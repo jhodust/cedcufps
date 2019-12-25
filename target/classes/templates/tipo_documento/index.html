@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8"/>
+<title th:text="${titulo}">Insert title here</title>
+</head>
+<body>
+	<h1 th:text="${titulo}"></h1>
+	<a th:href="@{/tipo-documento/agregar}">Crear TipoDocumento</a>
+	<table>
+		<thead>
+			<tr>
+				<th>id</th>
+				<th>tipo documento</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="td: ${tiposDocumento}">
+				<td th:text="${td.id}"></td>
+				<td th:text="${td.tipoDocumento}"></td>
+			
+			</tr>
+		</tbody>
+	</table>
+</body>
+</html>

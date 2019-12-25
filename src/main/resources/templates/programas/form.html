@@ -6,12 +6,16 @@
 </head>
 <body>
 	<h1 th:text="${titulo}"></h1>
-	<form th:action="@{/tipo-documento/registro}" th:object="${tipoDocumento}" method="post">
+	<form th:action="@{/programa/registro}" th:object="${programa}" method="post">
 		<table>
 			
 			<tr>
-				<td>Tipo Documento</td>
-				<td><input type="text" th:field="*{tipoDocumento}"/></td>
+				<td>Codigo</td>
+				<td><input type="text" th:field="*{codigo}"/></td>
+			</tr>
+			<tr>
+				<td>Programa</td>
+				<td><input type="text" th:field="*{nombrePrograma}"/></td>
 			</tr>
 			
 			

@@ -26,7 +26,7 @@ public class ProgramaController {
 	public String listar(Model model) {
 		model.addAttribute("titulo","PROGRAMAS");
 		model.addAttribute("programas",programaService.findAll());
-		return "programas/index";
+		return "programa/index";
 	}
 	
 	@RequestMapping(value = "/programa/registro")
@@ -34,7 +34,7 @@ public class ProgramaController {
 		Programa t= new Programa(); 
 		model.put("titulo","FORMULARIO PROGRAMAS");
 		model.put("programa",t);
-		return "programas/form";
+		return "programa/form";
 	}
 	
 	@RequestMapping(value = "/programa/registro", method = RequestMethod.POST)
@@ -49,6 +49,6 @@ public class ProgramaController {
 		Optional<Programa> p= programaService.findOne(id); 
 		model.put("titulo","FORMULARIO PROGRAMAS");
 		model.put("programa",p.get());
-		return "programas/form";
+		return "programa/form";
 	}
 }

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+<meta charset="UTF-8"/>
+</head>
+<body>
+	<div th:fragment="camposPersona">
+	
+		<div class="form-group">
+			<label class="col-form-label">Tipo Documento</label> <select
+				class="custom-select" th:field="*{tipoDocumento}">
+				<option value="0">Seleccione un tipo de documento...</option>
+				<option th:each="td: ${tipos_documento}" th:value="${td.id}"
+					th:text="${td.tipoDocumento}"></option>
+			</select>
+		</div>
+		<div class="form-group">
+			<label for="example-text-input" class="col-form-label">Documento</label>
+			<input class="form-control" type="text" th:field="*{numeroDocumento}" />
+		</div>
+		<div class="form-group">
+			<label for="example-text-input" class="col-form-label">Primer Nombre</label>
+			<input class="form-control" type="text" th:field="*{primerNombre}" />
+		</div>
+		<div class="form-group">
+			<label for="example-text-input" class="col-form-label">Segundo Nombre</label>
+			<input class="form-control" type="text" th:field="*{segundoNombre}" />
+		</div>
+		<div class="form-group">
+			<label for="example-text-input" class="col-form-label">Primer Apellido</label>
+			<input class="form-control" type="text" th:field="*{primerApellido}" />
+		</div>
+		<div class="form-group">
+			<label for="example-text-input" class="col-form-label">Segundo Apellido</label>
+			<input class="form-control" type="text" th:field="*{segundoApellido}" />
+		</div>
+		<div class="form-group">
+			<label for="example-text-input" class="col-form-label">Dirección</label>
+			<input class="form-control" type="text" th:field="*{direccion}" />
+		</div>
+		<div class="form-group">
+			<label for="example-text-input" class="col-form-label">Email</label>
+			<input class="form-control" type="text" th:field="*{email}" />
+		</div>
+		<div class="form-group">
+			<label for="example-text-input" class="col-form-label">Telefono</label>
+			<input class="form-control" type="text" th:field="*{telefono}" />
+		</div>
+		
+	</div>
+</body>
+</html>

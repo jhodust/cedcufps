@@ -1,0 +1,47 @@
+package com.ufps.cedcufps.controllers;
+
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.ufps.cedcufps.modelos.Administrativo;
+import com.ufps.cedcufps.modelos.Docente;
+import com.ufps.cedcufps.modelos.Estudiante;
+import com.ufps.cedcufps.modelos.Externo;
+import com.ufps.cedcufps.services.IPersonaService;
+
+@Controller
+public class PersonaController {
+
+	@Autowired
+	private IPersonaService personaService;
+	
+	@RequestMapping(value = "/persona/listar")
+	public String listar(Model model) {
+		model.addAttribute("titulo","PROGRAMAS");
+		model.addAttribute("personas",personaService.findAllPersonas());
+		
+		
+		return "persona/index";
+	}
+	
+	@RequestMapping(value = "/persona/registro")
+	public String agregar(Map<String, Object> model) {
+		Estudiante e= new Estudiante();
+		Docente d= new Docente();
+		Administrativo a= new Administrativo();
+		Externo ex= new Externo();
+		model.put("titulo","FORMULARIO PERSONA");
+		model.put("estudiante",e);
+		model.put("docente",d);
+		model.put("administrativo",a);
+		model.put("externo",ex);
+		model.put("tipos_documento",personaService.findAllTiposDocumento());
+		model.put("tipos_persona",personaService.findAllTiposPersona());
+		model.put("programas",personaService.findAllProgramas());
+		return "persona/formRegistro";
+	}
+}

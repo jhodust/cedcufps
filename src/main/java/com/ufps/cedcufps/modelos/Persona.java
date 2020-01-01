@@ -1,14 +1,30 @@
 package com.ufps.cedcufps.modelos;
 
 import java.io.Serializable;
+<<<<<<< HEAD
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+=======
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+>>>>>>> preparacion
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+<<<<<<< HEAD
+=======
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+>>>>>>> preparacion
 import javax.persistence.Table;
 
 
@@ -22,7 +38,13 @@ public class Persona implements Serializable {//*
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+<<<<<<< HEAD
 
+=======
+	
+	
+	
+>>>>>>> preparacion
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -45,6 +67,31 @@ public class Persona implements Serializable {//*
 	private String direccion;
 	private String telefono;
 	private String password;
+<<<<<<< HEAD
+=======
+	
+	private String username;
+	
+	private boolean enabled;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="id_tipo_documento")
+	private TipoDocumento tipoDocumento;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="id_tipo_persona")
+	private TipoPersona tipoPersona;
+	
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name = "id_persona")
+	private List<Rol> roles;
+	
+	
+	
+	public Persona() {
+		this.roles = new ArrayList<Rol>();;
+	}
+>>>>>>> preparacion
 	public Long getId() {
 		return id;
 	}
@@ -105,6 +152,42 @@ public class Persona implements Serializable {//*
 	public void setPassword(String password) {
 		this.password = password;
 	}
+<<<<<<< HEAD
+=======
+	public TipoDocumento getTipoDocumento() {
+		return tipoDocumento;
+	}
+	public void setTipoDocumento(TipoDocumento tipoDocumento) {
+		this.tipoDocumento = tipoDocumento;
+	}
+	public TipoPersona getTipoPersona() {
+		return tipoPersona;
+	}
+	public void setTipoPersona(TipoPersona tipoPersona) {
+		this.tipoPersona = tipoPersona;
+	}
+	public List<Rol> getRoles() {
+		return roles;
+	}
+	public void setRoles(List<Rol> roles) {
+		this.roles = roles;
+	}
+	public String getUsername() {
+		return username;
+	}
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	public boolean isEnabled() {
+		return enabled;
+	}
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
+	
+	
+	
+>>>>>>> preparacion
 	
 	
 	

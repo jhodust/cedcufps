@@ -6,4 +6,11 @@ import com.ufps.cedcufps.modelos.Persona;
 
 public interface IPersonaDao extends CrudRepository<Persona, Long> {
 
+<<<<<<< HEAD
+=======
+	public Persona findByUsername(String username);
+	
+	
+	
+>>>>>>> preparacion
 }

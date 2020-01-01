@@ -1,6 +1,7 @@
 package com.ufps.cedcufps.modelos;
 
 import java.io.Serializable;
+<<<<<<< HEAD
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +13,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+=======
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+>>>>>>> preparacion
 import javax.persistence.Table;
 
 @Entity
@@ -29,6 +38,7 @@ public class TipoDocumento implements Serializable {//1
 	@Column(name = "tipo_documento")
 	private String tipoDocumento;
 
+<<<<<<< HEAD
 	@OneToMany(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_tipo_documento")
 	private List<Persona> personas;
@@ -38,6 +48,8 @@ public class TipoDocumento implements Serializable {//1
 	public TipoDocumento() {
 		this.personas= new ArrayList<Persona>();
 	}
+=======
+>>>>>>> preparacion
 
 	public Long getId() {
 		return id;
@@ -55,6 +67,7 @@ public class TipoDocumento implements Serializable {//1
 		this.tipoDocumento = tipoDocumento;
 	}
 
+<<<<<<< HEAD
 	public List<Persona> getPersonas() {
 		return personas;
 	}
@@ -68,5 +81,7 @@ public class TipoDocumento implements Serializable {//1
 	}
 	
 	
+=======
+>>>>>>> preparacion
 
 }

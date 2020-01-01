@@ -1,6 +1,7 @@
 package com.ufps.cedcufps.modelos;
 
 import java.io.Serializable;
+<<<<<<< HEAD
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,6 +11,11 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+=======
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+>>>>>>> preparacion
 import javax.persistence.Table;
 
 @Entity
@@ -26,6 +32,7 @@ public class Programa implements Serializable {//1
 	@Column(name = "programa")
 	private String nombrePrograma;
 	
+<<<<<<< HEAD
 	@OneToMany(fetch = FetchType.LAZY)
 	@JoinColumn(name = "codigo_programa")
 	private List<Estudiante> estudiantes;
@@ -34,6 +41,9 @@ public class Programa implements Serializable {//1
 	public Programa() {
 		estudiantes= new ArrayList<Estudiante>();
 	}
+=======
+	
+>>>>>>> preparacion
 
 	public String getCodigo() {
 		return codigo;
@@ -51,9 +61,13 @@ public class Programa implements Serializable {//1
 		this.nombrePrograma = nombrePrograma;
 	}
 	
+<<<<<<< HEAD
 	public void addEstudiante(Estudiante e) {
 		this.estudiantes.add(e);
 	}
+=======
+	
+>>>>>>> preparacion
 	
 	
 

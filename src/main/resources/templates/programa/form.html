@@ -1,31 +1,3 @@
-<!DOCTYPE html>
-<<<<<<< HEAD
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-<meta charset="UTF-8"/>
-<title th:text="${titulo}">Insert title here</title>
-</head>
-<body>
-	<h1 th:text="${titulo}"></h1>
-	<form th:action="@{/programa/registro}" th:object="${programa}" method="post">
-		<table>
-			
-			<tr>
-				<td>Codigo</td>
-				<td><input type="text" th:field="*{codigo}"/></td>
-			</tr>
-			<tr>
-				<td>Programa</td>
-				<td><input type="text" th:field="*{nombrePrograma}"/></td>
-			</tr>
-			
-			
-				<button type="sumbit">Guardar</button>
-			
-		</table>
-	</form>
-</body>
-=======
 <html xmlns:th="http://www.thymeleaf.org"
 	xlmns:sec="http://www.thymeleaf.org/extras/spring-security">
 
@@ -65,5 +37,4 @@
 	<footer th:replace="layouts/layout :: footer"></footer>
 </body>
 
->>>>>>> preparacion
 </html>

@@ -1,30 +1,3 @@
-<!DOCTYPE html>
-<<<<<<< HEAD
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-<meta charset="UTF-8"/>
-<title th:text="${titulo}">Insert title here</title>
-</head>
-<body>
-	<h1 th:text="${titulo}"></h1>
-	<a th:href="@{/tipo-documento/registro}">Crear TipoDocumento</a>
-	<table>
-		<thead>
-			<tr>
-				<th>id</th>
-				<th>tipo documento</th>
-				<th>Acciones</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr th:each="td: ${tiposDocumento}">
-				<td th:text="${td.id}"></td>
-				<td th:text="${td.tipoDocumento}"></td>
-				<td><a th:href="@{/tipo-documento/registro/} + ${td.id}">Editar</a></td>
-			</tr>
-		</tbody>
-	</table>
-=======
 <html xmlns:th="http://www.thymeleaf.org"
 	xlmns:sec="http://www.thymeleaf.org/extras/spring-security">
 
@@ -67,6 +40,5 @@
 	</div>
 
 	<footer th:replace="layouts/layout :: footer"></footer>
->>>>>>> preparacion
 </body>
 </html>

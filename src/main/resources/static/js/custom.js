@@ -47,3 +47,7 @@ function ocultar(id) {// oculta un elemento del formulario
 function mostrar(id) {// muestra un elemento del formulario
 	document.getElementById(id).style.display = 'block';
 }
+
+function logout(){
+	document.getElementById('formLogout').submit();
+}

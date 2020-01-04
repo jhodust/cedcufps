@@ -12,5 +12,5 @@ insert into estudiantes (consecutivo,id_persona,codigo_programa) values ('1241',
 insert into estudiantes (consecutivo,id_persona,codigo_programa) values ('1229',2,'115');
 insert into roles(id,authority,id_persona) values(1,'ROLE_ADMIN',1);
 insert into roles(id,authority,id_persona) values(2,'ROLE_USER',1);
-insert into roles(id,authority,id_persona) values(3,'ROLE_ADMIN',2);
+insert into roles(id,authority,id_persona) values(3,'ROLE_USER',2);
 

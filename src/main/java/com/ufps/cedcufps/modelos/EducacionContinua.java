@@ -1,16 +1,22 @@
 package com.ufps.cedcufps.modelos;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -24,6 +30,7 @@ public class EducacionContinua implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
 	private String nombre;
@@ -51,7 +58,14 @@ public class EducacionContinua implements Serializable {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="id_tipo_educacion_continua")
 	private TipoEducacionContinua tipoEduContinua;
+	
+	@OneToMany(mappedBy = "educacionContinua",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<Jornada> jornadas;
 
+	public EducacionContinua() {
+		this.jornadas=new ArrayList<Jornada>();
+	}
+	
 	public Long getId() {
 		return id;
 	}
@@ -151,9 +165,22 @@ public class EducacionContinua implements Serializable {
 	public TipoEducacionContinua getTipoEduContinua() {
 		return tipoEduContinua;
 	}
+	
 
 	public void setTipoEduContinua(TipoEducacionContinua tipoEduContinua) {
 		this.tipoEduContinua = tipoEduContinua;
+	}
+	
+	public List<Jornada> getJornadas() {
+		return jornadas;
+	}
+
+	public void setJornadas(List<Jornada> jornadas) {
+		this.jornadas = jornadas;
+	}
+	
+	public void addJornada(Jornada j) {
+		this.jornadas.add(j);
 	}
 	
 	

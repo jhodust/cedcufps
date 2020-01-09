@@ -19,7 +19,7 @@
 						<label for="example-text-input" class="col-form-label">Tipo
 							Usuario</label> <select class="custom-select" id="select_tipo_usuario">
 							<option value="0">Seleccione el tipo de usuario...</option>
-							<option th:each="tp: ${tipos_persona}"
+							<option th:each="tp: ${tipos_persona}" th:value="${tp.tipoPersona}"
 								th:text="${tp.tipoPersona}"></option>
 						</select>
 					</div>

@@ -19,4 +19,6 @@ public interface IPersonaService {
 	public TipoPersona findByTipoPersona(String tipoPersona);
 	
 	public void save(Persona p);
+	
+	public Persona findPersonaLogueada();
 }

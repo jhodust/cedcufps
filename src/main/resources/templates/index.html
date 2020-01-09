@@ -1,109 +1,59 @@
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xlmns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head th:replace="layouts/layout :: head"></head>
 
 <body class="index-page sidebar-collapse">
-  <header th:replace="layouts/layout :: header"></header>
-  <div th:replace="layouts/layout :: encabezado"></div>
-  <div class="main main-raised">
-    <div class="section section-basic">
-      <div class="container">
-        holiholiholiholiholiholiholiholiholiholiholiholiholiholiholiholiholiholiholiholi
-        holiholiholiholiholiholiholiholiholiholiholi
-        holiholiholiholiholi
-        holi
-        holiholiholiholi
-        holiholi
-        holiholiholiholiholiholiholiholiholiholiholiholiholiholiholiholiholiholiholiholi
-        holiholiholiholiholiholiholiholiholiholiholi
-        holiholiholiholiholi
-        holi
-        holiholiholiholi
-        holiholi
-        holiholiholiholiholiholiholiholiholiholiholiholiholiholiholiholiholiholiholiholi
-        holiholiholiholiholiholiholiholiholiholiholi
-        holiholiholiholiholi
-        holi
-        holiholiholiholi
-        holiholi
-        holiholiholiholiholiholiholiholiholiholiholiholiholiholiholiholiholiholiholiholi
-        holiholiholiholiholiholiholiholiholiholiholi
-        holiholiholiholiholi
-        holi
-        holiholiholiholi
-        holiholi
-        holiholiholiholiholiholiholiholiholiholiholiholiholiholiholiholiholiholiholiholi
-        holiholiholiholiholiholiholiholiholiholiholi
-        holiholiholiholiholi
-        holi
-        holiholiholiholi
-        holiholi
-        holiholiholiholiholiholiholiholiholiholiholiholiholiholiholiholiholiholiholiholi
-        holiholiholiholiholiholiholiholiholiholiholi
-        holiholiholiholiholi
-        holi
-        holiholiholiholi
-        holiholi
-        holiholiholiholiholiholiholiholiholiholiholiholiholiholiholiholiholiholiholiholi
-        holiholiholiholiholiholiholiholiholiholiholi
-        holiholiholiholiholi
-        holi
-        holiholiholiholi
-        holiholi
-        holiholiholiholiholiholiholiholiholiholiholiholiholiholiholiholiholiholiholiholi
-        holiholiholiholiholiholiholiholiholiholiholi
-        holiholiholiholiholi
-        holi
-        holiholiholiholi
-        holiholi
-        holiholiholiholiholiholiholiholiholiholiholiholiholiholiholiholiholiholiholiholi
-        holiholiholiholiholiholiholiholiholiholiholi
-        holiholiholiholiholi
-        holi
-        holiholiholiholi
-        holiholi
-        holiholiholiholiholiholiholiholiholiholiholiholiholiholiholiholiholiholiholiholi
-        holiholiholiholiholiholiholiholiholiholiholi
-        holiholiholiholiholi
-        holi
-        holiholiholiholi
-        holiholi
-        holiholiholiholiholiholiholiholiholiholiholiholiholiholiholiholiholiholiholiholi
-        holiholiholiholiholiholiholiholiholiholiholi
-        holiholiholiholiholi
-        holi
-        holiholiholiholi
-        holiholi
-        holiholi
-        holiholiholiholiholiholiholiholiholiholiholiholiholiholiholiholiholiholiholiholi
-        holiholiholiholiholiholiholiholiholiholiholi
-        holiholiholiholiholi
-        holi
-        holiholiholiholi
-        holiholi
-        holiholiholiholiholiholiholiholiholiholiholiholiholiholiholiholiholiholiholiholi
-        holiholiholiholiholiholiholiholiholiholiholi
-        holiholiholiholiholi
-        holi
-        holiholiholiholi
-        holiholi
-        holiholiholiholiholiholiholiholiholiholiholiholiholiholiholiholiholiholiholiholi
-        holiholiholiholiholiholiholiholiholiholiholi
-        holiholiholiholiholi
-        holi
-        holiholiholiholi
-        holiholi
-        holiholiholiholiholiholiholiholiholiholiholiholiholiholiholiholiholiholiholiholi
-        holiholiholiholiholiholiholiholiholiholiholi
-        holiholiholiholiholi
-        holi
-        holiholiholiholi
-        holiholi
-      </div>
-    </div>
-  </div>
-  
-  <footer th:replace="layouts/layout :: footer"></footer>
+	<header th:replace="layouts/layout :: header"></header>
+	<div th:replace="layouts/layout :: encabezado"></div>
+	<div class="main main-raised">
+		<div class="section section-basic">
+			<div class="container">
+				<div class="col-md-6" sec:authorize="!isAuthenticated()">
+					<div class="card">
+						<div class="card-header card-header-text card-header-primary">
+							<div class="card-text">
+								<h4 class="card-title">INICIAR SESIÓN</h4>
+							</div>
+						</div>
+						<div class="card-body">
+
+							<form class="form" th:action="@{/login}" method="post">
+								
+								<div class="card-body">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text"> <i
+												class="material-icons">face</i>
+											</span>
+										</div>
+										<input type="text" class="form-control" name="username"
+											placeholder="username...">
+									</div>
+
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text"> <i
+												class="material-icons">lock_outline</i>
+											</span>
+										</div>
+										<input type="password" class="form-control" name="password"
+											placeholder="Password...">
+									</div>
+								</div>
+								<div class="footer text-center">
+									<button class="btn btn-primary btn-link btn-wd btn-lg"
+										type="submit">Login</button>
+								</div>
+							</form>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<footer th:replace="layouts/layout :: footer"></footer>
 </body>
 
 </html>

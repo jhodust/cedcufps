@@ -17,7 +17,7 @@ import javax.persistence.UniqueConstraint;
 
 @Entity
 @Table(name = "participantes", uniqueConstraints={
-		   @UniqueConstraint(columnNames={"id_persona", "id_educacion_continua"})})
+		   @UniqueConstraint(columnNames={"id_persona", "educacion_continua_id"})})
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Participante implements Serializable{
 
@@ -30,13 +30,15 @@ public class Participante implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="id_educacion_continua")
+	
+	@ManyToOne(fetch = FetchType.LAZY)
 	private EducacionContinua educacionContinua;
 	
+	//*****************************************revisar asociacion**************
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="id_persona")
 	private Persona persona;
+	
 	
 	
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -66,6 +68,14 @@ public class Participante implements Serializable{
 
 	public void setEducacionContinua(EducacionContinua educacionContinua) {
 		this.educacionContinua = educacionContinua;
+	}
+
+	public TipoParticipante getTipoParticipante() {
+		return tipoParticipante;
+	}
+
+	public void setTipoParticipante(TipoParticipante tipoParticipante) {
+		this.tipoParticipante = tipoParticipante;
 	}
 
 		

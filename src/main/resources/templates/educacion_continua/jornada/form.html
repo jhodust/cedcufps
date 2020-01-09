@@ -1,0 +1,44 @@
+<html xmlns:th="http://www.thymeleaf.org"
+	xlmns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="layouts/layout :: head">
+<meta charset="UTF-8" />
+</head>
+
+<body class="index-page sidebar-collapse">
+	<header th:replace="layouts/layout :: header"></header>
+	<div th:replace="layouts/layout :: encabezado"></div>
+	<div class="main main-raised">
+		<div class="section section-basic">
+			<div class="container">
+				<div class="col-md-8">
+					<h2>FORM REGISTRO JORNADA</h2>
+
+					
+						<form th:action="@{/educacion-continua/jornadas/registro}" th:object="${jornada}" method="post"
+							enctype="multipart/form-data">
+
+							<div class="form-group">
+							    <label class="label-control">Fecha</label>
+							    <input type="text" class="form-control datetimepicker" th:field="*{fecha}"/>
+							</div>
+							<div class="form-group">
+							    <label class="label-control">Hora Inicio</label>
+							    <input type="text" class="form-control datetimepicker" th:field="*{horaInicio}"/>
+							</div>
+							<div class="form-group">
+							    <label class="label-control">Hora Fin</label>
+							    <input type="text" class="form-control datetimepicker" th:field="*{horaFin}"/>
+							</div>
+							
+							<button type="submit" class="btn btn-primary mt-4 pr-4 pl-4">Guardar</button>
+						</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<footer th:replace="layouts/layout :: footer"></footer>
+</body>
+
+</html>

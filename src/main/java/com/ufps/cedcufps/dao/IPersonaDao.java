@@ -8,5 +8,6 @@ public interface IPersonaDao extends CrudRepository<Persona, Long> {
 
 	public Persona findByUsername(String username);
 	
+	
 
 }

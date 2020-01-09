@@ -13,27 +13,36 @@
 			<div class="container">
 				<div class="col-md-12">
 
-
-					<h2>Tipos de Documentos de ID</h2>
-					<a class="btn btn-primary" th:href="@{/tipo-documento/registro}">Agregar
-						Tipo Documento</a>
-					<table id="myTable" class="row-border" style="width: 100%">
-						<thead>
-							<tr>
-								<th>tipo documento</th>
-								<th>Acciones</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr th:each="td: ${tiposDocumento}">
-								<td th:text="${td.tipoDocumento}"></td>
-								<td><a th:href="@{/tipo-documento/registro/} + ${td.id}"
-									class="btn btn-primary btn-fab btn-round"> <i
-										class="material-icons">edit</i>
-								</a></td>
-							</tr>
-						</tbody>
-					</table>
+					<div class="card">
+						<div class="card-header card-header-text card-header-primary">
+							<div class="card-text">
+								<h4 class="card-title">Tipos de Documentos de ID</h4>
+								
+							</div>
+						</div>
+						<div class="card-body">
+						<div>
+						<a class="btn btn-primary" th:href="@{/tipo-documento/registro}">Agregar
+									Tipo Documento</a></div>
+							<table id="myTable" class="row-border" style="width: 100%">
+								<thead>
+									<tr>
+										<th>tipo documento</th>
+										<th>Acciones</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr th:each="td: ${tiposDocumento}">
+										<td th:text="${td.tipoDocumento}"></td>
+										<td><a th:href="@{/tipo-documento/registro/} + ${td.id}"
+											class="btn btn-primary btn-fab btn-round"> <i
+												class="material-icons">edit</i>
+										</a></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>

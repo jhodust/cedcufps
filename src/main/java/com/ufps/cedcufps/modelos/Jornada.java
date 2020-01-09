@@ -25,6 +25,8 @@ public class Jornada implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+	private Date fecha;
+	
 	@Column(name = "hora_inicio")
 	private Date horaInicio;
 	
@@ -43,6 +45,14 @@ public class Jornada implements Serializable{
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+	
+	public Date getFecha() {
+		return fecha;
+	}
+
+	public void setFecha(Date fecha) {
+		this.fecha = fecha;
 	}
 
 	public Date getHoraInicio() {
@@ -68,6 +78,8 @@ public class Jornada implements Serializable{
 	public void setEducacionContinua(EducacionContinua educacionContinua) {
 		this.educacionContinua = educacionContinua;
 	}
+
+	
 	
 	
 }

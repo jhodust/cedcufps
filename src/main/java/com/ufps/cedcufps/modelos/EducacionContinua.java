@@ -44,7 +44,7 @@ public class EducacionContinua implements Serializable {
 	@Column(name = "fecha_lim_inscripcion")
 	private Date fechaLimInscripcion;
 	private int duracion;
-	private String requitos;
+	private String requisitos;
 	
 	@Column(name = "contenido_general")
 	private String contenidoGeneral;
@@ -61,9 +61,13 @@ public class EducacionContinua implements Serializable {
 	
 	@OneToMany(mappedBy = "educacionContinua",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Jornada> jornadas;
+	
+	@OneToMany(mappedBy = "educacionContinua",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<Participante> participantes;
 
 	public EducacionContinua() {
 		this.jornadas=new ArrayList<Jornada>();
+		this.participantes=new ArrayList<Participante>();
 	}
 	
 	public Long getId() {
@@ -114,12 +118,12 @@ public class EducacionContinua implements Serializable {
 		this.duracion = duracion;
 	}
 
-	public String getRequitos() {
-		return requitos;
+	public String getRequisitos() {
+		return requisitos;
 	}
 
-	public void setRequitos(String requitos) {
-		this.requitos = requitos;
+	public void setRequisitos(String requisitos) {
+		this.requisitos = requisitos;
 	}
 
 	public String getContenidoGeneral() {
@@ -182,6 +186,20 @@ public class EducacionContinua implements Serializable {
 	public void addJornada(Jornada j) {
 		this.jornadas.add(j);
 	}
+
+	public List<Participante> getParticipantes() {
+		return participantes;
+	}
+
+	public void setParticipantes(List<Participante> participantes) {
+		this.participantes = participantes;
+	}
+	
+	public void addParticipante(Participante p) {
+		this.participantes.add(p);
+	}
+	
+	
 	
 	
 }

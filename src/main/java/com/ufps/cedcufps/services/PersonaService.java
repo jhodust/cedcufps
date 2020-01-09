@@ -6,8 +6,10 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -96,6 +98,14 @@ public class PersonaService implements IPersonaService, UserDetailsService {
 			throw new UsernameNotFoundException("usuario "+ username +" no tiene roles");
 		}
 		return new User(p.getUsername(), p.getPassword(), p.isEnabled(), true, true, true, authorities);
+	}
+
+	@Override
+	public Persona findPersonaLogueada() {
+		// TODO Auto-generated method stub
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	    UserDetails userDetail = (UserDetails) auth.getPrincipal();
+		return personaDao.findByUsername(userDetail.getUsername());
 	}
 
 }

@@ -40,8 +40,10 @@
 								<td th:text="${p.email}"></td>
 								<td th:text="${p.direccion}"></td>
 								<td th:text="${p.telefono}"></td>
-								<td><a th:href="@{/persona/registro/} + ${p.id}" class="btn btn-primary btn-fab btn-round">
+								<td><a th:href="@{/persona/registro/{id}(id=${p.id})}" class="btn btn-primary btn-fab btn-round"  data-toggle="tooltip" data-placement="top" title="Editar">
                 					<i class="material-icons">edit</i>
+              						</a><a th:href="@{/persona/{id}/permisos(id=${p.id})}" class="btn btn-primary btn-fab btn-round"  data-toggle="tooltip" data-placement="top" title="Privilegios">
+                					<i class="material-icons">assignment_turned_in</i>
               						</a></td>
 							</tr>
 						</tbody>

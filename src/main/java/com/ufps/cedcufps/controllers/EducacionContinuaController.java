@@ -66,7 +66,13 @@ public class EducacionContinuaController {
 		Optional<EducacionContinua> ec= educacionContinuaService.findOne(id); 
 		model.put("titulo","DETALLES EDUCACIÓN CONTINUA");
 		model.put("educacionContinua",ec.get());
+		try {
 		model.put("participante",participanteService.findByIdEducacionContinuaAndIdPersona(id,personaService.findPersonaLogueada().getId()));
+		}catch(Exception e) {
+			model.put("participante",null);
+		}
 		return "educacion_continua/detalles";
 	}
+	
+	
 }

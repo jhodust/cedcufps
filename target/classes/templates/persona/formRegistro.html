@@ -43,6 +43,7 @@
 								<label for="example-text-input" class="col-form-label">Codigo</label>
 								<input class="form-control col-md-3" type="text" disabled id="codigo_programa"/><input class="form-control col-md-5" type="text" th:field="*{consecutivo}" />
 							</div>
+							<div th:replace="persona/camposPersona :: camposUsuarioLogin"></div>
 							<button type="submit" class="btn btn-primary mt-4 pr-4 pl-4">Guardar</button>
 						</form>
 					</div>
@@ -59,6 +60,7 @@
 								<label for="example-text-input" class="col-form-label">Codigo</label>
 								<input class="form-control" type="text" th:field="*{codigo}" />
 							</div>
+							<div th:replace="persona/camposPersona :: camposUsuarioLogin"></div>
 							<button type="submit" class="btn btn-primary mt-4 pr-4 pl-4">Guardar</button>
 						</form>
 					</div>
@@ -75,6 +77,7 @@
 								<label for="example-text-input" class="col-form-label">Cargo</label>
 								<input class="form-control" type="text" th:field="*{cargo}" />
 							</div>
+							<div th:replace="persona/camposPersona :: camposUsuarioLogin"></div>
 							<button type="submit" class="btn btn-primary mt-4 pr-4 pl-4">Guardar</button>
 						</form>
 					</div>
@@ -91,6 +94,7 @@
 								<label for="example-text-input" class="col-form-label">Profesión</label>
 								<input class="form-control" type="text" th:field="*{profesion}" />
 							</div>
+							<div th:replace="persona/camposPersona :: camposUsuarioLogin"></div>
 							<button type="submit" class="btn btn-primary mt-4 pr-4 pl-4">Guardar</button>
 						</form>
 					</div>

@@ -9,16 +9,18 @@
 		<div class="section section-basic">
 			<div class="container">
 				<div class="col-md-6">
-					<h2>EDUCACIÓN CONTINUA</h2>
-					
-					<div th:each="ec: ${educacionesContinuas}">
-					<a th:href="@{/educacion-continua/{id}/detalles(id=${ec.id})}"
-									class="btn btn-primary btn-round" th:text="${ec.nombre}"></a>
-					<p th:text="fechaInicio +': '+${ec.fechaInicio}"></p>
-					<p th:text="fechaInscripción +': '+${ec.fechaLimInscripcion}"></p>
-					<p th:text="duracion +': ' +${ec.duracion}"></p>
+					<div class="card">
+						<div class="card-header card-header-text card-header-primary">
+							<div class="card-text">
+								<h4 class="card-title">INICIO</h4>
+							</div>
+						</div>
+						<div class="card-body">
+
+							
+
+						</div>
 					</div>
-					
 				</div>
 			</div>
 		</div>

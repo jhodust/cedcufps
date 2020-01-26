@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
 import com.ufps.cedcufps.modelos.Docente;
+import com.ufps.cedcufps.modelos.Rol;
 import com.ufps.cedcufps.services.IPersonaService;
 
 
@@ -22,6 +23,9 @@ public class DocenteController {
 	public String save(Docente d, SessionStatus status) {
 		d.setTipoPersona(personaService.findByTipoPersona("Docente"));
 		personaService.save(d);
+		Rol r= new Rol();
+		r.setAuthority("Docente");
+		d.addRol(r);
 		status.setComplete();
 		return "redirect:/persona/listar";
 	}

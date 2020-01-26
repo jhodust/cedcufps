@@ -19,4 +19,6 @@ public interface IParticipanteService {
 	public TipoParticipante findByTipoParticipante(String tipoParticipante);
 	
 	public Participante findByIdEducacionContinuaAndIdPersona(Long idEducacionContinua, Long idPersona);
+	
+	public void deleteParticipante(Participante p);
 }

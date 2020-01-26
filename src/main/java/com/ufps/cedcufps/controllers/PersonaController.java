@@ -5,6 +5,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.ufps.cedcufps.modelos.Administrativo;
@@ -43,5 +44,11 @@ public class PersonaController {
 		model.put("tipos_persona",personaService.findAllTiposPersona());
 		model.put("programas",personaService.findAllProgramas());
 		return "persona/formRegistro";
+	}
+	
+	@RequestMapping(value = "/persona/{id}/permisos")
+	public String permisos(@PathVariable(value = "id") Long idPersona, Map<String, Object> model) {
+		model.put("persona",personaService.findOne(idPersona).get());
+		return "persona/permisos";
 	}
 }

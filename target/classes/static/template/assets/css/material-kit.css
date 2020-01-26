@@ -16408,6 +16408,12 @@ footer .pull-center {
   background: linear-gradient(60deg, #ab47bc, #7b1fa2);
 }
 
+.card-header-custom {
+  background: linear-gradient(60deg, #fff, #fff);
+  border-right: #bf3434 5px solid;
+  border-bottom: #bf3434 5px solid;
+}
+
 .card .card-header-info,
 .card.bg-info,
 .card.card-rotate.bg-info .front,
@@ -16479,6 +16485,10 @@ footer .pull-center {
 .card[class*="bg-"] .card-title,
 .card[class*="bg-"] .icon i {
   color: #fff;
+}
+
+.card-title-custom{
+	color: #000;
 }
 
 .card [class*="header-"] .icon i,

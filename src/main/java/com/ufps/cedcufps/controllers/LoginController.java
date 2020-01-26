@@ -17,8 +17,8 @@ public class LoginController {
 		if(error != null) {
 			model.addAttribute("error", "Nombre o pass incorrectos");
 		}
-		System.out.println("*****************************************************");
-		return "index";
+		System.out.println("***************************valida login**********");
+		return "login";
 	}
 	
 }

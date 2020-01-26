@@ -3,6 +3,8 @@ package com.ufps.cedcufps.services;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -97,6 +99,7 @@ public class PersonaService implements IPersonaService, UserDetailsService {
 			logger.error("Error login: no tiene roles el usuario '"+username+"'");
 			throw new UsernameNotFoundException("usuario "+ username +" no tiene roles");
 		}
+		logger.info("Entra al metodo loadUserByUsername de personaService");
 		return new User(p.getUsername(), p.getPassword(), p.isEnabled(), true, true, true, authorities);
 	}
 
@@ -107,5 +110,13 @@ public class PersonaService implements IPersonaService, UserDetailsService {
 	    UserDetails userDetail = (UserDetails) auth.getPrincipal();
 		return personaDao.findByUsername(userDetail.getUsername());
 	}
+
+	@Override
+	public Optional<Persona> findOne(Long id) {
+		// TODO Auto-generated method stub
+		return personaDao.findById(id);
+	}
+
+	
 
 }

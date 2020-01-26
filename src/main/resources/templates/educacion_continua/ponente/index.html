@@ -16,7 +16,6 @@
 
 					<h2>PONENTES</h2>
 					<h3>Educación Continua:</h3><p th:text="${educacionContinua.nombre}"></p>
-					<h3>USUARIO AUTENTICADO</h3><p th:text="${persona.primerNombre}"></p>
 					<a class="btn btn-primary" th:href="@{/educacion-continua/{id}/ponentes/registro(id=${educacionContinua.id})}">Agregar
 						PONENTE</a>
 					<table id="myTable" class="row-border" style="width: 100%">
@@ -28,13 +27,16 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr th:each="p: ${educacionContinua.participantes}">
+							<tr th:each="p: ${educacionContinua.participantes}" th:if="${p.tipoParticipante.tipoParticipante == 'Ponente'}">
 							
-								<td th:if="${p.tipoParticipante.tipoParticipante == 'Ponente'}" th:text="${p.persona.primerNombre}"></td>
-								<td th:if="${p.tipoParticipante.tipoParticipante == 'Ponente'}" th:text="${p.tema}"></td>
-								<td th:if="${p.tipoParticipante.tipoParticipante == 'Ponente'}"><a th:href="@{/educacion-continua/{id_ec}/ponentes/registro/{id_ponente}(id_ec=${educacionContinua.id}, id_ponente=${p.id})}"
+								<td th:text="${p.persona.primerNombre}"></td>
+								<td th:text="${p.tema}"></td>
+								<td><a th:href="@{/educacion-continua/{id_ec}/ponentes/registro/{id_ponente}(id_ec=${educacionContinua.id}, id_ponente=${p.id})}"
 									class="btn btn-primary btn-fab btn-round"  data-toggle="tooltip" data-placement="top" title="Editar"> <i
 										class="material-icons">edit</i>
+								</a><a th:href="@{/educacion-continua/{id_ec}/ponentes/eliminar/{id_ponente}(id_ec=${educacionContinua.id}, id_ponente=${p.id})}"
+									class="btn btn-primary btn-fab btn-round"  data-toggle="tooltip" data-placement="top" title="Eliminar"> <i
+										class="material-icons">clear</i>
 								</a></td>
 								
 							</tr>

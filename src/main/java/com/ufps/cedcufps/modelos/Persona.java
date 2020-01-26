@@ -147,6 +147,10 @@ public class Persona implements Serializable {//*
 	public void setTipoPersona(TipoPersona tipoPersona) {
 		this.tipoPersona = tipoPersona;
 	}
+	
+	public void addRol(Rol r) {
+		this.roles.add(r);
+	}
 	public List<Rol> getRoles() {
 		return roles;
 	}

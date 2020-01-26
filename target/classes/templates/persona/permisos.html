@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xlmns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="layouts/layout :: head">
+	<meta charset="UTF-8"/>
+</head>
+
+<body class="index-page sidebar-collapse">
+	<header th:replace="layouts/layout :: header"></header>
+	<div th:replace="layouts/layout :: encabezado"></div>
+	<div class="main main-raised">
+		<div class="section section-basic">
+			<div class="container">
+				<div class="col-md-12">
+				<h2>Asignar Roles</h2>
+					<table>
+						<tr th:if="${persona.tipoPersona.tipoPersona == 'Estudiante'}">
+							<td>Beca</td>
+							<td th:each="r: ${persona.roles}">
+								<a class="btn btn-primary" th:if="${r.authority == 'ROLE_BECA'}" th:href="@{/persona/registro}">Revocar</a>
+								<a class="btn btn-primary" th:if="${r.authority != 'ROLE_BECA'}" th:href="@{/persona/registro}">Revocar</a></td>
+						</tr>
+						<tr th:if="${persona.tipoPersona.tipoPersona == 'Docente' or persona.tipoPersona.tipoPersona == 'Administrativo' }">
+							<td>Admin</td>
+							<td><a class="btn btn-primary" sec:authorize="hasAnyRole('ROLE_ADMIN')" th:href="@{/persona/registro}">Revocar</a>
+						<a class="btn btn-primary" sec:authorize="!hasAnyRole('ROLE_ADMIN')" th:href="@{/persona/registro}">Otorgar</a></td>
+						</tr>
+						<tr th:if="${persona.tipoPersona.tipoPersona == 'Externo'}">
+							<td><button class="btn btn-primary" disabled>No es posible asignar permisos!</button>
+							</td>
+						</tr>
+					</table>
+					
+					
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<footer th:replace="layouts/layout :: footer"></footer>
+</body>
+
+</html>

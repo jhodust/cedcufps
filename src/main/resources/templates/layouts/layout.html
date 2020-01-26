@@ -37,23 +37,27 @@
       </div>
       <div class="collapse navbar-collapse">
         <ul class="navbar-nav ml-auto">
-        <li class="nav-item">
-            <a class="nav-link" th:href="@{/programa/listar}" onclick="scrollToDownload()">
-              <i class="material-icons">cloud_download</i> Programas Academicos
+        
+         <li class="dropdown nav-item">
+            <a href="#" sec:authorize="hasAnyRole('ROLE_SUPERADMIN')" class="dropdown-toggle nav-link" data-toggle="dropdown">
+              <i class="material-icons">apps</i> Gestionar opciones
             </a>
-          </li>
-         <li class="nav-item">
-            <a class="nav-link" th:href="@{/tipo-documento/listar}" onclick="scrollToDownload()">
-              <i class="material-icons">cloud_download</i> Tipo Documento
-            </a>
+            <div class="dropdown-menu dropdown-with-icons">
+              <a class="nav-link" sec:authorize="hasAnyRole('ROLE_SUPERADMIN')" th:href="@{/programa/listar}" onclick="scrollToDownload()">
+	              <i class="material-icons">cloud_download</i> Programas Academicos
+	            </a> 
+	            <a class="nav-link" sec:authorize="hasAnyRole('ROLE_SUPERADMIN')" th:href="@{/tipo-documento/listar}" onclick="scrollToDownload()">
+	              <i class="material-icons">cloud_download</i> Tipo Documento
+	            </a>               
+            </div>
           </li>
         <li class="nav-item">
-            <a class="nav-link" th:href="@{/persona/listar}" onclick="scrollToDownload()">
-              <i class="material-icons">cloud_download</i> Usuarios
+            <a class="nav-link" sec:authorize="hasAnyRole('ROLE_SUPERADMIN','ROLE_DIRPROGRAMA','ROLE_ADMIN')" th:href="@{/persona/listar}" onclick="scrollToDownload()">
+              <i class="material-icons">cloud_download</i> Gestionar Usuarios
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" th:href="@{/educacion-continua/listar}" onclick="scrollToDownload()">
+            <a class="nav-link" sec:authorize="hasAnyRole('ROLE_SUPERADMIN','ROLE_DIRPROGRAMA','ROLE_ADMIN', 'ROLE_BECA')" th:href="@{/educacion-continua/listar}" onclick="scrollToDownload()">
               <i class="material-icons">cloud_download</i> Eventos
             </a>
           </li>

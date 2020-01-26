@@ -56,4 +56,10 @@ public class ParticipanteService implements IParticipanteService{
 		return participanteDao.findParticipanteByIdEducacionContinuaAndIdPersona(idEducacionContinua, idPersona);
 	}
 
+	@Override
+	public void deleteParticipante(Participante p) {
+		// TODO Auto-generated method stub
+		participanteDao.delete(p);
+	}
+
 }

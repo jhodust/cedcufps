@@ -8,46 +8,17 @@
 	<div class="main main-raised">
 		<div class="section section-basic">
 			<div class="container">
-				<div class="col-md-6" sec:authorize="!isAuthenticated()">
-					<div class="card">
-						<div class="card-header card-header-text card-header-primary">
-							<div class="card-text">
-								<h4 class="card-title">INICIAR SESIÓN</h4>
-							</div>
-						</div>
-						<div class="card-body">
-
-							<form class="form" th:action="@{/login}" method="post">
-								
-								<div class="card-body">
-									<div class="input-group">
-										<div class="input-group-prepend">
-											<span class="input-group-text"> <i
-												class="material-icons">face</i>
-											</span>
-										</div>
-										<input type="text" class="form-control" name="username"
-											placeholder="username...">
-									</div>
-
-									<div class="input-group">
-										<div class="input-group-prepend">
-											<span class="input-group-text"> <i
-												class="material-icons">lock_outline</i>
-											</span>
-										</div>
-										<input type="password" class="form-control" name="password"
-											placeholder="Password...">
-									</div>
-								</div>
-								<div class="footer text-center">
-									<button class="btn btn-primary btn-link btn-wd btn-lg"
-										type="submit">Login</button>
-								</div>
-							</form>
-
-						</div>
+				<div class="col-md-6">
+					<h2>EDUCACIÓN CONTINUA</h2>
+					
+					<div th:each="ec: ${educacionesContinuas}">
+					<a th:href="@{/educacion-continua/{id}/detalles(id=${ec.id})}"
+									class="btn btn-primary btn-round" th:text="${ec.nombre}"></a>
+					<p th:text="fechaInicio +': '+${ec.fechaInicio}"></p>
+					<p th:text="fechaInscripción +': '+${ec.fechaLimInscripcion}"></p>
+					<p th:text="duracion +': ' +${ec.duracion}"></p>
 					</div>
+					
 				</div>
 			</div>
 		</div>

@@ -27,15 +27,15 @@
 							</tr>
 							<tr>
 								<td>Fecha Inicio:</td>
-								<td th:text="${educacionContinua.fechaInicio}"></td>
+								<td th:text="${#dates.format(educacionContinua.fechaInicio, 'dd-MM-yyyy')}"></td>
 							</tr>
 							<tr>
 								<td>Fecha Fin:</td>
-								<td th:text="${educacionContinua.fechaFin}"></td>
+								<td th:text="${#dates.format(educacionContinua.fechaFin, 'dd-MM-yyyy')}"></td>
 							</tr>
 							<tr>
 								<td>Fecha Limite Inscripción:</td>
-								<td th:text="${educacionContinua.fechaLimInscripcion}"></td>
+								<td th:text="${#dates.format(educacionContinua.fechaLimInscripcion, 'dd-MM-yyyy')}"></td>
 							</tr>
 							<tr>
 								<td>Duracion:</td>
@@ -67,11 +67,17 @@
 							</tr>
 						</tbody>
 					</table>
+					
 					<div th:if="${participante == null}">
-						<button type="submit" class="btn btn-primary mt-4 pr-4 pl-4">INSCRIBETE!</button>
+						<a th:href="@{/educacion-continua/{id}/realizar-inscripcion(id=${educacionContinua.id})}"
+									class="btn btn-primary">INSCRIBETE!
+								</a>
+						
 					</div>
 					<div th:if="${participante != null and participante.tipoParticipante.tipoParticipante == 'Asistente'}">
-						<button type="submit" class="btn btn-primary mt-4 pr-4 pl-4">CANCELAR INSCRIPCIÓN!</button>
+						<a th:href="@{/educacion-continua/{id}/cancelar-inscripcion(id=${educacionContinua.id})}"
+									class="btn btn-primary">CANCELAR INSCRIPCIÓN!
+								</a>
 					</div>
 				</div>
 			</div>

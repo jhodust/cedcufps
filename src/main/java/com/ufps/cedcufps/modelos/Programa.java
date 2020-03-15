@@ -8,8 +8,11 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -22,20 +25,34 @@ public class Programa implements Serializable {//1
 	private static final long serialVersionUID = 1L;
 	
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+	
+	
 	private String codigo;
 	
 	@Column(name = "programa")
 	private String nombrePrograma;
 
 	@OneToMany(fetch = FetchType.LAZY)
-	@JoinColumn(name = "codigo_programa")
+	@JoinColumn(name = "id_programa")
 	private List<Estudiante> estudiantes;
 
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="id_departamento")
+	private Departamento departamento;
 	
 	public Programa() {
 		estudiantes= new ArrayList<Estudiante>();
 	}
 
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 
 	public String getCodigo() {
 		return codigo;
@@ -56,6 +73,22 @@ public class Programa implements Serializable {//1
 
 	public void addEstudiante(Estudiante e) {
 		this.estudiantes.add(e);
+	}
+
+	public List<Estudiante> getEstudiantes() {
+		return estudiantes;
+	}
+
+	public void setEstudiantes(List<Estudiante> estudiantes) {
+		this.estudiantes = estudiantes;
+	}
+
+	public Departamento getDepartamento() {
+		return departamento;
+	}
+
+	public void setDepartamento(Departamento departamento) {
+		this.departamento = departamento;
 	}
 
 	

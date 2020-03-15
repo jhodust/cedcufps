@@ -27,7 +27,7 @@ public class ProgramaService implements IProgramaService {
 	}
 
 	@Override
-	public Optional<Programa> findOne(String id) {
+	public Optional<Programa> findOne(Long id) {
 		// TODO Auto-generated method stub
 		return  programaDao.findById(id);
 	}

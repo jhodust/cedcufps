@@ -1,5 +1,20 @@
-insert into programas(codigo,programa) values('111','civil');
-insert into programas(codigo,programa) values('115','sistemas');
+insert into generos(id,genero) values(1,'Masculino');
+insert into generos(id,genero) values(2,'Femenino');
+insert into estados_civiles(id,estado_civil) values(1,'Soltero(a)');
+insert into estados_civiles(id,estado_civil) values(2,'Casado(a)');
+insert into estados_civiles(id,estado_civil) values(3,'Divorciado(a)');
+insert into estados_civiles(id,estado_civil) values(4,'Viudo(a)');
+insert into estados_civiles(id,estado_civil) values(5,'Unión Libre');
+insert into estados_civiles(id,estado_civil) values(6,'Religioso(a)');
+insert into estados_civiles(id,estado_civil) values(8,'Separado(a)');
+insert into programas(id,codigo,programa) values(1,'111','Ingeniería Civil');
+insert into programas(id,codigo,programa) values(2,'115','Ingeniería de Sistemas');
+insert into programas(id,codigo,programa) values(3,'164','Ingeniería Agroindustrial');
+insert into programas(id,codigo,programa) values(4,'150','Arquitectura');
+insert into programas(id,codigo,programa) values(5,'126','Comercio Internacional');
+insert into programas(id,codigo,programa) values(6,'122','Contaduría Pública');
+insert into programas(id,codigo,programa) values(7,'180','Enfermería');
+insert into programas(id,codigo,programa) values(8,'134','Trabajo Social');
 insert into tipos_documento(id,tipo_documento) values(1,'cc');
 insert into tipos_documento(id,tipo_documento) values(2,'ti');
 insert into tipos_persona(id,tipo_persona) values(1,'Estudiante');
@@ -50,3 +65,12 @@ insert into participantes(id,educacion_continua_id, id_tipo_participante,id_pers
 insert into ponentes(id_participante,tema) values(1,'algun tema');
 insert into participantes(id,educacion_continua_id, id_tipo_participante,id_persona) values(2,1,1,2);
 insert into asistentes(id_participante) values(2);
+insert into educacion_continua(id,nombre,fecha_inicio,fecha_fin,fecha_lim_inscripcion,contenido_general,cant_max_participantes,resumen,costo,duracion,id_tipo_educacion_continua) values(3,'CIINATIC2','2019-10-08','2019-10-10','2019-10-05','contenido generalll CIINATIC',10,'BBBBB',30000,2,6);
+insert into educacion_continua(id,nombre,fecha_inicio,fecha_fin,fecha_lim_inscripcion,contenido_general,cant_max_participantes,resumen,costo,duracion,id_tipo_educacion_continua) values(4,'CIINATIC3','2019-10-08','2019-10-10','2019-10-05','contenido generalll CIINATIC',10,'BBBBB',30000,2,6);
+insert into educacion_continua(id,nombre,fecha_inicio,fecha_fin,fecha_lim_inscripcion,contenido_general,cant_max_participantes,resumen,costo,duracion,id_tipo_educacion_continua) values(5,'CIINATIC4','2019-10-08','2019-10-10','2019-10-05','contenido generalll CIINATIC',10,'BBBBB',30000,2,6);
+insert into educacion_continua(id,nombre,fecha_inicio,fecha_fin,fecha_lim_inscripcion,contenido_general,cant_max_participantes,resumen,costo,duracion,id_tipo_educacion_continua) values(6,'CIINATIC5','2019-10-08','2019-10-10','2019-10-05','contenido generalll CIINATIC',10,'BBBBB',30000,2,6);
+insert into educacion_continua(id,nombre,fecha_inicio,fecha_fin,fecha_lim_inscripcion,contenido_general,cant_max_participantes,resumen,costo,duracion,id_tipo_educacion_continua) values(7,'CIINATIC6','2019-10-08','2019-10-10','2019-10-05','contenido generalll CIINATIC',10,'BBBBB',30000,2,6);
+insert into educacion_continua(id,nombre,fecha_inicio,fecha_fin,fecha_lim_inscripcion,contenido_general,cant_max_participantes,resumen,costo,duracion,id_tipo_educacion_continua) values(8,'CIINATIC7','2019-10-08','2019-10-10','2019-10-05','contenido generalll CIINATIC',10,'BBBBB',30000,2,6);
+insert into educacion_continua(id,nombre,fecha_inicio,fecha_fin,fecha_lim_inscripcion,contenido_general,cant_max_participantes,resumen,costo,duracion,id_tipo_educacion_continua) values(9,'CIINATIC8','2019-10-08','2019-10-10','2019-10-05','contenido generalll CIINATIC',10,'BBBBB',30000,2,6);
+insert into educacion_continua(id,nombre,fecha_inicio,fecha_fin,fecha_lim_inscripcion,contenido_general,cant_max_participantes,resumen,costo,duracion,id_tipo_educacion_continua) values(10,'CIINATIC9','2019-10-08','2019-10-10','2019-10-05','contenido generalll CIINATIC',10,'BBBBB',30000,2,6);
+

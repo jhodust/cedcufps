@@ -10,7 +10,7 @@ import javax.persistence.UniqueConstraint;
 
 @Entity
 @Table(name="estudiantes", uniqueConstraints={
-		   @UniqueConstraint(columnNames={"consecutivo", "codigo_programa"})})
+		   @UniqueConstraint(columnNames={"consecutivo", "id_programa"})})
 @PrimaryKeyJoinColumn(name="id_persona")
 public class Estudiante extends Persona{
 
@@ -23,7 +23,7 @@ public class Estudiante extends Persona{
 
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="codigo_programa")
+	@JoinColumn(name="id_programa")
 	private Programa programa;
 	
 

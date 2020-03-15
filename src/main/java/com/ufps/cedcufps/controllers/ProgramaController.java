@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
@@ -22,14 +23,16 @@ public class ProgramaController {
 	@Autowired
 	private IProgramaService programaService;
 	
-	@RequestMapping(value = "/programa/listar")
-	public String listar(Model model) {
-		model.addAttribute("titulo","PROGRAMAS");
-		model.addAttribute("programas",programaService.findAll());
+	@RequestMapping(value = "/programas-academicos")
+	public String listar(Map<String, Object> model) {
+		model.put("titulo","PROGRAMAS");
+		model.put("programas",programaService.findAll());
+		Programa t= new Programa(); 
+		model.put("programa",t);		
 		return "programa/index";
 	}
 	
-	@RequestMapping(value = "/programa/registro")
+	@RequestMapping(value = "/programas-academicos/registro")
 	public String agregar(Map<String, Object> model) {
 		Programa t= new Programa(); 
 		model.put("titulo","FORMULARIO PROGRAMAS");
@@ -37,18 +40,20 @@ public class ProgramaController {
 		return "programa/form";
 	}
 	
-	@RequestMapping(value = "/programa/registro", method = RequestMethod.POST)
+	@RequestMapping(value = "/programas-academicos/registro", method = RequestMethod.POST)
 	public String save(Programa p, SessionStatus status) {
 		programaService.save(p);
 		status.setComplete();
-		return "redirect:listar";
+		return "redirect:/programas-academicos";
 	}
 	
-	@RequestMapping(value = "/programa/registro/{id}")
-	public String editar(@PathVariable(value = "id") String id, Map<String, Object> model) {
+	@RequestMapping(value = "/programas-academicos/registro/{id}")
+	public String editar(@PathVariable(value = "id") Long id, Map<String, Object> model) {
 		Optional<Programa> p= programaService.findOne(id); 
 		model.put("titulo","FORMULARIO PROGRAMAS");
 		model.put("programa",p.get());
 		return "programa/form";
 	}
+	
+
 }

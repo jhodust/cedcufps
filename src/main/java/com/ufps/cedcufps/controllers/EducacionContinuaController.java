@@ -29,7 +29,7 @@ public class EducacionContinuaController {
 	@Autowired
 	private IParticipanteService participanteService;
 	
-	@RequestMapping(value = "/educacion-continua/listar")
+	@RequestMapping(value = "/educacion-continua")
 	public String listar(Model model) {
 		model.addAttribute("titulo","EDUCACIÓN CONTINUA");
 		model.addAttribute("educacionesContinuas",educacionContinuaService.findAll());
@@ -49,7 +49,7 @@ public class EducacionContinuaController {
 	public String save(EducacionContinua ec, SessionStatus status) {
 		educacionContinuaService.save(ec);
 		status.setComplete();
-		return "redirect:listar";
+		return "redirect:/educación-continua";
 	}
 	
 	@RequestMapping(value = "/educacion-continua/registro/{id}")
@@ -72,6 +72,13 @@ public class EducacionContinuaController {
 			model.put("participante",null);
 		}
 		return "educacion_continua/detalles";
+	}
+	
+	@RequestMapping(value = "/educacion-continua/{id}/personalizar-diploma")
+	public String listarDiplomas(@PathVariable(value = "id") Long id, Map<String, Object> model) {
+		model.put("educacionContinua",educacionContinuaService.findOne(id).get());
+		//https://www.youtube.com/watch?v=C4vQ-nSNAgA
+		return "educacion_continua/diplomas";
 	}
 	
 	

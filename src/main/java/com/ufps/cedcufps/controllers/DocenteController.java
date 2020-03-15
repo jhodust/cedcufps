@@ -19,7 +19,7 @@ public class DocenteController {
 	@Autowired
 	private IPersonaService personaService;
 	
-	@RequestMapping(value = "/persona/docente/registro", method = RequestMethod.POST)
+	@RequestMapping(value = "/usuarios/docente/registro", method = RequestMethod.POST)
 	public String save(Docente d, SessionStatus status) {
 		d.setTipoPersona(personaService.findByTipoPersona("Docente"));
 		personaService.save(d);
@@ -27,6 +27,6 @@ public class DocenteController {
 		r.setAuthority("Docente");
 		d.addRol(r);
 		status.setComplete();
-		return "redirect:/persona/listar";
+		return "redirect:/usuarios";
 	}
 }

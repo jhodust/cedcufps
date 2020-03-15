@@ -13,11 +13,11 @@ public class InicioController {
 	@Autowired
 	private IEducacionContinuaService educacionContinuaService;
 	
-	@GetMapping(value = "/")
+	@GetMapping(value = "/home")
 	public String login(Model model) {
 		model.addAttribute("titulo","EDUCACIÓN CONTINUA");
 		model.addAttribute("educacionesContinuas",educacionContinuaService.findAll());
-		return "index";
+		return "layouts/layout3";
 	}
 	
 	

@@ -1,22 +1,151 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xlmns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
-<head th:replace="layouts/layout :: head">
+<head th:replace="layouts/layout3 :: head">
 	<meta charset="UTF-8"/>
 </head>
 
-<body class="index-page sidebar-collapse">
-	<header th:replace="layouts/layout :: header"></header>
-	<div th:replace="layouts/layout :: encabezado"></div>
-	<div class="main main-raised">
-		<div class="section section-basic">
-			<div class="container">
-				<div class="col-md-12">
-					
-				
-					<h2>Estudiantes</h2>
-					<a class="btn btn-primary" th:href="@{/persona/registro}">Crear Persona</a>
-					<table id="myTable" class="row-border" style="width:100%">
+<body class="application application-offset">
+ 
+  <!-- Application container -->
+  <div class="container-fluid container-application">
+    <!-- Sidenav --><!-- lado izquierdo de la plantilla -->
+    <div class="sidenav" id="sidenav-main" th:fragment="sidenavMain">
+      <!-- Sidenav header -->
+      <div th:replace="layouts/sidenavHeader :: sidenavHeader"></div>
+      <!-- User mini profile -->
+      <div th:replace="layouts/profile :: profile"></div>
+      <!-- Application nav -->
+      <div class="nav-application clearfix" th:fragment="sidebar">
+        <a th:href="@{/usuarios}" class="btn btn-square text-sm">
+          <span class="btn-inner--icon d-block"><i class="fas fa-clipboard-list fa-3x"></i></span>
+          <span class="btn-inner--icon d-block pt-2">Listar</span>
+        </a>
+        <a th:href="@{/persona/registro}" class="btn btn-square text-sm">
+          <span class="btn-inner--icon d-block"><i class="fas fa-plus-circle fa-3x"></i></span>
+          <span class="btn-inner--icon d-block pt-2">Agregar</span>
+        </a>
+        
+      </div>
+    </div>
+    <!-- Content -->
+    <div class="main-content position-relative">
+      <!-- Main nav -->
+      <nav th:replace="layouts/layout3 :: nav"></nav>
+      <!-- Page content -->
+      <div class="page-content">
+        
+        <!-- Page title -->
+        <div class="page-title">
+          <div class="row justify-content-between align-items-center">
+            <div class="col-md-6 d-flex align-items-center justify-content-between justify-content-md-start mb-3 mb-md-0">
+              <!-- Page title + Go Back button -->
+              <div class="d-inline-block">
+                <h5 class="h4 d-inline-block font-weight-400 mb-0 text-white">Personas Registradas</h5>
+              </div>
+              
+              <!-- Optional link -->
+            </div>
+          </div>
+        </div>
+        <!-- Project cards -->
+        
+        <div class="row">
+          <div class="col-lg-3">
+            <div class="card card-stats">
+              <!-- Card body -->
+              <div class="card-body">
+                <div class="row">
+                  <div class="col">
+                    <h6 class="text-muted mb-1">Estudiantes</h6>
+                    <span class="h5 font-weight-bold mb-0">339</span>
+                  </div>
+                  <div class="col-auto">
+                    <div class="icon bg-gradient-warning text-white rounded-circle icon-shape">
+                      <i class="far fa-id-badge"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3">
+            <div class="card card-stats">
+              <!-- Card body -->
+              <div class="card-body">
+                <div class="row">
+                  <div class="col">
+                    <h6 class="text-muted mb-1">Docentes</h6>
+                    <span class="h5 font-weight-bold mb-0">357</span>
+                  </div>
+                  <div class="col-auto">
+                    <div class="icon bg-gradient-primary text-white rounded-circle icon-shape">
+                      <i class="fas fa-chalkboard-teacher"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3">
+            <div class="card card-stats">
+              <!-- Card body -->
+              <div class="card-body">
+                <div class="row">
+                  <div class="col">
+                    <h6 class="text-muted mb-1">Administrativo</h6>
+                    <span class="h5 font-weight-bold mb-0">215</span>
+                  </div>
+                  <div class="col-auto">
+                    <div class="icon bg-gradient-danger text-white rounded-circle icon-shape">
+                      <i class="fas fa-users-cog"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3">
+            <div class="card card-stats">
+              <!-- Card body -->
+              <div class="card-body">
+                <div class="row">
+                  <div class="col">
+                    <h6 class="text-muted mb-1">Externos</h6>
+                    <span class="h5 font-weight-bold mb-0">13.079</span>
+                  </div>
+                  <div class="col-auto">
+                    <div class="icon bg-gradient-primary text-white rounded-circle icon-shape">
+                      <i class="fas fa-users"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="row">
+        	<div class="card">
+          <!-- Card header -->
+          <div class="card-header actions-toolbar border-0">
+            <div class="actions-search" id="actions-search">
+              <div class="input-group input-group-merge input-group-flush">
+                <div class="input-group-prepend">
+                  <span class="input-group-text bg-transparent"><i class="far fa-search"></i></span>
+                </div>
+                <input type="text" class="form-control form-control-flush" placeholder="Type and hit enter ...">
+                <div class="input-group-append">
+                  <a href="#" class="input-group-text bg-transparent" data-action="search-close" data-target="#actions-search"><i class="far fa-times"></i></a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Table -->
+          <div class="table-responsive">
+            <div class="col-lg-12">
+              		
+					<table id="myTable" class="row-border table align-items-center">
 						<thead>
 							<tr>
 								<th>tipo persona</th>
@@ -40,20 +169,27 @@
 								<td th:text="${p.email}"></td>
 								<td th:text="${p.direccion}"></td>
 								<td th:text="${p.telefono}"></td>
-								<td><a th:href="@{/persona/registro/{id}(id=${p.id})}" class="btn btn-primary btn-fab btn-round"  data-toggle="tooltip" data-placement="top" title="Editar">
-                					<i class="material-icons">edit</i>
-              						</a><a th:href="@{/persona/{id}/permisos(id=${p.id})}" class="btn btn-primary btn-fab btn-round"  data-toggle="tooltip" data-placement="top" title="Privilegios">
-                					<i class="material-icons">assignment_turned_in</i>
-              						</a></td>
+								<td><a class="btn btn-primary rounded-circle btn-icon-only hover-scale-110" th:href="@{/persona/registro/{id}(id=${p.id})}" data-toggle="tooltip" data-placement="top" title="Editar">
+    								<span class="btn-inner--icon"><i class="fas fa-user-edit"></i></span></a>
+    								<a class="btn btn-primary rounded-circle btn-icon-only hover-scale-110" th:href="@{/persona/{id}/permisos(id=${p.id})}" data-toggle="tooltip" data-placement="top" title="Permisos">
+    								<span class="btn-inner--icon"><i class="fab fa-angellist"></i></span></a></td>
 							</tr>
 						</tbody>
 					</table>
-				</div>
-			</div>
-		</div>
-	</div>
 
-	<footer th:replace="layouts/layout :: footer"></footer>
+					</div>
+          </div>
+        </div>
+        </div>
+      </div>
+      
+    </div>
+    
+  </div>
+  <!-- Footer -->
+      <div th:replace="layouts/footer :: footer"></div>
+      <div th:replace="layouts/layout3 :: scripts"></div>
+  
 </body>
 
 </html>

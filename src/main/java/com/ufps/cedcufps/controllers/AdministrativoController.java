@@ -17,11 +17,11 @@ public class AdministrativoController {
 	@Autowired
 	private IPersonaService personaService;
 	
-	@RequestMapping(value = "/persona/administrativo/registro", method = RequestMethod.POST)
+	@RequestMapping(value = "/usuarios/administrativo/registro", method = RequestMethod.POST)
 	public String save(Administrativo a, SessionStatus status) {
 		a.setTipoPersona(personaService.findByTipoPersona("Administrativo"));
 		personaService.save(a);
 		status.setComplete();
-		return "redirect:/persona/listar";
+		return "redirect:/usuarios";
 	}
 }

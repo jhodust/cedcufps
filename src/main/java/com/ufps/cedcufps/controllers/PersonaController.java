@@ -20,7 +20,7 @@ public class PersonaController {
 	@Autowired
 	private IPersonaService personaService;
 	
-	@RequestMapping(value = "/persona/listar")
+	@RequestMapping(value = "/usuarios")
 	public String listar(Model model) {
 		model.addAttribute("titulo","PROGRAMAS");
 		model.addAttribute("personas",personaService.findAllPersonas());
@@ -29,7 +29,7 @@ public class PersonaController {
 		return "persona/index";
 	}
 	
-	@RequestMapping(value = "/persona/registro")
+	@RequestMapping(value = "/usuarios/registro")
 	public String agregar(Map<String, Object> model) {
 		Estudiante e= new Estudiante();
 		Docente d= new Docente();
@@ -43,6 +43,8 @@ public class PersonaController {
 		model.put("tipos_documento",personaService.findAllTiposDocumento());
 		model.put("tipos_persona",personaService.findAllTiposPersona());
 		model.put("programas",personaService.findAllProgramas());
+		model.put("generos",personaService.findAllGeneros());
+		model.put("estados_civiles",personaService.findAllEstadosCiviles());
 		return "persona/formRegistro";
 	}
 	

@@ -10,11 +10,26 @@
 	<div th:replace="layouts/layout :: encabezado"></div>
 	<div class="main main-raised">
 		<div class="section section-basic">
-			<div class="container">
-				<div class="col-md-8">
-					<h2>FORM REGISTRO JORNADA</h2>
-
-					
+		<div class="container">
+<!-- 				<div class="col-md-12"> -->
+<!-- 					<div class="cardi"> -->
+<!-- 				        <div class="cardi-header cardi-header-rose" align="center"> -->
+<!-- 				            <h2 class="cardi-title">JORNADA</h2> -->
+<!-- 				        </div> -->
+<!-- 						</div> -->
+<!-- 						</div> -->
+			<div class="container" align="center">		
+			<div class="col-md-6">
+			<div class="card">	
+			<div class="card-header-rose" align="center">
+			<br>
+			<h3 class="card-title">REGISTRAR JORNADA</h3>
+			<br>
+			</div>
+			<br>
+			<div class="card-body" align="center">			
+			
+				
 						<form th:action="@{/educacion-continua/jornadas/registro}" th:object="${jornada}" method="post"
 							enctype="multipart/form-data">
 
@@ -37,6 +52,9 @@
 			</div>
 		</div>
 	</div>
+	</div>
+	</div>
+	</div>	
 
 	<footer th:replace="layouts/layout :: footer"></footer>
 </body>

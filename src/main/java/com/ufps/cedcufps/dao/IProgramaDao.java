@@ -4,6 +4,6 @@ import org.springframework.data.repository.CrudRepository;
 
 import com.ufps.cedcufps.modelos.Programa;
 
-public interface IProgramaDao extends CrudRepository<Programa, String>{
+public interface IProgramaDao extends CrudRepository<Programa, Long>{
 
 }

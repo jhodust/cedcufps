@@ -4,6 +4,7 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.FetchType;
@@ -33,8 +34,15 @@ public class Persona implements Serializable {//*
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="id_tipo_documento")
+	private TipoDocumento tipoDocumento;
+	
 	@Column(name = "numero_documento")
 	private String numeroDocumento;
+	
+	@Column(name = "fecha_expedicion_documento")
+	private Date fechaExpedicionDocumento;
 	
 	@Column(name = "primer_nombre")
 	private String primerNombre;
@@ -47,6 +55,30 @@ public class Persona implements Serializable {//*
 	
 	@Column(name = "segundo_apellido")
 	private String segundoApellido;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="id_genero")
+	private Genero genero;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="id_estado_civil")
+	private EstadoCivil estadoCivil;
+	
+	@Column(name = "fecha_nacimiento")
+	private Date fechaNacimiento;
+	
+	@Column(name="id_pais_nacimiento")
+	private String idPaisNacimiento;
+	
+	@Column(name="pais_nacimiento")
+	private String paisNacimiento;
+	
+	@Column(name="id_municipio_nacimiento")
+	private String idMunicipioNacimiento;
+	
+	@Column(name="municipio_nacimiento")
+	private String municipioNacimiento;
+	
 	private String email;
 	private String direccion;
 	private String telefono;
@@ -56,9 +88,7 @@ public class Persona implements Serializable {//*
 	
 	private boolean enabled;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="id_tipo_documento")
-	private TipoDocumento tipoDocumento;
+	
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="id_tipo_persona")
@@ -168,6 +198,70 @@ public class Persona implements Serializable {//*
 	}
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
+	}
+
+	public Date getFechaExpedicionDocumento() {
+		return fechaExpedicionDocumento;
+	}
+
+	public void setFechaExpedicionDocumento(Date fechaExpedicionDocumento) {
+		this.fechaExpedicionDocumento = fechaExpedicionDocumento;
+	}
+
+	public Genero getGenero() {
+		return genero;
+	}
+
+	public void setGenero(Genero genero) {
+		this.genero = genero;
+	}
+
+	public EstadoCivil getEstadoCivil() {
+		return estadoCivil;
+	}
+
+	public void setEstadoCivil(EstadoCivil estadoCivil) {
+		this.estadoCivil = estadoCivil;
+	}
+
+	public Date getFechaNacimiento() {
+		return fechaNacimiento;
+	}
+
+	public void setFechaNacimiento(Date fechaNacimiento) {
+		this.fechaNacimiento = fechaNacimiento;
+	}
+
+	public String getIdPaisNacimiento() {
+		return idPaisNacimiento;
+	}
+
+	public void setIdPaisNacimiento(String idPaisNacimiento) {
+		this.idPaisNacimiento = idPaisNacimiento;
+	}
+
+	public String getPaisNacimiento() {
+		return paisNacimiento;
+	}
+
+	public void setPaisNacimiento(String paisNacimiento) {
+		this.paisNacimiento = paisNacimiento;
+	}
+
+	public String getIdMunicipioNacimiento() {
+		return idMunicipioNacimiento;
+	}
+
+	public void setIdMunicipioNacimiento(String idMunicipioNacimiento) {
+		this.idMunicipioNacimiento = idMunicipioNacimiento;
+	}
+
+	public String getMunicipioNacimiento() {
+		return municipioNacimiento;
+	}
+
+	public void setMunicipioNacimiento(String municipioNacimiento) {
+		this.municipioNacimiento = municipioNacimiento;
 	}
 	
 	

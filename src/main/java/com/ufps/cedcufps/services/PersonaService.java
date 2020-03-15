@@ -17,10 +17,15 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.ufps.cedcufps.dao.IEstadoCivilDao;
+import com.ufps.cedcufps.dao.IGeneroDao;
 import com.ufps.cedcufps.dao.IPersonaDao;
 import com.ufps.cedcufps.dao.IProgramaDao;
 import com.ufps.cedcufps.dao.ITipoDocumentoDao;
 import com.ufps.cedcufps.dao.ITipoPersonaDao;
+import com.ufps.cedcufps.modelos.EstadoCivil;
+import com.ufps.cedcufps.modelos.Genero;
 import com.ufps.cedcufps.modelos.Persona;
 import com.ufps.cedcufps.modelos.Programa;
 import com.ufps.cedcufps.modelos.Rol;
@@ -35,6 +40,12 @@ public class PersonaService implements IPersonaService, UserDetailsService {
 	
 	@Autowired
 	private ITipoDocumentoDao tipoDocumentoDao;
+	
+	@Autowired
+	private IEstadoCivilDao estadoCivilDao;
+	
+	@Autowired
+	private IGeneroDao generoDao;
 	
 	@Autowired
 	private IProgramaDao programaDao;
@@ -115,6 +126,18 @@ public class PersonaService implements IPersonaService, UserDetailsService {
 	public Optional<Persona> findOne(Long id) {
 		// TODO Auto-generated method stub
 		return personaDao.findById(id);
+	}
+
+	@Override
+	public List<EstadoCivil> findAllEstadosCiviles() {
+		// TODO Auto-generated method stub
+		return (List<EstadoCivil>) estadoCivilDao.findAll();
+	}
+
+	@Override
+	public List<Genero> findAllGeneros() {
+		// TODO Auto-generated method stub
+		return (List<Genero>) generoDao.findAll();
 	}
 
 	

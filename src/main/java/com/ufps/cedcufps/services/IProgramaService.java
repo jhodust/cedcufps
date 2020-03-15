@@ -11,5 +11,5 @@ public interface IProgramaService {
 	
 	public void save(Programa p);
 	
-	public Optional<Programa> findOne(String id);
+	public Optional<Programa> findOne(Long id);
 }

@@ -1,62 +1,147 @@
 <!DOCTYPE html>
 <html xmlns:th="http://thymeleaf.org">
 <head>
-<meta charset="UTF-8"/>
+<meta charset="UTF-8" />
 </head>
 <body>
 	<div th:fragment="camposPersona">
-	
-		<div class="form-group">
-			<label class="col-form-label">Tipo Documento</label> <select
-				class="custom-select" th:field="*{tipoDocumento}">
-				<option value="0">Seleccione un tipo de documento...</option>
-				<option th:each="td: ${tipos_documento}" th:value="${td.id}"
-					th:text="${td.tipoDocumento}"></option>
-			</select>
+		<div class="row">
+			<div class="col-md-6">
+				<div class="form-group">
+					<label class="col-form-label">Tipo Documento</label> <select
+						class="custom-select" th:field="*{tipoDocumento}">
+						<option value="0">Seleccione un tipo de documento...</option>
+						<option th:each="td: ${tipos_documento}" th:value="${td.id}"
+							th:text="${td.tipoDocumento}"></option>
+					</select>
+				</div>
+			</div>
+
+			<div class="col-md-6">
+				<div class="form-group" align="center">
+
+					<label for="example-text-input" class="col-form-label">Documento</label>
+					<input class="form-control" type="text"
+						th:field="*{numeroDocumento}" />
+				</div>
+
+			</div>
+			<div class="col-md-6">
+				<div class="form-group">
+					<label class="label-control">Fecha Expedición</label> <input
+						type="text" class="form-control datetimepicker"
+						th:field="*{fechaExpedicionDocumento}" />
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="form-group">
+
+					<label for="example-text-input" class="col-form-label">Primer
+						Nombre</label> <input class="form-control" type="text"
+						th:field="*{primerNombre}" />
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="form-group">
+					<label for="example-text-input" class="col-form-label">Segundo
+						Nombre</label> <input class="form-control" type="text"
+						th:field="*{segundoNombre}" />
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="form-group">
+					<label for="example-text-input" class="col-form-label">Primer
+						Apellido</label> <input class="form-control" type="text"
+						th:field="*{primerApellido}" />
+				</div>
+			</div>
+
+			<div class="col-md-6">
+				<div class="form-group">
+					<label for="example-text-input" class="col-form-label">Segundo
+						Apellido</label> <input class="form-control" type="text"
+						th:field="*{segundoApellido}" />
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="form-group">
+					<label class="col-form-label">Genero</label> <select
+						class="custom-select" th:field="*{genero}">
+						<option value="0">Seleccione...</option>
+						<option th:each="g: ${generos}" th:value="${g.id}"
+							th:text="${g.genero}"></option>
+					</select>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="form-group">
+					<label class="col-form-label">Estado Civil</label> <select
+						class="custom-select" th:field="*{estadoCivil}">
+						<option value="0">Seleccione...</option>
+						<option th:each="ec: ${estados_civiles}" th:value="${ec.id}"
+							th:text="${ec.estadoCivil}"></option>
+					</select>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="form-group">
+					<label class="label-control">Fecha Nacimiento</label> <input
+						type="text" class="form-control datetimepicker"
+						th:field="*{fechaNacimiento}" />
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="form-group">
+					<label class="col-form-label">País Nacimiento</label> <select
+						class="custom-select select2" th:field="*{paisNacimiento}" id="selectMunicipioNacimiento">
+						<option value="0">Seleccione...</option>
+					</select>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="form-group">
+					<label class="col-form-label">Municipio Nacimiento</label> <select
+						class="select2 col-md-8" th:field="*{municipioNacimiento}" id="selectMunicipioNacimiento2">
+						<option value="0">Seleccione...</option>
+					</select>
+				</div>
+			</div>
+			
+			<div class="col-md-6">
+				<div class="form-group">
+					<label for="example-text-input" class="col-form-label">Dirección</label>
+					<input class="form-control" type="text" th:field="*{direccion}" />
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="form-group">
+					<label for="example-text-input" class="col-form-label">Email</label>
+					<input class="form-control" type="text" th:field="*{email}" />
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="form-group">
+					<label for="example-text-input" class="col-form-label">Telefono</label>
+					<input class="form-control" type="text" th:field="*{telefono}" />
+				</div>
+			</div>
 		</div>
-		<div class="form-group">
-			<label for="example-text-input" class="col-form-label">Documento</label>
-			<input class="form-control" type="text" th:field="*{numeroDocumento}" />
-		</div>
-		<div class="form-group">
-			<label for="example-text-input" class="col-form-label">Primer Nombre</label>
-			<input class="form-control" type="text" th:field="*{primerNombre}" />
-		</div>
-		<div class="form-group">
-			<label for="example-text-input" class="col-form-label">Segundo Nombre</label>
-			<input class="form-control" type="text" th:field="*{segundoNombre}" />
-		</div>
-		<div class="form-group">
-			<label for="example-text-input" class="col-form-label">Primer Apellido</label>
-			<input class="form-control" type="text" th:field="*{primerApellido}" />
-		</div>
-		<div class="form-group">
-			<label for="example-text-input" class="col-form-label">Segundo Apellido</label>
-			<input class="form-control" type="text" th:field="*{segundoApellido}" />
-		</div>
-		<div class="form-group">
-			<label for="example-text-input" class="col-form-label">Dirección</label>
-			<input class="form-control" type="text" th:field="*{direccion}" />
-		</div>
-		<div class="form-group">
-			<label for="example-text-input" class="col-form-label">Email</label>
-			<input class="form-control" type="text" th:field="*{email}" />
-		</div>
-		<div class="form-group">
-			<label for="example-text-input" class="col-form-label">Telefono</label>
-			<input class="form-control" type="text" th:field="*{telefono}" />
-		</div>
-		
 	</div>
-	
+
 	<div th:fragment="camposUsuarioLogin">
-		<div class="form-group">
-			<label for="example-text-input" class="col-form-label">Username</label>
-			<input class="form-control" type="text" th:field="*{username}" />
-		</div>
-		<div class="form-group">
-			<label for="example-text-input" class="col-form-label">Password</label>
-			<input class="form-control" type="text" th:field="*{password}" />
+		<div class="row">
+			<div class="col-md-6">
+				<div class="form-group">
+					<label for="example-text-input" class="col-form-label">Username</label>
+					<input class="form-control" type="text" th:field="*{username}" />
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="form-group">
+					<label for="example-text-input" class="col-form-label">Password</label>
+					<input class="form-control" type="text" th:field="*{password}" />
+				</div>
+			</div>
 		</div>
 	</div>
 </body>

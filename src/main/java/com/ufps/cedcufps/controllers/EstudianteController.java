@@ -20,7 +20,7 @@ public class EstudianteController {
 	
 	
 	
-	@RequestMapping(value = "/persona/estudiante/registro", method = RequestMethod.POST)
+	@RequestMapping(value = "/usuarios/estudiante/registro", method = RequestMethod.POST)
 	public String save(Estudiante e, SessionStatus status) {
 		e.setTipoPersona(personaService.findByTipoPersona("Estudiante"));
 		if(e.getId()==null) {
@@ -33,9 +33,16 @@ public class EstudianteController {
 			BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 			e.setPassword(passwordEncoder.encode(e.getPassword()));
 		}
+		String[] datos=e.getMunicipioNacimiento().split("-");
+		e.setMunicipioNacimiento(datos[0]);
+		e.setIdMunicipioNacimiento(datos[1]);
+		
+		datos=e.getPaisNacimiento().split("-");
+		e.setPaisNacimiento(datos[0]);
+		e.setIdPaisNacimiento(datos[1]);
 		e.setEnabled(true);
 		personaService.save(e);
 		status.setComplete();
-		return "redirect:/persona/listar";
+		return "redirect:/usuarios";
 	}
 }

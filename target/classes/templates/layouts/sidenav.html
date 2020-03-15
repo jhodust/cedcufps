@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+
+<title>Insert title here</title>
+</head>
+<body>
+       <div class="sidenav" id="sidenav-main" th:fragment="sidenavMain">
+      <!-- Sidenav header -->
+      <div th:replace="layouts/sidenavHeader :: sidenavHeader"></div>
+      <!-- User mini profile -->
+      <div th:replace="layouts/profile :: profile"></div>
+      <!-- Application nav -->
+      <div th:replace="layouts/sidebar :: sidebar"></div>
+    </div>
+</body>
+</html>

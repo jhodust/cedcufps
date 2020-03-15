@@ -1,31 +1,193 @@
-<html xmlns:th="http://www.thymeleaf.org"
-	xlmns:sec="http://www.thymeleaf.org/extras/spring-security">
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
-<head th:replace="layouts/layout :: head">
-<meta charset="UTF-8" />
+<head th:replace="layouts/layout3 :: head">
+	<meta charset="UTF-8"/>
 </head>
 
-<body class="index-page sidebar-collapse">
-	<header th:replace="layouts/layout :: header"></header>
-	<div th:replace="layouts/layout :: encabezado"></div>
-	<div class="main main-raised">
-		<div class="section section-basic">
-			<div class="container">
-				<div class="col-md-12">
-					<div class="card">
-				        <div class="card-header card-header-primary">
-				            <h4 class="card-title">Full header coloured</h4>
-				            <p class="category">Category subtitle</p>
-				        </div>
-				        <div class="card-body">
-				              The place is close to Barceloneta Beach and bus stop just 2 min by walk and near to "Naviglio" where you can enjoy the main night life in Barcelona...
-				        </div>
-				    </div>
-
-					<h2>EDUCACIÓN CONTINUA</h2>
-					<a class="btn btn-primary" th:href="@{/educacion-continua/registro}">Agregar
-						Educación Continua</a>
-					<table id="myTable" class="row-border" style="width: 100%">
+<body class="application application-offset">
+ 
+  <!-- Application container -->
+  <div class="container-fluid container-application">
+    <!-- Sidenav --><!-- lado izquierdo de la plantilla -->
+    <div class="sidenav" id="sidenav-main" th:fragment="sidenavMain">
+      <!-- Sidenav header -->
+      <div th:replace="layouts/sidenavHeader :: sidenavHeader"></div>
+      <!-- User mini profile -->
+      <div th:replace="layouts/profile :: profile"></div>
+      <!-- Application nav -->
+      <div class="nav-application clearfix" th:fragment="sidebar">
+        <a th:href="@{/educacion-continua}" class="btn btn-square text-sm">
+          <span class="btn-inner--icon d-block"><i class="fas fa-clipboard-list fa-3x"></i></span>
+          <span class="btn-inner--icon d-block pt-2">Listar</span>
+        </a>
+        <a th:href="@{/educacion-continua/registro}" class="btn btn-square text-sm">
+          <span class="btn-inner--icon d-block"><i class="fas fa-plus-circle fa-3x"></i></span>
+          <span class="btn-inner--icon d-block pt-2">Agregar</span>
+        </a>
+        
+      </div>
+    </div>
+    <!-- Content -->
+    <div class="main-content position-relative">
+      <!-- Main nav -->
+      <nav th:replace="layouts/layout3 :: nav"></nav>
+      <!-- Page content -->
+      <div class="page-content">
+        
+        <!-- Page title -->
+        <div class="page-title">
+          <div class="row justify-content-between align-items-center">
+            <div class="col-md-6 d-flex align-items-center justify-content-between justify-content-md-start mb-3 mb-md-0">
+              <!-- Page title + Go Back button -->
+              <div class="d-inline-block">
+                <h5 class="h4 d-inline-block font-weight-400 mb-0 text-white">Educación Continua</h5>
+              </div>
+              
+              <!-- Optional link -->
+            </div>
+          </div>
+        </div>
+        <!-- Project cards -->
+        
+        <div class="row">
+          <div class="col-lg-3">
+            <div class="card card-stats border-0">
+              <!-- Card body -->
+              <div class="card-body">
+                <div class="row">
+                  <div class="col">
+                    <h6 class="text-muted mb-1">Cursos</h6>
+                    <span class="h3 font-weight-bold mb-0 ">242</span>
+                  </div>
+                  <div class="col-auto">
+                    <div class="progress-circle progress-sm" id="progress-circle-1" data-progress="40" data-text="40%" data-color="blue"></div>
+                  </div>
+                  <div class="col-auto">
+                    <div class="progress-circle progress-sm" id="progress-circle-1" data-progress="40" data-text="40%" data-color="indigo"></div>
+                  </div>
+                  <div class="col-auto">
+                    <div class="progress-circle progress-sm" id="progress-circle-1" data-progress="40" data-text="40%" data-color="purple"></div>
+                  </div>
+                  <div class="col-auto">
+                    <div class="progress-circle progress-sm" id="progress-circle-1" data-progress="40" data-text="40%" data-color="pink"></div>
+                  </div>
+                  <div class="col-auto">
+                    <div class="progress-circle progress-sm" id="progress-circle-1" data-progress="40" data-text="40%" data-color="red"></div>
+                  </div>
+                  <div class="col-auto">
+                    <div class="progress-circle progress-sm" id="progress-circle-1" data-progress="40" data-text="40%" data-color="orange"></div>
+                  </div>
+                  <div class="col-auto">
+                    <div class="progress-circle progress-sm" id="progress-circle-1" data-progress="40" data-text="40%" data-color="yellow"></div>
+                  </div>
+                  <div class="col-auto">
+                    <div class="progress-circle progress-sm" id="progress-circle-1" data-progress="40" data-text="40%" data-color="green"></div>
+                  </div>
+                  <div class="col-auto">
+                    <div class="progress-circle progress-sm" id="progress-circle-1" data-progress="40" data-text="40%" data-color="teal"></div>
+                  </div>
+                  <div class="col-auto">
+                    <div class="progress-circle progress-sm" id="progress-circle-1" data-progress="40" data-text="40%" data-color="cyan"></div>
+                  </div>
+                  <div class="col-auto">
+                    <div class="progress-circle progress-sm" id="progress-circle-1" data-progress="40" data-text="40%" data-color="gray"></div>
+                  </div>
+                  <div class="col-auto">
+                    <div class="progress-circle progress-sm" id="progress-circle-1" data-progress="40" data-text="40%" data-color="gray-dark"></div>
+                  </div>
+                  <div class="col-auto">
+                    <div class="progress-circle progress-sm" id="progress-circle-1" data-progress="40" data-text="40%" data-color="primary"></div>
+                  </div>
+                  <div class="col-auto">
+                    <div class="progress-circle progress-sm" id="progress-circle-1" data-progress="40" data-text="40%" data-color="secondary"></div>
+                  </div>
+                  <div class="col-auto">
+                    <div class="progress-circle progress-sm" id="progress-circle-1" data-progress="40" data-text="40%" data-color="success"></div>
+                  </div>
+                  <div class="col-auto">
+                    <div class="progress-circle progress-sm" id="progress-circle-1" data-progress="40" data-text="40%" data-color="info"></div>
+                  </div>
+                  <div class="col-auto">
+                    <div class="progress-circle progress-sm" id="progress-circle-1" data-progress="40" data-text="40%" data-color="warning"></div>
+                  </div>
+                  <div class="col-auto">
+                    <div class="progress-circle progress-sm" id="progress-circle-1" data-progress="40" data-text="40%" data-color="danger"></div>
+                  </div>
+                  <div class="col-auto">
+                    <div class="progress-circle progress-sm" id="progress-circle-1" data-progress="40" data-text="40%" data-color="light"></div>
+                  </div>
+                  <div class="col-auto">
+                    <div class="progress-circle progress-sm" id="progress-circle-1" data-progress="40" data-text="40%" data-color="rojoufps"></div>
+                  </div>
+                  <div class="col-auto">
+                    <div class="progress-circle progress-sm" id="progress-circle-1" data-progress="40" data-text="40%" data-color="dark"></div>
+                  </div>
+                  <div class="col-auto">
+                    <div class="progress-circle progress-sm" id="progress-circle-1" data-progress="40" data-text="40%" data-color="grisufps"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3">
+            <div class="card card-stats border-0">
+              <!-- Card body -->
+              <div class="card-body">
+                <div class="row">
+                  <div class="col">
+                    <h6 class="text-muted mb-1">Talleres</h6>
+                    <span class="h3 font-weight-bold mb-0 ">145</span>
+                  </div>
+                  <div class="col-auto">
+                    <div class="progress-circle progress-sm" id="progress-circle-1" data-progress="40" data-text="40%" data-color="primary"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3">
+            <div class="card card-stats border-0">
+              <!-- Card body -->
+              <div class="card-body">
+                <div class="row">
+                  <div class="col">
+                    <h6 class="text-muted mb-1">Diplomados</h6>
+                    <span class="h3 font-weight-bold mb-0 ">365</span>
+                  </div>
+                  <div class="col-auto">
+                    <div class="progress-circle progress-sm" id="progress-circle-1" data-progress="40" data-text="40%" data-color="primary"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3">
+            <div class="card card-stats border-0">
+              <!-- Card body -->
+              <div class="card-body">
+                <div class="row">
+                  <div class="col">
+                    <h6 class="text-muted mb-1">Seminarios, Congresos, Simposios</h6>
+                    <span class="h3 font-weight-bold mb-0 ">47</span>
+                  </div>
+                  <div class="col-auto">
+                    <div class="progress-circle progress-sm" id="progress-circle-1" data-progress="40" data-text="40%" data-color="primary"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+        
+        <div class="card">
+          <!-- Card header -->
+          
+          <!-- Table -->
+          <div class="table-responsive">
+          <div class="col-lg-12">
+            <table id="myTable" style="width: 100%;" class="row-border table align-items-center">
 						<thead>
 							<tr>
 								<th>Tipo</th>
@@ -43,27 +205,90 @@
 								<td th:text="${#dates.format(ec.fechaInicio, 'dd-MM-yyyy')}"></td>
 								<td th:text="${#dates.format(ec.fechaFin, 'dd-MM-yyyy')}"></td>
 								<td th:text="${#dates.format(ec.fechaLimInscripcion, 'dd-MM-yyyy')}"></td>
-								<td><a th:href="@{/educacion-continua/{id}/detalles(id=${ec.id})}"
-									class="btn btn-primary btn-fab btn-round" data-toggle="tooltip" data-placement="top" title="Ver Detalles"> <i
-										class="material-icons">search</i>
-								</a><a th:href="@{/educacion-continua/registro/} + ${ec.id}"
-									class="btn btn-primary btn-fab btn-round"  data-toggle="tooltip" data-placement="top" title="Editar"> <i
-										class="material-icons">edit</i>
-								</a><a th:href="@{/educacion-continua/{id}/jornadas(id=${ec.id})}"
-									class="btn btn-primary btn-fab btn-round" data-toggle="tooltip" data-placement="top" title="Jornadas"> <i
-										class="material-icons">event</i>
-								</a><a th:href="@{/educacion-continua/{id}/ponentes(id=${ec.id})}"
-									class="btn btn-primary btn-fab btn-round" data-toggle="tooltip" data-placement="top" title="Ponentes"> <i
-										class="material-icons">supervised_user_circle</i>
-								</a></td>
+								<td><a class="btn btn-rojoufps rounded-circle btn-icon-only hover-scale-110" th:href="@{/educacion-continua/{id}/detalles(id=${ec.id})}" data-toggle="tooltip" data-placement="top" title="Ver Detalles">
+    								<span class="btn-inner--icon"><i class="fas fa-search-plus"></i></span></a>
+    								<a class="btn btn-rojoufps rounded-circle btn-icon-only hover-scale-110" th:href="@{/educacion-continua/registro/} + ${ec.id}" data-toggle="tooltip" data-placement="top" title="Editar">
+    								<span class="btn-inner--icon"><i class="fas fa-edit"></i></span></a>
+    								<a class="btn btn-rojoufps rounded-circle btn-icon-only hover-scale-110" th:href="@{/educacion-continua/{id}/jornadas(id=${ec.id})}" data-toggle="tooltip" data-placement="top" title="Jornadas">
+    								<span class="btn-inner--icon"><i class="far fa-calendar-alt"></i></span></a>
+    								<a class="btn btn-rojoufps rounded-circle btn-icon-only hover-scale-110" th:href="@{/educacion-continua/{id}/ponentes(id=${ec.id})}" data-toggle="tooltip" data-placement="top" title="Ponentes">
+    								<span class="btn-inner--icon"><i class="fas fa-user-circle"></i></span></a>
+    								</td>
 							</tr>
+							
 						</tbody>
 					</table>
-				</div>
-			</div>
-		</div>
-	</div>
+					</div>
+          </div>
+        </div>
+        
+        
+        
+        <div class="row">
+        	<div class="card">
+          <!-- Card header -->
+          <div class="card-header actions-toolbar border-0">
+            <div class="actions-search" id="actions-search">
+              <div class="input-group input-group-merge input-group-flush">
+                <div class="input-group-prepend">
+                aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+                  <span class="input-group-text bg-transparent"><i class="far fa-search"></i></span>
+                </div>
+                <input type="text" class="form-control form-control-flush" placeholder="Type and hit enter ...">
+                <div class="input-group-append">
+                  <a href="#" class="input-group-text bg-transparent" data-action="search-close" data-target="#actions-search"><i class="far fa-times"></i></a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Table -->
+          <div class="table-responsive">
+            <div class="">
+              		<table id="myTable" class="table align-items-center">
+						<thead>
+							<tr>
+								<th>Tipo</th>
+								<th>Nombre</th>
+								<th>Fecha Inicio</th>
+								<th>Fecha Fin</th>
+								<th>Fecha Limite Inscripción</th>
+								<th>Acciones</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="ec : ${educacionesContinuas}">
+								<td th:text="${ec.tipoEduContinua.tipoEduContinua}"></td>
+								<td th:text="${ec.nombre}"></td>
+								<td th:text="${#dates.format(ec.fechaInicio, 'dd-MM-yyyy')}"></td>
+								<td th:text="${#dates.format(ec.fechaFin, 'dd-MM-yyyy')}"></td>
+								<td th:text="${#dates.format(ec.fechaLimInscripcion, 'dd-MM-yyyy')}"></td>
+								<td><a class="btn btn-rojoufps rounded-circle btn-icon-only hover-scale-110" th:href="@{/educacion-continua/{id}/detalles(id=${ec.id})}" data-toggle="tooltip" data-placement="top" title="Ver Detalles">
+    								<span class="btn-inner--icon"><i class="fas fa-search-plus"></i></span></a>
+    								<a class="btn btn-rojoufps rounded-circle btn-icon-only hover-scale-110" th:href="@{/educacion-continua/registro/} + ${ec.id}" data-toggle="tooltip" data-placement="top" title="Editar">
+    								<span class="btn-inner--icon"><i class="fas fa-edit"></i></span></a>
+    								<a class="btn btn-rojoufps rounded-circle btn-icon-only hover-scale-110" th:href="@{/educacion-continua/{id}/jornadas(id=${ec.id})}" data-toggle="tooltip" data-placement="top" title="Jornadas">
+    								<span class="btn-inner--icon"><i class="far fa-calendar-alt"></i></span></a>
+    								<a class="btn btn-rojoufps rounded-circle btn-icon-only hover-scale-110" th:href="@{/educacion-continua/{id}/ponentes(id=${ec.id})}" data-toggle="tooltip" data-placement="top" title="Ponentes">
+    								<span class="btn-inner--icon"><i class="fas fa-user-circle"></i></span></a>
+    								</td>
+							</tr>
+							
+						</tbody>
+					</table>
 
-	<footer th:replace="layouts/layout :: footer"></footer>
+					</div>
+          </div>
+        </div>
+        </div>
+      </div>
+      
+    </div>
+    
+  </div>
+  <!-- Footer -->
+      <div th:replace="layouts/footer :: footer"></div>
+      <div th:replace="layouts/layout3 :: scripts"></div>
+  
 </body>
+
 </html>

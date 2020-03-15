@@ -16,11 +16,11 @@ public class ExternoController {
 	@Autowired
 	private IPersonaService personaService;
 	
-	@RequestMapping(value = "/persona/externo/registro", method = RequestMethod.POST)
+	@RequestMapping(value = "/usuarios/externo/registro", method = RequestMethod.POST)
 	public String save(Externo e, SessionStatus status) {
 		e.setTipoPersona(personaService.findByTipoPersona("Externo"));
 		personaService.save(e);
 		status.setComplete();
-		return "redirect:/persona/listar";
+		return "redirect:/usuarios";
 	}
 }

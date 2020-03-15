@@ -56,10 +56,23 @@ function guardarPrograma(){
 	
 }
 function editarPrograma(elemento){
-	$('#modalRegistroPrograma').modal();
-	$('#codigo').val(elemento.dataset.codigo);
-	$('#programa').val(elemento.dataset.programa);
-	idPrograma=elemento.dataset.id;
+	$.ajax({
+		headers: {"X-CSRF-TOKEN": token},
+		type: "GET",
+		contentType: "application/json; charset=utf-8",
+		url: "http://localhost:8080/programa/search/"+elemento.dataset.id,
+		cache: false,
+		success: function(result) {
+			$('#modalRegistroPrograma').modal();
+			$('#codigo').val(result.codigo);
+			$('#programa').val(result.nombrePrograma);
+			idPrograma=elemento.dataset.id;
+			
+		},
+		error: function(err) {
+			$("#msg").html( "<span style='color: red'>Programa is required</span>" );
+		}
+	});
 	
 }
 

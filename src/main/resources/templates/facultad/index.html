@@ -18,11 +18,11 @@
       <div th:replace="layouts/profile :: profile"></div>
       <!-- Application nav -->
       <div class="nav-application clearfix" th:fragment="sidebar">
-        <a th:href="@{/programas-academicos}" class="btn btn-square text-sm">
+        <a th:href="@{/facultades}" class="btn btn-square text-sm">
           <span class="btn-inner--icon d-block"><i class="fas fa-clipboard-list fa-3x"></i></span>
           <span class="btn-inner--icon d-block pt-2">Listar</span>
         </a>
-        <a href="" data-toggle="modal" data-target="#modalRegistroPrograma" class="btn btn-square text-sm">
+        <a href="" data-toggle="modal" data-target="#modalRegistroFacultad" class="btn btn-square text-sm">
           <span class="btn-inner--icon d-block"><i class="fas fa-plus-circle fa-3x"></i></span>
           <span class="btn-inner--icon d-block pt-2">Agregar</span>
         </a>
@@ -42,7 +42,7 @@
             <div class="col-md-6 d-flex align-items-center justify-content-between justify-content-md-start mb-3 mb-md-0">
               <!-- Page title + Go Back button -->
               <div class="d-inline-block">
-                <h5 class="h4 d-inline-block font-weight-400 mb-0 text-white">Programas Académicos</h5>
+                <h5 class="h4 d-inline-block font-weight-400 mb-0 text-white">Facultades</h5>
               </div>
               
             </div>
@@ -51,16 +51,16 @@
         <!-- Project cards -->
         
         <div class="row">
-        	<div class="col-lg-4 col-sm-6" th:each="p: ${programas}">
+        	<div class="col-lg-4 col-sm-6" th:each="f: ${facultades}">
             <div class="card hover-shadow-lg hover-scale-110">
               <div class="card-body text-center">
                 <div class="avatar-parent-child">
                   <img alt="Image placeholder" th:src="@{/logos/logo_no_disponible.png}" class="avatar  rounded-circle avatar-lg">
                 </div>
-                <h5 class="h6 mt-4 mb-0" th:text="${p.nombrePrograma}"></h5>
-                <h4 class="d-block text-sm text-muted mb-3" th:text="${p.codigo}"></h4>
+                <h5 class="h6 mt-4 mb-4" th:text="${f.facultad}"></h5>
+               
                 <div class="actions d-flex justify-content-between px-4">
-                  <a href="#" onclick="editarPrograma(this)" class="action-item editarPrograma" th:data-id="${p.id}" th:data-codigo="${p.codigo}" th:data-programa="${p.nombrePrograma}" data-toggle="tooltip" data-placement="bottom" title="Editar">
+                  <a href="#" onclick="editarFacultad(this)" class="action-item editarPrograma" th:data-id="${f.id}" th:data-facultad="${f.facultad}" data-toggle="tooltip" data-placement="bottom" title="Editar">
                     <i class="far fa-edit"></i>
                   </a>
                   <a href="#" class="action-item text-danger" data-toggle="tooltip" data-placement="bottom" title="Eliminar">
@@ -76,7 +76,7 @@
     </div>
     
   </div>
-  <div th:replace="programa/formModal :: modalRegistro"></div>
+  <div th:replace="facultad/formModal :: modalRegistro"></div>
   <!-- Footer -->
       <div th:replace="layouts/footer :: footer"></div>
       <div th:replace="layouts/layout3 :: scripts"></div>

@@ -20,7 +20,14 @@
                       <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   Gestionar Opciones
                 </a>	
-                      <div class="dropdown-menu"><a class="dropdown-item"sec:authorize="hasAnyRole('ROLE_SUPERADMIN')" th:href="@{/programas-academicos}">
+                		
+                      <div class="dropdown-menu"><a class="dropdown-item"sec:authorize="hasAnyRole('ROLE_SUPERADMIN')" th:href="@{/facultades}">
+                          Facultades
+                        </a>
+                        <a class="dropdown-item"sec:authorize="hasAnyRole('ROLE_SUPERADMIN')" th:href="@{/departamentos-academicos}">
+                          Departamentos Académicos
+                        </a>
+                        <a class="dropdown-item"sec:authorize="hasAnyRole('ROLE_SUPERADMIN')" th:href="@{/programas-academicos}">
                           Programas Académicos
                         </a>
                         <a class="dropdown-item" sec:authorize="hasAnyRole('ROLE_SUPERADMIN')" th:href="@{/tipo-documento/listar}">

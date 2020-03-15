@@ -6,7 +6,7 @@
 </head>
 <body>
 	<!-- Modal -->
-<div class="modal fade" id="modalRegistroPrograma" tabindex="-1" role="dialog" aria-labelledby="modalRegistroPrograma" aria-hidden="true" th:fragment="modalRegistro">
+<div class="modal fade" id="modalRegistroDepartamento" tabindex="-1" role="dialog" aria-labelledby="modalRegistroPrograma" aria-hidden="true" th:fragment="modalRegistro">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <form>
             <div class="modal-content">
@@ -18,7 +18,7 @@
                             </div>
                         </div>
                         <div>
-                            <h6 class="mb-0">Formulario Registro Programa Académico</h6>
+                            <h6 class="mb-0">Formulario Registro Departamento Académico</h6>
                         </div>
                     </div>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -27,22 +27,28 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-sm-6">
+                    	<div class="col-sm-6">
                             <div class="form-group">
-                                <label class="form-control-label">Código</label>
-                                <input class="form-control" id="codigo" type="text" />
+                                <label class="form-control-label">Facultad perteneciente</label>
+                                <select class="form-control" data-toggle="select"
+														id="select_facultad">
+														<option value="0">Seleccione la facultad...</option>
+														<option th:each="f: ${facultades}" th:value="${f.id}"
+															th:text="${f.facultad}"></option>
+													</select>
+                               
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label class="form-control-label">Programa</label>
-                                <input class="form-control" id="programa" type="text" />
+                                <label class="form-control-label">Departamento</label>
+                                <input class="form-control" id="departamento" type="text" data-toggle="autosize"/>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" onclick="guardarPrograma()" class="btn btn-sm btn-secondary">Guardar</button>
+                    <button type="button" onclick="guardarDepartamento()" class="btn btn-sm btn-secondary">Guardar</button>
                 </div>
             </div>
         </form>

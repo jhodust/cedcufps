@@ -2,7 +2,6 @@ package com.ufps.cedcufps.controllers;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,7 +10,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.ufps.cedcufps.modelos.Programa;
 import com.ufps.cedcufps.services.IProgramaService;
 
@@ -26,10 +24,11 @@ public class ProgramaRestController {
 		return programaService.findAll();
 	}
 	
-	@GetMapping(value="/programa/{id}", produces = "application/json")
-    public Optional<Programa> programass(@PathVariable Long id) {
-        Optional<Programa> p= programaService.findOne(id); 
-        return p;
+	
+	
+	@GetMapping(value="/programa/search/{id}", produces = "application/json")
+    public Programa buscarPorPrograma(@PathVariable Long id) {
+		return  programaService.findOne(id).get();
     }
 	
 	

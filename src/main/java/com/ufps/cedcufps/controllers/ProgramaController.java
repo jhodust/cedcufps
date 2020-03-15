@@ -27,12 +27,12 @@ public class ProgramaController {
 	public String listar(Map<String, Object> model) {
 		model.put("titulo","PROGRAMAS");
 		model.put("programas",programaService.findAll());
-		Programa t= new Programa(); 
-		model.put("programa",t);		
+		//Programa t= new Programa(); 
+		//model.put("programa",t);		
 		return "programa/index";
 	}
 	
-	@RequestMapping(value = "/programas-academicos/registro")
+	/*@RequestMapping(value = "/programas-academicos/registro")
 	public String agregar(Map<String, Object> model) {
 		Programa t= new Programa(); 
 		model.put("titulo","FORMULARIO PROGRAMAS");
@@ -55,5 +55,5 @@ public class ProgramaController {
 		return "programa/form";
 	}
 	
-
+*/
 }

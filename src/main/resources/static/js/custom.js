@@ -18,7 +18,6 @@ toastr.options = {
 		}
 
 $(document).ready(function() {
-	
 	manejoFormsPersona();
 	indicarCodigoPrograma();
 	

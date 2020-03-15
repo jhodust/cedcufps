@@ -8,8 +8,7 @@
 	<!-- Modal -->
 <div class="modal fade" id="modalRegistroPrograma" tabindex="-1" role="dialog" aria-labelledby="modalRegistroPrograma" aria-hidden="true" th:fragment="modalRegistro">
     <div class="modal-dialog modal-dialog-centered" role="document">
-        <form th:action="@{/programas-academicos/registro}" th:object="${programa}" method="post"
-							enctype="multipart/form-data">
+        <form>
             <div class="modal-content">
                 <div class="modal-header">
                     <div class="modal-title d-flex align-items-center" id="modal-title-change-username">
@@ -31,13 +30,13 @@
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label class="form-control-label">Código</label>
-                                <input class="form-control" id="codigo" type="text" th:field="*{codigo}"/>
+                                <input class="form-control" id="codigo" type="text" />
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label class="form-control-label">Programa</label>
-                                <input class="form-control" id="programa" type="text" th:field="*{nombrePrograma}"/>
+                                <input class="form-control" id="programa" type="text" />
                             </div>
                         </div>
                     </div>

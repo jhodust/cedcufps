@@ -35,7 +35,7 @@ public class Departamento implements Serializable {//1
 	@JoinColumn(name = "id_departamento")
 	private List<Docente> docentes;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)//eager para que sirva el ajax
 	@JoinColumn(name="id_facultad")
 	private Facultad facultad;
 

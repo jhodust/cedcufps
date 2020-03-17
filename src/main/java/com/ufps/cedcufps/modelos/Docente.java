@@ -19,9 +19,7 @@ public class Docente extends Persona{
 
 	private String codigo;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="id_departamento")
-	private Departamento departamento;
+	
 
 	public String getCodigo() {
 		return codigo;
@@ -30,6 +28,10 @@ public class Docente extends Persona{
 	public void setCodigo(String codigo) {
 		this.codigo = codigo;
 	}
+
+	
+	
+	
 	
 	
 }

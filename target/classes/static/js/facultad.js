@@ -3,9 +3,9 @@ var idFacultad;
 $(document).ready(function ()
 		{
 				
-			$.getJSON('http://localhost:8080/programas-academicos/listar', function(json) {
+			/*$.getJSON('http://localhost:8080/programas-academicos/listar', function(json) {
 				console.log(json)
-			});
+			});*/
 			
 	$('#modalRegistroFacultad').on('show.bs.modal', function (event) {
 		$('#facultad').val("");

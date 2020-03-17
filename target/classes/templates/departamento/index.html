@@ -42,9 +42,31 @@
             <div class="col-md-6 d-flex align-items-center justify-content-between justify-content-md-start mb-3 mb-md-0">
               <!-- Page title + Go Back button -->
               <div class="d-inline-block">
-                <h5 class="h4 d-inline-block font-weight-400 mb-0 text-white">Departamentos Académicos</h5>
+                <h5 class="h4 d-inline-block font-weight-400 mb-0 text-white" >Departamentos Académicos</h5>
               </div>
-              
+              <div class="align-items-center ml-4 d-inline-flex">
+                <span class="h6 text-white counter badge-danger badge-pill" data-from="0" th:data-to="${#lists.size(departamentos)}" data-speed="1000" data-refresh-interval="100"></span>
+              </div>
+            </div>
+            <div class="col-md-6 d-flex align-items-center justify-content-between justify-content-md-end">
+              <!-- Filter input -->
+              <form class="bg-neutral rounded-pill d-inline-block">
+                <div class="input-group input-group-sm input-group-merge input-group-flush">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text bg-transparent"><i class="fas fa-filter"></i></span>
+                  </div>
+                  <select class="form-control form-control-flush" id="select_facultad_filtro_departamento" th:field="${facultad.id}">
+					<option value="0">Seleccione la facultad...</option>
+					<option value="0">Todos</option>
+					<option th:each="f: ${facultades}" th:value="${f.id}"
+						th:text="${f.facultad}"></option>
+				</select>
+                  
+                </div>
+              </form>
+              <a href="#modal-user-create" class="btn btn-sm btn-white btn-icon-only rounded-circle ml-4" data-toggle="modal">
+                <span class="btn-inner--icon"><i class="fas fa-plus"></i></span>
+              </a>
             </div>
           </div>
         </div>
@@ -54,7 +76,7 @@
 			<div class="col-lg-3 col-sm-6 hover-scale-110"  th:each="d: ${departamentos}">
             <div class="card card-fluid">
               <div class="card-body text-center d-flex flex-column justify-content-center">
-                <h5 class="mb-4" th:text="${d.departamento}"></h5>
+                <h6 class="mb-4" th:text="${d.departamento}"></h6>
                 <div class="avatar-parent-child">
                   <img alt="Image placeholder" th:src="@{/logos/logo_no_disponible.png}" class="avatar  rounded-circle avatar-lg">
                 </div>

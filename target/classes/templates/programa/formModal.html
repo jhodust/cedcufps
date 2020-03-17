@@ -27,6 +27,20 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
+                    	<div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="form-control-label">Facultad perteneciente</label>
+                                <select class="form-control" data-toggle="select"
+									id="select_facultad_programa">
+									<option value="0">Seleccione la facultad...</option>
+									<option th:each="f: ${facultades}" th:value="${f.id}"
+										th:text="${f.facultad}"></option>
+								</select>
+                               
+                            </div>
+                        </div>
+                       </div>
+                       <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label class="form-control-label">Código</label>

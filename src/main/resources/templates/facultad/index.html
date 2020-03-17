@@ -44,8 +44,12 @@
               <div class="d-inline-block">
                 <h5 class="h4 d-inline-block font-weight-400 mb-0 text-white">Facultades</h5>
               </div>
+              <div class="align-items-center ml-4 d-inline-flex">
+                <span class="h6 text-white counter badge-danger badge-pill" data-from="0" th:data-to="${#lists.size(facultades)}" data-speed="500" data-refresh-interval="100"></span>
+              </div>
               
             </div>
+            
           </div>
         </div>
         <!-- Project cards -->

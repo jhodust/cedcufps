@@ -38,9 +38,9 @@ public class Programa implements Serializable {//1
 	@JoinColumn(name = "id_programa")
 	private List<Estudiante> estudiantes;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="id_departamento")
-	private Departamento departamento;
+	@ManyToOne(fetch = FetchType.EAGER)//eager para que sirva el ajax
+	@JoinColumn(name="id_facultad")
+	private Facultad facultad;
 	
 	public Programa() {
 		estudiantes= new ArrayList<Estudiante>();
@@ -83,14 +83,15 @@ public class Programa implements Serializable {//1
 		this.estudiantes = estudiantes;
 	}
 
-	public Departamento getDepartamento() {
-		return departamento;
+	public Facultad getFacultad() {
+		return facultad;
 	}
 
-	public void setDepartamento(Departamento departamento) {
-		this.departamento = departamento;
+	public void setFacultad(Facultad facultad) {
+		this.facultad = facultad;
 	}
 
+	
 	
 	
 

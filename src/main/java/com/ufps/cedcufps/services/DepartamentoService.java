@@ -31,4 +31,12 @@ public class DepartamentoService implements IDepartamentoService {
 		return  departamentoDao.findById(id);
 	}
 
+	@Override
+	public List<Departamento> findByFacultad(String facultad) {
+		// TODO Auto-generated method stub
+		return departamentoDao.findByFacultad(facultad);
+	}
+
+	
+
 }

@@ -32,4 +32,10 @@ public class ProgramaService implements IProgramaService {
 		return  programaDao.findById(id);
 	}
 
+	@Override
+	public List<Programa> findByFacultad(String facultad) {
+		// TODO Auto-generated method stub
+		return programaDao.findByFacultad(facultad);
+	}
+
 }

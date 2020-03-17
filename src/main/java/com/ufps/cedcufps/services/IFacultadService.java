@@ -11,4 +11,6 @@ public interface IFacultadService {
 	public void save(Facultad p);
 	
 	public Optional<Facultad> findOne(Long id);
+	
+	public Facultad findByFacultad(String facultad);
 }

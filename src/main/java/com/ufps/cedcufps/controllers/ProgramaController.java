@@ -1,19 +1,13 @@
 package com.ufps.cedcufps.controllers;
 
 import java.util.Map;
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
-import org.springframework.web.bind.support.SessionStatus;
-
-import com.ufps.cedcufps.modelos.Programa;
+import com.ufps.cedcufps.modelos.Facultad;
+import com.ufps.cedcufps.services.IFacultadService;
 import com.ufps.cedcufps.services.IProgramaService;
 
 @Controller
@@ -23,12 +17,24 @@ public class ProgramaController {
 	@Autowired
 	private IProgramaService programaService;
 	
+	@Autowired
+	private IFacultadService facultadService;
+	
 	@RequestMapping(value = "/programas-academicos")
 	public String listar(Map<String, Object> model) {
 		model.put("titulo","PROGRAMAS");
 		model.put("programas",programaService.findAll());
-		//Programa t= new Programa(); 
-		//model.put("programa",t);		
+		model.put("facultades",facultadService.findAll());
+		model.put("facultad",new Facultad());//para cuando el filtro es todos
+		return "programa/index";
+	}
+	
+	@RequestMapping(value = "/programas-academicos/filter/{facultad}")
+	public String filtrarByFacultad(@PathVariable(value = "facultad") String facultad, Map<String, Object> model) {
+		model.put("titulo","PROGRAMAS");
+		model.put("programas",programaService.findByFacultad(facultad));
+		model.put("facultad",facultadService.findByFacultad(facultad));
+		model.put("facultades",facultadService.findAll());
 		return "programa/index";
 	}
 	

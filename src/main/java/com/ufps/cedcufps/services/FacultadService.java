@@ -31,4 +31,10 @@ public class FacultadService implements IFacultadService {
 		return  facultadDao.findById(id);
 	}
 
+	@Override
+	public Facultad findByFacultad(String facultad) {
+		// TODO Auto-generated method stub
+		return facultadDao.findByFacultad(facultad);
+	}
+
 }

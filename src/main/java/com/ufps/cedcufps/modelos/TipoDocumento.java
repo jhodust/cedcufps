@@ -13,6 +13,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 @Table(name="tipos_documento")
 public class TipoDocumento implements Serializable {//1
@@ -28,14 +30,11 @@ public class TipoDocumento implements Serializable {//1
 	@Column(name = "tipo_documento")
 	private String tipoDocumento;
 
-	@OneToMany(fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_tipo_documento")
-	private List<Persona> personas;
+	
 	
 	
 	
 	public TipoDocumento() {
-		this.personas= new ArrayList<Persona>();
 	}
 	public Long getId() {
 		return id;
@@ -54,17 +53,7 @@ public class TipoDocumento implements Serializable {//1
 	}
 
 
-	public List<Persona> getPersonas() {
-		return personas;
-	}
-
-	public void setPersonas(List<Persona> personas) {
-		this.personas = personas;
-	}
 	
-	public void addPersona(Persona p) {
-		this.personas.add(p);
-	}
 	
 	
 }

@@ -12,6 +12,7 @@ import com.ufps.cedcufps.modelos.Administrativo;
 import com.ufps.cedcufps.modelos.Docente;
 import com.ufps.cedcufps.modelos.Estudiante;
 import com.ufps.cedcufps.modelos.Externo;
+import com.ufps.cedcufps.modelos.Persona;
 import com.ufps.cedcufps.services.IPersonaService;
 
 @Controller
@@ -24,6 +25,10 @@ public class PersonaController {
 	public String listar(Model model) {
 		model.addAttribute("titulo","PROGRAMAS");
 		model.addAttribute("personas",personaService.findAllPersonas());
+		model.addAttribute("estudiantes",personaService.findAllEstudiantes());
+		model.addAttribute("docentes",personaService.findAllDocentes());
+		model.addAttribute("administrativos",personaService.findAllAdministrativos());
+		model.addAttribute("externos",personaService.findAllExternos());
 		
 		
 		return "persona/index";
@@ -45,7 +50,31 @@ public class PersonaController {
 		model.put("programas",personaService.findAllProgramas());
 		model.put("generos",personaService.findAllGeneros());
 		model.put("estados_civiles",personaService.findAllEstadosCiviles());
-		return "persona/formRegistro";
+		return "persona/form";
+	}
+	
+	@RequestMapping(value = "/usuarios/registro/{id}")
+	public String editar(@PathVariable(value = "id") Long id, Map<String, Object> model) {
+		Persona p= personaService.findOne(id).get();
+		model.put("titulo","FORMULARIO PERSONA");
+		model.put("tipos_documento",personaService.findAllTiposDocumento());
+		model.put("tipos_persona",personaService.findAllTiposPersona());
+		model.put("programas",personaService.findAllProgramas());
+		model.put("generos",personaService.findAllGeneros());
+		model.put("estados_civiles",personaService.findAllEstadosCiviles());
+		if(p.getTipoPersona().getTipoPersona().equalsIgnoreCase("Estudiante")) {
+			model.put("estudiante",(Estudiante)personaService.findOne(id).get());
+			return "persona/formRegistroEstudiante";
+		}else if(p.getTipoPersona().getTipoPersona().equalsIgnoreCase("Docente")) {
+			model.put("docente",(Docente)personaService.findOne(id).get());
+			return "persona/formRegistroDocente";
+		}else if(p.getTipoPersona().getTipoPersona().equalsIgnoreCase("Administrativo")) {
+			model.put("administrativo",(Administrativo)personaService.findOne(id).get());
+			return "persona/formRegistroAdministrativo";
+		}else{
+			model.put("externo",(Externo)personaService.findOne(id).get());
+			return "persona/formRegistroExterno";
+		}
 	}
 	
 	@RequestMapping(value = "/persona/{id}/permisos")

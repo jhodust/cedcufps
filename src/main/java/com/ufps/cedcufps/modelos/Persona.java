@@ -18,6 +18,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 
 @Entity
 @Table(name="personas")
@@ -33,6 +35,7 @@ public class Persona implements Serializable {//*
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="id_tipo_documento")
@@ -70,14 +73,15 @@ public class Persona implements Serializable {//*
 	@Column(name="id_pais_nacimiento")
 	private String idPaisNacimiento;
 	
-	@Column(name="pais_nacimiento")
-	private String paisNacimiento;
+	
+	@Column(name="id_departamento_nacimiento")
+	private String idDepartamentoNacimiento;
+	
+
 	
 	@Column(name="id_municipio_nacimiento")
 	private String idMunicipioNacimiento;
 	
-	@Column(name="municipio_nacimiento")
-	private String municipioNacimiento;
 	
 	private String email;
 	private String direccion;
@@ -240,14 +244,16 @@ public class Persona implements Serializable {//*
 		this.idPaisNacimiento = idPaisNacimiento;
 	}
 
-	public String getPaisNacimiento() {
-		return paisNacimiento;
+	
+	public String getIdDepartamentoNacimiento() {
+		return idDepartamentoNacimiento;
 	}
 
-	public void setPaisNacimiento(String paisNacimiento) {
-		this.paisNacimiento = paisNacimiento;
+	public void setIdDepartamentoNacimiento(String idDepartamentoNacimiento) {
+		this.idDepartamentoNacimiento = idDepartamentoNacimiento;
 	}
-
+	
+	
 	public String getIdMunicipioNacimiento() {
 		return idMunicipioNacimiento;
 	}
@@ -256,13 +262,6 @@ public class Persona implements Serializable {//*
 		this.idMunicipioNacimiento = idMunicipioNacimiento;
 	}
 
-	public String getMunicipioNacimiento() {
-		return municipioNacimiento;
-	}
-
-	public void setMunicipioNacimiento(String municipioNacimiento) {
-		this.municipioNacimiento = municipioNacimiento;
-	}
 	
 	
 	

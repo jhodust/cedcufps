@@ -16,6 +16,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 @Table(name="programas")
 public class Programa implements Serializable {//1
@@ -32,8 +35,9 @@ public class Programa implements Serializable {//1
 	private String codigo;
 	
 	@Column(name = "programa")
-	private String nombrePrograma;
+	private String programa;
 
+	@JsonIgnore //ignora esta referencia cuando se hace mediante ajax(json)  
 	@OneToMany(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_programa")
 	private List<Estudiante> estudiantes;
@@ -62,12 +66,12 @@ public class Programa implements Serializable {//1
 		this.codigo = codigo;
 	}
 
-	public String getNombrePrograma() {
-		return nombrePrograma;
+	public String getPrograma() {
+		return programa;
 	}
 
-	public void setNombrePrograma(String nombrePrograma) {
-		this.nombrePrograma = nombrePrograma;
+	public void setPrograma(String programa) {
+		this.programa = programa;
 	}
 	
 

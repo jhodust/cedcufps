@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="layouts/layout3 :: head">
+	<meta charset="UTF-8"/>
+	
+</head>
+
+<body class="application application-offset">
+ 
+  <!-- Application container -->
+  <div class="container-fluid container-application">
+    <!-- Sidenav --><!-- lado izquierdo de la plantilla -->
+    <div class="sidenav" id="sidenav-main" th:fragment="sidenavMain">
+      <!-- Sidenav header -->
+      <div th:replace="layouts/sidenavHeader :: sidenavHeader"></div>
+      <!-- User mini profile -->
+      <div th:replace="layouts/profile :: profile"></div>
+      <!-- Application nav -->
+      <div class="nav-application clearfix" th:fragment="sidebar">
+        <a th:href="@{/programas-academicos}" class="btn btn-square text-sm">
+          <span class="btn-inner--icon d-block"><i class="fas fa-clipboard-list fa-3x"></i></span>
+          <span class="btn-inner--icon d-block pt-2">Listar</span>
+        </a>
+        <a href="" data-toggle="modal" data-target="#modalRegistroPrograma" class="btn btn-square text-sm">
+          <span class="btn-inner--icon d-block"><i class="fas fa-plus-circle fa-3x"></i></span>
+          <span class="btn-inner--icon d-block pt-2">Agregar</span>
+        </a>
+        
+      </div>
+    </div>
+    <!-- Content -->
+    <div class="main-content position-relative">
+      <!-- Main nav -->
+      <nav th:replace="layouts/layout3 :: nav"></nav>
+      <!-- Page content -->
+      <div class="page-content">
+        
+        <!-- Page title -->
+        <div class="page-title">
+          <div class="row justify-content-between align-items-center">
+            <div class="col-md-6 d-flex align-items-center justify-content-between justify-content-md-start mb-3 mb-md-0">
+              <!-- Page title + Go Back button -->
+              <div class="d-inline-block">
+                <h5 class="h4 d-inline-block font-weight-400 mb-0 text-white">Formulario Registro Usuarios</h5>
+              </div>
+              
+            </div>
+            
+          </div>
+        </div>
+        <!-- Project cards -->
+        <form>
+        <div class="row">
+        	<div class="col-lg-6">
+            
+            <div class="card">
+              <div class="card-body">
+                  <!-- General information -->
+                  <div class="row"><span class="badge badge-danger">Información Personal</span></div>
+                  <div class="row">
+                  	<div class="col-md-6">
+                      <div class="form-group">
+                        <label class="form-control-label">Tipo Documento</label>
+                      	<select class="form-control" data-toggle="select">
+					        <option>Alerts</option>
+					        <option>Badges</option>
+					        <option>Buttons</option>
+					        <option>Cards</option>
+					        <option>Forms</option>
+					        <option>Modals</option>
+					    </select>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label class="form-control-label">Número Documento</label>
+                        <input class="form-control" type="text" placeholder="Enter your first name">
+                      </div>
+                    </div>
+                    
+                  </div>
+                  <div class="row">
+                  	<div class="col-md-12">
+                      <div class="form-group">
+                        <label class="form-control-label">Fecha Expedición Documento</label>
+                        <input type="text" class="form-control flatpickr-input" data-toggle="date" placeholder="Select your birth date">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label class="form-control-label">Primer Nombre</label>
+                        <input class="form-control" type="text" placeholder="Enter your first name">
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label class="form-control-label">Segundo Nombre</label>
+                        <input class="form-control" type="text" placeholder="Also your last name">
+                      </div>
+                    </div>
+                    </div>
+                   <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label class="form-control-label">Primer Apellido</label>
+                        <input class="form-control" type="text" placeholder="Enter your first name">
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label class="form-control-label">Segundo Apellido</label>
+                        <input class="form-control" type="text" placeholder="Also your last name">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row align-items-center">
+                    
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <label class="form-control-label">Género</label>
+                        <div class="col">
+                        <div class="custom-control custom-radio custom-control-inline">
+						    <input type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input">
+						    <label class="custom-control-label" for="customRadioInline1">Masculino</label>
+						</div>
+						<div class="custom-control custom-radio custom-control-inline">
+						    <input type="radio" id="customRadioInline2" name="customRadioInline1" class="custom-control-input">
+						    <label class="custom-control-label" for="customRadioInline2">Femenino</label>
+						</div>
+						</div>
+                      </div>
+                    </div>
+                    </div>
+                    <div class="row align-items-center">
+                    
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <label class="form-control-label">Estado Civil</label>
+                        <div class="col">
+	                        <div class="custom-control custom-radio custom-control-inline">
+							    <input type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input">
+							    <label class="custom-control-label" for="customRadioInline1">Soltero(a)</label>
+							</div>
+							<div class="custom-control custom-radio custom-control-inline">
+							    <input type="radio" id="customRadioInline2" name="customRadioInline1" class="custom-control-input">
+							    <label class="custom-control-label" for="customRadioInline2">Casado(a)</label>
+							</div>
+							<div class="custom-control custom-radio custom-control-inline">
+							    <input type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input">
+							    <label class="custom-control-label" for="customRadioInline1">Divorciado(a)</label>
+							</div>
+							<div class="custom-control custom-radio custom-control-inline">
+							    <input type="radio" id="customRadioInline2" name="customRadioInline1" class="custom-control-input">
+							    <label class="custom-control-label" for="customRadioInline2">Viudo(a)</label>
+							</div>
+							<div class="custom-control custom-radio custom-control-inline">
+							    <input type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input">
+							    <label class="custom-control-label" for="customRadioInline1">Unión Libre</label>
+							</div>
+							<div class="custom-control custom-radio custom-control-inline">
+							    <input type="radio" id="customRadioInline2" name="customRadioInline1" class="custom-control-input">
+							    <label class="custom-control-label" for="customRadioInline2">Religioso</label>
+							</div>
+							<div class="custom-control custom-radio custom-control-inline">
+							    <input type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input">
+							    <label class="custom-control-label" for="customRadioInline1">Separado(a)</label>
+							</div>
+						</div>
+                      </div>
+                    </div>
+                    </div>
+                    <div class="row align-items-center">
+                    
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <label class="form-control-label">Fecha Nacimiento</label>
+                        <input type="text" class="form-control flatpickr-input" data-toggle="date" placeholder="Select your birth date">
+                      </div>
+                    </div>
+                    </div>
+                    <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label class="form-control-label">Pais Nacimiento</label>
+                      	<select class="form-control" data-toggle="select">
+					        <option>Alerts</option>
+					        <option>Badges</option>
+					        <option>Buttons</option>
+					        <option>Cards</option>
+					        <option>Forms</option>
+					        <option>Modals</option>
+					    </select>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label class="form-control-label">Municipio Nacimiento</label>
+                      	<select class="form-control" data-toggle="select">
+					        <option>Alerts</option>
+					        <option>Badges</option>
+					        <option>Buttons</option>
+					        <option>Cards</option>
+					        <option>Forms</option>
+					        <option>Modals</option>
+					    </select>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6">
+          
+            <div class="col">
+            
+            <div class="card">
+              <div class="card-body">
+              <div class="row"><span class="badge badge-danger">Información de Contacto</span></div>
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <label class="form-control-label">Email</label>
+                        <input class="form-control" type="email" placeholder="name@exmaple.com">
+                        <small class="form-text text-muted mt-2">This is the main email address that we'll send notifications.</small>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <label class="form-control-label">Telefono</label>
+                        <input class="form-control" type="text" placeholder="+40-777 245 549">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <label class="form-control-label">Dirección</label>
+                        <input class="form-control" type="text" placeholder="Enter your home address">
+                      </div>
+                    </div>
+                  </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-body">
+              <div class="row"><span class="badge badge-danger">Información Académica</span></div>
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <label class="form-control-label">Programa Académico</label>
+                      	<select class="form-control" data-toggle="select">
+					        <option>Alerts</option>
+					        <option>Badges</option>
+					        <option>Buttons</option>
+					        <option>Cards</option>
+					        <option>Forms</option>
+					        <option>Modals</option>
+					    </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <label class="form-control-label">Código</label>
+                        <input class="form-control" type="text" placeholder="+40-777 245 549">
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Save changes buttons -->
+                  <button type="button" class="btn btn-sm btn-primary rounded-pill">Save changes</button>
+                  <button type="button" class="btn btn-link text-muted">Cancel</button>
+                  
+              </div>
+            </div>
+            </div>
+          </div>
+        </div>
+        
+                </form>
+        
+      </div>
+      
+    </div>
+    
+  </div>
+  <div th:replace="programa/formModal :: modalRegistro"></div>
+  <!-- Footer -->
+      <div th:replace="layouts/footer :: footer"></div>
+      <div th:replace="layouts/layout3 :: scripts"></div>
+  
+</body>
+
+</html>

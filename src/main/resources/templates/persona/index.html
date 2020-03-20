@@ -23,7 +23,7 @@
 					class="btn-inner--icon d-block"><i
 						class="fas fa-clipboard-list fa-3x"></i></span> <span
 					class="btn-inner--icon d-block pt-2">Listar</span>
-				</a> <a th:href="@{/persona/registro}" class="btn btn-square text-sm">
+				</a> <a th:href="@{/usuarios/registro}" class="btn btn-square text-sm">
 					<span class="btn-inner--icon d-block"><i
 						class="fas fa-plus-circle fa-3x"></i></span> <span
 					class="btn-inner--icon d-block pt-2">Agregar</span>
@@ -63,8 +63,12 @@
 								<div class="row">
 									<div class="col">
 										<h6 class="text-muted mb-1">Estudiantes</h6>
-										<span class="h5 font-weight-bold mb-0">339</span>
+										<span class="h5 font-weight-bold mb-0 counter" data-from="0" th:data-to="${#lists.size(estudiantes)}" data-speed="500" data-refresh-interval="100"></span>
+										<div class="row">
+										<a th:href="@{/usuarios/estudiante/registro}" class="badge badge-danger">Nuevo Registro</a>
+										</div>
 									</div>
+									
 									<div class="col-auto">
 										<div
 											class="icon bg-gradient-warning text-white rounded-circle icon-shape">
@@ -82,7 +86,10 @@
 								<div class="row">
 									<div class="col">
 										<h6 class="text-muted mb-1">Docentes</h6>
-										<span class="h5 font-weight-bold mb-0">357</span>
+										<span class="h5 font-weight-bold mb-0 counter" data-from="0" th:data-to="${#lists.size(docentes)}" data-speed="500" data-refresh-interval="100"></span>
+										<div class="row">
+										<a th:href="@{/usuarios/docente/registro}" class="badge badge-danger">Nuevo Registro</a>
+										</div>
 									</div>
 									<div class="col-auto">
 										<div
@@ -101,7 +108,10 @@
 								<div class="row">
 									<div class="col">
 										<h6 class="text-muted mb-1">Administrativo</h6>
-										<span class="h5 font-weight-bold mb-0">215</span>
+										<span class="h5 font-weight-bold mb-0 counter" data-from="0" th:data-to="${#lists.size(administrativos)}" data-speed="500" data-refresh-interval="100"></span>
+										<div class="row">
+										<a th:href="@{/usuarios/administrativo/registro}" class="badge badge-danger">Nuevo Registro</a>
+										</div>
 									</div>
 									<div class="col-auto">
 										<div
@@ -120,7 +130,10 @@
 								<div class="row">
 									<div class="col">
 										<h6 class="text-muted mb-1">Externos</h6>
-										<span class="h5 font-weight-bold mb-0">13.079</span>
+                						<span class="h5 font-weight-bold mb-0 counter" data-from="0" th:data-to="${#lists.size(externos)}" data-speed="500" data-refresh-interval="100"></span>
+             							<div class="row">
+											<a th:href="@{/usuarios/externo/registro}" class="badge badge-danger">Nuevo Registro</a>
+										</div>
 									</div>
 									<div class="col-auto">
 										<div
@@ -182,7 +195,7 @@
 										<td th:text="${p.telefono}"></td>
 										<td><a
 											class="btn btn-primary rounded-circle btn-icon-only hover-scale-110"
-											th:href="@{/persona/registro/{id}(id=${p.id})}"
+											th:href="@{/usuarios/registro/{id}(id=${p.id})}"
 											data-toggle="tooltip" data-placement="top" title="Editar">
 												<span class="btn-inner--icon"><i
 													class="fas fa-user-edit"></i></span>

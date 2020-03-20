@@ -15,5 +15,12 @@ public interface IEducacionContinuaService {
 	
 	public List<TipoEducacionContinua> findAllTiposEducacionContinua();
 	
+	public int cantidadCursos();
+	
+	public int cantidadTalleres();
+		
+	public int cantidadDiplomados();
+	
+	public int cantidadSeminariosCongresosSimposios();
 	
 }

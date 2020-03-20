@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
+
+import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.ufps.cedcufps.modelos.EducacionContinua;
 import com.ufps.cedcufps.services.IEducacionContinuaService;
 import com.ufps.cedcufps.services.IParticipanteService;
@@ -31,8 +33,21 @@ public class EducacionContinuaController {
 	
 	@RequestMapping(value = "/educacion-continua")
 	public String listar(Model model) {
+		int cantCursos=educacionContinuaService.cantidadCursos();
+		int cantTalleres=educacionContinuaService.cantidadTalleres();
+		int cantDiplomados=educacionContinuaService.cantidadDiplomados();
+		int cantSemConSimp=educacionContinuaService.cantidadSeminariosCongresosSimposios();
+		int total=cantCursos+cantTalleres+cantDiplomados+cantSemConSimp;
 		model.addAttribute("titulo","EDUCACIÓN CONTINUA");
 		model.addAttribute("educacionesContinuas",educacionContinuaService.findAll());
+		model.addAttribute("cantCursos",cantCursos);
+		model.addAttribute("cantTalleres",cantTalleres);
+		model.addAttribute("cantDiplomados",cantCursos);
+		model.addAttribute("cantSemConSimp",cantSemConSimp);
+		model.addAttribute("porcCursos",cantCursos*100/total);
+		model.addAttribute("porcTalleres",cantTalleres*100/total);
+		model.addAttribute("porcDiplomados",cantDiplomados*100/total);
+		model.addAttribute("porcSemConSimp",cantSemConSimp*100/total);
 		return "educacion_continua/index";
 	}
 	
@@ -49,7 +64,7 @@ public class EducacionContinuaController {
 	public String save(EducacionContinua ec, SessionStatus status) {
 		educacionContinuaService.save(ec);
 		status.setComplete();
-		return "redirect:/educación-continua";
+		return "redirect:/educacion-continua";
 	}
 	
 	@RequestMapping(value = "/educacion-continua/registro/{id}")

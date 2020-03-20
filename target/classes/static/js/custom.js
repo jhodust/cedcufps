@@ -1,4 +1,6 @@
 var token = $("meta[name='_csrf']").attr("content");
+var datos_paises;
+var datos_colombia;
 toastr.options = {
 		  "closeButton": true,
 		  "debug": false,
@@ -25,34 +27,47 @@ $(document).ready(function() {
 
 $(document).ready(function ()
 {
+	console.log("preparando datepicker");
+	$("#fechaInicioEduCont").flatpickr({
+	    "plugins": [new rangePlugin({ input: "#fechaFinEduCont"})]
+	});
+	
+	
 	
 	console.log("antes");
-	$.getJSON( "../data/countries_iso3166.json", function( json )
+	$.getJSON( "/data/countries_iso3166.json", function( json )
 		  
   {       
-	 
-    var datos = json;
-    var x = document.getElementById("selectMunicipioNacimiento");
-    datos.forEach(function(elemento){
-        var id=elemento.pais+"-"+elemento.id;;
+    var datos_paises = json;
+    var x = document.getElementById("selectPaisNacimiento");
+    datos_paises.forEach(function(elemento){
+        //var id=elemento.pais+"-"+elemento.id;;
+    	var id=elemento.id;;
         var newOption = new Option(elemento.pais, id, false, false);
-        $('#selectMunicipioNacimiento').append(newOption).trigger('change');
+        $('#selectPaisNacimiento').append(newOption).trigger('change');
     })
   });
+	
+	
 	$.getJSON( "https://www.datos.gov.co/resource/gdxc-w37w.json", function( json )
 			  
 			  {       
-				var datos_municipios=json;
-			    var x = document.getElementById("selectMunicipioNacimiento2");
-			    $("#selectMunicipioNacimiento").select2();
-			    $("#selectMunicipioNacimiento2").select2();
-			    datos_municipios.forEach(function(elemento){
-			    	var id=elemento.nom_mpio+"-"+elemento.cod_mpio;
-			        var newOption = new Option(elemento.nom_mpio, id, false, false);
-			        $('#selectMunicipioNacimiento2').append(newOption).trigger('change');
+		console.log(json);
+				datos_colombia=json;
+			    datos_colombia.forEach(function(elemento){
+			        var newOption = new Option(elemento.dpto, elemento.cod_depto, false, false);
+			        $('#selectDepartamentoNacimiento').append(newOption).trigger('change');
 			    })
 			  });
 	
+	$('#selectDepartamentoNacimiento').on('select2:select', function (e) { 
+	   $('#selectMunicipioNacimiento').empty().trigger("change");
+	   var arrayMunicipios= getFilteredByKey(datos_colombia,"cod_depto",e.params.data.id);
+	   arrayMunicipios.forEach(function(elemento){
+	        var newOption = new Option(elemento.nom_mpio, elemento.cod_mpio, false, false);
+	        $('#selectMunicipioNacimiento').append(newOption).trigger('change');
+	    })
+	});
 	
 	
 	
@@ -112,3 +127,11 @@ function mostrar(id) {// muestra un elemento del formulario
 function logout(){
 	document.getElementById('formLogout').submit();
 }
+
+function getFilteredByKey(array, key, value) {
+	  return array.filter(function(e) {
+	    return e[key] == value;
+	  });
+	}
+
+

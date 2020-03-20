@@ -53,7 +53,7 @@ function guardarPrograma(){
 		headers: {"X-CSRF-TOKEN": token},
 		type: "POST",
 		contentType: "application/json; charset=utf-8",
-		data: JSON.stringify({'id':idPrograma,'codigo': codigo,'nombrePrograma':programa,'facultad':{'id':id_facultad}}),
+		data: JSON.stringify({'id':idPrograma,'codigo': codigo,'programa':programa,'facultad':{'id':id_facultad}}),
 		url: "http://localhost:8080/programa/save",
 		cache: false,
 		success: function(result) {
@@ -79,7 +79,7 @@ function editarPrograma(elemento){
 		success: function(result) {
 			$('#modalRegistroPrograma').modal();
 			$('#codigo').val(result.codigo);
-			$('#programa').val(result.nombrePrograma);
+			$('#programa').val(result.programa);
 			$('#select_facultad_programa').val(result.facultad.id);
 			 $('#select_facultad_programa').select2().trigger('change');
 			idPrograma=elemento.dataset.id;

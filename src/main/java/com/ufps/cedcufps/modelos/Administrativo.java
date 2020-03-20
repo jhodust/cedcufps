@@ -14,6 +14,8 @@ public class Administrativo extends Persona{
 	 */
 	private static final long serialVersionUID = 1L;
 
+	private String dependencia;
+	
 	private String cargo;
 
 	public String getCargo() {
@@ -23,4 +25,14 @@ public class Administrativo extends Persona{
 	public void setCargo(String cargo) {
 		this.cargo = cargo;
 	}
+
+	public String getDependencia() {
+		return dependencia;
+	}
+
+	public void setDependencia(String dependencia) {
+		this.dependencia = dependencia;
+	}
+	
+	
 }

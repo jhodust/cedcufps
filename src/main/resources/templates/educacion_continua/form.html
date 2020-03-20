@@ -1,83 +1,238 @@
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-	xlmns:sec="http://www.thymeleaf.org/extras/spring-security">
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
-<head th:replace="layouts/layout :: head">
+<head th:replace="layouts/layout3 :: head">
 <meta charset="UTF-8" />
+
 </head>
 
-<body class="index-page sidebar-collapse">
-	<header th:replace="layouts/layout :: header"></header>
-	<div th:replace="layouts/layout :: encabezado"></div>
-	<div class="main main-raised">
-		<div class="section section-basic">
-			<div class="container">
-				<div class="col-md-8">
-					<h2>FORM REGISTRO PROGRAMA</h2>
+<body class="application application-offset">
 
-					
-						<form th:action="@{/educacion-continua/registro}" th:object="${educacionContinua}" method="post"
-							enctype="multipart/form-data">
+	<!-- Application container -->
+	<div class="container-fluid container-application">
+		<!-- Sidenav -->
+		<!-- lado izquierdo de la plantilla -->
+		<div class="sidenav" id="sidenav-main" th:fragment="sidenavMain">
+			<!-- Sidenav header -->
+			<div th:replace="layouts/sidenavHeader :: sidenavHeader"></div>
+			<!-- User mini profile -->
+			<div th:replace="layouts/profile :: profile"></div>
+			<!-- Application nav -->
+			<div class="nav-application clearfix" th:fragment="sidebar">
+				<a th:href="@{/educacion-continua}" class="btn btn-square text-sm">
+					<span class="btn-inner--icon d-block"><i
+						class="fas fa-clipboard-list fa-3x"></i></span> <span
+					class="btn-inner--icon d-block pt-2">Listar</span>
+				</a> <a th:href="@{/educacion-continua/registro}" 
+					class="btn btn-square text-sm"> <span
+					class="btn-inner--icon d-block"><i
+						class="fas fa-plus-circle fa-3x"></i></span> <span
+					class="btn-inner--icon d-block pt-2">Agregar</span>
+				</a>
 
-							<div class="form-group">
-								<label for="example-text-input" class="col-form-label">Tipo
-									Educación Continua</label> <select class="custom-select" th:field="*{tipoEduContinua}">
-									<option value="0">Seleccione el tipo...</option>
-									<option th:each="tec: ${tipos_educacion_continua}"
-										th:value="${tec.id}" th:text="${tec.tipoEduContinua}"></option>
-								</select>
-							</div>
-							<div class="form-group">
-								<label for="example-text-input" class="col-form-label">Nombre</label>
-								<input class="form-control" type="text" th:field="*{nombre}" />
-							</div>
-							<div class="form-group">
-							    <label class="label-control">Fecha Inicio</label>
-							    <input type="text" class="form-control datetimepicker" th:field="*{fechaInicio}"/>
-							</div>
-							<div class="form-group">
-							    <label class="label-control">Fecha Fin</label>
-							    <input type="text" class="form-control datetimepicker" th:field="*{fechaFin}"/>
-							</div>
-							<div class="form-group">
-							    <label class="label-control">Fecha Limite Inscripción</label>
-							    <input type="text" class="form-control datetimepicker" th:field="*{fechaLimInscripcion}"/>
-							</div>
-							<div class="form-group">
-							    <label class="label-control">Duración(Horas)</label>
-							    <input type="number" class="form-control" th:field="*{duracion}"/>
-							</div>
-							<div class="form-group">
-							    <label for="exampleFormControlTextarea1">Requisitos</label>
-							    <textarea class="form-control" rows="3" th:field="*{requisitos}"></textarea>
-							 </div>
-							 <div class="form-group">
-							    <label for="exampleFormControlTextarea1">Contenido General</label>
-							    <textarea class="form-control" rows="3" th:field="*{contenidoGeneral}"></textarea>
-							 </div>
-							 <div class="form-group">
-							    <label for="exampleFormControlTextarea1">Objetivo</label>
-							    <textarea class="form-control" rows="3" th:field="*{objetivo}"></textarea>
-							 </div>
-							 <div class="form-group">
-							    <label class="label-control">Cantidad Máxima Participante</label>
-							    <input type="number" class="form-control" th:field="*{cantMaxParticipantes}"/>
-							</div>
-							<div class="form-group">
-							    <label class="label-control">Costo</label>
-							    <input type="text" class="form-control" th:field="*{costo}"/>
-							</div>
-							<div class="form-group">
-							    <label for="exampleFormControlTextarea1">Resumen</label>
-							    <textarea class="form-control" rows="3" th:field="*{resumen}"></textarea>
-							 </div>
-							<button type="submit" class="btn btn-primary mt-4 pr-4 pl-4">Guardar</button>
-						</form>
-				</div>
 			</div>
 		</div>
-	</div>
+		<!-- Content -->
+		<div class="main-content position-relative">
+			<!-- Main nav -->
+			<nav th:replace="layouts/layout3 :: nav"></nav>
+			<!-- Page content -->
+			<div class="page-content">
 
-	<footer th:replace="layouts/layout :: footer"></footer>
+				<!-- Page title -->
+				<div class="page-title">
+					<div class="row justify-content-between align-items-center">
+						<div
+							class="col-md-6 d-flex align-items-center justify-content-between justify-content-md-start mb-3 mb-md-0">
+							<!-- Page title + Go Back button -->
+							<div class="d-inline-block">
+								<h5 class="h4 d-inline-block font-weight-400 mb-0 text-white">Formulario
+									Registro Usuarios</h5>
+							</div>
+
+						</div>
+
+					</div>
+				</div>
+				<!-- Project cards -->
+				<form th:action="@{/educacion-continua/registro}"
+										th:object="${educacionContinua}" method="post"
+										enctype="multipart/form-data">
+					<div class="row">
+						<div class="col-lg-6" th:fragment="camposInformacionPersonal">
+
+							<div class="card">
+								<div class="card-body">
+									<!-- General information -->
+									<div class="row">
+										<span class="badge badge-danger">Información Evento</span>
+									</div>
+									<div class="row">
+										<div class="col-md-12">
+											<div class="form-group">
+												<label class="form-control-label">Tipo Educación Continua</label> <select
+													class="form-control" data-toggle="select" th:field="*{tipoEduContinua}">
+													<option value="0">Seleccione el tipo...</option>
+													<option th:each="tec: ${tipos_educacion_continua}"
+														th:value="${tec.id}" th:text="${tec.tipoEduContinua}"></option>
+												</select>
+											</div>
+										</div>
+										
+
+									</div>
+									<div class="row">
+										<div class="col-md-12">
+											<div class="form-group">
+												<label class="form-control-label">Nombre</label> <input
+													class="form-control" type="text"
+													placeholder="Enter your first name" th:field="*{nombre}"/>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-6">
+											<div class="form-group">
+												<label class="form-control-label">Fecha Inicio</label> <input type="date"
+													class="form-control flatpickr-input" data-toggle="date"
+													placeholder="Select your birth date" id="fechaInicioEduCont" th:field="*{fechaInicio}"/>
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="form-group">
+												<label class="form-control-label">Fecha Fin</label> <input type="date"
+													class="form-control flatpickr-input" data-toggle="date"
+													placeholder="Select your birth date" id="fechaFinEduCont" th:field="*{fechaFin}"/>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-12">
+											<div class="form-group">
+												<label class="form-control-label">Duración(horas)</label> <input
+													class="form-control" type="text"
+													placeholder="Enter your first name" th:field="*{duracion}"/>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-12">
+											<div class="form-group">
+												<label class="form-control-label">Objetivo</label> 
+												<textarea class="form-control" data-toggle="autosize" 
+												placeholder="This textarea will autosize while you type" rows="1" 
+												th:field="*{objetivo}"></textarea>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+											<div class="col-md-12">
+												<div class="form-group">
+													<label class="form-control-label">Requisitos</label> 
+													<textarea class="form-control" data-toggle="autosize" 
+													placeholder="This textarea will autosize while you type" rows="1" 
+													th:field="*{requisitos}"></textarea>
+												</div>
+											</div>
+										</div>
+									
+									
+									
+									</div>
+								</div>
+						</div>
+						<div class="col-lg-6">
+							<div class="col">
+								<div class="card">
+									<div class="card-body">
+										<div class="row">
+											<span class="badge badge-danger">Información Participantes</span>
+										</div>
+										<div class="row">
+											<div class="col-md-12">
+												<div class="form-group">
+													<label class="form-control-label">Fecha Límite Inscripción</label> <input type="date"
+														class="form-control flatpickr-input" data-toggle="date"
+														placeholder="Select your birth date" id="fechaLimInscripcionEduCont" th:field="*{fechaLimInscripcion}"/>
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-md-6">
+												<div class="form-group">
+													<label class="form-control-label">Costo</label> <input
+														class="form-control" type="text"
+														placeholder="Enter your first name" th:field="*{costo}"/>
+												</div>
+											</div>
+											<div class="col-md-6">
+												<div class="form-group">
+													<label class="form-control-label">Cantidad Max Participantes</label> <input
+														class="form-control" type="text"
+														placeholder="Enter your first name" th:field="*{cantMaxParticipantes}"/>
+												</div>
+											</div>
+											
+										</div>
+										
+										
+									</div>
+								</div>
+							</div>
+							<div class="col">
+								<div class="card">
+									<div class="card-body">
+										<div class="row">
+											<span class="badge badge-danger">Información Adicional</span>
+										</div>
+										
+										
+										<div class="row">
+											<div class="col-md-12">
+												<div class="form-group">
+													<label class="form-control-label">Contenido General</label> 
+													<textarea class="form-control" data-toggle="autosize" 
+													placeholder="This textarea will autosize while you type" rows="1" 
+													th:field="*{contenidoGeneral}"></textarea>
+												</div>
+											</div>
+										</div>
+										
+										<div class="row">
+											<div class="col-md-12">
+												<div class="form-group">
+													<label class="form-control-label">Resumen</label> 
+													<textarea class="form-control" data-toggle="autosize" 
+													placeholder="This textarea will autosize while you type" rows="1" 
+													th:field="*{resumen}"></textarea>
+												</div>
+											</div>
+										</div>
+									
+										
+										<!-- Save changes buttons -->
+										<button type="submit"
+											class="btn btn-sm btn-primary rounded-pill">Save
+											changes</button>
+										
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</form>
+
+			</div>
+
+		</div>
+
+	</div>
+	<!-- Footer -->
+	<div th:replace="layouts/footer :: footer"></div>
+	<div th:replace="layouts/layout3 :: scripts"></div>
+
 </body>
 
 </html>

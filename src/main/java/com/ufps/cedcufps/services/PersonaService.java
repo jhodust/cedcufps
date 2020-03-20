@@ -18,13 +18,23 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ufps.cedcufps.dao.IAdministrativoDao;
+import com.ufps.cedcufps.dao.IDepartamentoDao;
+import com.ufps.cedcufps.dao.IDocenteDao;
 import com.ufps.cedcufps.dao.IEstadoCivilDao;
+import com.ufps.cedcufps.dao.IEstudianteDao;
+import com.ufps.cedcufps.dao.IExternoDao;
 import com.ufps.cedcufps.dao.IGeneroDao;
 import com.ufps.cedcufps.dao.IPersonaDao;
 import com.ufps.cedcufps.dao.IProgramaDao;
 import com.ufps.cedcufps.dao.ITipoDocumentoDao;
 import com.ufps.cedcufps.dao.ITipoPersonaDao;
+import com.ufps.cedcufps.modelos.Administrativo;
+import com.ufps.cedcufps.modelos.Departamento;
+import com.ufps.cedcufps.modelos.Docente;
 import com.ufps.cedcufps.modelos.EstadoCivil;
+import com.ufps.cedcufps.modelos.Estudiante;
+import com.ufps.cedcufps.modelos.Externo;
 import com.ufps.cedcufps.modelos.Genero;
 import com.ufps.cedcufps.modelos.Persona;
 import com.ufps.cedcufps.modelos.Programa;
@@ -39,6 +49,18 @@ public class PersonaService implements IPersonaService, UserDetailsService {
 	private IPersonaDao personaDao;
 	
 	@Autowired
+	private IEstudianteDao estudianteDao;
+	
+	@Autowired
+	private IDocenteDao docenteDao;
+	
+	@Autowired
+	private IAdministrativoDao administrativoDao;
+	
+	@Autowired
+	private IExternoDao externoDao;
+	
+	@Autowired
 	private ITipoDocumentoDao tipoDocumentoDao;
 	
 	@Autowired
@@ -49,6 +71,9 @@ public class PersonaService implements IPersonaService, UserDetailsService {
 	
 	@Autowired
 	private IProgramaDao programaDao;
+	
+	@Autowired
+	private IDepartamentoDao departamentoDao;
 	
 	@Autowired
 	private ITipoPersonaDao tipoPersonaDao;
@@ -138,6 +163,36 @@ public class PersonaService implements IPersonaService, UserDetailsService {
 	public List<Genero> findAllGeneros() {
 		// TODO Auto-generated method stub
 		return (List<Genero>) generoDao.findAll();
+	}
+
+	@Override
+	public List<Departamento> findAllDepartamentos() {
+		// TODO Auto-generated method stub
+		return (List<Departamento>)departamentoDao.findAll();
+	}
+
+	@Override
+	public List<Estudiante> findAllEstudiantes() {
+		// TODO Auto-generated method stub
+		return (List<Estudiante>)estudianteDao.findAll();
+	}
+
+	@Override
+	public List<Docente> findAllDocentes() {
+		// TODO Auto-generated method stub
+		return (List<Docente>)docenteDao.findAll();
+	}
+
+	@Override
+	public List<Administrativo> findAllAdministrativos() {
+		// TODO Auto-generated method stub
+		return (List<Administrativo>)administrativoDao.findAll();
+	}
+
+	@Override
+	public List<Externo> findAllExternos() {
+		// TODO Auto-generated method stub
+		return (List<Externo>)externoDao.findAll();
 	}
 
 	

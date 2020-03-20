@@ -14,6 +14,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name="departamentos")
 public class Departamento implements Serializable {//1
@@ -31,6 +33,7 @@ public class Departamento implements Serializable {//1
 	
 
 
+	@JsonIgnore //ignora esta referencia cuando se hace mediante ajax(json) 
 	@OneToMany(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_departamento")
 	private List<Docente> docentes;

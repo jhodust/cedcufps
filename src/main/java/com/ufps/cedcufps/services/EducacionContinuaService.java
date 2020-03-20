@@ -44,6 +44,30 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 		return (List<TipoEducacionContinua>) tipoEducacionContinuaDao.findAll();
 	}
 
+	@Override
+	public int cantidadCursos() {
+		// TODO Auto-generated method stub
+		return educacionContinuaDao.cantidadCursos();
+	}
+
+	@Override
+	public int cantidadTalleres() {
+		// TODO Auto-generated method stub
+		return educacionContinuaDao.cantidadTalleres();
+	}
+
+	@Override
+	public int cantidadDiplomados() {
+		// TODO Auto-generated method stub
+		return educacionContinuaDao.cantidadDiplomados();
+	}
+
+	@Override
+	public int cantidadSeminariosCongresosSimposios() {
+		// TODO Auto-generated method stub
+		return educacionContinuaDao.cantidadSeminariosCongresosSimposios();
+	}
+
 	
 
 	

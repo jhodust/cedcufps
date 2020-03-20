@@ -3,7 +3,12 @@ package com.ufps.cedcufps.services;
 import java.util.List;
 import java.util.Optional;
 
+import com.ufps.cedcufps.modelos.Administrativo;
+import com.ufps.cedcufps.modelos.Departamento;
+import com.ufps.cedcufps.modelos.Docente;
 import com.ufps.cedcufps.modelos.EstadoCivil;
+import com.ufps.cedcufps.modelos.Estudiante;
+import com.ufps.cedcufps.modelos.Externo;
 import com.ufps.cedcufps.modelos.Genero;
 import com.ufps.cedcufps.modelos.Persona;
 import com.ufps.cedcufps.modelos.Programa;
@@ -14,6 +19,14 @@ public interface IPersonaService {
 
 	public List<Persona> findAllPersonas();
 	
+	public List<Estudiante> findAllEstudiantes();
+	
+	public List<Docente> findAllDocentes();
+	
+	public List<Administrativo> findAllAdministrativos();
+	
+	public List<Externo> findAllExternos();
+	
 	public List<EstadoCivil> findAllEstadosCiviles();
 	
 	public List<Genero> findAllGeneros();
@@ -23,6 +36,8 @@ public interface IPersonaService {
 	public List<TipoPersona> findAllTiposPersona();
 	
 	public List<Programa> findAllProgramas();
+	
+	public List<Departamento> findAllDepartamentos();
 	
 	public TipoPersona findByTipoPersona(String tipoPersona);
 	

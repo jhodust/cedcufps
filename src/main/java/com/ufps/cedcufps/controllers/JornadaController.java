@@ -33,7 +33,7 @@ public class JornadaController {
 		return "educacion_continua/jornada/index";
 	}
 	
-	@RequestMapping(value = "/educacion-continua/{id}/jornadas/registro")
+	/*@RequestMapping(value = "/educacion-continua/{id}/jornadas/registro")
 	public String agregar(@PathVariable(value = "id") Long id, Map<String, Object> model) {
 		EducacionContinua ec= educacionContinuaService.findOne(id).get();
 		Jornada j= new Jornada(); 
@@ -60,5 +60,5 @@ public class JornadaController {
 		model.put("tipos_educacion_continua",educacionContinuaService.findAllTiposEducacionContinua());
 		model.put("jornada",j.get());
 		return "educacion_continua/jornada/form";
-	}
+	}*/
 }

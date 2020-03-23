@@ -36,9 +36,9 @@ public class PonenteController {
 		model.put("educacionContinua",educacionContinuaService.findOne(id).get());
 		
 		return "educacion_continua/ponente/index";
-	}*/
+	}
 	
-	@RequestMapping(value = "/educacion-continua/{id}/ponentes/registro")
+	/*@RequestMapping(value = "/educacion-continua/{id}/ponentes/registro")
 	public String agregar(@PathVariable(value = "id") Long id, Map<String, Object> model) {
 		EducacionContinua ec= educacionContinuaService.findOne(id).get();
 		Ponente p= new Ponente(); 
@@ -67,13 +67,13 @@ public class PonenteController {
 		model.put("personas",personaService.findAllPersonas());
 		model.put("ponente",p.get());
 		return "educacion_continua/ponente/form";
-	}
+	}*/
 	
-	@RequestMapping(value = "/educacion-continua/{id_ec}/ponentes/eliminar/{id_ponente}")
+	/*@RequestMapping(value = "/educacion-continua/{id_ec}/ponentes/eliminar/{id_ponente}")
 	public String eliminarPonenteEvento(@PathVariable(value = "id_ec") Long idEducacionContinua, @PathVariable(value = "id_ponente") Long idPonente, Map<String, Object> model) {
 		Optional<Participante> p= participanteService.findOne(idPonente); 
 		participanteService.deleteParticipante(p.get());
 		String url="/educacion-continua/"+idEducacionContinua+"/ponentes";
 		return "redirect:"+url;
-	}
+	}*/
 }

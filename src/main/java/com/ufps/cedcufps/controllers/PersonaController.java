@@ -34,7 +34,7 @@ public class PersonaController {
 		return "persona/index";
 	}
 	
-	@RequestMapping(value = "/usuarios/registro")
+	/*@RequestMapping(value = "/usuarios/registro")
 	public String agregar(Map<String, Object> model) {
 		Estudiante e= new Estudiante();
 		Docente d= new Docente();
@@ -51,7 +51,7 @@ public class PersonaController {
 		model.put("generos",personaService.findAllGeneros());
 		model.put("estados_civiles",personaService.findAllEstadosCiviles());
 		return "persona/form";
-	}
+	}*/
 	
 	@RequestMapping(value = "/usuarios/registro/{id}")
 	public String editar(@PathVariable(value = "id") Long id, Map<String, Object> model) {

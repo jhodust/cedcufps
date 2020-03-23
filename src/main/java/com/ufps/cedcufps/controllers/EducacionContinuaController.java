@@ -48,6 +48,7 @@ public class EducacionContinuaController {
 		model.addAttribute("porcTalleres",cantTalleres*100/total);
 		model.addAttribute("porcDiplomados",cantDiplomados*100/total);
 		model.addAttribute("porcSemConSimp",cantSemConSimp*100/total);
+		model.addAttribute("posiblesPonentes",personaService.findAllPersonas());
 		return "educacion_continua/index";
 	}
 	

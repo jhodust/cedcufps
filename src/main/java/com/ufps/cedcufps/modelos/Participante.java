@@ -15,6 +15,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "participantes", uniqueConstraints={
 		   @UniqueConstraint(columnNames={"id_persona", "educacion_continua_id"})})

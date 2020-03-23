@@ -12,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
 @Table(name = "jornadas")
 public class Jornada implements Serializable{
@@ -27,10 +29,11 @@ public class Jornada implements Serializable{
 	
 	private Date fecha;
 	
+	@JsonFormat(pattern="dd/MM/yyyy HH:mm", timezone="America/Bogota")
 	@Column(name = "hora_inicio")
 	private Date horaInicio;
 	
-
+	@JsonFormat(pattern="dd/MM/yyyy HH:mm", timezone="America/Bogota")
 	@Column(name = "hora_fin")
 	private Date horaFin;
 	

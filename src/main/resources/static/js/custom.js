@@ -34,6 +34,10 @@ $(document).ready(function ()
 	
 	
 	
+	
+	
+	
+	
 	console.log("antes");
 	$.getJSON( "/data/countries_iso3166.json", function( json )
 		  

@@ -1,89 +1,139 @@
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-	xlmns:sec="http://www.thymeleaf.org/extras/spring-security">
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
-<head th:replace="layouts/layout :: head">
+<head th:replace="layouts/layout3 :: head">
 <meta charset="UTF-8" />
+
 </head>
 
-<body class="index-page sidebar-collapse">
-	<header th:replace="layouts/layout :: header"></header>
-	<div th:replace="layouts/layout :: encabezado"></div>
-	<div class="main main-raised">
-		<div class="section section-basic">
-			<div class="container">
-				<div class="col-md-12">
-					
+<body class="application application-offset">
 
-					<h2>EDUCACIÓN CONTINUA</h2>
-					<table  class="row-border" style="width: 100%">
-						<tbody>
-							<tr>
-								<td>Tipo:</td>
-								<td th:text="${educacionContinua.tipoEduContinua.tipoEduContinua}"></td>
-							</tr>
-							<tr>
-								<td>Nombre:</td>
-								<td th:text="${educacionContinua.nombre}"></td>
-							</tr>
-							<tr>
-								<td>Fecha Inicio:</td>
-								<td th:text="${#dates.format(educacionContinua.fechaInicio, 'dd-MM-yyyy')}"></td>
-							</tr>
-							<tr>
-								<td>Fecha Fin:</td>
-								<td th:text="${#dates.format(educacionContinua.fechaFin, 'dd-MM-yyyy')}"></td>
-							</tr>
-							<tr>
-								<td>Fecha Limite Inscripción:</td>
-								<td th:text="${#dates.format(educacionContinua.fechaLimInscripcion, 'dd-MM-yyyy')}"></td>
-							</tr>
-							<tr>
-								<td>Duracion:</td>
-								<td th:text="${educacionContinua.duracion}"></td>
-							</tr>
-							<tr>
-								<td>Requisitos:</td>
-								<td th:text="${educacionContinua.requisitos}"></td>
-							</tr>
-							<tr>
-								<td>Contenido General:</td>
-								<td th:text="${educacionContinua.contenidoGeneral}"></td>
-							</tr>
-							<tr>
-								<td>Objetivo:</td>
-								<td th:text="${educacionContinua.objetivo}"></td>
-							</tr>
-							<tr>
-								<td>Cantidad Max Participantes:</td>
-								<td th:text="${educacionContinua.cantMaxParticipantes}"></td>
-							</tr>
-							<tr>
-								<td>Resumen:</td>
-								<td th:text="${educacionContinua.resumen}"></td>
-							</tr>
-							<tr>
-								<td>Costo:</td>
-								<td th:text="${educacionContinua.costo}"></td>
-							</tr>
-						</tbody>
-					</table>
-					
-					<div th:if="${participante == null}">
-						<a th:href="@{/educacion-continua/{id}/realizar-inscripcion(id=${educacionContinua.id})}"
-									class="btn btn-primary">INSCRIBETE!
-								</a>
-						
-					</div>
-					<div th:if="${participante != null and participante.tipoParticipante.tipoParticipante == 'Asistente'}">
-						<a th:href="@{/educacion-continua/{id}/cancelar-inscripcion(id=${educacionContinua.id})}"
-									class="btn btn-primary">CANCELAR INSCRIPCIÓN!
-								</a>
-					</div>
-				</div>
+	<!-- Application container -->
+	<div class="container-fluid container-application">
+		<!-- Sidenav -->
+		<!-- lado izquierdo de la plantilla -->
+		<div class="sidenav" id="sidenav-main" th:fragment="sidenavMain">
+			<!-- Sidenav header -->
+			<div th:replace="layouts/sidenavHeader :: sidenavHeader"></div>
+			<!-- User mini profile -->
+			<div th:replace="layouts/profile :: profile"></div>
+			<!-- Application nav -->
+			<div class="nav-application clearfix" th:fragment="sidebar">
+				<a th:href="@{/educacion-continua}" class="btn btn-square text-sm">
+					<span class="btn-inner--icon d-block"><i
+						class="fas fa-clipboard-list fa-3x"></i></span> <span
+					class="btn-inner--icon d-block pt-2">Listar</span>
+				</a> <a th:href="@{/educacion-continua/registro}" 
+					class="btn btn-square text-sm"> <span
+					class="btn-inner--icon d-block"><i
+						class="fas fa-plus-circle fa-3x"></i></span> <span
+					class="btn-inner--icon d-block pt-2">Agregar</span>
+				</a>
+
 			</div>
 		</div>
-	</div>
+		<!-- Content -->
+		<div class="main-content position-relative">
+			<!-- Main nav -->
+			<nav th:replace="layouts/layout3 :: nav"></nav>
+			<!-- Page content -->
+			<div class="page-content">
 
-	<footer th:replace="layouts/layout :: footer"></footer>
+				<!-- Page title -->
+				<div class="page-title">
+					<div class="row justify-content-between align-items-center">
+						<div
+							class="col-md-6 d-flex align-items-center justify-content-between justify-content-md-start mb-3 mb-md-0">
+							<!-- Page title + Go Back button -->
+							<div class="d-inline-block">
+								<h5 class="h4 d-inline-block font-weight-400 mb-0 text-white">Formulario
+									Registro Usuarios</h5>
+							</div>
+
+						</div>
+
+					</div>
+				</div>
+				<!-- Project cards -->
+				
+				<div class="card card-body p-md-5">
+          		  <div class="row">
+		            <div class="col-12 col-md-6">
+		              <h5>Información Evento</h5>
+	    
+		              <dl class="row mt-4 align-items-center">
+		                <dt class="col-sm-4 h6 text-sm">Tipo</dt>
+		                <dd class="col-sm-8 text-sm" th:text="${educacionContinua.tipoEduContinua.tipoEduContinua}"></dd>
+		                <dt class="col-sm-4 h6 text-sm">Nombre</dt>
+		                <dd class="col-sm-8 text-sm" th:text="${educacionContinua.nombre}"></dd>
+		                <dt class="col-sm-4 h6 text-sm">Fecha Inicio</dt>
+		                <dd class="col-sm-8 text-sm" th:text="${#dates.format(educacionContinua.fechaInicio, 'dd-MM-yyyy')}"></dd>
+		                <dt class="col-sm-4 h6 text-sm">Fecha Fin</dt>
+		                <dd class="col-sm-8 text-sm" th:text="${#dates.format(educacionContinua.fechaFin, 'dd-MM-yyyy')}"></dd>
+		                <dt class="col-sm-4 h6 text-sm">Duración(horas)</dt>
+		                <dd class="col-sm-8 text-sm" th:text="${educacionContinua.duracion}"></dd>
+		                <dt class="col-sm-4 h6 text-sm">Objetivo</dt>
+		                <dd class="col-sm-8 text-sm" th:text="${educacionContinua.objetivo}"></dd>
+		                <dt class="col-sm-4 h6 text-sm">Requisitos</dt>
+		                <dd class="col-sm-8 text-sm" th:text="${educacionContinua.requisitos}"></dd>
+		              </dl>
+		            </div>
+		            <div class="col-12 col-md-6">
+		              <h5>Imagen</h5>
+		              <a th:href="@{/plantilla/assets/img/theme/light/img-1-800x600.jpg}" data-fancybox data-caption="My caption">
+						 <img th:src="@{/plantilla/assets/img/theme/light/img-1-800x600.jpg}" class="w-50 img-fluid rounded">
+					  </a>
+		            </div>
+		          </div>
+		          <div class="row">
+		            <div class="col-12 col-md-6">
+		              <h5>Información Participantes</h5>
+	    
+		              <dl class="row mt-4 align-items-center">
+		                <dt class="col-sm-4 h6 text-sm">Fecha Límite Inscripción</dt>
+		                <dd class="col-sm-8 text-sm" th:text="${#dates.format(educacionContinua.fechaLimInscripcion, 'dd-MM-yyyy')}"></dd>
+		                <dt class="col-sm-4 h6 text-sm">Costo</dt>
+		                <dd class="col-sm-8 text-sm" th:text="${educacionContinua.costo}"></dd>
+		                <dt class="col-sm-4 h6 text-sm">Cantidad Máxima Participantes</dt>
+		                <dd class="col-sm-8 text-sm" th:text="${educacionContinua.cantMaxParticipantes}"></dd>
+		                <dt class="col-sm-4 h6 text-sm">Cantidad Participantes Inscritos</dt>
+		                <dd class="col-sm-8 text-sm">New York</dd>
+		              </dl>
+		            </div>
+		            <div class="col-12 col-md-6">
+		              <h5>Información Adicional</h5>
+		              <dl class="row mt-4 align-items-center">
+		                <dt class="col-sm-3 h6 text-sm">Contenido General</dt>
+		                <dd class="col-sm-9 text-sm" th:text="${educacionContinua.contenidoGeneral}"></dd>
+		                <dt class="col-sm-3 h6 text-sm">Resumen</dt>
+		                <dd class="col-sm-9 text-sm" th:text="${educacionContinua.resumen}"></dd>
+		              </dl>
+		              <div th:if="${participante == null}">
+						<a th:href="@{/educacion-continua/{id}/realizar-inscripcion(id=${educacionContinua.id})}"
+									class="btn btn-primary btn-sm">INSCRIBETE!
+								</a>
+						
+						</div>
+						<div th:if="${participante != null and participante.tipoParticipante.tipoParticipante == 'Asistente'}">
+							<a th:href="@{/educacion-continua/{id}/cancelar-inscripcion(id=${educacionContinua.id})}"
+										class="btn btn-primary btn-sm">CANCELAR INSCRIPCIÓN!
+									</a>
+						</div>
+		            </div>
+		          </div>
+		        </div>
+				
+				
+			</div>
+
+		</div>
+
+	</div>
+	<!-- Footer -->
+	<div th:replace="layouts/footer :: footer"></div>
+	<div th:replace="layouts/layout3 :: scripts"></div>
+
 </body>
+
 </html>

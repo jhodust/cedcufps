@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.ufps.cedcufps.dao.IEducacionContinuaDao;
 import com.ufps.cedcufps.dao.ITipoEducacionContinuaDao;
 import com.ufps.cedcufps.modelos.EducacionContinua;
+import com.ufps.cedcufps.modelos.Participante;
 import com.ufps.cedcufps.modelos.TipoEducacionContinua;
 
 @Service
@@ -67,6 +68,8 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 		// TODO Auto-generated method stub
 		return educacionContinuaDao.cantidadSeminariosCongresosSimposios();
 	}
+
+	
 
 	
 

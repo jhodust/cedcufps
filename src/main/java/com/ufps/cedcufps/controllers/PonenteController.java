@@ -30,13 +30,13 @@ public class PonenteController {
 	@Autowired
 	private IPersonaService personaService;
 
-	@RequestMapping(value = "/educacion-continua/{id}/ponentes")
+	/*@RequestMapping(value = "/educacion-continua/{id}/ponentes")
 	public String listar(@PathVariable(value = "id") Long id, Map<String, Object> model) {
 		model.put("titulo","PONENTES");
 		model.put("educacionContinua",educacionContinuaService.findOne(id).get());
 		
 		return "educacion_continua/ponente/index";
-	}
+	}*/
 	
 	@RequestMapping(value = "/educacion-continua/{id}/ponentes/registro")
 	public String agregar(@PathVariable(value = "id") Long id, Map<String, Object> model) {

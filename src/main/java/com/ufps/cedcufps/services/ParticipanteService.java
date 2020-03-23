@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.ufps.cedcufps.dao.IParticipanteDao;
 import com.ufps.cedcufps.dao.ITipoParticipanteDao;
 import com.ufps.cedcufps.modelos.Participante;
+import com.ufps.cedcufps.modelos.Ponente;
 import com.ufps.cedcufps.modelos.TipoParticipante;
 
 @Service
@@ -60,6 +61,24 @@ public class ParticipanteService implements IParticipanteService{
 	public void deleteParticipante(Participante p) {
 		// TODO Auto-generated method stub
 		participanteDao.delete(p);
+	}
+
+	@Override
+	public List<Participante> findAllPonentesOfOneEducacionContinua(Long idEducacionContinua) {
+		// TODO Auto-generated method stub
+		return participanteDao.findAllPonentesOfOneEducacionContinua(idEducacionContinua);
+	}
+
+	@Override
+	public Participante findParticipante(Long id) {
+		// TODO Auto-generated method stub
+		return participanteDao.findById(id).get();
+	}
+
+	@Override
+	public void deleteParticipanteById(Long id) {
+		// TODO Auto-generated method stub
+		participanteDao.deleteById(id);
 	}
 
 }

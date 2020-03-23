@@ -149,7 +149,7 @@
     								<span class="btn-inner--icon"><i class="fas fa-edit"></i></span></a>
     								<a class="btn btn-rojoufps rounded-circle btn-icon-only hover-scale-110" th:href="@{/educacion-continua/{id}/jornadas(id=${ec.id})}" data-toggle="tooltip" data-placement="top" title="Jornadas">
     								<span class="btn-inner--icon"><i class="far fa-calendar-alt"></i></span></a>
-    								<a class="btn btn-rojoufps rounded-circle btn-icon-only hover-scale-110" th:href="@{/educacion-continua/{id}/ponentes(id=${ec.id})}" data-toggle="tooltip" data-placement="top" title="Ponentes">
+    								<a class="btn btn-rojoufps rounded-circle btn-icon-only hover-scale-110"  href="#" onclick="ponentes(this)" th:data-id="${ec.id}" data-toggle="tooltip" data-placement="top" title="Ponentes">
     								<span class="btn-inner--icon"><i class="fas fa-user-circle"></i></span></a>
     								</td>
 							</tr>
@@ -167,6 +167,7 @@
     
   </div>
   <!-- Footer -->
+  	  <div th:replace="educacion_continua/ponente/formModal :: modalRegistro"></div>
       <div th:replace="layouts/footer :: footer"></div>
       <div th:replace="layouts/layout3 :: scripts"></div>
   

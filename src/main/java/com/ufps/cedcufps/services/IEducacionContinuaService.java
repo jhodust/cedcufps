@@ -3,6 +3,7 @@ package com.ufps.cedcufps.services;
 import java.util.List;
 import java.util.Optional;
 import com.ufps.cedcufps.modelos.EducacionContinua;
+import com.ufps.cedcufps.modelos.Participante;
 import com.ufps.cedcufps.modelos.TipoEducacionContinua;
 
 public interface IEducacionContinuaService {
@@ -22,5 +23,6 @@ public interface IEducacionContinuaService {
 	public int cantidadDiplomados();
 	
 	public int cantidadSeminariosCongresosSimposios();
+	
 	
 }

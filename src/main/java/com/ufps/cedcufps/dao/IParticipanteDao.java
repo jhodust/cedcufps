@@ -9,6 +9,9 @@ import com.ufps.cedcufps.modelos.Participante;
 
 public interface IParticipanteDao extends CrudRepository<Participante, Long> {
 
+	@Query("select p from Participante p where p.educacionContinua.id = ?1 and p.tipoParticipante.id = '2'")
+	public List<Participante> findAllPonentesOfOneEducacionContinua(Long idEducacionContinua);
+	
 	@Query("select p from Participante p where p.educacionContinua.id = ?1 and p.tipoParticipante.tipoParticipante=?2")
 	  public List<Participante> findTipoParticipantesByIdEducacionContinua(Long idEducacionContinua, String tipoParticipante );
 	

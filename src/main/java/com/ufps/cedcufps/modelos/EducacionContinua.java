@@ -19,6 +19,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "educacion_continua")
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -59,9 +61,11 @@ public class EducacionContinua implements Serializable {
 	@JoinColumn(name="id_tipo_educacion_continua")
 	private TipoEducacionContinua tipoEduContinua;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "educacionContinua",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Jornada> jornadas;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "educacionContinua",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Participante> participantes;
 

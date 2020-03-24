@@ -19,6 +19,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -37,12 +39,15 @@ public class EducacionContinua implements Serializable {
 	
 	private String nombre;
 	
+	@DateTimeFormat(pattern="dd/MM/yyyy")
 	@Column(name = "fecha_inicio")
 	private Date fechaInicio;
 	
+	@DateTimeFormat(pattern="dd/MM/yyyy")
 	@Column(name = "fecha_fin")
 	private Date fechaFin;
 	
+	@DateTimeFormat(pattern="dd/MM/yyyy")
 	@Column(name = "fecha_lim_inscripcion")
 	private Date fechaLimInscripcion;
 	private int duracion;

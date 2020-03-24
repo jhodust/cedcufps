@@ -74,7 +74,7 @@
 												<div class="form-group">
 													<label class="form-control-label">Programa
 														Académico</label> <select class="form-control"
-														data-toggle="select" th:field="*{programa}">
+														data-toggle="select" th:field="*{programa}" id="programaAsociado">
 														<option value="0">Seleccione el programa...</option>
 														<option th:each="p: ${programas}" th:value="${p.id}"
 															th:text="${p.programa}"></option>
@@ -85,9 +85,9 @@
 										<div class="row">
 											<div class="col-md-12">
 												<div class="form-group">
-													<label class="form-control-label">Código</label> <input
+													<label class="form-control-label">Código</label><input
 														class="form-control" type="text"
-														placeholder="+40-777 245 549" th:field="*{consecutivo}">
+														data-mask="000-0000" placeholder="000-0000" th:field="*{consecutivo}" id="codigo">
 												</div>
 											</div>
 										</div>

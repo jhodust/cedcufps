@@ -64,16 +64,16 @@ public class PersonaController {
 		model.put("estados_civiles",personaService.findAllEstadosCiviles());
 		if(p.getTipoPersona().getTipoPersona().equalsIgnoreCase("Estudiante")) {
 			model.put("estudiante",(Estudiante)personaService.findOne(id).get());
-			return "persona/formRegistroEstudiante";
+			return "redirect:/usuarios/estudiante/registro/"+p.getId();
 		}else if(p.getTipoPersona().getTipoPersona().equalsIgnoreCase("Docente")) {
 			model.put("docente",(Docente)personaService.findOne(id).get());
-			return "persona/formRegistroDocente";
+			return "redirect:/usuarios/docente/registro/"+p.getId();
 		}else if(p.getTipoPersona().getTipoPersona().equalsIgnoreCase("Administrativo")) {
 			model.put("administrativo",(Administrativo)personaService.findOne(id).get());
-			return "persona/formRegistroAdministrativo";
+			return "redirect:/usuarios/administrativo/registro/"+p.getId();
 		}else{
 			model.put("externo",(Externo)personaService.findOne(id).get());
-			return "persona/formRegistroExterno";
+			return "redirect:/usuarios/externo/registro/"+p.getId();
 		}
 	}
 	

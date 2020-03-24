@@ -18,6 +18,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 
@@ -43,7 +45,8 @@ public class Persona implements Serializable {//*
 	
 	@Column(name = "numero_documento")
 	private String numeroDocumento;
-	
+
+	@DateTimeFormat(pattern="dd/MM/yyyy")
 	@Column(name = "fecha_expedicion_documento")
 	private Date fechaExpedicionDocumento;
 	
@@ -67,6 +70,7 @@ public class Persona implements Serializable {//*
 	@JoinColumn(name="id_estado_civil")
 	private EstadoCivil estadoCivil;
 	
+	@DateTimeFormat(pattern="dd/MM/yyyy")
 	@Column(name = "fecha_nacimiento")
 	private Date fechaNacimiento;
 	

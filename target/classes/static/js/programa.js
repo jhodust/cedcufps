@@ -74,7 +74,7 @@ function editarPrograma(elemento){
 		headers: {"X-CSRF-TOKEN": token},
 		type: "GET",
 		contentType: "application/json; charset=utf-8",
-		url: "http://localhost:8080/programa/search/"+elemento.dataset.id,
+		url: "/programa/search/"+elemento.dataset.id,
 		cache: false,
 		success: function(result) {
 			$('#modalRegistroPrograma').modal();

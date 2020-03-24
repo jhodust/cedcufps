@@ -28,7 +28,7 @@
 											<div class="form-group">
 												<label class="form-control-label">Número Documento</label> <input
 													class="form-control" type="text"
-													placeholder="Enter your first name" th:field="*{numeroDocumento}"/>
+													placeholder="Ingrese su número de documento..." th:field="*{numeroDocumento}"/>
 											</div>
 										</div>
 
@@ -37,9 +37,9 @@
 										<div class="col-md-12">
 											<div class="form-group">
 												<label class="form-control-label">Fecha Expedición
-													Documento</label> <input type="date"
+													Documento</label> <input type="text"
 													class="form-control flatpickr-input" data-toggle="date"
-													placeholder="Select your birth date" th:field="*{fechaExpedicionDocumento}" value="2020/03/01"/>
+													placeholder="Seleccione fecha..." th:field="*{fechaExpedicionDocumento}"/>
 											</div>
 										</div>
 									</div>
@@ -48,14 +48,14 @@
 											<div class="form-group">
 												<label class="form-control-label">Primer Nombre</label> <input
 													class="form-control" type="text"
-													placeholder="Enter your first name" th:field="*{primerNombre}"/>
+													placeholder="Ingrese su primer nombre..." th:field="*{primerNombre}"/>
 											</div>
 										</div>
 										<div class="col-md-6">
 											<div class="form-group">
 												<label class="form-control-label">Segundo Nombre</label> <input
 													class="form-control" type="text"
-													placeholder="Also your last name" th:field="*{segundoNombre}"/>
+													placeholder="Ingrese su segundo nombre..." th:field="*{segundoNombre}"/>
 											</div>
 										</div>
 									</div>
@@ -64,14 +64,14 @@
 											<div class="form-group">
 												<label class="form-control-label">Primer Apellido</label> <input
 													class="form-control" type="text"
-													placeholder="Enter your first name" th:field="*{primerApellido}"/>
+													placeholder="Ingrese su primer apellido..." th:field="*{primerApellido}"/>
 											</div>
 										</div>
 										<div class="col-md-6">
 											<div class="form-group">
 												<label class="form-control-label">Segundo Apellido</label> <input
 													class="form-control" type="text"
-													placeholder="Also your last name" th:field="*{segundoApellido}"/>
+													placeholder="Ingrese su segundo apellido..." th:field="*{segundoApellido}"/>
 											</div>
 										</div>
 									</div>
@@ -117,27 +117,28 @@
 										<div class="col-md-12">
 											<div class="form-group">
 												<label class="form-control-label">Fecha Nacimiento</label> <input
-													type="date" class="form-control flatpickr-input"
-													data-toggle="date" placeholder="Select your birth date" th:field="*{fechaNacimiento}"/>
+													type="text" class="form-control flatpickr-input"
+													data-toggle="date" placeholder="Seleccione su fecha de nacimiento..." th:field="*{fechaNacimiento}"/>
 											</div>
 										</div>
 									</div>
 									<div class="row">
-										<div class="col-md-6">
+										<div class="col-md-12">
 											<div class="form-group">
 												<label class="form-control-label">Pais Nacimiento</label> <select
 													class="form-control" data-toggle="select" id="selectPaisNacimiento" th:field="*{idPaisNacimiento}">
-													
+													<option value="0">Seleccione pais...</option>
 												</select>
 											</div>
 										</div>
 									</div>
-									<div class="row">
+									<div class="row" id="rowDeptoYMpioColombia">
 										<div class="col-md-6">
 											<div class="form-group">
 												<label class="form-control-label">Departamento
 													Nacimiento</label> <select class="form-control"
 													data-toggle="select" id="selectDepartamentoNacimiento" th:field="*{idDepartamentoNacimiento}">
+													<option value="0">Seleccione departamento...</option>
 												</select>
 											</div>
 										</div>
@@ -146,12 +147,21 @@
 												<label class="form-control-label">Municipio
 													Nacimiento</label> <select class="form-control"
 													data-toggle="select" id="selectMunicipioNacimiento" th:field="*{idMunicipioNacimiento}">
+													<option value="0">Seleccione municipio...</option>
 												</select>
 											</div>
 										</div>
 									</div>
 								</div>
 							</div>
+							<script th:inline="javascript">
+							    var idPaisNac = [[*{idPaisNacimiento}]];
+							    var idDepNac = [[*{idDepartamentoNacimiento}]];
+							    var idMunNac = [[*{idMunicipioNacimiento}]];
+							    console.log("pais nacimiento: " + idPaisNac);
+							    console.log("depto nacimiento: " + idDepNac);
+						    	console.log("municipio nacimiento: " + idMunNac);
+						    </script>
 						</div>
 						<div class="col-lg-6">
 
@@ -167,10 +177,8 @@
 											<div class="col-md-12">
 												<div class="form-group">
 													<label class="form-control-label">Email</label> <input
-														class="form-control" type="email"
-														placeholder="name@exmaple.com" th:field="*{email}"/> <small
-														class="form-text text-muted mt-2">This is the main
-														email address that we'll send notifications.</small>
+														class="form-control" type="email" 
+														placeholder="Ingrese su email..."  th:field="*{email}"/> 
 												</div>
 											</div>
 										</div>
@@ -179,7 +187,7 @@
 												<div class="form-group">
 													<label class="form-control-label">Telefono</label> <input
 														class="form-control" type="text"
-														placeholder="+40-777 245 549" th:field="*{telefono}"/>
+														placeholder="Ingrese su telefono de contacto..." th:field="*{telefono}"/>
 												</div>
 											</div>
 										</div>
@@ -188,7 +196,7 @@
 												<div class="form-group">
 													<label class="form-control-label">Dirección</label> <input
 														class="form-control" type="text"
-														placeholder="Enter your home address" th:field="*{direccion}"/>
+														placeholder="Ingrese su dirección de residencia..." th:field="*{direccion}"/>
 												</div>
 											</div>
 										</div>
@@ -197,5 +205,7 @@
 							</div>
 						</div>
 					</div>
+					
+
 </body>
 </html>

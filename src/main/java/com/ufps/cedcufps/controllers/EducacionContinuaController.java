@@ -1,16 +1,23 @@
 package com.ufps.cedcufps.controllers;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.ufps.cedcufps.modelos.EducacionContinua;
@@ -61,8 +68,34 @@ public class EducacionContinuaController {
 		return "educacion_continua/form";
 	}
 	
+	
+	
 	@RequestMapping(value = "/educacion-continua/registro", method = RequestMethod.POST)
-	public String save(EducacionContinua ec, SessionStatus status) {
+	public String save(EducacionContinua ec, SessionStatus status, @RequestParam("file") MultipartFile imagen) {
+		
+			System.out.println("va a entrar al if");
+			if(!imagen.isEmpty()) {
+				System.out.println("entra al if");
+				Path directorioRecursos=Paths.get("src//main//resources//static/uploads");
+				System.out.println("define directorio recuros");
+				String rutaFolder=directorioRecursos.toFile().getAbsolutePath();
+				System.out.println("define ruta folder");
+				try {
+					byte[] bytes = imagen.getBytes();
+					System.out.println("toma bytes");
+					Path rutaArchivo=Paths.get(rutaFolder+"//"+imagen.getOriginalFilename());
+					System.out.println("establece ruta archivo");
+					Files.write(rutaArchivo, bytes);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				System.out.println("escribe archivo");
+				ec.setImagen("/uploads/"+imagen.getOriginalFilename());
+				System.out.println("actualiza en el modelo");
+			}
+		
 		educacionContinuaService.save(ec);
 		status.setComplete();
 		return "redirect:/educacion-continua";

@@ -37,6 +37,8 @@ public class EducacionContinua implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+	private String imagen;
+	
 	private String nombre;
 	
 	@DateTimeFormat(pattern="dd/MM/yyyy")
@@ -206,6 +208,14 @@ public class EducacionContinua implements Serializable {
 	
 	public void addParticipante(Participante p) {
 		this.participantes.add(p);
+	}
+
+	public String getImagen() {
+		return imagen;
+	}
+
+	public void setImagen(String imagen) {
+		this.imagen = imagen;
 	}
 	
 	

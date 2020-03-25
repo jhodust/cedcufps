@@ -87,7 +87,7 @@
 											<div class="form-group">
 												<label class="form-control-label">Nombre</label> <input
 													class="form-control" type="text"
-													placeholder="Enter your first name" th:field="*{nombre}"/>
+													placeholder="Ingrese el nombre del evento" th:field="*{nombre}"/>
 											</div>
 										</div>
 									</div>
@@ -96,14 +96,14 @@
 											<div class="form-group">
 												<label class="form-control-label">Fecha Inicio</label> <input type="text"
 													class="form-control flatpickr-input" data-toggle="date"
-													placeholder="Select your birth date" id="fechaInicioEduCont" th:field="*{fechaInicio}"/>
+													placeholder="Seleccione la fecha de inicio..." id="fechaInicioEduCont" th:field="*{fechaInicio}"/>
 											</div>
 										</div>
 										<div class="col-md-6">
 											<div class="form-group">
 												<label class="form-control-label">Fecha Fin</label> <input type="text"
 													class="form-control flatpickr-input" data-toggle="date"
-													placeholder="Select your birth date" id="fechaFinEduCont" th:field="*{fechaFin}"/>
+													placeholder="Seleccione la fecha de finalización..." id="fechaFinEduCont" th:field="*{fechaFin}"/>
 											</div>
 										</div>
 									</div>
@@ -112,17 +112,19 @@
 											<div class="form-group">
 												<label class="form-control-label">Duración(horas)</label> <input
 													class="form-control" type="text"
-													placeholder="Enter your first name" th:field="*{duracion}"/>
+													placeholder="Ingrese la duración del evento..." th:field="*{duracion}"/>
 											</div>
 										</div>
 									</div>
 									<div class="row">
 										<div class="col-md-12">
 											<div class="form-group">
-												<label class="form-control-label">Objetivo</label> 
-												<textarea class="form-control" data-toggle="autosize" 
-												placeholder="This textarea will autosize while you type" rows="1" 
-												th:field="*{objetivo}"></textarea>
+												<label class="form-control-label">Imagen</label> 
+												<input type="file" class="custom-input-file" name="file" id="inputImagenEvento" multiple />
+											    <label for="inputImagenEvento">
+											        <i class="fa fa-upload"></i>
+											        <span>Choose a file…</span>
+											    </label>
 											</div>
 										</div>
 									</div>
@@ -131,13 +133,11 @@
 												<div class="form-group">
 													<label class="form-control-label">Requisitos</label> 
 													<textarea class="form-control" data-toggle="autosize" 
-													placeholder="This textarea will autosize while you type" rows="1" 
+													placeholder="Ingrese los requisitos del evento..." rows="1" 
 													th:field="*{requisitos}"></textarea>
 												</div>
 											</div>
 										</div>
-									
-									
 									
 									</div>
 								</div>
@@ -154,7 +154,7 @@
 												<div class="form-group">
 													<label class="form-control-label">Fecha Límite Inscripción</label> <input type="text"
 														class="form-control flatpickr-input" data-toggle="date"
-														placeholder="Select your birth date" id="fechaLimInscripcionEduCont" th:field="*{fechaLimInscripcion}"/>
+														placeholder="Seleccione la fecha límite de inscripción..." id="fechaLimInscripcionEduCont" th:field="*{fechaLimInscripcion}"/>
 												</div>
 											</div>
 										</div>
@@ -163,14 +163,14 @@
 												<div class="form-group">
 													<label class="form-control-label">Costo</label> <input
 														class="form-control" type="text"
-														placeholder="Enter your first name" th:field="*{costo}"/>
+														placeholder="Ingrese el costo que tendrá la inscripción del participante" th:field="*{costo}"/>
 												</div>
 											</div>
 											<div class="col-md-6">
 												<div class="form-group">
-													<label class="form-control-label">Cantidad Max Participantes</label> <input
+													<label class="form-control-label">Cantidad Participantes(Max)</label> <input
 														class="form-control" type="text"
-														placeholder="Enter your first name" th:field="*{cantMaxParticipantes}"/>
+														placeholder="Ingrese la cantidad máxima de participantes" th:field="*{cantMaxParticipantes}"/>
 												</div>
 											</div>
 											
@@ -186,14 +186,22 @@
 										<div class="row">
 											<span class="badge badge-danger">Información Adicional</span>
 										</div>
-										
-										
+										<div class="row">
+											<div class="col-md-12">
+												<div class="form-group">
+													<label class="form-control-label">Objetivo</label> 
+													<textarea class="form-control" data-toggle="autosize" 
+													placeholder="Ingrese el objetivo del evento..." rows="1" 
+													th:field="*{objetivo}"></textarea>
+												</div>
+											</div>
+										</div>
 										<div class="row">
 											<div class="col-md-12">
 												<div class="form-group">
 													<label class="form-control-label">Contenido General</label> 
 													<textarea class="form-control" data-toggle="autosize" 
-													placeholder="This textarea will autosize while you type" rows="1" 
+													placeholder="Ingrese el contenido general del evento" rows="1" 
 													th:field="*{contenidoGeneral}"></textarea>
 												</div>
 											</div>
@@ -204,7 +212,7 @@
 												<div class="form-group">
 													<label class="form-control-label">Resumen</label> 
 													<textarea class="form-control" data-toggle="autosize" 
-													placeholder="This textarea will autosize while you type" rows="1" 
+													placeholder="Ingrese un resumen del evento..." rows="1" 
 													th:field="*{resumen}"></textarea>
 												</div>
 											</div>

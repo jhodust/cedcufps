@@ -73,27 +73,19 @@ public class EducacionContinuaController {
 	@RequestMapping(value = "/educacion-continua/registro", method = RequestMethod.POST)
 	public String save(EducacionContinua ec, SessionStatus status, @RequestParam("file") MultipartFile imagen) {
 		
-			System.out.println("va a entrar al if");
 			if(!imagen.isEmpty()) {
-				System.out.println("entra al if");
-				Path directorioRecursos=Paths.get("src//main//resources//static/uploads");
-				System.out.println("define directorio recuros");
+				Path directorioRecursos=Paths.get("src//main//resources//static//uploads");
 				String rutaFolder=directorioRecursos.toFile().getAbsolutePath();
-				System.out.println("define ruta folder");
 				try {
 					byte[] bytes = imagen.getBytes();
-					System.out.println("toma bytes");
 					Path rutaArchivo=Paths.get(rutaFolder+"//"+imagen.getOriginalFilename());
-					System.out.println("establece ruta archivo");
 					Files.write(rutaArchivo, bytes);
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				
-				System.out.println("escribe archivo");
 				ec.setImagen("/uploads/"+imagen.getOriginalFilename());
-				System.out.println("actualiza en el modelo");
 			}
 		
 		educacionContinuaService.save(ec);

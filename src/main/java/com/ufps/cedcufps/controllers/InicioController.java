@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.ufps.cedcufps.services.IEducacionContinuaService;
 
@@ -13,13 +14,11 @@ public class InicioController {
 	@Autowired
 	private IEducacionContinuaService educacionContinuaService;
 	
-	@GetMapping(value = "/home")
-	public String login(Model model) {
-		model.addAttribute("titulo","EDUCACIÓN CONTINUA");
+	@RequestMapping(value = "/")
+	public String listar(Model model) {
 		model.addAttribute("educacionesContinuas",educacionContinuaService.findAll());
-		return "layouts/layout3";
+		return "/index";
 	}
-	
 	
 	
 }

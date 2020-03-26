@@ -21,13 +21,13 @@ public class InicioController {
 	
 	@RequestMapping(value = "/")
 	public String listar(Model model) {
-//		List<EducacionContinua> edc = educacionContinuaService.educacionContinuaRecientes();
-//		EducacionContinua [] ec = new EducacionContinua[5];
-//		for(int i=0; i<ec.length; i++) {
-//			ec[i]=edc.get(i);
-//		}
+		List<EducacionContinua> edc = educacionContinuaService.educacionContinuaRecientes();
+		EducacionContinua [] ec = new EducacionContinua[5];
+		for(int i=0; i<ec.length; i++) {
+			ec[i]=edc.get(i);
+		}
 		model.addAttribute("educacionesContinuas",educacionContinuaService.findAll());
-//		model.addAttribute("educacionesRecientes",ec);
+		model.addAttribute("educacionesRecientes",ec);
 		return "/index";
 	}
 	

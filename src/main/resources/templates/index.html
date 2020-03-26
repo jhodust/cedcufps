@@ -1,201 +1,267 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head th:replace="layouts/layout3 :: head">
-	<meta charset="UTF-8"/>
+<meta charset="UTF-8" />
 </head>
 
 <body class="application application-offset">
- 
-  <!-- Application container -->
-  <div class="container-fluid container-application">
-    <!-- Sidenav --><!-- lado izquierdo de la plantilla -->
-    <div class="sidenav" id="sidenav-main" th:fragment="sidenavMain">
-      <!-- Sidenav header -->
-      <div th:replace="layouts/sidenavHeader :: sidenavHeader"></div>
-      <!-- User mini profile -->
-      <div th:replace="layouts/profile :: profile"></div>
-      <!-- Application nav -->
-      <div class="nav-application clearfix" th:fragment="sidebar">
-        <a th:href="@{/usuarios}" class="btn btn-square text-sm">
-          <span class="btn-inner--icon d-block"><i class="fas fa-clipboard-list fa-3x"></i></span>
-          <span class="btn-inner--icon d-block pt-2">Listar</span>
-        </a>
-        <a th:href="@{/persona/registro}" class="btn btn-square text-sm">
-          <span class="btn-inner--icon d-block"><i class="fas fa-plus-circle fa-3x"></i></span>
-          <span class="btn-inner--icon d-block pt-2">Agregar</span>
-        </a>
-        
-      </div>
-    </div>
-    <!-- Content -->
-    <div class="main-content position-relative">
-      <!-- Main nav -->
-      <nav th:replace="layouts/layout3 :: nav"></nav>
-      
-      <!-- Page content -->
-      <div class="page-content">
-        
-        <!-- Page title -->
-        <div class="page-title">
-          <div class="row justify-content-between align-items-center">
-            <div class="col-md-6 d-flex align-items-center justify-content-between justify-content-md-start mb-3 mb-md-0">
-              <!-- Page title + Go Back button -->
-              <div class="d-inline-block">
-                <h5 class="h4 d-inline-block font-weight-400 mb-0 text-white">Eventos Activos</h5>
-              </div>
-              
-              <!-- Optional link -->
-            </div>
-          </div>
-        </div>
-        <!-- Project cards -->
-        <hr>
-       <div class="tab-content mt-1">
-        <div class="swiper-js-container">
-    <div class="swiper-container" data-swiper-items="1" data-swiper-sm-items="2" data-swiper-xl-items="3" data-swiper-space-between="10" data-swiper-sm-space-between="10"  data-swiper-xl-space-between="10" data-swiper-initial-slide="0" data-swiper-effect="coverflow">
-        <div class="swiper-wrapper">
-            <div class="swiper-slide">
-                <svg class="bd-placeholder-img img-fluid rounded" width="600" height="600" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 600x600"><title>Placeholder</title><rect fill="" width="100%" height="100%"/><text fill="" dy=".3em" x="50%" y="50%">600x600</text></svg>
-            </div>
-            <div class="swiper-slide">
-                <svg class="bd-placeholder-img img-fluid rounded" width="600" height="600" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 600x600"><title>Placeholder</title><rect fill="" width="100%" height="100%"/><text fill="" dy=".3em" x="50%" y="50%">600x600</text></svg>
-            </div>
-            <div class="swiper-slide">
-                <svg class="bd-placeholder-img img-fluid rounded" width="600" height="600" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 600x600"><title>Placeholder</title><rect fill="" width="100%" height="100%"/><text fill="" dy=".3em" x="50%" y="50%">600x600</text></svg>
-            </div>
-            <div class="swiper-slide">
-                <svg class="bd-placeholder-img img-fluid rounded" width="600" height="600" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 600x600"><title>Placeholder</title><rect fill="" width="100%" height="100%"/><text fill="" dy=".3em" x="50%" y="50%">600x600</text></svg>
-            </div>
-            <div class="swiper-slide">
-                <svg class="bd-placeholder-img img-fluid rounded" width="600" height="600" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 600x600"><title>Placeholder</title><rect fill="" width="100%" height="100%"/><text fill="" dy=".3em" x="50%" y="50%">600x600</text></svg>
-            </div>
-            <div class="swiper-slide">
-                <svg class="bd-placeholder-img img-fluid rounded" width="600" height="600" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 600x600"><title>Placeholder</title><rect fill="" width="100%" height="100%"/><text fill="" dy=".3em" x="50%" y="50%">600x600</text></svg>
-            </div>
-        </div>
-        <!-- Add Pagination -->
-        <div class="swiper-pagination"></div>
-    
-</div>
-</div>
-</div>
-<br>
-<br>
-   
-        <div class="row">
-        <div class="col-lg-4">
-       <div class="card card-overlay card-hover-overlay hover-shadow-lg hover-translate-y-n10">
-    <figure class="figure">
-        <img alt="Image placeholder" src="/plantilla/assets/img/theme/light/img-1-1000x900.jpg" class="img-fluid">
 
-    </figure>
-    <div class="card-img-overlay d-flex flex-column align-items-center p-0">
-        <div class="overlay-text w-75 mt-auto p-4">
-            <p class="lead">Informacion Importante del Curso ofertado</p>
-            <a href="#!" class="link link-underline-white font-weight-bold">Nombre del Curso</a>
-        </div><div class="overlay-actions w-100 card-footer mt-auto d-flex justify-content-between align-items-center">
-            <div>
-                <a href="#!" class="h6 mb-0">Programa que lo oferta</a>
-            </div>
-            <div>
-                <div class="actions">
-                    <a href="#!" class="action-item mr-3"><i class="fas fa-paperclip"></i></a>
-                    <a href="../../assets/img/theme/light/" class="action-item mr-3" data-fancybox="gallery"><i class="fas fa-eye"></i></a>
-                    <a href="#!" class="action-item"><i class="fas fa-heart"></i></a>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-</div>
- <div class="col-lg-4">
-       <div class="card card-overlay card-hover-overlay hover-shadow-lg hover-translate-y-n10">
-    <figure class="figure">
-        <img alt="Image placeholder" src="/plantilla/assets/img/theme/light/img-1-1000x900.jpg" class="img-fluid">
+	<!-- Application container -->
+	<div class="container-fluid container-application">
+		<!-- Sidenav -->
+		<!-- lado izquierdo de la plantilla -->
+		<div class="sidenav" id="sidenav-main" th:fragment="sidenavMain">
+			<!-- Sidenav header -->
+			<div th:replace="layouts/sidenavHeader :: sidenavHeader"></div>
+			<!-- User mini profile -->
+			<div th:replace="layouts/profile :: profile"></div>
+			<!-- Application nav -->
+			<div class="nav-application clearfix" th:fragment="sidebar">
+				<a th:href="@{/usuarios}" class="btn btn-square text-sm"> <span
+					class="btn-inner--icon d-block"><i
+						class="fas fa-clipboard-list fa-3x"></i></span> <span
+					class="btn-inner--icon d-block pt-2">Listar</span>
+				</a> <a th:href="@{/persona/registro}" class="btn btn-square text-sm">
+					<span class="btn-inner--icon d-block"><i
+						class="fas fa-plus-circle fa-3x"></i></span> <span
+					class="btn-inner--icon d-block pt-2">Agregar</span>
+				</a>
 
-    </figure>
-    <div class="card-img-overlay d-flex flex-column align-items-center p-0">
-        <div class="overlay-text w-75 mt-auto p-4">
-            <p class="lead">Informacion Importante del Curso ofertado</p>
-            <a href="#!" class="link link-underline-white font-weight-bold">Nombre del Curso</a>
-        </div><div class="overlay-actions w-100 card-footer mt-auto d-flex justify-content-between align-items-center">
-            <div>
-                <a href="#!" class="h6 mb-0">Programa que lo oferta</a>
-            </div>
-            <div>
-                <div class="actions">
-                    <a href="#!" class="action-item mr-3"><i class="fas fa-paperclip"></i></a>
-                    <a href="../../assets/img/theme/light/" class="action-item mr-3" data-fancybox="gallery"><i class="fas fa-eye"></i></a>
-                    <a href="#!" class="action-item"><i class="fas fa-heart"></i></a>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-</div>
+			</div>
+		</div>
+		<!-- Content -->
+		<div class="main-content position-relative">
+			<!-- Main nav -->
+			<nav th:replace="layouts/layout3 :: nav"></nav>
 
- <div class="col-lg-4">
-       <div class="card card-overlay card-hover-overlay hover-shadow-lg hover-translate-y-n10">
-    <figure class="figure">
-        <img alt="Image placeholder" src="/plantilla/assets/img/theme/light/img-1-1000x900.jpg" class="img-fluid">
+			<!-- Page content -->
+			<div class="page-content">
 
-    </figure>
-    <div class="card-img-overlay d-flex flex-column align-items-center p-0">
-        <div class="overlay-text w-75 mt-auto p-4">
-            <p class="lead">Informacion Importante del Curso ofertado</p>
-            <a href="#!" class="link link-underline-white font-weight-bold">Nombre del Curso</a>
-        </div><div class="overlay-actions w-100 card-footer mt-auto d-flex justify-content-between align-items-center">
-            <div>
-                <a href="#!" class="h6 mb-0">Programa que lo oferta</a>
-            </div>
-            <div>
-                <div class="actions">
-                    <a href="#!" class="action-item mr-3"><i class="fas fa-paperclip"></i></a>
-                    <a href="../../assets/img/theme/light/" class="action-item mr-3" data-fancybox="gallery"><i class="fas fa-eye"></i></a>
-                    <a href="#!" class="action-item"><i class="fas fa-heart"></i></a>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-</div>
-<div class="col-lg-4">
-       <div class="card card-overlay card-hover-overlay hover-shadow-lg hover-translate-y-n10">
-    <figure class="figure">
-        <img alt="Image placeholder" src="/plantilla/assets/img/theme/light/img-1-1000x900.jpg" class="img-fluid">
+				<!-- Page title -->
+				<div class="page-title">
+					<div class="row justify-content-between align-items-center">
+						<div
+							class="col-md-6 d-flex align-items-center justify-content-between justify-content-md-start mb-3 mb-md-0">
+							<!-- Page title + Go Back button -->
+							<div class="d-inline-block">
+								<h5 class="h4 d-inline-block font-weight-400 mb-0 text-white">Eventos
+									Activos</h5>
+							</div>
 
-    </figure>
-    <div class="card-img-overlay d-flex flex-column align-items-center p-0">
-        <div class="overlay-text w-75 mt-auto p-4">
-            <p class="lead">Informacion Importante del Curso ofertado</p>
-            <a href="#!" class="link link-underline-white font-weight-bold">Nombre del Curso</a>
-        </div><div class="overlay-actions w-100 card-footer mt-auto d-flex justify-content-between align-items-center">
-            <div>
-                <a href="#!" class="h6 mb-0">Programa que lo oferta</a>
-            </div>
-            <div>
-                <div class="actions">
-                    <a href="#!" class="action-item mr-3"><i class="fas fa-paperclip"></i></a>
-                    <a href="../../assets/img/theme/light/" class="action-item mr-3" data-fancybox="gallery"><i class="fas fa-eye"></i></a>
-                    <a href="#!" class="action-item"><i class="fas fa-heart"></i></a>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-</div>
-</div>
-        </div>
-      </div>
-      
-    </div>
-    
- 
-  <!-- Footer -->
-      <div th:replace="layouts/footer :: footer"></div>
-      <div th:replace="layouts/layout3 :: scripts"></div>
-  
+							<!-- Optional link -->
+						</div>
+					</div>
+				</div>
+				<!-- Project cards -->
+				<hr>
+
+
+				<div class="tab-content mt-1">
+					<div class="swiper-js-container">
+						<div class="swiper-container" data-swiper-items="1"
+							data-swiper-sm-items="2" data-swiper-xl-items="3"
+							data-swiper-space-between="10" data-swiper-sm-space-between="10"
+							data-swiper-xl-space-between="10" data-swiper-initial-slide="0"
+							data-swiper-effect="coverflow">
+							<div class="swiper-wrapper">
+								<div th:each="edc:${educacionesRecientes}" class="swiper-slide">
+									<div class="card overflow-hidden" data-animate-hover="2">
+										<div class="overflow-hidden">
+											<div class="animate-this">
+												<img alt="Image placeholder"
+													style="width: 600px; height: 300px;"
+													th:src="@{${edc.imagen}}" class="card-img-top">
+
+											</div>
+										</div>
+										<div class="card-body">
+											<div class="row align-items-center mb-4">
+												<div class="col">
+													<span class="badge badge-pill badge-soft-danger"
+														th:text="${edc.nombre}"></span>
+												</div>
+												<div class="col text-right">
+													<span class="text-muted" th:text="${edc.fechaFin}"></span>
+												</div>
+											</div>
+
+											<p class="card-text mt-2" th:text="${edc.resumen}"></p>
+											<!-- Button trigger modal -->
+											<button type="button" class="btn btn-soft-danger"
+												data-toggle="modal" data-target="#exampleModal">
+												Mas Información</button>
+
+
+
+
+											<!--             <div class="swiper-slide"> -->
+											<!--                 <svg class="bd-placeholder-img img-fluid rounded" width="600" height="600" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 600x600"><title>Placeholder</title><rect fill="" width="100%" height="100%"/><text fill="" dy=".3em" x="50%" y="50%">600x600</text></svg> -->
+											<!--             </div> -->
+										</div>
+										</div>
+										</div>
+										</div>
+										<!-- Add Pagination -->
+										<div class="swiper-pagination"></div>
+
+									
+								
+							
+						</div>
+					</div>
+				</div>
+				<!-- Modal -->
+				<div th:each="edc1:${educacionesRecientes}" class="modal fade" id="exampleModal" tabindex="-1"
+					role="dialog" aria-labelledby="exampleModalLabel"
+					aria-hidden="true">
+					<div class="modal-dialog modal-dialog-centered" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="exampleModalLabel" th:text="${edc1.nombre} " ></h5>
+								<button type="button" class="close" data-dismiss="modal"
+									aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body">...</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary"
+									data-dismiss="modal">Close</button>
+								<button type="button" class="btn btn-primary">Save
+									changes</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<br>
+	<br>
+	<div class="row">
+		<div class="col-lg-4" th:each="ec:${educacionesContinuas}">
+			<div
+				class="card card-overlay card-hover-overlay hover-shadow-lg hover-translate-y-n10">
+				<figure class="figure">
+					<img style="width: 500px; height: 300px;" th:src="@{${ec.imagen}}"
+						alt="Image placeholder" class="img-fluid">
+
+				</figure>
+				<div
+					class="card-img-overlay d-flex flex-column align-items-center p-0">
+					<div class="overlay-text w-75 mt-auto p-4">
+						<p th:text="${ec.resumen} " class="lead"></p>
+						<a th:text="${ec.nombre}" href="#!"
+							class="link link-underline-white font-weight-bold"></a>
+					</div>
+					<div
+						class="overlay-actions w-100 card-footer mt-auto d-flex justify-content-between align-items-center">
+						<div>
+							<a href="#!" class="h6 mb-0">Programa que lo oferta</a>
+						</div>
+						<div>
+							<div class="actions">
+								<a href="#!" class="action-item mr-3"><i
+									class="fas fa-paperclip"></i></a> <a
+									href="../../assets/img/theme/light/" class="action-item mr-3"
+									data-fancybox="gallery"><i class="fas fa-eye"></i></a>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--  <div class="col-lg-4"> -->
+		<!--        <div class="card card-overlay card-hover-overlay hover-shadow-lg hover-translate-y-n10"> -->
+		<!--     <figure class="figure"> -->
+		<!--         <img alt="Image placeholder" src="/plantilla/assets/img/theme/light/img-1-1000x900.jpg" class="img-fluid"> -->
+
+		<!--     </figure> -->
+		<!--     <div class="card-img-overlay d-flex flex-column align-items-center p-0"> -->
+		<!--         <div class="overlay-text w-75 mt-auto p-4"> -->
+		<!--             <p class="lead">Informacion Importante del Curso ofertado</p> -->
+		<!--             <a href="#!" class="link link-underline-white font-weight-bold">Nombre del Curso</a> -->
+		<!--         </div><div class="overlay-actions w-100 card-footer mt-auto d-flex justify-content-between align-items-center"> -->
+		<!--             <div> -->
+		<!--                 <a href="#!" class="h6 mb-0">Programa que lo oferta</a> -->
+		<!--             </div> -->
+		<!--             <div> -->
+		<!--                 <div class="actions"> -->
+		<!--                     <a href="#!" class="action-item mr-3"><i class="fas fa-paperclip"></i></a> -->
+		<!--                     <a href="../../assets/img/theme/light/" class="action-item mr-3" data-fancybox="gallery"><i class="fas fa-eye"></i></a> -->
+		<!--                     <a href="#!" class="action-item"><i class="fas fa-heart"></i></a> -->
+		<!--                 </div> -->
+		<!--             </div> -->
+		<!--         </div> -->
+		<!--     </div> -->
+		<!-- </div> -->
+		<!-- </div> -->
+
+		<!--  <div class="col-lg-4"> -->
+		<!--        <div class="card card-overlay card-hover-overlay hover-shadow-lg hover-translate-y-n10"> -->
+		<!--     <figure class="figure"> -->
+		<!--         <img alt="Image placeholder" src="/plantilla/assets/img/theme/light/img-1-1000x900.jpg" class="img-fluid"> -->
+
+		<!--     </figure> -->
+		<!--     <div class="card-img-overlay d-flex flex-column align-items-center p-0"> -->
+		<!--         <div class="overlay-text w-75 mt-auto p-4"> -->
+		<!--             <p class="lead">Informacion Importante del Curso ofertado</p> -->
+		<!--             <a href="#!" class="link link-underline-white font-weight-bold">Nombre del Curso</a> -->
+		<!--         </div><div class="overlay-actions w-100 card-footer mt-auto d-flex justify-content-between align-items-center"> -->
+		<!--             <div> -->
+		<!--                 <a href="#!" class="h6 mb-0">Programa que lo oferta</a> -->
+		<!--             </div> -->
+		<!--             <div> -->
+		<!--                 <div class="actions"> -->
+		<!--                     <a href="#!" class="action-item mr-3"><i class="fas fa-paperclip"></i></a> -->
+		<!--                     <a href="../../assets/img/theme/light/" class="action-item mr-3" data-fancybox="gallery"><i class="fas fa-eye"></i></a> -->
+		<!--                     <a href="#!" class="action-item"><i class="fas fa-heart"></i></a> -->
+		<!--                 </div> -->
+		<!--             </div> -->
+		<!--         </div> -->
+		<!--     </div> -->
+		<!-- </div> -->
+		<!-- </div> -->
+		<!-- <div class="col-lg-4"> -->
+		<!--        <div class="card card-overlay card-hover-overlay hover-shadow-lg hover-translate-y-n10"> -->
+		<!--     <figure class="figure"> -->
+		<!--         <img alt="Image placeholder" src="/plantilla/assets/img/theme/light/img-1-1000x900.jpg" class="img-fluid"> -->
+
+		<!--     </figure> -->
+		<!--     <div class="card-img-overlay d-flex flex-column align-items-center p-0"> -->
+		<!--         <div class="overlay-text w-75 mt-auto p-4"> -->
+		<!--             <p class="lead">Informacion Importante del Curso ofertado</p> -->
+		<!--             <a href="#!" class="link link-underline-white font-weight-bold">Nombre del Curso</a> -->
+		<!--         </div><div class="overlay-actions w-100 card-footer mt-auto d-flex justify-content-between align-items-center"> -->
+		<!--             <div> -->
+		<!--                 <a href="#!" class="h6 mb-0">Programa que lo oferta</a> -->
+		<!--             </div> -->
+		<!--             <div> -->
+		<!--                 <div class="actions"> -->
+		<!--                     <a href="#!" class="action-item mr-3"><i class="fas fa-paperclip"></i></a> -->
+		<!--                     <a href="../../assets/img/theme/light/" class="action-item mr-3" data-fancybox="gallery"><i class="fas fa-eye"></i></a> -->
+		<!--                     <a href="#!" class="action-item"><i class="fas fa-heart"></i></a> -->
+		<!--                 </div> -->
+		<!--             </div> -->
+		<!--         </div> -->
+		<!--     </div> -->
+		<!-- </div> -->
+		<!-- </div> -->
+	</div>
+	</div>
+	</div>
+
+	</div>
+
+
+	<!-- Footer -->
+	<div th:replace="layouts/footer :: footer"></div>
+	<div th:replace="layouts/layout3 :: scripts"></div>
+
 </body>
 
 </html>

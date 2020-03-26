@@ -10,6 +10,8 @@ public interface IEducacionContinuaService {
 
 	public List<EducacionContinua> findAll();
 	
+	public List<EducacionContinua> educacionContinuaRecientes();
+	
 	public void save(EducacionContinua ec);
 	
 	public Optional<EducacionContinua> findOne(Long id);

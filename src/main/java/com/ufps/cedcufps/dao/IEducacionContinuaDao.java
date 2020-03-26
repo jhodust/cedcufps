@@ -21,6 +21,8 @@ public interface IEducacionContinuaDao extends CrudRepository<EducacionContinua,
 	@Query("select count(e) from EducacionContinua e where e.tipoEduContinua.id = '3' or e.tipoEduContinua.id = '5' or e.tipoEduContinua.id = '6'")
 	public int cantidadSeminariosCongresosSimposios();
 	
+	@Query(value= "SELECT * FROM educacion_continua ec ORDER BY ec.fecha_inicio DESC ", nativeQuery = true)
+	public List<EducacionContinua> educacionContinuaReciente();
 	
 	
 	

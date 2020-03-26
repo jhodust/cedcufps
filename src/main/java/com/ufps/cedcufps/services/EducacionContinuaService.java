@@ -68,6 +68,13 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 		// TODO Auto-generated method stub
 		return educacionContinuaDao.cantidadSeminariosCongresosSimposios();
 	}
+	
+	@Override
+	public List<EducacionContinua> educacionContinuaRecientes() {
+		// TODO Auto-generated method stub
+		return (List<EducacionContinua>) educacionContinuaDao.educacionContinuaReciente();
+	}
+
 
 	
 

@@ -24,8 +24,11 @@ toastr.options = {
 $(document).ready(function ()
 {
 	console.log("preparando datepicker");
+	$("#fechaInicioEduCont").val(fechaInicioEvento);
+	$("#fechaFinEduCont").val(fechaFinEvento);
 	$("#fechaInicioEduCont").flatpickr({
-	    "plugins": [new rangePlugin({ input: "#fechaFinEduCont"})]
+		dateFormat: "d/m/Y",
+	    plugins: [new rangePlugin({ input: "#fechaFinEduCont"})]
 	});
 	
 	comportamientoSelectsNacimiento();

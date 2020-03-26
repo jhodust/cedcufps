@@ -1,11 +1,13 @@
 package com.ufps.cedcufps.controllers;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Map;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -72,8 +74,15 @@ public class EducacionContinuaController {
 	
 	@RequestMapping(value = "/educacion-continua/registro", method = RequestMethod.POST)
 	public String save(EducacionContinua ec, SessionStatus status, @RequestParam("file") MultipartFile imagen) {
-		
+		String random=UUID.randomUUID().toString();
 			if(!imagen.isEmpty()) {
+				/*if(ec.getImagen()!=null && !ec.getImagen().isEmpty()) {
+					System.out.println("*****************probando**************************");
+					Path ruta=Paths.get("uploads").resolve(ec.getImagen()).toAbsolutePath();
+					File archivo=ruta.toFile();
+					System.out.println(archivo.getAbsolutePath());
+					archivo.delete();
+				}*/
 				Path directorioRecursos=Paths.get("src//main//resources//static//uploads");
 				String rutaFolder=directorioRecursos.toFile().getAbsolutePath();
 				try {

@@ -79,8 +79,6 @@
 												</select>
 											</div>
 										</div>
-										
-
 									</div>
 									<div class="row">
 										<div class="col-md-12">
@@ -107,6 +105,10 @@
 											</div>
 										</div>
 									</div>
+									<script th:inline="javascript">
+									    var fechaInicioEvento = [[*{#dates.format(fechaInicio, 'dd/MM/yyyy')}]];
+									    var fechaFinEvento = [[*{#dates.format(fechaFin, 'dd/MM/yyyy')}]];
+								    </script>
 									<div class="row">
 										<div class="col-md-12">
 											<div class="form-group">
@@ -147,6 +149,40 @@
 								<div class="card">
 									<div class="card-body">
 										<div class="row">
+											<span class="badge badge-danger">Información Organizador</span>
+										</div>
+										<div class="row">
+											<div class="col-md-12">
+												<div class="form-group">
+													<label class="form-control-label">Programa Académico</label> <select
+														class="form-control" data-toggle="select">
+														<option value="0">Seleccione el tipo...</option>
+														<option th:each="tec: ${tipos_educacion_continua}"
+															th:value="${tec.id}" th:text="${tec.tipoEduContinua}"></option>
+													</select>
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-md-12">
+												<div class="form-group">
+													<label class="form-control-label">Docente Responsable</label> <select
+														class="form-control" data-toggle="select" >
+														<option value="0">Seleccione el tipo...</option>
+														<option th:each="tec: ${tipos_educacion_continua}"
+															th:value="${tec.id}" th:text="${tec.tipoEduContinua}"></option>
+													</select>
+												</div>
+											</div>
+										</div>
+										
+									</div>
+								</div>
+							</div>
+							<div class="col">
+								<div class="card">
+									<div class="card-body">
+										<div class="row">
 											<span class="badge badge-danger">Información Participantes</span>
 										</div>
 										<div class="row">
@@ -154,7 +190,7 @@
 												<div class="form-group">
 													<label class="form-control-label">Fecha Límite Inscripción</label> <input type="text"
 														class="form-control flatpickr-input" data-toggle="date"
-														placeholder="Seleccione la fecha límite de inscripción..." id="fechaLimInscripcionEduCont" th:field="*{fechaLimInscripcion}"/>
+														placeholder="Seleccione la fecha límite de inscripción..." id="fechaLimInscripcionEduCont" th:field="*{fechaLimInscripcion}" readonly/>
 												</div>
 											</div>
 										</div>

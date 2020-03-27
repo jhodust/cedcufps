@@ -46,8 +46,14 @@ public class Programa implements Serializable {//1
 	@JoinColumn(name="id_facultad")
 	private Facultad facultad;
 	
+	@JsonIgnore //ignora esta referencia cuando se hace mediante ajax(json) 
+	@OneToMany(fetch = FetchType.LAZY)
+	@JoinColumn(name = "id_programa")
+	private List<EducacionContinua> educacionesContinuas;
+	
 	public Programa() {
 		estudiantes= new ArrayList<Estudiante>();
+		educacionesContinuas= new ArrayList<EducacionContinua>();
 	}
 
 	public Long getId() {
@@ -96,7 +102,18 @@ public class Programa implements Serializable {//1
 	}
 
 	
-	
+	public void addEducacionContinua(EducacionContinua ec) {
+		educacionesContinuas.add(ec);
+	}
+
+	public List<EducacionContinua> getEducacionesContinuas() {
+		return educacionesContinuas;
+	}
+
+	public void setEducacionesContinuas(List<EducacionContinua> educacionesContinuas) {
+		this.educacionesContinuas = educacionesContinuas;
+	}
+
 	
 
 }

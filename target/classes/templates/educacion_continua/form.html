@@ -60,7 +60,8 @@
 										th:object="${educacionContinua}" method="post"
 										enctype="multipart/form-data">
 					<div class="row">
-						<div class="col-lg-6" th:fragment="camposInformacionPersonal">
+						<div class="col">
+						<div class="col-lg-12">
 
 							<div class="card">
 								<div class="card-body">
@@ -90,14 +91,14 @@
 										</div>
 									</div>
 									<div class="row">
-										<div class="col-md-6">
+										<div class="col-md-12">
 											<div class="form-group">
 												<label class="form-control-label">Fecha Inicio</label> <input type="text"
 													class="form-control flatpickr-input" data-toggle="date"
 													placeholder="Seleccione la fecha de inicio..." id="fechaInicioEduCont" th:field="*{fechaInicio}"/>
 											</div>
 										</div>
-										<div class="col-md-6">
+										<div class="col-md-12">
 											<div class="form-group">
 												<label class="form-control-label">Fecha Fin</label> <input type="text"
 													class="form-control flatpickr-input" data-toggle="date"
@@ -107,7 +108,8 @@
 									</div>
 									<script th:inline="javascript">
 									    var fechaInicioEvento = [[*{#dates.format(fechaInicio, 'dd/MM/yyyy')}]];
-									    var fechaFinEvento = [[*{#dates.format(fechaFin, 'dd/MM/yyyy')}]];
+									    var fechaFinEvento = [[*{#dates.format(fechaFin, 'dd/MM/yyyy ')}]];
+									    var fechaLimInscripcionEvento = [[*{#dates.format(fechaLimInscripcion, 'dd/MM/yyyy')}]];
 								    </script>
 									<div class="row">
 										<div class="col-md-12">
@@ -130,55 +132,48 @@
 											</div>
 										</div>
 									</div>
-									<div class="row">
-											<div class="col-md-12">
-												<div class="form-group">
-													<label class="form-control-label">Requisitos</label> 
-													<textarea class="form-control" data-toggle="autosize" 
-													placeholder="Ingrese los requisitos del evento..." rows="1" 
-													th:field="*{requisitos}"></textarea>
-												</div>
-											</div>
-										</div>
+									
 									
 									</div>
 								</div>
-						</div>
-						<div class="col-lg-6">
-							<div class="col">
-								<div class="card">
-									<div class="card-body">
-										<div class="row">
-											<span class="badge badge-danger">Información Organizador</span>
-										</div>
-										<div class="row">
-											<div class="col-md-12">
-												<div class="form-group">
-													<label class="form-control-label">Programa Académico</label> <select
-														class="form-control" data-toggle="select">
-														<option value="0">Seleccione el tipo...</option>
-														<option th:each="tec: ${tipos_educacion_continua}"
-															th:value="${tec.id}" th:text="${tec.tipoEduContinua}"></option>
-													</select>
+								<div class="col-lg-12">
+									<div class="card">
+										<div class="card-body">
+											<div class="row">
+												<span class="badge badge-danger">Información Organizador</span>
+											</div>
+											<div class="row">
+												<div class="col-md-12">
+													<div class="form-group">
+														<label class="form-control-label">Programa Académico</label> <select
+															class="form-control" data-toggle="select" th:field="*{programaResponsable}">
+															<option value="0">Seleccione el programa...</option>
+															<option th:each="p: ${programas}"
+																th:value="${p.id}" th:text="${p.programa}"></option>
+														</select>
+													</div>
 												</div>
 											</div>
-										</div>
-										<div class="row">
-											<div class="col-md-12">
-												<div class="form-group">
-													<label class="form-control-label">Docente Responsable</label> <select
-														class="form-control" data-toggle="select" >
-														<option value="0">Seleccione el tipo...</option>
-														<option th:each="tec: ${tipos_educacion_continua}"
-															th:value="${tec.id}" th:text="${tec.tipoEduContinua}"></option>
-													</select>
+											<div class="row">
+												<div class="col-md-12">
+													<div class="form-group">
+														<label class="form-control-label">Docente Responsable</label> <select
+															class="form-control" data-toggle="select" th:field="*{docenteResponsable}" >
+															<option value="0">Seleccione el tipo...</option>
+															<option th:each="d: ${docentes}"
+																th:value="${d.id}" th:text="${d.codigo + ' - ' + d.primerNombre + ' ' + d.segundoNombre + ' ' + d.primerApellido + ' ' + d.segundoApellido}"></option>
+														</select>
+													</div>
 												</div>
 											</div>
+											
 										</div>
-										
 									</div>
 								</div>
 							</div>
+						</div>
+						<div class="col-lg-6">
+							
 							<div class="col">
 								<div class="card">
 									<div class="card-body">
@@ -190,19 +185,21 @@
 												<div class="form-group">
 													<label class="form-control-label">Fecha Límite Inscripción</label> <input type="text"
 														class="form-control flatpickr-input" data-toggle="date"
-														placeholder="Seleccione la fecha límite de inscripción..." id="fechaLimInscripcionEduCont" th:field="*{fechaLimInscripcion}" readonly/>
+														placeholder="Seleccione la fecha límite de inscripción..." id="fechaLimInscripcionEduCont" th:field="*{fechaLimInscripcion}" readOnly />
 												</div>
 											</div>
 										</div>
 										<div class="row">
-											<div class="col-md-6">
+											<div class="col-md-12">
 												<div class="form-group">
 													<label class="form-control-label">Costo</label> <input
 														class="form-control" type="text"
 														placeholder="Ingrese el costo que tendrá la inscripción del participante" th:field="*{costo}"/>
 												</div>
 											</div>
-											<div class="col-md-6">
+										</div>
+										<div class="row">
+											<div class="col-md-12">
 												<div class="form-group">
 													<label class="form-control-label">Cantidad Participantes(Max)</label> <input
 														class="form-control" type="text"
@@ -221,6 +218,16 @@
 									<div class="card-body">
 										<div class="row">
 											<span class="badge badge-danger">Información Adicional</span>
+										</div>
+										<div class="row">
+											<div class="col-md-12">
+												<div class="form-group">
+													<label class="form-control-label">Requisitos</label> 
+													<textarea class="form-control" data-toggle="autosize" 
+													placeholder="Ingrese los requisitos del evento..." rows="1" 
+													th:field="*{requisitos}"></textarea>
+												</div>
+											</div>
 										</div>
 										<div class="row">
 											<div class="col-md-12">

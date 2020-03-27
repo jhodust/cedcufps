@@ -26,6 +26,7 @@ import com.ufps.cedcufps.modelos.EducacionContinua;
 import com.ufps.cedcufps.services.IEducacionContinuaService;
 import com.ufps.cedcufps.services.IParticipanteService;
 import com.ufps.cedcufps.services.IPersonaService;
+import com.ufps.cedcufps.services.IProgramaService;
 
 @Controller
 @SessionAttributes("educacionContinua")
@@ -36,6 +37,9 @@ public class EducacionContinuaController {
 	
 	@Autowired
 	private IPersonaService personaService;
+	
+	@Autowired
+	private IProgramaService programaService;
 	
 	@Autowired
 	private IParticipanteService participanteService;
@@ -67,6 +71,8 @@ public class EducacionContinuaController {
 		model.put("titulo","FORMULARIO EDUCACIÓN CONTINUA");
 		model.put("educacionContinua",ec);
 		model.put("tipos_educacion_continua",educacionContinuaService.findAllTiposEducacionContinua());
+		model.put("docentes",personaService.findAllDocentes());
+		model.put("programas",programaService.findAll());
 		return "educacion_continua/form";
 	}
 	
@@ -108,6 +114,8 @@ public class EducacionContinuaController {
 		model.put("titulo","FORMULARIO EDUCACIÓN CONTINUA");
 		model.put("educacionContinua",ec.get());
 		model.put("tipos_educacion_continua",educacionContinuaService.findAllTiposEducacionContinua());
+		model.put("docentes",personaService.findAllDocentes());
+		model.put("programas",programaService.findAll());
 		return "educacion_continua/form";
 	}
 	

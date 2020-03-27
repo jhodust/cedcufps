@@ -41,15 +41,15 @@ public class EducacionContinua implements Serializable {
 	
 	private String nombre;
 	
-	@DateTimeFormat(pattern="dd/MM/yyyy")
+	@DateTimeFormat(pattern="dd/MM/yyyy HH:mm")
 	@Column(name = "fecha_inicio")
 	private Date fechaInicio;
 	
-	@DateTimeFormat(pattern="dd/MM/yyyy")
+	@DateTimeFormat(pattern="dd/MM/yyyy HH:mm")
 	@Column(name = "fecha_fin")
 	private Date fechaFin;
 	
-	@DateTimeFormat(pattern="dd/MM/yyyy")
+	@DateTimeFormat(pattern="dd/MM/yyyy HH:mm")
 	@Column(name = "fecha_lim_inscripcion")
 	private Date fechaLimInscripcion;
 	private int duracion;
@@ -76,6 +76,14 @@ public class EducacionContinua implements Serializable {
 	@OneToMany(mappedBy = "educacionContinua",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Participante> participantes;
 
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="id_programa")
+	private Programa programaResponsable;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="id_docente")
+	private Docente docenteResponsable;
+	
 	public EducacionContinua() {
 		this.jornadas=new ArrayList<Jornada>();
 		this.participantes=new ArrayList<Participante>();
@@ -216,6 +224,22 @@ public class EducacionContinua implements Serializable {
 
 	public void setImagen(String imagen) {
 		this.imagen = imagen;
+	}
+
+	public Programa getProgramaResponsable() {
+		return programaResponsable;
+	}
+
+	public void setProgramaResponsable(Programa programaResponsable) {
+		this.programaResponsable = programaResponsable;
+	}
+
+	public Docente getDocenteResponsable() {
+		return docenteResponsable;
+	}
+
+	public void setDocenteResponsable(Docente docenteResponsable) {
+		this.docenteResponsable = docenteResponsable;
 	}
 	
 	

@@ -129,6 +129,8 @@
 						<thead>
 							<tr>
 								<th>Tipo</th>
+								<th>Programa Académico Organizador</th>
+								<th>Docente</th>
 								<th>Nombre</th>
 								<th>Fecha Inicio</th>
 								<th>Fecha Fin</th>
@@ -139,6 +141,8 @@
 						<tbody>
 							<tr th:each="ec : ${educacionesContinuas}">
 								<td th:text="${ec.tipoEduContinua.tipoEduContinua}"></td>
+								<td th:text="${ec.programaResponsable.programa}"></td>
+								<td th:text="${ec.docenteResponsable.primerNombre}"></td>
 								<td th:text="${ec.nombre}"></td>
 								<td th:text="${#dates.format(ec.fechaInicio, 'dd-MM-yyyy')}"></td>
 								<td th:text="${#dates.format(ec.fechaFin, 'dd-MM-yyyy')}"></td>

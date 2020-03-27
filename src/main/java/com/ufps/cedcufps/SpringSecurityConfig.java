@@ -27,7 +27,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		// TODO Auto-generated method stub
-		http.authorizeRequests().antMatchers("/home","/diplomas","/plantilla/**", "/logos/**","/data/**","/js/**","/programa/save").permitAll()
+		http.authorizeRequests().antMatchers("/home","/diplomas","/plantilla/**", "/logos/**","/data/**","/js/**","/css/**","/programa/save").permitAll()
 		.antMatchers("/persona/**").hasAnyRole("SUPERADMIN", "ESTUDIANTE")
 		.antMatchers("/programa/**").hasAnyRole("SUPERADMIN")
 		.antMatchers("/tipo-documento/**").hasAnyRole("SUPERADMIN")

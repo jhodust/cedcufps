@@ -1,11 +1,17 @@
 package com.ufps.cedcufps.modelos;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="docentes")
@@ -22,7 +28,17 @@ public class Docente extends Persona{
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="id_departamento")
 	private Departamento departamento;
+	
+	@JsonIgnore //ignora esta referencia cuando se hace mediante ajax(json) 
+	@OneToMany(fetch = FetchType.LAZY)
+	@JoinColumn(name = "id_docente")
+	private List<EducacionContinua> educacionesContinuas;
 
+	
+	public Docente() {
+		educacionesContinuas=new ArrayList<EducacionContinua>();
+	}
+	
 	public String getCodigo() {
 		return codigo;
 	}
@@ -37,6 +53,18 @@ public class Docente extends Persona{
 
 	public void setDepartamento(Departamento departamento) {
 		this.departamento = departamento;
+	}
+	
+	public void addEducacionContinua(EducacionContinua ec) {
+		educacionesContinuas.add(ec);
+	}
+
+	public List<EducacionContinua> getEducacionesContinuas() {
+		return educacionesContinuas;
+	}
+
+	public void setEducacionesContinuas(List<EducacionContinua> educacionesContinuas) {
+		this.educacionesContinuas = educacionesContinuas;
 	}
 
 	

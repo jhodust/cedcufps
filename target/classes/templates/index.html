@@ -86,6 +86,7 @@
 		</div>
 		<div class="row">
 		<div class="col-lg-4" th:each="ec:${educacionesContinuas}">
+			
 			<div
 				class="card card-overlay card-hover-overlay hover-shadow-lg hover-translate-y-n10">
 				<figure class="figure">
@@ -107,7 +108,7 @@
 						</div>
 						<div>
 							<div class="actions">
-								<a href="#!" class="action-item mr-3"><i
+								<a th:href="@{/educacion-continua/{id}/detalles(id=${ec.id})}" class="action-item mr-3"><i
 									class="fas fa-paperclip"></i></a> <a
 									href="../../assets/img/theme/light/" class="action-item mr-3"
 									data-fancybox="gallery"><i class="fas fa-eye"></i></a>
@@ -211,4 +212,4 @@
   
 </body>
 
-</html
+</html>

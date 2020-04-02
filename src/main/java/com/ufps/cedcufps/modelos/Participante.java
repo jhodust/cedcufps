@@ -2,6 +2,7 @@ package com.ufps.cedcufps.modelos;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -48,6 +49,11 @@ public class Participante implements Serializable{
 	private TipoParticipante tipoParticipante;
 	
 
+	private String codigoQR;
+	
+	@Column(name = "imagen_codigo_qr")
+	private String imagenCodigoQR;
+	
 	public Long getId() {
 		return id;
 	}
@@ -80,5 +86,22 @@ public class Participante implements Serializable{
 		this.tipoParticipante = tipoParticipante;
 	}
 
+	public String getCodigoQR() {
+		return codigoQR;
+	}
+
+	public void setCodigoQR(String codigoQR) {
+		this.codigoQR = codigoQR;
+	}
+
+	public String getImagenCodigoQR() {
+		return imagenCodigoQR;
+	}
+
+	public void setImagenCodigoQR(String imagenCodigoQR) {
+		this.imagenCodigoQR = imagenCodigoQR;
+	}
+
+	
 		
 }

@@ -27,11 +27,12 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		// TODO Auto-generated method stub
-		http.authorizeRequests().antMatchers("/home","/diplomas","/plantilla/**", "/logos/**","/data/**","/js/**","/css/**","/programa/save").permitAll()
+		http.authorizeRequests().antMatchers("/","/home","/diplomas","/plantilla/**", "/logos/**","/data/**","/js/**","/css/**","/programa/save", "/uploads/**","/educacion-continua/**/detalles").permitAll()
 		.antMatchers("/persona/**").hasAnyRole("SUPERADMIN", "ESTUDIANTE")
 		.antMatchers("/programa/**").hasAnyRole("SUPERADMIN")
 		.antMatchers("/tipo-documento/**").hasAnyRole("SUPERADMIN")
 		.antMatchers("/educacion-continua/**").hasAnyRole("SUPERADMIN","ADMIN")
+		.antMatchers("/realizar-inscripcion/**","/cancelar-inscripcion/**").hasAnyRole("ESTUDIANTE","DOCENTE","ADMINISTRATIVO","EXTERNO")
 		.anyRequest().authenticated()
 		.and()
 			.formLogin().successHandler(successHandler).loginPage("/login")
@@ -39,8 +40,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 		.and()
 		.logout().permitAll();
 		
-		
-		/*http.authorizeRequests()
+		/*
+		http.authorizeRequests()
 		.anyRequest().authenticated()
 		.and()
 		.oauth2Login();*/

@@ -1,5 +1,6 @@
 package com.ufps.cedcufps.controllers;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -18,6 +19,8 @@ public class InicioController {
 
 	@Autowired
 	private IEducacionContinuaService educacionContinuaService;
+	
+	
 	
 	@RequestMapping(value = "/")
 	public String listar(Model model) {

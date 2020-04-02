@@ -110,13 +110,13 @@
 		                <dd class="col-sm-9 text-sm" th:text="${educacionContinua.resumen}"></dd>
 		              </dl>
 		              <div th:if="${participante == null}">
-						<a th:href="@{/educacion-continua/{id}/realizar-inscripcion(id=${educacionContinua.id})}"
+						<a th:href="@{/realizar-inscripcion/{id_evento}(id_evento=${educacionContinua.id})}"
 									class="btn btn-primary btn-sm">INSCRIBETE!
 								</a>
 						
 						</div>
 						<div th:if="${participante != null and participante.tipoParticipante.tipoParticipante == 'Asistente'}">
-							<a th:href="@{/educacion-continua/{id}/cancelar-inscripcion(id=${educacionContinua.id})}"
+							<a th:href="@{/cancelar-inscripcion/{id_evento}(id_evento=${educacionContinua.id})}"
 										class="btn btn-primary btn-sm">CANCELAR INSCRIPCIÓN!
 									</a>
 						</div>

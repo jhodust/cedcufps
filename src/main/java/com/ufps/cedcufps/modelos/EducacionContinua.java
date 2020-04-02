@@ -37,6 +37,8 @@ public class EducacionContinua implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+	private String consecutivo;
+	
 	private String imagen;
 	
 	private String nombre;
@@ -95,6 +97,16 @@ public class EducacionContinua implements Serializable {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	
+	
+	public String getConsecutivo() {
+		return consecutivo;
+	}
+
+	public void setConsecutivo(String consecutivo) {
+		this.consecutivo = consecutivo;
 	}
 
 	public String getNombre() {

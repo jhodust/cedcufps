@@ -13,6 +13,7 @@ public class FacultadService implements IFacultadService {
 
 	@Autowired
 	private IFacultadDao facultadDao;
+	
 	@Override
 	public List<Facultad> findAll() {
 		// TODO Auto-generated method stub

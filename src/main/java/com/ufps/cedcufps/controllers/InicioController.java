@@ -3,6 +3,7 @@ package com.ufps.cedcufps.controllers;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.ufps.cedcufps.modelos.EducacionContinua;
 import com.ufps.cedcufps.services.IEducacionContinuaService;
+import com.ufps.cedcufps.utils.ReportesExcel;
 
 @Controller
 public class InicioController {
@@ -31,8 +33,13 @@ public class InicioController {
 		}
 		model.addAttribute("educacionesContinuas",educacionContinuaService.findAll());
 		model.addAttribute("educacionesRecientes",ec);
+		//educacionContinuaService.generarReporteSNIESEducacionContinua(new Date(), 0);
 		return "/index";
 	}
+	
+	
+	
+	
 	
 	
 }

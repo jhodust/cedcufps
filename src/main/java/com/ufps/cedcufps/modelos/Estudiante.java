@@ -10,7 +10,7 @@ import javax.persistence.UniqueConstraint;
 
 @Entity
 @Table(name="estudiantes", uniqueConstraints={
-		   @UniqueConstraint(columnNames={"consecutivo", "id_programa"})})
+		   @UniqueConstraint(columnNames={"codigo", "id_programa"})})
 @PrimaryKeyJoinColumn(name="id_persona")
 public class Estudiante extends Persona{
 
@@ -19,7 +19,7 @@ public class Estudiante extends Persona{
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private String consecutivo;
+	private String codigo;
 
 	
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -27,12 +27,12 @@ public class Estudiante extends Persona{
 	private Programa programa;
 	
 
-	public String getConsecutivo() {
-		return consecutivo;
+	public String getCodigo() {
+		return codigo;
 	}
 
-	public void setConsecutivo(String consecutivo) {
-		this.consecutivo = consecutivo;
+	public void setCodigo(String codigo) {
+		this.codigo = codigo;
 	}
 
 

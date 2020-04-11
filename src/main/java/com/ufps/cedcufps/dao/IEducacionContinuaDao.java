@@ -24,9 +24,10 @@ public interface IEducacionContinuaDao extends CrudRepository<EducacionContinua,
 	@Query(value= "SELECT * FROM educacion_continua ec ORDER BY ec.fecha_inicio DESC ", nativeQuery = true)
 	public List<EducacionContinua> educacionContinuaReciente();
 	
-	//@Query("select e from EducacionContinua e where e.tipoEduContinua.id = ?1 or e.programaResponsable.id = ?2 order by e.consecutivo DESC")
-	//public List<EducacionContinua> educacionContinuasByTipoAndPrograma(Long idTipo, Long idPrograma);
+	@Query("select e from EducacionContinua e where e.tipoEduContinua.id = ?1 or e.programaResponsable.id = ?2 order by e.consecutivo ASC")
+	public List<EducacionContinua> educacionContinuasByTipoAndPrograma(Long idTipo, Long idPrograma);
 	
-	
+	@Query("select e from EducacionContinua e where year(e.fechaInicio) = ?1")
+	List<EducacionContinua> findAllEducacionContinuaByAñoReporte(int año);
 	
 }

@@ -86,6 +86,17 @@ public class EducacionContinua implements Serializable {
 	@JoinColumn(name="id_docente")
 	private Docente docenteResponsable;
 	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="id_clasificacion_cine")
+	private ClasificacionCine clasificacionCine;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="id_tipo_beneficiario")
+	private TipoBeneficiario tipoBeneficiario;
+	
+	@Column(columnDefinition = "boolean default true")
+	private boolean activo;
+	
 	public EducacionContinua() {
 		this.jornadas=new ArrayList<Jornada>();
 		this.participantes=new ArrayList<Participante>();
@@ -101,13 +112,7 @@ public class EducacionContinua implements Serializable {
 
 	
 	
-	public String getConsecutivo() {
-		return consecutivo;
-	}
 
-	public void setConsecutivo(String consecutivo) {
-		this.consecutivo = consecutivo;
-	}
 
 	public String getNombre() {
 		return nombre;
@@ -252,6 +257,38 @@ public class EducacionContinua implements Serializable {
 
 	public void setDocenteResponsable(Docente docenteResponsable) {
 		this.docenteResponsable = docenteResponsable;
+	}
+
+	public String getConsecutivo() {
+		return consecutivo;
+	}
+
+	public void setConsecutivo(String consecutivo) {
+		this.consecutivo = consecutivo;
+	}
+
+	public ClasificacionCine getClasificacionCine() {
+		return clasificacionCine;
+	}
+
+	public void setClasificacionCine(ClasificacionCine clasificacionCine) {
+		this.clasificacionCine = clasificacionCine;
+	}
+
+	public TipoBeneficiario getTipoBeneficiario() {
+		return tipoBeneficiario;
+	}
+
+	public void setTipoBeneficiario(TipoBeneficiario tipoBeneficiario) {
+		this.tipoBeneficiario = tipoBeneficiario;
+	}
+
+	public boolean isActivo() {
+		return activo;
+	}
+
+	public void setActivo(boolean activo) {
+		this.activo = activo;
 	}
 	
 	

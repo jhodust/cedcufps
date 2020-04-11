@@ -1,62 +1,38 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-
-<head th:replace="layouts/layout3 :: head">
-<meta charset="UTF-8" />
-
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layouts/layout :: head">
+	<meta charset="UTF-8"/>
 </head>
-
-<body class="application application-offset">
-
-	<!-- Application container -->
-	<div class="container-fluid container-application">
-		<!-- Sidenav -->
-		<!-- lado izquierdo de la plantilla -->
-		<div class="sidenav" id="sidenav-main" th:fragment="sidenavMain">
-			<!-- Sidenav header -->
-			<div th:replace="layouts/sidenavHeader :: sidenavHeader"></div>
-			<!-- User mini profile -->
-			<div th:replace="layouts/profile :: profile"></div>
-			<!-- Application nav -->
-			<div class="nav-application clearfix" th:fragment="sidebar">
-				<a th:href="@{/educacion-continua}" class="btn btn-square text-sm">
-					<span class="btn-inner--icon d-block"><i
-						class="fas fa-clipboard-list fa-3x"></i></span> <span
-					class="btn-inner--icon d-block pt-2">Listar</span>
-				</a> <a th:href="@{/educacion-continua/registro}" 
-					class="btn btn-square text-sm"> <span
-					class="btn-inner--icon d-block"><i
-						class="fas fa-plus-circle fa-3x"></i></span> <span
-					class="btn-inner--icon d-block pt-2">Agregar</span>
-				</a>
-
-			</div>
-		</div>
-		<!-- Content -->
-		<div class="main-content position-relative">
-			<!-- Main nav -->
-			<nav th:replace="layouts/layout3 :: nav"></nav>
-			<!-- Page content -->
-			<div class="page-content">
-
-				<!-- Page title -->
-				<div class="page-title">
-					<div class="row justify-content-between align-items-center">
-						<div
-							class="col-md-6 d-flex align-items-center justify-content-between justify-content-md-start mb-3 mb-md-0">
-							<!-- Page title + Go Back button -->
-							<div class="d-inline-block">
-								<h5 class="h4 d-inline-block font-weight-400 mb-0 text-white">Formulario
-									Registro Usuarios</h5>
-							</div>
-
-						</div>
-
-					</div>
-				</div>
-				<!-- Project cards -->
-				<form th:action="@{/educacion-continua/registro}"
+<body>
+  <!-- Application container -->
+  <div class="container-fluid container-application">
+    <!-- Content -->
+    <div class="main-content position-relative">
+      <!-- Main nav -->
+      <div th:replace="layouts/logosHead :: logosHead"></div>
+      <nav th:replace="layouts/navbar :: navbar"></nav>
+      
+      <!-- Page content -->
+      <div class="page-content col-lg-9 center">
+       <!-- Project cards -->
+        <!-- Page title -->
+       	<div class="contenido ml-3 mr-3 pb-2" >
+        <br>
+        <div class="page-title">
+          <div class="row justify-content-between align-items-center">
+            <div class="col-md-6 d-flex align-items-center justify-content-between justify-content-md-start mb-3 mb-md-0">
+              <!-- Page title + Go Back button -->
+              <div class="d-inline-block">
+                <h5 class="h4 d-inline-block font-weight-400 mb-0 text-dark" ><strong>Educación Continua</strong></h5>
+	              	
+              </div>
+            </div>
+            
+          </div>
+        </div>
+        <hr/>
+        
+		<form th:action="@{/educacion-continua/registro}"
 										th:object="${educacionContinua}" method="post"
 										enctype="multipart/form-data">
 					<div class="row">
@@ -77,6 +53,18 @@
 													<option value="0">Seleccione el tipo...</option>
 													<option th:each="tec: ${tipos_educacion_continua}"
 														th:value="${tec.id}" th:text="${tec.tipoEduContinua}"></option>
+												</select>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-12">
+											<div class="form-group">
+												<label class="form-control-label">Clasificación CINE</label> <select
+													class="form-control" data-toggle="select" th:field="*{clasificacionCine}">
+													<option value="0">Seleccione...</option>
+													<option th:each="c: ${clasificacion_cine}"
+														th:value="${c.id}" th:text="${c.clasificacionCine}"></option>
 												</select>
 											</div>
 										</div>
@@ -183,6 +171,18 @@
 										<div class="row">
 											<div class="col-md-12">
 												<div class="form-group">
+													<label class="form-control-label">Tipo Beneficiarios</label> <select
+														class="form-control" data-toggle="select" th:field="*{tipoBeneficiario}">
+														<option value="0">Seleccione...</option>
+														<option th:each="tb: ${tipo_beneficiarios}"
+															th:value="${tb.id}" th:text="${tb.tipoBeneficiario}"></option>
+													</select>
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-md-12">
+												<div class="form-group">
 													<label class="form-control-label">Fecha Límite Inscripción</label> <input type="text"
 														class="form-control flatpickr-input" data-toggle="date"
 														placeholder="Seleccione la fecha límite de inscripción..." id="fechaLimInscripcionEduCont" th:field="*{fechaLimInscripcion}" readOnly />
@@ -274,16 +274,19 @@
 					</div>
 
 				</form>
-
-			</div>
-
+        
+        
 		</div>
-
-	</div>
-	<!-- Footer -->
-	<div th:replace="layouts/footer :: footer"></div>
-	<div th:replace="layouts/layout3 :: scripts"></div>
-
+	  </div>
+    
+    </div>
+    <div th:replace="layouts/footer :: footer"></div>
+    
+  </div>
+  <!-- Scripts -->
+  <!-- Core JS - includes jquery, bootstrap, popper, in-view and sticky-kit -->
+  <div th:replace="layouts/layout :: scripts"></div>
+  <script th:src="@{/js/educacionContinua.js}" type="text/javascript"></script>
 </body>
 
 </html>

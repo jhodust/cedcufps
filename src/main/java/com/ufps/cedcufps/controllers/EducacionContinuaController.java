@@ -62,6 +62,8 @@ public class EducacionContinuaController {
 		model.put("titulo","FORMULARIO EDUCACIÓN CONTINUA");
 		model.put("educacionContinua",ec);
 		model.put("tipos_educacion_continua",educacionContinuaService.findAllTiposEducacionContinua());
+		model.put("clasificacion_cine",educacionContinuaService.findAllClasificacionCine());
+		model.put("tipo_beneficiarios",educacionContinuaService.findAllTipoBeneficiario());
 		model.put("docentes",personaService.findAllDocentes());
 		model.put("programas",programaService.findAll());
 		return "educacion_continua/form";
@@ -72,6 +74,7 @@ public class EducacionContinuaController {
 	@RequestMapping(value = "/educacion-continua/registro", method = RequestMethod.POST)
 	public String save(EducacionContinua ec, SessionStatus status, @RequestParam("file") MultipartFile imagen) {
 		educacionContinuaService.save(ec);
+		educacionContinuaService.updateCodigoEducacionContinua(ec);
 		System.out.println("id ec: " + ec.getId());
 		generarDirectoriosPropios(ec);
 		guardarImagenPortada(ec,imagen);
@@ -85,6 +88,8 @@ public class EducacionContinuaController {
 		model.put("titulo","FORMULARIO EDUCACIÓN CONTINUA");
 		model.put("educacionContinua",ec.get());
 		model.put("tipos_educacion_continua",educacionContinuaService.findAllTiposEducacionContinua());
+		model.put("clasificacion_cine",educacionContinuaService.findAllClasificacionCine());
+		model.put("tipo_beneficiarios",educacionContinuaService.findAllTipoBeneficiario());
 		model.put("docentes",personaService.findAllDocentes());
 		model.put("programas",programaService.findAll());
 		return "educacion_continua/form";
@@ -110,6 +115,8 @@ public class EducacionContinuaController {
 		return "educacion_continua/diplomas";
 	}
 	
+	
+	
 	public void generarDirectoriosPropios(EducacionContinua ec) {
 		Archivo.crearDirectorio("uploads/educacion-continua/"+ec.getId());//directorio de la educacion continua
 		Archivo.crearDirectorio("uploads/educacion-continua/"+ec.getId()+"/qr-participantes");//directorio interno de los qr de participantes de la educacion continua
@@ -124,5 +131,7 @@ public class EducacionContinuaController {
 			educacionContinuaService.save(ec);
 		}
 	}
+	
+	
 	
 }

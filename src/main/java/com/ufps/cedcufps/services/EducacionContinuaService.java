@@ -1,16 +1,23 @@
 package com.ufps.cedcufps.services;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
+import com.ufps.cedcufps.dao.IClasificacionCineDao;
 import com.ufps.cedcufps.dao.IEducacionContinuaDao;
+import com.ufps.cedcufps.dao.ITipoBeneficiarioDao;
 import com.ufps.cedcufps.dao.ITipoEducacionContinuaDao;
+import com.ufps.cedcufps.modelos.ClasificacionCine;
 import com.ufps.cedcufps.modelos.EducacionContinua;
 import com.ufps.cedcufps.modelos.Participante;
+import com.ufps.cedcufps.modelos.TipoBeneficiario;
 import com.ufps.cedcufps.modelos.TipoEducacionContinua;
+import com.ufps.cedcufps.utils.ReportesExcel;
 
 @Service
 public class EducacionContinuaService implements IEducacionContinuaService{
@@ -20,6 +27,12 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 	
 	@Autowired
 	private ITipoEducacionContinuaDao tipoEducacionContinuaDao;
+	
+	@Autowired
+	private IClasificacionCineDao clasificacionCineDao;
+	
+	@Autowired
+	private ITipoBeneficiarioDao tipoBeneficiarioDao;
 	
 	@Override
 	public List<EducacionContinua> findAll() {
@@ -75,6 +88,63 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 		return (List<EducacionContinua>) educacionContinuaDao.educacionContinuaReciente();
 	}
 
+	@Override
+	public List<EducacionContinua> educacionContinuasByTipoAndPrograma(Long idTipo, Long idPrograma) {
+		// TODO Auto-generated method stub
+		return educacionContinuaDao.educacionContinuasByTipoAndPrograma(idTipo, idPrograma);
+	}
+
+
+	@Async
+	@Override
+	public void updateCodigoEducacionContinua(EducacionContinua ec) {
+		// TODO Auto-generated method stub
+		List<EducacionContinua> edcs=educacionContinuaDao.educacionContinuasByTipoAndPrograma(ec.getTipoEduContinua().getId(), ec.getProgramaResponsable().getId());
+		int i=0;
+		String consecutivoAnterior="001";
+		for(EducacionContinua e: edcs) {
+			if(i==0) {
+				if(e.getConsecutivo() == null) {
+					e.setConsecutivo("001");
+				}
+			}else {
+				e.setConsecutivo(String.format("%03d", Integer.parseInt(consecutivoAnterior)+1));
+			}
+			
+			consecutivoAnterior=e.getConsecutivo();
+			edcs.set(i, e);
+			i++;
+		}
+		
+		System.out.println("***********************************************************");
+		System.out.println("actualizando consecutivos");
+		System.out.println("***********************************************************");
+		
+		educacionContinuaDao.saveAll(edcs);
+	}
+
+	@Override
+	public void generarReporteSNIESEducacionContinua(String año) {
+		// TODO Auto-generated method stub
+		List<EducacionContinua> educacionesContinuas=(List<EducacionContinua>)educacionContinuaDao.findAllEducacionContinuaByAñoReporte(Integer.parseInt(año));
+		System.out.println("******************************PREPARANDO INFORME EXCEL******************");
+		ReportesExcel.reporteEducacionContinua("/formatos_reportes_excel/formato_educacion_continua.xlsx",educacionesContinuas,año);
+		ReportesExcel.reporteCursos("/formatos_reportes_excel/formato_cursos.xlsx",educacionesContinuas,año);
+		//ReportesExcel.reporteEducacionContinuaHoja1("/formatos_reportes_excel/nuevo.xlsx",educacionesContinuas);
+		
+	}
+
+	@Override
+	public List<ClasificacionCine> findAllClasificacionCine() {
+		// TODO Auto-generated method stub
+		return (List<ClasificacionCine>) clasificacionCineDao.findAll();
+	}
+
+	@Override
+	public List<TipoBeneficiario> findAllTipoBeneficiario() {
+		// TODO Auto-generated method stub
+		return (List<TipoBeneficiario>) tipoBeneficiarioDao.findAll();
+	}
 
 	
 

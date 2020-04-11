@@ -30,6 +30,7 @@ public class TipoDocumento implements Serializable {//1
 	@Column(name = "tipo_documento")
 	private String tipoDocumento;
 
+	private String descripcion;
 	
 	
 	
@@ -50,6 +51,12 @@ public class TipoDocumento implements Serializable {//1
 
 	public void setTipoDocumento(String tipoDocumento) {
 		this.tipoDocumento = tipoDocumento;
+	}
+	public String getDescripcion() {
+		return descripcion;
+	}
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
 	}
 
 

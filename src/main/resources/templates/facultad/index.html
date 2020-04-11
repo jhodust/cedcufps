@@ -1,60 +1,40 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-
-<head th:replace="layouts/layout3 :: head">
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layouts/layout :: head">
 	<meta charset="UTF-8"/>
-	
 </head>
-
-<body class="application application-offset">
- 
+<body>
   <!-- Application container -->
   <div class="container-fluid container-application">
-    <!-- Sidenav --><!-- lado izquierdo de la plantilla -->
-    <div class="sidenav" id="sidenav-main" th:fragment="sidenavMain">
-      <!-- Sidenav header -->
-      <div th:replace="layouts/sidenavHeader :: sidenavHeader"></div>
-      <!-- User mini profile -->
-      <div th:replace="layouts/profile :: profile"></div>
-      <!-- Application nav -->
-      <div class="nav-application clearfix" th:fragment="sidebar">
-        <a th:href="@{/facultades}" class="btn btn-square text-sm">
-          <span class="btn-inner--icon d-block"><i class="fas fa-clipboard-list fa-3x"></i></span>
-          <span class="btn-inner--icon d-block pt-2">Listar</span>
-        </a>
-        <a href="" data-toggle="modal" data-target="#modalRegistroFacultad" class="btn btn-square text-sm">
-          <span class="btn-inner--icon d-block"><i class="fas fa-plus-circle fa-3x"></i></span>
-          <span class="btn-inner--icon d-block pt-2">Agregar</span>
-        </a>
-        
-      </div>
-    </div>
     <!-- Content -->
     <div class="main-content position-relative">
       <!-- Main nav -->
-      <nav th:replace="layouts/layout3 :: nav"></nav>
+      <div th:replace="layouts/logosHead :: logosHead"></div>
+      <nav th:replace="layouts/navbar :: navbar"></nav>
+      
       <!-- Page content -->
-      <div class="page-content">
-        
+      <div class="page-content col-lg-9 center">
+       <!-- Project cards -->
         <!-- Page title -->
+       	<div class="contenido ml-3 mr-3" >
+        <br>
         <div class="page-title">
           <div class="row justify-content-between align-items-center">
             <div class="col-md-6 d-flex align-items-center justify-content-between justify-content-md-start mb-3 mb-md-0">
               <!-- Page title + Go Back button -->
               <div class="d-inline-block">
-                <h5 class="h4 d-inline-block font-weight-400 mb-0 text-white">Facultades</h5>
-              </div>
-              <div class="align-items-center ml-4 d-inline-flex">
+                <h5 class="h4 d-inline-block font-weight-400 mb-0 text-dark"><strong>Facultades</strong></h5>
                 <span class="h6 text-white counter badge-danger badge-pill" data-from="0" th:data-to="${#lists.size(facultades)}" data-speed="500" data-refresh-interval="100"></span>
+              	<a href="#" data-toggle="modal" data-target="#modalRegistroFacultad" class="btn btn-sm btn-white btn-icon-only rounded-circle ml-4">
+                <span class="btn-inner--icon"><i class="fas fa-plus"></i></span>
+              </a>
               </div>
-              
             </div>
-            
           </div>
         </div>
-        <!-- Project cards -->
+        <hr/>
         
-        <div class="row">
+		<div class="row">
         	<div class="col-lg-4 col-sm-6 " th:each="f: ${facultades}">
             <div class="card hover-shadow-lg hover-scale-110">
               <div class="card-body text-center">
@@ -84,16 +64,17 @@
             </div>
           </div>   	
         </div>
-      </div>
-      
+		</div>
+	  </div>
+    
     </div>
+    <div th:replace="layouts/footer :: footer"></div>
+    <div th:replace="facultad/formModal :: modalRegistro"></div>
     
   </div>
-  <div th:replace="facultad/formModal :: modalRegistro"></div>
-  <!-- Footer -->
-      <div th:replace="layouts/footer :: footer"></div>
-      <div th:replace="layouts/layout3 :: scripts"></div>
-  
+  <!-- Scripts -->
+  <!-- Core JS - includes jquery, bootstrap, popper, in-view and sticky-kit -->
+  <div th:replace="layouts/layout :: scripts"></div>
 </body>
 
 </html>

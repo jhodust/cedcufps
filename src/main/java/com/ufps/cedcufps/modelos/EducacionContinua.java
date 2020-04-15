@@ -51,10 +51,13 @@ public class EducacionContinua implements Serializable {
 	@Column(name = "fecha_fin")
 	private Date fechaFin;
 	
+	private String lugar;
+	
 	@DateTimeFormat(pattern="dd/MM/yyyy HH:mm")
 	@Column(name = "fecha_lim_inscripcion")
 	private Date fechaLimInscripcion;
 	private int duracion;
+	
 	private String requisitos;
 	
 	@Column(name = "contenido_general")
@@ -289,6 +292,14 @@ public class EducacionContinua implements Serializable {
 
 	public void setActivo(boolean activo) {
 		this.activo = activo;
+	}
+
+	public String getLugar() {
+		return lugar;
+	}
+
+	public void setLugar(String lugar) {
+		this.lugar = lugar;
 	}
 	
 	

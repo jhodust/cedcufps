@@ -81,4 +81,10 @@ public class ParticipanteService implements IParticipanteService{
 		participanteDao.deleteById(id);
 	}
 
+	@Override
+	public List<Participante> findAllParticipacionesActivasByParticipante(String numDocumento) {
+		// TODO Auto-generated method stub
+		return participanteDao.findAllParticipacionesActivasByParticipante(numDocumento);
+	}
+
 }

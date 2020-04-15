@@ -54,6 +54,9 @@ public class Participante implements Serializable{
 	@Column(name = "imagen_codigo_qr")
 	private String imagenCodigoQR;
 	
+	@Column(name = "tarjeta_inscripcion")
+	private String tarjetaInscripcion;
+	
 	public Long getId() {
 		return id;
 	}
@@ -100,6 +103,14 @@ public class Participante implements Serializable{
 
 	public void setImagenCodigoQR(String imagenCodigoQR) {
 		this.imagenCodigoQR = imagenCodigoQR;
+	}
+
+	public String getTarjetaInscripcion() {
+		return tarjetaInscripcion;
+	}
+
+	public void setTarjetaInscripcion(String tarjetaInscripcion) {
+		this.tarjetaInscripcion = tarjetaInscripcion;
 	}
 
 	

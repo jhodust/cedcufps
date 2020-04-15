@@ -58,7 +58,7 @@ public class ExternoController {
 		System.out.println(e.getFechaNacimiento());
 		if(e.getId()==null) {
 			Rol r= new Rol();
-			r.setAuthority("ROLE_EXTERNO");
+			r.setAuthority("ROLE_USER");
 			e.getRoles().add(r);
 			System.out.println("******************************entra solo cuando id es null****************************");
 		}

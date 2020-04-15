@@ -3,12 +3,15 @@ package com.ufps.cedcufps.controllers;
 import java.util.Map;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
@@ -108,6 +111,14 @@ public class EducacionContinuaController {
 		return "educacion_continua/detalles";
 	}
 	
+	@RequestMapping(value = "/participaciones-educacion-continua")
+	public String eventosActivosParticipante( Map<String, Object> model, Authentication authentication) {
+		
+		User u= (User) authentication.getPrincipal();
+		model.put("participaciones",participanteService.findAllParticipacionesActivasByParticipante(personaService.findByUsername(u.getUsername()).getNumeroDocumento()));
+		return "educacion_continua/tarjetas_inscripcion/index";
+	}
+	
 	@RequestMapping(value = "/educacion-continua/{id}/personalizar-diploma")
 	public String listarDiplomas(@PathVariable(value = "id") Long id, Map<String, Object> model) {
 		model.put("educacionContinua",educacionContinuaService.findOne(id).get());
@@ -120,6 +131,7 @@ public class EducacionContinuaController {
 	public void generarDirectoriosPropios(EducacionContinua ec) {
 		Archivo.crearDirectorio("uploads/educacion-continua/"+ec.getId());//directorio de la educacion continua
 		Archivo.crearDirectorio("uploads/educacion-continua/"+ec.getId()+"/qr-participantes");//directorio interno de los qr de participantes de la educacion continua
+		Archivo.crearDirectorio("uploads/educacion-continua/"+ec.getId()+"/tarjetas-inscripcion");
 	}
 	
 	public  void guardarImagenPortada(EducacionContinua ec, MultipartFile imagen) {

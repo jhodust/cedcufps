@@ -60,6 +60,9 @@ public class DocenteController {
 			Rol r= new Rol();
 			r.setAuthority("ROLE_DOCENTE");
 			d.getRoles().add(r);
+			r= new Rol();
+			r.setAuthority("ROLE_USER");
+			d.getRoles().add(r);
 			System.out.println("******************************entra solo cuando id es null****************************");
 		}
 		if(d.getPassword()!=null) {

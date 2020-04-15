@@ -57,7 +57,7 @@ public class AdministrativoController {
 		System.out.println(a.getFechaNacimiento());
 		if(a.getId()==null) {
 			Rol r= new Rol();
-			r.setAuthority("ROLE_ADMINISTRATIVO");
+			r.setAuthority("ROLE_USER");
 			a.getRoles().add(r);
 			System.out.println("******************************entra solo cuando id es null****************************");
 		}

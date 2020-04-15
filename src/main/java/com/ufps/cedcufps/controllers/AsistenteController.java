@@ -34,9 +34,9 @@ public class AsistenteController {
 	
 	@Autowired
 	private IPersonaService personaService;
-	
+	/*
 	@RequestMapping(value = "/realizar-inscripcion/{id_evento}")
-	public String realizarInscripcion(@PathVariable(value = "id_evento") Long id, Map<String, Object> model) {
+	public String realizarInscripcion2(@PathVariable(value = "id_evento") Long id, Map<String, Object> model) {
 		
 		EducacionContinua ec= educacionContinuaService.findOne(id).get();
 		Persona p= personaService.findPersonaLogueada();
@@ -70,14 +70,14 @@ public class AsistenteController {
 		participanteService.save(a);
 		String url="/educacion-continua/"+id+"/detalles";
 		return "redirect:"+url;
-	}
+	}*/
 	
-	@RequestMapping(value = "/cancelar-inscripcion/{id_evento}")
+	/*@RequestMapping(value = "/cancelar-inscripcion/{id_evento}")
 	public String cancelarInscripcion(@PathVariable(value = "id_evento") Long id, Map<String, Object> model) {
 		Participante p=participanteService.findByIdEducacionContinuaAndIdPersona(id, personaService.findPersonaLogueada().getId());
 		Archivo.deleteImage(p.getImagenCodigoQR());
 		participanteService.deleteParticipante(p);
 		String url="/educacion-continua/"+id+"/detalles";
 		return "redirect:"+url;
-	}
+	}*/
 }

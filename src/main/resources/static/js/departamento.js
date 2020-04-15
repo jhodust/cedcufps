@@ -38,7 +38,7 @@ function guardarDepartamento(){
 		url: "/departamento/save",
 		cache: false,
 		success: function(result) {
-			toastr.success('Se ha guardado la información', 'Excelente!')
+			toastr.success('Se ha guardado la información', 'Excelente!');
 			window.setTimeout(function(){location.reload()},1000);
 			idFacultad=null;
 		},

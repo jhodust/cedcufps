@@ -126,45 +126,57 @@ insert into administrativos (id_persona,cargo) values (34,'vicerector de extensi
 insert into externos (id_persona,profesion) values (35,'ing de sistemas');
 
 
-insert into roles(id,authority,id_persona) values(1,'ROLE_ESTUDIANTE',1);
+insert into roles(id,authority,id_persona) values(1,'ROLE_USER',1);
 insert into roles(id,authority,id_persona) values(2,'ROLE_BECA',1);
-insert into roles(id,authority,id_persona) values(3,'ROLE_ESTUDIANTE',2);
-insert into roles(id,authority,id_persona) values(4,'ROLE_ESTUDIANTE',3);
-insert into roles(id,authority,id_persona) values(5,'ROLE_ESTUDIANTE',4);
-insert into roles(id,authority,id_persona) values(6,'ROLE_ESTUDIANTE',5);
-insert into roles(id,authority,id_persona) values(7,'ROLE_ESTUDIANTE',6);
-insert into roles(id,authority,id_persona) values(8,'ROLE_ESTUDIANTE',7);
-insert into roles(id,authority,id_persona) values(9,'ROLE_ESTUDIANTE',8);
-insert into roles(id,authority,id_persona) values(11,'ROLE_ESTUDIANTE',10);
-insert into roles(id,authority,id_persona) values(12,'ROLE_ESTUDIANTE',11);
-insert into roles(id,authority,id_persona) values(13,'ROLE_ESTUDIANTE',12);
-insert into roles(id,authority,id_persona) values(14,'ROLE_ESTUDIANTE',13);
-insert into roles(id,authority,id_persona) values(15,'ROLE_ESTUDIANTE',14);
-insert into roles(id,authority,id_persona) values(17,'ROLE_ESTUDIANTE',16);
-insert into roles(id,authority,id_persona) values(18,'ROLE_ESTUDIANTE',17);
-insert into roles(id,authority,id_persona) values(20,'ROLE_ESTUDIANTE',19);
-insert into roles(id,authority,id_persona) values(21,'ROLE_ESTUDIANTE',20);
+insert into roles(id,authority,id_persona) values(3,'ROLE_USER',2);
+insert into roles(id,authority,id_persona) values(4,'ROLE_USER',3);
+insert into roles(id,authority,id_persona) values(5,'ROLE_USER',4);
+insert into roles(id,authority,id_persona) values(6,'ROLE_USER',5);
+insert into roles(id,authority,id_persona) values(7,'ROLE_USER',6);
+insert into roles(id,authority,id_persona) values(8,'ROLE_USER',7);
+insert into roles(id,authority,id_persona) values(9,'ROLE_USER',8);
+insert into roles(id,authority,id_persona) values(11,'ROLE_USER',10);
+insert into roles(id,authority,id_persona) values(12,'ROLE_USER',11);
+insert into roles(id,authority,id_persona) values(13,'ROLE_USER',12);
+insert into roles(id,authority,id_persona) values(14,'ROLE_USER',13);
+insert into roles(id,authority,id_persona) values(15,'ROLE_USER',14);
+insert into roles(id,authority,id_persona) values(17,'ROLE_USER',16);
+insert into roles(id,authority,id_persona) values(18,'ROLE_USER',17);
+insert into roles(id,authority,id_persona) values(20,'ROLE_USER',19);
+insert into roles(id,authority,id_persona) values(21,'ROLE_USER',20);
 
 
-insert into roles(id,authority,id_persona) values(22,'ROLE_DOCENTE',21);
-insert into roles(id,authority,id_persona) values(23,'ROLE_DOCENTE',22);
-insert into roles(id,authority,id_persona) values(24,'ROLE_DOCENTE',23);
-insert into roles(id,authority,id_persona) values(25,'ROLE_DOCENTE',24);
-insert into roles(id,authority,id_persona) values(27,'ROLE_DOCENTE',26);
-insert into roles(id,authority,id_persona) values(28,'ROLE_DOCENTE',27);
-insert into roles(id,authority,id_persona) values(29,'ROLE_DOCENTE',28);
-insert into roles(id,authority,id_persona) values(30,'ROLE_DOCENTE',29);
-insert into roles(id,authority,id_persona) values(31,'ROLE_DOCENTE',30);
-insert into roles(id,authority,id_persona) values(32,'ROLE_DOCENTE',31);
-insert into roles(id,authority,id_persona) values(33,'ROLE_DOCENTE',32);
+insert into roles(id,authority,id_persona) values(22,'ROLE_USER',21);
+insert into roles(id,authority,id_persona) values(23,'ROLE_USER',22);
+insert into roles(id,authority,id_persona) values(24,'ROLE_USER',23);
+insert into roles(id,authority,id_persona) values(25,'ROLE_USER',24);
+insert into roles(id,authority,id_persona) values(27,'ROLE_USER',26);
+insert into roles(id,authority,id_persona) values(28,'ROLE_USER',27);
+insert into roles(id,authority,id_persona) values(29,'ROLE_USER',28);
+insert into roles(id,authority,id_persona) values(30,'ROLE_USER',29);
+insert into roles(id,authority,id_persona) values(31,'ROLE_USER',30);
+insert into roles(id,authority,id_persona) values(32,'ROLE_USER',31);
+insert into roles(id,authority,id_persona) values(33,'ROLE_USER',32);
+
+insert into roles(id,authority,id_persona) values(34,'ROLE_DOCENTE',21);
+insert into roles(id,authority,id_persona) values(35,'ROLE_DOCENTE',22);
+insert into roles(id,authority,id_persona) values(36,'ROLE_DOCENTE',23);
+insert into roles(id,authority,id_persona) values(37,'ROLE_DOCENTE',24);
+insert into roles(id,authority,id_persona) values(38,'ROLE_DOCENTE',26);
+insert into roles(id,authority,id_persona) values(39,'ROLE_DOCENTE',27);
+insert into roles(id,authority,id_persona) values(40,'ROLE_DOCENTE',28);
+insert into roles(id,authority,id_persona) values(41,'ROLE_DOCENTE',29);
+insert into roles(id,authority,id_persona) values(42,'ROLE_DOCENTE',30);
+insert into roles(id,authority,id_persona) values(43,'ROLE_DOCENTE',31);
+insert into roles(id,authority,id_persona) values(44,'ROLE_DOCENTE',32);
 
 
 
-insert into roles(id,authority,id_persona) values(34,'ROLE_DIRPROGRAMA',23);
-insert into roles(id,authority,id_persona) values(35,'ROLE_ADMINISTRATIVO',33);
-insert into roles(id,authority,id_persona) values(36,'ROLE_ADMINISTRATIVO',34);
-insert into roles(id,authority,id_persona) values(37,'ROLE_SUPERADMIN',34);
-insert into roles(id,authority,id_persona) values(38,'ROLE_EXTERNO',35);
+insert into roles(id,authority,id_persona) values(45,'ROLE_DIRPROGRAMA',23);
+insert into roles(id,authority,id_persona) values(46,'ROLE_USER',33);
+insert into roles(id,authority,id_persona) values(47,'ROLE_USER',34);
+insert into roles(id,authority,id_persona) values(48,'ROLE_SUPERADMIN',34);
+insert into roles(id,authority,id_persona) values(49,'ROLE_USER',35);
 
 
 insert into tipos_participante(id,tipo_participante) values(1,'Asistente');
@@ -265,16 +277,16 @@ insert into tipos_educacion_continua(id,tipo_educacion_continua) values(4,'Talle
 insert into tipos_educacion_continua(id,tipo_educacion_continua) values(5,'Seminario');
 insert into tipos_educacion_continua(id,tipo_educacion_continua) values(6,'Congreso');
 
-insert into educacion_continua(id,nombre,fecha_inicio,fecha_fin,fecha_lim_inscripcion,contenido_general,cant_max_participantes,resumen,costo,duracion,id_tipo_educacion_continua,imagen,id_docente,id_programa,consecutivo,id_clasificacion_cine,id_tipo_beneficiario) values(1,'CIINATIC','2020-01-10','2020-01-15','2020-01-08','contenido generalll CIINATIC',10,'BBBBB',30000,26,6,'/uploads/educacion-continua/1/portada.jpg',21,1,'001',711,1);
-insert into educacion_continua(id,nombre,fecha_inicio,fecha_fin,fecha_lim_inscripcion,contenido_general,cant_max_participantes,resumen,costo,duracion,id_tipo_educacion_continua,imagen,id_docente,id_programa,consecutivo,id_clasificacion_cine,id_tipo_beneficiario) values(2,'EISI','2020-02-14','2020-02-17','2020-02-14','contenido generalll EISI',100,'aaaa',52000,40,4,'/uploads/educacion-continua/2/portada.jpg',27,8,'002',711,2);
-insert into educacion_continua(id,nombre,fecha_inicio,fecha_fin,fecha_lim_inscripcion,contenido_general,cant_max_participantes,resumen,costo,duracion,id_tipo_educacion_continua,imagen,id_docente,id_programa,consecutivo,id_clasificacion_cine,id_tipo_beneficiario) values(3,'BIENAL','2020-02-25','2020-02-29','2020-02-24','contenido generalll de la bienal',10,'jdihsig',20000,35,1,'/uploads/educacion-continua/3/portada.png',29,3,'001',541,1);
-insert into educacion_continua(id,nombre,fecha_inicio,fecha_fin,fecha_lim_inscripcion,contenido_general,cant_max_participantes,resumen,costo,duracion,id_tipo_educacion_continua,imagen,id_docente,id_programa,consecutivo,id_clasificacion_cine,id_tipo_beneficiario) values(4,'EISI2','2020-03-05','2020-03-10','2020-03-07','contenido generalll del eisi2',10,'indgisng',34800,20,2,'/uploads/educacion-continua/4/portada.jpg',30,6,'001',1021,3);
-insert into educacion_continua(id,nombre,fecha_inicio,fecha_fin,fecha_lim_inscripcion,contenido_general,cant_max_participantes,resumen,costo,duracion,id_tipo_educacion_continua,imagen,id_docente,id_programa,consecutivo,id_clasificacion_cine,id_tipo_beneficiario) values(5,'BIENAL2','2020-04-20','2020-04-20','2020-04-18','contenido generalll de la bienal2',10,'nsiengtisent',78647,25,3,'/uploads/educacion-continua/5/portada.jpg',21,4,'001',521,1);
-insert into educacion_continua(id,nombre,fecha_inicio,fecha_fin,fecha_lim_inscripcion,contenido_general,cant_max_participantes,resumen,costo,duracion,id_tipo_educacion_continua,imagen,id_docente,id_programa,consecutivo,id_clasificacion_cine,id_tipo_beneficiario) values(6,'CIINATIC3','2020-05-12','2020-05-14','2020-05-13','contenido generalll del ciinatic3',10,'isjign',640000,40,5,'/uploads/educacion-continua/6/portada.jpg',22,2,'001',711,5);
-insert into educacion_continua(id,nombre,fecha_inicio,fecha_fin,fecha_lim_inscripcion,contenido_general,cant_max_participantes,resumen,costo,duracion,id_tipo_educacion_continua,imagen,id_docente,id_programa,consecutivo,id_clasificacion_cine,id_tipo_beneficiario) values(7,'RALLY MATEMATICO','2020-06-25','2020-06-25','2020-06-22','contenido generalll del rally',10,'sjdisjgi',25500,60,6,'/uploads/educacion-continua/7/portada.jpg',23,1,'002',923,3);
-insert into educacion_continua(id,nombre,fecha_inicio,fecha_fin,fecha_lim_inscripcion,contenido_general,cant_max_participantes,resumen,costo,duracion,id_tipo_educacion_continua,imagen,id_docente,id_programa,consecutivo,id_clasificacion_cine,id_tipo_beneficiario) values(8,'II Ingeniería Civil','2020-07-10','2020-07-13','2020-07-09','contenido generalll del congreso de civil',10,'sjgisigj',100000,70,1,'/uploads/educacion-continua/8/portada.jpg',32,5,'002',412,4);
-insert into educacion_continua(id,nombre,fecha_inicio,fecha_fin,fecha_lim_inscripcion,contenido_general,cant_max_participantes,resumen,costo,duracion,id_tipo_educacion_continua,imagen,id_docente,id_programa,consecutivo,id_clasificacion_cine,id_tipo_beneficiario) values(9,'Encuentro Internacional','2020-07-25','2020-07-30','2020-07-20','contenido generalll de ciencias aplicadas',10,'ijdsgijs',67800,10,2,'/uploads/educacion-continua/9/portada.jpg',31,6,'002',711,5);
-insert into educacion_continua(id,nombre,fecha_inicio,fecha_fin,fecha_lim_inscripcion,contenido_general,cant_max_participantes,resumen,costo,duracion,id_tipo_educacion_continua,imagen,id_docente,id_programa,consecutivo,id_clasificacion_cine,id_tipo_beneficiario) values(10,'Bienal3','2020-08-18','2020-08-21','2020-08-16','contenido generalll de la bienal3',10,'ijdisjg',34500,36,3,'/uploads/educacion-continua/10/portada.jpg',21,8,'003',417,3);
+insert into educacion_continua(id,nombre,fecha_inicio,fecha_fin,fecha_lim_inscripcion,contenido_general,cant_max_participantes,resumen,costo,duracion,id_tipo_educacion_continua,imagen,id_docente,id_programa,consecutivo,id_clasificacion_cine,id_tipo_beneficiario,lugar) values(1,'CIINATIC','2020-01-10','2020-01-15','2020-01-08','contenido generalll CIINATIC',10,'BBBBB',30000,26,6,'/uploads/educacion-continua/1/portada.jpg',21,1,'001',711,1,'Auditorio Biblioteca');
+insert into educacion_continua(id,nombre,fecha_inicio,fecha_fin,fecha_lim_inscripcion,contenido_general,cant_max_participantes,resumen,costo,duracion,id_tipo_educacion_continua,imagen,id_docente,id_programa,consecutivo,id_clasificacion_cine,id_tipo_beneficiario,lugar) values(2,'EISI','2020-02-14','2020-02-17','2020-02-14','contenido generalll EISI',100,'aaaa',52000,40,4,'/uploads/educacion-continua/2/portada.jpg',27,8,'002',711,2,'Auditorio Eustorgio Colmenares Batista');
+insert into educacion_continua(id,nombre,fecha_inicio,fecha_fin,fecha_lim_inscripcion,contenido_general,cant_max_participantes,resumen,costo,duracion,id_tipo_educacion_continua,imagen,id_docente,id_programa,consecutivo,id_clasificacion_cine,id_tipo_beneficiario,lugar) values(3,'SEMINARIO VIII ENCUENTRO SEMILLERO Y PROYECTO AULA','2020-02-25','2020-02-29','2020-02-24','contenido generalll de la bienal',10,'jdihsig',20000,35,1,'/uploads/educacion-continua/3/portada.png',29,3,'001',541,1,'Auditorio Postgrados');
+insert into educacion_continua(id,nombre,fecha_inicio,fecha_fin,fecha_lim_inscripcion,contenido_general,cant_max_participantes,resumen,costo,duracion,id_tipo_educacion_continua,imagen,id_docente,id_programa,consecutivo,id_clasificacion_cine,id_tipo_beneficiario,lugar) values(4,'EISI2','2020-03-05','2020-03-10','2020-03-07','contenido generalll del eisi2',10,'indgisng',34800,20,2,'/uploads/educacion-continua/4/portada.jpg',30,6,'001',1021,3,'Auditorio Jorge Luis Acero Jordán');
+insert into educacion_continua(id,nombre,fecha_inicio,fecha_fin,fecha_lim_inscripcion,contenido_general,cant_max_participantes,resumen,costo,duracion,id_tipo_educacion_continua,imagen,id_docente,id_programa,consecutivo,id_clasificacion_cine,id_tipo_beneficiario,lugar) values(5,'COMO INVESTIGAR CON DATOS ABIERTOS? GENERANDO CONOCIMIENTO CON DATOS ABIERTOS EN DIFERENTES PAGINAS','2020-04-20','2020-04-20','2020-04-18','contenido generalll de la bienal2',10,'nsiengtisent',78647,25,3,'/uploads/educacion-continua/5/portada.jpg',21,4,'001',521,1,'Hotel Casino Internacional');
+insert into educacion_continua(id,nombre,fecha_inicio,fecha_fin,fecha_lim_inscripcion,contenido_general,cant_max_participantes,resumen,costo,duracion,id_tipo_educacion_continua,imagen,id_docente,id_programa,consecutivo,id_clasificacion_cine,id_tipo_beneficiario,lugar) values(6,'CIINATIC3','2020-05-12','2020-05-14','2020-05-13','contenido generalll del ciinatic3',10,'isjign',640000,40,5,'/uploads/educacion-continua/6/portada.jpg',22,2,'001',711,5,'Auditorio Eustorgio Colmenares Batista');
+insert into educacion_continua(id,nombre,fecha_inicio,fecha_fin,fecha_lim_inscripcion,contenido_general,cant_max_participantes,resumen,costo,duracion,id_tipo_educacion_continua,imagen,id_docente,id_programa,consecutivo,id_clasificacion_cine,id_tipo_beneficiario,lugar) values(7,'RALLY MATEMATICO','2020-06-25','2020-06-25','2020-06-22','contenido generalll del rally',10,'sjdisjgi',25500,60,6,'/uploads/educacion-continua/7/portada.jpg',23,1,'002',923,3,'Auditorio Biblioteca');
+insert into educacion_continua(id,nombre,fecha_inicio,fecha_fin,fecha_lim_inscripcion,contenido_general,cant_max_participantes,resumen,costo,duracion,id_tipo_educacion_continua,imagen,id_docente,id_programa,consecutivo,id_clasificacion_cine,id_tipo_beneficiario,lugar) values(8,'II Ingeniería Civil','2020-07-10','2020-07-13','2020-07-09','contenido generalll del congreso de civil',10,'sjgisigj',100000,70,1,'/uploads/educacion-continua/8/portada.jpg',32,5,'002',412,4,'Hotel Bolivar Salon Principal');
+insert into educacion_continua(id,nombre,fecha_inicio,fecha_fin,fecha_lim_inscripcion,contenido_general,cant_max_participantes,resumen,costo,duracion,id_tipo_educacion_continua,imagen,id_docente,id_programa,consecutivo,id_clasificacion_cine,id_tipo_beneficiario,lugar) values(9,'Encuentro Internacional','2020-07-25','2020-07-30','2020-07-20','contenido generalll de ciencias aplicadas',10,'ijdsgijs',67800,10,2,'/uploads/educacion-continua/9/portada.jpg',31,6,'002',711,5,'Auditorio J.J Maldonado 4 Piso SA');
+insert into educacion_continua(id,nombre,fecha_inicio,fecha_fin,fecha_lim_inscripcion,contenido_general,cant_max_participantes,resumen,costo,duracion,id_tipo_educacion_continua,imagen,id_docente,id_programa,consecutivo,id_clasificacion_cine,id_tipo_beneficiario,lugar) values(10,'Bienal3','2020-08-18','2020-08-21','2020-08-16','contenido generalll de la bienal3',10,'ijdisjg',34500,36,3,'/uploads/educacion-continua/10/portada.jpg',21,8,'003',417,3,'Auditorio Eustorgio Colmenares Batista');
 
 insert into jornadas(id,fecha,hora_inicio,hora_fin,educacion_continua_id) values(1,'2016-04-06','2016-04-08 08:00:00','2016-04-02 12:00:00',1);
 insert into jornadas(id,fecha,hora_inicio,hora_fin,educacion_continua_id) values(2,'2016-04-06','2016-04-08 14:00:00','2016-04-02 18:00:00',1);
@@ -284,37 +296,39 @@ insert into jornadas(id,fecha,hora_inicio,hora_fin,educacion_continua_id) values
 
 
 
-insert into participantes(id,codigoqr,imagen_codigo_qr,educacion_continua_id,id_persona,id_tipo_participante) values (2, 'Q29uZ3Jlc29fQ0lJTkFUSUNfQXNpc3RlbnRlXzE1MTU0MzZfSmF2aWVyX0NhbGRlcm9uXzAzLTA0LTIwMjAgMDI6MDM=', '/uploads/educacion-continua/1/qr-participantes/1515436.png', 1, 2, 1);
-insert into participantes(id,codigoqr,imagen_codigo_qr,educacion_continua_id,id_persona,id_tipo_participante) values (3, 'Q29uZ3Jlc29fQ0lJTkFUSUNfQXNpc3RlbnRlXzEwNTE0ODRfSmVpc29uX1N1YXJlel8wMy0wNC0yMDIwIDAxOjU5', '/uploads/educacion-continua/1/qr-participantes/1051484.png', 1, 8, 1);
-insert into participantes(id,codigoqr,imagen_codigo_qr,educacion_continua_id,id_persona,id_tipo_participante) values (4, 'Q29uZ3Jlc29fQ0lJTkFUSUNfQXNpc3RlbnRlXzE1OTg0N19Kb3NlX0hlcm5hbmRlel8wMy0wNC0yMDIwIDAyOjA1', '/uploads/educacion-continua/1/qr-participantes/159847.png', 1, 4, 1);
-insert into participantes(id,codigoqr,imagen_codigo_qr,educacion_continua_id,id_persona,id_tipo_participante) values (5, 'Q3Vyc29fQklFTkFMX0FzaXN0ZW50ZV8xMDkwNTAxNV9KaG9jZWxfU3Vlc2N1bl8wMy0wNC0yMDIwIDE0OjAz', '/uploads/educacion-continua/3/qr-participantes/10905015.png', 3, 1, 1);
-insert into participantes(id,codigoqr,imagen_codigo_qr,educacion_continua_id,id_persona,id_tipo_participante) values (6, 'RGlwbG9tYWRvX0VJU0kyX0FzaXN0ZW50ZV8xMDkwNTAxNV9KaG9jZWxfU3Vlc2N1bl8wMy0wNC0yMDIwIDE0OjA0', '/uploads/educacion-continua/4/qr-participantes/10905015.png', 4, 1, 1);
-insert into participantes(id,codigoqr,imagen_codigo_qr,educacion_continua_id,id_persona,id_tipo_participante) values (7, 'U2VtaW5hcmlvX0NJSU5BVElDM19Bc2lzdGVudGVfMTA5MDUwMTVfSmhvY2VsX1N1ZXNjdW5fMDMtMDQtMjAyMCAxNDowNA==', '/uploads/educacion-continua/6/qr-participantes/10905015.png', 6, 1, 1);
-insert into participantes(id,codigoqr,imagen_codigo_qr,educacion_continua_id,id_persona,id_tipo_participante) values (8, 'Q3Vyc29fSUkgSW5nZW5pZXLDrWEgQ2l2aWxfQXNpc3RlbnRlXzEwOTA1MDE1X0pob2NlbF9TdWVzY3VuXzAzLTA0LTIwMjAgMTQ6MDQ=', '/uploads/educacion-continua/8/qr-participantes/10905015.png', 8, 1, 1);
-insert into participantes(id,codigoqr,imagen_codigo_qr,educacion_continua_id,id_persona,id_tipo_participante) values (9, 'U2ltcG9zaW9fQmllbmFsM19Bc2lzdGVudGVfMTUxNTQzNl9KYXZpZXJfQ2FsZGVyb25fMDMtMDQtMjAyMCAxNDowNQ==', '/uploads/educacion-continua/10/qr-participantes/1515436.png', 10, 2, 1);
-insert into participantes(id,codigoqr,imagen_codigo_qr,educacion_continua_id,id_persona,id_tipo_participante) values (10, 'RGlwbG9tYWRvX0VuY3VlbnRybyBJbnRlcm5hY2lvbmFsX0FzaXN0ZW50ZV8xNTE1NDM2X0phdmllcl9DYWxkZXJvbl8wMy0wNC0yMDIwIDE0OjA1', '/uploads/educacion-continua/9/qr-participantes/1515436.png', 9, 2, 1);
-insert into participantes(id,codigoqr,imagen_codigo_qr,educacion_continua_id,id_persona,id_tipo_participante) values (11, 'U2ltcG9zaW9fQklFTkFMMl9Bc2lzdGVudGVfMTUxNTQzNl9KYXZpZXJfQ2FsZGVyb25fMDMtMDQtMjAyMCAxNDowNQ==', '/uploads/educacion-continua/5/qr-participantes/1515436.png', 5, 2, 1);
-insert into participantes(id,codigoqr,imagen_codigo_qr,educacion_continua_id,id_persona,id_tipo_participante) values (12, 'RGlwbG9tYWRvX0VJU0kyX0FzaXN0ZW50ZV8xNTE1NDM2X0phdmllcl9DYWxkZXJvbl8wMy0wNC0yMDIwIDE0OjA2', '/uploads/educacion-continua/4/qr-participantes/1515436.png', 4, 2, 1);
-insert into participantes(id,codigoqr,imagen_codigo_qr,educacion_continua_id,id_persona,id_tipo_participante) values (13, 'U2ltcG9zaW9fQklFTkFMMl9Bc2lzdGVudGVfMTA1MTg2OV9KYW5lc19EdXJhbl8wMy0wNC0yMDIwIDE0OjEw', '/uploads/educacion-continua/5/qr-participantes/1051869.png', 5, 3, 1);
-insert into participantes(id,codigoqr,imagen_codigo_qr,educacion_continua_id,id_persona,id_tipo_participante) values (14, 'Q29uZ3Jlc29fUkFMTFkgTUFURU1BVElDT19Bc2lzdGVudGVfMTA1MTg2OV9KYW5lc19EdXJhbl8wMy0wNC0yMDIwIDE0OjEw', '/uploads/educacion-continua/7/qr-participantes/1051869.png', 7, 3, 1);
-insert into participantes(id,codigoqr,imagen_codigo_qr,educacion_continua_id,id_persona,id_tipo_participante) values (15, 'U2ltcG9zaW9fQmllbmFsM19Bc2lzdGVudGVfMTA1MTg2OV9KYW5lc19EdXJhbl8wMy0wNC0yMDIwIDE0OjEw', '/uploads/educacion-continua/10/qr-participantes/1051869.png', 10, 3, 1);
-insert into participantes(id,codigoqr,imagen_codigo_qr,educacion_continua_id,id_persona,id_tipo_participante) values (16, 'RGlwbG9tYWRvX0VuY3VlbnRybyBJbnRlcm5hY2lvbmFsX0FzaXN0ZW50ZV8xMDUxODY5X0phbmVzX0R1cmFuXzAzLTA0LTIwMjAgMTQ6MTE=', '/uploads/educacion-continua/9/qr-participantes/1051869.png', 9, 3, 1);
-insert into participantes(id,codigoqr,imagen_codigo_qr,educacion_continua_id,id_persona,id_tipo_participante) values (17, 'VGFsbGVyX0VJU0lfQXNpc3RlbnRlXzE1OTg0N19Kb3NlX0hlcm5hbmRlel8wMy0wNC0yMDIwIDE0OjEx', '/uploads/educacion-continua/2/qr-participantes/159847.png', 2, 4, 1);
-insert into participantes(id,codigoqr,imagen_codigo_qr,educacion_continua_id,id_persona,id_tipo_participante) values (18, 'RGlwbG9tYWRvX0VJU0kyX0FzaXN0ZW50ZV8xNTk4NDdfSm9zZV9IZXJuYW5kZXpfMDMtMDQtMjAyMCAxNDoxMQ==', '/uploads/educacion-continua/4/qr-participantes/159847.png', 4, 4, 1);
-insert into participantes(id,codigoqr,imagen_codigo_qr,educacion_continua_id,id_persona,id_tipo_participante) values (19, 'U2VtaW5hcmlvX0NJSU5BVElDM19Bc2lzdGVudGVfMTU5ODQ3X0pvc2VfSGVybmFuZGV6XzAzLTA0LTIwMjAgMTQ6MTI=', '/uploads/educacion-continua/6/qr-participantes/159847.png', 6, 4, 1);
-insert into participantes(id,codigoqr,imagen_codigo_qr,educacion_continua_id,id_persona,id_tipo_participante) values (20, 'Q3Vyc29fSUkgSW5nZW5pZXLDrWEgQ2l2aWxfQXNpc3RlbnRlXzE1OTg0N19Kb3NlX0hlcm5hbmRlel8wMy0wNC0yMDIwIDE0OjEy', '/uploads/educacion-continua/8/qr-participantes/159847.png', 8, 4, 1);
-insert into participantes(id,codigoqr,imagen_codigo_qr,educacion_continua_id,id_persona,id_tipo_participante) values (21, 'Q29uZ3Jlc29fQ0lJTkFUSUNfQXNpc3RlbnRlXzEwNjk0ODk0X0R1bWFyX0Jhc3RvXzAzLTA0LTIwMjAgMTQ6MTI=', '/uploads/educacion-continua/1/qr-participantes/10694894.png', 1, 5, 1);
-insert into participantes(id,codigoqr,imagen_codigo_qr,educacion_continua_id,id_persona,id_tipo_participante) values (22, 'RGlwbG9tYWRvX0VJU0kyX0FzaXN0ZW50ZV8xMDY5NDg5NF9EdW1hcl9CYXN0b18wMy0wNC0yMDIwIDE0OjEz', '/uploads/educacion-continua/4/qr-participantes/10694894.png', 4, 5, 1);
-insert into participantes(id,codigoqr,imagen_codigo_qr,educacion_continua_id,id_persona,id_tipo_participante) values (23, 'Q29uZ3Jlc29fUkFMTFkgTUFURU1BVElDT19Bc2lzdGVudGVfMTA2OTQ4OTRfRHVtYXJfQmFzdG9fMDMtMDQtMjAyMCAxNDoxMw==', '/uploads/educacion-continua/7/qr-participantes/10694894.png', 7, 5, 1);
-insert into participantes(id,codigoqr,imagen_codigo_qr,educacion_continua_id,id_persona,id_tipo_participante) values (24, 'U2ltcG9zaW9fQmllbmFsM19Bc2lzdGVudGVfMTA2OTQ4OTRfRHVtYXJfQmFzdG9fMDMtMDQtMjAyMCAxNDoxMw==', '/uploads/educacion-continua/10/qr-participantes/10694894.png', 10, 5, 1);
-insert into participantes(id,codigoqr,imagen_codigo_qr,educacion_continua_id,id_persona,id_tipo_participante) values (25, 'Q3Vyc29fQklFTkFMX0FzaXN0ZW50ZV8xMDUxODQ5OF9Kb3NlX0Nhbm9fMDMtMDQtMjAyMCAxNDoxMw==', '/uploads/educacion-continua/3/qr-participantes/10518498.png', 3, 6, 1);
-insert into participantes(id,codigoqr,imagen_codigo_qr,educacion_continua_id,id_persona,id_tipo_participante) values (26, 'U2VtaW5hcmlvX0NJSU5BVElDM19Bc2lzdGVudGVfMTA1MTg0OThfSm9zZV9DYW5vXzAzLTA0LTIwMjAgMTQ6MTQ=', '/uploads/educacion-continua/6/qr-participantes/10518498.png', 6, 6, 1);
-insert into participantes(id,codigoqr,imagen_codigo_qr,educacion_continua_id,id_persona,id_tipo_participante) values (27, 'RGlwbG9tYWRvX0VuY3VlbnRybyBJbnRlcm5hY2lvbmFsX0FzaXN0ZW50ZV8xMDUxODQ5OF9Kb3NlX0Nhbm9fMDMtMDQtMjAyMCAxNDoxNA==', '/uploads/educacion-continua/9/qr-participantes/10518498.png', 9, 6, 1);
-insert into participantes(id,codigoqr,imagen_codigo_qr,educacion_continua_id,id_persona,id_tipo_participante) values (28, 'Q29uZ3Jlc29fUkFMTFkgTUFURU1BVElDT19Bc2lzdGVudGVfMTA4NDg0X01hcmlhX01lbmRvemFfMDMtMDQtMjAyMCAxNDoxNQ==', '/uploads/educacion-continua/7/qr-participantes/108484.png', 7, 7, 1);
-insert into participantes(id,codigoqr,imagen_codigo_qr,educacion_continua_id,id_persona,id_tipo_participante) values (29, 'U2ltcG9zaW9fQklFTkFMMl9Bc2lzdGVudGVfMTA4NDg0X01hcmlhX01lbmRvemFfMDMtMDQtMjAyMCAxNDoxNQ==', '/uploads/educacion-continua/5/qr-participantes/108484.png', 5, 7, 1);
-insert into participantes(id,codigoqr,imagen_codigo_qr,educacion_continua_id,id_persona,id_tipo_participante) values (30, 'Q3Vyc29fQklFTkFMX0FzaXN0ZW50ZV8xMDg0ODRfTWFyaWFfTWVuZG96YV8wMy0wNC0yMDIwIDE0OjE1', '/uploads/educacion-continua/3/qr-participantes/108484.png', 3, 7, 1);
-insert into participantes(id,codigoqr,imagen_codigo_qr,educacion_continua_id,id_persona,id_tipo_participante) values (31, 'U2ltcG9zaW9fQklFTkFMMl9Bc2lzdGVudGVfMTA1MTQ4NF9KZWlzb25fU3VhcmV6XzAzLTA0LTIwMjAgMTQ6MTY=', '/uploads/educacion-continua/5/qr-participantes/1051484.png', 5, 8, 1);
-insert into participantes(id,codigoqr,imagen_codigo_qr,educacion_continua_id,id_persona,id_tipo_participante) values (32, 'RGlwbG9tYWRvX0VuY3VlbnRybyBJbnRlcm5hY2lvbmFsX0FzaXN0ZW50ZV8xMDUxNDg0X0plaXNvbl9TdWFyZXpfMDMtMDQtMjAyMCAxNDoxNg==', '/uploads/educacion-continua/9/qr-participantes/1051484.png', 9, 8, 1);
+
+insert into participantes(id,codigoqr,imagen_codigo_qr,tarjeta_inscripcion,educacion_continua_id,id_persona,id_tipo_participante) values (2, 'MTY0XzFfM18xXzEwODQ4NF8xNS0wNC0yMDIwIDA0OjA1', '/uploads/educacion-continua/3/qr-participantes/108484.png', '/uploads/educacion-continua/3/tarjetas-inscripcion/inscripcion_108484.jpg', 3, 7, 1),
+insert into participantes(id,codigoqr,imagen_codigo_qr,tarjeta_inscripcion,educacion_continua_id,id_persona,id_tipo_participante) values (3, 'MTUwXzNfNV8xXzEwODQ4NF8xNS0wNC0yMDIwIDA0OjA1', '/uploads/educacion-continua/5/qr-participantes/108484.png', '/uploads/educacion-continua/5/tarjetas-inscripcion/inscripcion_108484.jpg', 5, 7, 1),
+insert into participantes(id,codigoqr,imagen_codigo_qr,tarjeta_inscripcion,educacion_continua_id,id_persona,id_tipo_participante) values (4, 'MTExXzZfN18xXzEwODQ4NF8xNS0wNC0yMDIwIDA0OjA1', '/uploads/educacion-continua/7/qr-participantes/108484.png', '/uploads/educacion-continua/7/tarjetas-inscripcion/inscripcion_108484.jpg', 7, 7, 1),
+insert into participantes(id,codigoqr,imagen_codigo_qr,tarjeta_inscripcion,educacion_continua_id,id_persona,id_tipo_participante) values (5, 'MTExXzZfMV8xXzEwNjk0ODk0XzE1LTA0LTIwMjAgMDQ6MDc=', '/uploads/educacion-continua/1/qr-participantes/10694894.png', '/uploads/educacion-continua/1/tarjetas-inscripcion/inscripcion_10694894.jpg', 1, 5, 1),
+insert into participantes(id,codigoqr,imagen_codigo_qr,tarjeta_inscripcion,educacion_continua_id,id_persona,id_tipo_participante) values (6, 'MTM0XzNfMTBfMV8xMDY5NDg5NF8xNS0wNC0yMDIwIDA0OjA3', '/uploads/educacion-continua/10/qr-participantes/10694894.png', '/uploads/educacion-continua/10/tarjetas-inscripcion/inscripcion_10694894.jpg', 10, 5, 1),
+insert into participantes(id,codigoqr,imagen_codigo_qr,tarjeta_inscripcion,educacion_continua_id,id_persona,id_tipo_participante) values (7, 'MTIyXzJfNF8xXzEwNjk0ODk0XzE1LTA0LTIwMjAgMDQ6MDg=', '/uploads/educacion-continua/4/qr-participantes/10694894.png', '/uploads/educacion-continua/4/tarjetas-inscripcion/inscripcion_10694894.jpg', 4, 5, 1),
+insert into participantes(id,codigoqr,imagen_codigo_qr,tarjeta_inscripcion,educacion_continua_id,id_persona,id_tipo_participante) values (8, 'MTExXzZfN18xXzEwNjk0ODk0XzE1LTA0LTIwMjAgMDQ6MDg=', '/uploads/educacion-continua/7/qr-participantes/10694894.png', '/uploads/educacion-continua/7/tarjetas-inscripcion/inscripcion_10694894.jpg', 7, 5, 1),
+insert into participantes(id,codigoqr,imagen_codigo_qr,tarjeta_inscripcion,educacion_continua_id,id_persona,id_tipo_participante) values (9, 'MTIyXzJfOV8xXzEwNTE0ODRfMTUtMDQtMjAyMCAwNDowOQ==', '/uploads/educacion-continua/9/qr-participantes/1051484.png', '/uploads/educacion-continua/9/tarjetas-inscripcion/inscripcion_1051484.jpg', 9, 8, 1),
+insert into participantes(id,codigoqr,imagen_codigo_qr,tarjeta_inscripcion,educacion_continua_id,id_persona,id_tipo_participante) values (10, 'MTUwXzNfNV8xXzEwNTE0ODRfMTUtMDQtMjAyMCAwNDowOQ==', '/uploads/educacion-continua/5/qr-participantes/1051484.png', '/uploads/educacion-continua/5/tarjetas-inscripcion/inscripcion_1051484.jpg', 5, 8, 1),
+insert into participantes(id,codigoqr,imagen_codigo_qr,tarjeta_inscripcion,educacion_continua_id,id_persona,id_tipo_participante) values (11, 'MTExXzZfMV8xXzEwNTE0ODRfMTUtMDQtMjAyMCAwNDowOQ==', '/uploads/educacion-continua/1/qr-participantes/1051484.png', '/uploads/educacion-continua/1/tarjetas-inscripcion/inscripcion_1051484.jpg', 1, 8, 1),
+insert into participantes(id,codigoqr,imagen_codigo_qr,tarjeta_inscripcion,educacion_continua_id,id_persona,id_tipo_participante) values (12, 'MTExXzZfN18xXzEwNTE4NjlfMTUtMDQtMjAyMCAwNDoxMg==', '/uploads/educacion-continua/7/qr-participantes/1051869.png', '/uploads/educacion-continua/7/tarjetas-inscripcion/inscripcion_1051869.jpg', 7, 3, 1),
+insert into participantes(id,codigoqr,imagen_codigo_qr,tarjeta_inscripcion,educacion_continua_id,id_persona,id_tipo_participante) values (13, 'MTIyXzJfOV8xXzEwNTE4NjlfMTUtMDQtMjAyMCAwNDoxMg==', '/uploads/educacion-continua/9/qr-participantes/1051869.png', '/uploads/educacion-continua/9/tarjetas-inscripcion/inscripcion_1051869.jpg', 9, 3, 1),
+insert into participantes(id,codigoqr,imagen_codigo_qr,tarjeta_inscripcion,educacion_continua_id,id_persona,id_tipo_participante) values (14, 'MTM0XzNfMTBfMV8xMDUxODY5XzE1LTA0LTIwMjAgMDQ6MTI=', '/uploads/educacion-continua/10/qr-participantes/1051869.png', '/uploads/educacion-continua/10/tarjetas-inscripcion/inscripcion_1051869.jpg', 10, 3, 1),
+insert into participantes(id,codigoqr,imagen_codigo_qr,tarjeta_inscripcion,educacion_continua_id,id_persona,id_tipo_participante) values (15, 'MTUwXzNfNV8xXzEwNTE4NjlfMTUtMDQtMjAyMCAwNDoxMg==', '/uploads/educacion-continua/5/qr-participantes/1051869.png', '/uploads/educacion-continua/5/tarjetas-inscripcion/inscripcion_1051869.jpg', 5, 3, 1),
+insert into participantes(id,codigoqr,imagen_codigo_qr,tarjeta_inscripcion,educacion_continua_id,id_persona,id_tipo_participante) values (16, 'MTIyXzJfOV8xXzE1MTU0MzZfMTUtMDQtMjAyMCAwNDoxNA==', '/uploads/educacion-continua/9/qr-participantes/1515436.png', '/uploads/educacion-continua/9/tarjetas-inscripcion/inscripcion_1515436.jpg', 9, 2, 1),
+insert into participantes(id,codigoqr,imagen_codigo_qr,tarjeta_inscripcion,educacion_continua_id,id_persona,id_tipo_participante) values (17, 'MTM0XzNfMTBfMV8xNTE1NDM2XzE1LTA0LTIwMjAgMDQ6MTQ=', '/uploads/educacion-continua/10/qr-participantes/1515436.png', '/uploads/educacion-continua/10/tarjetas-inscripcion/inscripcion_1515436.jpg', 10, 2, 1),
+insert into participantes(id,codigoqr,imagen_codigo_qr,tarjeta_inscripcion,educacion_continua_id,id_persona,id_tipo_participante) values (18, 'MTExXzZfMV8xXzE1MTU0MzZfMTUtMDQtMjAyMCAwNDoxNA==', '/uploads/educacion-continua/1/qr-participantes/1515436.png', '/uploads/educacion-continua/1/tarjetas-inscripcion/inscripcion_1515436.jpg', 1, 2, 1),
+insert into participantes(id,codigoqr,imagen_codigo_qr,tarjeta_inscripcion,educacion_continua_id,id_persona,id_tipo_participante) values (19, 'MTIyXzJfNF8xXzE1MTU0MzZfMTUtMDQtMjAyMCAwNDoxNA==', '/uploads/educacion-continua/4/qr-participantes/1515436.png', '/uploads/educacion-continua/4/tarjetas-inscripcion/inscripcion_1515436.jpg', 4, 2, 1),
+insert into participantes(id,codigoqr,imagen_codigo_qr,tarjeta_inscripcion,educacion_continua_id,id_persona,id_tipo_participante) values (20, 'MTUwXzNfNV8xXzE1MTU0MzZfMTUtMDQtMjAyMCAwNDoxNA==', '/uploads/educacion-continua/5/qr-participantes/1515436.png', '/uploads/educacion-continua/5/tarjetas-inscripcion/inscripcion_1515436.jpg', 5, 2, 1),
+insert into participantes(id,codigoqr,imagen_codigo_qr,tarjeta_inscripcion,educacion_continua_id,id_persona,id_tipo_participante) values (21, 'MTI2XzFfOF8xXzE1OTg0N18xNS0wNC0yMDIwIDA0OjE2', '/uploads/educacion-continua/8/qr-participantes/159847.png', '/uploads/educacion-continua/8/tarjetas-inscripcion/inscripcion_159847.jpg', 8, 4, 1),
+insert into participantes(id,codigoqr,imagen_codigo_qr,tarjeta_inscripcion,educacion_continua_id,id_persona,id_tipo_participante) values (22, 'MTExXzZfMV8xXzE1OTg0N18xNS0wNC0yMDIwIDA0OjE2', '/uploads/educacion-continua/1/qr-participantes/159847.png', '/uploads/educacion-continua/1/tarjetas-inscripcion/inscripcion_159847.jpg', 1, 4, 1),
+insert into participantes(id,codigoqr,imagen_codigo_qr,tarjeta_inscripcion,educacion_continua_id,id_persona,id_tipo_participante) values (23, 'MTM0XzRfMl8xXzE1OTg0N18xNS0wNC0yMDIwIDA0OjE3', '/uploads/educacion-continua/2/qr-participantes/159847.png', '/uploads/educacion-continua/2/tarjetas-inscripcion/inscripcion_159847.jpg', 2, 4, 1),
+insert into participantes(id,codigoqr,imagen_codigo_qr,tarjeta_inscripcion,educacion_continua_id,id_persona,id_tipo_participante) values (24, 'MTIyXzJfNF8xXzE1OTg0N18xNS0wNC0yMDIwIDA0OjE3', '/uploads/educacion-continua/4/qr-participantes/159847.png', '/uploads/educacion-continua/4/tarjetas-inscripcion/inscripcion_159847.jpg', 4, 4, 1),
+insert into participantes(id,codigoqr,imagen_codigo_qr,tarjeta_inscripcion,educacion_continua_id,id_persona,id_tipo_participante) values (25, 'MTE1XzVfNl8xXzE1OTg0N18xNS0wNC0yMDIwIDA0OjE4', '/uploads/educacion-continua/6/qr-participantes/159847.png', '/uploads/educacion-continua/6/tarjetas-inscripcion/inscripcion_159847.jpg', 6, 4, 1),
+insert into participantes(id,codigoqr,imagen_codigo_qr,tarjeta_inscripcion,educacion_continua_id,id_persona,id_tipo_participante) values (26, 'MTY0XzFfM18xXzEwOTA1MDE1XzE1LTA0LTIwMjAgMDQ6MTk=', '/uploads/educacion-continua/3/qr-participantes/10905015.png', '/uploads/educacion-continua/3/tarjetas-inscripcion/inscripcion_10905015.jpg', 3, 1, 1),
+insert into participantes(id,codigoqr,imagen_codigo_qr,tarjeta_inscripcion,educacion_continua_id,id_persona,id_tipo_participante) values (27, 'MTIyXzJfNF8xXzEwOTA1MDE1XzE1LTA0LTIwMjAgMDQ6MTk=', '/uploads/educacion-continua/4/qr-participantes/10905015.png', '/uploads/educacion-continua/4/tarjetas-inscripcion/inscripcion_10905015.jpg', 4, 1, 1),
+insert into participantes(id,codigoqr,imagen_codigo_qr,tarjeta_inscripcion,educacion_continua_id,id_persona,id_tipo_participante) values (28, 'MTE1XzVfNl8xXzEwOTA1MDE1XzE1LTA0LTIwMjAgMDQ6MTk=', '/uploads/educacion-continua/6/qr-participantes/10905015.png', '/uploads/educacion-continua/6/tarjetas-inscripcion/inscripcion_10905015.jpg', 6, 1, 1),
+insert into participantes(id,codigoqr,imagen_codigo_qr,tarjeta_inscripcion,educacion_continua_id,id_persona,id_tipo_participante) values (29, 'MTI2XzFfOF8xXzEwOTA1MDE1XzE1LTA0LTIwMjAgMDQ6MTk=', '/uploads/educacion-continua/8/qr-participantes/10905015.png', '/uploads/educacion-continua/8/tarjetas-inscripcion/inscripcion_10905015.jpg', 8, 1, 1),
+insert into participantes(id,codigoqr,imagen_codigo_qr,tarjeta_inscripcion,educacion_continua_id,id_persona,id_tipo_participante) values (30, 'MTY0XzFfM18xXzEwNTE4NDk4XzE1LTA0LTIwMjAgMDQ6MjE=', '/uploads/educacion-continua/3/qr-participantes/10518498.png', '/uploads/educacion-continua/3/tarjetas-inscripcion/inscripcion_10518498.jpg', 3, 6, 1),
+insert into participantes(id,codigoqr,imagen_codigo_qr,tarjeta_inscripcion,educacion_continua_id,id_persona,id_tipo_participante) values (31, 'MTE1XzVfNl8xXzEwNTE4NDk4XzE1LTA0LTIwMjAgMDQ6MjE=', '/uploads/educacion-continua/6/qr-participantes/10518498.png', '/uploads/educacion-continua/6/tarjetas-inscripcion/inscripcion_10518498.jpg', 6, 6, 1),
+insert into participantes(id,codigoqr,imagen_codigo_qr,tarjeta_inscripcion,educacion_continua_id,id_persona,id_tipo_participante) values (32, 'MTIyXzJfOV8xXzEwNTE4NDk4XzE1LTA0LTIwMjAgMDQ6MjE=', '/uploads/educacion-continua/9/qr-participantes/10518498.png', '/uploads/educacion-continua/9/tarjetas-inscripcion/inscripcion_10518498.jpg', 9, 6, 1);
+
 
 insert into participantes(id,codigoqr,imagen_codigo_qr,educacion_continua_id,id_persona,id_tipo_participante) values (1, NULL, NULL, 1, 1, 2);
 insert into participantes(id,codigoqr,imagen_codigo_qr,educacion_continua_id,id_persona,id_tipo_participante) values (33, NULL, NULL, 1, 31, 2);

@@ -195,6 +195,12 @@ public class PersonaService implements IPersonaService, UserDetailsService {
 		return (List<Externo>)externoDao.findAll();
 	}
 
+	@Override
+	public Persona findByUsername(String username) {
+		// TODO Auto-generated method stub
+		return personaDao.findByUsername(username);
+	}
+
 	
 
 }

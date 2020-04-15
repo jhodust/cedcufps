@@ -39,4 +39,6 @@ public interface IEducacionContinuaService {
 	public void updateCodigoEducacionContinua(EducacionContinua ec);
 	
 	public void generarReporteSNIESEducacionContinua(String año);
+	
+	
 }

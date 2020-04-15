@@ -77,17 +77,32 @@
                 </a>
               </li>
               <li class="nav-item ">
-                <a class="nav-link pl-lg-0" th:href="@{/plantilla/application/home.html}">
+                <a class="nav-link pl-lg-0" th:href="@{/}">
                   Home
                 </a>
               </li>
+              <li class="nav-item" sec:authorize="hasAnyRole('ROLE_USER')" >
+                <a class="nav-link" th:href="@{/participaciones-educacion-continua}">
+                  Eventos Inscrito
+                </a>
+              </li>
+              <li class="nav-item" sec:authorize="hasAnyRole('ROLE_DOCENTE')" >
+                <a class="nav-link" th:href="@{/reportes-SNIES}">
+                  Eventos a Cargo
+                </a>
+              </li>
+              <li class="nav-item" sec:authorize="hasAnyRole('ROLE_USER')" >
+                <a class="nav-link" th:href="@{/reportes-SNIES}">
+                  Certificados
+                </a>
+              </li>
               <!-- Application menu -->
-              <li class="nav-item dropdown dropdown-animate" data-toggle="hover">
+              <li class="nav-item dropdown dropdown-animate" data-toggle="hover" sec:authorize="hasAnyRole('ROLE_SUPERADMIN')">
                       <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Gestionar Opciones
+                  Áreas academicas
                 </a>	
                 		
-                      <div class="dropdown-menu"><a class="dropdown-item"sec:authorize="hasAnyRole('ROLE_SUPERADMIN')" th:href="@{/facultades}">
+                      <div class="dropdown-menu"><a class="dropdown-item" sec:authorize="hasAnyRole('ROLE_SUPERADMIN')" th:href="@{/facultades}">
                           Facultades
                         </a>
                         <a class="dropdown-item"sec:authorize="hasAnyRole('ROLE_SUPERADMIN')" th:href="@{/departamentos-academicos}">
@@ -99,27 +114,35 @@
                       </div>
                     </li>
               
-              <li class="nav-item">
-                <a class="nav-link" sec:authorize="hasAnyRole('ROLE_SUPERADMIN','ROLE_DIRPROGRAMA','ROLE_ADMIN')" th:href="@{/usuarios}">
-                  Gestionar Usuarios
+              <li class="nav-item" sec:authorize="hasAnyRole('ROLE_SUPERADMIN','ROLE_DIRPROGRAMA','ROLE_ADMIN')">
+                <a class="nav-link"  th:href="@{/usuarios}">
+                  Usuarios
                 </a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" sec:authorize="hasAnyRole('ROLE_SUPERADMIN','ROLE_DIRPROGRAMA','ROLE_ADMIN', 'ROLE_BECA')" th:href="@{/educacion-continua}">
+              <li class="nav-item" sec:authorize="hasAnyRole('ROLE_SUPERADMIN','ROLE_DIRPROGRAMA','ROLE_ADMIN', 'ROLE_BECA')">
+                <a class="nav-link"  th:href="@{/educacion-continua}">
                   Eventos
                 </a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" sec:authorize="hasAnyRole('ROLE_SUPERADMIN','ROLE_DIRPROGRAMA')" th:href="@{/reportes-SNIES}">
-                  Reportes SNIES
-                </a>
-              </li>
+              <li class="nav-item dropdown dropdown-animate" data-toggle="hover" sec:authorize="hasAnyRole('ROLE_SUPERADMIN','ROLE_DIRPROGRAMA')">
+                      <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Reportes
+                </a>	
+                		
+                  <div class="dropdown-menu"><a class="dropdown-item" sec:authorize="hasAnyRole('ROLE_SUPERADMIN','ROLE_DIRPROGRAMA')" th:href="@{/reportes-SNIES}">
+                      SNIES
+                    </a>
+                    <a class="dropdown-item" sec:authorize="hasAnyRole('ROLE_SUPERADMIN','ROLE_DIRPROGRAMA')" th:href="@{/reportes-SNIES}">
+                      Dashboard
+                    </a>
+                  </div>
+                </li>
+             
+              
             </ul><!-- Right menu -->
             <ul class="navbar-nav ml-lg-auto align-items-center d-none d-lg-flex">
               
-              <li class="nav-item">
-                <a href="#" class="nav-link nav-link-icon" data-action="omnisearch-open" data-target="#omnisearch"><i class="fas fa-search"></i></a>
-              </li>
+              
               
               
               <li class="nav-item dropdown dropdown-animate">

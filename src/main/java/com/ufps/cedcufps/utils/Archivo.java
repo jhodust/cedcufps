@@ -36,8 +36,7 @@ public class Archivo {
 	
 	public static void deleteImage(String imagen) {
 		System.out.println("*****************eliminando imagen**************************");
-		Path ruta=Paths.get(Paths.get("src//main//resources//static").toFile().getAbsolutePath()+imagen);
-		File archivo=ruta.toFile();
+		File archivo=Paths.get("src//main//resources//static"+imagen).toFile();
 		System.out.println(archivo.getAbsolutePath());
 		archivo.delete();
 	}

@@ -32,7 +32,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 		.antMatchers("/programa/**").hasAnyRole("SUPERADMIN")
 		.antMatchers("/tipo-documento/**").hasAnyRole("SUPERADMIN")
 		.antMatchers("/educacion-continua/**").hasAnyRole("SUPERADMIN","ADMIN")
-		.antMatchers("/realizar-inscripcion/**","/cancelar-inscripcion/**").hasAnyRole("ESTUDIANTE","DOCENTE","ADMINISTRATIVO","EXTERNO")
+		.antMatchers("/participaciones-educacion-continua", "/realizar-inscripcion/**","/cancelar-inscripcion/**").hasRole("USER")
 		.anyRequest().authenticated()
 		.and()
 			.formLogin().successHandler(successHandler).loginPage("/login")

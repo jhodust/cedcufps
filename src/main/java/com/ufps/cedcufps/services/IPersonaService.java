@@ -46,5 +46,7 @@ public interface IPersonaService {
 	public Persona findPersonaLogueada();
 	
 	public Optional<Persona> findOne(Long id);
+	
+	public Persona findByUsername(String username);
 
 }

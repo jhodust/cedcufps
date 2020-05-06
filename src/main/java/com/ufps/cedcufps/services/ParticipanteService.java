@@ -87,4 +87,10 @@ public class ParticipanteService implements IParticipanteService{
 		return participanteDao.findAllParticipacionesActivasByParticipante(numDocumento);
 	}
 
+	@Override
+	public List<Participante> findAllParticipantesByEducacionContinua(Long idEduContinua) {
+		// TODO Auto-generated method stub
+		return participanteDao.findAllParticipantesByEducacionContinua(idEduContinua);
+	}
+
 }

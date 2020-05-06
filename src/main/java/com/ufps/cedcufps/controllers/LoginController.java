@@ -21,10 +21,6 @@ public class LoginController {
 		return "login";
 	}
 	
-	@GetMapping(value = "/diplomas")
-	public String diplomas(Model model) {
-		
-		return "diplomas";
-	}
+	
 	
 }

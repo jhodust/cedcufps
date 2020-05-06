@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -50,6 +51,10 @@ public class Programa implements Serializable {//1
 	@OneToMany(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_programa")
 	private List<EducacionContinua> educacionesContinuas;
+	
+	@OneToOne
+	@JoinColumn(name="id_docente")
+	private Docente directorPrograma;
 	
 	public Programa() {
 		estudiantes= new ArrayList<Estudiante>();
@@ -114,6 +119,15 @@ public class Programa implements Serializable {//1
 		this.educacionesContinuas = educacionesContinuas;
 	}
 
+	public Docente getDirectorPrograma() {
+		return directorPrograma;
+	}
+
+	public void setDirectorPrograma(Docente directorPrograma) {
+		this.directorPrograma = directorPrograma;
+	}
+
+	
 	
 
 }

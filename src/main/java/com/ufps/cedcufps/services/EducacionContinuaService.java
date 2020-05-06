@@ -13,6 +13,7 @@ import com.ufps.cedcufps.dao.IEducacionContinuaDao;
 import com.ufps.cedcufps.dao.ITipoBeneficiarioDao;
 import com.ufps.cedcufps.dao.ITipoEducacionContinuaDao;
 import com.ufps.cedcufps.modelos.ClasificacionCine;
+import com.ufps.cedcufps.modelos.Diploma;
 import com.ufps.cedcufps.modelos.EducacionContinua;
 import com.ufps.cedcufps.modelos.Participante;
 import com.ufps.cedcufps.modelos.TipoBeneficiario;
@@ -145,6 +146,26 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 		// TODO Auto-generated method stub
 		return (List<TipoBeneficiario>) tipoBeneficiarioDao.findAll();
 	}
+
+	@Override
+	public List<EducacionContinua> findAllEducacionContinuaACargoDocente(String numDocumento) {
+		// TODO Auto-generated method stub
+		return educacionContinuaDao.findAllEducacionContinuaACargoDocente(numDocumento);
+	}
+	
+	@Override
+	public List<EducacionContinua> findAllEducacionContinuaACargoDirector(String numDocumento, Long idProgramaDirector) {
+		// TODO Auto-generated method stub
+		return educacionContinuaDao.findAllEducacionContinuaACargoDirector(numDocumento,idProgramaDirector);
+	}
+
+	@Override
+	public EducacionContinua findOneByNombre(String educacionContinua) {
+		// TODO Auto-generated method stub
+		return educacionContinuaDao.findByNombre(educacionContinua);
+	}
+
+	
 
 	
 

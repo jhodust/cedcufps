@@ -17,6 +17,7 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -99,6 +100,11 @@ public class EducacionContinua implements Serializable {
 	
 	@Column(columnDefinition = "boolean default true")
 	private boolean activo;
+	
+	@JsonIgnore
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="id_diploma")
+	private Diploma diploma;
 	
 	public EducacionContinua() {
 		this.jornadas=new ArrayList<Jornada>();
@@ -300,6 +306,14 @@ public class EducacionContinua implements Serializable {
 
 	public void setLugar(String lugar) {
 		this.lugar = lugar;
+	}
+
+	public Diploma getDiploma() {
+		return diploma;
+	}
+
+	public void setDiploma(Diploma diploma) {
+		this.diploma = diploma;
 	}
 	
 	

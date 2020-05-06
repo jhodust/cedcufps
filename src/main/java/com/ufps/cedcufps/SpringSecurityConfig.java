@@ -27,12 +27,13 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		// TODO Auto-generated method stub
-		http.authorizeRequests().antMatchers("/","/home","/diplomas","/plantilla/**", "/logos/**","/data/**","/js/**","/css/**","/programa/save", "/uploads/**","/educacion-continua/**/detalles").permitAll()
+		http.authorizeRequests().antMatchers("/","/pdfreport","/home","/plantilla/**", "/logos/**","/data/**","/js/**","/css/**","/programa/save", "/uploads/**","/educacion-continua/**/detalles").permitAll()
 		.antMatchers("/persona/**").hasAnyRole("SUPERADMIN", "ESTUDIANTE")
 		.antMatchers("/programa/**").hasAnyRole("SUPERADMIN")
 		.antMatchers("/tipo-documento/**").hasAnyRole("SUPERADMIN")
-		.antMatchers("/educacion-continua/**").hasAnyRole("SUPERADMIN","ADMIN")
+		.antMatchers("/educacion-continua/**").hasAnyRole("SUPERADMIN","ADMIN","DOCENTE","DIRPROGRAMA")
 		.antMatchers("/participaciones-educacion-continua", "/realizar-inscripcion/**","/cancelar-inscripcion/**").hasRole("USER")
+		.antMatchers("/educacion-continua-a-cargo").hasRole("DOCENTE")
 		.anyRequest().authenticated()
 		.and()
 			.formLogin().successHandler(successHandler).loginPage("/login")

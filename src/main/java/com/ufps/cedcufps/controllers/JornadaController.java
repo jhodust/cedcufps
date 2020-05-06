@@ -4,17 +4,22 @@ import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.ufps.cedcufps.modelos.Docente;
 import com.ufps.cedcufps.modelos.EducacionContinua;
 import com.ufps.cedcufps.modelos.Jornada;
+import com.ufps.cedcufps.modelos.Persona;
 import com.ufps.cedcufps.services.IEducacionContinuaService;
 import com.ufps.cedcufps.services.IJornadaService;
+import com.ufps.cedcufps.services.IPersonaService;
 
 @Controller
 @SessionAttributes("jornada")
@@ -26,12 +31,10 @@ public class JornadaController {
 	@Autowired
 	private IEducacionContinuaService educacionContinuaService;
 	
-	@RequestMapping(value = "/educacion-continua/{id}/jornadas")
-	public String listar(@PathVariable(value = "id") Long id, Map<String, Object> model) {
-		model.put("titulo","JORNADAS");
-		model.put("educacionContinua",educacionContinuaService.findOne(id).get());
-		return "educacion_continua/jornada/index";
-	}
+	@Autowired
+	private IPersonaService personaService;
+	
+	
 	
 	/*@RequestMapping(value = "/educacion-continua/{id}/jornadas/registro")
 	public String agregar(@PathVariable(value = "id") Long id, Map<String, Object> model) {

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="layouts/layout :: head">
 	<meta charset="UTF-8"/>
 </head>
@@ -130,7 +130,7 @@
 											<div class="row">
 												<span class="badge badge-danger">Información Organizador</span>
 											</div>
-											<div class="row">
+											<div class="row" sec:authorize="hasRole('ROLE_SUPERADMIN')">
 												<div class="col-md-12">
 													<div class="form-group">
 														<label class="form-control-label">Programa Académico</label> <select
@@ -142,7 +142,15 @@
 													</div>
 												</div>
 											</div>
-											<div class="row">
+											<div class="row" sec:authorize="hasAnyRole('ROLE_DIRPROGRAMA', 'ROLE_DOCENTE')">
+												<div class="col-md-12">
+													<div class="form-group">
+														<label class="form-control-label">Programa Académico</label> <label
+															class="form-control" th:text="${educacionContinua.programaResponsable.programa}" readOnly></label>
+													</div>
+												</div>
+											</div>
+											<div class="row" sec:authorize="hasAnyRole('ROLE_SUPERADMIN','ROLE_DIRPROGRAMA')">
 												<div class="col-md-12">
 													<div class="form-group">
 														<label class="form-control-label">Docente Responsable</label> <select
@@ -151,6 +159,14 @@
 															<option th:each="d: ${docentes}"
 																th:value="${d.id}" th:text="${d.codigo + ' - ' + d.primerNombre + ' ' + d.segundoNombre + ' ' + d.primerApellido + ' ' + d.segundoApellido}"></option>
 														</select>
+													</div>
+												</div>
+											</div>
+											<div class="row" sec:authorize="hasRole('ROLE_DOCENTE') and !hasRole('ROLE_DIRPROGRAMA') ">
+												<div class="col-md-12">
+													<div class="form-group">
+														<label class="form-control-label">Docente Responsable</label> <label
+															class="form-control" th:text="${educacionContinua.docenteResponsable.codigo + ' - ' + educacionContinua.docenteResponsable.primerNombre + ' ' + educacionContinua.docenteResponsable.segundoNombre + ' ' + educacionContinua.docenteResponsable.primerApellido + ' ' + educacionContinua.docenteResponsable.segundoApellido}" readOnly></label>
 													</div>
 												</div>
 											</div>

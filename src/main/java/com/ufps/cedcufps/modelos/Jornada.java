@@ -27,7 +27,7 @@ public class Jornada implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	private Date fecha;
+	
 	
 	@JsonFormat(pattern="dd/MM/yyyy HH:mm", timezone="America/Bogota")
 	@Column(name = "hora_inicio")
@@ -50,13 +50,7 @@ public class Jornada implements Serializable{
 		this.id = id;
 	}
 	
-	public Date getFecha() {
-		return fecha;
-	}
-
-	public void setFecha(Date fecha) {
-		this.fecha = fecha;
-	}
+	
 
 	public Date getHoraInicio() {
 		return horaInicio;

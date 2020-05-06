@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="layouts/layout :: head">
+	<meta charset="UTF-8"/>
+</head>
+<body>
+  <!-- Application container -->
+  <div class="container-fluid container-application">
+    <!-- Content -->
+    <div class="main-content position-relative">
+      <!-- Main nav -->
+      <div th:replace="layouts/logosHead :: logosHead"></div>
+      <nav th:replace="layouts/navbar :: navbar"></nav>
+      
+      <!-- Page content -->
+      <div class="page-content col-lg-9 center">
+       <!-- Project cards -->
+        <!-- Page title -->
+       	<div class="contenido ml-3 mr-3 pb-2" >
+        <br>
+        <div class="page-title">
+          <div class="row justify-content-between align-items-center">
+            <div class="col-md-6 d-flex align-items-center justify-content-between justify-content-md-start mb-3 mb-md-0">
+              <!-- Page title + Go Back button -->
+              <div class="d-inline-block">
+                <h5 class="h4 d-inline-block font-weight-400 mb-0 text-dark" ><strong>Custom Diploma</strong></h5>
+	              
+	              <a target="_blank" th:href="@{/educacion-continua/listado-participantes/{eduContinuaNombre} (eduContinuaNombre=${educacionContinua.nombre})}" data-toggle="tooltip" data-placement="top" title="Generar PDF" class="btn btn-sm btn-white btn-icon-only rounded-circle ml-4">
+	                <span class="btn-inner--icon"><i class="far fa-file-pdf"></i></span>
+	              </a>	
+              </div>
+            </div>
+            
+          </div>
+        </div>
+        <hr/>
+        
+        <div class="card col-md-12">
+        		<!-- Nav pills -->
+			<ul class="nav nav-pills">
+			  <li class="nav-item">
+			    <a class="nav-link active" data-toggle="pill" href="#visualizarDiploma">Visualizar Diploma</a>
+			  </li>
+			  <li class="nav-item">
+			    <a class="nav-link" data-toggle="pill" href="#imagenesDiploma">Editar Imágenes</a>
+			  </li>
+			  <li class="nav-item">
+			    <a class="nav-link" data-toggle="pill" href="#textoDiploma">Editar Textos</a>
+			  </li>
+			  <li class="nav-item">
+			    <a class="nav-link" data-toggle="pill" href="#firmaDiploma">Editar Firma</a>
+			  </li>
+			</ul>
+			
+			<!-- Tab panes -->
+			<div class="tab-content">
+			  <div class="tab-pane container active" id="visualizarDiploma">
+			  	<canvas class="col-md-12" id="canvas" width="970" height="750"></canvas>
+			  	
+			  </div>
+			  <div class="tab-pane container fade" id="imagenesDiploma">IMAGENES</div>
+			  <div class="tab-pane container fade" id="textoDiploma">TEXTO</div>
+			  <div class="tab-pane container fade" id="firmaDiploma">FIRMA</div>
+			</div>
+        </div>
+		
+		</div>
+	  </div>
+    
+    </div>
+    <div th:replace="layouts/footer :: footer"></div>
+    
+  </div>
+  <!-- Scripts -->
+  <!-- Core JS - includes jquery, bootstrap, popper, in-view and sticky-kit -->
+  <div th:replace="layouts/layout :: scripts"></div>
+  <script type="text/javascript" th:inline="javascript">
+  var mensajeExitoso= [[${successMessage}]];
+  if(mensajeExitoso!=null){
+	  toastr.success(mensajeExitoso, 'Excelente!',{timeOut:2000});
+  }
+  var mensajeError= [[${errorMessage}]];
+  console.log(mensajeError);
+  if(mensajeError!=null){
+	  toastr.error(mensajeError, 'Error!',{timeOut:2000});
+  }
+  </script>
+  
+  <script type="application/javascript">
+    
+      var canvas = document.getElementById('canvas');
+      if (canvas.getContext) {
+        var ctx = canvas.getContext('2d');
+        var centerX = canvas.width/2;
+      
+	   
+       /*var i=0;
+       i=porcentajeReducido(imgLogo1.width);
+       imgLogo1.width=imgLogo1.width*i/100;
+       imgLogo1.height=imgLogo1.height*i/100;
+       console.log("i: " + i);
+       
+       i=porcentajeReducido(imgLogo2.width);
+       imgLogo2.width=imgLogo2.width*i/100;
+       imgLogo2.height=imgLogo2.height*i/100;
+       console.log("i: " + i);
+       
+       
+       console.log("logo1  " + imgLogo1.width);
+       console.log("ancho1 " + imgLogo1.height);
+       console.log("logo2  " + imgLogo2.width);
+       console.log("ancho2 " + imgLogo2.height);*/
+       var img = new Image();
+    	img.src="/img/plantilla_diploma/fondo.jpg";
+    	img.onload = function() {
+    	    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+    	    var imgLogo1 = new Image();
+    		imgLogo1.src="/img/plantilla_diploma/logo1.jpg";
+    		imgLogo1.onload = function() {
+    	    	imgLogo1= redimensionarLogos(imgLogo1);
+    	    	ctx.drawImage(imgLogo1, 80, 120, imgLogo1.width, imgLogo1.height);//max 150 width
+        	    var imgLogo2 = new Image();
+      		    imgLogo2.src="/img/plantilla_diploma/logo2.jpg";
+        	    imgLogo2.onload = function() {
+        	    	imgLogo2= redimensionarLogos(imgLogo2);
+            	    ctx.drawImage(imgLogo2, 750, 120, imgLogo2.width, imgLogo2.height);//max 150 width
+        	    }
+        	   
+    	    }
+    	    //ctx.drawImage(img, 0, 0);
+    	    ctx.font = '30px Lemonada';
+    		//ctx.font = "bold 38px Trebuchet MS";
+            ctx.textAlign="center"; 
+            ctx.fillText('Universidad Francisco de Paula Santander', centerX, 120);
+            ctx.fillText('Facultad de Ingeniería', centerX, 170);
+            ctx.fillText('Programa de Ingeniería de Sistemass', centerX, 220);
+            ctx.fillText('Certifican que:', centerX, 270);
+          //persona
+            ctx.fillText('Jhocel Duvan Suescun Torres', centerX, 350);
+            ctx.font = '25px Lemonada';
+            ctx.fillText('Identificado con C.C. 1090502154, participó en el Curso', centerX, 400);
+            ctx.fillText('Mantenimiento de Hardware y Software', centerX, 440);
+            ctx.fillText('con una intensidad de Cuarenta (40) horas.', centerX, 480);
+    	}
+    	
+         
+         
+        //encabezado
+        
+        
+        
+        
+        
+        //ctx.fillStyle = 'rgb(200, 0, 0)';
+        //ctx.fillRect(10, 10, 50, 50);
+
+        //ctx.fillStyle = 'rgba(0, 0, 200, 0.5)';
+        //ctx.fillRect(30, 30, 50, 50);
+        
+        //ctx.fillRect(25, 25, 100, 100);
+        //ctx.clearRect(45, 45, 60, 60);
+        //ctx.strokeRect(50, 50, 50, 50);
+        
+        //ctx.beginPath();
+        //ctx.moveTo(75, 50);
+        //ctx.lineTo(100, 75);
+        //ctx.lineTo(100, 25);
+        //ctx.fill();
+        
+        //ctx.beginPath();
+        //ctx.arc(75, 75, 50, 0, Math.PI * 2, true); // Outer circle
+        //ctx.moveTo(110, 75);
+        //ctx.arc(75, 75, 35, 0, Math.PI, false);  // Mouth (clockwise)
+        //ctx.moveTo(65, 65);
+        //ctx.arc(60, 65, 5, 0, Math.PI * 2, true);  // Left eye
+        //ctx.moveTo(95, 65);
+        //ctx.arc(90, 65, 5, 0, Math.PI * 2, true);  // Right eye
+        //ctx.stroke();
+      }
+    function redimensionarLogos(imagen){
+    	var i=0;
+    	widthFinal=0;
+    	while(widthFinal<=150){
+     	   if((widthFinal+imagen.width*0.01)<150){
+     		  widthFinal=widthFinal+imagen.width*0.01;
+     		  i++;
+     	   }else{
+     		   break;
+     	   }
+        }
+    	
+    	imagen.width=imagen.width*i/100;
+        imagen.height=imagen.height*i/100;
+        return imagen
+    }
+  </script>
+</body>
+
+</html>

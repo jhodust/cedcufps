@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="layouts/layout :: head">
 	<meta charset="UTF-8"/>
 </head>
@@ -34,7 +34,7 @@
         </div>
         <hr/>
         
-		<div class="row">
+		<div class="row" sec:authorize="hasRole('ROLE_SUPERADMIN')">
           <div class="col-lg-3">
             <div class="card card-stats border-0">
               <!-- Card body -->
@@ -102,7 +102,6 @@
           </div>
           
         </div>
-        
         <div class="card">
           <!-- Card header -->
           <br>
@@ -133,13 +132,36 @@
 								<td th:text="${#dates.format(ec.fechaLimInscripcion, 'dd-MM-yyyy')}"></td>
 								<td><a class="btn btn-rojoufps rounded-circle btn-icon-only hover-scale-110" th:href="@{/educacion-continua/{id}/detalles(id=${ec.id})}" data-toggle="tooltip" data-placement="top" title="Ver Detalles">
     								<span class="btn-inner--icon"><i class="fas fa-search-plus"></i></span></a>
+    								<a class="btn btn-rojoufps rounded-circle btn-icon-only hover-scale-110" th:href="@{/educacion-continua/{id}/registro(id=${ec.id})}" data-toggle="tooltip" data-placement="top" title="Editar">
+    								<span class="btn-inner--icon"><i class="fas fa-edit"></i></span></a>
+    								<a class="btn btn-rojoufps rounded-circle btn-icon-only hover-scale-110" th:href="@{/educacion-continua/{id}/jornadas(id=${ec.id})}" data-toggle="tooltip" data-placement="top" title="Jornadas">
+    								<span class="btn-inner--icon"><i class="far fa-calendar-alt"></i></span></a>
+    								<a class="btn btn-rojoufps rounded-circle btn-icon-only hover-scale-110"  href="#" onclick="ponentes(this)" th:data-id="${ec.id}" data-toggle="tooltip" data-placement="top" title="Ponentes">
+    								<span class="btn-inner--icon"><i class="fas fa-user-circle"></i></span></a>
+    								<a class="btn btn-rojoufps rounded-circle btn-icon-only hover-scale-110"  th:href="@{/educacion-continua/{id}/listado-participantes(id=${ec.id})}" th:data-id="${ec.id}" data-toggle="tooltip" data-placement="top" title="Listado Participantes">
+    								<span class="btn-inner--icon"><i class="fas fa-clipboard-list"></i></span></a>
+    								<a class="btn btn-rojoufps rounded-circle btn-icon-only hover-scale-110"  th:href="@{/educacion-continua/{id}/personalizar-diploma(id=${ec.id})}" th:data-id="${ec.id}" data-toggle="tooltip" data-placement="top" title="Personalizar Diploma">
+    								<span class="btn-inner--icon"><i class="fas fa-clipboard-list"></i></span></a>
+    								</td>
+    							<!--  <td sec:authorize="hasRole('ROLE_DIRPROGRAMA')">Dir Programa<a class="btn btn-rojoufps rounded-circle btn-icon-only hover-scale-110" th:href="@{/educacion-continua/{id}/detalles(id=${ec.id})}" data-toggle="tooltip" data-placement="top" title="Ver Detalles">
+    								<span class="btn-inner--icon"><i class="fas fa-search-plus"></i></span></a>
     								<a class="btn btn-rojoufps rounded-circle btn-icon-only hover-scale-110" th:href="@{/educacion-continua/registro/} + ${ec.id}" data-toggle="tooltip" data-placement="top" title="Editar">
     								<span class="btn-inner--icon"><i class="fas fa-edit"></i></span></a>
     								<a class="btn btn-rojoufps rounded-circle btn-icon-only hover-scale-110" th:href="@{/educacion-continua/{id}/jornadas(id=${ec.id})}" data-toggle="tooltip" data-placement="top" title="Jornadas">
     								<span class="btn-inner--icon"><i class="far fa-calendar-alt"></i></span></a>
     								<a class="btn btn-rojoufps rounded-circle btn-icon-only hover-scale-110"  href="#" onclick="ponentes(this)" th:data-id="${ec.id}" data-toggle="tooltip" data-placement="top" title="Ponentes">
     								<span class="btn-inner--icon"><i class="fas fa-user-circle"></i></span></a>
-    								</td>
+    								</td>	
+    							 <td sec:authorize="hasRole('ROLE_DOCENTE')">Docente<a class="btn btn-rojoufps rounded-circle btn-icon-only hover-scale-110" th:href="@{/educacion-continua/{id}/detalles(id=${ec.id})}" data-toggle="tooltip" data-placement="top" title="Ver Detalles">
+    								<span class="btn-inner--icon"><i class="fas fa-search-plus"></i></span></a>
+    								<a class="btn btn-rojoufps rounded-circle btn-icon-only hover-scale-110" th:href="@{/educacion-continua-a-cargo/{id}/registro(id=${ec.id})}" data-toggle="tooltip" data-placement="top" title="Editar">
+    								<span class="btn-inner--icon"><i class="fas fa-edit"></i></span></a>
+    								<a class="btn btn-rojoufps rounded-circle btn-icon-only hover-scale-110" th:href="@{/educacion-continua-a-cargo/{id}/jornadas(id=${ec.id})}" data-toggle="tooltip" data-placement="top" title="Jornadas">
+    								<span class="btn-inner--icon"><i class="far fa-calendar-alt"></i></span></a>
+    								<a class="btn btn-rojoufps rounded-circle btn-icon-only hover-scale-110"  href="#" onclick="ponentes(this)" th:data-id="${ec.id}" data-toggle="tooltip" data-placement="top" title="Ponentes">
+    								<span class="btn-inner--icon"><i class="fas fa-user-circle"></i></span></a>
+    								</td>	
+    							-->
 							</tr>
 							
 						</tbody>
@@ -158,6 +180,17 @@
   <!-- Scripts -->
   <!-- Core JS - includes jquery, bootstrap, popper, in-view and sticky-kit -->
   <div th:replace="layouts/layout :: scripts"></div>
+  <script type="text/javascript" th:inline="javascript">
+  var mensajeExitoso= [[${successMessage}]];
+  if(mensajeExitoso!=null){
+	  toastr.success(mensajeExitoso, 'Excelente!',{timeOut:2000});
+  }
+  var mensajeError= [[${errorMessage}]];
+  console.log(mensajeError);
+  if(mensajeError!=null){
+	  toastr.error(mensajeError, 'Error!',{timeOut:2000});
+  }
+  </script>
 </body>
 
 </html>

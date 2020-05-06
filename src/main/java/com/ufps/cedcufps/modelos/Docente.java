@@ -8,6 +8,7 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
@@ -34,6 +35,9 @@ public class Docente extends Persona{
 	@JoinColumn(name = "id_docente")
 	private List<EducacionContinua> educacionesContinuas;
 
+	@JsonIgnore //ignora esta referencia cuando se hace mediante ajax(json) 
+	@OneToOne(mappedBy = "directorPrograma")
+    private Programa programaACargoDirector;
 	
 	public Docente() {
 		educacionesContinuas=new ArrayList<EducacionContinua>();
@@ -65,6 +69,14 @@ public class Docente extends Persona{
 
 	public void setEducacionesContinuas(List<EducacionContinua> educacionesContinuas) {
 		this.educacionesContinuas = educacionesContinuas;
+	}
+
+	public Programa getProgramaACargoDirector() {
+		return programaACargoDirector;
+	}
+
+	public void setProgramaACargoDirector(Programa programaACargoDirector) {
+		this.programaACargoDirector = programaACargoDirector;
 	}
 
 	

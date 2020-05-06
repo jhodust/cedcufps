@@ -30,4 +30,6 @@ public interface IParticipanteService {
 	public void deleteParticipanteById(Long id);
 	
 	public List<Participante> findAllParticipacionesActivasByParticipante(String numDocumento);
+	
+	public List<Participante> findAllParticipantesByEducacionContinua(Long idEduContinua);
 }

@@ -86,11 +86,6 @@
                   Eventos Inscrito
                 </a>
               </li>
-              <li class="nav-item" sec:authorize="hasAnyRole('ROLE_DOCENTE')" >
-                <a class="nav-link" th:href="@{/reportes-SNIES}">
-                  Eventos a Cargo
-                </a>
-              </li>
               <li class="nav-item" sec:authorize="hasAnyRole('ROLE_USER')" >
                 <a class="nav-link" th:href="@{/reportes-SNIES}">
                   Certificados
@@ -119,9 +114,9 @@
                   Usuarios
                 </a>
               </li>
-              <li class="nav-item" sec:authorize="hasAnyRole('ROLE_SUPERADMIN','ROLE_DIRPROGRAMA','ROLE_ADMIN', 'ROLE_BECA')">
+              <li class="nav-item" sec:authorize="hasAnyRole('ROLE_SUPERADMIN','ROLE_DIRPROGRAMA','ROLE_ADMIN', 'ROLE_DOCENTE')">
                 <a class="nav-link"  th:href="@{/educacion-continua}">
-                  Eventos
+                  Gestionar Eventos
                 </a>
               </li>
               <li class="nav-item dropdown dropdown-animate" data-toggle="hover" sec:authorize="hasAnyRole('ROLE_SUPERADMIN','ROLE_DIRPROGRAMA')">

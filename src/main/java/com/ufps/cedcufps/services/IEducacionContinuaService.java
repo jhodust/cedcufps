@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.ufps.cedcufps.modelos.ClasificacionCine;
+import com.ufps.cedcufps.modelos.Diploma;
 import com.ufps.cedcufps.modelos.EducacionContinua;
 import com.ufps.cedcufps.modelos.Participante;
 import com.ufps.cedcufps.modelos.TipoBeneficiario;
@@ -19,6 +20,8 @@ public interface IEducacionContinuaService {
 	public void save(EducacionContinua ec);
 	
 	public Optional<EducacionContinua> findOne(Long id);
+	
+	public EducacionContinua findOneByNombre(String educacionContinua);
 	
 	public List<TipoEducacionContinua> findAllTiposEducacionContinua();
 	
@@ -40,5 +43,8 @@ public interface IEducacionContinuaService {
 	
 	public void generarReporteSNIESEducacionContinua(String año);
 	
+	public List<EducacionContinua> findAllEducacionContinuaACargoDocente(String numDocumento);
+	
+	public List<EducacionContinua> findAllEducacionContinuaACargoDirector(String numDocumento, Long idProgramaDirector);
 	
 }

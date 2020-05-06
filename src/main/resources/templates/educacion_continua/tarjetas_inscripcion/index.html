@@ -33,22 +33,23 @@
           </div>
         </div>
         <hr/>
-        <div th:if=" ${participantes == null}">
+        <div th:if="${#lists.size(participaciones) == 0}">
         	<center><span class="badge badge-danger">No se encuentra inscrito a cursos o eventos de educación continua próximos</span></center>
         </div>
        
-        
-        <div class="row">
+        <div class="row" th:unless="${#lists.size(participaciones) == 0}">
         	<div class="card card-overlay hover-shadow-lg hover-translate-y-n10 col-md-4" th:each="p : ${participaciones}">
 			    <img th:src="${p.tarjetaInscripcion}" class="img-fluid rounded card-img">
 			<span class="mask bg-dark opacity-8"></span><div class="card-img-overlay d-flex flex-column align-items-center p-0">
-			        <div class="overlay-text w-75 mt-auto p-4">
+			        <div class="overlay-text w-75 mt-auto">
 			            <p class="lead" th:text="${p.educacionContinua.tipoEduContinua.tipoEduContinua}"></p>
-			            <a  href="#!" class="link link-underline-white font-weight-bold" th:text="${p.educacionContinua.nombre}"></a>
+			            <a  href="#!" class="link link-underline-white font-weight-bold p" th:if="${#strings.length(p.educacionContinua.nombre)<25}" th:text="${p.educacionContinua.nombre}"></a>
+			            <a  href="#!" class="link link-underline-white font-weight-bold p" th:if="${#strings.length(p.educacionContinua.nombre)>=25 and #strings.length(p.educacionContinua.nombre)<=50}" th:text="${p.educacionContinua.nombre}" style="font-size:small"></a>
+			            <a  href="#!" class="link link-underline-white font-weight-bold p" th:if="${#strings.length(p.educacionContinua.nombre)>50 and #strings.length(p.educacionContinua.nombre)<100}" th:text="${p.educacionContinua.nombre}" style="font-size:x-small"></a>
 			        </div>
 			        <div class="overlay-actions w-100 card-footer mt-auto d-flex justify-content-between align-items-center">
 			            <div>
-			                <a href="#!" class="h5 mb-0">Tarjeta Inscripción</a>
+			                <a href="#!" class="h6 mb-0">Tarjeta Inscripción</a>
 			            </div>
 			            <div>
 			                <div class="actions">

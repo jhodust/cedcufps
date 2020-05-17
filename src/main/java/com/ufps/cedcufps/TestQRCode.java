@@ -2,12 +2,20 @@ package com.ufps.cedcufps;
 
 
 import com.ufps.cedcufps.utils.CodigoQR;
+
+import java.awt.Graphics;
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.Formatter;
+import java.util.Random;
 
+import javax.imageio.ImageIO;
 import javax.swing.text.MaskFormatter;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -28,6 +36,8 @@ public class TestQRCode {
     	System.out.println("hojas: " + hojas);
     	System.out.println("residuo: " + residuo);
 
+    	
+    	
     
 }
 }

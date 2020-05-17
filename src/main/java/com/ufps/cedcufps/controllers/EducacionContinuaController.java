@@ -235,11 +235,7 @@ public class EducacionContinuaController {
 	@RequestMapping(value = "/educacion-continua/{id}/personalizar-diploma")
 	public String personalizarDiploma(@PathVariable(value = "id") Long id, Map<String, Object> model) {
 		EducacionContinua e=educacionContinuaService.findOne(id).get();
-		if(e.getDiploma()==null) {
-			model.put("imagenes", diplomaService.findImagenesDefault());
-			model.put("textos", diplomaService.findTextoDefault());
-			model.put("firmas", null);
-		}else {
+		if(e.getDiploma()!=null) {
 			model.put("imagenes", diplomaService.findImagenesByDiploma(e.getDiploma().getId()));
 			model.put("textos", diplomaService.findTextoByDiploma(e.getDiploma().getId()));
 			model.put("firmas", diplomaService.findFirmaByDiploma(e.getDiploma().getId()));
@@ -248,6 +244,7 @@ public class EducacionContinuaController {
 		//https://www.youtube.com/watch?v=C4vQ-nSNAgA
 		
 		return "educacion_continua/plantillaDiploma";
+		//return "croppie";
 	}
 	
 	
@@ -256,6 +253,7 @@ public class EducacionContinuaController {
 		Archivo.crearDirectorio("uploads/educacion-continua/"+ec.getId());//directorio de la educacion continua
 		Archivo.crearDirectorio("uploads/educacion-continua/"+ec.getId()+"/qr-participantes");//directorio interno de los qr de participantes de la educacion continua
 		Archivo.crearDirectorio("uploads/educacion-continua/"+ec.getId()+"/tarjetas-inscripcion");
+		Archivo.crearDirectorio("uploads/educacion-continua/"+ec.getId()+"/plantilla-diploma");
 	}
 	
 	public  void guardarImagenPortada(EducacionContinua ec, MultipartFile imagen) {

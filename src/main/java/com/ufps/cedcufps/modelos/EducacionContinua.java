@@ -70,7 +70,7 @@ public class EducacionContinua implements Serializable {
 	private String resumen;
 	private double costo;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)//cambié lazy por eager
 	@JoinColumn(name="id_tipo_educacion_continua")
 	private TipoEducacionContinua tipoEduContinua;
 	
@@ -82,18 +82,22 @@ public class EducacionContinua implements Serializable {
 	@OneToMany(mappedBy = "educacionContinua",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Participante> participantes;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	
+	@ManyToOne(fetch = FetchType.EAGER)//cambié lazy por eager
 	@JoinColumn(name="id_programa")
 	private Programa programaResponsable;
 	
+	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="id_docente")
 	private Docente docenteResponsable;
 	
+	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="id_clasificacion_cine")
 	private ClasificacionCine clasificacionCine;
 	
+	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="id_tipo_beneficiario")
 	private TipoBeneficiario tipoBeneficiario;
@@ -101,8 +105,8 @@ public class EducacionContinua implements Serializable {
 	@Column(columnDefinition = "boolean default true")
 	private boolean activo;
 	
-	@JsonIgnore
-	@OneToOne(fetch = FetchType.LAZY)
+	
+	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name="id_diploma")
 	private Diploma diploma;
 	

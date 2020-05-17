@@ -1,8 +1,14 @@
 package com.ufps.cedcufps.modelos;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="textos_diploma")
@@ -18,6 +24,12 @@ public class TextoDiploma extends ElementoDiploma{
 	private String texto;
 	//private String fuente;
 	//private String size;
+	
+	@JsonIgnore
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name="id_diploma")
+	private Diploma diploma;
+	
 	public String getTexto() {
 		return texto;
 	}
@@ -41,6 +53,12 @@ public class TextoDiploma extends ElementoDiploma{
 	}
 	public void setCategoria(String categoria) {
 		this.categoria = categoria;
+	}
+	public Diploma getDiploma() {
+		return diploma;
+	}
+	public void setDiploma(Diploma diploma) {
+		this.diploma = diploma;
 	}
 	
 	

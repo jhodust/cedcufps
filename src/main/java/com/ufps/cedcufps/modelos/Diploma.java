@@ -14,9 +14,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.apache.poi.hpsf.Array;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -36,13 +38,24 @@ public class Diploma implements Serializable {//1
 	@Column(name="imagen_plantilla")
 	private String imagenPlantilla;
 
-	@JsonIgnore
-	@OneToMany(mappedBy = "diploma",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	
+	/*@OneToMany(mappedBy = "diploma",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<ElementoDiploma> elementos;
-
+	*/
+	@OneToMany(mappedBy = "diploma",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<TextoDiploma> textos;
+	
+	@OneToMany(mappedBy = "diploma",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<ImagenDiploma> imagenes;
+	
+	@OneToMany(mappedBy = "diploma",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<FirmaDiploma> firmas;
+	
 	
 	public Diploma() {
-		elementos= new ArrayList<ElementoDiploma>();
+		textos= new ArrayList<TextoDiploma>();
+		imagenes= new ArrayList<ImagenDiploma>();
+		firmas= new ArrayList<FirmaDiploma>();
 	}
 	public Long getId() {
 		return id;
@@ -63,18 +76,38 @@ public class Diploma implements Serializable {//1
 		this.imagenPlantilla = imagenPlantilla;
 	}
 
-	public void addElemento(ElementoDiploma e) {
-		this.elementos.add(e);
+	public void addTexto(TextoDiploma e) {
+		this.textos.add(e);
 	}
 
-	public List<ElementoDiploma> getElementos() {
-		return elementos;
+	public void addImagen(ImagenDiploma i) {
+		this.imagenes.add(i);
+	}
+	
+	public void addFirma(FirmaDiploma f) {
+		this.firmas.add(f);
 	}
 
 
-	public void setElementos(List<ElementoDiploma> elementos) {
-		this.elementos = elementos;
+	public void setTextos(List<TextoDiploma> textos) {
+		this.textos = textos;
 	}
+	public List<ImagenDiploma> getImagenes() {
+		return imagenes;
+	}
+	public void setImagenes(List<ImagenDiploma> imagenes) {
+		this.imagenes = imagenes;
+	}
+	public List<FirmaDiploma> getFirmas() {
+		return firmas;
+	}
+	public void setFirmas(List<FirmaDiploma> firmas) {
+		this.firmas = firmas;
+	}
+	public List<TextoDiploma> getTextos() {
+		return textos;
+	}
+	
 	
 	
 }

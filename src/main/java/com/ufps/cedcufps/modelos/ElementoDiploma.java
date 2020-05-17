@@ -2,6 +2,7 @@ package com.ufps.cedcufps.modelos;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -30,9 +31,7 @@ public class ElementoDiploma implements Serializable {//
 	private int x;
 	private int y;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="id_diploma")
-	private Diploma diploma;
+	
 	
 	
 	public Long getId() {
@@ -53,12 +52,7 @@ public class ElementoDiploma implements Serializable {//
 	public void setY(int y) {
 		this.y = y;
 	}
-	public Diploma getDiploma() {
-		return diploma;
-	}
-	public void setDiploma(Diploma diploma) {
-		this.diploma = diploma;
-	}
+	
 	
 	
 

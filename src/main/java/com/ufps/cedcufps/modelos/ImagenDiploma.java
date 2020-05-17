@@ -1,8 +1,14 @@
 package com.ufps.cedcufps.modelos;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "imagenes_diploma")
@@ -20,6 +26,11 @@ public class ImagenDiploma extends ElementoDiploma {
 
 	private int alto;
 
+	@JsonIgnore
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name="id_diploma")
+	private Diploma diploma;
+	
 	public String getRuta() {
 		return ruta;
 	}
@@ -44,4 +55,13 @@ public class ImagenDiploma extends ElementoDiploma {
 		this.alto = alto;
 	}
 
+	public Diploma getDiploma() {
+		return diploma;
+	}
+
+	public void setDiploma(Diploma diploma) {
+		this.diploma = diploma;
+	}
+
+	
 }

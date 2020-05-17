@@ -425,16 +425,34 @@ insert into asistentes(id_participante) values(32);
 insert into informes_snies(id,anio,informe_cursos,informe_educacion_continua,informe_participante) values (1,'2020','/reportes_snies/informe_cursos_snies/2020.xlsx','/reportes_snies/informe_educacion_continua_snies/2020.xlsx',null);
 insert into informes_snies(id,anio,informe_cursos,informe_educacion_continua,informe_participante) values (2,'2019','/reportes_snies/informe_cursos_snies/2019.xlsx','/reportes_snies/informe_educacion_continua_snies/2019.xlsx',null);
 
-
+insert into diplomas(id,imagen_plantilla) value (1,null);
 
 insert into elementos_diploma(id,x,y) value(1,80,120); /*imagen logo1*/
 insert into elementos_diploma(id,x,y) value(2,750,120); /*imagen logo2*/
 insert into elementos_diploma(id,x,y) value(3,485,170); /*texto titulo*/
 insert into elementos_diploma(id,x,y) value(4,485,220); /*texto subtitulo*/
 
-insert into imagenes_diploma(id_elemento,ruta,ancho,alto) value(1,"/img/plantilla_diploma/logo1",150,150);
-insert into imagenes_diploma(id_elemento,ruta,ancho,alto) value(2,"/img/plantilla_diploma/logo2",150,150);
+insert into elementos_diploma(id,x,y) value(5,145,600); 
+insert into elementos_diploma(id,x,y) value(6,530,600); 
+insert into elementos_diploma(id,x,y) value(7,80,150);
+insert into elementos_diploma(id,x,y) value(8,765,150); 
+insert into elementos_diploma(id,x,y) value(9,485,180); 
+insert into elementos_diploma(id,x,y) value(10,485,200); 
+
+insert into imagenes_diploma(id_elemento,ruta,ancho,alto) value(1,"/img/plantilla_diploma/logo1.jpg",150,150);
+insert into imagenes_diploma(id_elemento,ruta,ancho,alto) value(2,"/img/plantilla_diploma/logo2.jpg",150,150);
+
+insert into imagenes_diploma (id_elemento,alto,ancho,ruta,id_diploma) value (7,0,0,'/uploads/educacion-continua/5/plantilla-diploma/senqsrlfibqjontwtzfd.png',1);
+insert into imagenes_diploma (id_elemento,alto,ancho,ruta,id_diploma) value (8,0,0,'/uploads/educacion-continua/5/plantilla-diploma/fxybjytzzzppbdzagnjh.png',1);
+
 
 insert into textos_diploma(id_elemento,categoria,texto) value(3,"titulo","");
 insert into textos_diploma(id_elemento,categoria,texto) value(4,"subtitulo","");
-insert into imagenes_diploma(id_elemento,ruta,ancho,alto) value(2,"/img/plantilla_diploma/logo2",150,150)
+insert into textos_diploma(id_elemento,categoria,texto,id_diploma) value (9,'titulo', 'Facultad de EducaasifciÃ³n, Artes y Humanidades',1);
+insert into textos_diploma(id_elemento,categoria,texto,id_diploma) value (10,'subtitulo','Programa de Arquitectuigjsra',1);
+
+
+insert into firmas_diploma (id_elemento,cargo,imagen_firma_digital,nombre,x_cargo,x_nombre,y_cargo,y_nombre,id_diploma) value (5,'Dir. Programa de Sistemas','/uploads/educacion-continua/5/plantilla-diploma/lbexmznvprsuvzxckpev.png','PhD. Judith del Pilar Rodriguez Tenjo',280,280,627,615,1);
+insert into firmas_diploma (id_elemento,cargo,imagen_firma_digital,nombre,x_cargo,x_nombre,y_cargo,y_nombre,id_diploma) value (6,'Docente Departamento Sistemas e InformÃ¡tica','/uploads/educacion-continua/5/plantilla-diploma/xxhcsflkjclmycsivzlt.png','PhD. Marco Antonio Adarme Jaimes',665,665,627,615,1);
+
+update educacion_continua set id_diploma='1' where id='5';

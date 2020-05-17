@@ -7,8 +7,10 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ufps.cedcufps.dao.IClasificacionCineDao;
+import com.ufps.cedcufps.dao.IDiplomaDao;
 import com.ufps.cedcufps.dao.IEducacionContinuaDao;
 import com.ufps.cedcufps.dao.ITipoBeneficiarioDao;
 import com.ufps.cedcufps.dao.ITipoEducacionContinuaDao;
@@ -18,6 +20,7 @@ import com.ufps.cedcufps.modelos.EducacionContinua;
 import com.ufps.cedcufps.modelos.Participante;
 import com.ufps.cedcufps.modelos.TipoBeneficiario;
 import com.ufps.cedcufps.modelos.TipoEducacionContinua;
+import com.ufps.cedcufps.utils.Archivo;
 import com.ufps.cedcufps.utils.ReportesExcel;
 
 @Service
@@ -34,6 +37,9 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 	
 	@Autowired
 	private ITipoBeneficiarioDao tipoBeneficiarioDao;
+	
+	@Autowired
+	private IDiplomaDao diplomaDao;
 	
 	@Override
 	public List<EducacionContinua> findAll() {
@@ -165,7 +171,26 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 		return educacionContinuaDao.findByNombre(educacionContinua);
 	}
 
-	
+	@Override
+	public Diploma generarDiploma(Long idEducacionContinua) {
+		// TODO Auto-generated method stub
+		EducacionContinua e=educacionContinuaDao.findById(idEducacionContinua).get();
+		
+		if(e!=null) {
+			Diploma d= e.getDiploma();
+			if(d==null) {
+				d=new Diploma();
+			}
+			diplomaDao.save(d);
+			e.setDiploma(d);
+			educacionContinuaDao.save(e);
+			return d;
+		}else {
+			return null;
+		}
+		
+		
+	}
 
 	
 

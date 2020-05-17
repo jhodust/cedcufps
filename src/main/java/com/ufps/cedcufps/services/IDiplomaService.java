@@ -2,6 +2,8 @@ package com.ufps.cedcufps.services;
 
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.ufps.cedcufps.modelos.Diploma;
 import com.ufps.cedcufps.modelos.ElementoDiploma;
 import com.ufps.cedcufps.modelos.FirmaDiploma;
@@ -22,4 +24,7 @@ public interface IDiplomaService {
 	public List<TextoDiploma> findTextoByDiploma(Long idDiploma);
 	
 	public List<FirmaDiploma> findFirmaByDiploma(Long idDiploma);
+	
+	public void save(Diploma d);
+	
 }

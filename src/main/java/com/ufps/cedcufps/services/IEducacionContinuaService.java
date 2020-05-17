@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.ufps.cedcufps.modelos.ClasificacionCine;
 import com.ufps.cedcufps.modelos.Diploma;
 import com.ufps.cedcufps.modelos.EducacionContinua;
@@ -47,4 +49,5 @@ public interface IEducacionContinuaService {
 	
 	public List<EducacionContinua> findAllEducacionContinuaACargoDirector(String numDocumento, Long idProgramaDirector);
 	
+	public Diploma generarDiploma(Long idEduContinua);
 }

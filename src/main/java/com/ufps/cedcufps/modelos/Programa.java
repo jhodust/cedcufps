@@ -52,6 +52,7 @@ public class Programa implements Serializable {//1
 	@JoinColumn(name = "id_programa")
 	private List<EducacionContinua> educacionesContinuas;
 	
+	@JsonIgnore
 	@OneToOne
 	@JoinColumn(name="id_docente")
 	private Docente directorPrograma;

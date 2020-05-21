@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
@@ -17,6 +20,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -126,13 +130,24 @@ public class EducacionContinuaController {
 	
 	
 	@RequestMapping(value = "/educacion-continua/registro", method = RequestMethod.POST)
-	public String save(EducacionContinua ec, SessionStatus status, @RequestParam("file") MultipartFile imagen) {
+	public String save(@Valid EducacionContinua ec, BindingResult result, SessionStatus status, @RequestParam("file") MultipartFile imagen,Map<String, Object> model, RedirectAttributes redirectAttributes) {
+		if(result.hasErrors()) {
+			model.put("tipos_educacion_continua",educacionContinuaService.findAllTiposEducacionContinua());
+			model.put("clasificacion_cine",educacionContinuaService.findAllClasificacionCine());
+			model.put("tipo_beneficiarios",educacionContinuaService.findAllTipoBeneficiario());
+			model.put("docentes",personaService.findAllDocentes());
+			model.put("programas",programaService.findAll());
+			model.put("errorMessage", "Debes diligenciar los campos correctamente...");
+			return "educacion_continua/form";
+			//return "redirect:/educacion-continua/registro";
+		}
 		educacionContinuaService.save(ec);
 		educacionContinuaService.updateCodigoEducacionContinua(ec);
 		System.out.println("id ec: " + ec.getId());
 		generarDirectoriosPropios(ec);
 		guardarImagenPortada(ec,imagen);
 		status.setComplete();
+		redirectAttributes.addFlashAttribute("successMessage", "Se ha guardado la información correctamente...");
 		return "redirect:/educacion-continua";
 	}
 	

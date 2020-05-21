@@ -249,17 +249,7 @@
   <!-- Core JS - includes jquery, bootstrap, popper, in-view and sticky-kit -->
   <div th:replace="layouts/layout :: scripts"></div>
   
-  <script type="text/javascript" th:inline="javascript">
-  var mensajeExitoso= [[${successMessage}]];
-  if(mensajeExitoso!=null){
-	  toastr.success(mensajeExitoso, 'Excelente!',{timeOut:2000});
-  }
-  var mensajeError= [[${errorMessage}]];
-  console.log(mensajeError);
-  if(mensajeError!=null){
-	  toastr.error(mensajeError, 'Error!',{timeOut:2000});
-  }
-  </script>
+ 
   
   <script type="application/javascript" th:inline="javascript">
   

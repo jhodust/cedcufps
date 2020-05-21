@@ -7,3 +7,15 @@
 .overflow-visible {
   white-space: initial;
 }
+.badge-ufps{font-size: smaller;border-radius: .25rem;}
+.badge-red-ufps{color:#fff;background-color:#BC0017;}
+.badge-gray-ufps{color:#fff;background-color:#818386}
+.badge-black-ufps{color:#fff;background-color:#000}
+.bg-red-ufps{background-color:#BC0017!important}
+.bg-gray-ufps{background-color:#818386!important}
+.bg-black-ufps{background-color:#000!important}
+.btn-red-ufps{color:#fff;background-color:#BC0017;border-color:#BC0017;-webkit-box-shadow:inset 0 1px 0 hsla(0,0%,100%,.15);box-shadow:inset 0 1px 0 hsla(0,0%,100%,.15)}
+.btn-red-ufps:hover{color:#fff;background-color:#DC0017;border-color:#DC0017}
+.page-link-ufps{position:relative;display:block;padding:.5rem .75rem;margin-left:-1px;line-height:1.25;color:#FFF;background-color:#818386;border:1px solid #000}
+.page-link-ufps.active{z-index:1;color:#fff;background-color:#818386;border-color:#818386}
+.page-link-ufps.disabled{color:#FFF;pointer-events:none;cursor:auto;background-color:#BC0017;border-color:#e5e9f2}

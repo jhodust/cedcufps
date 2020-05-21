@@ -7,18 +7,18 @@
 <body>
 	<!-- Modal -->
 <div class="modal fade" id="modalRegistroFacultad" tabindex="-1" role="dialog" aria-labelledby="modalRegistroPrograma" aria-hidden="true" th:fragment="modalRegistro">
-    <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-dialog" role="document">
         <form>
             <div class="modal-content">
                 <div class="modal-header">
                     <div class="modal-title d-flex align-items-center" id="modal-title-change-username">
                         <div>
-                            <div class="icon icon-sm icon-shape icon-info rounded-circle shadow mr-3">
-                                <i class="far fa-user"></i>
+                            <div class="icon icon-sm icon-shape rounded-circle shadow mr-3">
+                                <i class="fas fa-edit"></i>
                             </div>
                         </div>
                         <div>
-                            <h6 class="mb-0">Formulario Registro Facultad</h6>
+                            <h6 class="mb-0" >Formulario Registro</h6>
                         </div>
                     </div>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -27,16 +27,17 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-sm-12">
+                        <div class="col-md-12">
                             <div class="form-group">
                                 <label class="form-control-label">Facultad</label>
                                 <input class="form-control" id="facultad" type="text" data-toggle="autosize"/>
+                                <small class="form-text text-danger"><strong id="errorFacultad"></strong></small>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" onclick="guardarFacultad()" class="btn btn-sm btn-secondary">Guardar</button>
+                    <center>
+                    	<button type="button" onclick="guardarFacultad()" class="btn btn-sm btn-red-ufps">Guardar</button>
+                	</center>
                 </div>
             </div>
         </form>

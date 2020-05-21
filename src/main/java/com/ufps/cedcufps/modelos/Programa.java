@@ -16,6 +16,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -33,8 +38,13 @@ public class Programa implements Serializable {//1
 	private Long id;
 	
 	
+	@NotEmpty(message = "El campo código es requerido")
+	@Pattern(regexp = "^([0-9]{3,3})*$", message = "El código debe contener 3 dígitos")
+	@Column(unique = true)
 	private String codigo;
 	
+	@NotEmpty(message = "El campo programa es requerido")
+	@Size(max = 60, message = "El campo programa no puede exceder los 60 caracteres")
 	@Column(name = "programa")
 	private String programa;
 
@@ -43,6 +53,7 @@ public class Programa implements Serializable {//1
 	@JoinColumn(name = "id_programa")
 	private List<Estudiante> estudiantes;
 
+	@NotNull(message =  "Seleccione la facultad")
 	@ManyToOne(fetch = FetchType.EAGER)//eager para que sirva el ajax
 	@JoinColumn(name="id_facultad")
 	private Facultad facultad;
@@ -52,9 +63,9 @@ public class Programa implements Serializable {//1
 	@JoinColumn(name = "id_programa")
 	private List<EducacionContinua> educacionesContinuas;
 	
-	@JsonIgnore
+	@NotNull(message =  "Seleccione director(a) del Programa")
 	@OneToOne
-	@JoinColumn(name="id_docente")
+	@JoinColumn(name="id_director")
 	private Docente directorPrograma;
 	
 	public Programa() {

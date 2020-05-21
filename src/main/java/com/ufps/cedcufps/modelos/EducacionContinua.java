@@ -19,6 +19,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -42,22 +46,32 @@ public class EducacionContinua implements Serializable {
 	
 	private String imagen;
 	
+	@NotEmpty
+	@Size(max = 100)
 	private String nombre;
 	
+	@NotNull
 	@DateTimeFormat(pattern="dd/MM/yyyy HH:mm")
 	@Column(name = "fecha_inicio")
 	private Date fechaInicio;
 	
+	@NotNull
 	@DateTimeFormat(pattern="dd/MM/yyyy HH:mm")
 	@Column(name = "fecha_fin")
 	private Date fechaFin;
 	
+	@NotEmpty
+	@Size(max = 50)
 	private String lugar;
 	
+	@NotNull
 	@DateTimeFormat(pattern="dd/MM/yyyy HH:mm")
 	@Column(name = "fecha_lim_inscripcion")
 	private Date fechaLimInscripcion;
+	
+	@NotNull
 	private int duracion;
+	
 	
 	private String requisitos;
 	
@@ -65,11 +79,16 @@ public class EducacionContinua implements Serializable {
 	private String contenidoGeneral;
 	private String objetivo;
 	
+	@DecimalMin(value = "1")
 	@Column(name = "cant_max_participantes")
 	private int cantMaxParticipantes;
+	
 	private String resumen;
+	
+	@NotNull
 	private double costo;
 	
+	@NotNull
 	@ManyToOne(fetch = FetchType.EAGER)//cambié lazy por eager
 	@JoinColumn(name="id_tipo_educacion_continua")
 	private TipoEducacionContinua tipoEduContinua;
@@ -82,22 +101,25 @@ public class EducacionContinua implements Serializable {
 	@OneToMany(mappedBy = "educacionContinua",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Participante> participantes;
 
-	
+	@NotNull
 	@ManyToOne(fetch = FetchType.EAGER)//cambié lazy por eager
 	@JoinColumn(name="id_programa")
 	private Programa programaResponsable;
 	
 	@JsonIgnore
+	@NotNull
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="id_docente")
 	private Docente docenteResponsable;
 	
 	@JsonIgnore
+	@NotNull
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="id_clasificacion_cine")
 	private ClasificacionCine clasificacionCine;
 	
 	@JsonIgnore
+	@NotNull
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="id_tipo_beneficiario")
 	private TipoBeneficiario tipoBeneficiario;

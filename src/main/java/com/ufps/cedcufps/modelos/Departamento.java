@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -13,6 +14,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -28,7 +33,8 @@ public class Departamento implements Serializable {//1
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	
+	@NotEmpty(message = "El campo departamento es requerido")
+	@Size(max = 60, message = "El campo departamento no puede exceder los 60 caracteres")
 	private String departamento;
 	
 
@@ -38,8 +44,10 @@ public class Departamento implements Serializable {//1
 	@JoinColumn(name = "id_departamento")
 	private List<Docente> docentes;
 	
+	
+	@NotNull(message =  "Seleccione la facultad")
 	@ManyToOne(fetch = FetchType.EAGER)//eager para que sirva el ajax
-	@JoinColumn(name="id_facultad")
+	@JoinColumn(name="id_facultad",nullable = false)
 	private Facultad facultad;
 
 	

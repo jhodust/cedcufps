@@ -20,7 +20,7 @@ $(document).ready(function ()
 		if(id == 0){
 			window.location="/departamentos-academicos";
 		}else{
-			window.location="/departamentos-academicos/filter/"+facultad;
+			window.location="/departamentos-academicos?facultad="+facultad;
 		}
 		
 	});
@@ -30,11 +30,19 @@ $(document).ready(function ()
 function guardarDepartamento(){
 	var departamento = $('#departamento').val();
 	var id_facultad = document.getElementById("select_facultad_departamento").value;
+	var JSONdepartamento={};
+	JSONdepartamento.id=idDepartamento;
+	JSONdepartamento.departamento=departamento;
+	if(id_facultad != "0"){
+		JSONdepartamento.facultad={};
+		JSONdepartamento.facultad.id=id_facultad;
+	}
+	limpiarErrores();
 	$.ajax({
 		headers: {"X-CSRF-TOKEN": token},
 		type: "POST",
 		contentType: "application/json; charset=utf-8",
-		data: JSON.stringify({'id':idDepartamento,'departamento': departamento, 'facultad':{'id':id_facultad}}),
+		data: JSON.stringify(JSONdepartamento),
 		url: "/departamento/save",
 		cache: false,
 		success: function(result) {
@@ -43,7 +51,22 @@ function guardarDepartamento(){
 			idFacultad=null;
 		},
 		error: function(err) {
-			$("#msg").html( "<span style='color: red'>Programa is required</span>" );
+			toastr.error('No se pudo procesar la solicitud...', 'Error!');
+			console.log(err);
+			err.responseJSON.forEach(function(error){
+				if(error.field=="departamento"){
+					var inputDepto=document.getElementById('departamento');
+					var errorDepto=document.getElementById('errorDepartamento');
+					errorDepto.innerText=error.defaultMessage;
+					inputDepto.classList.add("is-invalid");
+				}
+				if(error.field=="facultad"){
+					var selectFacultad=document.getElementById('select_facultad_departamento');
+					var errorSelectFacultad=document.getElementById('errorSelectFacultad');
+					errorSelectFacultad.innerText=error.defaultMessage;
+					selectFacultad.classList.add("alert-danger");
+				}
+			  });
 		}
 	});
 	
@@ -66,8 +89,19 @@ function editarDepartamento(elemento){
 			
 		},
 		error: function(err) {
-			$("#msg").html( "<span style='color: red'>Programa is required</span>" );
+			
 		}
 	});
 		
+}
+
+function limpiarErrores(){
+	var selectFacultad=document.getElementById('select_facultad_departamento');
+	var errorSelectFacultad=document.getElementById('errorSelectFacultad');
+	errorSelectFacultad.innerText="";
+	selectFacultad.classList.remove("alert-danger");
+	var inputDepto=document.getElementById('departamento');
+	var errorDepto=document.getElementById('errorDepartamento');
+	errorDepto.innerText="";
+	inputDepto.classList.remove("is-invalid");
 }

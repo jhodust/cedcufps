@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.ufps.cedcufps.dao.IProgramaDao;
@@ -21,6 +23,12 @@ public class ProgramaService implements IProgramaService {
 	}
 
 	@Override
+	public Page<Programa> findAll(Pageable pageable) {
+		// TODO Auto-generated method stub
+		return programaDao.findAll(pageable);
+	}
+	
+	@Override
 	public void save(Programa p) {
 		// TODO Auto-generated method stub
 		programaDao.save(p);
@@ -36,6 +44,13 @@ public class ProgramaService implements IProgramaService {
 	public List<Programa> findByFacultad(String facultad) {
 		// TODO Auto-generated method stub
 		return programaDao.findByFacultad(facultad);
+	}
+
+	
+	@Override
+	public Page<Programa> findByFacultad(String facultad, Pageable pageable) {
+		// TODO Auto-generated method stub
+		return programaDao.findByFacultad(facultad, pageable);
 	}
 
 }

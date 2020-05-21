@@ -29,14 +29,7 @@ insert into departamentos(id,departamento,id_facultad) values(13,'Medio Ambiente
 insert into departamentos(id,departamento,id_facultad) values(14,'Ciencias Agrícolas y Pecuarias y Programa Ing. Pecuaria',1);
 insert into departamentos(id,departamento,id_facultad) values(15,'Ciencias Contables y Programa de Contaduría Pública',3);
 insert into departamentos(id,departamento,id_facultad) values(16,'Ciencias Administrativas y Plan de Estudios de Administración de Empresas',3);
-insert into programas(id,codigo,programa,id_facultad) values(1,'111','Ingeniería Civil',6);
-insert into programas(id,codigo,programa,id_facultad) values(2,'115','Ingeniería de Sistemas',6);
-insert into programas(id,codigo,programa,id_facultad) values(3,'164','Ingeniería Agroindustrial',6);
-insert into programas(id,codigo,programa,id_facultad) values(4,'150','Arquitectura',5);
-insert into programas(id,codigo,programa,id_facultad) values(5,'126','Comercio Internacional',3);
-insert into programas(id,codigo,programa,id_facultad) values(6,'122','Contaduría Pública',3);
-insert into programas(id,codigo,programa,id_facultad) values(7,'180','Enfermería',4);
-insert into programas(id,codigo,programa,id_facultad) values(8,'134','Trabajo Social',5);
+
 insert into tipos_documento(id,tipo_documento,descripcion) values(1,'CC','Cedula Ciudadania');
 insert into tipos_documento(id,tipo_documento,descripcion) values(2,'DE','Documento de Identidad Extranjera');
 insert into tipos_documento(id,tipo_documento,descripcion) values(3,'CE','Cedula de Extranjeria');
@@ -89,6 +82,32 @@ insert into personas (id,direccion,email,numero_documento,primer_nombre,segundo_
 insert into personas (id,direccion,email,numero_documento,primer_nombre,segundo_nombre,primer_apellido,segundo_apellido,telefono,id_tipo_persona,id_tipo_documento,username,password,enabled,id_pais_nacimiento,id_departamento_nacimiento,id_municipio_nacimiento,fecha_nacimiento,fecha_expedicion_documento,id_estado_civil,id_genero) values (35,'gjfgjdh','carlos@gmail.com','8645','carlos','antonio','perez','rodriguez','86545',4,1,'carlos','$2y$12$YDPFttCM69kWxKG5amI53ewmrgrDllKrOtMI8YNsKnlUwkOZQrgKa',1,'218',null,null,'1956-01-08','1970-12-10',8,1);
 
 
+
+
+insert into docentes (id_persona,codigo,id_departamento) values (21,'05848',1);
+insert into docentes (id_persona,codigo,id_departamento) values (22,'08465',1);
+insert into docentes (id_persona,codigo,id_departamento) values (23,'01516',1);
+insert into docentes (id_persona,codigo,id_departamento) values (24,'05154',1);
+insert into docentes (id_persona,codigo,id_departamento) values (25,'03546',1);
+insert into docentes (id_persona,codigo,id_departamento) values (26,'84456',7);
+insert into docentes (id_persona,codigo,id_departamento) values (27,'51515',4);
+insert into docentes (id_persona,codigo,id_departamento) values (28,'14848',3);
+insert into docentes (id_persona,codigo,id_departamento) values (29,'14488',4);
+insert into docentes (id_persona,codigo,id_departamento) values (30,'84862',7);
+insert into docentes (id_persona,codigo,id_departamento) values (31,'65348',8);
+insert into docentes (id_persona,codigo,id_departamento) values (32,'52514',1);
+
+insert into programas(id,codigo,programa,id_facultad,id_director) values(1,'111','Ingeniería Civil',6,23);
+insert into programas(id,codigo,programa,id_facultad,id_director) values(2,'115','Ingeniería de Sistemas',6,28);
+insert into programas(id,codigo,programa,id_facultad,id_director) values(3,'164','Ingeniería Agroindustrial',6,32);
+insert into programas(id,codigo,programa,id_facultad,id_director) values(4,'150','Arquitectura',5,31);
+insert into programas(id,codigo,programa,id_facultad,id_director) values(5,'126','Comercio Internacional',3,26);
+insert into programas(id,codigo,programa,id_facultad,id_director) values(6,'122','Contaduría Pública',3,30);
+insert into programas(id,codigo,programa,id_facultad,id_director) values(7,'180','Enfermería',4,21);
+insert into programas(id,codigo,programa,id_facultad,id_director) values(8,'134','Trabajo Social',5,25);
+
+
+
 insert into estudiantes (codigo,id_persona,id_programa) values ('115-1241',1,2);
 insert into estudiantes (codigo,id_persona,id_programa) values ('115-1229',2,2);
 insert into estudiantes (codigo,id_persona,id_programa) values ('164-4552',3,3);
@@ -108,33 +127,12 @@ insert into estudiantes (codigo,id_persona,id_programa) values ('164-3546',19,3)
 insert into estudiantes (codigo,id_persona,id_programa) values ('150-8861',20,4);
 
 
-insert into docentes (id_persona,codigo,id_departamento) values (21,'05848',1);
-insert into docentes (id_persona,codigo,id_departamento) values (22,'08465',1);
-insert into docentes (id_persona,codigo,id_departamento) values (23,'01516',1);
-insert into docentes (id_persona,codigo,id_departamento) values (24,'05154',1);
-insert into docentes (id_persona,codigo,id_departamento) values (25,'03546',1);
-insert into docentes (id_persona,codigo,id_departamento) values (26,'84456',7);
-insert into docentes (id_persona,codigo,id_departamento) values (27,'51515',4);
-insert into docentes (id_persona,codigo,id_departamento) values (28,'14848',3);
-insert into docentes (id_persona,codigo,id_departamento) values (29,'14488',4);
-insert into docentes (id_persona,codigo,id_departamento) values (30,'84862',7);
-insert into docentes (id_persona,codigo,id_departamento) values (31,'65348',8);
-insert into docentes (id_persona,codigo,id_departamento) values (32,'52514',1);
-
-
 insert into administrativos (id_persona,cargo) values (33,'secretaria');
 insert into administrativos (id_persona,cargo) values (34,'vicerector de extension');
 
 insert into externos (id_persona,profesion) values (35,'ing de sistemas');
 
-update programas set id_docente='30' where id='1';
-update programas set id_docente='25' where id='2';
-update programas set id_docente='28' where id='3';
-update programas set id_docente='29' where id='4';
-update programas set id_docente='32' where id='5';
-update programas set id_docente='31' where id='6';
-update programas set id_docente='27' where id='7';
-update programas set id_docente='26' where id='8';
+
 
 insert into roles(id,authority,id_persona) values(1,'ROLE_USER',1);
 insert into roles(id,authority,id_persona) values(2,'ROLE_BECA',1);

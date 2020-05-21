@@ -24,12 +24,29 @@ function guardarFacultad(){
 		url: "/facultad/save",
 		cache: false,
 		success: function(result) {
-			toastr.success('Se ha guardado la información', 'Excelente!')
+			console.log(result);
+			toastr.success('Se ha guardado la información', 'Excelente!');
 			window.setTimeout(function(){location.reload()},1000);
 			idFacultad=null;
 		},
 		error: function(err) {
-			$("#msg").html( "<span style='color: red'>Programa is required</span>" );
+			toastr.error('No se pudo procesar la solicitud...', 'Error!');
+			
+			err.responseJSON.forEach(function(error){
+				if(error.field=="facultad"){
+					var inputFacultad=document.getElementById('facultad');
+					var errorFacultad=document.getElementById('errorFacultad');
+					errorFacultad.innerText=error.defaultMessage;
+					inputFacultad.classList.add("is-invalid");
+				}
+			  });
+			
+				
+			
+			
+			//console.log(err.responseJSON[0].defaultMessage);
+			console.log(err);
+			//$("#msg").html( "<span style='color: red'>Programa is required</span>" );
 		}
 	});
 	
@@ -51,7 +68,8 @@ function editarFacultad(elemento){
 			
 		},
 		error: function(err) {
-			$("#msg").html( "<span style='color: red'>Programa is required</span>" );
+			console.log("errores");
+			console.log(err);
 		}
 	});
 		

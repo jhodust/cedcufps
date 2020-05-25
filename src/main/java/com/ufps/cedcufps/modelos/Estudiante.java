@@ -7,6 +7,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name="estudiantes", uniqueConstraints={
@@ -19,9 +22,11 @@ public class Estudiante extends Persona{
 	 */
 	private static final long serialVersionUID = 1L;
 
+	@NotEmpty(message = "El campo código es requerido")
+	@Size(max = 8, message = "El campo código debe tene máximo 7 dígitos")
 	private String codigo;
 
-	
+	@NotNull(message = "Seleccione el Programa Académico en el que se encuentra matriculado")
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="id_programa")
 	private Programa programa;

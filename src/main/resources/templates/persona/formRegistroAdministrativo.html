@@ -43,14 +43,15 @@
 								<div class="card">
 									<div class="card-body">
 										<div class="row">
-											<span class="badge badge-danger">Información Laboral-Administrativa</span>
+											<span class="badge badge-red-ufps">Información Laboral-Administrativa</span>
 										</div>
 										<div class="row">
 											<div class="col-md-12">
 												<div class="form-group">
 													<label class="form-control-label">Dependencia Adscrito(a)</label> <input
 														class="form-control" type="text"
-														placeholder="Ingrese la dependencia..." th:field="*{dependencia}"/>
+														placeholder="Ingrese la dependencia..." th:field="*{dependencia}" th:errorclass="'form-control is-invalid'"/>
+														<small class="form-text text-danger" th:if="${#fields.hasErrors('dependencia')}"><strong th:errors="*{dependencia}"></strong></small>
 												</div>
 											</div>
 										</div>
@@ -59,14 +60,13 @@
 												<div class="form-group">
 													<label class="form-control-label">Cargo</label> <input
 														class="form-control" type="text"
-														placeholder="Ingrese su cargo..." th:field="*{cargo}"/>
+														placeholder="Ingrese su cargo..." th:field="*{cargo}" th:errorclass="'form-control is-invalid'"/>
+														<small class="form-text text-danger" th:if="${#fields.hasErrors('cargo')}"><strong th:errors="*{cargo}"></strong></small>
 												</div>
 											</div>
 										</div>
 										<!-- Save changes buttons -->
-										<button type="submit"
-											class="btn btn-sm btn-primary rounded-pill">Save
-											changes</button>
+										<button type="submit" class="btn btn-sm btn-red-ufps rounded-pill">Guardar</button>
 										
 									</div>
 								</div>

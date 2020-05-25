@@ -17,6 +17,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -38,42 +42,61 @@ public class Persona implements Serializable {//*
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	
+	@NotNull(message = "Seleccione el tipo de documento")
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="id_tipo_documento")
 	private TipoDocumento tipoDocumento;
 	
+	@NotEmpty(message = "El campo número documento es requerido")
+	@Pattern(regexp = "^([0-9])*$", message = "El código debe contener solo dígitos")
 	@Column(name = "numero_documento")
 	private String numeroDocumento;
 
+	@NotNull(message = "Ingrese fecha de expedición del documeto de identidad")
 	@DateTimeFormat(pattern="dd/MM/yyyy")
 	@Column(name = "fecha_expedicion_documento")
 	private Date fechaExpedicionDocumento;
 	
+	@NotEmpty(message = "El campo primer nombre es requerido")
+	@Pattern(regexp = "^$|^[a-zA-ZñNáéíóúÁÉÍÓÚüÜ\\s]+$", message = "El campo primer nombre debe contener solo letras")
+	@Size(max = 20, message = "El campo primer nombre debe tener máximo 20 caracteres")
 	@Column(name = "primer_nombre")
 	private String primerNombre;
 	
+	
+	@Pattern(regexp = "^$|^[a-zA-ZñNáéíóúÁÉÍÓÚüÜ\\s]+$", message = "El campo segundo nombre debe contener solo letras")
+	@Size(max = 20, message = "El campo segundo nombre debe tener máximo 20 caracteres")
 	@Column(name = "segundo_nombre")
 	private String segundoNombre;
 	
+	@NotEmpty(message = "El campo primer apellido es requerido")
+	@Pattern(regexp = "^$|^[a-zA-ZñNáéíóúÁÉÍÓÚüÜ\\s]+$", message = "El campo primer apellido debe contener solo letras")
+	@Size(max = 20, message = "El campo primer apellido debe tener máximo 20 caracteres")
 	@Column(name = "primer_apellido")
 	private String primerApellido;
 	
+	@NotEmpty(message = "El campo segundo apellido es requerido")
+	@Pattern(regexp = "^$|^[a-zA-ZñNáéíóúÁÉÍÓÚüÜ\\s]+$", message = "El campo segundo apellido debe contener solo letras")
+	@Size(max = 20, message = "El campo segundo apellido debe tener máximo 20 caracteres")
 	@Column(name = "segundo_apellido")
 	private String segundoApellido;
 	
+	@NotNull(message = "El campo género es requerido")
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="id_genero")
 	private Genero genero;
 	
+	@NotNull(message = "El campo estado civil es requerido")
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="id_estado_civil")
 	private EstadoCivil estadoCivil;
 	
+	@NotNull(message = "Ingrese su fecha de nacimiento")
 	@DateTimeFormat(pattern="dd/MM/yyyy")
 	@Column(name = "fecha_nacimiento")
 	private Date fechaNacimiento;
 	
+	@NotEmpty(message = "Seleccion el pais de nacimiento, es requerido")
 	@Column(name="id_pais_nacimiento")
 	private String idPaisNacimiento;
 	
@@ -82,14 +105,18 @@ public class Persona implements Serializable {//*
 	private String idDepartamentoNacimiento;
 	
 
-	
 	@Column(name="id_municipio_nacimiento")
 	private String idMunicipioNacimiento;
 	
-	
+	@Pattern(regexp = "^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$", message = "El email ingresado no es válido")
 	private String email;
+	
+	@Size(max = 50, message = "El campo dirección maximo debe tener 50 caracteres")
 	private String direccion;
+	
+	@Pattern(regexp = "^([0-9])*$", message = "El campo telefono debe contener solo dígitos")
 	private String telefono;
+	
 	private String password;
 
 	private String username;

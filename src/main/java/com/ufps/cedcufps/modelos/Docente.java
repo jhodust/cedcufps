@@ -11,6 +11,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -23,9 +26,12 @@ public class Docente extends Persona{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
+	@NotEmpty(message = "El campo código es requerido")
+	@Pattern(regexp = "^$|^([0-9]{5,5})*$", message = "El código debe contener 5 dígitos")
 	private String codigo;
 	
+	
+	@NotNull(message = "Seleccione el Departamento Académico en el que se encuentra adscrito")
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="id_departamento")
 	private Departamento departamento;

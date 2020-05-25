@@ -43,21 +43,20 @@
 								<div class="card">
 									<div class="card-body">
 										<div class="row">
-											<span class="badge badge-danger">Información Laboral</span>
+											<span class="badge badge-red-ufps">Información Laboral</span>
 										</div>
 										<div class="row">
 											<div class="col-md-12">
 												<div class="form-group">
 													<label class="form-control-label">Profesión</label> <input
 														class="form-control" type="text"
-														placeholder="Ingrese su profesión..." th:field="*{profesion}"/>
+														placeholder="Ingrese su profesión..." th:field="*{profesion}" th:errorclass="'form-control is-invalid'"/>
+														<small class="form-text text-danger" th:if="${#fields.hasErrors('profesion')}"><strong th:errors="*{profesion}"></strong></small>
 												</div>
 											</div>
 										</div>
 										<!-- Save changes buttons -->
-										<button type="submit"
-											class="btn btn-sm btn-primary rounded-pill">Save
-											changes</button>
+										<button type="submit" class="btn btn-sm btn-red-ufps rounded-pill">Guardar</button>
 										
 									</div>
 								</div>

@@ -43,18 +43,19 @@
 								<div class="card">
 									<div class="card-body">
 										<div class="row">
-											<span class="badge badge-danger">Información Académica</span>
+											<span class="badge badge-red-ufps">Información Académica</span>
 										</div>
 										<div class="row">
 											<div class="col-md-12">
 												<div class="form-group">
 													<label class="form-control-label">Programa
 														Académico</label> <select class="form-control"
-														data-toggle="select" th:field="*{programa}" id="programaAsociado">
+														data-toggle="select" th:field="*{programa}" id="programaAsociado" th:errorclass="'form-control is-invalid'">
 														<option value="0">Seleccione el programa...</option>
 														<option th:each="p: ${programas}" th:value="${p.id}"
 															th:text="${p.programa}"></option>
 													</select>
+													<small class="form-text text-danger" th:if="${#fields.hasErrors('programa')}"><strong th:errors="*{programa}"></strong></small>
 												</div>
 											</div>
 										</div>
@@ -63,14 +64,13 @@
 												<div class="form-group">
 													<label class="form-control-label">Código</label><input
 														class="form-control" type="text"
-														data-mask="000-0000" placeholder="000-0000" th:field="*{codigo}" id="codigo">
+														data-mask="000-0000" placeholder="000-0000" th:field="*{codigo}" id="codigo" th:errorclass="'form-control is-invalid'" />
 												</div>
+												<small class="form-text text-danger" th:if="${#fields.hasErrors('codigo')}"><strong th:errors="*{codigo}"></strong></small>
 											</div>
 										</div>
 										<!-- Save changes buttons -->
-										<button type="submit"
-											class="btn btn-sm btn-primary rounded-pill">Save
-											changes</button>
+										<button type="submit" class="btn btn-sm btn-red-ufps rounded-pill">Guardar</button>
 										
 									</div>
 								</div>

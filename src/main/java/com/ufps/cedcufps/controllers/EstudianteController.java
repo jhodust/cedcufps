@@ -2,14 +2,18 @@ package com.ufps.cedcufps.controllers;
 
 import java.util.Map;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ufps.cedcufps.modelos.Administrativo;
 import com.ufps.cedcufps.modelos.Docente;
@@ -54,11 +58,21 @@ public class EstudianteController {
 	
 	
 	@RequestMapping(value = "/usuarios/estudiante/registro", method = RequestMethod.POST)
-	public String save(Estudiante e, SessionStatus status) {
+	public String save(@Valid Estudiante e, BindingResult result,Map<String, Object> model, SessionStatus status,RedirectAttributes redirectAttributes) {
 		e.setTipoPersona(personaService.findByTipoPersona("Estudiante"));
 		System.out.println("*******************************************************************");
 		System.out.println(e.getFechaExpedicionDocumento());
 		System.out.println(e.getFechaNacimiento());
+		if(result.hasErrors()) {
+			System.out.println("Entra al if");
+			model.put("tipos_documento",personaService.findAllTiposDocumento());
+			model.put("tipos_persona",personaService.findAllTiposPersona());
+			model.put("programas",personaService.findAllProgramas());
+			model.put("generos",personaService.findAllGeneros());
+			model.put("estados_civiles",personaService.findAllEstadosCiviles());
+			model.put("errorMessage","No se pudo procesar la solicitud...");
+			return "persona/formRegistroEstudiante";
+		}
 		if(e.getId()==null) {
 			Rol r= new Rol();
 			r.setAuthority("ROLE_USER");
@@ -72,7 +86,7 @@ public class EstudianteController {
 		e.setEnabled(true);
 		personaService.save(e);
 		status.setComplete();
-		
+		redirectAttributes.addFlashAttribute("successMessage", "Se ha guardado la información correctamente...");
 		return "redirect:/usuarios";
 	}
 }

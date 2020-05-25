@@ -31,20 +31,26 @@ $(document).ready(function ()
 	/***establece el input mask dependiendo el programa asociado***/
 	$('#programaAsociado').on('select2:select', function (e) { 
 		$('#codigo').val("");
-		$.ajax({
-			headers: {"X-CSRF-TOKEN": token},
-			type: "GET",
-			contentType: "application/json; charset=utf-8",
-			url: "/programa/search/"+e.params.data.id,
-			cache: false,
-			success: function(result) {
-				console.log(result);
-				$('#codigo').mask(result.codigo+"-0000", {placeholder: result.codigo+"-0000"});
-			},
-			error: function(err) {
-				$("#msg").html( "<span style='color: red'>Programa is required</span>" );
-			}
-		});
+		if(e.params.data.id!="0"){
+			$.ajax({
+				headers: {"X-CSRF-TOKEN": token},
+				type: "GET",
+				contentType: "application/json; charset=utf-8",
+				url: "/programa/search/"+e.params.data.id,
+				cache: false,
+				success: function(result) {
+					console.log(result);
+					$('#codigo').mask(result.codigo+"-0000", {placeholder: result.codigo+"-0000"});
+				},
+				error: function(err) {
+					console.log(err);
+					$('#codigo').mask("000-0000", {placeholder: "000-0000"});
+				}
+			});
+		}else{
+			$('#codigo').mask("000-0000", {placeholder: "000-0000"});
+		}
+		
 		});
 	
 });

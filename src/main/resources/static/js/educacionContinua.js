@@ -1,5 +1,76 @@
 $(document).ready(function ()
 {
+	
+	$('#selectTipoContinua').on("change", function (e) { 
+		e.preventDefault();
+		var tipoContinua= $(this).find('option:selected');
+		var inputDuracion=document.getElementById('duracion');
+		var errorDuracion=document.getElementById('inputErrorDuracion');
+		var boton = document.getElementById('btnGuardar');
+		console.log("error");
+		console.log(errorDuracion);
+		console.log(inputDuracion);
+		console.log(inputDuracion.value);
+		console.log(tipoContinua.val());
+		if(tipoContinua.val()=="1" || tipoContinua.val()=="4"){//curso talleres
+			console.log("entra por curso");
+			if(inputDuracion.value<16){
+				errorDuracion.innerText="El " + tipoContinua.text() + " debe tener mínimo 16 horas de duración";
+				inputDuracion.classList.add("is-invalid");
+				boton.disabled=true;
+			}
+		}else if(tipoContinua.val()==2){//diplomados
+			if(inputDuracion.value<90){
+				errorDuracion.innerText="El " + tipoContinua.text() + " debe tener mínimo 90 horas de duración";
+				inputDuracion.classList.add("is-invalid");
+				boton.disabled=true;
+			}
+		}else{
+			errorDuracion.innerText="";
+			inputDuracion.classList.remove("is-invalid");
+			boton.disabled=false;
+		}
+		
+	});
+	
+	 $('#duracion').keyup(function(event) {
+		 var horas = event.target.value;
+		 var tipoContinua= $('#selectTipoContinua').find('option:selected');
+		var inputDuracion=document.getElementById('duracion');
+		var errorDuracion=document.getElementById('inputErrorDuracion');
+			var boton = document.getElementById('btnGuardar');
+			console.log("horas");
+			console.log(horas);
+			if(tipoContinua.val()==1 || tipoContinua.val()==4){//curso talleres
+				console.log("entra por curso");
+				console.log(horas<16);
+				if(horas<16){
+					errorDuracion.innerText="El " + tipoContinua.text() + " debe tener mínimo 16 horas de duración";
+					inputDuracion.classList.add("is-invalid");
+					boton.disabled=true;
+				}else{
+					errorDuracion.innerText="";
+					inputDuracion.classList.remove("is-invalid");
+					boton.disabled=false;
+				}
+			}else if(tipoContinua.val()==2){//diplomados
+				if(horas.value<90){
+					errorDuracion.innerText="El " + tipoContinua.text() + " debe tener mínimo 90 horas de duración";
+					inputDuracion.classList.add("is-invalid");
+					boton.disabled=true;
+				}else{
+					errorDuracion.innerText="";
+					inputDuracion.classList.remove("is-invalid");
+					boton.disabled=false;
+				}
+			}else{
+				errorDuracion.innerText="";
+				inputDuracion.classList.remove("is-invalid");
+				boton.disabled=false;
+			}
+		    
+	  });
+	
 console.log("preparando datepicker");
 	$("#fechaLimInscripcionEduCont").flatpickr({
    		enableTime: true,

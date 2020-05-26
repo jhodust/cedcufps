@@ -55,6 +55,7 @@ $(document).ready(function ()
 function guardarJornada(){
 	var horaInicio = $('#horaInicio').val();
 	var horaFin = $('#horaFin').val();
+	limpiarErrores();
 	$.ajax({
 		headers: {"X-CSRF-TOKEN": token},
 		type: "POST",
@@ -68,7 +69,22 @@ function guardarJornada(){
 			idJornada=null;
 		},
 		error: function(err) {
-			$("#msg").html( "<span style='color: red'>Programa is required</span>" );
+			toastr.error('No se pudo procesar la solicitud...', 'Error!');
+			console.log(err);
+			err.responseJSON.forEach(function(error){
+				if(error.field=="horaInicio"){
+					var inputHoraInicio=document.getElementById('horaInicio');
+					var errorHoraInicio=document.getElementById('errorHoraInicio');
+					errorHoraInicio.innerText=error.defaultMessage;
+					inputHoraInicio.classList.add("is-invalid");
+				}
+				if(error.field=="horaFin"){
+					var inputHoraFin=document.getElementById('horaFin');
+					var errorHoraFin=document.getElementById('errorHoraFin');
+					errorHoraFin.innerText=error.defaultMessage;
+					inputHoraFin.classList.add("is-invalid");
+				}
+			  });
 		}
 	});
 	
@@ -95,4 +111,15 @@ function editarJornada(elemento){
 		}
 	});
 		
+}
+
+function limpiarErrores(){
+	var inputHoraInicio=document.getElementById('horaInicio');
+	var errorHoraInicio=document.getElementById('errorHoraInicio');
+	errorHoraInicio.innerText="";
+	inputHoraInicio.classList.remove("is-invalid");
+	var inputHoraFin=document.getElementById('horaFin');
+	var errorHoraFin=document.getElementById('errorHoraFin');
+	errorHoraFin.innerText="";
+	inputHoraFin.classList.remove("is-invalid");
 }

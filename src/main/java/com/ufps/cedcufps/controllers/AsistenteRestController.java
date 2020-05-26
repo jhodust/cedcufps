@@ -56,27 +56,23 @@ public class AsistenteRestController {
 		a.setEducacionContinua(ec);
 		a.setTipoParticipante(participanteService.findByTipoParticipante("Asistente"));
 		a.setPersona(p);
-		Path directorioRecursos=Paths.get("src//main//resources//static//uploads//educacion-continua//"+ec.getId()+"//qr-participantes");
-		if(directorioRecursos.toFile().exists()) {
-			Date fechaInscripcion = new Date();
-		    SimpleDateFormat formateador = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+		
 		    
-			String texto=ec.getProgramaResponsable().getCodigo()+"_"+ec.getTipoEduContinua().getId()+"_"+ec.getId()+"_"+a.getTipoParticipante().getId()+"_"+p.getNumeroDocumento()+"_"+formateador.format(fechaInscripcion);
-			String nombreArchivo=p.getNumeroDocumento()+".png";
-			System.out.println("texto original: " + texto);
-			File file=Paths.get(directorioRecursos+"//"+nombreArchivo).toFile();
-			texto=Encrypt.encriptar(texto);
-			try {
-				CodigoQR.generateQR(file, texto);
-				System.out.println("encriptado: " + texto);
-				System.out.println("desencriptado: " + Encrypt.desencriptar(texto));
-				a.setImagenCodigoQR("/uploads/educacion-continua/"+ec.getId()+"/qr-participantes/"+nombreArchivo);
-				a.setCodigoQR(texto);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		String texto=ec.getProgramaResponsable().getCodigo()+"_"+ec.getTipoEduContinua().getId()+"_"+ec.getId()+"_"+a.getTipoParticipante().getId()+"_"+p.getNumeroDocumento();
+		String nombreArchivo=p.getNumeroDocumento()+".png";
+		System.out.println("texto original: " + texto);
+		texto=Encrypt.encriptar(texto);
+		try {
+			CodigoQR.generateQR("src//main//resources//static//uploads//educacion-continua//"+ec.getId()+"//qr-participantes//"+nombreArchivo, texto);
+			System.out.println("encriptado: " + texto);
+			System.out.println("desencriptado: " + Encrypt.desencriptar(texto));
+			a.setImagenCodigoQR("/uploads/educacion-continua/"+ec.getId()+"/qr-participantes/"+nombreArchivo);
+			a.setCodigoQR(texto);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		
 		
 		
 		participanteService.save(a);

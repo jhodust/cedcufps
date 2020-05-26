@@ -7,13 +7,13 @@
 <body>
 
 <div class="modal fade docs-example-modal-lg" id="modalRegistroJornada" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" th:fragment="modalRegistro">
-  <div class="modal-dialog modal-lg">
+  <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
 
       <div class="modal-header">
           <div class="modal-title d-flex align-items-center" id="modal-title-change-username">
               <div>
-                  <div class="icon icon-sm icon-shape icon-info rounded-circle shadow mr-3">
+                  <div class="icon icon-sm icon-shape rounded-circle shadow mr-3">
                       <i class="far fa-user"></i>
                   </div>
               </div>
@@ -31,18 +31,20 @@
                   <div class="form-group">
                       <label class="form-control-label">Hora Inicio</label>
                       <input type="date" class="form-control flatpickr-input" id="horaInicio" data-toggle="date" readOnly/>
+                  	<small class="form-text text-danger"><strong id="errorHoraInicio"></strong></small>
                   </div>
               </div>
               <div class="col-sm-6">
                   <div class="form-group">
                       <label class="form-control-label">Hora Fin</label>
                        <input type="date" class="form-control flatpickr-input" id="horaFin" data-toggle="date" readOnly/>
+                  		<small class="form-text text-danger"><strong id="errorHoraFin"></strong></small>
                   </div>
               </div>
           </div>
           <div class="row">
-          	<button type="button" onclick="guardarJornada()" class="btn btn-sm btn-secondary">Guardar</button>
-          </div>
+               	<button type="button" onclick="guardarJornada()" class="btn btn-sm btn-red-ufps">Guardar</button>
+         </div>
       </div>
     </div>
   </div>

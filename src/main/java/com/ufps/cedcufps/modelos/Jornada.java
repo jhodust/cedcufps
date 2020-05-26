@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -28,11 +29,12 @@ public class Jornada implements Serializable{
 	private Long id;
 	
 	
-	
+	@NotNull(message = "Ingrese la fecha y hora de inicio de la jornada")
 	@JsonFormat(pattern="dd/MM/yyyy HH:mm", timezone="America/Bogota")
 	@Column(name = "hora_inicio")
 	private Date horaInicio;
 	
+	@NotNull(message = "Ingrese la fecha y hora que termina la jornada")
 	@JsonFormat(pattern="dd/MM/yyyy HH:mm", timezone="America/Bogota")
 	@Column(name = "hora_fin")
 	private Date horaFin;

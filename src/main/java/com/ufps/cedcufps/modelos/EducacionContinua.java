@@ -20,6 +20,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -44,32 +45,33 @@ public class EducacionContinua implements Serializable {
 	
 	private String consecutivo;
 	
+	
 	private String imagen;
 	
-	@NotEmpty
-	@Size(max = 100)
+	@NotEmpty(message="El campo nombre es requerido")
+	@Size(max = 100, message="El campo nombre debe tener máximo 100 caracteres")
 	private String nombre;
 	
-	@NotNull
+	@NotNull(message="Ingrese la fecha y hora de inicio del evento")
 	@DateTimeFormat(pattern="dd/MM/yyyy HH:mm")
 	@Column(name = "fecha_inicio")
 	private Date fechaInicio;
 	
-	@NotNull
+	@NotNull(message="Ingrese la fecha y hora de finalización del evento ")
 	@DateTimeFormat(pattern="dd/MM/yyyy HH:mm")
 	@Column(name = "fecha_fin")
 	private Date fechaFin;
 	
-	@NotEmpty
-	@Size(max = 50)
+	@NotEmpty(message="El campo lugar es requerido")
+	@Size(max = 40, message="El campo lugar debe tener máximo 40 caracteres")
 	private String lugar;
 	
-	@NotNull
+	@NotNull(message = "Ingrese la fecha y hora límite de inscripción al evento")
 	@DateTimeFormat(pattern="dd/MM/yyyy HH:mm")
 	@Column(name = "fecha_lim_inscripcion")
 	private Date fechaLimInscripcion;
 	
-	@NotNull
+	@Min(value = 1,message="El campo duración es requerido")
 	private int duracion;
 	
 	
@@ -79,16 +81,17 @@ public class EducacionContinua implements Serializable {
 	private String contenidoGeneral;
 	private String objetivo;
 	
+	
 	@DecimalMin(value = "1")
 	@Column(name = "cant_max_participantes")
 	private int cantMaxParticipantes;
 	
 	private String resumen;
 	
-	@NotNull
+	@NotNull(message="El campo costo es requerido")
 	private double costo;
 	
-	@NotNull
+	@NotNull(message="Seleccione el tipo de Educación Continua")
 	@ManyToOne(fetch = FetchType.EAGER)//cambié lazy por eager
 	@JoinColumn(name="id_tipo_educacion_continua")
 	private TipoEducacionContinua tipoEduContinua;
@@ -101,25 +104,25 @@ public class EducacionContinua implements Serializable {
 	@OneToMany(mappedBy = "educacionContinua",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Participante> participantes;
 
-	@NotNull
+	@NotNull(message="El campo Programa Académico responsable es responsable")
 	@ManyToOne(fetch = FetchType.EAGER)//cambié lazy por eager
 	@JoinColumn(name="id_programa")
 	private Programa programaResponsable;
 	
 	@JsonIgnore
-	@NotNull
+	@NotNull(message="El campo docente responsable es requerido")
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="id_docente")
 	private Docente docenteResponsable;
 	
 	@JsonIgnore
-	@NotNull
+	@NotNull(message="El campo Clasificación CINE es requerido")
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="id_clasificacion_cine")
 	private ClasificacionCine clasificacionCine;
 	
 	@JsonIgnore
-	@NotNull
+	@NotNull(message="El campo tipo de beneficiario del evento es requerido")
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="id_tipo_beneficiario")
 	private TipoBeneficiario tipoBeneficiario;

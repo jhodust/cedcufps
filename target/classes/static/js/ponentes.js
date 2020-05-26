@@ -11,6 +11,7 @@ $(document).ready(function ()
 	$('#modalPonentes').on('show.bs.modal', function (event) {
 		limpiarForm();
 		idEducacionContinua=null;
+		limpiarErrores();
 	});
 
 });
@@ -19,11 +20,23 @@ $(document).ready(function ()
 function guardarPonente(){
 	var tema = $('#temaPonente').val();
 	var id_persona = document.getElementById("select_ponentes").value;
+	limpiarErrores();
+	var JSONponente={};
+	JSONponente.id=idPonente;
+	JSONponente.tema=tema;
+	JSONponente.educacionContinua={};
+	JSONponente.educacionContinua.id=idEducacionContinua;
+	JSONponente.tipoParticipante={};
+	JSONponente.tipoParticipante.id="2";
+	if(id_persona != "0"){
+		JSONponente.persona={};
+		JSONponente.persona.id=id_persona;
+	}
 	$.ajax({
 		headers: {"X-CSRF-TOKEN": token},
 		type: "POST",
 		contentType: "application/json; charset=utf-8",
-		data: JSON.stringify({'id':idPonente,'educacionContinua':{id:idEducacionContinua},'persona':{id:id_persona}, 'tipoParticipante':{id:'2'}, 'tema':tema}),
+		data: JSON.stringify(JSONponente),
 		url: "/educacion-continua/ponente/save",
 		cache: false,
 		success: function(result) {
@@ -33,7 +46,22 @@ function guardarPonente(){
 			console.log("el metodo guardarPonente deja idEDuContinua en: " +idEducacionContinua);
 		},
 		error: function(err) {
-			$("#msg").html( "<span style='color: red'>Programa is required</span>" );
+			toastr.error('No se pudo procesar la solicitud...', 'Error!');
+			console.log(err);
+			err.responseJSON.forEach(function(error){
+				if(error.field=="persona"){
+					var selectPonente=document.getElementById('select_ponentes');
+					var errorPonente=document.getElementById('errorPonente');
+					errorPonente.innerText=error.defaultMessage;
+					selectPonente.classList.add("is-invalid");
+				}
+				if(error.field=="tema"){
+					var inputTema=document.getElementById('temaPonente');
+					var errorTema=document.getElementById('errorTema');
+					errorTema.innerText=error.defaultMessage;
+					inputTema.classList.add("is-invalid");
+				}
+			  });
 		}
 	});
 	
@@ -168,4 +196,17 @@ function actualizarConsultaPonentes(){
 		a.appendChild(i);
 		$(a).tooltip();
 		return a;
+	}
+	
+	function limpiarErrores(){
+		var selectPonente=document.getElementById('select_ponentes');
+		var errorPonente=document.getElementById('errorPonente');
+		errorPonente.innerText="";
+		selectPonente.classList.remove("is-invalid");
+	
+		var inputTema=document.getElementById('temaPonente');
+		var errorTema=document.getElementById('errorTema');
+		errorTema.innerText="";
+		inputTema.classList.remove("is-invalid");
+		
 	}

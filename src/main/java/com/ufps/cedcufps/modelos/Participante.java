@@ -19,6 +19,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -44,6 +45,7 @@ public class Participante implements Serializable{
 	private EducacionContinua educacionContinua;
 	
 	//*****************************************revisar asociacion**************
+	@NotNull(message="El campo ponente es requerido")
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="id_persona")
 	private Persona persona;

@@ -64,7 +64,7 @@ function guardarDepartamento(){
 					var selectFacultad=document.getElementById('select_facultad_departamento');
 					var errorSelectFacultad=document.getElementById('errorSelectFacultad');
 					errorSelectFacultad.innerText=error.defaultMessage;
-					selectFacultad.classList.add("alert-danger");
+					selectFacultad.classList.add("is-invalid");
 				}
 			  });
 		}
@@ -99,7 +99,7 @@ function limpiarErrores(){
 	var selectFacultad=document.getElementById('select_facultad_departamento');
 	var errorSelectFacultad=document.getElementById('errorSelectFacultad');
 	errorSelectFacultad.innerText="";
-	selectFacultad.classList.remove("alert-danger");
+	selectFacultad.classList.remove("is-invalid");
 	var inputDepto=document.getElementById('departamento');
 	var errorDepto=document.getElementById('errorDepartamento');
 	errorDepto.innerText="";

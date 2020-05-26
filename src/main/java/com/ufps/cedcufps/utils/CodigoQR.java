@@ -5,6 +5,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
+import java.nio.file.Paths;
 
 import javax.imageio.ImageIO;
 
@@ -21,7 +22,9 @@ public class CodigoQR {
 
 	
 	
-	public static File generateQR(File file, String text) throws Exception {
+	public static File generateQR(String filename, String text) throws Exception {
+		File file=Paths.get(filename).toFile();
+		
 		int h=300;
 		int w=300;
         QRCodeWriter writer = new QRCodeWriter();

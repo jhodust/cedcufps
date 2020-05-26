@@ -13,7 +13,7 @@
                 <div class="modal-header">
                     <div class="modal-title d-flex align-items-center" id="modal-title-change-username">
                         <div>
-                            <div class="icon icon-sm icon-shape icon-info rounded-circle shadow mr-3">
+                            <div class="icon icon-sm icon-shape rounded-circle shadow mr-3">
                                 <i class="far fa-user"></i>
                             </div>
                         </div>
@@ -32,10 +32,11 @@
                                 <label class="form-control-label">Ponente</label>
                                 <select class="form-control" data-toggle="select"
 														id="select_ponentes">
-														<option value="0">Seleccione el ponente</option>
-														  <option th:each="p: ${posiblesPonentes}"
-															th:value="${p.id}" th:text="${p.primerNombre}+ ' ' +${p.segundoNombre}+ ' ' +${p.primerApellido} + ' ' +${p.segundoApellido}  "></option>
-													</select>
+									<option value="0">Seleccione el ponente</option>
+									  <option th:each="p: ${posiblesPonentes}"
+										th:value="${p.id}" th:text="${p.primerNombre}+ ' ' +${p.segundoNombre}+ ' ' +${p.primerApellido} + ' ' +${p.segundoApellido}  "></option>
+								</select>
+								<small class="form-text text-danger"><strong id="errorPonente"></strong></small>
                                
                             </div>
                         </div>
@@ -43,11 +44,12 @@
                             <div class="form-group">
                                 <label class="form-control-label">Tema</label>
                                 <input class="form-control" type="text" id="temaPonente"/>
+                                <small class="form-text text-danger"><strong id="errorTema"></strong></small>
                             </div>
                         </div>
                         
                     </div>
-	                <button type="button" onclick="guardarPonente()" class="btn btn-sm btn-secondary">Guardar</button>
+	                <button type="button" onclick="guardarPonente()" class="btn btn-sm btn-red-ufps">Guardar</button>
 	                
                     <div class="col-12 pt-4 mt-4 delimiter-top text-center">
                         <table class="table" id="tablaPonentes">

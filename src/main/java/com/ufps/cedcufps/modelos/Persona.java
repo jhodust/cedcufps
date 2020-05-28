@@ -24,6 +24,7 @@ import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 
@@ -42,7 +43,9 @@ public class Persona implements Serializable {//*
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+	
 	@NotNull(message = "Seleccione el tipo de documento")
+	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="id_tipo_documento")
 	private TipoDocumento tipoDocumento;
@@ -82,11 +85,13 @@ public class Persona implements Serializable {//*
 	private String segundoApellido;
 	
 	@NotNull(message = "El campo género es requerido")
+	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="id_genero")
 	private Genero genero;
 	
 	@NotNull(message = "El campo estado civil es requerido")
+	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="id_estado_civil")
 	private EstadoCivil estadoCivil;
@@ -124,7 +129,7 @@ public class Persona implements Serializable {//*
 	private boolean enabled;
 	
 	
-	
+	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="id_tipo_persona")
 	private TipoPersona tipoPersona;

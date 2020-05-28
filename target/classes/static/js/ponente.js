@@ -1,5 +1,5 @@
 var token = $("meta[name='_csrf']").attr("content");
-var idEducacionContinua;
+console.log(idEducacionContinua);
 var idPonente;
 $(document).ready(function ()
 		{
@@ -10,8 +10,8 @@ $(document).ready(function ()
 			
 	$('#modalPonentes').on('show.bs.modal', function (event) {
 		limpiarForm();
-		idEducacionContinua=null;
 		limpiarErrores();
+		
 	});
 
 });
@@ -41,8 +41,8 @@ function guardarPonente(){
 		cache: false,
 		success: function(result) {
 			toastr.success('Se ha guardado la información del ponente', 'Excelente!')
-			limpiarForm();
-			actualizarConsultaPonentes();
+			window.setTimeout(function(){location.reload()},1000);
+			//actualizarConsultaPonentes();
 			console.log("el metodo guardarPonente deja idEDuContinua en: " +idEducacionContinua);
 		},
 		error: function(err) {
@@ -77,10 +77,13 @@ function editarPonente(elemento){
 		url: "/educacion-continua/ponente/search/"+elemento.dataset.id,
 		cache: false,
 		success: function(result) {
+			$('#modalPonentes').modal();
 			$('#temaPonente').val(result.tema);
 			 $('#select_ponentes').val(result.persona.id);
 			 $('#select_ponentes').select2().trigger('change');
+			 $("#select_ponentes").prop("disabled", true);
 			 idPonente=result.id;
+			 
 		},
 		error: function(err) {
 			$("#msg").html( "<span style='color: red'>Programa is required</span>" );
@@ -110,15 +113,15 @@ function eliminarPonente(elemento){
 		
 }
 
-function ponentes(elemento){
+/*function ponentes(elemento){
 	$('#modalPonentes').modal();
 	idEducacionContinua=elemento.dataset.id;
 	console.log("el metodo ponentes deja idEDuContinua en: " +idEducacionContinua);
-	actualizarConsultaPonentes();
+	//actualizarConsultaPonentes();
 		
-}
+}*/
 
-function actualizarConsultaPonentes(){
+/*function actualizarConsultaPonentes(){
 	console.log("el metodo actualizarConsultaPonentes tiene idEDuContinua en: " +idEducacionContinua);
 	$.ajax({
 		headers: {"X-CSRF-TOKEN": token},
@@ -135,28 +138,29 @@ function actualizarConsultaPonentes(){
 		}
 	});
 }
-
+*/
 	function limpiarForm(){
 		$('#temaPonente').val("");
 		$('#select_ponentes').val(0).trigger('change');
 		idPonente=null;
+		$("#select_ponentes").prop("disabled", false);
 	}
 	
-	function actualizarTablaPonentes(listaPonentes){
+/*	function actualizarTablaPonentes(listaPonentes){
 		var tabla=document.getElementById("tablaPonentes");
 		limpiarDatosTabla(tabla);
 		agregarDatosTabla(tabla,listaPonentes);
 		
 	}
-	
-	function limpiarDatosTabla(tabla){
+*/	
+/*	function limpiarDatosTabla(tabla){
 		var tbody = tabla.getElementsByTagName('tbody')[0];
 		for(var i=tbody.rows.length; i>0; i--){
 			tbody.deleteRow(i-1);
 		}
 	}
-	
-	function agregarDatosTabla(tabla,lista){
+*/	
+/*	function agregarDatosTabla(tabla,lista){
 		var tbody = tabla.getElementsByTagName('tbody')[0];
 		console.log("------------------------------------");
 		lista.forEach(function(ponente){
@@ -180,8 +184,8 @@ function actualizarConsultaPonentes(){
 		});
 		console.log("------------------------------------");
 	}
-	
-	function crearElementoParaGestionar(idPonente, href,classLink,onclick,titleTooltip,icon){
+*/	
+/*	function crearElementoParaGestionar(idPonente, href,classLink,onclick,titleTooltip,icon){
 		var a = document.createElement("a"); 
 		a.setAttribute('class', classLink);
 		a.setAttribute('href', href);
@@ -197,7 +201,7 @@ function actualizarConsultaPonentes(){
 		$(a).tooltip();
 		return a;
 	}
-	
+*/	
 	function limpiarErrores(){
 		var selectPonente=document.getElementById('select_ponentes');
 		var errorPonente=document.getElementById('errorPonente');

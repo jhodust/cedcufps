@@ -5,71 +5,56 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<!-- Modal -->
-<div class="modal fade" id="modalPonentes" tabindex="-1" role="dialog" aria-labelledby="modalPonentes" aria-hidden="true" th:fragment="modalRegistro">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <form>
-            <div class="modal-content">
-                <div class="modal-header">
-                    <div class="modal-title d-flex align-items-center" id="modal-title-change-username">
-                        <div>
-                            <div class="icon icon-sm icon-shape rounded-circle shadow mr-3">
-                                <i class="far fa-user"></i>
-                            </div>
-                        </div>
-                        <div>
-                            <h6 class="mb-0">Formulario Registro Ponentes</h6>
-                        </div>
-                    </div>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                    	<div class="col-sm-6">
-                            <div class="form-group">
-                                <label class="form-control-label">Ponente</label>
-                                <select class="form-control" data-toggle="select"
-														id="select_ponentes">
-									<option value="0">Seleccione el ponente</option>
-									  <option th:each="p: ${posiblesPonentes}"
-										th:value="${p.id}" th:text="${p.primerNombre}+ ' ' +${p.segundoNombre}+ ' ' +${p.primerApellido} + ' ' +${p.segundoApellido}  "></option>
-								</select>
-								<small class="form-text text-danger"><strong id="errorPonente"></strong></small>
-                               
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label class="form-control-label">Tema</label>
-                                <input class="form-control" type="text" id="temaPonente"/>
-                                <small class="form-text text-danger"><strong id="errorTema"></strong></small>
-                            </div>
-                        </div>
-                        
-                    </div>
-	                <button type="button" onclick="guardarPonente()" class="btn btn-sm btn-red-ufps">Guardar</button>
-	                
-                    <div class="col-12 pt-4 mt-4 delimiter-top text-center">
-                        <table class="table" id="tablaPonentes">
-						  <thead>
-						    <tr>
-						      <th scope="col">Ponente</th>
-						      <th scope="col">Tema</th>
-						      <th scope="col">Acción</th>
-						    </tr>
-						  </thead>
-						  <tbody>
-						   
-						  </tbody>
-						</table>
+
+<div class="modal fade docs-example-modal-lg" id="modalPonentes" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" th:fragment="modalRegistro">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+
+      <div class="modal-header">
+          <div class="modal-title d-flex align-items-center" id="modal-title-change-username">
+              <div>
+                  <div class="icon icon-sm icon-shape rounded-circle shadow mr-3">
+                      <i class="far fa-user"></i>
+                  </div>
+              </div>
+              <div>
+                  <h6 class="mb-0">Formulario Registro Ponente</h6>
+              </div>
+          </div>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+          </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          	<div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="form-control-label">Ponente</label>
+                        <select class="form-control" data-toggle="select"
+						id="select_ponentes">
+							<option value="0">Seleccione el ponente</option>
+							  <option th:each="p: ${posiblesPonentes}"
+								th:value="${p.id}" th:text="${p.primerNombre}+ ' ' +${p.segundoNombre}+ ' ' +${p.primerApellido} + ' ' +${p.segundoApellido}  "></option>
+						</select>
+						<small class="form-text text-danger"><strong id="errorPonente"></strong></small>
+                       
                     </div>
                 </div>
-                
-            </div>
-        </form>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="form-control-label">Tema</label>
+                        <input class="form-control" type="text" id="temaPonente"/>
+                        <small class="form-text text-danger"><strong id="errorTema"></strong></small>
+                    </div>
+                </div>
+          </div>
+          <div class="row">
+               	<button type="button" onclick="guardarPonente()" class="btn btn-sm btn-red-ufps">Guardar</button>
+         </div>
+      </div>
     </div>
+  </div>
 </div>
+	
 </body>
 </html>

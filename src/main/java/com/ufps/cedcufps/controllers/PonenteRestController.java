@@ -69,23 +69,32 @@ public class PonenteRestController {
 		Persona p=personaService.findOne(ponente.getPersona().getId()).get();
 		EducacionContinua ec=educacionContinuaService.findOne(ponente.getEducacionContinua().getId()).get();
 		/*preparando qr de inscripcion*/
-		if(p!=null && ec!=null) {
-			String texto=ec.getProgramaResponsable().getCodigo()+"_"+ec.getTipoEduContinua().getId()+"_"+ec.getId()+"_"+ponente.getTipoParticipante().getId()+"_"+p.getNumeroDocumento();
-			String nombreArchivo=p.getNumeroDocumento()+".png";
-			ponente.setCodigoQR(Encrypt.encriptar(texto));
-			try {
-				System.out.println("encriptado: " + ponente.getCodigoQR());
-				System.out.println("desencriptado: " + Encrypt.desencriptar(ponente.getCodigoQR()));
-				ponente.setImagenCodigoQR("/uploads/educacion-continua/"+ec.getId()+"/qr-participantes/"+nombreArchivo);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+		if(ponente.getId()==null) {
+			if(p!=null && ec!=null) {
+				String texto=ec.getProgramaResponsable().getCodigo()+"_"+ec.getTipoEduContinua().getId()+"_"+ec.getId()+"_"+ponente.getTipoParticipante().getId()+"_"+p.getNumeroDocumento();
+				String nombreArchivo=p.getNumeroDocumento()+".png";
+				ponente.setCodigoQR(Encrypt.encriptar(texto));
+				try {
+					System.out.println("encriptado: " + ponente.getCodigoQR());
+					System.out.println("desencriptado: " + Encrypt.desencriptar(ponente.getCodigoQR()));
+					CodigoQR.generateQR("/uploads/educacion-continua/"+ec.getId()+"/qr-participantes/"+nombreArchivo, ponente.getCodigoQR());
+					ponente.setImagenCodigoQR("/uploads/educacion-continua/"+ec.getId()+"/qr-participantes/"+nombreArchivo);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}else {
+				return new ResponseEntity<>("No se pudo procesar la solicitud",HttpStatus.BAD_REQUEST);
 			}
+		}else {
+			Ponente po=(Ponente)participanteService.findOne(ponente.getId()).get();
+			po.setTema(ponente.getTema());
+			ponente=po;
+		}
+		
 			participanteService.save(ponente);
 			return new ResponseEntity<>(HttpStatus.OK);
-		}else {
-			return new ResponseEntity<>("No se pudo procesar la solicitud",HttpStatus.BAD_REQUEST);
-		}
+		
 		
 		
 	}

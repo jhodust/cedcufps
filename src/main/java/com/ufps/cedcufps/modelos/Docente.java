@@ -32,7 +32,7 @@ public class Docente extends Persona{
 	
 	
 	@NotNull(message = "Seleccione el Departamento Académico en el que se encuentra adscrito")
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="id_departamento")
 	private Departamento departamento;
 	

@@ -15,9 +15,16 @@
       <!-- Page content -->
       <div class="page-content col-lg-9 center">
        <!-- Project cards -->
+       <nav aria-label="breadcrumb">
+		  <ol class="breadcrumb breadcrumb-links">
+		    <li class="breadcrumb-item"><a class="red-ufps-breadcrumb" th:href="@{/}">Inicio</a></li>
+		    <li class="breadcrumb-item"><a class="red-ufps-breadcrumb" th:href="@{/usuarios}">Usuarios</a></li>
+		    <li class="breadcrumb-item active" aria-current="page">Formulario</li>
+		  </ol>
+		</nav>
         <!-- Page title -->
        	<div class="contenido ml-3 mr-3 pb-2" >
-        <br>
+        
         <div class="page-title">
           <div class="row justify-content-between align-items-center">
             <div class="col-md-6 d-flex align-items-center justify-content-between justify-content-md-start mb-3 mb-md-0">
@@ -25,6 +32,13 @@
               <div class="d-inline-block">
                 <h5 class="h4 d-inline-block font-weight-400 mb-0 text-dark" ><strong>Formulario
 									Registro Usuarios</strong></h5>
+              </div>
+            </div>
+            <div th:if="${estudiante.id != null}" class="col-md-6 d-flex align-items-center justify-content-between justify-content-md-end">
+              <div class="actions actions-dark d-inline-block">
+                <a href="#" class="btn btn-sm btn-white">
+                  <i class="fas fa-user-cog mr-2"></i>Roles Usuario
+                </a>
               </div>
             </div>
             

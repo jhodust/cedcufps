@@ -54,7 +54,9 @@ $(document).ready(function ()
 					boton.disabled=false;
 				}
 			}else if(tipoContinua.val()==2){//diplomados
-				if(horas.value<90){
+				console.log("horas en diplomados if");
+				console.log(horas);
+				if(horas<90){
 					errorDuracion.innerText="El " + tipoContinua.text() + " debe tener mínimo 90 horas de duración";
 					inputDuracion.classList.add("is-invalid");
 					boton.disabled=true;

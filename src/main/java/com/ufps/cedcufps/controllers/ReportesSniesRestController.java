@@ -2,7 +2,12 @@ package com.ufps.cedcufps.controllers;
 
 import java.util.Map;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ufps.cedcufps.modelos.InformeSnies;
 import com.ufps.cedcufps.modelos.Ponente;
+import com.ufps.cedcufps.modelos.Programa;
 import com.ufps.cedcufps.services.IEducacionContinuaService;
 import com.ufps.cedcufps.services.IInformeSniesService;
 
@@ -25,12 +31,15 @@ public class ReportesSniesRestController {
 	
 	
 	@PostMapping(value = "/reportes-SNIES/generar")
-	public InformeSnies informeExcel(@RequestBody InformeSnies i) {
+	public ResponseEntity<?> informeExcel(@RequestBody @Valid InformeSnies i,BindingResult result) {
+		if(result.hasErrors()) {
+			return new ResponseEntity<>(result.getAllErrors(),HttpStatus.BAD_REQUEST);
+		}
 		educacionContinuaService.generarReporteSNIESEducacionContinua(i.getAnio());
-		i.setInformeCurso("/reportes_snies/informe_cursos_snies/"+i.getAnio()+".xlsx");
-		i.setInformeEducacionContinua("/reportes_snies/informe_educacion_continua_snies/"+i.getAnio()+".xlsx");
+		i.setInformeCurso("/reportes_snies/informe_cursos_snies_"+i.getAnio()+".xlsx");
+		i.setInformeEducacionContinua("/reportes_snies/informe_educacion_continua_snies_"+i.getAnio()+".xlsx");
 		informeSniesService.save(i);
-		return i;
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	/*CREATE EVENT test_event_02
 ON SCHEDULE AT CURRENT_TIMESTAMP + INTERVAL 1 MINUTE

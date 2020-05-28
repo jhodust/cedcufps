@@ -48,7 +48,7 @@ public class ProgramaRestController {
 	
 
 	@PostMapping(value = "/programa/save")
-	public ResponseEntity<?> guardarProgramaRest(@RequestBody @Valid Programa programa,BindingResult result,Error errores) {
+	public ResponseEntity<?> guardarProgramaRest(@RequestBody @Valid Programa programa,BindingResult result) {
 		if(result.hasErrors()) {
 			
 			return new ResponseEntity<>(result.getAllErrors(),HttpStatus.BAD_REQUEST);

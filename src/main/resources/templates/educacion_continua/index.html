@@ -16,8 +16,14 @@
       <div class="page-content col-lg-9 center">
        <!-- Project cards -->
         <!-- Page title -->
+        <nav aria-label="breadcrumb">
+		  <ol class="breadcrumb breadcrumb-links">
+		    <li class="breadcrumb-item"><a class="red-ufps-breadcrumb" th:href="@{/}">Inicio</a></li>
+		    <li class="breadcrumb-item active" aria-current="page">Educación Continua</li>
+		  </ol>
+		</nav>
        	<div class="contenido ml-3 mr-3 pb-2" >
-        <br>
+       	
         <div class="page-title">
           <div class="row justify-content-between align-items-center">
             <div class="col-md-6 d-flex align-items-center justify-content-between justify-content-md-start mb-3 mb-md-0">
@@ -33,6 +39,7 @@
           </div>
         </div>
         <hr/>
+        
         
 		<div class="row" sec:authorize="hasRole('ROLE_SUPERADMIN')">
           <div class="col-lg-3">
@@ -130,18 +137,8 @@
 								<td th:text="${#dates.format(ec.fechaInicio, 'dd-MM-yyyy')}"></td>
 								<td th:text="${#dates.format(ec.fechaFin, 'dd-MM-yyyy')}"></td>
 								<td th:text="${#dates.format(ec.fechaLimInscripcion, 'dd-MM-yyyy')}"></td>
-								<td><a class="btn btn-rojoufps rounded-circle btn-icon-only hover-scale-110" th:href="@{/educacion-continua/{id}/detalles(id=${ec.id})}" data-toggle="tooltip" data-placement="top" title="Ver Detalles">
+								<td><a class="btn btn-sm btn-rojoufps rounded-circle btn-icon-only hover-scale-110" th:href="@{/educacion-continua/{id}/detalles(id=${ec.id})}" data-toggle="tooltip" data-placement="top" title="Ver Detalles">
     								<span class="btn-inner--icon"><i class="fas fa-search-plus"></i></span></a>
-    								<a class="btn btn-rojoufps rounded-circle btn-icon-only hover-scale-110" th:href="@{/educacion-continua/{id}/registro(id=${ec.id})}" data-toggle="tooltip" data-placement="top" title="Editar">
-    								<span class="btn-inner--icon"><i class="fas fa-edit"></i></span></a>
-    								<a class="btn btn-rojoufps rounded-circle btn-icon-only hover-scale-110" th:href="@{/educacion-continua/{id}/jornadas(id=${ec.id})}" data-toggle="tooltip" data-placement="top" title="Jornadas">
-    								<span class="btn-inner--icon"><i class="far fa-calendar-alt"></i></span></a>
-    								<a class="btn btn-rojoufps rounded-circle btn-icon-only hover-scale-110"  href="#" onclick="ponentes(this)" th:data-id="${ec.id}" data-toggle="tooltip" data-placement="top" title="Ponentes">
-    								<span class="btn-inner--icon"><i class="fas fa-user-circle"></i></span></a>
-    								<a class="btn btn-rojoufps rounded-circle btn-icon-only hover-scale-110"  th:href="@{/educacion-continua/{id}/listado-participantes(id=${ec.id})}" th:data-id="${ec.id}" data-toggle="tooltip" data-placement="top" title="Listado Participantes">
-    								<span class="btn-inner--icon"><i class="fas fa-clipboard-list"></i></span></a>
-    								<a class="btn btn-rojoufps rounded-circle btn-icon-only hover-scale-110"  th:href="@{/educacion-continua/{id}/personalizar-diploma(id=${ec.id})}" th:data-id="${ec.id}" data-toggle="tooltip" data-placement="top" title="Personalizar Diploma">
-    								<span class="btn-inner--icon"><i class="fas fa-money-check"></i></span></a>
     								</td>
     							<!--  <td sec:authorize="hasRole('ROLE_DIRPROGRAMA')">Dir Programa<a class="btn btn-rojoufps rounded-circle btn-icon-only hover-scale-110" th:href="@{/educacion-continua/{id}/detalles(id=${ec.id})}" data-toggle="tooltip" data-placement="top" title="Ver Detalles">
     								<span class="btn-inner--icon"><i class="fas fa-search-plus"></i></span></a>
@@ -174,7 +171,6 @@
     
     </div>
     <div th:replace="layouts/footer :: footer"></div>
-    <div th:replace="educacion_continua/ponente/formModal :: modalRegistro"></div>
     
   </div>
   <!-- Scripts -->

@@ -1,52 +1,108 @@
-<html xmlns:th="http://www.thymeleaf.org"
-	xlmns:sec="http://www.thymeleaf.org/extras/spring-security">
-
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="layouts/layout :: head">
-<meta charset="UTF-8" />
+	<meta charset="UTF-8"/>
 </head>
-
-<body class="index-page sidebar-collapse">
-	<header th:replace="layouts/layout :: header"></header>
-	<div th:replace="layouts/layout :: encabezado"></div>
-	<div class="main main-raised">
-		<div class="section section-basic">
-			<div class="container">
-				<div class="col-md-12">
+<body>
+  <!-- Application container -->
+  <div class="container-fluid container-application">
+    <!-- Content -->
+    <div class="main-content position-relative">
+      <!-- Main nav -->
+      <div th:replace="layouts/logosHead :: logosHead"></div>
+      <nav th:replace="layouts/navbar :: navbar"></nav>
+      
+      <!-- Page content -->
+      <div class="page-content col-lg-9 center">
+       <!-- Project cards -->
+       <nav aria-label="breadcrumb">
+		  <ol class="breadcrumb breadcrumb-links">
+		    <li class="breadcrumb-item"><a class="red-ufps-breadcrumb" th:href="@{/}">Inicio</a></li>
+		    <li class="breadcrumb-item"><a class="red-ufps-breadcrumb" th:href="@{/educacion-continua}">Educaciones Continuas</a></li>
+		    <li class="breadcrumb-item" th:if="${educacionContinua.id != null}"><a class="red-ufps-breadcrumb"  th:href="@{/educacion-continua/{id}/detalles(id=${educacionContinua.id})}">Detalles</a></li>
+		    <li class="breadcrumb-item active" aria-current="page">Ponentes</li>
+		  </ol>
+		</nav>
+        <!-- Page title -->
+       	<div class="contenido ml-3 mr-3 pb-2" >
+        <br>
+        <div class="page-title">
+          <div class="row justify-content-between align-items-center">
+            <div class="col-md-6 d-flex align-items-center justify-content-between justify-content-md-start mb-3 mb-md-0">
+              <!-- Page title + Go Back button -->
+              <div class="d-inline-block">
+                <h5 class="h4 d-inline-block font-weight-400 mb-0 text-dark" ><strong>Ponentes</strong></h5>
+	              <a href="#" data-toggle="modal" data-target="#modalPonentes" class="btn btn-sm btn-white btn-icon-only rounded-circle ml-4">
+                <span class="btn-inner--icon"><i class="fas fa-plus"></i></span>
+              </a>	
+              </div>
+            </div>
+            
+          </div>
+        </div>
+        <hr/>
+        <div th:if="${#lists.size(ponentes) == 0}">
+        	<center><span class="badge badge-danger">No existen ponentes registrados(as)</span></center>
+        </div>
+		<div class="row">
+			<div class="col-lg-4 hover-scale-110" th:each="p: ${ponentes}">
+            <div class="card hover-shadow-sm-">
+            
+              <div class="card-header"> 
+                <div class="d-flex align-items-center">
+                
+                  
+                  <div class="avatar-parent-child">
+                    
+                    <img alt="Image placeholder" th:src="@{/logos/ponente.png}" class="avatar">
+                   	<div class="row ml-1">
+                    	<a href="#" onclick="editarPonente(this)" class="action-item" th:data-id="${p.id}" data-toggle="tooltip" data-placement="bottom" title="Editar">
+	                    <i class="far fa-edit"></i>
+	                  </a>
+	                  <a href="#" onclick="editarDepartamento(this)" class="action-item text-danger" th:data-id="${p.id}" data-toggle="tooltip" data-placement="bottom" title="Eliminar">
+	                    <i class="far fa-trash-alt"></i>
+	                  </a>
+	                  
+                    </div>
+                  </div>
+                  
+                  <div class="avatar-content ml-2">
+                   
 					
-
-					<h2>PONENTES</h2>
-					<h3>Educación Continua:</h3><p th:text="${educacionContinua.nombre}"></p>
-					<a class="btn btn-primary" th:href="@{/educacion-continua/{id}/ponentes/registro(id=${educacionContinua.id})}">Agregar
-						PONENTE</a>
-					<table id="myTable" class="row-border" style="width: 100%">
-						<thead>
-							<tr>
-								<th>Primer Nombre</th>
-								<th>tema</th>
-								<th>Acciones</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr th:each="p: ${educacionContinua.participantes}" th:if="${p.tipoParticipante.tipoParticipante == 'Ponente'}">
-							
-								<td th:text="${p.persona.primerNombre}"></td>
-								<td th:text="${p.tema}"></td>
-								<td><a th:href="@{/educacion-continua/{id_ec}/ponentes/registro/{id_ponente}(id_ec=${educacionContinua.id}, id_ponente=${p.id})}"
-									class="btn btn-primary btn-fab btn-round"  data-toggle="tooltip" data-placement="top" title="Editar"> <i
-										class="material-icons">edit</i>
-								</a><a th:href="@{/educacion-continua/{id_ec}/ponentes/eliminar/{id_ponente}(id_ec=${educacionContinua.id}, id_ponente=${p.id})}"
-									class="btn btn-primary btn-fab btn-round"  data-toggle="tooltip" data-placement="top" title="Eliminar"> <i
-										class="material-icons">clear</i>
-								</a></td>
-								
-							</tr>
-						</tbody>
-					</table>
-				</div>
-			</div>
+                    <strong><span class="text-sm text-muted"><i class="fas fa-info-circle"></i> Nombre</span></strong>
+                    <br>
+                    <p class="text-sm text-muted" th:text="${p.persona.primerNombre + ' ' + p.persona.segundoNombre + ' ' + p.persona.primerApellido + ' ' + p.persona.segundoApellido}"></p>
+                    <strong><span class="text-sm text-muted"><i class="fas fa-info-circle"></i> Tema</span></strong>
+                    <br>
+                    <p class="text-sm text-muted"  th:text="${p.tema}"></p>
+                    
+                  </div>
+                  
+                </div>
+              </div>
+            </div>
+          </div>
+			
 		</div>
-	</div>
-
-	<footer th:replace="layouts/layout :: footer"></footer>
+        
+        
+		</div>
+	  </div>
+    
+    </div>
+    <div th:replace="layouts/footer :: footer"></div>
+    <div th:replace="educacion_continua/ponente/formModal :: modalRegistro"></div>
+    
+  </div>
+  <!-- Scripts -->
+  <!-- Core JS - includes jquery, bootstrap, popper, in-view and sticky-kit -->
+  
+    <script th:inline="javascript">
+    var idEducacionContinua = [[${educacionContinua.id}]];
+    console.log(idEducacionContinua);
+    </script>
+  <div th:replace="layouts/layout :: scripts"></div>
+  <script th:src="@{/js/ponente.js}" type="text/javascript"></script>
 </body>
+
 </html>

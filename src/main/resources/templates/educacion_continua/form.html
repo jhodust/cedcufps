@@ -15,9 +15,16 @@
       <!-- Page content -->
       <div class="page-content col-lg-9 center">
        <!-- Project cards -->
+       <nav aria-label="breadcrumb">
+		  <ol class="breadcrumb breadcrumb-links">
+		    <li class="breadcrumb-item"><a class="red-ufps-breadcrumb" th:href="@{/}">Inicio</a></li>
+		    <li class="breadcrumb-item"><a class="red-ufps-breadcrumb" th:href="@{/educacion-continua}">Educaciones Continuas</a></li>
+		    <li class="breadcrumb-item" th:if="${educacionContinua.id != null}"><a class="red-ufps-breadcrumb"  th:href="@{/educacion-continua/{id}/detalles(id=${educacionContinua.id})}">Detalles</a></li>
+		    <li class="breadcrumb-item active" aria-current="page">Formulario</li>
+		  </ol>
+		</nav>
         <!-- Page title -->
        	<div class="contenido ml-3 mr-3 pb-2" >
-        <br>
         <div class="page-title">
           <div class="row justify-content-between align-items-center">
             <div class="col-md-6 d-flex align-items-center justify-content-between justify-content-md-start mb-3 mb-md-0">

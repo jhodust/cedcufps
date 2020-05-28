@@ -103,7 +103,7 @@ insert into programas(id,codigo,programa,id_facultad,id_director) values(3,'164'
 insert into programas(id,codigo,programa,id_facultad,id_director) values(4,'150','Arquitectura',5,31);
 insert into programas(id,codigo,programa,id_facultad,id_director) values(5,'126','Comercio Internacional',3,26);
 insert into programas(id,codigo,programa,id_facultad,id_director) values(6,'122','Contaduría Pública',3,30);
-insert into programas(id,codigo,programa,id_facultad,id_director) values(7,'180','Enfermería',4,21);
+insert into programas(id,codigo,programa,id_facultad,id_director) values(7,'180','Enfermería',4,22);
 insert into programas(id,codigo,programa,id_facultad,id_director) values(8,'134','Trabajo Social',5,25);
 
 
@@ -420,8 +420,8 @@ insert into asistentes(id_participante) values(31);
 insert into asistentes(id_participante) values(32);
 
 
-insert into informes_snies(id,anio,informe_cursos,informe_educacion_continua,informe_participante) values (1,'2020','/reportes_snies/informe_cursos_snies/2020.xlsx','/reportes_snies/informe_educacion_continua_snies/2020.xlsx',null);
-insert into informes_snies(id,anio,informe_cursos,informe_educacion_continua,informe_participante) values (2,'2019','/reportes_snies/informe_cursos_snies/2019.xlsx','/reportes_snies/informe_educacion_continua_snies/2019.xlsx',null);
+insert into informes_snies(id,anio,informe_cursos,informe_educacion_continua,informe_participante) values (1,'2020','/reportes_snies/informe_cursos_snies_2020.xlsx','/reportes_snies/informe_educacion_continua_snies_2020.xlsx',null);
+insert into informes_snies(id,anio,informe_cursos,informe_educacion_continua,informe_participante) values (2,'2019','/reportes_snies/informe_cursos_snies_2019.xlsx','/reportes_snies/informe_educacion_continua_snies_2019.xlsx',null);
 
 insert into diplomas(id,imagen_plantilla) value (1,null);
 

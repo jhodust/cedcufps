@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="layouts/layout :: head">
 	<meta charset="UTF-8"/>
 </head>
@@ -15,9 +15,16 @@
       <!-- Page content -->
       <div class="page-content col-lg-9 center">
        <!-- Project cards -->
+       <nav aria-label="breadcrumb">
+		  <ol class="breadcrumb breadcrumb-links">
+		    <li class="breadcrumb-item"><a class="red-ufps-breadcrumb" th:href="@{/}">Inicio</a></li>
+		    <li class="breadcrumb-item"><a class="red-ufps-breadcrumb" th:href="@{/educacion-continua}">Educaciones Continuas</a></li>
+		    <li class="breadcrumb-item active" aria-current="page">Detalles</li>
+		  </ol>
+		</nav>
         <!-- Page title -->
        	<div class="contenido ml-3 mr-3 pb-2" >
-        <br>
+        
         <div class="page-title">
           <div class="row justify-content-between align-items-center">
             <div class="col-md-6 d-flex align-items-center justify-content-between justify-content-md-start mb-3 mb-md-0">
@@ -30,64 +37,116 @@
             
           </div>
         </div>
+        <hr/>
+        <ul class="nav" sec:authorize="hasAnyRole('ROLE_SUPERADMIN')">
+		  <li class="nav-item">
+		    <a class="nav-link red-ufps" th:href="@{/educacion-continua/{id}/registro(id=${educacionContinua.id})}"><i class="fas fa-edit"></i> Editar</a>
+		  </li>
+		  <li class="nav-item">
+		    <a class="nav-link red-ufps" th:href="@{/educacion-continua/{id}/ponentes(id=${educacionContinua.id})}"><i class="fas fa-user-circle"></i> Ponentes</a>
+		  </li>
+		  <li class="nav-item">
+		    <a class="nav-link red-ufps" th:href="@{/educacion-continua/{id}/jornadas(id=${educacionContinua.id})}"><i class="far fa-calendar-alt"></i> Jornadas</a>
+		  </li>
+		  <li class="nav-item">
+		    <a class="nav-link red-ufps" th:href="@{/educacion-continua/{id}/listado-participantes(id=${educacionContinua.id})}"><i class="fas fa-clipboard-list"></i> Listado Participantes</a>
+		  </li>
+		  <li class="nav-item">
+		    <a class="nav-link red-ufps" th:href="@{/educacion-continua/{id}/personalizar-diploma(id=${educacionContinua.id})}"><i class="fas fa-money-check"></i> Personalizar Diploma</a>
+		  </li>
+		</ul>
+		<div class="row">
         
-        
-		<div class="card card-body p-md-5">
-          		  <div class="row">
+        <div class="col-md-12">
+        	<div class="card">
+        	<div class="card-header">
+        		<center>
+        			<h6 class="card-title mb-0">Información Evento</h6>
+        		</center>
+        	</div>
+		<div class="card-body">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="row">
 		            <div class="col-12 col-md-6">
-		              <h5>Información Evento</h5>
-	    
-		              <dl class="row mt-4 align-items-center">
-		                <dt class="col-sm-4 h6 text-sm">Tipo</dt>
-		                <dd class="col-sm-8 text-sm" th:text="${educacionContinua.tipoEduContinua.tipoEduContinua}"></dd>
-		                <dt class="col-sm-4 h6 text-sm">Nombre</dt>
-		                <dd class="col-sm-8 text-sm" th:text="${educacionContinua.nombre}"></dd>
-		                <dt class="col-sm-4 h6 text-sm">Fecha Inicio</dt>
-		                <dd class="col-sm-8 text-sm" th:text="${#dates.format(educacionContinua.fechaInicio, 'dd-MM-yyyy')}"></dd>
-		                <dt class="col-sm-4 h6 text-sm">Fecha Fin</dt>
-		                <dd class="col-sm-8 text-sm" th:text="${#dates.format(educacionContinua.fechaFin, 'dd-MM-yyyy')}"></dd>
-		                <dt class="col-sm-4 h6 text-sm">Duración(horas)</dt>
-		                <dd class="col-sm-8 text-sm" th:text="${educacionContinua.duracion}"></dd>
-		                <dt class="col-sm-4 h6 text-sm">Lugar</dt>
-		                <dd class="col-sm-8 text-sm" th:text="${educacionContinua.lugar}"></dd>
-		                <dt class="col-sm-4 h6 text-sm">Objetivo</dt>
-		                <dd class="col-sm-8 text-sm" th:text="${educacionContinua.objetivo}"></dd>
-		                <dt class="col-sm-4 h6 text-sm">Requisitos</dt>
-		                <dd class="col-sm-8 text-sm" th:text="${educacionContinua.requisitos}"></dd>
-		              </dl>
+		             
+	    			<table>
+	    				<thead>
+	    				<tr>
+	    					<td><span class="text-white badge badge-red-ufps">Información Básica</span></td>
+	    				</tr>
+	    				</thead>
+	    				<tbody>
+		    				<tr>
+		    					<td class="h6 text-sm"><strong>Tipo</strong></td>
+		    					<td class="text-sm" th:text="${educacionContinua.tipoEduContinua.tipoEduContinua}"></td>
+		    				</tr>
+		    				<tr>
+		    					<td class="h6 text-sm"><strong>Nombre</strong></td>
+		    					<td class="text-sm" th:text="${educacionContinua.nombre}"></td>
+		    				</tr>
+		    				<tr>
+		    					<td class="h6 text-sm"><strong>Fecha Inicio</strong></td>
+		    					<td class="text-sm" th:text="${#strings.capitalizeWords(#dates.format(educacionContinua.fechaInicio, 'dd MMMM yyyy'))}"></td>
+		    				</tr>
+		    				<tr>
+		    					<td class="h6 text-sm"><strong>Fecha Fin</strong></td>
+		    					<td class="text-sm" th:text="${#strings.capitalizeWords(#dates.format(educacionContinua.fechaFin, 'dd MMMM yyyy'))}"></td>
+		    				</tr>
+		    				<tr>
+		    					<td class="h6 text-sm"><strong>Duración (horas)</strong></td>
+		    					<td class="text-sm" th:text="${educacionContinua.duracion}"></td>
+		    				</tr>
+		    				<tr>
+		    					<td class="h6 text-sm"><strong>Lugar</strong></td>
+		    					<td class="text-sm" th:text="${educacionContinua.lugar}"></td>
+		    				</tr>
+		    			</tbody>
+	    			</table>
+		              
 		            </div>
-		            <div class="col-12 col-md-6">
-		              <h5>Imagen</h5>
-		              <a th:href="@{${educacionContinua.imagen}}" data-fancybox data-caption="My caption">
-						 <img th:src="@{${educacionContinua.imagen}}" class="w-50 img-fluid rounded">
-					  </a>
+		            <div class="col-md-6">
+		            	<table>
+		            		<thead><tr><td><span class="text-white badge badge-red-ufps">Imagen</span></td></tr></thead>
+		            		<tbody>
+		            		<tr><td>
+				              <a th:href="@{${educacionContinua.imagen}}" data-fancybox data-caption="My caption">
+								 <img th:src="@{${educacionContinua.imagen}}" class="w-50 img-fluid rounded">
+							  </a>
+							  </td></tr></tbody>
+		            	</table>
+		              	
 		            </div>
 		          </div>
+		          <br>
 		          <div class="row">
 		            <div class="col-12 col-md-6">
-		              <h5>Información Participantes</h5>
-	    
-		              <dl class="row mt-4 align-items-center">
-		                <dt class="col-sm-4 h6 text-sm">Fecha Límite Inscripción</dt>
-		                <dd class="col-sm-8 text-sm" th:text="${#dates.format(educacionContinua.fechaLimInscripcion, 'dd-MM-yyyy')}"></dd>
-		                <dt class="col-sm-4 h6 text-sm">Costo</dt>
-		                <dd class="col-sm-8 text-sm" th:text="${educacionContinua.costo}"></dd>
-		                <dt class="col-sm-4 h6 text-sm">Cantidad Máxima Participantes</dt>
-		                <dd class="col-sm-8 text-sm" th:text="${educacionContinua.cantMaxParticipantes}"></dd>
-		                <dt class="col-sm-4 h6 text-sm">Cantidad Participantes Inscritos</dt>
-		                <dd class="col-sm-8 text-sm">New York</dd>
-		              </dl>
-		            </div>
-		            <div class="col-12 col-md-6">
-		              <h5>Información Adicional</h5>
-		              <dl class="row mt-4 align-items-center">
-		              
-		                <dt class="col-sm-3 h6 text-sm">Contenido General</dt>
-		                <dd class="col-sm-9 text-sm" th:text="${educacionContinua.contenidoGeneral}"></dd>
-		                <dt class="col-sm-3 h6 text-sm">Resumen</dt>
-		                <dd class="col-sm-9 text-sm" th:text="${educacionContinua.resumen}"></dd>
-		              </dl>
-		              <div th:if="${participante == null}">
+		            	<table>
+		    				<thead>
+		    				<tr>
+		    					<td><span class="text-white badge badge-red-ufps">Información Participantes</span></td>
+		    				</tr>
+		    				</thead>
+		    				<tbody>
+			    				<tr>
+			    					<td class="h6 text-sm"><strong>Fecha Límite Inscripción</strong></td>
+			    					<td class="text-sm" th:text="${#strings.capitalizeWords(#dates.format(educacionContinua.fechaLimInscripcion, 'dd MMMM yyyy'))}"></td>
+			    				</tr>
+			    				<tr>
+			    					<td class="h6 text-sm"><strong>Costo</strong></td>
+			    					<td class="text-sm" th:text="${educacionContinua.costo}"></td>
+			    				</tr>
+			    				<tr>
+			    					<td class="h6 text-sm"><strong>Cantidad (Máx) Participantes</strong></td>
+			    					<td class="text-sm" th:text="${educacionContinua.cantMaxParticipantes}"></td>
+			    				</tr>
+			    				<tr>
+			    					<td class="h6 text-sm"><strong>Participantes Inscritos</strong></td>
+			    					<td class="text-sm">New York</td>
+			    				</tr>
+			    			</tbody>
+		    			</table>
+		            	<div th:if="${participante == null}">
 						<a href="#" onclick="realizarInscripcion()" 
 									class="btn btn-primary btn-sm" id="btn_inscripcion">INSCRIBETE!
 								</a>
@@ -102,11 +161,48 @@
 						<div th:if="${participante != null and participante.tipoParticipante.tipoParticipante == 'Ponente'}">
 							<span class="badge badge-dark">Te encuentras inscrito(a) como 'PONENTE'</span>
 						</div>
+		              
+		            </div>
+		            <div class="col-12 col-md-6">
+		            	<table>
+		    				<thead>
+		    				<tr>
+		    					<td><span class="text-white badge badge-red-ufps">Información Adicional</span></td>
+		    				</tr>
+		    				</thead>
+		    				<tbody>
+			    				<tr>
+			    					<td class="h6 text-sm"><strong>Requisitos</strong></td>
+			    					<td class="text-sm" th:text="${educacionContinua.requisitos}"></td>
+			    				</tr>
+			    				<tr>
+			    					<td class="h6 text-sm"><strong>Contenido General</strong></td>
+			    					<td class="text-sm" th:text="${educacionContinua.contenidoGeneral}"></td>
+			    				</tr>
+			    				<tr>
+			    					<td class="h6 text-sm"><strong>Objetivos</strong></td>
+			    					<td class="text-sm" th:text="${educacionContinua.objetivo}"></td>
+			    				</tr>
+			    				<tr>
+			    					<td class="h6 text-sm"><strong>Resumen</strong></td>
+			    					<td class="text-sm" th:text="${educacionContinua.resumen}"></td>
+			    				</tr>
+			    			</tbody>
+		    			</table>
+		              
+		              
 						
 		            </div>
 		          </div>
+				</div>
+			</div>
+		
+          		  
 		        </div>
-        
+		        </div>
+		        </div>
+		        
+        	</div>
         
 		</div>
 	  </div>

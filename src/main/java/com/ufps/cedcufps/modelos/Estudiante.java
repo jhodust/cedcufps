@@ -27,7 +27,7 @@ public class Estudiante extends Persona{
 	private String codigo;
 
 	@NotNull(message = "Seleccione el Programa Académico en el que se encuentra matriculado")
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="id_programa")
 	private Programa programa;
 	

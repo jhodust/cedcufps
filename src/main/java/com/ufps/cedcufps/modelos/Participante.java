@@ -46,13 +46,13 @@ public class Participante implements Serializable{
 	
 	//*****************************************revisar asociacion**************
 	@NotNull(message="El campo ponente es requerido")
-	@OneToOne(fetch = FetchType.LAZY)
+	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="id_persona")
 	private Persona persona;
 	
 	
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="id_tipo_participante")
 	private TipoParticipante tipoParticipante;
 	

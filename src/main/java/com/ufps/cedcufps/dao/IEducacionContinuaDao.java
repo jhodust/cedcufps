@@ -2,8 +2,12 @@ package com.ufps.cedcufps.dao;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+
+import com.ufps.cedcufps.modelos.Departamento;
 import com.ufps.cedcufps.modelos.EducacionContinua;
 import com.ufps.cedcufps.modelos.Participante;
 
@@ -21,8 +25,12 @@ public interface IEducacionContinuaDao extends CrudRepository<EducacionContinua,
 	@Query("select count(e) from EducacionContinua e where e.tipoEduContinua.id = '3' or e.tipoEduContinua.id = '5' or e.tipoEduContinua.id = '6'")
 	public int cantidadSeminariosCongresosSimposios();
 	
-	@Query(value= "SELECT * FROM educacion_continua ec ORDER BY ec.fecha_inicio DESC ", nativeQuery = true)
-	public List<EducacionContinua> educacionContinuaReciente();
+	@Query(value= "SELECT * FROM educacion_continua ec where ec.estado='Activo' ORDER BY ec.fecha_inicio DESC LIMIT 5",nativeQuery = true)
+	public List<EducacionContinua> educacionesContinuasRecientes();
+	
+	@Query(value= "SELECT ec from EducacionContinua ec where ec.estado!='Terminado' ORDER BY ec.fechaInicio DESC")
+	public Page<EducacionContinua> educacionesContinuasPanel(Pageable pageable);
+	
 	
 	@Query("select e from EducacionContinua e where e.tipoEduContinua.id = ?1 or e.programaResponsable.id = ?2 order by e.consecutivo ASC")
 	public List<EducacionContinua> educacionContinuasByTipoAndPrograma(Long idTipo, Long idPrograma);

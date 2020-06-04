@@ -4,11 +4,14 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ufps.cedcufps.modelos.ClasificacionCine;
 import com.ufps.cedcufps.modelos.Diploma;
 import com.ufps.cedcufps.modelos.EducacionContinua;
+import com.ufps.cedcufps.modelos.Jornada;
 import com.ufps.cedcufps.modelos.Participante;
 import com.ufps.cedcufps.modelos.TipoBeneficiario;
 import com.ufps.cedcufps.modelos.TipoEducacionContinua;
@@ -18,6 +21,8 @@ public interface IEducacionContinuaService {
 	public List<EducacionContinua> findAll();
 	
 	public List<EducacionContinua> educacionContinuaRecientes();
+	
+	public Page<EducacionContinua> educacionContinuaNoTerminadas(Pageable pageable);
 	
 	public void save(EducacionContinua ec);
 	
@@ -50,4 +55,6 @@ public interface IEducacionContinuaService {
 	public List<EducacionContinua> findAllEducacionContinuaACargoDirector(String numDocumento, Long idProgramaDirector);
 	
 	public Diploma generarDiploma(Long idEduContinua);
+	
+	public List<Jornada> findJornadasByEducacionContinua(Long idEduContinua);
 }

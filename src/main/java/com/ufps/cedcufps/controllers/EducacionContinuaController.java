@@ -36,8 +36,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ufps.cedcufps.modelos.Docente;
 import com.ufps.cedcufps.modelos.EducacionContinua;
+import com.ufps.cedcufps.modelos.Jornada;
+import com.ufps.cedcufps.modelos.Participante;
 import com.ufps.cedcufps.modelos.Persona;
 import com.ufps.cedcufps.modelos.Rol;
+import com.ufps.cedcufps.services.IAsistenciaService;
 import com.ufps.cedcufps.services.IDiplomaService;
 import com.ufps.cedcufps.services.IEducacionContinuaService;
 import com.ufps.cedcufps.services.IParticipanteService;
@@ -64,6 +67,9 @@ public class EducacionContinuaController {
 	
 	@Autowired
 	private IDiplomaService diplomaService;
+	
+	@Autowired
+	private IAsistenciaService asistenciaService;
 	
 	@RequestMapping(value = "/educacion-continua")
 	public String listar(Model model, Authentication auth) {
@@ -241,6 +247,19 @@ public class EducacionContinuaController {
 		return "educacion_continua/detalles";
 	}
 	
+	@RequestMapping(value = "/preinscripcion/{nombre}")
+	public String preinscripcionEducacionContinua(@PathVariable(value = "nombre") String nombreEvento, Map<String, Object> model) {
+		EducacionContinua ec= educacionContinuaService.findOneByNombre(nombreEvento);
+		model.put("titulo","DETALLES EDUCACIÓN CONTINUA");
+		model.put("educacionContinua",ec);
+		try {
+		model.put("participante",participanteService.findByIdEducacionContinuaAndIdPersona(ec.getId(),personaService.findPersonaLogueada().getId()));
+		}catch(Exception e) {
+			model.put("participante",null);
+		}
+		return "preinscripcion";
+	}
+	
 	@RequestMapping(value = "/educacion-continua/{id}/listado-participantes")
 	public String listadoParticipantes(@PathVariable(value = "id") Long id, Map<String, Object> model, Authentication auth, RedirectAttributes redirectAttributes) {
 		EducacionContinua e=educacionContinuaService.findOne(id).get();
@@ -259,7 +278,11 @@ public class EducacionContinuaController {
 			}
 			
 		}
+		List<Jornada> jornadas=educacionContinuaService.findJornadasByEducacionContinua(id);
 		model.put("educacionContinua",e);
+		model.put("jornadas",jornadas);
+		model.put("asistencias",asistenciaService.findAsistenciasByJornadas(jornadas));
+		model.put("asistenciaGlobal",asistenciaService.countAsistenciasByJornadas(id));
 		model.put("participantes",participanteService.findAllParticipantesByEducacionContinua(id));
 		return "educacion_continua/listadoParticipantes";
 	}

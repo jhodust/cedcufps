@@ -29,6 +29,7 @@ import com.ufps.cedcufps.modelos.Participante;
 import com.ufps.cedcufps.modelos.Persona;
 import com.ufps.cedcufps.modelos.Ponente;
 import com.ufps.cedcufps.modelos.Programa;
+import com.ufps.cedcufps.modelos.TipoParticipante;
 import com.ufps.cedcufps.services.IEducacionContinuaService;
 import com.ufps.cedcufps.services.IParticipanteService;
 import com.ufps.cedcufps.services.IPersonaService;
@@ -68,16 +69,21 @@ public class PonenteRestController {
 		}
 		Persona p=personaService.findOne(ponente.getPersona().getId()).get();
 		EducacionContinua ec=educacionContinuaService.findOne(ponente.getEducacionContinua().getId()).get();
+		TipoParticipante tp=participanteService.findTipoParticipanteById(ponente.getTipoParticipante().getId());
 		/*preparando qr de inscripcion*/
 		if(ponente.getId()==null) {
 			if(p!=null && ec!=null) {
+				ponente.setPersona(p);
+				ponente.setEducacionContinua(ec);
+				ponente.setTipoParticipante(tp);
+				
 				String texto=ec.getProgramaResponsable().getCodigo()+"_"+ec.getTipoEduContinua().getId()+"_"+ec.getId()+"_"+ponente.getTipoParticipante().getId()+"_"+p.getNumeroDocumento();
 				String nombreArchivo=p.getNumeroDocumento()+".png";
 				ponente.setCodigoQR(Encrypt.encriptar(texto));
 				try {
 					System.out.println("encriptado: " + ponente.getCodigoQR());
 					System.out.println("desencriptado: " + Encrypt.desencriptar(ponente.getCodigoQR()));
-					CodigoQR.generateQR("/uploads/educacion-continua/"+ec.getId()+"/qr-participantes/"+nombreArchivo, ponente.getCodigoQR());
+					CodigoQR.generateQR("uploads/educacion-continua/"+ec.getId()+"/qr-participantes/"+nombreArchivo, ponente.getCodigoQR());
 					ponente.setImagenCodigoQR("/uploads/educacion-continua/"+ec.getId()+"/qr-participantes/"+nombreArchivo);
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
@@ -93,7 +99,7 @@ public class PonenteRestController {
 		}
 		
 			participanteService.save(ponente);
-			return new ResponseEntity<>(HttpStatus.OK);
+			return new ResponseEntity<>(ponente,HttpStatus.OK);
 		
 		
 		

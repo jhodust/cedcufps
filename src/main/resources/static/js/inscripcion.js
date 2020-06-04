@@ -63,6 +63,7 @@ function realizarInscripcion(){
 }
 
 function creacionTarjetaInscripcion(p){
+	console.log(p);
 	var educacionContinua = p.educacionContinua.nombre;
     var primerNombre = p.persona.primerNombre;
     var segundoNombre = p.persona.segundoNombre;
@@ -202,6 +203,7 @@ function creacionTarjetaInscripcion(p){
 }
 
 function guardarTarjeta(imagen,idParticipante){
+	console.log("entra a guardar tarjeta");
 	var formData = new FormData();
 	var newFile = new File([imagen], 'tarjeta.jpg', {type: 'image/jpg'});
 	formData.append('file', newFile);
@@ -216,10 +218,14 @@ function guardarTarjeta(imagen,idParticipante){
         contentType: false,
         cache: false,
         success: function (res) {
-            toastr.success('Se ha realizado la inscripción con éxito', 'Excelente!');
-            var enlace = document.getElementById("btn_inscripcion");
-            enlace.innerHTML ="CANCELAR INSCRIPCIÓN!";
-            enlace.setAttribute( "onclick","cancelarInscripcion()");
+        	var enlace = document.getElementById("btn_inscripcion");
+        	if(enlace!=null){
+        		toastr.success('Se ha realizado la inscripción con éxito', 'Excelente!');
+                
+                enlace.innerHTML ="CANCELAR INSCRIPCIÓN!";
+                enlace.setAttribute( "onclick","cancelarInscripcion()");
+        	}
+            
         },
         error: function (err) {
             console.error(err);

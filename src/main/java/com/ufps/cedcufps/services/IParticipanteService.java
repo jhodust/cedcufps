@@ -32,4 +32,6 @@ public interface IParticipanteService {
 	public List<Participante> findAllParticipacionesActivasByParticipante(String numDocumento);
 	
 	public List<Participante> findAllParticipantesByEducacionContinua(Long idEduContinua);
+	
+	public TipoParticipante findTipoParticipanteById(Long id);
 }

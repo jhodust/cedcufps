@@ -40,8 +40,12 @@ function guardarPonente(){
 		url: "/educacion-continua/ponente/save",
 		cache: false,
 		success: function(result) {
-			toastr.success('Se ha guardado la información del ponente', 'Excelente!')
-			window.setTimeout(function(){location.reload()},1000);
+			console.log(result);
+			if(result.tarjetaInscripcion==null){
+				creacionTarjetaInscripcion(result);
+			}
+			toastr.success('Se ha guardado el ponente', 'Excelente!');
+			//window.setTimeout(function(){location.reload()},1000);
 			//actualizarConsultaPonentes();
 			console.log("el metodo guardarPonente deja idEDuContinua en: " +idEducacionContinua);
 		},

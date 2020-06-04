@@ -23,6 +23,7 @@ public class CodigoQR {
 	
 	
 	public static File generateQR(String filename, String text) throws Exception {
+		System.out.println("filename para generador qr " + "src//main//resources//static//"+filename);
 		File file=Paths.get("src//main//resources//static//"+filename).toFile();
 		
 		int h=300;

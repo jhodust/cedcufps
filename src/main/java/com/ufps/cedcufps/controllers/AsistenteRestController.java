@@ -63,7 +63,7 @@ public class AsistenteRestController {
 		System.out.println("texto original: " + texto);
 		texto=Encrypt.encriptar(texto);
 		try {
-			CodigoQR.generateQR("src//main//resources//static//uploads//educacion-continua//"+ec.getId()+"//qr-participantes//"+nombreArchivo, texto);
+			CodigoQR.generateQR("uploads/educacion-continua/"+ec.getId()+"/qr-participantes/"+nombreArchivo, texto);
 			System.out.println("encriptado: " + texto);
 			System.out.println("desencriptado: " + Encrypt.desencriptar(texto));
 			a.setImagenCodigoQR("/uploads/educacion-continua/"+ec.getId()+"/qr-participantes/"+nombreArchivo);

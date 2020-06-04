@@ -1,34 +1,34 @@
-insert into generos(id,genero) values(1,'Masculino');
-insert into generos(id,genero) values(2,'Femenino');
-insert into estados_civiles(id,estado_civil) values(1,'Soltero(a)');
-insert into estados_civiles(id,estado_civil) values(2,'Casado(a)');
-insert into estados_civiles(id,estado_civil) values(3,'Divorciado(a)');
-insert into estados_civiles(id,estado_civil) values(4,'Viudo(a)');
-insert into estados_civiles(id,estado_civil) values(5,'Unión Libre');
-insert into estados_civiles(id,estado_civil) values(6,'Religioso(a)');
-insert into estados_civiles(id,estado_civil) values(8,'Separado(a)');
-insert into facultades(id,facultad) values(1,'Ciencias Agrarias y del Ambiente');
-insert into facultades(id,facultad) values(2,'Ciencias Básicas');
-insert into facultades(id,facultad) values(3,'Ciencias Empresariales');
-insert into facultades(id,facultad) values(4,'Ciencias de la Salud');
-insert into facultades(id,facultad) values(5,'Educación, Artes y Humanidades');
-insert into facultades(id,facultad) values(6,'Ingeniería');
-insert into departamentos(id,departamento,id_facultad) values(1,'Sistemas e Informática',6);
-insert into departamentos(id,departamento,id_facultad) values(2,'Pedagogía, Andragogía, Comunicación y Multimedios',5);
-insert into departamentos(id,departamento,id_facultad) values(3,'Humanidades, Sociales e Idiomas',5);
-insert into departamentos(id,departamento,id_facultad) values(4,'Atención Clínica y Rehabilitación',4);
-insert into departamentos(id,departamento,id_facultad) values(5,'Promoción, Protección',4);
-insert into departamentos(id,departamento,id_facultad) values(6,'Fluidos y Térmicas',6);
-insert into departamentos(id,departamento,id_facultad) values(7,'Construcciones Civiles',6);
-insert into departamentos(id,departamento,id_facultad) values(8,'Matemáticas y Estadística',2);
-insert into departamentos(id,departamento,id_facultad) values(9,'Física',2);
-insert into departamentos(id,departamento,id_facultad) values(10,'Biología',2);
-insert into departamentos(id,departamento,id_facultad) values(11,'Química',2);
-insert into departamentos(id,departamento,id_facultad) values(12,'Electricidad y Electrónica',6);
-insert into departamentos(id,departamento,id_facultad) values(13,'Medio Ambiente y Planes de Estudio de Ing. ambiental e Ing. Agroindustrial',1);
-insert into departamentos(id,departamento,id_facultad) values(14,'Ciencias Agrícolas y Pecuarias y Programa Ing. Pecuaria',1);
-insert into departamentos(id,departamento,id_facultad) values(15,'Ciencias Contables y Programa de Contaduría Pública',3);
-insert into departamentos(id,departamento,id_facultad) values(16,'Ciencias Administrativas y Plan de Estudios de Administración de Empresas',3);
+insert into generos(id,genero) values (1,'Masculino');
+insert into generos(id,genero) values (2,'Femenino');
+insert into estados_civiles(id,estado_civil) values (1,'Soltero(a)');
+insert into estados_civiles(id,estado_civil) values (2,'Casado(a)');
+insert into estados_civiles(id,estado_civil) values (3,'Divorciado(a)');
+insert into estados_civiles(id,estado_civil) values (4,'Viudo(a)');
+insert into estados_civiles(id,estado_civil) values (5,'Unión Libre');
+insert into estados_civiles(id,estado_civil) values (6,'Religioso(a)');
+insert into estados_civiles(id,estado_civil) values (8,'Separado(a)');
+insert into facultades(id,facultad) values (1,'Ciencias Agrarias y del Ambiente');
+insert into facultades(id,facultad) values (2,'Ciencias Básicas');
+insert into facultades(id,facultad) values (3,'Ciencias Empresariales');
+insert into facultades(id,facultad) values (4,'Ciencias de la Salud');
+insert into facultades(id,facultad) values (5,'Educación, Artes y Humanidades');
+insert into facultades(id,facultad) values (6,'Ingeniería');
+insert into departamentos(id,departamento,id_facultad) values (1,'Sistemas e Informática',6);
+insert into departamentos(id,departamento,id_facultad) values (2,'Pedagogía, Andragogía, Comunicación y Multimedios',5);
+insert into departamentos(id,departamento,id_facultad) values (3,'Humanidades, Sociales e Idiomas',5);
+insert into departamentos(id,departamento,id_facultad) values (4,'Atención Clínica y Rehabilitación',4);
+insert into departamentos(id,departamento,id_facultad) values (5,'Promoción, Protección',4);
+insert into departamentos(id,departamento,id_facultad) values (6,'Fluidos y Térmicas',6);
+insert into departamentos(id,departamento,id_facultad) values (7,'Construcciones Civiles',6);
+insert into departamentos(id,departamento,id_facultad) values (8,'Matemáticas y Estadística',2);
+insert into departamentos(id,departamento,id_facultad) values (9,'Física',2);
+insert into departamentos(id,departamento,id_facultad) values (10,'Biología',2);
+insert into departamentos(id,departamento,id_facultad) values (11,'Química',2);
+insert into departamentos(id,departamento,id_facultad) values (12,'Electricidad y Electrónica',6);
+insert into departamentos(id,departamento,id_facultad) values (13,'Medio Ambiente y Planes de Estudio de Ing. ambiental e Ing. Agroindustrial',1);
+insert into departamentos(id,departamento,id_facultad) values (14,'Ciencias Agrícolas y Pecuarias y Programa Ing. Pecuaria',1);
+insert into departamentos(id,departamento,id_facultad) values (15,'Ciencias Contables y Programa de Contaduría Pública',3);
+insert into departamentos(id,departamento,id_facultad) values (16,'Ciencias Administrativas y Plan de Estudios de Administración de Empresas',3);
 
 insert into tipos_documento(id,tipo_documento,descripcion) values(1,'CC','Cedula Ciudadania');
 insert into tipos_documento(id,tipo_documento,descripcion) values(2,'DE','Documento de Identidad Extranjera');
@@ -287,23 +287,20 @@ insert into tipos_educacion_continua(id,tipo_educacion_continua) values(4,'Talle
 insert into tipos_educacion_continua(id,tipo_educacion_continua) values(5,'Seminario');
 insert into tipos_educacion_continua(id,tipo_educacion_continua) values(6,'Congreso');
 
-insert into educacion_continua(id,nombre,fecha_inicio,fecha_fin,fecha_lim_inscripcion,contenido_general,cant_max_participantes,resumen,costo,duracion,id_tipo_educacion_continua,imagen,id_docente,id_programa,consecutivo,id_clasificacion_cine,id_tipo_beneficiario,lugar) values(1,'CIINATIC','2020-01-10','2020-01-15','2020-01-08','contenido generalll CIINATIC',10,'BBBBB',30000,26,6,'/uploads/educacion-continua/1/portada.jpg',21,1,'001',711,1,'Auditorio Biblioteca');
-insert into educacion_continua(id,nombre,fecha_inicio,fecha_fin,fecha_lim_inscripcion,contenido_general,cant_max_participantes,resumen,costo,duracion,id_tipo_educacion_continua,imagen,id_docente,id_programa,consecutivo,id_clasificacion_cine,id_tipo_beneficiario,lugar) values(2,'EISI','2020-02-14','2020-02-17','2020-02-14','contenido generalll EISI',100,'aaaa',52000,40,4,'/uploads/educacion-continua/2/portada.jpg',27,8,'002',711,2,'Auditorio Eustorgio Colmenares Batista');
-insert into educacion_continua(id,nombre,fecha_inicio,fecha_fin,fecha_lim_inscripcion,contenido_general,cant_max_participantes,resumen,costo,duracion,id_tipo_educacion_continua,imagen,id_docente,id_programa,consecutivo,id_clasificacion_cine,id_tipo_beneficiario,lugar) values(3,'SEMINARIO VIII ENCUENTRO SEMILLERO Y PROYECTO AULA','2020-02-25','2020-02-29','2020-02-24','contenido generalll de la bienal',10,'jdihsig',20000,35,1,'/uploads/educacion-continua/3/portada.png',29,3,'001',541,1,'Auditorio Postgrados');
-insert into educacion_continua(id,nombre,fecha_inicio,fecha_fin,fecha_lim_inscripcion,contenido_general,cant_max_participantes,resumen,costo,duracion,id_tipo_educacion_continua,imagen,id_docente,id_programa,consecutivo,id_clasificacion_cine,id_tipo_beneficiario,lugar) values(4,'EISI2','2020-03-05','2020-03-10','2020-03-07','contenido generalll del eisi2',10,'indgisng',34800,20,2,'/uploads/educacion-continua/4/portada.jpg',30,6,'001',1021,3,'Auditorio Jorge Luis Acero Jordán');
-insert into educacion_continua(id,nombre,fecha_inicio,fecha_fin,fecha_lim_inscripcion,contenido_general,cant_max_participantes,resumen,costo,duracion,id_tipo_educacion_continua,imagen,id_docente,id_programa,consecutivo,id_clasificacion_cine,id_tipo_beneficiario,lugar) values(5,'COMO INVESTIGAR CON DATOS ABIERTOS? GENERANDO CONOCIMIENTO CON DATOS ABIERTOS EN DIFERENTES PAGINAS','2020-04-20','2020-04-20','2020-04-18','contenido generalll de la bienal2',10,'nsiengtisent',78647,25,3,'/uploads/educacion-continua/5/portada.jpg',21,4,'001',521,1,'Hotel Casino Internacional');
-insert into educacion_continua(id,nombre,fecha_inicio,fecha_fin,fecha_lim_inscripcion,contenido_general,cant_max_participantes,resumen,costo,duracion,id_tipo_educacion_continua,imagen,id_docente,id_programa,consecutivo,id_clasificacion_cine,id_tipo_beneficiario,lugar) values(6,'CIINATIC3','2020-05-12','2020-05-14','2020-05-13','contenido generalll del ciinatic3',10,'isjign',640000,40,5,'/uploads/educacion-continua/6/portada.jpg',22,2,'001',711,5,'Auditorio Eustorgio Colmenares Batista');
-insert into educacion_continua(id,nombre,fecha_inicio,fecha_fin,fecha_lim_inscripcion,contenido_general,cant_max_participantes,resumen,costo,duracion,id_tipo_educacion_continua,imagen,id_docente,id_programa,consecutivo,id_clasificacion_cine,id_tipo_beneficiario,lugar) values(7,'RALLY MATEMATICO','2020-06-25','2020-06-25','2020-06-22','contenido generalll del rally',10,'sjdisjgi',25500,60,6,'/uploads/educacion-continua/7/portada.jpg',23,1,'002',923,3,'Auditorio Biblioteca');
-insert into educacion_continua(id,nombre,fecha_inicio,fecha_fin,fecha_lim_inscripcion,contenido_general,cant_max_participantes,resumen,costo,duracion,id_tipo_educacion_continua,imagen,id_docente,id_programa,consecutivo,id_clasificacion_cine,id_tipo_beneficiario,lugar) values(8,'II Ingeniería Civil','2020-07-10','2020-07-13','2020-07-09','contenido generalll del congreso de civil',10,'sjgisigj',100000,70,1,'/uploads/educacion-continua/8/portada.jpg',32,5,'002',412,4,'Hotel Bolivar Salon Principal');
-insert into educacion_continua(id,nombre,fecha_inicio,fecha_fin,fecha_lim_inscripcion,contenido_general,cant_max_participantes,resumen,costo,duracion,id_tipo_educacion_continua,imagen,id_docente,id_programa,consecutivo,id_clasificacion_cine,id_tipo_beneficiario,lugar) values(9,'Encuentro Internacional','2020-07-25','2020-07-30','2020-07-20','contenido generalll de ciencias aplicadas',10,'ijdsgijs',67800,10,2,'/uploads/educacion-continua/9/portada.jpg',31,6,'002',711,5,'Auditorio J.J Maldonado 4 Piso SA');
-insert into educacion_continua(id,nombre,fecha_inicio,fecha_fin,fecha_lim_inscripcion,contenido_general,cant_max_participantes,resumen,costo,duracion,id_tipo_educacion_continua,imagen,id_docente,id_programa,consecutivo,id_clasificacion_cine,id_tipo_beneficiario,lugar) values(10,'Bienal3','2020-08-18','2020-08-21','2020-08-16','contenido generalll de la bienal3',10,'ijdisjg',34500,36,3,'/uploads/educacion-continua/10/portada.jpg',21,8,'003',417,3,'Auditorio Eustorgio Colmenares Batista');
+insert into educacion_continua(id,nombre,fecha_inicio,fecha_fin,fecha_lim_inscripcion,contenido_general,cant_max_participantes,resumen,costo,duracion,id_tipo_educacion_continua,imagen,id_docente,id_programa,consecutivo,id_clasificacion_cine,id_tipo_beneficiario,lugar,estado) values(1,'CIINATIC','2020-01-10','2020-01-15','2020-01-08','contenido generalll CIINATIC',10,'BBBBB',30000,26,6,'/uploads/educacion-continua/1/portada.jpg',21,1,'001',711,1,'Auditorio Biblioteca','Activo');
+insert into educacion_continua(id,nombre,fecha_inicio,fecha_fin,fecha_lim_inscripcion,contenido_general,cant_max_participantes,resumen,costo,duracion,id_tipo_educacion_continua,imagen,id_docente,id_programa,consecutivo,id_clasificacion_cine,id_tipo_beneficiario,lugar,estado) values(2,'EISI','2020-05-30','2020-06-10','2020-05-29','contenido generalll EISI',100,'aaaa',52000,40,4,'/uploads/educacion-continua/2/portada.jpg',27,8,'002',711,2,'Auditorio Eustorgio Colmenares Batista','Activo');
+insert into educacion_continua(id,nombre,fecha_inicio,fecha_fin,fecha_lim_inscripcion,contenido_general,cant_max_participantes,resumen,costo,duracion,id_tipo_educacion_continua,imagen,id_docente,id_programa,consecutivo,id_clasificacion_cine,id_tipo_beneficiario,lugar,estado) values(3,'SEMINARIO VIII ENCUENTRO SEMILLERO Y PROYECTO AULA','2020-02-25','2020-02-29','2020-02-24','contenido generalll de la bienal',10,'jdihsig',20000,35,1,'/uploads/educacion-continua/3/portada.png',29,3,'001',541,1,'Auditorio Postgrados','Activo');
+insert into educacion_continua(id,nombre,fecha_inicio,fecha_fin,fecha_lim_inscripcion,contenido_general,cant_max_participantes,resumen,costo,duracion,id_tipo_educacion_continua,imagen,id_docente,id_programa,consecutivo,id_clasificacion_cine,id_tipo_beneficiario,lugar,estado) values(4,'EISI2','2020-03-05','2020-03-10','2020-03-07','contenido generalll del eisi2',10,'indgisng',34800,20,2,'/uploads/educacion-continua/4/portada.jpg',30,6,'001',1021,3,'Auditorio Jorge Luis Acero Jordán','Activo');
+insert into educacion_continua(id,nombre,fecha_inicio,fecha_fin,fecha_lim_inscripcion,contenido_general,cant_max_participantes,resumen,costo,duracion,id_tipo_educacion_continua,imagen,id_docente,id_programa,consecutivo,id_clasificacion_cine,id_tipo_beneficiario,lugar,estado) values(5,'COMO INVESTIGAR CON DATOS ABIERTOS? GENERANDO CONOCIMIENTO CON DATOS ABIERTOS EN DIFERENTES PAGINAS','2020-04-20','2020-04-20','2020-04-18','contenido generalll de la bienal2',10,'nsiengtisent',78647,25,3,'/uploads/educacion-continua/5/portada.jpg',21,4,'001',521,1,'Hotel Casino Internacional','Activo');
+insert into educacion_continua(id,nombre,fecha_inicio,fecha_fin,fecha_lim_inscripcion,contenido_general,cant_max_participantes,resumen,costo,duracion,id_tipo_educacion_continua,imagen,id_docente,id_programa,consecutivo,id_clasificacion_cine,id_tipo_beneficiario,lugar,estado) values(6,'CIINATIC3','2020-05-12','2020-05-14','2020-05-13','contenido generalll del ciinatic3',10,'isjign',640000,40,5,'/uploads/educacion-continua/6/portada.jpg',22,2,'001',711,5,'Auditorio Eustorgio Colmenares Batista','Activo');
+insert into educacion_continua(id,nombre,fecha_inicio,fecha_fin,fecha_lim_inscripcion,contenido_general,cant_max_participantes,resumen,costo,duracion,id_tipo_educacion_continua,imagen,id_docente,id_programa,consecutivo,id_clasificacion_cine,id_tipo_beneficiario,lugar,estado) values(7,'RALLY MATEMATICO','2020-06-25','2020-06-25','2020-06-22','contenido generalll del rally',10,'sjdisjgi',25500,60,6,'/uploads/educacion-continua/7/portada.jpg',23,1,'002',923,3,'Auditorio Biblioteca','Activo');
+insert into educacion_continua(id,nombre,fecha_inicio,fecha_fin,fecha_lim_inscripcion,contenido_general,cant_max_participantes,resumen,costo,duracion,id_tipo_educacion_continua,imagen,id_docente,id_programa,consecutivo,id_clasificacion_cine,id_tipo_beneficiario,lugar,estado) values(8,'II Ingeniería Civil','2020-07-10','2020-07-13','2020-07-09','contenido generalll del congreso de civil',10,'sjgisigj',100000,70,1,'/uploads/educacion-continua/8/portada.jpg',32,5,'002',412,4,'Hotel Bolivar Salon Principal','Activo');
+insert into educacion_continua(id,nombre,fecha_inicio,fecha_fin,fecha_lim_inscripcion,contenido_general,cant_max_participantes,resumen,costo,duracion,id_tipo_educacion_continua,imagen,id_docente,id_programa,consecutivo,id_clasificacion_cine,id_tipo_beneficiario,lugar,estado) values(9,'SEMINARIO X ENCUENTRO DE PROYECTOS DE SEMILLEROS DE INVESTIGACIÓN DE INGENIERÍA DE SISTEMAS','2020-07-25','2020-07-30','2020-07-20','contenido generalll de ciencias aplicadas',10,'ijdsgijs',67800,10,2,'/uploads/educacion-continua/9/portada.jpg',31,6,'002',711,5,'Auditorio J.J Maldonado 4 Piso SA','Activo');
+insert into educacion_continua(id,nombre,fecha_inicio,fecha_fin,fecha_lim_inscripcion,contenido_general,cant_max_participantes,resumen,costo,duracion,id_tipo_educacion_continua,imagen,id_docente,id_programa,consecutivo,id_clasificacion_cine,id_tipo_beneficiario,lugar,estado) values(10,'Bienal3','2020-08-18','2020-08-21','2020-08-16','contenido generalll de la bienal3',10,'ijdisjg',34500,36,3,'/uploads/educacion-continua/10/portada.jpg',21,8,'003',417,3,'Auditorio Eustorgio Colmenares Batista','Activo');
 
 insert into jornadas(id,hora_inicio,hora_fin,educacion_continua_id) values(1,'2016-04-08 08:00:00','2016-04-02 12:00:00',1);
 insert into jornadas(id,hora_inicio,hora_fin,educacion_continua_id) values(2,'2016-04-08 14:00:00','2016-04-02 18:00:00',1);
 insert into jornadas(id,hora_inicio,hora_fin,educacion_continua_id) values(3, '2019-10-10 08:00:00','2019-10-10 12:00:00',2);
-
-
-
 
 
 
@@ -418,6 +415,15 @@ insert into asistentes(id_participante) values(29);
 insert into asistentes(id_participante) values(30);
 insert into asistentes(id_participante) values(31);
 insert into asistentes(id_participante) values(32);
+
+insert into asistencias(id,id_jornada,id_participante) values (1,1,1);
+insert into asistencias(id,id_jornada,id_participante) values (2,2,5);
+insert into asistencias(id,id_jornada,id_participante) values (3,1,11);
+insert into asistencias(id,id_jornada,id_participante) values (4,2,18);
+insert into asistencias(id,id_jornada,id_participante) values (5,1,22);
+insert into asistencias(id,id_jornada,id_participante) values (6,2,22);
+insert into asistencias(id,id_jornada,id_participante) values (7,1,33);
+insert into asistencias(id,id_jornada,id_participante) values (8,1,34);
 
 
 insert into informes_snies(id,anio,informe_cursos,informe_educacion_continua,informe_participante) values (1,'2020','/reportes_snies/informe_cursos_snies_2020.xlsx','/reportes_snies/informe_educacion_continua_snies_2020.xlsx',null);

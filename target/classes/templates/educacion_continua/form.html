@@ -107,10 +107,16 @@
 										</div>
 									</div>
 									<script th:inline="javascript">
-									    var fechaInicioEvento = [[*{#dates.format(fechaInicio, 'dd/MM/yyyy')}]];
-									    var fechaFinEvento = [[*{#dates.format(fechaFin, 'dd/MM/yyyy ')}]];
-									    var fechaLimInscripcionEvento = [[*{#dates.format(fechaLimInscripcion, 'dd/MM/yyyy')}]];
-								    </script>
+										console.log("fechas evento");
+										
+									    var fechaInicioEvento = [[*{#dates.format(fechaInicio, 'dd/MM/yyyy HH:mm')}]];
+									    var fechaFinEvento = [[*{#dates.format(fechaFin, 'dd/MM/yyyy HH:mm')}]];
+									    var fechaLimInscripcionEvento = [[*{#dates.format(fechaLimInscripcion, 'dd/MM/yyyy HH:mm')}]];
+								 		console.log("formatos");
+								 		console.log(fechaInicioEvento);
+								 		console.log(fechaFinEvento);
+								 		console.log(fechaLimInscripcionEvento);
+								 </script>
 									<div class="row">
 										<div class="col-md-12">
 											<div class="form-group">

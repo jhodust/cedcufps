@@ -1,9 +1,13 @@
 var token = $("meta[name='_csrf']").attr("content");
+
+
+var idEducacionContinua=eduContinua.id;
 var idJornada;
 var horaInicioPick;
 var horaFinPick;
 $(document).ready(function ()
 {
+	document.getElementById("horaFin").disabled = true;
 	horaInicioPick=$("#horaInicio").flatpickr({
 		enableTime: true,
 	    dateFormat: "d/m/Y H:i",
@@ -24,6 +28,7 @@ $(document).ready(function ()
 	    	
 	    	
 	    	console.log("minDate: "+selectedDates[0].toDateString());
+	    	document.getElementById("horaFin").disabled = false;
            horaFinPick=$("#horaFin").flatpickr({
        		enableTime: true,
        	    dateFormat: "d/m/Y H:i",
@@ -32,7 +37,10 @@ $(document).ready(function ()
        	    maxDate: selectedDates[0].toLocaleDateString(),
        	    defaultDate: selectedDates[0].toLocaleString(),
        	});
-        }
+        },
+        minDate:fechaIEvento,
+        maxDate:fechaFEvento,
+        defaultDate: fechaIEvento,
 	    
 	});
 	
@@ -46,6 +54,7 @@ $(document).ready(function ()
 		$('#horaFin').val("");
 		//horaInicioPick.clear();
 		idJornada=null;
+		document.getElementById("horaFin").disabled = true;
 	});
 	
 	
@@ -56,11 +65,22 @@ function guardarJornada(){
 	var horaInicio = $('#horaInicio').val();
 	var horaFin = $('#horaFin').val();
 	limpiarErrores();
+	 var jornadaJSON={};
+	  jornadaJSON.id=idJornada;
+	  jornadaJSON.horaInicio=horaInicio;
+	  jornadaJSON.horaFin=horaFin;
+	  jornadaJSON.educacionContinua={};
+	  jornadaJSON.educacionContinua.id=idEducacionContinua;
+	  ajaxGuardarJornada(jornadaJSON);
+	
+}
+
+function ajaxGuardarJornada(jsonJornada){
 	$.ajax({
 		headers: {"X-CSRF-TOKEN": token},
 		type: "POST",
 		contentType: "application/json; charset=utf-8",
-		data: JSON.stringify({'id':idJornada, 'horaInicio': horaInicio, 'horaFin': horaFin, 'educacionContinua':{'id': idEducacionContinua}}),//variable idEducacionContinua la recibo de un script al final del index de jornadas
+		data: JSON.stringify(jsonJornada),//variable idEducacionContinua la recibo de un script al final del index de jornadas
 		url: "/educacion-continua/jornada/save",
 		cache: false,
 		success: function(result) {
@@ -87,8 +107,6 @@ function guardarJornada(){
 			  });
 		}
 	});
-	
-	
 }
 function editarJornada(elemento){
 	
@@ -104,10 +122,10 @@ function editarJornada(elemento){
 			$('#horaInicio').val(result.horaInicio);
 			$('#horaFin').val(result.horaFin);
 			idJornada=result.id;
-			
+			document.getElementById("horaFin").disabled = true;
 		},
 		error: function(err) {
-			$("#msg").html( "<span style='color: red'>Programa is required</span>" );
+			
 		}
 	});
 		

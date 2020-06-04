@@ -2,19 +2,26 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="layouts/layout :: head">
 	<meta charset="UTF-8"/>
+	
 </head>
+<style>
+		
+	</style>
 <body>
   <!-- Application container -->
+  
   <div class="container-fluid container-application">
     <!-- Content -->
     <div class="main-content position-relative">
       <!-- Main nav -->
+      
       <div th:replace="layouts/logosHead :: logosHead"></div>
       <nav th:replace="layouts/navbar :: navbar"></nav>
       
       <!-- Page content -->
       <div class="page-content col-lg-9 center">
        <!-- Project cards -->
+       
        <nav aria-label="breadcrumb">
 		  <ol class="breadcrumb breadcrumb-links">
 		    <li class="breadcrumb-item"><a class="red-ufps-breadcrumb" th:href="@{/}">Inicio</a></li>
@@ -42,8 +49,12 @@
           </div>
         </div>
         <hr/>
-        
-		<div class="card">
+        <div class="text-center" id="spinner">
+		  <div class="spinner-border" role="status">
+		    <span class="sr-only">Loading...</span>
+		  </div>
+		</div>
+		<div class="card" id="cardListado" style="display:none;">
           <!-- Card header -->
           <br>
           <!-- Table -->
@@ -61,6 +72,7 @@
 								<th>Apellidos</th>
 								<th>Usuario</th>
 								<th>Tipo Participante</th>
+								<th>Asistencia<br><input type="checkbox" th:each="j : ${jornadas}" th:id="${j.id}+'_all'" class="all" th:data-jornada="${j.id}" data-toggle="tooltip" data-placement="top" th:title="${#strings.capitalizeWords(#dates.format(j.horaInicio, 'dd MMMM yyyy HH:mm'))}"/></th>
 							</tr>
 						</thead>
 						<tbody>
@@ -71,7 +83,7 @@
 								<td th:text="${p.persona.primerApellido + ' ' + p.persona.segundoApellido}"></td>
 								<td th:text="${p.persona.tipoPersona.tipoPersona}"></td>
 								<td th:text="${p.tipoParticipante.tipoParticipante}"></td>
-								
+								<td><input type="checkbox" th:each="j : ${jornadas}" th:class="'checkAsistencia j_'+${j.id}" th:id="${j.id}+'_'+${p.id}" th:data-jornada="${j.id}" th:data-participante="${p.id}" data-toggle="tooltip" data-placement="top" th:title="${#strings.capitalizeWords(#dates.format(j.horaInicio, 'dd MMMM yyyy HH:mm'))}"/></td>
     							
 							</tr>
 							
@@ -100,6 +112,132 @@
   if(mensajeError!=null){
 	  toastr.error(mensajeError, 'Error!',{timeOut:2000});
   }
+  </script>
+  <script type="text/javascript" th:inline="javascript">
+  var token = $("meta[name='_csrf']").attr("content");
+  var participantes= [[${participantes}]];
+  var asistencias= [[${asistencias}]];
+  var asistenciaGlobal= [[${asistenciaGlobal}]];
+  console.log(participantes.length);
+  console.log("asistencias");
+  
+  console.log(asistencias);
+  console.log("asistenciaGlobal");
+  console.log(asistenciaGlobal);
+  if(asistenciaGlobal!=null){
+	  asistenciaGlobal.forEach(function(a){
+		    console.log(a);
+		   if(a[0]==participantes.length){
+			   var idCheckBox=a[1]+'_all';
+			   $('#'+idCheckBox).attr('checked', true);  
+		   }
+		  }); 
+  }
+  if(asistencias!=null){
+	  asistencias.forEach(function(j){
+		    var idCheckBox = j.jornada.id+"_"+j.participante.id;
+		    $('#'+idCheckBox).attr('checked', true);  
+		    console.log("for each");
+		  }); 
+  }
+  
+  console.log("entra a aplicar cambios");
+  document.getElementById('cardListado').style.display='flex';
+  document.getElementById('spinner').style.display='none';
+  console.log("aplicó cambios");
+  
+  
+ 
+  $(document).ready(function ()
+			{
+				
+	  $(".all").click(function(e) {  
+	       console.log(e); 
+	       console.log(e.target.dataset.jornada); 
+	       var idJornada=e.target.dataset.jornada;
+	       if($('#'+idJornada+'_all').is(':checked')) {//se va a marcar la asistencia
+		       $.ajax({
+		   		headers: {"X-CSRF-TOKEN": token},
+		   		type: "GET",
+		   		contentType: "application/json; charset=utf-8",
+		   		url: "/asistencia-general-marcar/"+idJornada,
+		   		cache: false,
+		   		success: function(result) {
+		   			toastr.success('Se han actualizado las asistencias de la Jornada', 'Excelente!');
+		   			$('.j_'+idJornada).attr('checked', true);  
+		   			
+		   		},
+		   		error: function(err) {
+		   			toastr.error('No se guardaron las asistencias de la Jornada', 'Error!');
+		   			$('#'+idJornada+'_all').attr('checked', false); 
+		   		}
+		   	});
+	       
+		}else{//se va a quitar la asistencia
+			$.ajax({
+		   		headers: {"X-CSRF-TOKEN": token},
+		   		type: "GET",
+		   		contentType: "application/json; charset=utf-8",
+		   		url: "/asistencia-general-desmarcar/"+idJornada,
+		   		cache: false,
+		   		success: function(result) {
+		   			toastr.success('Se han actualizado las asistencias de la Jornada', 'Excelente!');
+		   		 	$('.j_'+idJornada).attr('checked', false); 
+		   			
+		   		},
+		   		error: function(err) {
+		   			toastr.error('No se guardaron las asistencias de la Jornada', 'Error!');
+		   			$('#'+idJornada+'_all').attr('checked', true); 
+		   		}
+		   	});
+		}  
+	    });  
+	  
+	  
+	  $(".checkAsistencia").click(function(e) {  
+	       console.log(e); 
+	       console.log(e.target.dataset.jornada); 
+	       var idJornada=e.target.dataset.jornada;
+	       var idParticipante=e.target.dataset.participante;
+	       //e.preventDefault();
+	       if($('#'+idJornada+'_'+idParticipante).is(':checked')) {//se va a marcar la asistencia
+		       $.ajax({
+		   		headers: {"X-CSRF-TOKEN": token},
+		   		type: "GET",
+		   		contentType: "application/json; charset=utf-8",
+		   		url: "/asistencia-marcar/"+idJornada+"/"+idParticipante,
+		   		cache: false,
+		   		success: function(result) {
+		   			toastr.success('Se ha actualizado la asistencia del Participante', 'Excelente!');
+		   			
+		   			
+		   		},
+		   		error: function(err) {
+		   			toastr.error('No se guardó la asistencia del Participante', 'Error!');
+		   			$('#'+idJornada+'_'+idParticipante).attr('checked', false); 
+		   		}
+		   	});
+	       
+		}else{//se va a quitar la asistencia
+			$.ajax({
+		   		headers: {"X-CSRF-TOKEN": token},
+		   		type: "GET",
+		   		contentType: "application/json; charset=utf-8",
+		   		url: "/asistencia-desmarcar/"+idJornada+"/"+idParticipante,
+		   		cache: false,
+		   		success: function(result) {
+		   			toastr.success('Se ha actualizado la asistencia del Participante', 'Excelente!');
+		   		 	
+		   			
+		   		},
+		   		error: function(err) {
+		   			toastr.error('No se guardó la asistencia del Participante', 'Error!');
+		   			$('#'+idJornada+'_'+idParticipante).attr('checked', true); 
+		   		}
+		   	});
+		}  
+	    });  
+	});
   </script>
 </body>
 

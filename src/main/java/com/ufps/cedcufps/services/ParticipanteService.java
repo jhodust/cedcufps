@@ -93,4 +93,10 @@ public class ParticipanteService implements IParticipanteService{
 		return participanteDao.findAllParticipantesByEducacionContinua(idEduContinua);
 	}
 
+	@Override
+	public TipoParticipante findTipoParticipanteById(Long id) {
+		// TODO Auto-generated method stub
+		return tipoParticipanteDao.findById(id).get();
+	}
+
 }

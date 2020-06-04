@@ -134,6 +134,10 @@ public class EducacionContinua implements Serializable {
 	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name="id_diploma")
 	private Diploma diploma;
+
+	@Column(columnDefinition = "varchar(10) default 'Activo'")
+	private String estado;//activo, en curso, finalizado
+	
 	
 	public EducacionContinua() {
 		this.jornadas=new ArrayList<Jornada>();
@@ -343,6 +347,14 @@ public class EducacionContinua implements Serializable {
 
 	public void setDiploma(Diploma diploma) {
 		this.diploma = diploma;
+	}
+
+	public String getEstado() {
+		return estado;
+	}
+
+	public void setEstado(String estado) {
+		this.estado = estado;
 	}
 	
 	

@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -12,11 +14,14 @@ import org.springframework.web.multipart.MultipartFile;
 import com.ufps.cedcufps.dao.IClasificacionCineDao;
 import com.ufps.cedcufps.dao.IDiplomaDao;
 import com.ufps.cedcufps.dao.IEducacionContinuaDao;
+import com.ufps.cedcufps.dao.IJornadaDao;
 import com.ufps.cedcufps.dao.ITipoBeneficiarioDao;
 import com.ufps.cedcufps.dao.ITipoEducacionContinuaDao;
 import com.ufps.cedcufps.modelos.ClasificacionCine;
+import com.ufps.cedcufps.modelos.Departamento;
 import com.ufps.cedcufps.modelos.Diploma;
 import com.ufps.cedcufps.modelos.EducacionContinua;
+import com.ufps.cedcufps.modelos.Jornada;
 import com.ufps.cedcufps.modelos.Participante;
 import com.ufps.cedcufps.modelos.TipoBeneficiario;
 import com.ufps.cedcufps.modelos.TipoEducacionContinua;
@@ -31,6 +36,9 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 	
 	@Autowired
 	private ITipoEducacionContinuaDao tipoEducacionContinuaDao;
+	
+	@Autowired
+	private IJornadaDao jornadaDao;
 	
 	@Autowired
 	private IClasificacionCineDao clasificacionCineDao;
@@ -92,7 +100,16 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 	@Override
 	public List<EducacionContinua> educacionContinuaRecientes() {
 		// TODO Auto-generated method stub
-		return (List<EducacionContinua>) educacionContinuaDao.educacionContinuaReciente();
+		for(EducacionContinua e: educacionContinuaDao.educacionesContinuasRecientes()) {
+			System.out.println(e.getNombre());
+		}
+		return educacionContinuaDao.educacionesContinuasRecientes();
+	}
+	
+	@Override
+	public Page<EducacionContinua> educacionContinuaNoTerminadas(Pageable pageable) {
+		// TODO Auto-generated method stub
+		return educacionContinuaDao.educacionesContinuasPanel(pageable);
 	}
 
 	@Override
@@ -191,6 +208,14 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 		
 		
 	}
+
+	@Override
+	public List<Jornada> findJornadasByEducacionContinua(Long idEduContinua) {
+		// TODO Auto-generated method stub
+		return jornadaDao.findByIdEducacionContinua(idEduContinua);
+	}
+
+	
 
 	
 

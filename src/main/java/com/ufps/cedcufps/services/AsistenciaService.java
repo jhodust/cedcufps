@@ -67,5 +67,11 @@ public class AsistenciaService implements IAsistenciaService {
 		asistenciaDao.deleteAsistencia(idJornada, idParticipante);
 	}
 
+	@Override
+	public void deleteAsistenciasByJornada(Long idJornada) {
+		// TODO Auto-generated method stub
+		asistenciaDao.deleteAsistenciasByJornada(idJornada);
+	}
+
 	
 }

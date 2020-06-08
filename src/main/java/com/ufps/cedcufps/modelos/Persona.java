@@ -129,8 +129,8 @@ public class Persona implements Serializable {//*
 	private boolean enabled;
 	
 	
-	@JsonIgnore
-	@ManyToOne(fetch = FetchType.LAZY)
+	
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="id_tipo_persona")
 	private TipoPersona tipoPersona;
 	

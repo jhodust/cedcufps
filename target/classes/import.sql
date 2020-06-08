@@ -184,9 +184,9 @@ insert into roles(id,authority,id_persona) values(45,'ROLE_DOCENTE',32);
 insert into roles(id,authority,id_persona) values(46,'ROLE_DIRPROGRAMA',25);
 insert into roles(id,authority,id_persona) values(47,'ROLE_DIRPROGRAMA',23);
 insert into roles(id,authority,id_persona) values(48,'ROLE_USER',33);
-insert into roles(id,authority,id_persona) values(49,'ROLE_USER',34);
-insert into roles(id,authority,id_persona) values(50,'ROLE_SUPERADMIN',34);
-insert into roles(id,authority,id_persona) values(51,'ROLE_USER',35);
+insert into roles(id,authority,id_persona) values(50,'ROLE_USER',34);
+insert into roles(id,authority,id_persona) values(51,'ROLE_SUPERADMIN',34);
+insert into roles(id,authority,id_persona) values(52,'ROLE_USER',35);
 
 
 insert into tipos_participante(id,tipo_participante) values(1,'Asistente');

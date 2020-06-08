@@ -42,7 +42,11 @@ public interface IEducacionContinuaService {
 		
 	public int cantidadDiplomados();
 	
-	public int cantidadSeminariosCongresosSimposios();
+	public int cantidadSeminarios();
+	
+	public int cantidadCongresos();
+	
+	public int cantidadSimposios();
 	
 	public List<EducacionContinua> educacionContinuasByTipoAndPrograma(Long idTipo, Long idPrograma);
 	

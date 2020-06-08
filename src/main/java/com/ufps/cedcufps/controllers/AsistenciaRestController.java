@@ -56,7 +56,8 @@ public class AsistenciaRestController {
 		
 		Jornada j= jornadaService.findOne(id).get();
 		if(j!=null) {
-			asistenciaService.deleteAll(j.getAsistencias());
+			//asistenciaService.deleteAll(j.getAsistencias());
+			asistenciaService.deleteAsistenciasByJornada(id);
 			return new ResponseEntity<>(HttpStatus.OK);
 		}
 		

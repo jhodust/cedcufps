@@ -27,4 +27,9 @@ public interface IAsistenciaDao extends CrudRepository<Asistencia, Long> {
 	@Modifying
 	@Query("delete from Asistencia a where a.jornada.id=?1 and a.participante.id=?2")
 	public void deleteAsistencia(Long idJornada, Long idParticipante);
+	
+	@Transactional
+	@Modifying
+	@Query("delete from Asistencia a where a.jornada.id=?1")
+	public void deleteAsistenciasByJornada(Long idJornada);
 }

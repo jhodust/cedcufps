@@ -40,9 +40,10 @@
         </div>
         <hr/>
         
-        
-		<div class="row" sec:authorize="hasRole('ROLE_SUPERADMIN')">
-          <div class="col-lg-3">
+        <div class="row">
+        	<div class="col-md-3">
+        		<div class="row" sec:authorize="hasRole('ROLE_SUPERADMIN')">
+          <div class="col-lg-12">
             <div class="card card-stats border-0">
               <!-- Card body -->
               <div class="card-body">
@@ -53,13 +54,13 @@
                   </div>
                   
                   <div class="col-auto">
-                    <div class="progress-circle progress-sm" id="progress-circle-1" th:data-progress="${porcCursos}" th:data-text="${porcCursos} + '%'" data-color="primary"></div>
+                    <div class="progress-circle progress-xs" id="progress-circle-1" th:data-progress="${porcCursos}" th:data-text="${porcCursos} + '%'" data-color="primary"></div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <div class="col-lg-3">
+          <div class="col-lg-12">
             <div class="card card-stats border-0">
               <!-- Card body -->
               <div class="card-body">
@@ -69,77 +70,112 @@
                     <span class="h4 font-weight-bold mb-0 counter" data-from="0" th:data-to="${cantTalleres}" data-speed="500" data-refresh-interval="100"></span>
                   </div>
                   <div class="col-auto">
-                    <div class="progress-circle progress-sm" id="progress-circle-1" th:data-progress="${porcTalleres}" th:data-text="${porcTalleres} + '%'" data-color="primary"></div>
+                    <div class="progress-circle progress-xs" id="progress-circle-1" th:data-progress="${porcTalleres}" th:data-text="${porcTalleres} + '%'" data-color="primary"></div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <div class="col-lg-3">
+          <div class="col-lg-12">
             <div class="card card-stats border-0">
               <!-- Card body -->
               <div class="card-body">
                 <div class="row">
                   <div class="col">
-                    <h6 class="text-muted mb-1">Diplomados</h6>
+                    <h6 class="text-muted mb-1">Diplomado</h6>
                     <span class="h4 font-weight-bold mb-0 counter" data-from="0" th:data-to="${cantDiplomados}" data-speed="500" data-refresh-interval="100"></span>
                   </div>
                   <div class="col-auto">
-                    <div class="progress-circle progress-sm" id="progress-circle-1" th:data-progress="${porcDiplomados}" th:data-text="${porcDiplomados} + '%'" data-color="primary"></div>
+                    <div class="progress-circle progress-xs" id="progress-circle-1" th:data-progress="${porcDiplomados}" th:data-text="${porcDiplomados} + '%'" data-color="primary"></div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <div class="col-lg-3">
+          <div class="col-lg-12">
             <div class="card card-stats border-0">
               <!-- Card body -->
               <div class="card-body">
                 <div class="row">
                   <div class="col">
-                    <h6 class="p text-muted mb-1">Seminarios, Congresos, Simposios</h6>
-                    <span class="h4 font-weight-bold mb-0 counter" data-from="0" th:data-to="${cantSemConSimp}" data-speed="500" data-refresh-interval="100"></span>
+                    <h6 class="p text-muted mb-1">Seminarios</h6>
+                    <span class="h4 font-weight-bold mb-0 counter" data-from="0" th:data-to="${cantSeminarios}" data-speed="500" data-refresh-interval="100"></span>
                   </div>
                   <div class="col-auto">
-                    <div class="progress-circle progress-sm" id="progress-circle-1"  th:data-progress="${porcSemConSimp}" th:data-text="${porcSemConSimp} + '%'" data-color="primary"></div>
+                    <div class="progress-circle progress-xs" id="progress-circle-1"  th:data-progress="${porcSeminarios}" th:data-text="${porcSeminarios} + '%'" data-color="primary"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-12">
+            <div class="card card-stats border-0">
+              <!-- Card body -->
+              <div class="card-body">
+                <div class="row">
+                  <div class="col">
+                    <h6 class="p text-muted mb-1">Congresos</h6>
+                    <span class="h4 font-weight-bold mb-0 counter" data-from="0" th:data-to="${cantCongresos}" data-speed="500" data-refresh-interval="100"></span>
+                  </div>
+                  <div class="col-auto">
+                    <div class="progress-circle progress-xs" id="progress-circle-1"  th:data-progress="${porcCongresos}" th:data-text="${porcCongresos} + '%'" data-color="primary"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-12">
+            <div class="card card-stats border-0">
+              <!-- Card body -->
+              <div class="card-body">
+                <div class="row">
+                  <div class="col">
+                    <h6 class="p text-muted mb-1">Simposios</h6>
+                    <span class="h4 font-weight-bold mb-0 counter" data-from="0" th:data-to="${cantSimposios}" data-speed="500" data-refresh-interval="100"></span>
+                  </div>
+                  <div class="col-auto">
+                    <div class="progress-circle progress-xs" id="progress-circle-1"  th:data-progress="${porcSimposios}" th:data-text="${porcSimposios} + '%'" data-color="primary"></div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
           
+          
         </div>
-        <div class="card">
+        	</div>
+        	<div class="col-md-9">
+        		<div class="card">
           <!-- Card header -->
-          <br>
+          
           <!-- Table -->
-          <div class="table-responsive">
+          <div class="card-body">
+          	<div class="table-responsive">
           <div class="col-lg-12">
             <table id="myTable" style="width: 100%;" class="row-border table align-items-center">
 						<thead>
 							<tr>
+								<th></th>
 								<th>Tipo</th>
 								<th>Programa Académico Organizador</th>
-								<th>Docente</th>
 								<th>Nombre</th>
 								<th>Fecha Inicio</th>
 								<th>Fecha Fin</th>
 								<th>Fecha Limite Inscripción</th>
-								<th>Acciones</th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr th:each="ec : ${educacionesContinuas}">
+								<td><a class="btn btn-sm btn-rojoufps rounded-circle btn-icon-only hover-scale-110" th:href="@{/educacion-continua/{id}/detalles(id=${ec.id})}" data-toggle="tooltip" data-placement="top" title="Ver Detalles">
+    								<span class="btn-inner--icon"><i class="fas fa-search-plus"></i></span></a>
+    								</td>
 								<td th:text="${ec.tipoEduContinua.tipoEduContinua}"></td>
 								<td th:text="${ec.programaResponsable.programa}"></td>
-								<td th:text="${ec.docenteResponsable.primerNombre}"></td>
 								<td th:text="${ec.nombre}"></td>
 								<td th:text="${#dates.format(ec.fechaInicio, 'dd-MM-yyyy')}"></td>
 								<td th:text="${#dates.format(ec.fechaFin, 'dd-MM-yyyy')}"></td>
 								<td th:text="${#dates.format(ec.fechaLimInscripcion, 'dd-MM-yyyy')}"></td>
-								<td><a class="btn btn-sm btn-rojoufps rounded-circle btn-icon-only hover-scale-110" th:href="@{/educacion-continua/{id}/detalles(id=${ec.id})}" data-toggle="tooltip" data-placement="top" title="Ver Detalles">
-    								<span class="btn-inner--icon"><i class="fas fa-search-plus"></i></span></a>
-    								</td>
+								
     							<!--  <td sec:authorize="hasRole('ROLE_DIRPROGRAMA')">Dir Programa<a class="btn btn-rojoufps rounded-circle btn-icon-only hover-scale-110" th:href="@{/educacion-continua/{id}/detalles(id=${ec.id})}" data-toggle="tooltip" data-placement="top" title="Ver Detalles">
     								<span class="btn-inner--icon"><i class="fas fa-search-plus"></i></span></a>
     								<a class="btn btn-rojoufps rounded-circle btn-icon-only hover-scale-110" th:href="@{/educacion-continua/registro/} + ${ec.id}" data-toggle="tooltip" data-placement="top" title="Editar">
@@ -165,7 +201,12 @@
 					</table>
 					</div>
           </div>
+          </div>
         </div>
+        	</div>
+        </div>
+		
+        
 		</div>
 	  </div>
     

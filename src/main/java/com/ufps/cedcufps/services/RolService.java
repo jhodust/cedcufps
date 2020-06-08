@@ -17,4 +17,10 @@ public class RolService implements IRolService{
 		// TODO Auto-generated method stub
 		rolDao.save(r);
 	}
+
+	@Override
+	public void deleteRol(String rol, Long idPersona) {
+		// TODO Auto-generated method stub
+		rolDao.deleteRolByPersona(rol, idPersona);
+	}
 }

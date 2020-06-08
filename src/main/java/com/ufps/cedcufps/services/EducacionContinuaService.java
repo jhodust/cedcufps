@@ -92,9 +92,21 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 	}
 
 	@Override
-	public int cantidadSeminariosCongresosSimposios() {
+	public int cantidadSeminarios() {
 		// TODO Auto-generated method stub
-		return educacionContinuaDao.cantidadSeminariosCongresosSimposios();
+		return educacionContinuaDao.cantidadSeminarios();
+	}
+	
+	@Override
+	public int cantidadCongresos() {
+		// TODO Auto-generated method stub
+		return educacionContinuaDao.cantidadCongresos();
+	}
+	
+	@Override
+	public int cantidadSimposios() {
+		// TODO Auto-generated method stub
+		return educacionContinuaDao.cantidadSimposios();
 	}
 	
 	@Override

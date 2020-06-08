@@ -23,4 +23,6 @@ public interface IAsistenciaService {
 	public void deleteAll(List<Asistencia> asistencias);
 	
 	public void deleteAsistencia(Long idJornada, Long idParticipante);
+	
+	public void deleteAsistenciasByJornada(Long idJornada);
 }

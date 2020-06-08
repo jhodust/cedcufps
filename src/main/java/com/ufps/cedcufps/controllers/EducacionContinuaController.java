@@ -76,18 +76,24 @@ public class EducacionContinuaController {
 		int cantCursos=educacionContinuaService.cantidadCursos();
 		int cantTalleres=educacionContinuaService.cantidadTalleres();
 		int cantDiplomados=educacionContinuaService.cantidadDiplomados();
-		int cantSemConSimp=educacionContinuaService.cantidadSeminariosCongresosSimposios();
-		int total=cantCursos+cantTalleres+cantDiplomados+cantSemConSimp;
+		int cantSeminarios=educacionContinuaService.cantidadSeminarios();
+		int cantCongresos=educacionContinuaService.cantidadCongresos();
+		int cantSimposios=educacionContinuaService.cantidadSimposios();
+		int total=cantCursos+cantTalleres+cantDiplomados+cantSeminarios+cantCongresos+cantSimposios;
 		model.addAttribute("titulo","EDUCACIÓN CONTINUA");
 		model.addAttribute("educacionesContinuas",educacionesContinuasSegunTipoGestionante(auth));
 		model.addAttribute("cantCursos",cantCursos);
 		model.addAttribute("cantTalleres",cantTalleres);
 		model.addAttribute("cantDiplomados",cantCursos);
-		model.addAttribute("cantSemConSimp",cantSemConSimp);
+		model.addAttribute("cantSeminarios",cantSeminarios);
+		model.addAttribute("cantCongresos",cantCongresos);
+		model.addAttribute("cantSimposios",cantSimposios);
 		model.addAttribute("porcCursos",cantCursos*100/total);
 		model.addAttribute("porcTalleres",cantTalleres*100/total);
 		model.addAttribute("porcDiplomados",cantDiplomados*100/total);
-		model.addAttribute("porcSemConSimp",cantSemConSimp*100/total);
+		model.addAttribute("porcSeminarios",cantSeminarios*100/total);
+		model.addAttribute("porcCongresos",cantCongresos*100/total);
+		model.addAttribute("porcSimposios",cantSimposios*100/total);
 		
 		return "educacion_continua/index";
 	}

@@ -38,29 +38,94 @@
         <hr/>
         
 		<div class="row">
-			<div class="col-lg-9">
+			<div class="col-lg-12">
 				<div class="card">
 					<!-- Card header -->
 					
 					<div class="card-body">
-						<table>
-								<tr th:if="${persona.tipoPersona.tipoPersona == 'Estudiante'}">
-									<td>Beca</td>
-									<td th:each="r: ${persona.roles}">
-										<a class="btn btn-primary" th:if="${r.authority == 'ROLE_BECA'}" th:href="@{/persona/registro}">Revocar</a>
-										<a class="btn btn-primary" th:if="${r.authority != 'ROLE_BECA'}" th:href="@{/persona/registro}">Revocar</a></td>
+					<div class="row">
+						<div class="col-md-6">
+							<center>
+							<h5>Datos Persona</h5>
+							</center>
+							<div class="table-responsive">
+							<table class="table align-items-center">
+						
+						<tbody>
+							<tr>
+									<td class="text-dark"><strong>Nombre</strong></td>
+									<td class="text-dark" th:text="${persona.primerNombre + ' ' + persona.primerApellido}"></td>
 								</tr>
-								<tr th:if="${persona.tipoPersona.tipoPersona == 'Docente' or persona.tipoPersona.tipoPersona == 'Administrativo' }">
-									<td>Admin</td>
-									<td><a class="btn btn-primary" sec:authorize="hasAnyRole('ROLE_ADMIN')" th:href="@{/persona/registro}">Revocar</a>
-								<a class="btn btn-primary" sec:authorize="!hasAnyRole('ROLE_ADMIN')" th:href="@{/persona/registro}">Otorgar</a></td>
+								<tr>
+									<td class="text-dark"><strong>Tipo Usuario</strong></td>
+									<td class="text-dark" th:text="${persona.tipoPersona.tipoPersona}"></td>
 								</tr>
-								<tr th:if="${persona.tipoPersona.tipoPersona == 'Externo'}">
-									<td><button class="btn btn-primary" disabled>No es posible asignar permisos!</button>
+								<tr th:if="${persona.tipoPersona.tipoPersona == 'Docente'}">
+									<td class="text-dark"><strong>Director de Programa</strong></td>
+									<td th:if="${persona.programaACargoDirector == null}">
+										<div class="custom-control custom-switch">
+										  <input type="checkbox" class="custom-control-input" id="customSwitch1" disabled>
+										  <label class="custom-control-label" for="customSwitch1"></label>
+										</div>
+									</td>
+									<td th:unless="${persona.programaACargoDirector == null}">
+										<div class="custom-control custom-switch">
+										  <input type="checkbox" class="custom-control-input" id="customSwitch1" checked disabled>
+										  <label class="custom-control-label" for="customSwitch1"><span class="badge badge-gray-ufps badge-pill"  th:text="${persona.programaACargoDirector.programa}"></span></label>
+										</div>
 									</td>
 								</tr>
+								
+						</tbody>
+													
 							</table>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<center>
+							<h5>Roles</h5>
+							</center>
+							<div class="table-responsive">
+							<table class="table align-items-center">
+								<tr th:if="${persona.tipoPersona.tipoPersona == 'Estudiante'}">
+									<td class="text-dark">
+									
+									<strong>Beca <button class="badge badge-secondary badge-circle" data-container="body" data-toggle="popover" data-placement="left" data-content="El rol beca permite al estudiante gestionar los eventos de educación continua del Programa Académico al cual pertenece">
+										    <i class="fas fa-info"></i>
+										</button></strong></td>
+									<td>
+										<div class="custom-control custom-switch">
+										  <input type="checkbox" class="custom-control-input switch" id="switchBeca" data-role="ROLE_BECA">
+										  <label class="custom-control-label" for="switchBeca"></label>
+										</div>
+									<td>
+									
+								</tr>
+								<tr th:if="${persona.tipoPersona.tipoPersona == 'Docente' or persona.tipoPersona.tipoPersona == 'Egresado' or persona.tipoPersona.tipoPersona == 'Externo'}">
+									<td><span class="badge badge-red-ufps badge-pill" th:text="'El tipo de persona ' + ${persona.tipoPersona.tipoPersona} + ' no tiene acceso a otros roles' "></span>
+									</td>
+									
+								</tr>
+								<tr th:if="${persona.tipoPersona.tipoPersona == 'Administrativo'}">
+									<td class="text-dark">
+									
+									<strong>Admin <button class="badge badge-secondary badge-circle" data-container="body" data-toggle="popover" data-placement="left" data-content="El rol admin permite al administrativo gestionar los eventos de educación continua, usuarios, generar reportes generales de SNIES y observar las estadisticas">
+										    <i class="fas fa-info"></i>
+										</button></strong></td>
+									<td>
+										<div class="custom-control custom-switch">
+										  <input type="checkbox" class="custom-control-input switch" id="switchAdminAdministrativo" data-role="ROLE_ADMIN">
+										  <label class="custom-control-label" for="switchAdminAdministrativo"></label>
+										</div>
+									</td>
+									
+								</tr>
+							
+							</table>
+							</div>
+						</div>
 					</div>
+					
 				</div>
 			</div>
 				</div>
@@ -76,6 +141,17 @@
   <!-- Scripts -->
   <!-- Core JS - includes jquery, bootstrap, popper, in-view and sticky-kit -->
   <div th:replace="layouts/layout :: scripts"></div>
+  <script type="text/javascript" th:inline="javascript">
+  var token = $("meta[name='_csrf']").attr("content");
+  var persona= [[${persona}]];
+  console.log(persona);
+  console.log(persona.roles);
+  
+  </script>
+  
+  <script th:src="@{/js/permisos.js}" type="text/javascript"></script>
+  
+  
 </body>
 
 </html>

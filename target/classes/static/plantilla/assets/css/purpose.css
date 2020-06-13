@@ -33,3 +33,7 @@ a.red-ufps:hover{color:#bc0017;}
 .progress-circle.progress-xs .progressbar-text {
     font-size: .775rem;
 }
+
+.not-allowed{
+ cursor: not-allowed! important; 
+}

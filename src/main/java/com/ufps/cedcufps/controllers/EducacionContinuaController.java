@@ -182,6 +182,11 @@ public class EducacionContinuaController {
 			
 		}
 		
+		if(e.getEstado().equalsIgnoreCase("Terminado")) {
+			redirectAttributes.addFlashAttribute("errorMessage", "El estado de la Educación Continua es " + e.getEstado());
+			return "redirect:/educacion-continua/"+e.getId()+"/detalles";
+		}
+		
 		model.put("titulo","FORMULARIO EDUCACIÓN CONTINUA");
 		model.put("educacionContinua",e);
 		model.put("tipos_educacion_continua",educacionContinuaService.findAllTiposEducacionContinua());
@@ -210,6 +215,10 @@ public class EducacionContinuaController {
 			}
 			
 		}
+		if(e.getEstado().equalsIgnoreCase("Terminado")) {
+			redirectAttributes.addFlashAttribute("errorMessage", "El estado de la Educación Continua es " + e.getEstado());
+			return "redirect:/educacion-continua/"+e.getId()+"/detalles";
+		}
 		model.put("titulo","JORNADAS");
 		model.put("educacionContinua",e);
 		return "educacion_continua/jornada/index";
@@ -232,6 +241,10 @@ public class EducacionContinuaController {
 				return "redirect:/educacion-continua";
 			}
 			
+		}
+		if(e.getEstado().equalsIgnoreCase("Terminado")) {
+			redirectAttributes.addFlashAttribute("errorMessage", "El estado de la Educación Continua es " + e.getEstado());
+			return "redirect:/educacion-continua/"+e.getId()+"/detalles";
 		}
 		model.put("titulo","JORNADAS");
 		model.put("educacionContinua",e);

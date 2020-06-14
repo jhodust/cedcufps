@@ -72,7 +72,7 @@ function creacionTarjetaInscripcion(p){
     var tipoParticipante = p.tipoParticipante.tipoParticipante;
     var lugar = p.educacionContinua.lugar;
     var fecha=new Date(p.educacionContinua.fechaInicio);
-    var imgQR=p.imagenCodigoQR;
+    var imgQR="/"+p.imagenCodigoQR;
     var tipoEduContinua=p.educacionContinua.tipoEduContinua.tipoEduContinua;
     
     var nombres="";
@@ -83,6 +83,42 @@ function creacionTarjetaInscripcion(p){
     }
    
 	var apellidos = primerApellido + " " + segundoApellido;
+	
+	var dia=null;
+	var hora=null;
+	var minutos=null;
+	
+	if(fecha.getDate()<10){
+		dia="0"+fecha.getDate();
+	}else{
+		dia=fecha.getDate();
+	}
+	var fechaE=dia + " " + meses[fecha.getMonth()] + " " + fecha.getFullYear();
+	
+	if(fecha.getHours()<10){
+		hora="0"+fecha.getHours();
+	}else{
+		hora=fecha.getHours();
+	}
+	
+	if(fecha.getMinutes()<10){
+		minutos="0"+fecha.getMinutes();
+	}else{
+		minutos=fecha.getMinutes();
+	}
+	
+	var tiempo=null;
+	if(fecha.getHours()<= 11){
+		tiempo=hora+":"+minutos + " A.M";
+	}else if (fecha.getHours()==12){
+		tiempo=hora+":"+minutos + " M";
+	}else{
+		tiempo=hora+":"+minutos;
+	}
+	
+	
+	
+	
 	
 	ctx.font = "italic 30px Arial";
 	ctx.fillStyle = "#484A4B";
@@ -115,7 +151,8 @@ function creacionTarjetaInscripcion(p){
 	
 	ctx.font = "normal 33px Berlin Sans FB";
 	ctx.fillStyle = "#000";
-	ctx.fillText(fecha.getDate() + " " + meses[fecha.getMonth()] + " "+ fecha.getFullYear(), 80, 720);
+	
+	ctx.fillText(fechaE, 80, 720);
 	
 	
 	
@@ -125,11 +162,7 @@ function creacionTarjetaInscripcion(p){
 	
 	ctx.font = "normal 33px Berlin Sans FB";
 	ctx.fillStyle = "#000";
-	if(fecha.getHours()<12){
-		ctx.fillText(fecha.getHours()+":"+fecha.getMinutes()+" A.M", 450, 720);
-	}else{
-		ctx.fillText(fecha.getHours()+":"+fecha.getMinutes(), 450, 720);
-	}
+	ctx.fillText(tiempo, 450, 720);
 	
 	
 	ctx.font = "800 38px Arial";

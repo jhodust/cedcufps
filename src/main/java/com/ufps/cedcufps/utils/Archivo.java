@@ -13,16 +13,35 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.google.common.io.Files;
 
+
 public class Archivo {
 
-	public static void crearDirectorio(String ruta) {
-		Path directorioRecursos=Paths.get("src//main//resources//static//"+ruta);
-		File folder=directorioRecursos.toFile();
+	public final static String rutaEducacionContinua="files/uploads/educacion-continua/";
+	
+	
+	public static void crearDirectorio(String rutaDir) {
+		
+		File folder=Paths.get(rutaEducacionContinua+rutaDir).toAbsolutePath().toFile();
 		if(!folder.exists() || !folder.isDirectory()) {
 			folder.mkdir();
 		}
 	}
 	
+	public static String saveImageAboutEducacionContinua(MultipartFile imagen, String imagenSinExtension) {
+		System.out.println("extension imagen: " + Files.getFileExtension(imagen.getOriginalFilename()));
+		String nombreImagen=rutaEducacionContinua+imagenSinExtension+"."+Files.getFileExtension(imagen.getOriginalFilename());
+		try {
+			byte[] bytes = imagen.getBytes();
+			guardarImagen(bytes,nombreImagen);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+		System.out.println("retorno nombre Imagen en saveImagenAboutEduContinua");
+		System.out.println(nombreImagen);
+		return nombreImagen;
+	}
 	
 	public static String saveImage(MultipartFile imagen, String imagenSinExtension) {
 		System.out.println("extension imagen: " + Files.getFileExtension(imagen.getOriginalFilename()));
@@ -32,6 +51,8 @@ public class Archivo {
 			guardarImagen(bytes,nombreImagen);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
+			System.out.println("genera error en save imagen");
+			System.out.println(e.getMessage());
 			e.printStackTrace();
 			return null;
 		}
@@ -40,18 +61,21 @@ public class Archivo {
 	
 	public static void guardarImagen(byte[] bytes, String nombreImagen) {
 		try {
-			
-			Path rutaArchivo=Paths.get("src//main//resources//static"+nombreImagen);
+			System.out.println("--------------guardando imagen nombre--------------");
+			System.out.println(nombreImagen);
+			Path rutaArchivo=Paths.get(nombreImagen);
 			Files.write(bytes, rutaArchivo.toFile().getAbsoluteFile());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
+			System.out.println("genera error en guardar imagen");
+			System.out.println(e.getMessage());
 			e.printStackTrace();
 		}
 	}
 	
 	public static void deleteImage(String imagen) {
 		System.out.println("*****************eliminando imagen**************************");
-		File archivo=Paths.get("src//main//resources//static"+imagen).toFile();
+		File archivo=Paths.get(imagen).toFile();
 		System.out.println(archivo.getAbsolutePath());
 		archivo.delete();
 	}

@@ -160,12 +160,23 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 	}
 
 	@Override
-	public void generarReporteSNIESEducacionContinua(String año) {
+	public String generarReporteSNIESFormatoEducacionContinua(String año) {
 		// TODO Auto-generated method stub
 		List<EducacionContinua> educacionesContinuas=(List<EducacionContinua>)educacionContinuaDao.findAllEducacionContinuaByAñoReporte(Integer.parseInt(año));
-		System.out.println("******************************PREPARANDO INFORME EXCEL******************");
-		ReportesExcel.reporteEducacionContinua("/formatos_reportes_excel/formato_educacion_continua.xlsx",educacionesContinuas,año);
-		ReportesExcel.reporteCursos("/formatos_reportes_excel/formato_cursos.xlsx",educacionesContinuas,año);
+		System.out.println("******************************PREPARANDO INFORME EXCEL 1******************");
+		return ReportesExcel.reporteEducacionContinua(educacionesContinuas,año);
+		//ReportesExcel.reporteCursos("/formatos_reportes_excel/formato_cursos.xlsx",educacionesContinuas,año);
+		//ReportesExcel.reporteEducacionContinuaHoja1("/formatos_reportes_excel/nuevo.xlsx",educacionesContinuas);
+		
+	}
+	
+	@Override
+	public String generarReporteSNIESFormatoCurso(String año) {
+		// TODO Auto-generated method stub
+		List<EducacionContinua> educacionesContinuas=(List<EducacionContinua>)educacionContinuaDao.findAllEducacionContinuaByAñoReporte(Integer.parseInt(año));
+		System.out.println("******************************PREPARANDO INFORME EXCEL 2******************");
+		//ReportesExcel.reporteEducacionContinua("/formatos_reportes_excel/formato_educacion_continua.xlsx",educacionesContinuas,año);
+		return ReportesExcel.reporteCursos(educacionesContinuas,año);
 		//ReportesExcel.reporteEducacionContinuaHoja1("/formatos_reportes_excel/nuevo.xlsx",educacionesContinuas);
 		
 	}

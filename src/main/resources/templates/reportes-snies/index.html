@@ -70,9 +70,9 @@
 								<tbody>
 									<tr th:each="i : ${informesSnies}">
 										<td th:text="${i.anio}"></td>
-										<td><a class="btn btn-rojoufps rounded-circle btn-icon-only hover-scale-110" th:href="@{${i.informeCurso}}" data-toggle="tooltip" data-placement="top" title="Reporte Cursos">
+										<td><a class="btn btn-rojoufps rounded-circle btn-icon-only hover-scale-110" th:href="@{'/'+${i.informeCurso}}" data-toggle="tooltip" data-placement="top" title="Reporte Cursos">
 		    								<span class="btn-inner--icon"><i class="fas fa-file-excel"></i></span></a></td>
-		    							<td><a class="btn btn-rojoufps rounded-circle btn-icon-only hover-scale-110" th:href="@{${i.informeEducacionContinua}}" data-toggle="tooltip" data-placement="top" title="Reporte Educación Continua">
+		    							<td><a class="btn btn-rojoufps rounded-circle btn-icon-only hover-scale-110" th:href="@{'/'+${i.informeEducacionContinua}}" data-toggle="tooltip" data-placement="top" title="Reporte Educación Continua">
 		    								<span class="btn-inner--icon"><i class="fas fa-file-excel"></i></span></a></td>
 		    							<td>Proximamente</td>
 									</tr>

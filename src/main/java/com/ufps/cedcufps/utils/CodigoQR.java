@@ -20,12 +20,12 @@ import com.google.zxing.qrcode.QRCodeWriter;
 
 public class CodigoQR {
 
+	public final static String rutaEducacionContinua="files/uploads/educacion-continua/";
 	
-	
-	public static File generateQR(String filename, String text) throws Exception {
-		System.out.println("filename para generador qr " + "src//main//resources//static//"+filename);
-		File file=Paths.get("src//main//resources//static//"+filename).toFile();
-		
+	public static String generateQR(String filename, String text) throws Exception {
+		String rutaTemp=rutaEducacionContinua+filename;
+		File file=Paths.get(rutaTemp).toAbsolutePath().toFile();
+		System.out.println("filename para generador qr " + file.getAbsolutePath());
 		int h=300;
 		int w=300;
         QRCodeWriter writer = new QRCodeWriter();
@@ -49,7 +49,7 @@ public class CodigoQR {
        
         ImageIO.write(image, "png", file);
 
-        return file;
+        return rutaTemp;
 
     }
 

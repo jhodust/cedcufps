@@ -63,10 +63,10 @@ public class AsistenteRestController {
 		System.out.println("texto original: " + texto);
 		texto=Encrypt.encriptar(texto);
 		try {
-			CodigoQR.generateQR("uploads/educacion-continua/"+ec.getId()+"/qr-participantes/"+nombreArchivo, texto);
+			;
 			System.out.println("encriptado: " + texto);
 			System.out.println("desencriptado: " + Encrypt.desencriptar(texto));
-			a.setImagenCodigoQR("/uploads/educacion-continua/"+ec.getId()+"/qr-participantes/"+nombreArchivo);
+			a.setImagenCodigoQR(CodigoQR.generateQR(ec.getId()+"/qr-participantes/"+nombreArchivo, texto));
 			a.setCodigoQR(texto);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -86,7 +86,7 @@ public class AsistenteRestController {
 		Participante p= participanteService.findParticipante(Long.parseLong(idParticipante));
 		System.out.println("participante: " + idParticipante);
 		System.out.println("participante educacion continua: " + p.getEducacionContinua().getId());
-		p.setTarjetaInscripcion(Archivo.saveImage(file,"/uploads/educacion-continua/"+p.getEducacionContinua().getId()+"/tarjetas-inscripcion/inscripcion_"+p.getPersona().getNumeroDocumento()));
+		p.setTarjetaInscripcion(Archivo.saveImageAboutEducacionContinua(file,p.getEducacionContinua().getId()+"/tarjetas-inscripcion/inscripcion_"+p.getPersona().getNumeroDocumento()));
 		participanteService.save(p);
 		System.out.println("tarjeta participante: " + p.getTarjetaInscripcion());
 		return new ResponseEntity<>(HttpStatus.OK);

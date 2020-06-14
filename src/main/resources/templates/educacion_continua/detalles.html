@@ -117,8 +117,8 @@
 		            		<thead><tr><td><span class="text-white badge badge-red-ufps">Imagen</span></td></tr></thead>
 		            		<tbody>
 		            		<tr><td>
-				              <a th:href="@{${educacionContinua.imagen}}" data-fancybox data-caption="My caption">
-								 <img th:src="@{${educacionContinua.imagen}}" class="img-fluid rounded">
+				              <a th:if="${educacionContinua.imagen!=null}" th:href="@{'/'+${educacionContinua.imagen}}" data-fancybox data-caption="My caption">
+								 <img th:src="@{'/'+${educacionContinua.imagen}}" class="img-fluid rounded">
 							  </a>
 							  </td></tr></tbody>
 		            	</table>

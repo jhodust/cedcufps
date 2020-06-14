@@ -70,7 +70,7 @@
 								<th>Nombres</th>
 								<th>Apellidos</th>
 								<th>Tipo Participante</th>
-								<th>Asistencia<br><input type="checkbox" th:each="j : ${jornadas}" th:id="${j.id}+'_all'" class="all" th:data-jornada="${j.id}" data-toggle="tooltip" data-placement="top" th:title="${#strings.capitalizeWords(#dates.format(j.horaInicio, 'dd MMMM yyyy HH:mm'))}"/></th>
+								<th th:if="${educacionContinua.estado != 'Activo'}">Asistencia<br><input type="checkbox" th:each="j : ${jornadas}" th:id="${j.id}+'_all'" class="all" th:data-jornada="${j.id}" data-toggle="tooltip" data-placement="top" th:title="${#strings.capitalizeWords(#dates.format(j.horaInicio, 'dd MMMM yyyy HH:mm'))}"/></th>
 							</tr>
 						</thead>
 						<tbody>
@@ -79,7 +79,7 @@
 								<td th:text="${p.persona.primerNombre + ' ' + p.persona.segundoNombre}"></td>
 								<td th:text="${p.persona.primerApellido + ' ' + p.persona.segundoApellido}"></td>
 								<td th:text="${p.tipoParticipante.tipoParticipante}"></td>
-								<td><input type="checkbox" th:each="j : ${jornadas}" th:class="'checkAsistencia j_'+${j.id}" th:id="${j.id}+'_'+${p.id}" th:data-jornada="${j.id}" th:data-participante="${p.id}" data-toggle="tooltip" data-placement="top" th:title="${#strings.capitalizeWords(#dates.format(j.horaInicio, 'dd MMMM yyyy HH:mm'))}"/></td>
+								<td th:if="${educacionContinua.estado != 'Activo'}"><input type="checkbox" th:each="j : ${jornadas}" th:class="'checkAsistencia j_'+${j.id}" th:id="${j.id}+'_'+${p.id}" th:data-jornada="${j.id}" th:data-participante="${p.id}" data-toggle="tooltip" data-placement="top" th:title="${#strings.capitalizeWords(#dates.format(j.horaInicio, 'dd MMMM yyyy HH:mm'))}"/></td>
     							
 							</tr>
 							
@@ -111,6 +111,7 @@
   </script>
   <script type="text/javascript" th:inline="javascript">
   var token = $("meta[name='_csrf']").attr("content");
+  var eduContinua= [[${educacionContinua}]];
   var participantes= [[${participantes}]];
   var asistencias= [[${asistencias}]];
   var asistenciaGlobal= [[${asistenciaGlobal}]];
@@ -120,8 +121,12 @@
   console.log(asistencias);
   console.log("asistenciaGlobal");
   console.log(asistenciaGlobal);
+  if(eduContinua.estado=="Activo"){
+	  document.getElementById('cardListado').style.display='flex';
+	  document.getElementById('spinner').style.display='none';
+  }
   </script>
-  <script th:src="@{/js/asistencia.js}" type="text/javascript"></script>
+  <script th:if="${educacionContinua.estado != 'Activo'}" th:src="@{/js/asistencia.js}" type="text/javascript"></script>
 </body>
 
 </html>

@@ -127,16 +127,15 @@ public class EducacionContinua implements Serializable {
 	@JoinColumn(name="id_tipo_beneficiario")
 	private TipoBeneficiario tipoBeneficiario;
 	
-	@Column(columnDefinition = "boolean default true")
-	private boolean activo;
+	
+
 	
 	
 	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name="id_diploma")
 	private Diploma diploma;
 
-	@Column(columnDefinition = "varchar(10) default 'Activo'")
-	private String estado;//activo, en curso, finalizado
+	private String estado="Activo";//activo, en curso, finalizado
 	
 	
 	public EducacionContinua() {
@@ -325,13 +324,6 @@ public class EducacionContinua implements Serializable {
 		this.tipoBeneficiario = tipoBeneficiario;
 	}
 
-	public boolean isActivo() {
-		return activo;
-	}
-
-	public void setActivo(boolean activo) {
-		this.activo = activo;
-	}
 
 	public String getLugar() {
 		return lugar;

@@ -45,6 +45,12 @@ public class InicioController {
 		return "/index";
 	}
 	
+	@RequestMapping(value = "/dashboard")
+	public String listar(Model model) {
+		
+		return "reportes-snies/dashboard";
+	}
+	
 	
 	
 	

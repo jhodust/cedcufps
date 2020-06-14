@@ -52,7 +52,9 @@ public interface IEducacionContinuaService {
 	
 	public void updateCodigoEducacionContinua(EducacionContinua ec);
 	
-	public void generarReporteSNIESEducacionContinua(String año);
+	public String generarReporteSNIESFormatoEducacionContinua(String año);
+	
+	public String generarReporteSNIESFormatoCurso(String año);
 	
 	public List<EducacionContinua> findAllEducacionContinuaACargoDocente(String numDocumento);
 	

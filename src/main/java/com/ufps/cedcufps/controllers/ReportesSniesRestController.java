@@ -35,9 +35,9 @@ public class ReportesSniesRestController {
 		if(result.hasErrors()) {
 			return new ResponseEntity<>(result.getAllErrors(),HttpStatus.BAD_REQUEST);
 		}
-		educacionContinuaService.generarReporteSNIESEducacionContinua(i.getAnio());
-		i.setInformeCurso("/reportes_snies/informe_cursos_snies_"+i.getAnio()+".xlsx");
-		i.setInformeEducacionContinua("/reportes_snies/informe_educacion_continua_snies_"+i.getAnio()+".xlsx");
+		
+		i.setInformeCurso(educacionContinuaService.generarReporteSNIESFormatoCurso(i.getAnio()));
+		i.setInformeEducacionContinua(educacionContinuaService.generarReporteSNIESFormatoEducacionContinua(i.getAnio()));
 		informeSniesService.save(i);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}

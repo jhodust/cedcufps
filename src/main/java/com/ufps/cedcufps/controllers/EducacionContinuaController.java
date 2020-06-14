@@ -157,7 +157,11 @@ public class EducacionContinuaController {
 		educacionContinuaService.updateCodigoEducacionContinua(ec);
 		System.out.println("id ec: " + ec.getId());
 		generarDirectoriosPropios(ec);
-		guardarImagenPortada(ec,imagen);
+		if(imagen!=null) {
+			guardarImagenPortada(ec,imagen);
+		}
+		System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!estado!!!!!!!!!!!!!!!!!!!!!!!!");
+		System.out.println(ec.getEstado());
 		status.setComplete();
 		redirectAttributes.addFlashAttribute("successMessage", "Se ha guardado la información correctamente...");
 		return "redirect:/educacion-continua";
@@ -332,10 +336,10 @@ public class EducacionContinuaController {
 	
 	
 	public void generarDirectoriosPropios(EducacionContinua ec) {
-		Archivo.crearDirectorio("uploads/educacion-continua/"+ec.getId());//directorio de la educacion continua
-		Archivo.crearDirectorio("uploads/educacion-continua/"+ec.getId()+"/qr-participantes");//directorio interno de los qr de participantes de la educacion continua
-		Archivo.crearDirectorio("uploads/educacion-continua/"+ec.getId()+"/tarjetas-inscripcion");
-		Archivo.crearDirectorio("uploads/educacion-continua/"+ec.getId()+"/plantilla-diploma");
+		Archivo.crearDirectorio(String.valueOf(ec.getId()));//directorio de la educacion continua
+		Archivo.crearDirectorio(ec.getId()+"/qr-participantes");//directorio interno de los qr de participantes de la educacion continua
+		Archivo.crearDirectorio(ec.getId()+"/tarjetas-inscripcion");
+		Archivo.crearDirectorio(ec.getId()+"/plantilla-diploma");
 	}
 	
 	public  void guardarImagenPortada(EducacionContinua ec, MultipartFile imagen) {
@@ -343,8 +347,10 @@ public class EducacionContinuaController {
 			if(ec.getImagen()!=null && !ec.getImagen().isEmpty()) {
 				Archivo.deleteImage(ec.getImagen());
 			}
-			ec.setImagen(Archivo.saveImage(imagen,"/uploads/educacion-continua/"+ec.getId()+"/portada"));
+			ec.setImagen(Archivo.saveImageAboutEducacionContinua(imagen,ec.getId()+"/portada"));
 			educacionContinuaService.save(ec);
+			System.out.println("actualizando guardar imagen edu continua");
+			System.out.println(ec.getImagen());
 		}
 	}
 	

@@ -83,8 +83,8 @@ public class PonenteRestController {
 				try {
 					System.out.println("encriptado: " + ponente.getCodigoQR());
 					System.out.println("desencriptado: " + Encrypt.desencriptar(ponente.getCodigoQR()));
-					CodigoQR.generateQR("uploads/educacion-continua/"+ec.getId()+"/qr-participantes/"+nombreArchivo, ponente.getCodigoQR());
-					ponente.setImagenCodigoQR("/uploads/educacion-continua/"+ec.getId()+"/qr-participantes/"+nombreArchivo);
+					ponente.setImagenCodigoQR(CodigoQR.generateQR(ec.getId()+"/qr-participantes/"+nombreArchivo, ponente.getCodigoQR()));
+					
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

@@ -42,7 +42,7 @@
         </div>
         <hr/>
         <div th:if="${#lists.size(ponentes) == 0}">
-        	<center><span class="badge badge-danger">No existen ponentes registrados(as)</span></center>
+        	<center><span class="badge badge-red-ufps">No existen ponentes registrados(as)</span></center>
         </div>
 		<div class="row">
 			<div class="col-lg-4 hover-scale-110" th:each="p: ${ponentes}">

@@ -38,9 +38,14 @@ import java.util.List;
 import java.util.Map;
 
 public class ReportesExcel {
-
-	public static void reporteCursos(String ruta, List<EducacionContinua> ec, String anio) {
-		Path rutaArchivo = Paths.get("src//main//resources//static" + ruta);
+	
+	public final static String rutaPlantillaEducacionContinua="src/main/resources/static/formatos_reportes_excel/formato_educacion_continua.xlsx";
+	public final static String rutaPlantillaCursos="src/main/resources/static/formatos_reportes_excel/formato_cursos.xlsx";
+	public final static String rutaReportes="files/reportes_snies/";
+	
+	public static String reporteCursos(List<EducacionContinua> ec, String anio) {
+		String filename=rutaReportes+"informe_cursos_snies_"+anio+".xlsx";
+		Path rutaArchivo = Paths.get(rutaPlantillaEducacionContinua);
 		FileInputStream file;
 		try {
 			file = new FileInputStream(rutaArchivo.toFile());
@@ -74,7 +79,7 @@ public class ReportesExcel {
 
 				// activo
 				cell = row.createCell(4);
-				if(e.isActivo()) {
+				if(!e.getEstado().equalsIgnoreCase("Terminado")) {
 					cell.setCellValue("S");
 				}else {
 					cell.setCellValue("N");
@@ -85,19 +90,20 @@ public class ReportesExcel {
 
 			
 			
-			Path nuevoArchivo = Paths.get("src//main//resources//static//reportes_snies");
-			String fileLocation = nuevoArchivo.toAbsolutePath() + "//informe_cursos_snies_"+anio+".xlsx";
-			FileOutputStream outputStream = new FileOutputStream(fileLocation);
+			File nuevoArchivo=Paths.get(filename).toAbsolutePath().toFile();
+			FileOutputStream outputStream = new FileOutputStream(nuevoArchivo.getAbsolutePath());
 			workbook.write(outputStream);
 			workbook.close();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return filename;
 	}
 	
-	public static void reporteEducacionContinua(String ruta, List<EducacionContinua> ec, String anio) {
-		Path rutaArchivo = Paths.get("src//main//resources//static" + ruta);
+	public static String reporteEducacionContinua(List<EducacionContinua> ec, String anio) {
+		String filename=rutaReportes+"informe_educacion_continua_snies_"+anio+".xlsx";
+		Path rutaArchivo = Paths.get(rutaPlantillaCursos);
 		FileInputStream file;
 		try {
 			file = new FileInputStream(rutaArchivo.toFile());
@@ -313,16 +319,17 @@ public class ReportesExcel {
 			}
 
 			
-			
-			Path nuevoArchivo = Paths.get("src//main//resources//static//reportes_snies");
-			String fileLocation = nuevoArchivo.toAbsolutePath() + "//informe_educacion_continua_snies_"+anio+".xlsx";
-			FileOutputStream outputStream = new FileOutputStream(fileLocation);
+			File nuevoArchivo=Paths.get(filename).toAbsolutePath().toFile();
+			FileOutputStream outputStream = new FileOutputStream(nuevoArchivo.getAbsolutePath());
 			workbook.write(outputStream);
 			workbook.close();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			
 		}
+		
+		return filename;
 	}
 
 

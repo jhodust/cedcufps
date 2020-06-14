@@ -45,7 +45,7 @@ function guardarPonente(){
 				creacionTarjetaInscripcion(result);
 			}
 			toastr.success('Se ha guardado el ponente', 'Excelente!');
-			//window.setTimeout(function(){location.reload()},1000);
+			window.setTimeout(function(){location.reload()},1000);
 			//actualizarConsultaPonentes();
 			console.log("el metodo guardarPonente deja idEDuContinua en: " +idEducacionContinua);
 		},

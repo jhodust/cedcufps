@@ -42,7 +42,7 @@ public class InicioController {
 		model.addAttribute("educacionesContinuas",edc);
 		model.addAttribute("page",pageRender);
 		//educacionContinuaService.generarReporteSNIESEducacionContinua(new Date(), 0);
-		return "/index";
+		return "index";
 	}
 	
 	@RequestMapping(value = "/dashboard")

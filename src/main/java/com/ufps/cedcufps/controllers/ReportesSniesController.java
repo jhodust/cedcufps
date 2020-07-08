@@ -35,7 +35,7 @@ public class ReportesSniesController {
 	@RequestMapping(value = "/reportes-SNIES")
 	public String listar(Map<String, Object> model) {
 		model.put("informesSnies",informeSniesService.findAll());
-		return "/reportes-snies/index";
+		return "reportes-snies/index";
 	}
 	
 	

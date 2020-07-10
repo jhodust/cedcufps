@@ -32,7 +32,7 @@ public class FacultadController {
 	
 	@RequestMapping(value = "/facultades")
 	public String listar(@RequestParam(name="page", defaultValue = "0") int page, Map<String, Object> model) {
-		Pageable pageRequest=PageRequest.of(page, 2);
+		Pageable pageRequest=PageRequest.of(page, 9);
 		Page<Facultad> facultades=facultadService.findAll(pageRequest);
 		PageRender<Facultad> pageRender= new PageRender<Facultad>("/facultades", facultades);
 		model.put("facultades",facultades);	

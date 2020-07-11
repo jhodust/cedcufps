@@ -63,7 +63,7 @@ public class Programa implements Serializable {//1
 	@JoinColumn(name = "id_programa")
 	private List<EducacionContinua> educacionesContinuas;
 	
-	@NotNull(message =  "Seleccione director(a) del Programa")
+	//@NotNull(message =  "Seleccione director(a) del Programa")
 	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="id_director")
 	private Docente directorPrograma;

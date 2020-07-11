@@ -19,7 +19,7 @@ toastr.options = {
 		}
 $(document).ready(function ()
 		{
-				
+			
 			/*$.getJSON('http://localhost:8080/programas-academicos/listar', function(json) {
 				console.log(json)
 			});*/
@@ -43,6 +43,39 @@ $(document).ready(function ()
 		}
 		
 	});
+	
+	$('#select_director_programa').on("change", function (e) { 
+		e.preventDefault();
+		var docente= $(this).find('option:selected').text();
+		var id=$(this).find('option:selected').val();
+		var docente = {
+            "id" : id
+		}
+
+        $.ajax({
+			headers: {"X-CSRF-TOKEN": token},
+            type: "GET",
+            url: "/programa/search-director?" + $.param(docente),
+            dataType : 'json',
+            contentType: "application/json; charset=utf-8",
+			cache: false,
+			success: function(result) {
+				
+				if(result.length != 0){
+					toastr.info("El/La docente ya es director del programa " + result[0].programa + " y sería desvinculado.", 'Atención!',
+					{ "closeButton": true,
+					  "positionClass": "toast-top-right",
+					  "preventDuplicates": false,
+					  "showDuration": "200",
+					  "hideDuration": "1000",
+					  "timeOut": "12000"})
+				}
+				
+			},
+        });
+		
+	});
+	
 });
 
 
@@ -111,6 +144,7 @@ function guardarPrograma(){
 	
 }
 function editarPrograma(elemento){
+	
 	$.ajax({
 		headers: {"X-CSRF-TOKEN": token},
 		type: "GET",
@@ -124,7 +158,9 @@ function editarPrograma(elemento){
 			$('#programa').val(result.programa);
 			$('#select_facultad_programa').val(result.facultad.id);
 			$('#select_facultad_programa').select2().trigger('change');
-			$('#select_director_programa').val(result.directorPrograma.id);
+			if(result.directorPrograma!=null){
+				$('#select_director_programa').val(result.directorPrograma.id);	
+			}
 			$('#select_director_programa').select2().trigger('change');
 			idPrograma=elemento.dataset.id;
 			 

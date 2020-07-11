@@ -36,8 +36,16 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 		.antMatchers("/educacion-continua-a-cargo").hasRole("DOCENTE")
 		.anyRequest().authenticated()
 		.and()
-		.oauth2Login();
+			.formLogin().successHandler(successHandler).loginPage("/login")
+			.permitAll()
+		.and()
+		.logout().permitAll();
 		
+		/*
+		http.authorizeRequests()
+		.anyRequest().authenticated()
+		.and()
+		.oauth2Login();*/
 	}
 	
 	

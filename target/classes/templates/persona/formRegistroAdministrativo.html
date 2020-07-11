@@ -36,7 +36,7 @@
             </div>
             <div th:if="${administrativo.id != null}" class="col-md-6 d-flex align-items-center justify-content-between justify-content-md-end">
               <div class="actions actions-dark d-inline-block">
-                <a href="#" class="btn btn-sm btn-white">
+                <a th:href="@{/persona/{id}/permisos(id=${administrativo.id})}" class="btn btn-sm btn-white">
                   <i class="fas fa-user-cog mr-2"></i>Roles Usuario
                 </a>
               </div>

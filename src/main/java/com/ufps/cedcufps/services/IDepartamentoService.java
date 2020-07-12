@@ -14,9 +14,9 @@ public interface IDepartamentoService {
 	
 	public Page<Departamento> findAll(Pageable pageable);
 	
-	public void save(Departamento p);
+	public void save(Departamento d);
 	
-	public Optional<Departamento> findOne(Long id);
+	public Departamento findOne(Long id);
 	
 	public List<Departamento> findByFacultad(String facultad);
 	

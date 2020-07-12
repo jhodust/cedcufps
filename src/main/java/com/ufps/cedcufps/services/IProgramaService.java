@@ -17,11 +17,11 @@ public interface IProgramaService {
 	
 	public void save(Programa p);
 	
-	public Optional<Programa> findOne(Long id);
+	public Programa findOne(Long id);
 	
 	public List<Programa> findByFacultad(String facultad);
 	
 	public Page<Programa> findByFacultad(String facultad,Pageable pageable);
 	
-	public List<Programa> findProgramaByDirector(Long idDir);
+	public List<Programa> findProgramaByDirector(Long idDir,Long idPrograma);
 }

@@ -34,11 +34,8 @@ public class FacultadRestController {
 	
 	@GetMapping(value="/facultad/search/{id}", produces = "application/json")
     public ResponseEntity<?> buscarPorFacultad(@PathVariable Long id) {
-		Facultad f=facultadService.findOne(id).get();
-		if(f==null) {
-			return new ResponseEntity<>("No se encontró el Programa Académico",HttpStatus.BAD_REQUEST);
-		}
-		return  new ResponseEntity<>(f,HttpStatus.OK); 
+		
+		return  new ResponseEntity<>(facultadService.findOne(id),HttpStatus.OK); 
     }
 	
 	

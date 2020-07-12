@@ -10,7 +10,8 @@ $(document).ready(function ()
 	$('#modalRegistroDepartamento').on('show.bs.modal', function (event) {
 		$('#departamento').val("");
 		$('#select_facultad_departamento').val(0).trigger('change');
-		idDepartamento=null;
+		idDepartamento=0;
+		limpiarErrores();
 	});
 	
 	$('#select_facultad_filtro_departamento').on("change", function (e) { 
@@ -51,22 +52,28 @@ function guardarDepartamento(){
 			idFacultad=null;
 		},
 		error: function(err) {
-			toastr.error('No se pudo procesar la solicitud...', 'Error!');
-			console.log(err);
-			err.responseJSON.forEach(function(error){
-				if(error.field=="departamento"){
-					var inputDepto=document.getElementById('departamento');
-					var errorDepto=document.getElementById('errorDepartamento');
-					errorDepto.innerText=error.defaultMessage;
-					inputDepto.classList.add("is-invalid");
-				}
-				if(error.field=="facultad"){
-					var selectFacultad=document.getElementById('select_facultad_departamento');
-					var errorSelectFacultad=document.getElementById('errorSelectFacultad');
-					errorSelectFacultad.innerText=error.defaultMessage;
-					selectFacultad.classList.add("is-invalid");
-				}
-			  });
+			  console.log(err);
+			if(err.responseJSON.length >0){
+				toastr.error('No se pudo procesar la solicitud...', 'Error!');
+				err.responseJSON.forEach(function(error){
+					if(error.field=="departamento"){
+						var inputDepto=document.getElementById('departamento');
+						var errorDepto=document.getElementById('errorDepartamento');
+						errorDepto.innerText=error.defaultMessage;
+						inputDepto.classList.add("is-invalid");
+					}
+					if(error.field=="facultad"){
+						var selectFacultad=document.getElementById('select_facultad_departamento');
+						var errorSelectFacultad=document.getElementById('errorSelectFacultad');
+						errorSelectFacultad.innerText=error.defaultMessage;
+						selectFacultad.classList.add("is-invalid");
+					}
+				  });
+			  
+			}else{
+				toastr.error(err.responseJSON.message, 'Error!');
+				
+			}
 		}
 	});
 	
@@ -89,7 +96,7 @@ function editarDepartamento(elemento){
 			
 		},
 		error: function(err) {
-			
+			toastr.error(err.responseJSON.message, 'Error!');
 		}
 	});
 		

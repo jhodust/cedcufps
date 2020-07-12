@@ -39,11 +39,8 @@ public class ProgramaRestController {
 	
 	@GetMapping(value="/programa/search/{id}", produces = "application/json")
     public ResponseEntity<?> buscarPorPrograma(@PathVariable Long id) {
-		Programa p=programaService.findOne(id).get();
-		if(p==null) {
-			return new ResponseEntity<>("No se encontró el Programa Académico",HttpStatus.BAD_REQUEST);
-		}
-		return  new ResponseEntity<>(p,HttpStatus.OK);
+		
+		return  new ResponseEntity<>(programaService.findOne(id),HttpStatus.OK);
     }
 	
 	
@@ -59,9 +56,9 @@ public class ProgramaRestController {
 	}
 	
 	@GetMapping(value="/programa/search-director", produces = "application/json")
-    public ResponseEntity<?> buscarDirectorPrograma(@RequestParam(name = "id", required = true) Long idDir) {
+    public ResponseEntity<?> buscarDirectorPrograma(@RequestParam(name = "id", required = true) Long idDir, @RequestParam(name = "idP", required = true) Long idPrograma) {
 		
-		return  new ResponseEntity<>(programaService.findProgramaByDirector(idDir),HttpStatus.OK);
+		return  new ResponseEntity<>(programaService.findProgramaByDirector(idDir,idPrograma),HttpStatus.OK);
     }
 	
 

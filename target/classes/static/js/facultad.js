@@ -9,7 +9,8 @@ $(document).ready(function ()
 			
 	$('#modalRegistroFacultad').on('show.bs.modal', function (event) {
 		$('#facultad').val("");
-		idFacultad=null;
+		idFacultad=0;
+		limpiarErrores();
 	});
 });
 
@@ -27,26 +28,25 @@ function guardarFacultad(){
 			console.log(result);
 			toastr.success('Se ha guardado la información', 'Excelente!');
 			window.setTimeout(function(){location.reload()},1000);
-			idFacultad=null;
+			idFacultad=0;
 		},
 		error: function(err) {
-			toastr.error('No se pudo procesar la solicitud...', 'Error!');
-			
-			err.responseJSON.forEach(function(error){
-				if(error.field=="facultad"){
-					var inputFacultad=document.getElementById('facultad');
-					var errorFacultad=document.getElementById('errorFacultad');
-					errorFacultad.innerText=error.defaultMessage;
-					inputFacultad.classList.add("is-invalid");
-				}
-			  });
-			
-				
-			
-			
-			//console.log(err.responseJSON[0].defaultMessage);
 			console.log(err);
-			//$("#msg").html( "<span style='color: red'>Programa is required</span>" );
+			if(err.responseJSON.length >0){
+				toastr.error('No se pudo procesar la solicitud...', 'Error!');
+				err.responseJSON.forEach(function(error){
+					if(error.field=="facultad"){
+						var inputFacultad=document.getElementById('facultad');
+						var errorFacultad=document.getElementById('errorFacultad');
+						errorFacultad.innerText=error.defaultMessage;
+						inputFacultad.classList.add("is-invalid");
+					}
+				  });
+			  
+			}else{
+				toastr.error(err.responseJSON.message, 'Error!');
+				
+			}
 		}
 	});
 	
@@ -68,9 +68,16 @@ function editarFacultad(elemento){
 			
 		},
 		error: function(err) {
-			console.log("errores");
 			console.log(err);
+			toastr.error(err.responseJSON.message, 'Error!');
 		}
 	});
 		
+}
+
+function limpiarErrores(){
+	var inputFacultad=document.getElementById('facultad');
+	var errorFacultad=document.getElementById('errorFacultad');
+	errorFacultad.innerText="";
+	inputFacultad.classList.remove("is-invalid");
 }

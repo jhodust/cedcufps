@@ -38,11 +38,8 @@ public class DepartamentoRestController {
 	
 	@GetMapping(value="/departamento/search/{id}", produces = "application/json")
     public ResponseEntity<?> buscarPorFacultad(@PathVariable Long id) {
-        Departamento d=departamentoService.findOne(id).get();
-        if(d==null) {
-        	return new ResponseEntity<>("No se encontró el Departamento Académico",HttpStatus.BAD_REQUEST);
-        }
-        return  new ResponseEntity<>(d,HttpStatus.OK);
+        
+        return  new ResponseEntity<>(departamentoService.findOne(id),HttpStatus.OK);
     }
 	
 	

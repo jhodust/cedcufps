@@ -26,7 +26,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
-@Table(name="programas")
+@Table(name="programas", uniqueConstraints={
+		   @UniqueConstraint(columnNames={"codigo"})})
 public class Programa implements Serializable {//1
 	/**
 	 * 
@@ -37,10 +38,10 @@ public class Programa implements Serializable {//1
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	
+	@NotNull
 	@NotEmpty(message = "El campo código es requerido")
 	@Pattern(regexp = "^([0-9]{3,3})*$", message = "El código debe contener 3 dígitos")
-	@Column(unique = true)
+	//@Column(unique = true)
 	private String codigo;
 	
 	@NotEmpty(message = "El campo programa es requerido")
@@ -63,7 +64,7 @@ public class Programa implements Serializable {//1
 	@JoinColumn(name = "id_programa")
 	private List<EducacionContinua> educacionesContinuas;
 	
-	@NotNull(message =  "Seleccione director(a) del Programa")
+	//@NotNull(message =  "Seleccione director(a) del Programa")
 	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="id_director")
 	private Docente directorPrograma;

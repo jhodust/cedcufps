@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ufps.cedcufps.modelos.Departamento;
@@ -38,11 +39,8 @@ public class ProgramaRestController {
 	
 	@GetMapping(value="/programa/search/{id}", produces = "application/json")
     public ResponseEntity<?> buscarPorPrograma(@PathVariable Long id) {
-		Programa p=programaService.findOne(id).get();
-		if(p==null) {
-			return new ResponseEntity<>("No se encontró el Programa Académico",HttpStatus.BAD_REQUEST);
-		}
-		return  new ResponseEntity<>(p,HttpStatus.OK);
+		
+		return  new ResponseEntity<>(programaService.findOne(id),HttpStatus.OK);
     }
 	
 	
@@ -56,6 +54,12 @@ public class ProgramaRestController {
 		programaService.save(programa);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
+	
+	@GetMapping(value="/programa/search-director", produces = "application/json")
+    public ResponseEntity<?> buscarDirectorPrograma(@RequestParam(name = "id", required = true) Long idDir, @RequestParam(name = "idP", required = true) Long idPrograma) {
+		
+		return  new ResponseEntity<>(programaService.findProgramaByDirector(idDir,idPrograma),HttpStatus.OK);
+    }
 	
 
 }

@@ -19,7 +19,7 @@ toastr.options = {
 		}
 $(document).ready(function ()
 		{
-				
+			
 			/*$.getJSON('http://localhost:8080/programas-academicos/listar', function(json) {
 				console.log(json)
 			});*/
@@ -29,7 +29,8 @@ $(document).ready(function ()
 		$('#programa').val("");
 		$('#select_facultad_programa').val(0).trigger('change');
 		$('#select_director_programa').val(0).trigger('change');
-		idPrograma=null;
+		idPrograma=0;
+		limpiarErrores();
 	});
 	
 	$('#select_facultad_filtro_programa').on("change", function (e) { 
@@ -43,6 +44,40 @@ $(document).ready(function ()
 		}
 		
 	});
+	
+	$('#select_director_programa').on("change", function (e) { 
+		e.preventDefault();
+		var docente= $(this).find('option:selected').text();
+		var id=$(this).find('option:selected').val();
+		var docente = {
+            "id" : id,
+            "idP": idPrograma
+		}
+		toastr.clear();
+        $.ajax({
+			headers: {"X-CSRF-TOKEN": token},
+            type: "GET",
+            url: "/programa/search-director?" + $.param(docente),
+            dataType : 'json',
+            contentType: "application/json; charset=utf-8",
+			cache: false,
+			success: function(result) {
+				console.log(result);
+				if(result.length > 0){
+					toastr.info("El/La docente ya es director del programa " + result[0].programa + " y sería desvinculado.", 'Atención!',
+					{ "closeButton": true,
+					  "positionClass": "toast-top-right",
+					  "preventDuplicates": false,
+					  "showDuration": "200",
+					  "hideDuration": "1000",
+					  "timeOut": "12000"})
+				}
+				
+			},
+        });
+		
+	});
+	
 });
 
 
@@ -51,6 +86,7 @@ function guardarPrograma(){
 	var programa = $('#programa').val();
 	var id_facultad = document.getElementById("select_facultad_programa").value;
 	var id_director = document.getElementById("select_director_programa").value;
+	
 	var JSONprograma={};
 	JSONprograma.id=idPrograma;
 	JSONprograma.codigo=codigo;
@@ -64,22 +100,26 @@ function guardarPrograma(){
 		JSONprograma.directorPrograma.id=id_director;
 	}
 	limpiarErrores();
+	console.log("json enviado: ");
+	console.log(JSONprograma);
 	$.ajax({
 		headers: {"X-CSRF-TOKEN": token},
 		type: "POST",
 		contentType: "application/json; charset=utf-8",
 		data: JSON.stringify(JSONprograma),
-		url: "http://localhost:8080/programa/save",
+		url: "/programa/save",
 		cache: false,
 		success: function(result) {
 			toastr.success('Se ha guardado la información', 'Excelente!')
 			window.setTimeout(function(){location.reload()},1000);
-			idPrograma=null;
+			idPrograma=0;
 		},
 		error: function(err) {
-			toastr.error('No se pudo procesar la solicitud...', 'Error!');
+			
 			console.log(err);
-			err.responseJSON.forEach(function(error){
+			if(err.responseJSON.length >0){
+				toastr.error('No se pudo procesar la solicitud...', 'Error!');
+				err.responseJSON.forEach(function(error){
 				if(error.field=="programa"){
 					var inputPrograma=document.getElementById('programa');
 					var errorPrograma=document.getElementById('errorPrograma');
@@ -105,12 +145,18 @@ function guardarPrograma(){
 					selectDirector.classList.add("has-error");
 				}
 			  });
+			}else{
+				toastr.error(err.responseJSON.message, 'Error!');
+				
+			}
+			
 		}
 	});
 	
 	
 }
 function editarPrograma(elemento){
+	
 	$.ajax({
 		headers: {"X-CSRF-TOKEN": token},
 		type: "GET",
@@ -120,18 +166,22 @@ function editarPrograma(elemento){
 		success: function(result) {
 			console.log(result);
 			$('#modalRegistroPrograma').modal();
+			idPrograma=result.id;
 			$('#codigo').val(result.codigo);
 			$('#programa').val(result.programa);
 			$('#select_facultad_programa').val(result.facultad.id);
 			$('#select_facultad_programa').select2().trigger('change');
-			$('#select_director_programa').val(result.directorPrograma.id);
+			if(result.directorPrograma!=null){
+				$('#select_director_programa').val(result.directorPrograma.id);	
+			}
 			$('#select_director_programa').select2().trigger('change');
-			idPrograma=elemento.dataset.id;
+			
 			 
 			
 		},
 		error: function(err) {
 			console.log(err);
+			toastr.error(err.responseJSON.message, 'Error!');
 		}
 	});
 	

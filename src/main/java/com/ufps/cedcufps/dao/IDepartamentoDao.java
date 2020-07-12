@@ -20,4 +20,7 @@ public interface IDepartamentoDao extends PagingAndSortingRepository<Departament
 	
 	@Query("select d from Departamento d where d.facultad.facultad = ?1")
 	public Page<Departamento> findByFacultad(String facultad,Pageable pageable);
+	
+	@Query("select count(d) from Departamento d where d.id != ?1 and d.departamento = ?2")
+	public int cantidadDeptosExistentes(Long idDepto, String depto);
 }

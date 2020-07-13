@@ -70,7 +70,7 @@
                   <div class="col">
                   	<span class="h5 font-weight-bold mb-0" th:text="${p.programa}"></span>
                     <h6 class="text-muted mb-1" th:text="${p.codigo}"></h6>
-                    <h6 style="font-style: italic;"  th:text="${p.directorPrograma} ? ('Director(a): ' +(${p?.directorPrograma?.primerNombre} ?:'') +' '+ (${p?.directorPrograma?.segundoNombre} ?:'') +' '+ (${p?.directorPrograma?.primerApellido} ?:'')+' '+ (${p?.directorPrograma?.segundoApellido} ?:'')) : 'Director(a): No Registra'"></h6>
+                    <h6 class="text-sm" style="font-style: italic;"  th:text="${p.directorPrograma} ? ('Director(a): ' +(${p?.directorPrograma?.primerNombre} ?:'') +' '+ (${p?.directorPrograma?.segundoNombre} ?:'') +' '+ (${p?.directorPrograma?.primerApellido} ?:'')+' '+ (${p?.directorPrograma?.segundoApellido} ?:'')) : 'Director(a): No Registra'"></h6>
                   </div>
                   <!-- <div class="col-auto">
                     <div class=" bg-gradient-light text-white rounded-circle icon-shape">

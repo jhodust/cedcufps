@@ -67,48 +67,14 @@ public class PonenteRestController {
 		if(result.hasErrors()) {
 			return new ResponseEntity<>(result.getAllErrors(),HttpStatus.BAD_REQUEST);
 		}
-		Persona p=personaService.findOne(ponente.getPersona().getId()).get();
-		EducacionContinua ec=educacionContinuaService.findOne(ponente.getEducacionContinua().getId()).get();
-		TipoParticipante tp=participanteService.findTipoParticipanteById(ponente.getTipoParticipante().getId());
-		/*preparando qr de inscripcion*/
-		if(ponente.getId()==null) {
-			if(p!=null && ec!=null) {
-				ponente.setPersona(p);
-				ponente.setEducacionContinua(ec);
-				ponente.setTipoParticipante(tp);
-				
-				String texto=ec.getProgramaResponsable().getCodigo()+"_"+ec.getTipoEduContinua().getId()+"_"+ec.getId()+"_"+ponente.getTipoParticipante().getId()+"_"+p.getNumeroDocumento();
-				String nombreArchivo=p.getNumeroDocumento()+".png";
-				ponente.setCodigoQR(Encrypt.encriptar(texto));
-				try {
-					System.out.println("encriptado: " + ponente.getCodigoQR());
-					System.out.println("desencriptado: " + Encrypt.desencriptar(ponente.getCodigoQR()));
-					ponente.setImagenCodigoQR(CodigoQR.generateQR(ec.getId()+"/qr-participantes/"+nombreArchivo, ponente.getCodigoQR()));
-					
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}else {
-				return new ResponseEntity<>("No se pudo procesar la solicitud",HttpStatus.BAD_REQUEST);
-			}
-		}else {
-			Ponente po=(Ponente)participanteService.findOne(ponente.getId()).get();
-			po.setTema(ponente.getTema());
-			ponente=po;
-		}
-		
-			participanteService.save(ponente);
-			return new ResponseEntity<>(ponente,HttpStatus.OK);
-		
-		
-		
+		participanteService.savePonente(ponente);
+		return new ResponseEntity<>(participanteService.findByIdEducacionContinuaAndIdPersona(ponente.getEducacionContinua().getId(), ponente.getPersona().getId()),HttpStatus.OK);
 	}
 	
 	@PostMapping(value="/educacion-continua/ponente/delete")
-    public String deletePonente(@RequestBody Ponente ponente) {
+    public ResponseEntity<?> deletePonente(@RequestBody Ponente ponente) {
 		participanteService.deleteParticipante(ponente);
-		 return "sisas";
+		return new ResponseEntity<>("Se ha eliminado el ponente exitosamente",HttpStatus.OK);
 		
     }
 

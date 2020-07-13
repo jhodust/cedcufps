@@ -43,3 +43,9 @@ a.page-link-ufps:hover{color:#bc0017; background-color:#fff}
   background-color: #bc0017;
   color:#fff;
 }
+a.actions-red-ufps{
+  color:#bc0017;
+}
+a.actions-red-ufps:hover {
+color:#ec0017;
+}

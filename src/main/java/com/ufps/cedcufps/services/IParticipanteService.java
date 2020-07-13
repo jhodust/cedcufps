@@ -34,4 +34,6 @@ public interface IParticipanteService {
 	public List<Participante> findAllParticipantesByEducacionContinua(Long idEduContinua);
 	
 	public TipoParticipante findTipoParticipanteById(Long id);
+	
+	public void savePonente(Ponente p);
 }

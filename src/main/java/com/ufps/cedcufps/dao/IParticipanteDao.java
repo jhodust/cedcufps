@@ -21,6 +21,10 @@ public interface IParticipanteDao extends CrudRepository<Participante, Long> {
 
 	@Query("select p from Participante p where p.persona.numeroDocumento = ?1 and p.educacionContinua.estado!='Terminado'")
 	List<Participante> findAllParticipacionesActivasByParticipante(String numDocumento);
+	
 	@Query("select p from Participante p where p.educacionContinua.id = ?1 ORDER BY p.persona.primerApellido")
 	List<Participante> findAllParticipantesByEducacionContinua(Long idEduContinua);
+	
+	@Query("select p from Participante p where p.educacionContinua.id = ?1 and p.persona.id = ?2")
+	public Participante validarParticipanteYaInscrito(Long idEduContinua, Long idPersona);
 }

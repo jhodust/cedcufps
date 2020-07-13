@@ -56,10 +56,10 @@
                     
                     <img alt="Image placeholder" th:src="@{/logos/ponente.png}" class="avatar">
                    	<div class="row ml-1">
-                    	<a href="#" onclick="editarPonente(this)" class="action-item" th:data-id="${p.id}" data-toggle="tooltip" data-placement="bottom" title="Editar">
+                    	<a href="#" onclick="editarPonente(this)" class="action-item actions-red-ufps" th:data-id="${p.id}" data-toggle="tooltip" data-placement="bottom" title="Editar">
 	                    <i class="far fa-edit"></i>
 	                  </a>
-	                  <a href="#" onclick="editarDepartamento(this)" class="action-item text-danger" th:data-id="${p.id}" data-toggle="tooltip" data-placement="bottom" title="Eliminar">
+	                  <a href="#" onclick="eliminarPonente(this)" class="action-item actions-red-ufps" th:data-id="${p.id}" data-toggle="tooltip" data-placement="bottom" title="Eliminar">
 	                    <i class="far fa-trash-alt"></i>
 	                  </a>
 	                  
@@ -71,7 +71,7 @@
 					
                     <strong><span class="text-sm text-muted"><i class="fas fa-info-circle"></i> Nombre</span></strong>
                     <br>
-                    <p class="text-sm text-muted" th:text="${p.persona.primerNombre + ' ' + p.persona.segundoNombre + ' ' + p.persona.primerApellido + ' ' + p.persona.segundoApellido}"></p>
+                    <p class="text-sm text-muted" th:text="(${p?.persona?.primerNombre} ?:'') +' '+ (${p?.persona?.segundoNombre} ?:'') +' '+ (${p?.persona?.primerApellido} ?:'')+' '+ (${p?.persona?.segundoApellido} ?:'')"></p>
                     <strong><span class="text-sm text-muted"><i class="fas fa-info-circle"></i> Tema</span></strong>
                     <br>
                     <p class="text-sm text-muted"  th:text="${p.tema}"></p>

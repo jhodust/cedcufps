@@ -7,10 +7,20 @@
 # BlueJ files
 *.ctxt
 
-#directorios
+# directorios
 target/**
 /target/**
 /target/**
+target/
+
+# STS
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/

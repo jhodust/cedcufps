@@ -50,22 +50,28 @@ function guardarPonente(){
 			console.log("el metodo guardarPonente deja idEDuContinua en: " +idEducacionContinua);
 		},
 		error: function(err) {
-			toastr.error('No se pudo procesar la solicitud...', 'Error!');
 			console.log(err);
-			err.responseJSON.forEach(function(error){
-				if(error.field=="persona"){
-					var selectPonente=document.getElementById('select_ponentes');
-					var errorPonente=document.getElementById('errorPonente');
-					errorPonente.innerText=error.defaultMessage;
-					selectPonente.classList.add("is-invalid");
-				}
-				if(error.field=="tema"){
-					var inputTema=document.getElementById('temaPonente');
-					var errorTema=document.getElementById('errorTema');
-					errorTema.innerText=error.defaultMessage;
-					inputTema.classList.add("is-invalid");
-				}
-			  });
+			if(err.responseJSON.length >0){
+				toastr.error('No se pudo procesar la solicitud...', 'Error!');
+				err.responseJSON.forEach(function(error){
+					if(error.field=="persona"){
+						var selectPonente=document.getElementById('select_ponentes');
+						var errorPonente=document.getElementById('errorPonente');
+						errorPonente.innerText=error.defaultMessage;
+						selectPonente.classList.add("is-invalid");
+					}
+					if(error.field=="tema"){
+						var inputTema=document.getElementById('temaPonente');
+						var errorTema=document.getElementById('errorTema');
+						errorTema.innerText=error.defaultMessage;
+						inputTema.classList.add("is-invalid");
+					}
+				  });
+			  
+			}else{
+				toastr.error(err.responseJSON.message, 'Error!');
+				
+			}
 		}
 	});
 	
@@ -106,12 +112,12 @@ function eliminarPonente(elemento){
 		url: "/educacion-continua/ponente/delete",
 		cache: false,
 		success: function(result) {
-				console.log(result);
-			 toastr.success('Se ha eliminado la información del ponente', 'Excelente!')
-			 actualizarConsultaPonentes();
+			 console.log(result);
+			 toastr.success(result, 'Excelente!');
+			 window.setTimeout(function(){location.reload()},1000);
 		},
 		error: function(err) {
-			$("#msg").html( "<span style='color: red'>Programa is required</span>" );
+			toastr.error(err.responseJSON.message, 'Error!');
 		}
 	});
 		

@@ -9,6 +9,7 @@
 
 # directorios
 
+target/
 
 # STS
 .apt_generated
@@ -18,7 +19,7 @@
 .settings
 .springBeans
 .sts4-cache
-
+.mvn
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
 

@@ -302,11 +302,17 @@ public class EducacionContinuaController {
 			
 		}
 		List<Jornada> jornadas=educacionContinuaService.findJornadasByEducacionContinua(id);
+		System.out.println("jornadas");
+		System.out.println(jornadas.size());
 		model.put("educacionContinua",e);
 		model.put("jornadas",jornadas);
-		model.put("asistencias",asistenciaService.findAsistenciasByJornadas(jornadas));
-		model.put("asistenciaGlobal",asistenciaService.countAsistenciasByJornadas(id));
 		model.put("participantes",participanteService.findAllParticipantesByEducacionContinua(id));
+		if(jornadas.size()>0) {
+			model.put("asistencias",asistenciaService.findAsistenciasByJornadas(jornadas));
+			model.put("asistenciaGlobal",asistenciaService.countAsistenciasByJornadas(id));
+			
+		}
+		
 		return "educacion_continua/listadoParticipantes";
 	}
 	

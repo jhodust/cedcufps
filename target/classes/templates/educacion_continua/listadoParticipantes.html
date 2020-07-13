@@ -76,8 +76,8 @@
 						<tbody>
 							<tr th:each="p : ${participantes}">
 								<td th:text="${p.persona.tipoDocumento.tipoDocumento + ' ' + p.persona.numeroDocumento}"></td>
-								<td th:text="${p.persona.primerNombre + ' ' + p.persona.segundoNombre}"></td>
-								<td th:text="${p.persona.primerApellido + ' ' + p.persona.segundoApellido}"></td>
+								<td th:text="(${p?.persona?.primerNombre} ?:'') +' '+ (${p?.persona?.segundoNombre} ?:'')"></td>
+								<td th:text="(${p?.persona?.primerApellido} ?:'') +' '+ (${p?.persona?.segundoApellido} ?:'')"></td>
 								<td th:text="${p.tipoParticipante.tipoParticipante}"></td>
 								<td th:if="${educacionContinua.estado != 'Activo'}"><input type="checkbox" th:each="j : ${jornadas}" th:class="'checkAsistencia j_'+${j.id}" th:id="${j.id}+'_'+${p.id}" th:data-jornada="${j.id}" th:data-participante="${p.id}" data-toggle="tooltip" data-placement="top" th:title="${#strings.capitalizeWords(#dates.format(j.horaInicio, 'dd MMMM yyyy HH:mm'))}"/></td>
     							
@@ -112,15 +112,20 @@
   <script type="text/javascript" th:inline="javascript">
   var token = $("meta[name='_csrf']").attr("content");
   var eduContinua= [[${educacionContinua}]];
-  var participantes= [[${participantes}]];
-  var asistencias= [[${asistencias}]];
-  var asistenciaGlobal= [[${asistenciaGlobal}]];
-  console.log(participantes.length);
-  console.log("asistencias");
+  var jornadas= [[${jornadas}]];
+  if(jornadas.length>0){
+	  var participantes= [[${participantes}]];
+	  
+	  var asistencias= [[${asistencias}]];
+	  var asistenciaGlobal= [[${asistenciaGlobal}]];
+	  console.log(participantes.length);
+	  console.log("asistencias");
+	  
+	  console.log(asistencias);
+	  console.log("asistenciaGlobal");
+	  console.log(asistenciaGlobal);  
+  }
   
-  console.log(asistencias);
-  console.log("asistenciaGlobal");
-  console.log(asistenciaGlobal);
   if(eduContinua.estado=="Activo"){
 	  document.getElementById('cardListado').style.display='flex';
 	  document.getElementById('spinner').style.display='none';

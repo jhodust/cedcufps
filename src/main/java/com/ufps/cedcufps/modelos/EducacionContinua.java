@@ -23,6 +23,7 @@ import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -82,14 +83,12 @@ public class EducacionContinua implements Serializable {
 	private String objetivo;
 	
 	
-	@DecimalMin(value = "1")
 	@Column(name = "cant_max_participantes")
-	private int cantMaxParticipantes;
+	private String cantMaxParticipantes;
 	
 	private String resumen;
 	
-	@NotNull(message="El campo costo es requerido")
-	private double costo;
+	private String costo;
 	
 	@NotNull(message="Seleccione el tipo de Educación Continua")
 	@ManyToOne(fetch = FetchType.EAGER)//cambié lazy por eager
@@ -219,11 +218,11 @@ public class EducacionContinua implements Serializable {
 		this.objetivo = objetivo;
 	}
 
-	public int getCantMaxParticipantes() {
+	public String getCantMaxParticipantes() {
 		return cantMaxParticipantes;
 	}
 
-	public void setCantMaxParticipantes(int cantMaxParticipantes) {
+	public void setCantMaxParticipantes(String cantMaxParticipantes) {
 		this.cantMaxParticipantes = cantMaxParticipantes;
 	}
 
@@ -235,11 +234,11 @@ public class EducacionContinua implements Serializable {
 		this.resumen = resumen;
 	}
 
-	public double getCosto() {
+	public String getCosto() {
 		return costo;
 	}
 
-	public void setCosto(double costo) {
+	public void setCosto(String costo) {
 		this.costo = costo;
 	}
 

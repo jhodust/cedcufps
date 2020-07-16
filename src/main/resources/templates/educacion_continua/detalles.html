@@ -141,11 +141,11 @@
 			    				</tr>
 			    				<tr>
 			    					<td class="h6 text-sm"><strong>Costo</strong></td>
-			    					<td class="text-sm" th:text="${educacionContinua.costo}"></td>
+			    					<td class="text-sm" th:text="${educacionContinua.costo != ''} ? ('$ '+${#numbers.formatDecimal(educacionContinua.costo, 0, 'COMMA', 0, 'POINT')}):'No Aplica'"></td>
 			    				</tr>
 			    				<tr>
 			    					<td class="h6 text-sm"><strong>Cantidad (Máx) Participantes</strong></td>
-			    					<td class="text-sm" th:text="${educacionContinua.cantMaxParticipantes}"></td>
+			    					<td class="text-sm" th:text="${educacionContinua.cantMaxParticipantes != ''} ? ${educacionContinua.cantMaxParticipantes}:'No Aplica'"></td>
 			    				</tr>
 			    				<tr>
 			    					<td class="h6 text-sm"><strong>Participantes Inscritos</strong></td>

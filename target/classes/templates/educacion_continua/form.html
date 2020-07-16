@@ -233,7 +233,11 @@
 										<div class="row">
 											<div class="col-md-12">
 												<div class="form-group">
-													<label class="form-control-label">Costo (*)</label> <input
+													<label class="form-control-label">Costo (*)</label> 
+													<div class="alert alert-info" role="alert">
+													    Deje el campo vacío si la educación continua es gratuita
+													</div>
+													<input
 														class="form-control" type="text"
 														placeholder="Ingrese el costo que tendrá la inscripción del participante" th:field="*{costo}" th:errorclass="'form-control is-invalid'"/>
 														<small class="form-text text-danger" th:if="${#fields.hasErrors('costo')}"><strong th:errors="*{costo}"></strong></small>
@@ -243,11 +247,16 @@
 										<div class="row">
 											<div class="col-md-12">
 												<div class="form-group">
-													<label class="form-control-label">Cantidad Participantes(Max) (*)</label> <input
+													<label class="form-control-label">Cantidad Participantes(Max) (*)</label> 
+													<div class="alert alert-info" role="alert">
+													    Deje el campo vacío si la educación continua no tiene límite de participantes
+													</div>
+													<input
 														class="form-control" type="number"
 														placeholder="Ingrese la cantidad máxima de participantes" th:field="*{cantMaxParticipantes}" th:errorclass="'form-control is-invalid'"/>
 														<small class="form-text text-danger" th:if="${#fields.hasErrors('cantMaxParticipantes')}"><strong th:errors="*{cantMaxParticipantes}"></strong></small>
 												</div>
+												
 											</div>
 											
 										</div>

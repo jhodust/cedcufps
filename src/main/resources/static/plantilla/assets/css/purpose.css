@@ -7,10 +7,16 @@
 .overflow-visible {
   white-space: initial;
 }
+.alert-red-ufps{
+  border-color: #bc0017;
+  background-color: #fff;
+  color: #bc0017;
+}
 .badge-ufps{font-size: smaller;border-radius: .25rem;}
 .badge-red-ufps{color:#fff;background-color:#BC0017;}
 .badge-gray-ufps{color:#fff;background-color:#818386}
 .badge-black-ufps{color:#fff;background-color:#000}
+.badge-white-red-ufps{color:#bc0017;background-color:#fff;}
 .bg-red-ufps{background-color:#BC0017!important}
 .bg-gray-ufps{background-color:#818386!important}
 .bg-black-ufps{background-color:#000!important}
@@ -48,4 +54,17 @@ a.actions-red-ufps{
 }
 a.actions-red-ufps:hover {
 color:#ec0017;
+}
+.btn-inscripcion{
+	border-color: #000;
+	background-color: #bc0017;
+	color: #fff;
+	transition: transform .2s; /* Animation */
+}
+.btn-inscripcion:hover{
+	border-color: #bc0017;
+	background-color: #fff;
+	color: #bc0017;
+	box-shadow: 5px 5px 5px #818386;
+	transform: scale(1.1); 
 }

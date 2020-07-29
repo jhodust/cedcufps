@@ -40,16 +40,13 @@
         <hr/>
         <ul class="nav justify-content-end" sec:authorize="hasAnyRole('ROLE_SUPERADMIN')">
 		  <li class="nav-item">
-		    <a class="nav-link red-ufps" th:if="${educacionContinua.estado != 'Terminado'}" th:href="@{/educacion-continua/{id}/registro(id=${educacionContinua.id})}"><i class="fas fa-edit"></i> Editar</a>
-		  	<a class="nav-link red-ufps disabled" th:unless="${educacionContinua.estado != 'Terminado'}" href="#"><i class="fas fa-edit"></i> Editar</a>
+		    <a class="nav-link red-ufps" th:href="@{/educacion-continua/{id}/registro(id=${educacionContinua.id})}"><i class="fas fa-edit"></i> Editar</a>
 		  </li>
 		  <li class="nav-item">
-		    <a class="nav-link red-ufps" th:if="${educacionContinua.estado != 'Terminado'}" th:href="@{/educacion-continua/{id}/ponentes(id=${educacionContinua.id})}"><i class="fas fa-user-circle"></i> Ponentes</a>
-		  	<a class="nav-link red-ufps disabled" th:unless="${educacionContinua.estado != 'Terminado'}" href="#"><i class="fas fa-user-circle"></i> Ponentes</a>
+		    <a class="nav-link red-ufps" th:href="@{/educacion-continua/{id}/ponentes(id=${educacionContinua.id})}"><i class="fas fa-user-circle"></i> Ponentes</a>
 		  </li>
 		  <li class="nav-item">
-		    <a class="nav-link red-ufps" th:if="${educacionContinua.estado != 'Terminado'}" th:href="@{/educacion-continua/{id}/jornadas(id=${educacionContinua.id})}"><i class="far fa-calendar-alt"></i> Jornadas</a>
-		  	<a class="nav-link red-ufps disabled" th:unless="${educacionContinua.estado != 'Terminado'}" href="#"><i class="far fa-calendar-alt"></i> Jornadas</a>
+		    <a class="nav-link red-ufps" th:href="@{/educacion-continua/{id}/jornadas(id=${educacionContinua.id})}"><i class="far fa-calendar-alt"></i> Jornadas</a>
 		  </li>
 		  <li class="nav-item">
 		    <a class="nav-link red-ufps" th:href="@{/educacion-continua/{id}/listado-participantes(id=${educacionContinua.id})}"><i class="fas fa-clipboard-list"></i> Listado Participantes</a>
@@ -72,13 +69,11 @@
 				<div class="col-md-12">
 					<div class="row">
 		            <div class="col-12 col-md-6">
-		             
+		            <div class="alert alert-red-ufps shadow-lg text-center" role="alert">
+						    <strong>Información Básica y Participantes</strong>
+						</div>
+		           
 	    			<table>
-	    				<thead>
-	    				<tr>
-	    					<td><span class="text-white badge badge-red-ufps">Información Básica</span></td>
-	    				</tr>
-	    				</thead>
 	    				<tbody>
 		    				<tr>
 		    					<td class="h6 text-sm"><strong>Tipo</strong></td>
@@ -90,11 +85,11 @@
 		    				</tr>
 		    				<tr>
 		    					<td class="h6 text-sm"><strong>Fecha Inicio</strong></td>
-		    					<td class="text-sm" th:text="${#strings.capitalizeWords(#dates.format(educacionContinua.fechaInicio, 'dd MMMM yyyy'))}"></td>
+		    					<td class="text-sm" th:text="${#strings.capitalizeWords(#dates.format(educacionContinua.fechaInicio, 'dd MMMM yyyy HH:mm'))}"></td>
 		    				</tr>
 		    				<tr>
 		    					<td class="h6 text-sm"><strong>Fecha Fin</strong></td>
-		    					<td class="text-sm" th:text="${#strings.capitalizeWords(#dates.format(educacionContinua.fechaFin, 'dd MMMM yyyy'))}"></td>
+		    					<td class="text-sm" th:text="${#strings.capitalizeWords(#dates.format(educacionContinua.fechaFin, 'dd MMMM yyyy HH:mm'))}"></td>
 		    				</tr>
 		    				<tr>
 		    					<td class="h6 text-sm"><strong>Duración (horas)</strong></td>
@@ -108,13 +103,28 @@
 		    					<td class="h6 text-sm"><strong>Estado</strong></td>
 		    					<td class="text-sm" th:text="${educacionContinua.estado}"></td>
 		    				</tr>
+		    				<tr>
+		    					<td class="h6 text-sm"><strong>Fecha Límite Inscripción</strong></td>
+		    					<td class="text-sm" th:text="${#strings.capitalizeWords(#dates.format(educacionContinua.fechaLimInscripcion, 'dd MMMM yyyy HH:mm'))}"></td>
+		    				</tr>
+		    				<tr>
+		    					<td class="h6 text-sm"><strong>Costo</strong></td>
+		    					<td class="text-sm" th:text="${educacionContinua.costo != ''} ? ('$ '+${#numbers.formatDecimal(educacionContinua.costo, 0, 'COMMA', 0, 'POINT')}):'No Aplica'"></td>
+		    				</tr>
+		    				<tr>
+		    					<td class="h6 text-sm"><strong>Cantidad (Máx) Participantes</strong></td>
+		    					<td class="text-sm" th:text="${educacionContinua.cantMaxParticipantes != ''} ? ${educacionContinua.cantMaxParticipantes}:'No Aplica'"></td>
+		    				</tr>
+		    				<tr>
+		    					<td class="h6 text-sm"><strong>Participantes Inscritos</strong></td>
+		    					<td class="text-sm">New York</td>
+		    				</tr>
 		    			</tbody>
 	    			</table>
 		              
 		            </div>
 		            <div class="col-md-6">
 		            	<table>
-		            		<thead><tr><td><span class="text-white badge badge-red-ufps">Imagen</span></td></tr></thead>
 		            		<tbody>
 		            		<tr><td>
 				              <a th:if="${educacionContinua.imagen!=null}" th:href="@{'/'+${educacionContinua.imagen}}" data-fancybox data-caption="My caption">
@@ -122,40 +132,12 @@
 							  </a>
 							  </td></tr></tbody>
 		            	</table>
-		              	
-		            </div>
-		          </div>
-		          <br>
-		          <div class="row">
-		            <div class="col-12 col-md-6">
-		            	<table>
-		    				<thead>
-		    				<tr>
-		    					<td><span class="text-white badge badge-red-ufps">Información Participantes</span></td>
-		    				</tr>
-		    				</thead>
-		    				<tbody>
-			    				<tr>
-			    					<td class="h6 text-sm"><strong>Fecha Límite Inscripción</strong></td>
-			    					<td class="text-sm" th:text="${#strings.capitalizeWords(#dates.format(educacionContinua.fechaLimInscripcion, 'dd MMMM yyyy'))}"></td>
-			    				</tr>
-			    				<tr>
-			    					<td class="h6 text-sm"><strong>Costo</strong></td>
-			    					<td class="text-sm" th:text="${educacionContinua.costo != ''} ? ('$ '+${#numbers.formatDecimal(educacionContinua.costo, 0, 'COMMA', 0, 'POINT')}):'No Aplica'"></td>
-			    				</tr>
-			    				<tr>
-			    					<td class="h6 text-sm"><strong>Cantidad (Máx) Participantes</strong></td>
-			    					<td class="text-sm" th:text="${educacionContinua.cantMaxParticipantes != ''} ? ${educacionContinua.cantMaxParticipantes}:'No Aplica'"></td>
-			    				</tr>
-			    				<tr>
-			    					<td class="h6 text-sm"><strong>Participantes Inscritos</strong></td>
-			    					<td class="text-sm">New York</td>
-			    				</tr>
-			    			</tbody>
-		    			</table>
-		            	<div th:if="${participante == null}">
+		            	
+		            	<br>
+		            	<div class="row">
+		            		<div th:if="${participante == null}">
 						<a href="#" onclick="realizarInscripcion()" 
-									class="btn btn-primary btn-sm" id="btn_inscripcion">INSCRIBETE!
+									class="btn btn-inscripcion btn-sm" id="btn_inscripcion">INSCRIBETE!
 								</a>
 						
 						</div>
@@ -168,39 +150,118 @@
 						<div th:if="${participante != null and participante.tipoParticipante.tipoParticipante == 'Ponente'}">
 							<span class="badge badge-dark">Te encuentras inscrito(a) como 'PONENTE'</span>
 						</div>
-		              
+		            	</div>
+		              	
 		            </div>
-		            <div class="col-12 col-md-6">
-		            	<table>
-		    				<thead>
-		    				<tr>
-		    					<td><span class="text-white badge badge-red-ufps">Información Adicional</span></td>
-		    				</tr>
-		    				</thead>
-		    				<tbody>
-			    				<tr>
-			    					<td class="h6 text-sm"><strong>Requisitos</strong></td>
-			    					<td class="text-sm" th:text="${educacionContinua.requisitos}"></td>
-			    				</tr>
-			    				<tr>
-			    					<td class="h6 text-sm"><strong>Contenido General</strong></td>
-			    					<td class="text-sm" th:text="${educacionContinua.contenidoGeneral}"></td>
-			    				</tr>
-			    				<tr>
-			    					<td class="h6 text-sm"><strong>Objetivos</strong></td>
-			    					<td class="text-sm" th:text="${educacionContinua.objetivo}"></td>
-			    				</tr>
-			    				<tr>
-			    					<td class="h6 text-sm"><strong>Resumen</strong></td>
-			    					<td class="text-sm" th:text="${educacionContinua.resumen}"></td>
-			    				</tr>
-			    			</tbody>
-		    			</table>
-		              
+		          </div>
+		         
+		         <br>
+		          <div class="row">
+		            
+		            <div class="col-12 col-md-12">
+		             	<div class="alert alert-red-ufps shadow-lg text-center" role="alert">
+						    <strong>Información Adicional</strong>
+						</div>
+		            	<br>
+		            
+		            	<div class="row">
+		            		<div class="col-md-6">
+				            	<table>
+				    				<tbody>
+					    				<tr>
+					    					<td class="h6 text-sm"><strong>Requisitos</strong></td>
+					    				</tr>
+					    				<tr>
+					    					<td class="text-sm" th:text="${educacionContinua.requisitos != '' AND educacionContinua.requisitos != null } ? ${educacionContinua.requisitos}:'No Registra'"></td>
+					    				</tr>
+					    				<tr>
+					    					<td class="h6 text-sm"><strong>Objetivo</strong></td>
+					    				</tr>
+					    				<tr>
+					    					<td class="text-sm" th:text="${educacionContinua.objetivo != '' AND educacionContinua.objetivo != null } ? ${educacionContinua.objetivo}:'No Registra' "></td>
+					    				</tr>
+					    				<tr>
+					    					<td class="h6 text-sm"><strong>Resumen</strong></td>
+					    				</tr>
+					    				<tr>
+					    					<td class="text-sm" th:text="${educacionContinua.resumen != '' AND educacionContinua.resumen != null } ? ${educacionContinua.resumen}:'No Registra' "></td>
+					    				</tr>
+					    				
+					    			</tbody>
+				    			</table>
+				    		</div>
+				    		<div class="col-md-6">
+				            	<table>
+				    				<tbody>
+					    				<tr>
+					    					<td class="h6 text-sm"><strong>Contenido General</strong></td>
+					    				</tr>
+					    				<tr>
+					    					<td class="text-sm" th:text="${educacionContinua.contenidoGeneral != '' AND educacionContinua.contenidoGeneral != null } ? ${educacionContinua.contenidoGeneral}:'No Registra' "></td>
+					    				</tr>
+					    			</tbody>
+				    			</table>
+				    		</div>
+		              	</div>
 		              
 						
 		            </div>
 		          </div>
+		          <br>
+		          <div class="row">
+		          	<div class="col-md-6">
+		          		<div class="alert alert-red-ufps shadow-lg text-center" role="alert">
+						    <strong>Ponentes</strong>
+						</div>
+						<div th:if="${#lists.size(ponentes) == 0}">
+				        	<center><span class="badge badge-white-red-ufps">No existen ponentes registrados(as)</span></center>
+				        </div>
+				        <div th:unless="${#lists.size(ponentes) == 0}">
+					        <div class="table-responsive">
+							<table class="table align-items-center">
+								<thead>
+									<tr>
+										<td><strong>Nombre</strong></td>
+										<td><strong>Tema</strong></td>
+									</tr>
+								</thead>
+								<tbody>
+									<tr th:each="p: ${ponentes}">
+										<td th:text="(${p?.persona?.primerNombre} ?:'') +' '+ (${p?.persona?.segundoNombre} ?:'') +' '+ (${p?.persona?.primerApellido} ?:'') +' '+ (${p?.persona?.segundoApellido} ?:'' )">Nombre</td>
+										<td th:text="${p.tema}">Tema</td>
+									</tr>
+								</tbody>
+							</table>
+							</div>
+						</div>
+		          	</div>
+		          	<div class="col-md-6">
+		          		<div class="alert alert-red-ufps shadow-lg text-center" role="alert">
+						    <strong>Jornadas</strong>
+						</div>
+						<div th:if="${#lists.size(jornadas) == 0}">
+				        	<center><span class="badge badge-white-red-ufps">No existen jornadas registradas</span></center>
+				        </div>
+				        <div th:unless="${#lists.size(jornadas) == 0}">
+					        <div class="table-responsive">
+							<table class="table align-items-center">
+								<thead>
+									<tr>
+										<td><strong>Horario</strong></td>
+									</tr>
+								</thead>
+								<tbody>
+									<tr th:each="j: ${jornadas}">
+										<td th:text="${#dates.format(j.horaInicio, 'dd/MMM/yyyy HH:mm')} + ' - ' + ${#dates.format(j.horaFin, 'dd/MMM/yyyy HH:mm')} "></td>
+									</tr>
+								</tbody>
+							</table>
+							</div>
+						</div>
+		          	</div>
+		          </div>
+		          
+		          
 				</div>
 			</div>
 		
@@ -224,6 +285,12 @@
   <div th:replace="layouts/layout :: scripts"></div>
   <script th:inline="javascript">
   var idEduContinua= [[${educacionContinua.id}]];
+  var ec= [[${educacionContinua}]];
+  var j= [[${jornadas}]];
+  var p= [[${ponentes}]];
+  console.log(ec);
+  console.log(j);
+  console.log(p);
   </script>
   <script th:src="@{/js/inscripcion.js}" type="text/javascript"></script>
 </body>

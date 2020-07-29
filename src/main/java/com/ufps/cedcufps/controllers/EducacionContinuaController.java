@@ -262,6 +262,9 @@ public class EducacionContinuaController {
 		Optional<EducacionContinua> ec= educacionContinuaService.findOne(id); 
 		model.put("titulo","DETALLES EDUCACIÓN CONTINUA");
 		model.put("educacionContinua",ec.get());
+		model.put("jornadas",ec.get());
+		model.put("jornadas",educacionContinuaService.findJornadasByEducacionContinua(id));
+		model.put("ponentes",participanteService.findAllPonentesOfOneEducacionContinua(id));
 		try {
 		model.put("participante",participanteService.findByIdEducacionContinuaAndIdPersona(id,personaService.findPersonaLogueada().getId()));
 		}catch(Exception e) {
@@ -388,7 +391,7 @@ public class EducacionContinuaController {
 
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Disposition", "inline; filename=participantes.pdf");
-
+        
         return ResponseEntity
                 .ok()
                 .headers(headers)

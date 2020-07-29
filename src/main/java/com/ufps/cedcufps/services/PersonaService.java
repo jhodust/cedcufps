@@ -200,6 +200,12 @@ public class PersonaService implements IPersonaService, UserDetailsService {
 		// TODO Auto-generated method stub
 		return personaDao.findByUsername(username);
 	}
+	
+	@Override
+	public Persona findByEmail(String email) {
+		// TODO Auto-generated method stub
+		return personaDao.findByEmail(email).get();
+	}
 
 	
 

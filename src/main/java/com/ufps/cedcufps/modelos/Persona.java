@@ -134,7 +134,7 @@ public class Persona implements Serializable {//*
 	@JoinColumn(name="id_tipo_persona")
 	private TipoPersona tipoPersona;
 	
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "id_persona")
 	private List<Rol> roles;
 	

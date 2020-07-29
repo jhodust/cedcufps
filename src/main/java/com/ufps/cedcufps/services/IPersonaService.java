@@ -49,4 +49,5 @@ public interface IPersonaService {
 	
 	public Persona findByUsername(String username);
 
+	public Persona findByEmail(String email);
 }

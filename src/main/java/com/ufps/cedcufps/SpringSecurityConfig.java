@@ -18,6 +18,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserRequest;
 import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserService;
+import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
 import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.security.oauth2.core.oidc.OidcIdToken;
@@ -25,6 +26,7 @@ import org.springframework.security.oauth2.core.oidc.OidcUserInfo;
 import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.security.oauth2.core.oidc.user.OidcUserAuthority;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.oauth2.core.user.OAuth2UserAuthority;
 import org.springframework.security.core.GrantedAuthority;
 
@@ -59,7 +61,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 		.and()
 		.oauth2Login()
 			.userInfoEndpoint()
-				.oidcUserService(oidcUserService());
+				.oidcUserService(oidcUserService())
+				.oidcUserService(this.oidcUserService());
 				//.userAuthoritiesMapper(this.userAuthoritiesMapper());
 		/*.and()
 			.formLogin().successHandler(successHandler).loginPage("/login")
@@ -73,6 +76,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 		.and()
 		.oauth2Login();*/
 	}
+	
+	
 	
 	private OAuth2UserService<OidcUserRequest, OidcUser> oidcUserService() {
 		final OidcUserService delegate = new OidcUserService();

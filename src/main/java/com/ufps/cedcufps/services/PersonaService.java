@@ -16,6 +16,8 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
+import org.springframework.security.oauth2.core.OAuth2AuthenticatedPrincipal;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ufps.cedcufps.dao.IAdministrativoDao;
@@ -142,9 +144,17 @@ public class PersonaService implements IPersonaService, UserDetailsService {
 	@Override
 	public Persona findPersonaLogueada() {
 		// TODO Auto-generated method stub
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		/*Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 	    UserDetails userDetail = (UserDetails) auth.getPrincipal();
-		return personaDao.findByUsername(userDetail.getUsername());
+		return personaDao.findByUsername(userDetail.getUsername());*/
+		Authentication a = SecurityContextHolder.getContext().getAuthentication();
+		OAuth2AuthenticationToken client= (OAuth2AuthenticationToken )a;
+		String email=client.getPrincipal().getAttribute("email");
+		System.out.println("email del usuario logueadoen metodo findPersonaLogueada de personaService");
+		System.out.println(email);
+		
+		
+	    return personaDao.findByEmail(email).get();
 	}
 
 	@Override

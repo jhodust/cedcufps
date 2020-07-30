@@ -28,6 +28,7 @@ import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.security.oauth2.core.oidc.user.OidcUserAuthority;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.oauth2.core.user.OAuth2UserAuthority;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.core.GrantedAuthority;
 
 import com.ufps.cedcufps.auth.handler.LoginSuccessHandler;
@@ -58,11 +59,13 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 		.antMatchers("/participaciones-educacion-continua","/preinscripcion/**", "/realizar-inscripcion/**","/cancelar-inscripcion/**").hasRole("USER")
 		.antMatchers("/educacion-continua-a-cargo").hasRole("DOCENTE")
 		.anyRequest().authenticated()
+		.and().logout().invalidateHttpSession(true)
+        .clearAuthentication(true).logoutSuccessUrl("/login?logout").deleteCookies("JSESSIONID").permitAll().and().csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
 		.and()
 		.oauth2Login()
 			.userInfoEndpoint()
-				.oidcUserService(oidcUserService())
-				.oidcUserService(this.oidcUserService());
+				.oidcUserService(oidcUserService());
+		
 				//.userAuthoritiesMapper(this.userAuthoritiesMapper());
 		/*.and()
 			.formLogin().successHandler(successHandler).loginPage("/login")
@@ -86,9 +89,6 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 			// Delegate to the default implementation for loading a user
 			OidcUser oidcUser = delegate.loadUser(userRequest);
 
-			OAuth2AccessToken accessToken = userRequest.getAccessToken();
-			System.out.println("email");
-			System.out.println(oidcUser.getEmail());
 			Set<GrantedAuthority> mappedAuthorities = new HashSet<>();
 			Persona p=personaService.findByEmail(oidcUser.getEmail());
 			for(Rol r:p.getRoles()) {

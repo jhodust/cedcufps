@@ -3,6 +3,7 @@ package com.ufps.cedcufps.services;
 import java.util.List;
 import java.util.Optional;
 
+import com.ufps.cedcufps.dto.UsuarioDto;
 import com.ufps.cedcufps.modelos.Administrativo;
 import com.ufps.cedcufps.modelos.Departamento;
 import com.ufps.cedcufps.modelos.Docente;
@@ -50,4 +51,6 @@ public interface IPersonaService {
 	public Persona findByUsername(String username);
 
 	public Persona findByEmail(String email);
+	
+	public void registrarse(UsuarioDto u);
 }

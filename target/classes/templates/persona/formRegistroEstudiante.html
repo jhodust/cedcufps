@@ -49,11 +49,15 @@
 		<form th:action="@{/usuarios/estudiante/registro}"
 										th:object="${estudiante}" method="post"
 										enctype="multipart/form-data">
+					
+					<div th:fragment="formularioEstudiante">
+					<div class="row" th:replace="persona/camposPersona :: camposInformacionPersonal"></div>
+					
 					<div class="row">
-						<div th:replace="persona/camposPersona :: camposInformacionPersonal"></div>
 						<div class="col-lg-6">
-							<div class="col">
 								<div th:replace="persona/camposPersona :: camposInformacionContacto"></div>
+						</div>
+						<div class="col-lg-6">
 								<div class="card">
 									<div class="card-body">
 										<div class="row">
@@ -88,10 +92,9 @@
 										
 									</div>
 								</div>
-							</div>
 						</div>
 					</div>
-
+					</div>
 				</form>
 		</div>
 	  </div>

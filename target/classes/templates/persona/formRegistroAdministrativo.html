@@ -48,11 +48,12 @@
 		<form th:action="@{/usuarios/administrativo/registro}"
 										th:object="${administrativo}" method="post"
 										enctype="multipart/form-data">
+					<div class="row" th:replace="persona/camposPersona :: camposInformacionPersonal"></div>
 					<div class="row">
-						<div th:replace="persona/camposPersona :: camposInformacionPersonal"></div>
 						<div class="col-lg-6">
-							<div class="col">
 								<div th:replace="persona/camposPersona :: camposInformacionContacto"></div>
+						</div>
+						<div class="col-lg-6">
 								<div class="card">
 									<div class="card-body">
 										<div class="row">
@@ -83,7 +84,6 @@
 										
 									</div>
 								</div>
-							</div>
 						</div>
 					</div>
 

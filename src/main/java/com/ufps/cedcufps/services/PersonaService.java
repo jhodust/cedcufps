@@ -31,6 +31,9 @@ import com.ufps.cedcufps.dao.IPersonaDao;
 import com.ufps.cedcufps.dao.IProgramaDao;
 import com.ufps.cedcufps.dao.ITipoDocumentoDao;
 import com.ufps.cedcufps.dao.ITipoPersonaDao;
+import com.ufps.cedcufps.dto.UsuarioDto;
+import com.ufps.cedcufps.exception.CustomException;
+import com.ufps.cedcufps.mapper.IUsuarioMapper;
 import com.ufps.cedcufps.modelos.Administrativo;
 import com.ufps.cedcufps.modelos.Departamento;
 import com.ufps.cedcufps.modelos.Docente;
@@ -70,6 +73,9 @@ public class PersonaService implements IPersonaService, UserDetailsService {
 	
 	@Autowired
 	private IGeneroDao generoDao;
+	
+	@Autowired
+	private IUsuarioMapper usuarioMapper;
 	
 	@Autowired
 	private IProgramaDao programaDao;
@@ -154,7 +160,7 @@ public class PersonaService implements IPersonaService, UserDetailsService {
 		System.out.println(email);
 		
 		
-	    return personaDao.findByEmail(email).get();
+	    return this.findByEmail(email);
 	}
 
 	@Override
@@ -212,9 +218,35 @@ public class PersonaService implements IPersonaService, UserDetailsService {
 	}
 	
 	@Override
+	@Transactional(rollbackFor = CustomException.class)
 	public Persona findByEmail(String email) {
 		// TODO Auto-generated method stub
-		return personaDao.findByEmail(email).get();
+		Optional<Persona> p=personaDao.findByEmail(email);
+		try {
+			return p.get();
+		}catch(Exception e) {
+			return null;
+		}
+		
+		
+	}
+
+	@Override
+	public void registrarse(UsuarioDto u) {
+		// TODO Auto-generated method stub
+		if(String.valueOf(u.getTipoPersona()).equalsIgnoreCase("1")) {
+			Estudiante e= usuarioMapper.convertUsuarioToEstudiante(u);
+			System.out.println("save estudiante");
+			personaDao.save(e);
+		}else if (String.valueOf(u.getTipoPersona()).equalsIgnoreCase("4")) {
+			Externo e= usuarioMapper.convertUsuarioToExterno(u);
+			System.out.println("save externo");
+			personaDao.save(e);
+		}else {
+			System.out.println("negativo");
+		}
+		
+		
 	}
 
 	

@@ -151,7 +151,7 @@
 											<div class="row">
 												<span class="badge badge-red-ufps">Información Organizador</span>
 											</div>
-											<div class="row" sec:authorize="hasRole('ROLE_SUPERADMIN')">
+											<div class="row" sec:authorize="hasAnyRole('ROLE_SUPERADMIN','ROLE_DOCENTE')">
 												<div class="col-md-12">
 													<div class="form-group">
 														<label class="form-control-label">Programa Académico (*)</label> <select
@@ -164,7 +164,7 @@
 													</div>
 												</div>
 											</div>
-											<div class="row" sec:authorize="hasAnyRole('ROLE_DIRPROGRAMA', 'ROLE_DOCENTE')">
+											<div class="row" sec:authorize="hasAnyRole('ROLE_DIRPROGRAMA')">
 												<div class="col-md-12">
 													<div class="form-group">
 														<label class="form-control-label">Programa Académico (*)</label> <label

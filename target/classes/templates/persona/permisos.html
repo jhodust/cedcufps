@@ -43,85 +43,107 @@
 					<!-- Card header -->
 					
 					<div class="card-body">
-					<div class="row">
-						<div class="col-md-6">
-							<center>
-							<h5>Datos Persona</h5>
-							</center>
-							<div class="table-responsive">
-							<table class="table align-items-center">
 						
-						<tbody>
-							<tr>
-									<td class="text-dark"><strong>Nombre</strong></td>
-									<td class="text-dark" th:text="${persona.primerNombre + ' ' + persona.primerApellido}"></td>
-								</tr>
-								<tr>
-									<td class="text-dark"><strong>Tipo Usuario</strong></td>
-									<td class="text-dark" th:text="${persona.tipoPersona.tipoPersona}"></td>
-								</tr>
-								<tr th:if="${persona.tipoPersona.tipoPersona == 'Docente'}">
-									<td class="text-dark"><strong>Director de Programa</strong></td>
-									<td th:if="${persona.programaACargoDirector == null}">
-										<div class="custom-control custom-switch">
-										  <input type="checkbox" class="custom-control-input" id="customSwitch1" disabled>
-										  <label class="custom-control-label" for="customSwitch1"></label>
-										</div>
-									</td>
-									<td th:unless="${persona.programaACargoDirector == null}">
-										<div class="custom-control custom-switch">
-										  <input type="checkbox" class="custom-control-input" id="customSwitch1" checked disabled>
-										  <label class="custom-control-label" for="customSwitch1"><span class="badge badge-gray-ufps badge-pill"  th:text="${persona.programaACargoDirector.programa}"></span></label>
-										</div>
-									</td>
-								</tr>
-								
-						</tbody>
-													
-							</table>
-							</div>
-						</div>
-						<div class="col-md-6">
+					<div class="row">
+						<div class="col-md-12">
 							<center>
 							<h5>Roles</h5>
 							</center>
-							<div class="table-responsive">
+							<div class="row">
+							<div class="table-responsive col-md-6">
 							<table class="table align-items-center">
-								<tr th:if="${persona.tipoPersona.tipoPersona == 'Estudiante'}">
+								<tr th:if="${persona.isEstudiante() or persona.isDocente() or persona.isAdministrativo()}">
 									<td class="text-dark">
 									
-									<strong>Beca <button class="badge badge-secondary badge-circle" data-container="body" data-toggle="popover" data-placement="left" data-content="El rol beca permite al estudiante gestionar los eventos de educación continua del Programa Académico al cual pertenece">
-										    <i class="fas fa-info"></i>
-										</button></strong></td>
+									<strong>Administrar Eventos de Educación Continua</strong></td>
 									<td>
 										<div class="custom-control custom-switch">
-										  <input type="checkbox" class="custom-control-input switch" id="switchBeca" data-role="ROLE_BECA">
-										  <label class="custom-control-label" for="switchBeca"></label>
-										</div>
-									<td>
-									
-								</tr>
-								<tr th:if="${persona.tipoPersona.tipoPersona == 'Docente' or persona.tipoPersona.tipoPersona == 'Egresado' or persona.tipoPersona.tipoPersona == 'Externo'}">
-									<td><span class="badge badge-red-ufps badge-pill" th:text="'El tipo de persona ' + ${persona.tipoPersona.tipoPersona} + ' no tiene acceso a otros roles' "></span>
-									</td>
-									
-								</tr>
-								<tr th:if="${persona.tipoPersona.tipoPersona == 'Administrativo'}">
-									<td class="text-dark">
-									
-									<strong>Admin <button class="badge badge-secondary badge-circle" data-container="body" data-toggle="popover" data-placement="left" data-content="El rol admin permite al administrativo gestionar los eventos de educación continua, usuarios, generar reportes generales de SNIES y observar las estadisticas">
-										    <i class="fas fa-info"></i>
-										</button></strong></td>
-									<td>
-										<div class="custom-control custom-switch">
-										  <input type="checkbox" class="custom-control-input switch" id="switchAdminAdministrativo" data-role="ROLE_ADMIN">
-										  <label class="custom-control-label" for="switchAdminAdministrativo"></label>
+										  <input type="checkbox" class="custom-control-input switch" id="switchEduContinua" data-role="ROLE_ADMIN_CEEC">
+										  <label class="custom-control-label" for="switchEduContinua"></label>
 										</div>
 									</td>
 									
 								</tr>
-							
 							</table>
+								<div class="row">
+									<div class="col-md-12">
+										<div class="form-group">
+											<label class="form-control-label">Programa
+												Académicos asociados</label> <select class="form-control"
+												data-toggle="select" id="programasEC" multiple="multiple">
+												<option value="0">Seleccione el programa...</option>
+												<option th:each="p: ${programas}" th:value="${p.id}"
+													th:text="${p.programa}"></option>
+											</select>
+											<small class="form-text text-danger"><strong></strong></small>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="table-responsive col-md-6">
+							<table class="table align-items-center">
+								<tr th:if="${persona.isEstudiante() or persona.isDocente() or persona.isAdministrativo()}">
+									<td class="text-dark">
+									
+									<strong>Administrar Usuarios</strong></td>
+									<td>
+										<div class="custom-control custom-switch">
+										  <input type="checkbox" class="custom-control-input switch" id="switchUsuarios" data-role="ROLE_ADMIN_USERS">
+										  <label class="custom-control-label" for="switchUsuarios"></label>
+										</div>
+									</td>
+									
+								</tr>
+							</table>
+								<div class="row">
+									<div class="col-md-12">
+										<div class="form-group">
+											<label class="form-control-label"> Estudiantes de Programas
+												Académicos asociados</label> <select class="form-control"
+												data-toggle="select" id="programasUsuarios" multiple="multiple">
+												<option value="0">Seleccione los programas...</option>
+												<option th:each="p: ${programas}" th:value="${p.id}"
+													th:text="${p.programa}"></option>
+											</select>
+											<small class="form-text text-danger"><strong></strong></small>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-12">
+										<div class="form-group">
+											<label class="form-control-label">Docentes de Departamentos
+												Académicos asociados</label> <select class="form-control"
+												data-toggle="select" id="departamentos" multiple="multiple">
+												<option value="0">Seleccione los departamentos...</option>
+												<option th:each="d: ${departamentos}" th:value="${d.id}"
+													th:text="${d.departamento}"></option>
+											</select>
+											<small class="form-text text-danger"><strong></strong></small>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-4">
+									<div class="custom-control custom-checkbox">
+										<input type="checkbox" class="custom-control-input">
+										 <label class="custom-control-label">Administrativos</label>
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="custom-control custom-checkbox">
+										<input type="checkbox" class="custom-control-input">
+										 <label class="custom-control-label">Graduados</label>
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="custom-control custom-checkbox">
+										<input type="checkbox" class="custom-control-input">
+										 <label class="custom-control-label">Externos</label>
+									</div>
+								</div>
+								</div>
+							</div>
 							</div>
 						</div>
 					</div>
@@ -137,6 +159,7 @@
     </div>
     <div th:replace="layouts/footer :: footer"></div>
     
+  </div>
   </div>
   <!-- Scripts -->
   <!-- Core JS - includes jquery, bootstrap, popper, in-view and sticky-kit -->

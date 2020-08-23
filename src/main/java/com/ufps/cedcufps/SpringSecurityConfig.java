@@ -90,7 +90,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		// TODO Auto-generated method stub
-		http.authorizeRequests().antMatchers("/","/registrarse","/search/programa/**","/files/**","/pdfreport","/home","/plantilla/**", "/logos/**","/data/**","/js/**","/css/**","/programa/save", "/uploads/**").permitAll()
+		http.authorizeRequests().antMatchers("/","/registrarse","/search/programa/**","/files/**","/pdfreport","/home","/plantilla/**", "/logos/**","/data/**","/js/**","/css/**","/programa/save", "/uploads/**","/app/**").permitAll()
 		.antMatchers("/persona/**").hasAnyRole("SUPERADMIN", "ESTUDIANTE")
 		.antMatchers("/programa/**").hasAnyRole("SUPERADMIN")
 		.antMatchers("/tipo-documento/**").hasAnyRole("SUPERADMIN")
@@ -98,7 +98,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 		.antMatchers("/participaciones-educacion-continua","/preinscripcion/**", "/realizar-inscripcion/**","/cancelar-inscripcion/**").hasRole("USER")
 		.antMatchers("/educacion-continua-a-cargo").hasRole("DOCENTE")
 		.anyRequest().authenticated()
-		.and().cors().configurationSource(corsConfigurationSource())
+		//.and().cors().configurationSource(corsConfigurationSource())
 		.and()
 		.oauth2Login()
 			.failureHandler(customAuthenticationFailureHandler())

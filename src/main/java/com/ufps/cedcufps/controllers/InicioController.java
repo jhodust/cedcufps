@@ -67,6 +67,7 @@ public class InicioController {
 		model.put("tipos_documento",personaService.findAllTiposDocumento());
 		model.put("tipos_persona",personaService.findAllTiposPersona());
 		model.put("programas",personaService.findAllProgramas());
+		model.put("departamentos",personaService.findAllDepartamentos());
 		model.put("generos",personaService.findAllGeneros());
 		model.put("estados_civiles",personaService.findAllEstadosCiviles());
 		//educacionContinuaService.generarReporteSNIESEducacionContinua(new Date(), 0);

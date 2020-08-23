@@ -27,10 +27,13 @@ import com.ufps.cedcufps.dao.IEstadoCivilDao;
 import com.ufps.cedcufps.dao.IEstudianteDao;
 import com.ufps.cedcufps.dao.IExternoDao;
 import com.ufps.cedcufps.dao.IGeneroDao;
+import com.ufps.cedcufps.dao.IGraduadoDao;
+import com.ufps.cedcufps.dao.IPersonaCustomDao;
 import com.ufps.cedcufps.dao.IPersonaDao;
 import com.ufps.cedcufps.dao.IProgramaDao;
 import com.ufps.cedcufps.dao.ITipoDocumentoDao;
 import com.ufps.cedcufps.dao.ITipoPersonaDao;
+import com.ufps.cedcufps.dto.UsuarioAppDto;
 import com.ufps.cedcufps.dto.UsuarioDto;
 import com.ufps.cedcufps.exception.CustomException;
 import com.ufps.cedcufps.mapper.IUsuarioMapper;
@@ -41,6 +44,7 @@ import com.ufps.cedcufps.modelos.EstadoCivil;
 import com.ufps.cedcufps.modelos.Estudiante;
 import com.ufps.cedcufps.modelos.Externo;
 import com.ufps.cedcufps.modelos.Genero;
+import com.ufps.cedcufps.modelos.Graduado;
 import com.ufps.cedcufps.modelos.Persona;
 import com.ufps.cedcufps.modelos.Programa;
 import com.ufps.cedcufps.modelos.Rol;
@@ -54,6 +58,9 @@ public class PersonaService implements IPersonaService, UserDetailsService {
 	private IPersonaDao personaDao;
 	
 	@Autowired
+	private IPersonaCustomDao personaCustomDao;
+	
+	@Autowired
 	private IEstudianteDao estudianteDao;
 	
 	@Autowired
@@ -64,6 +71,9 @@ public class PersonaService implements IPersonaService, UserDetailsService {
 	
 	@Autowired
 	private IExternoDao externoDao;
+	
+	@Autowired
+	private IGraduadoDao graduadoDao;
 	
 	@Autowired
 	private ITipoDocumentoDao tipoDocumentoDao;
@@ -196,7 +206,12 @@ public class PersonaService implements IPersonaService, UserDetailsService {
 	@Override
 	public List<Docente> findAllDocentes() {
 		// TODO Auto-generated method stub
-		return (List<Docente>)docenteDao.findAll();
+		List<Docente> docentes=docenteDao.findDocentes();
+		System.out.println("tamaño docentes: " + docentes.size() );
+		for(Docente d: docentes) {
+			System.out.println(d.getCodigo() + " - " +d.getPrimerNombre());
+		}
+		return docentes;
 	}
 
 	@Override
@@ -234,19 +249,73 @@ public class PersonaService implements IPersonaService, UserDetailsService {
 	@Override
 	public void registrarse(UsuarioDto u) {
 		// TODO Auto-generated method stub
-		if(String.valueOf(u.getTipoPersona()).equalsIgnoreCase("1")) {
+		/*if(String.valueOf(u.getTipoPersona()).equalsIgnoreCase("1")) {
 			Estudiante e= usuarioMapper.convertUsuarioToEstudiante(u);
 			System.out.println("save estudiante");
 			personaDao.save(e);
-		}else if (String.valueOf(u.getTipoPersona()).equalsIgnoreCase("4")) {
+		}
+		
+		if (String.valueOf(u.getTipoPersona()).equalsIgnoreCase("4")) {
 			Externo e= usuarioMapper.convertUsuarioToExterno(u);
 			System.out.println("save externo");
 			personaDao.save(e);
+		}*/
+		Persona p= usuarioMapper.convertUsuarioToPersona(u);
+		logger.info("llega de mappear");
+		personaDao.save(p);
+		logger.info("guarda la persona");
+		System.out.println(u.getIsEstudiante());
+		System.out.println(u.getIsDocente());
+		System.out.println(u.getIsAdministrativo());
+		System.out.println(u.getIsGraduado());
+		System.out.println(u.getIsExterno());
+		if(u.getIsExterno()==1) {
+			logger.info("Es externo");
+			Externo e=usuarioMapper.convertUsuarioToExterno(u,p.getId());
+			logger.info(e.getId().toString());
+			logger.info(e.getEmpresa());
+			logger.info(e.getProfesion());
+			personaCustomDao.saveExterno(e);
 		}else {
-			System.out.println("negativo");
+			if(u.getIsEstudiante()==1) {
+				logger.info("Es estudiante");
+				Estudiante e=usuarioMapper.convertUsuarioToEstudiante(u,p.getId());
+				logger.info(e.getId().toString());
+				logger.info(e.getPrograma().getPrograma());
+				logger.info(e.getCodigo());
+				personaCustomDao.saveEstudiante(e);
+			}
+			if(u.getIsDocente()==1) {
+				logger.info("Es docente");
+				Docente d= usuarioMapper.convertUsuarioToDocente(u,p.getId());
+				logger.info(d.getId().toString());
+				logger.info(d.getDepartamento().getDepartamento());
+				logger.info(d.getCodigo());
+				personaCustomDao.saveDocente(d);
+			}
+			if(u.getIsAdministrativo()==1) {
+				logger.info("Es administrativo");
+				Administrativo a= usuarioMapper.convertUsuarioToAdministrativo(u,p.getId());
+				logger.info(a.getId().toString());
+				logger.info(a.getDependencia());
+				logger.info(a.getCargo());
+				personaCustomDao.saveAdministrativo(a);
+			}
+			if(u.getIsGraduado()==1) {
+				logger.info("Es graduado");
+				Graduado g= usuarioMapper.convertUsuarioToGraduado(u,p.getId());
+				logger.info(g.getId().toString());
+				logger.info(g.getPrograma().getPrograma());
+				logger.info(g.getAnio());
+				personaCustomDao.saveGraduado(g);
+			}
 		}
-		
-		
+	}
+
+	@Override
+	public UsuarioAppDto convertPersonaLogueadaApp(Persona p) {
+		// TODO Auto-generated method stub
+		return usuarioMapper.convertPersonaToUsuarioAppDto(p);
 	}
 
 	

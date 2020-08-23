@@ -38,7 +38,7 @@
           </div>
         </div>
         <hr/>
-        <ul class="nav justify-content-end" sec:authorize="hasAnyRole('ROLE_SUPERADMIN')">
+        <ul class="nav justify-content-end" sec:authorize="hasAnyRole('ROLE_SUPERADMIN','ROLE_DOCENTE','ROLE_DIRPROGRAMA')">
 		  <li class="nav-item">
 		    <a class="nav-link red-ufps" th:href="@{/educacion-continua/{id}/registro(id=${educacionContinua.id})}"><i class="fas fa-edit"></i> Editar</a>
 		  </li>

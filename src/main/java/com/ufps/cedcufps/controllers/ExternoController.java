@@ -56,7 +56,7 @@ public class ExternoController {
 	
 	@RequestMapping(value = "/usuarios/externo/registro", method = RequestMethod.POST)
 	public String save(@Valid Externo e, BindingResult result,Map<String, Object> model, SessionStatus status,RedirectAttributes redirectAttributes) {
-		e.setTipoPersona(personaService.findByTipoPersona("Externo"));
+		//e.setTipoPersona(personaService.findByTipoPersona("Externo"));
 		System.out.println("*******************************************************************");
 		System.out.println(e.getFechaExpedicionDocumento());
 		System.out.println(e.getFechaNacimiento());

@@ -21,10 +21,21 @@ public class UsuarioDto {
 	private String email;
 	private String direccion;
 	private String telefono;
-	private Long tipoPersona;
 	private String codigo;
 	private Long programa;
 	private String profesion;
+	private String empresa;
+	private int isEstudiante;
+	private int isDocente;
+	private int isAdministrativo;
+	private int isGraduado;
+	private int isExterno;
+	private Long programaGraduado;
+	private String anioGraduado;
+	private Long deptoAdscrito;
+	private String codigoDocente;
+	private String dependencia;
+	private String cargo;
 	
 	
 	public Long getTipoDocumento() {
@@ -123,12 +134,7 @@ public class UsuarioDto {
 	public void setTelefono(String telefono) {
 		this.telefono = telefono;
 	}
-	public Long getTipoPersona() {
-		return tipoPersona;
-	}
-	public void setTipoPersona(Long tipoPersona) {
-		this.tipoPersona = tipoPersona;
-	}
+	
 	public String getCodigo() {
 		return codigo;
 	}
@@ -147,6 +153,80 @@ public class UsuarioDto {
 	public void setProfesion(String profesion) {
 		this.profesion = profesion;
 	}
+	
+	public Long getProgramaGraduado() {
+		return programaGraduado;
+	}
+	public void setProgramaGraduado(Long programaGraduado) {
+		this.programaGraduado = programaGraduado;
+	}
+	public String getAnioGraduado() {
+		return anioGraduado;
+	}
+	public void setAnioGraduado(String anioGraduado) {
+		this.anioGraduado = anioGraduado;
+	}
+	public Long getDeptoAdscrito() {
+		return deptoAdscrito;
+	}
+	public void setDeptoAdscrito(Long deptoAdscrito) {
+		this.deptoAdscrito = deptoAdscrito;
+	}
+	public String getCodigoDocente() {
+		return codigoDocente;
+	}
+	public void setCodigoDocente(String codigoDocente) {
+		this.codigoDocente = codigoDocente;
+	}
+	public String getDependencia() {
+		return dependencia;
+	}
+	public void setDependencia(String dependencia) {
+		this.dependencia = dependencia;
+	}
+	public String getCargo() {
+		return cargo;
+	}
+	public void setCargo(String cargo) {
+		this.cargo = cargo;
+	}
+	public String getEmpresa() {
+		return empresa;
+	}
+	public void setEmpresa(String empresa) {
+		this.empresa = empresa;
+	}
+	public int getIsEstudiante() {
+		return isEstudiante;
+	}
+	public void setIsEstudiante(int isEstudiante) {
+		this.isEstudiante = isEstudiante;
+	}
+	public int getIsDocente() {
+		return isDocente;
+	}
+	public void setIsDocente(int isDocente) {
+		this.isDocente = isDocente;
+	}
+	public int getIsAdministrativo() {
+		return isAdministrativo;
+	}
+	public void setIsAdministrativo(int isAdministrativo) {
+		this.isAdministrativo = isAdministrativo;
+	}
+	public int getIsGraduado() {
+		return isGraduado;
+	}
+	public void setIsGraduado(int isGraduado) {
+		this.isGraduado = isGraduado;
+	}
+	public int getIsExterno() {
+		return isExterno;
+	}
+	public void setIsExterno(int isExterno) {
+		this.isExterno = isExterno;
+	}
 
+	
 	
 }

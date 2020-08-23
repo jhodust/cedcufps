@@ -17,6 +17,11 @@ import com.ufps.cedcufps.dao.IEducacionContinuaDao;
 import com.ufps.cedcufps.dao.IJornadaDao;
 import com.ufps.cedcufps.dao.ITipoBeneficiarioDao;
 import com.ufps.cedcufps.dao.ITipoEducacionContinuaDao;
+import com.ufps.cedcufps.dto.EducacionContinuaAppDto;
+import com.ufps.cedcufps.dto.EducacionContinuaAppDto2;
+import com.ufps.cedcufps.dto.JornadaAppDto;
+import com.ufps.cedcufps.mapper.IEducacionContinuaMapper;
+import com.ufps.cedcufps.mapper.IJornadaMapper;
 import com.ufps.cedcufps.modelos.ClasificacionCine;
 import com.ufps.cedcufps.modelos.Departamento;
 import com.ufps.cedcufps.modelos.Diploma;
@@ -48,6 +53,12 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 	
 	@Autowired
 	private IDiplomaDao diplomaDao;
+	
+	@Autowired
+	private IEducacionContinuaMapper educacionContinuaMapper;
+	
+	@Autowired
+	private IJornadaMapper jornadaMapper;
 	
 	@Override
 	public List<EducacionContinua> findAll() {
@@ -236,6 +247,24 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 	public List<Jornada> findJornadasByEducacionContinua(Long idEduContinua) {
 		// TODO Auto-generated method stub
 		return jornadaDao.findByIdEducacionContinua(idEduContinua);
+	}
+
+	
+	
+	@Override
+	public List<EducacionContinuaAppDto2> findAllEducacionesApp() {
+		// TODO Auto-generated method stub
+		List<EducacionContinua> ec= this.findAll();
+		return educacionContinuaMapper.convertEducacionContinuaToApp(ec);
+		
+	}
+	
+	@Override
+	public List<JornadaAppDto> findAllJornadasByEduContinuaApp(Long idEduContinua) {
+		// TODO Auto-generated method stub
+		
+		return jornadaMapper.convertJornadasToJornadaAppDto(this.findOne(idEduContinua).get().getJornadas());
+		
 	}
 
 	

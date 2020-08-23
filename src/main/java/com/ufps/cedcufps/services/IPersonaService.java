@@ -3,6 +3,7 @@ package com.ufps.cedcufps.services;
 import java.util.List;
 import java.util.Optional;
 
+import com.ufps.cedcufps.dto.UsuarioAppDto;
 import com.ufps.cedcufps.dto.UsuarioDto;
 import com.ufps.cedcufps.modelos.Administrativo;
 import com.ufps.cedcufps.modelos.Departamento;
@@ -45,6 +46,8 @@ public interface IPersonaService {
 	public void save(Persona p);
 	
 	public Persona findPersonaLogueada();
+	
+	public UsuarioAppDto convertPersonaLogueadaApp(Persona p);
 	
 	public Optional<Persona> findOne(Long id);
 	

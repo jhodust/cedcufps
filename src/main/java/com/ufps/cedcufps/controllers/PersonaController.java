@@ -13,13 +13,21 @@ import com.ufps.cedcufps.modelos.Docente;
 import com.ufps.cedcufps.modelos.Estudiante;
 import com.ufps.cedcufps.modelos.Externo;
 import com.ufps.cedcufps.modelos.Persona;
+import com.ufps.cedcufps.services.IDepartamentoService;
 import com.ufps.cedcufps.services.IPersonaService;
+import com.ufps.cedcufps.services.IProgramaService;
 
 @Controller
 public class PersonaController {
 
 	@Autowired
 	private IPersonaService personaService;
+	
+	@Autowired
+	private IProgramaService programaService;
+	
+	@Autowired
+	private IDepartamentoService departamentoService;
 	
 	@RequestMapping(value = "/usuarios")
 	public String listar(Model model) {
@@ -62,7 +70,7 @@ public class PersonaController {
 		model.put("programas",personaService.findAllProgramas());
 		model.put("generos",personaService.findAllGeneros());
 		model.put("estados_civiles",personaService.findAllEstadosCiviles());
-		if(p.getTipoPersona().getTipoPersona().equalsIgnoreCase("Estudiante")) {
+		/*if(p.getTipoPersona().getTipoPersona().equalsIgnoreCase("Estudiante")) {
 			model.put("estudiante",(Estudiante)personaService.findOne(id).get());
 			return "redirect:/usuarios/estudiante/registro/"+p.getId();
 		}else if(p.getTipoPersona().getTipoPersona().equalsIgnoreCase("Docente")) {
@@ -74,12 +82,20 @@ public class PersonaController {
 		}else{
 			model.put("externo",(Externo)personaService.findOne(id).get());
 			return "redirect:/usuarios/externo/registro/"+p.getId();
-		}
+		}*/
+		return null;
 	}
 	
 	@RequestMapping(value = "/persona/{id}/permisos")
 	public String permisos(@PathVariable(value = "id") Long idPersona, Map<String, Object> model) {
 		model.put("persona",personaService.findOne(idPersona).get());
+		model.put("programas",programaService.findAll());
+		model.put("departamentos",departamentoService.findAll());
+		System.out.println(personaService.findOne(idPersona).get().isEstudiante());
+		System.out.println(personaService.findOne(idPersona).get().isDocente());
+		System.out.println(personaService.findOne(idPersona).get().isAdministrativo());
+		System.out.println(personaService.findOne(idPersona).get().isGraduado());
+		System.out.println(personaService.findOne(idPersona).get().isExterno());
 		return "persona/permisos";
 	}
 }

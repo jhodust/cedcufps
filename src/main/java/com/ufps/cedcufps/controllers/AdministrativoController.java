@@ -56,7 +56,7 @@ public class AdministrativoController {
 	
 	@RequestMapping(value = "/usuarios/administrativo/registro", method = RequestMethod.POST)
 	public String save(@Valid Administrativo a, BindingResult result,Map<String, Object> model, SessionStatus status,RedirectAttributes redirectAttributes) {
-		a.setTipoPersona(personaService.findByTipoPersona("Administrativo"));
+		//a.setTipoPersona(personaService.findByTipoPersona("Administrativo"));
 		System.out.println("*******************************************************************");
 		System.out.println(a.getFechaExpedicionDocumento());
 		System.out.println(a.getFechaNacimiento());

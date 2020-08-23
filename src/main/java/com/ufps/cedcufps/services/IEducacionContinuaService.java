@@ -8,6 +8,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.ufps.cedcufps.dto.EducacionContinuaAppDto;
+import com.ufps.cedcufps.dto.EducacionContinuaAppDto2;
+import com.ufps.cedcufps.dto.JornadaAppDto;
 import com.ufps.cedcufps.modelos.ClasificacionCine;
 import com.ufps.cedcufps.modelos.Diploma;
 import com.ufps.cedcufps.modelos.EducacionContinua;
@@ -63,4 +66,10 @@ public interface IEducacionContinuaService {
 	public Diploma generarDiploma(Long idEduContinua);
 	
 	public List<Jornada> findJornadasByEducacionContinua(Long idEduContinua);
+	
+	
+	public List<EducacionContinuaAppDto2> findAllEducacionesApp();
+	
+	public List<JornadaAppDto> findAllJornadasByEduContinuaApp(Long idEduContinua);
+	
 }

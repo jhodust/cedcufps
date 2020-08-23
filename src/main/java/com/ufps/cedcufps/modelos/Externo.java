@@ -15,8 +15,11 @@ public class Externo extends Persona{
 	 */
 	private static final long serialVersionUID = 1L;
 
-	@Size(max=30,message = "El campo profesión debe tener máximo 30 caracteres")
+	@Size(max=50,message = "El campo profesión debe tener máximo 50 caracteres")
 	private String profesion;
+	
+	@Size(max=50,message = "El campo empresa debe tener máximo 50 caracteres")
+	private String empresa;
 
 
 	public String getProfesion() {
@@ -26,6 +29,16 @@ public class Externo extends Persona{
 
 	public void setProfesion(String profesion) {
 		this.profesion = profesion;
+	}
+
+
+	public String getEmpresa() {
+		return empresa;
+	}
+
+
+	public void setEmpresa(String empresa) {
+		this.empresa = empresa;
 	}
 	
 

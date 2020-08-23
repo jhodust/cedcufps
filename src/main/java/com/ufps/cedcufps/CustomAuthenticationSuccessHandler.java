@@ -52,14 +52,14 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 	    System.out.println(auth.getPrincipal().getAttribute("email").toString());
 	    Persona p=personaService.findPersonaLogueada();
 	    if(p==null) {
-	    	 targetUrl = "http://localhost:8080/registrarse";
+	    	 targetUrl = "/registrarse";
 	    	 HttpSession session = request.getSession();
 	 	     System.out.println("session");
 	 	     System.out.println(session.getAttribute("email"));
 	 	     
 	    	 new SecurityContextLogoutHandler().logout(request, response, auth);
 	    }else {
-	    	targetUrl = "http://localhost:8080";
+	    	targetUrl = "/";
 	    }
 	    if (response.isCommitted()) {
 	        logger.debug(

@@ -1,6 +1,5 @@
 persona.roles.forEach(function(rol) {
 	  console.log(rol);
-	  if(persona.tipoPersona.tipoPersona=='Estudiante'){
 		  if(rol.authority=='ROLE_BECA'){
 			  
 			   $('#switchBeca').attr('checked', true);

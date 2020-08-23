@@ -22,6 +22,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+import org.hibernate.annotations.Type;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -130,9 +131,33 @@ public class Persona implements Serializable {//*
 	
 	
 	
-	@ManyToOne(fetch = FetchType.EAGER)
+	/*@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="id_tipo_persona")
 	private TipoPersona tipoPersona;
+	*/
+	
+	@Column(name="is_estudiante", columnDefinition = "TINYINT")
+	@Type(type = "org.hibernate.type.NumericBooleanType")
+	private boolean isEstudiante;
+	
+	@Column(name="is_docente", columnDefinition = "TINYINT")
+	@Type(type = "org.hibernate.type.NumericBooleanType")
+	private boolean isDocente;
+	
+	@Column(name="is_administrativo", columnDefinition = "TINYINT")
+	@Type(type = "org.hibernate.type.NumericBooleanType")
+	private boolean isAdministrativo;
+	
+	@Column(name="is_graduado",  columnDefinition = "TINYINT")
+	@Type(type = "org.hibernate.type.NumericBooleanType")
+	private boolean isGraduado;
+	
+	@Column(name="is_externo",  columnDefinition = "TINYINT")
+	@Type(type = "org.hibernate.type.NumericBooleanType")
+	private boolean isExterno;
+	
+	
+	
 	
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "id_persona")
@@ -211,12 +236,12 @@ public class Persona implements Serializable {//*
 	public void setTipoDocumento(TipoDocumento tipoDocumento) {
 		this.tipoDocumento = tipoDocumento;
 	}
-	public TipoPersona getTipoPersona() {
+	/*public TipoPersona getTipoPersona() {
 		return tipoPersona;
 	}
 	public void setTipoPersona(TipoPersona tipoPersona) {
 		this.tipoPersona = tipoPersona;
-	}
+	}*/
 	
 	public void addRol(Rol r) {
 		this.roles.add(r);
@@ -296,6 +321,46 @@ public class Persona implements Serializable {//*
 
 	public void setIdMunicipioNacimiento(String idMunicipioNacimiento) {
 		this.idMunicipioNacimiento = idMunicipioNacimiento;
+	}
+
+	public boolean isEstudiante() {
+		return isEstudiante;
+	}
+
+	public void setEstudiante(boolean isEstudiante) {
+		this.isEstudiante = isEstudiante;
+	}
+
+	public boolean isDocente() {
+		return isDocente;
+	}
+
+	public void setDocente(boolean isDocente) {
+		this.isDocente = isDocente;
+	}
+
+	public boolean isAdministrativo() {
+		return isAdministrativo;
+	}
+
+	public void setAdministrativo(boolean isAdministrativo) {
+		this.isAdministrativo = isAdministrativo;
+	}
+
+	public boolean isGraduado() {
+		return isGraduado;
+	}
+
+	public void setGraduado(boolean isGraduado) {
+		this.isGraduado = isGraduado;
+	}
+
+	public boolean isExterno() {
+		return isExterno;
+	}
+
+	public void setExterno(boolean isExterno) {
+		this.isExterno = isExterno;
 	}
 
 	

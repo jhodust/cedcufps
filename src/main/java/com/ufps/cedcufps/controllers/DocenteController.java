@@ -56,7 +56,7 @@ public class DocenteController {
 	
 	@RequestMapping(value = "/usuarios/docente/registro", method = RequestMethod.POST)
 	public String save(@Valid Docente d, BindingResult result,Map<String, Object> model, SessionStatus status,RedirectAttributes redirectAttributes) {
-		d.setTipoPersona(personaService.findByTipoPersona("Docente"));
+		//d.setTipoPersona(personaService.findByTipoPersona("Docente"));
 		System.out.println("*******************************************************************");
 		System.out.println(d.getFechaExpedicionDocumento());
 		System.out.println(d.getFechaNacimiento());

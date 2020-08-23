@@ -12,17 +12,24 @@ import java.util.ListIterator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.ufps.cedcufps.dao.IDepartamentoDao;
 import com.ufps.cedcufps.dao.IEstadoCivilDao;
 import com.ufps.cedcufps.dao.IGeneroDao;
 import com.ufps.cedcufps.dao.IProgramaDao;
 import com.ufps.cedcufps.dao.ITipoDocumentoDao;
 import com.ufps.cedcufps.dao.ITipoPersonaDao;
+import com.ufps.cedcufps.dto.UsuarioAppDto;
 import com.ufps.cedcufps.dto.UsuarioDto;
 import com.ufps.cedcufps.exception.CustomException;
+import com.ufps.cedcufps.modelos.Administrativo;
+import com.ufps.cedcufps.modelos.Departamento;
+import com.ufps.cedcufps.modelos.Docente;
 import com.ufps.cedcufps.modelos.EstadoCivil;
 import com.ufps.cedcufps.modelos.Estudiante;
 import com.ufps.cedcufps.modelos.Externo;
 import com.ufps.cedcufps.modelos.Genero;
+import com.ufps.cedcufps.modelos.Graduado;
+import com.ufps.cedcufps.modelos.Persona;
 import com.ufps.cedcufps.modelos.Programa;
 import com.ufps.cedcufps.modelos.Rol;
 import com.ufps.cedcufps.modelos.TipoDocumento;
@@ -46,125 +53,200 @@ public class UsuarioMapper implements IUsuarioMapper {
 	@Autowired
 	private IProgramaDao programaDao;
 	
+	@Autowired
+	private IDepartamentoDao departamentoDao;
+	
 	@Override
-	public Estudiante convertUsuarioToEstudiante(UsuarioDto u) {
+	public Persona convertUsuarioToPersona(UsuarioDto u) {
 		// TODO Auto-generated method stub
-		Estudiante e= new Estudiante();
-		TipoDocumento td = tipoDocumentoDao.findById(u.getTipoDocumento()).orElseThrow(() -> {
+		Persona pe=new Persona();
+		TipoDocumento td=null;
+		Genero g=null;
+		EstadoCivil ec=null;
+		TipoPersona tp=null;
+		Programa p=null;
+		try {
+			td = tipoDocumentoDao.findById(u.getTipoDocumento()).get();
+		}catch(Exception ex) {
 			throw new CustomException("No se encontró el tipo de documento en la base de datos");
-		});
-		Genero g= generoDao.findById(u.getGenero()).orElseThrow(() -> {
+		}
+		
+		try {
+			g= generoDao.findById(u.getGenero()).get();
+		}catch(Exception ex) {
 			throw new CustomException("No se encontró el género en la base de datos");
-		});
+		}
 		
-		EstadoCivil ec= estadoCivilDao.findById(u.getEstadoCivil()).orElseThrow(() -> {
+		try {
+			ec= estadoCivilDao.findById(u.getEstadoCivil()).get();
+		}catch(Exception ex) {
 			throw new CustomException("No se encontró el estado civil en la base de datos");
-		});
+		}
 		
-		TipoPersona tp= tipoPersonaDao.findById((long) 1).orElseThrow(() -> {
+		try {
+			tp= tipoPersonaDao.findById((long) 1).get();
+		}catch(Exception ex) {
 			throw new CustomException("No se encontró el tipo usuario en la base de datos");
-		});
+		}
+			
 		
-		Programa p= programaDao.findById(u.getPrograma()).orElseThrow(() -> {
+		try {
+			p= programaDao.findById(u.getPrograma()).get();
+		}catch(Exception ex) {
 			throw new CustomException("No se encontró el programa en la base de datos");
-		});
+		}	
+			
 		  
 		
-		e.setTipoDocumento(td);
-		e.setNumeroDocumento(u.getNumeroDocumento());
+		pe.setTipoDocumento(td);
+		pe.setNumeroDocumento(u.getNumeroDocumento());
 		try {
-			e.setFechaExpedicionDocumento(new SimpleDateFormat("dd/MM/yyyy").parse(u.getFechaExpedicionDocumento()));
+			pe.setFechaExpedicionDocumento(new SimpleDateFormat("dd/MM/yyyy").parse(u.getFechaExpedicionDocumento()));
 		} catch (ParseException e1) {
 			// TODO Auto-generated catch block
 			throw new CustomException("Fecha Expedición Documento inválida");
 		}
-		e.setPrimerNombre(u.getPrimerNombre());
-		e.setSegundoNombre(u.getSegundoNombre());
-		e.setPrimerApellido(u.getPrimerApellido());
-		e.setSegundoApellido(u.getSegundoApellido());
-		e.setGenero(g);
-		e.setEstadoCivil(ec);
+		pe.setPrimerNombre(u.getPrimerNombre());
+		pe.setSegundoNombre(u.getSegundoNombre());
+		pe.setPrimerApellido(u.getPrimerApellido());
+		pe.setSegundoApellido(u.getSegundoApellido());
+		pe.setGenero(g);
+		pe.setEstadoCivil(ec);
 		try {
-			e.setFechaNacimiento(new SimpleDateFormat("dd/MM/yyyy").parse(u.getFechaNacimiento()));
+			pe.setFechaNacimiento(new SimpleDateFormat("dd/MM/yyyy").parse(u.getFechaNacimiento()));
 		} catch (ParseException e1) {
 			// TODO Auto-generated catch block
 			throw new CustomException("Fecha Nacimiento inválida");
 		}
-		e.setIdPaisNacimiento(u.getIdPaisNacimiento());
-		e.setIdMunicipioNacimiento(u.getIdMunicipioNacimiento());
-		e.setIdDepartamentoNacimiento(u.getIdDepartamentoNacimiento());
-		e.setEmail(u.getEmail());
-		e.setDireccion(u.getDireccion());
-		e.setTelefono(u.getTelefono());
-		e.setTipoPersona(tp);
-		e.setPrograma(p);
-		e.setCodigo(u.getCodigo());
+		pe.setIdPaisNacimiento(u.getIdPaisNacimiento());
+		pe.setIdMunicipioNacimiento(u.getIdMunicipioNacimiento());
+		pe.setIdDepartamentoNacimiento(u.getIdDepartamentoNacimiento());
+		pe.setEmail(u.getEmail());
+		pe.setDireccion(u.getDireccion());
+		pe.setTelefono(u.getTelefono());
+		
+		if(u.getIsExterno()==1) {
+			pe.setExterno(true);
+		}else {
+			if(u.getIsEstudiante()==1) {
+				pe.setEstudiante(true);
+			}
+			if(u.getIsDocente()==1) {
+				pe.setDocente(true);
+			}
+			if(u.getIsAdministrativo()==1) {
+				pe.setAdministrativo(true);
+			}
+			if(u.getIsGraduado()==1) {
+				pe.setGraduado(true);
+			}
+			
+		}
+		
 		List<Rol> r= new ArrayList<>();
 		Rol rol= new Rol();
 		rol.setAuthority("ROLE_USER");
 		r.add(rol);
-		e.setRoles(r);
+		pe.setRoles(r);
+		return pe;
+	}
+	
+	@Override
+	public Estudiante convertUsuarioToEstudiante(UsuarioDto u, Long idPersona) {
+		// TODO Auto-generated method stub
+		
+		Programa p=null;
+		
+		try {
+			p= programaDao.findById(u.getPrograma()).get();
+		}catch(Exception ex) {
+			throw new CustomException("No se encontró el programa en la base de datos");
+		}	
+		Estudiante e= new Estudiante();
+		e.setId(idPersona);
+		e.setPrograma(p);
+		e.setCodigo(u.getCodigo());
+		
 		return e;
 	}
 	
 	
 
 	@Override
-	public Externo convertUsuarioToExterno(UsuarioDto u) {
+	public Externo convertUsuarioToExterno(UsuarioDto u,Long idPersona) {
 		// TODO Auto-generated method stub
-		Externo e= new Externo();
-		TipoDocumento td = tipoDocumentoDao.findById(u.getTipoDocumento()).orElseThrow(() -> {
-			throw new CustomException("No se encontró el tipo de documento en la base de datos");
-		});
-		Genero g= generoDao.findById(u.getGenero()).orElseThrow(() -> {
-			throw new CustomException("No se encontró el género en la base de datos");
-		});
-		
-		EstadoCivil ec= estadoCivilDao.findById(u.getEstadoCivil()).orElseThrow(() -> {
-			throw new CustomException("No se encontró el estado civil en la base de datos");
-		});
-		
-		TipoPersona tp= tipoPersonaDao.findById((long) 4).orElseThrow(() -> {
-			throw new CustomException("No se encontró el tipo usuario en la base de datos");
-		});
-		
-		
-		e.setTipoDocumento(td);
-		e.setNumeroDocumento(u.getNumeroDocumento());
-		try {
-			e.setFechaExpedicionDocumento(new SimpleDateFormat("dd/MM/yyyy").parse(u.getFechaExpedicionDocumento()));
-		} catch (ParseException e1) {
-			// TODO Auto-generated catch block
-			throw new CustomException("Fecha Expedición Documento inválida");
-		}
-		e.setPrimerNombre(u.getPrimerNombre());
-		e.setSegundoNombre(u.getSegundoNombre());
-		e.setPrimerApellido(u.getPrimerApellido());
-		e.setSegundoApellido(u.getSegundoApellido());
-		e.setGenero(g);
-		e.setEstadoCivil(ec);
-		try {
-			e.setFechaNacimiento(new SimpleDateFormat("dd/MM/yyyy").parse(u.getFechaNacimiento()));
-		} catch (ParseException e1) {
-			// TODO Auto-generated catch block
-			throw new CustomException("Fecha Nacimiento inválida");
-		}
-		e.setIdPaisNacimiento(u.getIdPaisNacimiento());
-		e.setIdMunicipioNacimiento(u.getIdMunicipioNacimiento());
-		e.setIdDepartamentoNacimiento(u.getIdDepartamentoNacimiento());
-		e.setEmail(u.getEmail());
-		e.setDireccion(u.getDireccion());
-		e.setTelefono(u.getTelefono());
-		e.setTipoPersona(tp);
+		Externo e=new Externo();
+		e.setId(idPersona);
+		e.setEmpresa(u.getEmpresa());
 		e.setProfesion(u.getProfesion());
-		List<Rol> r= new ArrayList<>();
-		Rol rol= new Rol();
-		rol.setAuthority("ROLE_USER");
-		r.add(rol);
-		e.setRoles(r);
 		return e;
 	}
 
-	
+	@Override
+	public Docente convertUsuarioToDocente(UsuarioDto u, Long idPersona) {
+		// TODO Auto-generated method stub
+		
+		Departamento de=null;
+		
+		try {
+			de= departamentoDao.findById(u.getDeptoAdscrito()).get();
+		}catch(Exception ex) {
+			throw new CustomException("No se encontró el departamento en la base de datos");
+		}	
+		Docente d= new Docente();
+		d.setId(idPersona);
+		d.setDepartamento(de);
+		d.setCodigo(u.getCodigoDocente());
+		return d;
+	}
 
+	@Override
+	public Administrativo convertUsuarioToAdministrativo(UsuarioDto u, Long idPersona) {
+		// TODO Auto-generated method stub
+		Administrativo a= new Administrativo();
+		a.setId(idPersona);
+		a.setCargo(u.getCargo());
+		a.setDependencia(u.getDependencia());
+		return a;
+	}
+
+	@Override
+	public Graduado convertUsuarioToGraduado(UsuarioDto u, Long idPersona) {
+		// TODO Auto-generated method stub
+		Programa p=null;
+		
+		try {
+			p= programaDao.findById(u.getPrograma()).get();
+		}catch(Exception ex) {
+			throw new CustomException("No se encontró el programa del cuál se graduó en la base de datos");
+		}
+		
+		Graduado g= new Graduado();
+		g.setId(idPersona);
+		g.setPrograma(p);
+		g.setAnio(u.getAnioGraduado());
+		return g;
+	}
+
+	@Override
+	public UsuarioAppDto convertPersonaToUsuarioAppDto(Persona p) {
+		// TODO Auto-generated method stub
+		UsuarioAppDto dto=new UsuarioAppDto();
+		dto.setId(p.getId());
+		dto.setPrimerNombre(p.getPrimerNombre());
+		dto.setSegundoNombre(p.getSegundoNombre());
+		dto.setPrimerApellido(p.getPrimerApellido());
+		dto.setSegundoApellido(p.getSegundoApellido());
+		dto.setEmail(p.getEmail());
+		dto.setTelefono(p.getEmail());
+		dto.setEstudiante(p.isEstudiante());
+		dto.setDocente(p.isDocente());
+		dto.setAdministrativo(p.isAdministrativo());
+		dto.setGraduado(p.isGraduado());
+		dto.setExterno(p.isExterno());
+		return dto;
+	}
+
+	
+	
 }

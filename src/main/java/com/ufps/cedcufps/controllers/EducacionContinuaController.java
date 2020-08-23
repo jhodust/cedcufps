@@ -127,9 +127,13 @@ public class EducacionContinuaController {
 	}
 	
 	@RequestMapping(value = "/educacion-continua/registro")
-	public String agregar(Map<String, Object> model) {
+	public String agregar(Map<String, Object> model, Authentication auth) {
 		EducacionContinua ec= new EducacionContinua(); 
 		model.put("titulo","FORMULARIO EDUCACIÓN CONTINUA");
+	
+		if(buscarAuthority(auth, "ROLE_DOCENTE")) {
+			ec.setDocenteResponsable((Docente)personaService.findPersonaLogueada());
+		}
 		model.put("educacionContinua",ec);
 		model.put("tipos_educacion_continua",educacionContinuaService.findAllTiposEducacionContinua());
 		model.put("clasificacion_cine",educacionContinuaService.findAllClasificacionCine());

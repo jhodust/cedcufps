@@ -13,7 +13,7 @@ $(document).ready(function ()
 	$('#selectPaisNacimiento').on('select2:select', function (e) { 
 		var idPaisSeleccionado=e.params.data.id;
 		if(idPaisSeleccionado=='170'){//id de Colombia
-			mostrar('rowDeptoYMpioColombia');
+			mostrar('rowDeptoYMpioColombia','flex');
 		}else{
 			$('#selectDepartamentoNacimiento').val('0').trigger('change');
 			$('#selectMunicipioNacimiento').empty().trigger("change");
@@ -72,7 +72,7 @@ function cargarPaises(){
   //caso de editar usuario
    $('#selectPaisNacimiento').val(idPaisNac).trigger('select');//esto se hace en caso de editar usuario ya que recibo las variables mediante un script en el form de camposPersona
    if(idPaisNac=='170'){
-	   mostrar('rowDeptoYMpioColombia');
+	   mostrar('rowDeptoYMpioColombia','flex');
    }
    //termina caso de editar usuario
   });
@@ -127,8 +127,8 @@ function comportamientoSelectsNacimiento(){
 function ocultar(id) {// oculta un elemento del formulario
 	document.getElementById(id).style.display = 'none';
 }
-function mostrar(id) {// muestra un elemento del formulario
-	document.getElementById(id).style.display = 'flex';
+function mostrar(id,style) {// muestra un elemento del formulario
+	document.getElementById(id).style.display = style;
 }
 
 

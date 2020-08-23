@@ -146,11 +146,11 @@ public class ManejoPdf {
 						cell.setHorizontalAlignment(Element.ALIGN_LEFT);
 						table.addCell(cell);
 
-						cell = new PdfPCell(new Phrase(p.getPersona().getTipoPersona().getTipoPersona()));
-						cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-						cell.setHorizontalAlignment(Element.ALIGN_LEFT);
-						cell.setPaddingRight(5);
-						table.addCell(cell);
+						//cell = new PdfPCell(new Phrase(p.getPersona().getTipoPersona().getTipoPersona()));
+						//cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+						//cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+						//cell.setPaddingRight(5);
+						//table.addCell(cell);
 
 						i++;
 					}else {

@@ -161,7 +161,7 @@ function editarPrograma(elemento){
 		headers: {"X-CSRF-TOKEN": token},
 		type: "GET",
 		contentType: "application/json; charset=utf-8",
-		url: "/programa/search/"+elemento.dataset.id,
+		url: "/search/programa/"+elemento.dataset.id,
 		cache: false,
 		success: function(result) {
 			console.log(result);

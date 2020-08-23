@@ -147,7 +147,7 @@ public class UsuarioMapper implements IUsuarioMapper {
 		Rol rol= new Rol();
 		rol.setAuthority("ROLE_USER");
 		r.add(rol);
-		pe.setRoles(r);
+		//pe.setRoles(r);
 		return pe;
 	}
 	

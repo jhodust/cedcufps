@@ -144,10 +144,10 @@ public class PersonaService implements IPersonaService, UserDetailsService {
 			throw new UsernameNotFoundException("usuario "+ username +" no existe");
 		}
 		List<GrantedAuthority> authorities= new ArrayList<GrantedAuthority>();
-		for(Rol r:p.getRoles()) {
+		/*for(Rol r:p.getRoles()) {
 			logger.info("Role:".concat(r.getAuthority()));
 			authorities.add(new SimpleGrantedAuthority(r.getAuthority()));
-		}
+		}*/
 		
 		if(authorities.isEmpty()) {
 			logger.error("Error login: no tiene roles el usuario '"+username+"'");

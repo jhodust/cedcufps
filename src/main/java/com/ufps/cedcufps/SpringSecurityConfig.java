@@ -219,9 +219,10 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 			Set<GrantedAuthority> mappedAuthorities = new HashSet<>();
 			Persona p=personaService.findByEmail(oidcUser.getEmail());
 			if(p!=null) {
-				for(Rol r:p.getRoles()) {
+				/*for(Rol r:p.getRoles()) {
 					mappedAuthorities.add(new SimpleGrantedAuthority(r.getAuthority()));
-				}
+				}*/
+				mappedAuthorities.add(new SimpleGrantedAuthority("ROLE_SUPERADMIN"));
 				oidcUser = new DefaultOidcUser(mappedAuthorities, oidcUser.getIdToken(), oidcUser.getUserInfo());
 			}else {
 				System.out.println("no es usuario registrado");
@@ -265,9 +266,10 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 					System.out.println(userAttributes.get("email"));
 					Persona p=personaService.findByEmail(String.valueOf(userAttributes.get("email")));
 					List<GrantedAuthority> authoritiess= new ArrayList<GrantedAuthority>();
-					for(Rol r:p.getRoles()) {
+					/*for(Rol r:p.getRoles()) {
 						mappedAuthorities.add(new SimpleGrantedAuthority(r.getAuthority()));
-					}
+					}*/
+					mappedAuthorities.add(new SimpleGrantedAuthority("ROLE_SUPERADMIN"));
 				}
 				
 				

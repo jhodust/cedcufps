@@ -39,7 +39,8 @@ insert into tipos_documento(id,tipo_documento,descripcion) values(6,'CA','Certif
 insert into tipos_persona(id,tipo_persona) values(1,'Estudiante');
 insert into tipos_persona(id,tipo_persona) values(2,'Docente');
 insert into tipos_persona(id,tipo_persona) values(3,'Administrativo');
-insert into tipos_persona(id,tipo_persona) values(4,'Externo');
+insert into tipos_persona(id,tipo_persona) values(4,'Graduado');
+insert into tipos_persona(id,tipo_persona) values(5,'Externo');
 
 insert into personas (id,direccion,email,numero_documento,primer_nombre,segundo_nombre,primer_apellido,segundo_apellido,telefono,is_estudiante,is_docente,is_administrativo,is_graduado,is_externo,id_tipo_documento,username,password,enabled,id_pais_nacimiento,id_departamento_nacimiento,id_municipio_nacimiento,fecha_nacimiento,fecha_expedicion_documento,id_estado_civil,id_genero) values (1,'atalaya','jhocel@gmail.com','10905015','Jhocel','Duvan','Suescun','Torres','32184602',1,0,0,0,0,1,'jhocel','$2a$10$n8.oDbyejLtZAcpKKRSsfuUSGMJ6LZ.qNmTURpganDyTZ.s6F.vkm',1,'170','54','54001','1997-01-03','2015-01-06',1,1);
 insert into personas (id,direccion,email,numero_documento,primer_nombre,segundo_nombre,primer_apellido,segundo_apellido,telefono,is_estudiante,is_docente,is_administrativo,is_graduado,is_externo,id_tipo_documento,username,password,enabled,id_pais_nacimiento,id_departamento_nacimiento,id_municipio_nacimiento,fecha_nacimiento,fecha_expedicion_documento,id_estado_civil,id_genero) values (2,'limonar','javier@gmail.com','1515436','Javier','Eduardo','Calderon','Villamizar','32318485',1,0,0,0,0,1,'javier','$2a$10$aMefgC8nnLjkzHfYjTjA6eKpdjqhVOlVczgvtJqAD0EUFaWO3U0JO',1,'170','54','54239','1948-10-22','1966-07-04',1,1);
@@ -132,62 +133,20 @@ insert into administrativos (id_persona,cargo) values (34,'vicerector de extensi
 
 insert into externos (id_persona,profesion) values (35,'ing de sistemas');
 
+insert into roles (id, authority) values (1,'ROLE_SUPERADMIN');
+insert into roles (id, authority) values (2,'ROLE_MANAECCU');
+insert into roles (id, authority) values (3,'ROLE_MANPEOPLE');
+insert into roles (id, authority) values (4,'ROLE_ATTENDANCE');
 
-
-insert into roles(id,authority,id_persona) values(1,'ROLE_USER',1);
-insert into roles(id,authority,id_persona) values(2,'ROLE_BECA',1);
-insert into roles(id,authority,id_persona) values(3,'ROLE_USER',2);
-insert into roles(id,authority,id_persona) values(4,'ROLE_USER',3);
-insert into roles(id,authority,id_persona) values(5,'ROLE_USER',4);
-insert into roles(id,authority,id_persona) values(6,'ROLE_USER',5);
-insert into roles(id,authority,id_persona) values(7,'ROLE_USER',6);
-insert into roles(id,authority,id_persona) values(8,'ROLE_USER',7);
-insert into roles(id,authority,id_persona) values(9,'ROLE_USER',8);
-insert into roles(id,authority,id_persona) values(11,'ROLE_USER',10);
-insert into roles(id,authority,id_persona) values(12,'ROLE_USER',11);
-insert into roles(id,authority,id_persona) values(13,'ROLE_USER',12);
-insert into roles(id,authority,id_persona) values(14,'ROLE_USER',13);
-insert into roles(id,authority,id_persona) values(15,'ROLE_USER',14);
-insert into roles(id,authority,id_persona) values(17,'ROLE_USER',16);
-insert into roles(id,authority,id_persona) values(18,'ROLE_USER',17);
-insert into roles(id,authority,id_persona) values(20,'ROLE_USER',19);
-insert into roles(id,authority,id_persona) values(21,'ROLE_USER',20);
-
-
-insert into roles(id,authority,id_persona) values(22,'ROLE_USER',21);
-insert into roles(id,authority,id_persona) values(23,'ROLE_USER',22);
-insert into roles(id,authority,id_persona) values(24,'ROLE_USER',23);
-insert into roles(id,authority,id_persona) values(25,'ROLE_USER',24);
-insert into roles(id,authority,id_persona) values(26,'ROLE_USER',25);
-insert into roles(id,authority,id_persona) values(27,'ROLE_USER',26);
-insert into roles(id,authority,id_persona) values(28,'ROLE_USER',27);
-insert into roles(id,authority,id_persona) values(29,'ROLE_USER',28);
-insert into roles(id,authority,id_persona) values(30,'ROLE_USER',29);
-insert into roles(id,authority,id_persona) values(31,'ROLE_USER',30);
-insert into roles(id,authority,id_persona) values(32,'ROLE_USER',31);
-insert into roles(id,authority,id_persona) values(33,'ROLE_USER',32);
-
-insert into roles(id,authority,id_persona) values(34,'ROLE_ADMIN_CEEC',21);
-insert into roles(id,authority,id_persona) values(35,'ROLE_DOCENTE',22);
-insert into roles(id,authority,id_persona) values(36,'ROLE_ADMIN_CEEC',23);
-insert into roles(id,authority,id_persona) values(37,'ROLE_ADMIN_CEEC',24);
-insert into roles(id,authority,id_persona) values(38,'ROLE_DOCENTE',25);
-insert into roles(id,authority,id_persona) values(39,'ROLE_DOCENTE',26);
-insert into roles(id,authority,id_persona) values(40,'ROLE_ADMIN_CEEC',27);
-insert into roles(id,authority,id_persona) values(41,'ROLE_DOCENTE',28);
-insert into roles(id,authority,id_persona) values(42,'ROLE_DOCENTE',29);
-insert into roles(id,authority,id_persona) values(43,'ROLE_ADMIN_CEEC',30);
-insert into roles(id,authority,id_persona) values(44,'ROLE_DOCENTE',31);
-insert into roles(id,authority,id_persona) values(45,'ROLE_DOCENTE',32);
-
-
-insert into roles(id,authority,id_persona) values(46,'ROLE_DIRPROGRAMA',25);
-insert into roles(id,authority,id_persona) values(47,'ROLE_DIRPROGRAMA',23);
-insert into roles(id,authority,id_persona) values(48,'ROLE_USER',33);
-insert into roles(id,authority,id_persona) values(50,'ROLE_USER',34);
-insert into roles(id,authority,id_persona) values(51,'ROLE_SUPERADMIN',34);
-insert into roles(id,authority,id_persona) values(52,'ROLE_USER',35);
-
+insert into personas_x_roles (id_persona, id_rol) values (1,2);
+insert into personas_x_roles (id_persona, id_rol) values (1,3);
+insert into roles_personas_programas_ec (id_persona, id_rol, id_programa) values (1,2,1);
+insert into rol_persona_tip_pers (id_persona, id_rol, id_tipo_persona) values (1,3,1);
+insert into rol_persona_tip_pers (id_persona, id_rol, id_tipo_persona) values (1,3,2);
+insert into rol_persona_tip_pers (id_persona, id_rol, id_tipo_persona) values (1,3,4);
+insert into rol_persona_programa_per (id_persona, id_rol, id_tipo_persona,id_programa) values (1,3,1,1);
+insert into rol_persona_programa_per (id_persona, id_rol, id_tipo_persona,id_programa) values (1,3,4,1);
+insert into rol_persona_depto_per (id_persona, id_rol, id_tipo_persona,id_depto) values (1,3,2,3);
 
 insert into tipos_participante(id,tipo_participante) values(1,'Asistente');
 insert into tipos_participante(id,tipo_participante) values(2,'Ponente');

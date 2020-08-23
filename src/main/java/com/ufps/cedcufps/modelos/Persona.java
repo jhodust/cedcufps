@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -160,13 +161,13 @@ public class Persona implements Serializable {//*
 	
 	
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinColumn(name = "id_persona")
-	private List<Rol> roles;
+	@JoinColumn(name="id_persona")
+	private List<PersonaRol> personaXRoles;
 	
 	
 	
 	public Persona() {
-		this.roles = new ArrayList<Rol>();;
+		this.personaXRoles = new ArrayList<PersonaRol>();;
 	}
 
 	public Long getId() {
@@ -243,14 +244,14 @@ public class Persona implements Serializable {//*
 		this.tipoPersona = tipoPersona;
 	}*/
 	
-	public void addRol(Rol r) {
-		this.roles.add(r);
+	public void addRol(PersonaRol r) {
+		this.personaXRoles.add(r);
 	}
-	public List<Rol> getRoles() {
-		return roles;
+	public List<PersonaRol> getRoles() {
+		return personaXRoles;
 	}
-	public void setRoles(List<Rol> roles) {
-		this.roles = roles;
+	public void setRoles(List<PersonaRol> roles) {
+		this.personaXRoles = roles;
 	}
 	public String getUsername() {
 		return username;

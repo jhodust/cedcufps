@@ -35,7 +35,7 @@ public class RoleRestController {
 		if(p!=null) {
 			Rol r=new Rol();
 			r.setAuthority(role);
-			p.addRol(r);
+			//p.addRol(r);
 			personaService.save(p);
 		}
 		return  new ResponseEntity<>(HttpStatus.OK);

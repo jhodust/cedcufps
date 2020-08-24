@@ -41,22 +41,28 @@ public class AppRestController {
 		
 		GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(new NetHttpTransport(),  new JacksonFactory())
 			    // Specify the CLIENT_ID of the app that accesses the backend:
-			    .setAudience(Collections.singletonList("460942427313-o7mqvi3ksnuvslpahmkdgsm7u24qnhkt.apps.googleusercontent.com"))
+			    .setAudience(Collections.singletonList("835770905354-89itpo5t6vfvtrmfltvmfj1765vlr1va.apps.googleusercontent.com"))
 			    // Or, if multiple clients access the backend:
 			    //.setAudience(Arrays.asList(CLIENT_ID_1, CLIENT_ID_2, CLIENT_ID_3))
 			    .build();
 
 			// (Receive idTokenString by HTTPS POST)
-
+			boolean verificacionToken=false;
 			GoogleIdToken idToken=null;
 			try {
 				idToken = verifier.verify(token);
+				verificacionToken=true;
 			} catch (GeneralSecurityException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				verificacionToken=false;
+				//e.printStackTrace();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				//e.printStackTrace();
+				verificacionToken=false;
+			}
+			if(!verificacionToken) {
+				return  new ResponseEntity<>("Error en la verificacion",HttpStatus.BAD_REQUEST);
 			}
 			if (idToken != null) {
 			  Payload payload = idToken.getPayload();
@@ -87,13 +93,15 @@ public class AppRestController {
 		        		return  new ResponseEntity<>("No cuenta con permisos para administrar cursos y/o eventos de educación continua",HttpStatus.FORBIDDEN);
 		        	}
 		        	
+		        }else {
+		        	return  new ResponseEntity<>("Usuario no existe",HttpStatus.INTERNAL_SERVER_ERROR);
 		        }
 			} else {
 			  System.out.println("Invalid ID token.");
 			  return  new ResponseEntity<>("Invalid ID token",HttpStatus.UNAUTHORIZED);
 			}
 		
-		return  new ResponseEntity<>("Usuario no existe",HttpStatus.INTERNAL_SERVER_ERROR);
+		
     }
 	
 	public boolean buscarPermisosAdminsitradorCursosYEventos(Persona p) {

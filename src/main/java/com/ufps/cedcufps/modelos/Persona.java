@@ -160,8 +160,7 @@ public class Persona implements Serializable {//*
 	
 	
 	
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinColumn(name="id_persona")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "persona", cascade = CascadeType.ALL)
 	private List<PersonaRol> personaXRoles;
 	
 	

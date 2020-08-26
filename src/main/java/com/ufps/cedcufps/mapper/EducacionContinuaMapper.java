@@ -6,7 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import com.ufps.cedcufps.dto.EducacionContinuaAppDto;
-import com.ufps.cedcufps.dto.EducacionContinuaAppDto2;
+import com.ufps.cedcufps.dto.EducacionContinuaAppDto;
 import com.ufps.cedcufps.dto.JornadaAppDto;
 import com.ufps.cedcufps.modelos.EducacionContinua;
 import com.ufps.cedcufps.modelos.Jornada;
@@ -17,13 +17,13 @@ public class EducacionContinuaMapper implements IEducacionContinuaMapper {
 
 	
 	@Override
-	public List<EducacionContinuaAppDto2> convertEducacionContinuaToApp(List<EducacionContinua> edc) {
+	public List<EducacionContinuaAppDto> convertEducacionContinuaToApp(List<EducacionContinua> edc) {
 		// TODO Auto-generated method stub
-		List<EducacionContinuaAppDto2> ecadto=new ArrayList<>();
+		List<EducacionContinuaAppDto> ecadto=new ArrayList<>();
 		
 		if(!edc.isEmpty()) {
 			for(EducacionContinua e:edc) {
-				EducacionContinuaAppDto2 dto= new EducacionContinuaAppDto2();
+				EducacionContinuaAppDto dto= new EducacionContinuaAppDto();
 				dto.setId(e.getId());
 				dto.setNombre(e.getNombre());
 				dto.setFechaInicio(e.getFechaInicio());

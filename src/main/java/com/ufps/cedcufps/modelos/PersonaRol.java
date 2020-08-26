@@ -34,7 +34,7 @@ public class PersonaRol implements Serializable{
 	private Persona persona;
 	
 	@Id
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name="id_rol")
 	private Rol rol;
 	

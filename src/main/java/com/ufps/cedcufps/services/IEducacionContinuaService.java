@@ -9,7 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ufps.cedcufps.dto.EducacionContinuaAppDto;
-import com.ufps.cedcufps.dto.EducacionContinuaAppDto2;
+import com.ufps.cedcufps.dto.EducacionContinuaAppDto;
 import com.ufps.cedcufps.dto.JornadaAppDto;
 import com.ufps.cedcufps.modelos.ClasificacionCine;
 import com.ufps.cedcufps.modelos.Diploma;
@@ -68,7 +68,7 @@ public interface IEducacionContinuaService {
 	public List<Jornada> findJornadasByEducacionContinua(Long idEduContinua);
 	
 	
-	public List<EducacionContinuaAppDto2> findAllEducacionesApp();
+	public List<EducacionContinuaAppDto> findAllEducacionesApp();
 	
 	public List<JornadaAppDto> findAllJornadasByEduContinuaApp(Long idEduContinua);
 	

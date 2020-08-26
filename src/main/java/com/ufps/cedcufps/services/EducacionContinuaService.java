@@ -18,7 +18,7 @@ import com.ufps.cedcufps.dao.IJornadaDao;
 import com.ufps.cedcufps.dao.ITipoBeneficiarioDao;
 import com.ufps.cedcufps.dao.ITipoEducacionContinuaDao;
 import com.ufps.cedcufps.dto.EducacionContinuaAppDto;
-import com.ufps.cedcufps.dto.EducacionContinuaAppDto2;
+import com.ufps.cedcufps.dto.EducacionContinuaAppDto;
 import com.ufps.cedcufps.dto.JornadaAppDto;
 import com.ufps.cedcufps.mapper.IEducacionContinuaMapper;
 import com.ufps.cedcufps.mapper.IJornadaMapper;
@@ -252,7 +252,7 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 	
 	
 	@Override
-	public List<EducacionContinuaAppDto2> findAllEducacionesApp() {
+	public List<EducacionContinuaAppDto> findAllEducacionesApp() {
 		// TODO Auto-generated method stub
 		List<EducacionContinua> ec= this.findAll();
 		return educacionContinuaMapper.convertEducacionContinuaToApp(ec);

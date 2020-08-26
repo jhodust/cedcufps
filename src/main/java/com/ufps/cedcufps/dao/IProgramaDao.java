@@ -37,4 +37,7 @@ public interface IProgramaDao extends PagingAndSortingRepository<Programa, Long>
 	
 	@Query("select p from Programa p where p.id != ?1 and p.directorPrograma.id = ?2")
 	public List<Programa> findOthersProgramasByDirector(Long idPro, Long idDir);
+	
+	@Query
+	public Programa findByCodigo(String codigo);
 }

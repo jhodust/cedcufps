@@ -137,9 +137,13 @@ insert into roles (id, authority) values (1,'ROLE_SUPERADMIN');
 insert into roles (id, authority) values (2,'ROLE_MANAECCU');
 insert into roles (id, authority) values (3,'ROLE_MANPEOPLE');
 insert into roles (id, authority) values (4,'ROLE_ATTENDANCE');
+insert into roles (id, authority) values (5,'ROLE_USER');
 
+insert into personas_x_roles (id_persona, id_rol) values (34,1);
+insert into personas_x_roles (id_persona, id_rol) values (34,5);
 insert into personas_x_roles (id_persona, id_rol) values (1,2);
 insert into personas_x_roles (id_persona, id_rol) values (1,3);
+insert into personas_x_roles (id_persona, id_rol) values (1,4);
 insert into roles_personas_programas_ec (id_persona, id_rol, id_programa) values (1,2,1);
 insert into rol_persona_tip_pers (id_persona, id_rol, id_tipo_persona) values (1,3,1);
 insert into rol_persona_tip_pers (id_persona, id_rol, id_tipo_persona) values (1,3,2);

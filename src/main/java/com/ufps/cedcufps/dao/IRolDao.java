@@ -10,8 +10,6 @@ import com.ufps.cedcufps.modelos.Rol;
 
 public interface IRolDao extends CrudRepository<Rol, Long>{
 
-	@Transactional
-	@Modifying
-	@Query(value= "delete FROM roles where authority=?1 and id_persona=?2",nativeQuery = true)
-	public void deleteRolByPersona(String rol, Long idPersona);
+	@Query
+	public Rol findByAuthority(String authority);
 }

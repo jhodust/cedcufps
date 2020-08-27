@@ -109,12 +109,12 @@
                       </div>
                     </li>
               
-              <li class="nav-item" sec:authorize="hasAnyRole('ROLE_SUPERADMIN','ROLE_DIRPROGRAMA','ROLE_ADMIN')">
+              <li class="nav-item" sec:authorize="hasAnyRole('ROLE_SUPERADMIN','ROLE_MANPEOPLE')">
                 <a class="nav-link"  th:href="@{/usuarios}">
                   Usuarios
                 </a>
               </li>
-              <li class="nav-item" sec:authorize="hasAnyRole('ROLE_SUPERADMIN','ROLE_DIRPROGRAMA','ROLE_ADMIN', 'ROLE_DOCENTE')">
+              <li class="nav-item" sec:authorize="hasAnyRole('ROLE_SUPERADMIN','ROLE_MANAECCU')">
                 <a class="nav-link"  th:href="@{/educacion-continua}">
                   Gestionar Eventos
                 </a>

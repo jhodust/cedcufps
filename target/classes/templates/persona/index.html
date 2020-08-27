@@ -166,6 +166,7 @@
 										<th></th>
 										<th>Documento</th>
 										<th>Nombre</th>
+										<th>Perfiles</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -183,8 +184,9 @@
 												<span class="btn-inner--icon"><i
 													class="fas fa-user-cog"></i></span>
 										</a></td>
-										<td th:text="${p.tipoDocumento.tipoDocumento} + ' - ' + ${p.numeroDocumento}"></td>
-										<td th:text="${p.primerNombre} + ' ' + ${p.segundoNombre} + ' ' + ${p.primerApellido} + ' ' + ${p.segundoApellido}"></td>
+										<td th:text="${p.documento}"></td>
+										<td th:text="${p.nombre}"></td>
+										<td th:text="${p.perfiles}"></td>
 									</tr>
 								</tbody>
 							</table>

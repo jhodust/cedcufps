@@ -40,7 +40,7 @@ public class ProgramaRestController {
 	@GetMapping(value="/search/programa/{id}", produces = "application/json")
     public ResponseEntity<?> buscarPorPrograma(@PathVariable Long id) {
 		
-		return  new ResponseEntity<>(programaService.findOne(id),HttpStatus.OK);
+		return  new ResponseEntity<>(programaService.searchProgramaById(id),HttpStatus.OK);
     }
 	
 	

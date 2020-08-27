@@ -23,7 +23,9 @@ import com.ufps.cedcufps.dao.IPersonaRolCustomDao;
 import com.ufps.cedcufps.dao.IProgramaDao;
 import com.ufps.cedcufps.dao.IRolDao;
 import com.ufps.cedcufps.dao.ITipoPersonaDao;
+import com.ufps.cedcufps.dto.ProgramaDto;
 import com.ufps.cedcufps.exception.CustomException;
+import com.ufps.cedcufps.mapper.IProgramaMapper;
 import com.ufps.cedcufps.modelos.Persona;
 import com.ufps.cedcufps.modelos.PersonaRol;
 import com.ufps.cedcufps.modelos.Programa;
@@ -57,6 +59,9 @@ public class ProgramaService implements IProgramaService {
 	@Autowired
 	private ITipoPersonaDao tipoPersonaDao;
 	
+	@Autowired
+	private IProgramaMapper programaMapper;
+	
 	@Override
 	public List<Programa> findAll() {
 		// TODO Auto-generated method stub
@@ -87,6 +92,7 @@ public class ProgramaService implements IProgramaService {
 			if(pr.getDirectorPrograma().getId().equals(p.getDirectorPrograma().getId())) {
 				asignarPermisosDir=false;
 			}else {
+				personaRolCustomDao.deleteRolesDirPrograma(pr.getDirectorPrograma().getId());
 				pr.setDirectorPrograma(docenteDao.findById(p.getDirectorPrograma().getId()).orElseThrow(() -> new CustomException("El docente seleccionado no fue encontrado en la base de datos")));
 			}
 			pr.setCodigo(p.getCodigo());
@@ -128,9 +134,10 @@ public class ProgramaService implements IProgramaService {
 	}
 
 	@Override
-	public List<Programa> findProgramaByDirector(Long idDir, Long idPrograma) {
+	public List<ProgramaDto> findProgramaByDirector(Long idDir, Long idPrograma) {
 		// TODO Auto-generated method stub
-		return programaDao.findOthersProgramasByDirector(idPrograma,idDir);
+		return programaMapper.convertListProgramaToProgramaDto(programaDao.findOthersProgramasByDirector(idPrograma,idDir));
+
 	}
 	
 	public void asignarPermisosDirector(Long idDirPrograma, String codigo) {
@@ -193,6 +200,13 @@ public class ProgramaService implements IProgramaService {
 		
 		
 		personaRolCustomDao.save(pr2);
+	}
+
+	@Override
+	public ProgramaDto searchProgramaById(Long id) {
+		// TODO Auto-generated method stub
+		Programa p=programaDao.findById(id).orElseThrow(() -> new CustomException("El Programa Académico no fue encontrado en la base de datos"));
+		return programaMapper.convertProgramaToProgramaDto(p); 
 	}
 
 }

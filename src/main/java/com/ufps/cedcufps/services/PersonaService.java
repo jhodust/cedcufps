@@ -33,6 +33,7 @@ import com.ufps.cedcufps.dao.IPersonaDao;
 import com.ufps.cedcufps.dao.IProgramaDao;
 import com.ufps.cedcufps.dao.ITipoDocumentoDao;
 import com.ufps.cedcufps.dao.ITipoPersonaDao;
+import com.ufps.cedcufps.dto.PersonaDto;
 import com.ufps.cedcufps.dto.UsuarioAppDto;
 import com.ufps.cedcufps.dto.UsuarioDto;
 import com.ufps.cedcufps.exception.CustomException;
@@ -46,8 +47,12 @@ import com.ufps.cedcufps.modelos.Externo;
 import com.ufps.cedcufps.modelos.Genero;
 import com.ufps.cedcufps.modelos.Graduado;
 import com.ufps.cedcufps.modelos.Persona;
+import com.ufps.cedcufps.modelos.PersonaRol;
 import com.ufps.cedcufps.modelos.Programa;
 import com.ufps.cedcufps.modelos.Rol;
+import com.ufps.cedcufps.modelos.RolPersonaPerDepto;
+import com.ufps.cedcufps.modelos.RolPersonaPerPrograma;
+import com.ufps.cedcufps.modelos.RolPersonaTipoPersona;
 import com.ufps.cedcufps.modelos.TipoDocumento;
 import com.ufps.cedcufps.modelos.TipoPersona;
 
@@ -318,6 +323,40 @@ public class PersonaService implements IPersonaService, UserDetailsService {
 		return usuarioMapper.convertPersonaToUsuarioAppDto(p);
 	}
 
+	@Override
+	public List<PersonaDto> findAllPersonasPosibles() {
+		// TODO Auto-generated method stub
+		
+		if(this.isSuperAdmin()) {
+			return usuarioMapper.convertListPersonasToPersonaDto((List<Persona>)personaDao.findAll());
+		}else {
+			if(this.hasPermissionForPeople()) {
+				return usuarioMapper.convertListPersonasToPersonaDto(this.personaCustomDao.listAllPossiblePeople(this.findPersonaLogueada().getId()));
+			}
+		}
+		
+		return null;
+		
+	}
 	
+	public boolean isSuperAdmin() {
+		Persona p=this.findPersonaLogueada();
+		for(PersonaRol pr: p.getRoles()) {
+			if(pr.getRol().getAuthority().equalsIgnoreCase("ROLE_SUPERADMIN")) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public boolean hasPermissionForPeople() {
+		Persona p=this.findPersonaLogueada();
+		for(PersonaRol pr: p.getRoles()) {
+			if(pr.getRol().getAuthority().equalsIgnoreCase("ROLE_MANPEOPLE")) {
+				return true;
+			}
+		}
+		return false;
+	}
 
 }

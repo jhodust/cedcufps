@@ -32,11 +32,7 @@ public class PersonaController {
 	@RequestMapping(value = "/usuarios")
 	public String listar(Model model) {
 		model.addAttribute("titulo","PROGRAMAS");
-		model.addAttribute("personas",personaService.findAllPersonas());
-		model.addAttribute("estudiantes",personaService.findAllEstudiantes());
-		model.addAttribute("docentes",personaService.findAllDocentes());
-		model.addAttribute("administrativos",personaService.findAllAdministrativos());
-		model.addAttribute("externos",personaService.findAllExternos());
+		model.addAttribute("personas",personaService.findAllPersonasPosibles());
 		
 		
 		return "persona/index";

@@ -18,6 +18,7 @@ import com.ufps.cedcufps.dao.IGeneroDao;
 import com.ufps.cedcufps.dao.IProgramaDao;
 import com.ufps.cedcufps.dao.ITipoDocumentoDao;
 import com.ufps.cedcufps.dao.ITipoPersonaDao;
+import com.ufps.cedcufps.dto.PersonaDto;
 import com.ufps.cedcufps.dto.UsuarioAppDto;
 import com.ufps.cedcufps.dto.UsuarioDto;
 import com.ufps.cedcufps.exception.CustomException;
@@ -244,6 +245,84 @@ public class UsuarioMapper implements IUsuarioMapper {
 		dto.setAdministrativo(p.isAdministrativo());
 		dto.setGraduado(p.isGraduado());
 		dto.setExterno(p.isExterno());
+		return dto;
+	}
+
+	@Override
+	public List<PersonaDto> convertListPersonasToPersonaDto(List<Persona> personas) {
+		// TODO Auto-generated method stub
+		List<PersonaDto> list= new ArrayList<PersonaDto>();
+		for(Persona p: personas) {
+			list.add(this.convertPersonaToPersonaDto(p));
+		}
+		return list;
+	}
+
+	@Override
+	public PersonaDto convertPersonaToPersonaDto(Persona persona) {
+		// TODO Auto-generated method stub
+		PersonaDto dto= new PersonaDto();
+		dto.setId(persona.getId());
+		dto.setDocumento(persona.getNumeroDocumento());
+		dto.setEmail(persona.getEmail());
+		String nombre="";
+		if( persona.getPrimerNombre()!=null) {
+			nombre=persona.getPrimerNombre();
+		}
+		
+		if( persona.getSegundoNombre()!=null) {
+			nombre=nombre + " " + persona.getSegundoNombre();
+		}
+		
+		if(persona.getPrimerApellido()!=null ) {
+			nombre=nombre + " " + persona.getPrimerApellido();
+		}
+		
+		if( persona.getSegundoApellido()!=null) {
+			nombre=nombre + " " + persona.getSegundoApellido();
+		}
+		
+		dto.setNombre(nombre);
+		
+		String perfiles="";
+		if(persona.isEstudiante()) {
+			if(perfiles.isEmpty()) {
+				perfiles="estudiante";
+			}
+		}
+		
+		if(persona.isDocente()) {
+			if(perfiles.isEmpty()) {
+				perfiles="docente";
+			}else {
+				perfiles=perfiles+"-docente";
+			}
+		}
+		
+		if(persona.isAdministrativo()) {
+			if(perfiles.isEmpty()) {
+				perfiles="administrativo";
+			}else {
+				perfiles=perfiles+"-administrativo";
+			}
+		}
+		
+		if(persona.isGraduado()) {
+			if(perfiles.isEmpty()) {
+				perfiles="graduado";
+			}else {
+				perfiles=perfiles+"-graduado";
+			}
+		}
+		
+		if(persona.isExterno()) {
+			if(perfiles.isEmpty()) {
+				perfiles="externo";
+			}else {
+				perfiles=perfiles+"-externo";
+			}
+		}
+		dto.setPerfiles(perfiles);
 		return dto;
 	}
 

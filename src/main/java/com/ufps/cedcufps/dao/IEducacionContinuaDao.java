@@ -50,5 +50,9 @@ public interface IEducacionContinuaDao extends CrudRepository<EducacionContinua,
 	@Query("select e from EducacionContinua e where e.docenteResponsable.numeroDocumento = ?1 or e.programaResponsable.id = ?2")
 	public List<EducacionContinua> findAllEducacionContinuaACargoDirector(String numDocumento,Long idProgramaDirector);
 	
+	
 	public EducacionContinua findByNombre(String educacionContinua);
+	
+	@Query("select e from EducacionContinua e where e.id IN (?1)")
+	public List<EducacionContinua> findByManyIds(List<Long> idsEduContinua);
 }

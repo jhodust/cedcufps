@@ -89,7 +89,7 @@ public class PersonaCustomDaoImpl implements IPersonaCustomDao {
 	}
 
 	@Override
-	public List<Persona> listAllPossiblePeople(Long idPersona) {
+	public List<Long> listAllPossiblePeople(Long idPersona) {
 		// TODO Auto-generated method stub
 		StringBuilder query = new StringBuilder();
 		query.append("(SELECT r.id_tipo_persona from rol_persona_tip_pers r where r.id_persona=?1 and r.id_rol=(select ro.id from roles  ro where ro.authority='ROLE_MANPEOPLE'))");
@@ -103,31 +103,31 @@ public class PersonaCustomDaoImpl implements IPersonaCustomDao {
 		int n=1;
 		for(Object i: result) {
 			if(String.valueOf(i).equalsIgnoreCase("1")) {
-				query.append("(select p.id, p.primer_nombre, p.segundo_nombre, p.primer_apellido, p.segundo_apellido, p.numero_documento, p.email, p.is_estudiante, p.is_docente, p.is_administrativo, p.is_graduado, p.is_externo");
+				query.append("(select p.id");
 				query.append(" from personas p join estudiantes e on p.id=e.id_persona ");
 				query.append(" where e.id_programa IN (select rppp.id_programa from rol_persona_programa_per rppp");
 				query.append(" where rppp.id_tipo_persona='1' and rppp.id_rol=(select ro.id from roles ro where ro.authority='ROLE_MANPEOPLE') and rppp.id_persona=?1))" );
 			}
 			if(String.valueOf(i).equalsIgnoreCase("2")) {
-				query.append("(select p.id, p.primer_nombre, p.segundo_nombre, p.primer_apellido, p.segundo_apellido, p.numero_documento, p.email, p.is_estudiante, p.is_docente, p.is_administrativo, p.is_graduado, p.is_externo");
+				query.append("(select p.id");
 				query.append(" from personas p join docentes d on p.id=d.id_persona");
 				query.append(" where d.id_departamento IN (select rppp.id_depto from rol_persona_depto_per rppp");
 				query.append(" where rppp.id_tipo_persona='2' and rppp.id_rol=(select ro.id from roles ro where ro.authority='ROLE_MANPEOPLE') and rppp.id_persona=?1))" );
 				
 			}
 			if(String.valueOf(i).equalsIgnoreCase("3")) {
-				query.append("(select p.id, p.primer_nombre, p.segundo_nombre, p.primer_apellido, p.segundo_apellido, p.numero_documento, p.email, p.is_estudiante, p.is_docente, p.is_administrativo, p.is_graduado, p.is_externo from personas p join administrativos a on p.id=a.id_persona)");
+				query.append("(select p.id from personas p join administrativos a on p.id=a.id_persona)");
 				
 			}
 			if(String.valueOf(i).equalsIgnoreCase("4")) {
-				query.append("(select p.id, p.primer_nombre, p.segundo_nombre, p.primer_apellido, p.segundo_apellido, p.numero_documento, p.email, p.is_estudiante, p.is_docente, p.is_administrativo, p.is_graduado, p.is_externo");
+				query.append("(select p.id");
 				query.append(" from personas p join graduados g on p.id=g.id_persona ");
 				query.append(" where g.id_programa IN (select rppp.id_programa from rol_persona_programa_per rppp");
 				query.append(" where rppp.id_tipo_persona='4' and rppp.id_rol=(select ro.id from roles ro where ro.authority='ROLE_MANPEOPLE') and rppp.id_persona=?1))" );
 				
 			}
 			if(String.valueOf(i).equalsIgnoreCase("5")) {
-				query.append("(select p.id, p.primer_nombre, p.segundo_nombre, p.primer_apellido, p.segundo_apellido, p.numero_documento, p.email, p.is_estudiante, p.is_docente, p.is_administrativo, p.is_graduado, p.is_externo from personas p join externos ex on p.id=ex.id_persona)");
+				query.append("(select p.id from personas p join externos ex on p.id=ex.id_persona)");
 				
 			}
 			
@@ -142,23 +142,9 @@ public class PersonaCustomDaoImpl implements IPersonaCustomDao {
 		q=em.createNativeQuery(query.toString());
 		q.setParameter(1, idPersona);
 		
-		List<Persona> list=new  ArrayList<>();
-		List<Object[]> result2=q.getResultList();
-		for(Object[] o: result2) {
-			Persona p=new Persona(); 
-			p.setId(Long.parseLong(String.valueOf(o[0])));
-			p.setPrimerNombre(String.valueOf(o[1]));
-			p.setSegundoNombre(String.valueOf(o[2]));
-			p.setPrimerApellido(String.valueOf(o[3]));
-			p.setSegundoApellido(String.valueOf(o[4]));
-			p.setNumeroDocumento(String.valueOf(o[5]));
-			p.setEmail(String.valueOf(o[6]));
-			p.setEstudiante(((byte) o[7])!=0);
-			p.setDocente(((byte) o[8])!=0);
-			p.setAdministrativo(((byte) o[9])!=0);
-			p.setGraduado(((byte) o[10])!=0);
-			p.setExterno(((byte) o[11])!=0);
-			list.add(p);
+		List<Long> list=new  ArrayList<>();
+		for(Object o: q.getResultList()) {
+			list.add(Long.parseLong(String.valueOf(o)));
 		}
 		return list;
 	}

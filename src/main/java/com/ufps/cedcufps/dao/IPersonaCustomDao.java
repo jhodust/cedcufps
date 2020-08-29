@@ -22,6 +22,6 @@ public interface IPersonaCustomDao {
 	
 	public int saveExterno(Externo e);
 	
-	public List<Persona> listAllPossiblePeople(Long idPersona);
+	public List<Long> listAllPossiblePeople(Long idPersona);
 	
 }

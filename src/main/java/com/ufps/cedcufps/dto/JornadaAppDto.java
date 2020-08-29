@@ -7,9 +7,6 @@ public class JornadaAppDto {
 	private Long id;
 	private Date horaInicio;
 	private Date horaFin;
-	private Long idEducacionContinua;
-	private Date fechaInicioEduContinua;
-	private Date fechaFinEduContinua;
 	public Long getId() {
 		return id;
 	}
@@ -28,24 +25,7 @@ public class JornadaAppDto {
 	public void setHoraFin(Date horaFin) {
 		this.horaFin = horaFin;
 	}
-	public Long getIdEducacionContinua() {
-		return idEducacionContinua;
-	}
-	public void setIdEducacionContinua(Long idEducacionContinua) {
-		this.idEducacionContinua = idEducacionContinua;
-	}
-	public Date getFechaInicioEduContinua() {
-		return fechaInicioEduContinua;
-	}
-	public void setFechaInicioEduContinua(Date fechaInicioEduContinua) {
-		this.fechaInicioEduContinua = fechaInicioEduContinua;
-	}
-	public Date getFechaFinEduContinua() {
-		return fechaFinEduContinua;
-	}
-	public void setFechaFinEduContinua(Date fechaFinEduContinua) {
-		this.fechaFinEduContinua = fechaFinEduContinua;
-	}
+	
 	
 	
 	

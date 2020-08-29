@@ -9,6 +9,7 @@ public class EducacionContinuaAppDto {
 	private String nombre;
 	private Date fechaInicio;
 	private Date fechaFin;
+	private Date fechaLimInscripcion;
 	private int cantidadParticipantes;
 	private String tipoEduContinua;
 	private String programaResponsable;
@@ -67,6 +68,12 @@ public class EducacionContinuaAppDto {
 	}
 	public void setJornadas(List<JornadaAppDto> jornadas) {
 		this.jornadas = jornadas;
+	}
+	public Date getFechaLimInscripcion() {
+		return fechaLimInscripcion;
+	}
+	public void setFechaLimInscripcion(Date fechaLimInscripcion) {
+		this.fechaLimInscripcion = fechaLimInscripcion;
 	}
 	
 	

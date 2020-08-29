@@ -13,13 +13,16 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.ufps.cedcufps.dao.IClasificacionCineDao;
 import com.ufps.cedcufps.dao.IDiplomaDao;
+import com.ufps.cedcufps.dao.IEducacionContinuaCustomDao;
 import com.ufps.cedcufps.dao.IEducacionContinuaDao;
 import com.ufps.cedcufps.dao.IJornadaDao;
 import com.ufps.cedcufps.dao.ITipoBeneficiarioDao;
 import com.ufps.cedcufps.dao.ITipoEducacionContinuaDao;
 import com.ufps.cedcufps.dto.EducacionContinuaAppDto;
+import com.ufps.cedcufps.dto.InfoEducacionContinuaDto;
 import com.ufps.cedcufps.dto.EducacionContinuaAppDto;
 import com.ufps.cedcufps.dto.JornadaAppDto;
+import com.ufps.cedcufps.exception.CustomException;
 import com.ufps.cedcufps.mapper.IEducacionContinuaMapper;
 import com.ufps.cedcufps.mapper.IJornadaMapper;
 import com.ufps.cedcufps.modelos.ClasificacionCine;
@@ -59,6 +62,12 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 	
 	@Autowired
 	private IJornadaMapper jornadaMapper;
+	
+	@Autowired
+	private IPersonaService personaService;
+	
+	@Autowired
+	private IEducacionContinuaCustomDao educacionContinuaCustomDao;
 	
 	@Override
 	public List<EducacionContinua> findAll() {
@@ -264,6 +273,34 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 		// TODO Auto-generated method stub
 		
 		return jornadaMapper.convertJornadasToJornadaAppDto(this.findOne(idEduContinua).get().getJornadas());
+		
+	}
+
+	@Override
+	public List<EducacionContinuaAppDto> findPosiblesEduContinuaGestionar() {
+		// TODO Auto-generated method stub
+		if(personaService.isSuperAdmin()) {
+			return educacionContinuaMapper.convertEducacionContinuaToApp((List<EducacionContinua>) educacionContinuaDao.findAll());
+		}else if(personaService.hasPermissionForEduContinua()){
+			return educacionContinuaMapper.convertEducacionContinuaToApp(educacionContinuaDao.findByManyIds(educacionContinuaCustomDao.listAllPossibleEducacionContinua(personaService.findPersonaLogueada().getId())));
+		}
+		return null;
+	}
+
+	@Override
+	public InfoEducacionContinuaDto detallesEducacionContinua(String nombreEducacionContinua) {
+		// TODO Auto-generated method stub
+		if(educacionContinuaCustomDao.docenteHasPermission(nombreEducacionContinua, personaService.findPersonaLogueada().getId())) {
+			EducacionContinua e=educacionContinuaDao.findByNombre(nombreEducacionContinua);
+			if(e!=null) {
+				return educacionContinuaMapper.convertEducacionContinuaToEducacionContinuaWeb(e, true);
+			}else {
+				throw new CustomException("No se encontró la educación continua en la base de datos");
+			}
+			
+		}else {
+			return educacionContinuaMapper.convertEducacionContinuaToEducacionContinuaWeb(null, false);
+		}
 		
 	}
 

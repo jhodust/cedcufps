@@ -331,7 +331,7 @@ public class PersonaService implements IPersonaService, UserDetailsService {
 			return usuarioMapper.convertListPersonasToPersonaDto((List<Persona>)personaDao.findAll());
 		}else {
 			if(this.hasPermissionForPeople()) {
-				return usuarioMapper.convertListPersonasToPersonaDto(this.personaCustomDao.listAllPossiblePeople(this.findPersonaLogueada().getId()));
+				return usuarioMapper.convertListPersonasToPersonaDto(personaDao.findManyPeople(this.personaCustomDao.listAllPossiblePeople(this.findPersonaLogueada().getId())));
 			}
 		}
 		
@@ -339,6 +339,7 @@ public class PersonaService implements IPersonaService, UserDetailsService {
 		
 	}
 	
+	@Override
 	public boolean isSuperAdmin() {
 		Persona p=this.findPersonaLogueada();
 		for(PersonaRol pr: p.getRoles()) {
@@ -349,10 +350,33 @@ public class PersonaService implements IPersonaService, UserDetailsService {
 		return false;
 	}
 	
+	@Override
 	public boolean hasPermissionForPeople() {
 		Persona p=this.findPersonaLogueada();
 		for(PersonaRol pr: p.getRoles()) {
 			if(pr.getRol().getAuthority().equalsIgnoreCase("ROLE_MANPEOPLE")) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	@Override
+	public boolean hasPermissionForEduContinua() {
+		Persona p=this.findPersonaLogueada();
+		for(PersonaRol pr: p.getRoles()) {
+			if(pr.getRol().getAuthority().equalsIgnoreCase("ROLE_MANAECCU")) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	@Override
+	public boolean hasPermissionForAttendance() {
+		Persona p=this.findPersonaLogueada();
+		for(PersonaRol pr: p.getRoles()) {
+			if(pr.getRol().getAuthority().equalsIgnoreCase("ROLE_ATTENDANCE")) {
 				return true;
 			}
 		}

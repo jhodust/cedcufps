@@ -14,6 +14,7 @@ import com.ufps.cedcufps.modelos.Estudiante;
 import com.ufps.cedcufps.modelos.Externo;
 import com.ufps.cedcufps.modelos.Genero;
 import com.ufps.cedcufps.modelos.Persona;
+import com.ufps.cedcufps.modelos.PersonaRol;
 import com.ufps.cedcufps.modelos.Programa;
 import com.ufps.cedcufps.modelos.TipoDocumento;
 import com.ufps.cedcufps.modelos.TipoPersona;
@@ -59,4 +60,13 @@ public interface IPersonaService {
 	public void registrarse(UsuarioDto u);
 	
 	public List<PersonaDto> findAllPersonasPosibles();
+	
+	public boolean isSuperAdmin();
+	
+	public boolean hasPermissionForPeople();
+	
+	public boolean hasPermissionForEduContinua();
+	
+	public boolean hasPermissionForAttendance();
+
 }

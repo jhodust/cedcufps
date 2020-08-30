@@ -122,8 +122,8 @@ public class AppRestController {
         return  new ResponseEntity<>(educacionContinuaService.findAllJornadasByEduContinuaApp(idEducacionContinua),HttpStatus.OK);
     }
 	
-	@GetMapping(value="/asistencia/{idEducacionContinua}/{qr}", produces = "application/json")
-    public ResponseEntity<?> searchJornadasCursosYEventos(@PathVariable Long idEducacionContinua, @PathVariable String qr) {
+	@GetMapping(value="/asistencia/{idEducacionContinua}/{idJornada}/{qr}", produces = "application/json")
+    public ResponseEntity<?> searchJornadasCursosYEventos(@PathVariable Long idEducacionContinua, @PathVariable Long idJornada, @PathVariable String qr) {
         
         return  new ResponseEntity<>("Se tomó asistencia exitosamente",HttpStatus.OK);
     }

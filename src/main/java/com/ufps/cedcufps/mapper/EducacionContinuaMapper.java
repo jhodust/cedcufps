@@ -1,5 +1,6 @@
 package com.ufps.cedcufps.mapper;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -9,14 +10,12 @@ import org.springframework.stereotype.Repository;
 import com.ufps.cedcufps.dto.EducacionContinuaAppDto;
 import com.ufps.cedcufps.dto.EducacionContinuaWebDto;
 import com.ufps.cedcufps.dto.InfoEducacionContinuaDto;
-import com.ufps.cedcufps.dto.EducacionContinuaAppDto;
 import com.ufps.cedcufps.dto.JornadaAppDto;
 import com.ufps.cedcufps.dto.ParticipanteDto;
 import com.ufps.cedcufps.modelos.EducacionContinua;
 import com.ufps.cedcufps.modelos.Jornada;
 import com.ufps.cedcufps.modelos.Participante;
 import com.ufps.cedcufps.modelos.Persona;
-import com.ufps.cedcufps.services.JornadaService;
 
 @Repository
 public class EducacionContinuaMapper implements IEducacionContinuaMapper {
@@ -34,17 +33,22 @@ public class EducacionContinuaMapper implements IEducacionContinuaMapper {
 				dto.setNombre(e.getNombre());
 				dto.setFechaInicio(e.getFechaInicio());
 				dto.setFechaFin(e.getFechaFin());
-				dto.setFechaLimInscripcion(e.getFechaLimInscripcion());
 				dto.setTipoEduContinua(e.getTipoEduContinua().getTipoEduContinua());
 				dto.setCantidadParticipantes(10);
 				dto.setProgramaResponsable(e.getProgramaResponsable().getPrograma());
 				dto.setDocenteResponsable(this.convertFieldsFullName(e.getDocenteResponsable()));
+				SimpleDateFormat formatDate = new SimpleDateFormat("dd/MM/yyyy");
+				SimpleDateFormat formatHour = new SimpleDateFormat("HH:mm");
+
 				List<JornadaAppDto>jadto= new ArrayList<JornadaAppDto>();
 				for(Jornada j:e.getJornadas()) {
 					JornadaAppDto jornada= new JornadaAppDto();
 					jornada.setId(j.getId());
 					jornada.setHoraFin(j.getHoraFin());
 					jornada.setHoraInicio(j.getHoraInicio());
+					jornada.setFechaJornadaString(formatDate.format(j.getHoraInicio()));
+					jornada.setHoraInicioString(formatHour.format(j.getHoraInicio()));
+					jornada.setHoraFinString(formatHour.format(j.getHoraFin()));
 					jadto.add(jornada);
 				}
 				dto.setJornadas(jadto);

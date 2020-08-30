@@ -10,6 +10,10 @@ public class JornadaAppDto {
 	private Long idEducacionContinua;
 	private Date fechaInicioEduContinua;
 	private Date fechaFinEduContinua;
+	private String fechaJornadaString;
+	private String horaInicioString;
+	private String horaFinString;
+	
 	public Long getId() {
 		return id;
 	}
@@ -45,6 +49,24 @@ public class JornadaAppDto {
 	}
 	public void setFechaFinEduContinua(Date fechaFinEduContinua) {
 		this.fechaFinEduContinua = fechaFinEduContinua;
+	}
+	public String getFechaJornadaString() {
+		return fechaJornadaString;
+	}
+	public void setFechaJornadaString(String fechaJornadaString) {
+		this.fechaJornadaString = fechaJornadaString;
+	}
+	public String getHoraInicioString() {
+		return horaInicioString;
+	}
+	public void setHoraInicioString(String horaInicioString) {
+		this.horaInicioString = horaInicioString;
+	}
+	public String getHoraFinString() {
+		return horaFinString;
+	}
+	public void setHoraFinString(String horaFinString) {
+		this.horaFinString = horaFinString;
 	}
 	
 	

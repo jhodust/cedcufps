@@ -1,5 +1,6 @@
 package com.ufps.cedcufps.mapper;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,6 +47,9 @@ public class EducacionContinuaMapper implements IEducacionContinuaMapper {
 				}
 				
 				dto.setDocenteResponsable(nombreResponsable);
+				SimpleDateFormat formatDate = new SimpleDateFormat("dd/MM/yyyy");
+				SimpleDateFormat formatHour = new SimpleDateFormat("HH:mm");
+
 				List<JornadaAppDto>jadto= new ArrayList<JornadaAppDto>();
 				for(Jornada j:e.getJornadas()) {
 					JornadaAppDto jornada= new JornadaAppDto();
@@ -55,6 +59,9 @@ public class EducacionContinuaMapper implements IEducacionContinuaMapper {
 					jornada.setIdEducacionContinua(j.getEducacionContinua().getId());
 					jornada.setFechaInicioEduContinua(j.getEducacionContinua().getFechaInicio());
 					jornada.setFechaFinEduContinua(j.getEducacionContinua().getFechaFin());
+					jornada.setFechaJornadaString(formatDate.format(j.getHoraInicio()));
+					jornada.setHoraInicioString(formatHour.format(j.getHoraInicio()));
+					jornada.setHoraFinString(formatHour.format(j.getHoraFin()));
 					jadto.add(jornada);
 				}
 				dto.setJornadas(jadto);

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.aspectj.weaver.patterns.PerThisOrTargetPointcutVisitor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.ufps.cedcufps.dao.IAdministrativoDao;
 import com.ufps.cedcufps.dao.IDepartamentoDao;
 import com.ufps.cedcufps.dao.IDocenteDao;
+import com.ufps.cedcufps.dao.IEducacionContinuaDao;
 import com.ufps.cedcufps.dao.IEstadoCivilDao;
 import com.ufps.cedcufps.dao.IEstudianteDao;
 import com.ufps.cedcufps.dao.IExternoDao;
@@ -33,14 +35,19 @@ import com.ufps.cedcufps.dao.IPersonaDao;
 import com.ufps.cedcufps.dao.IProgramaDao;
 import com.ufps.cedcufps.dao.ITipoDocumentoDao;
 import com.ufps.cedcufps.dao.ITipoPersonaDao;
+import com.ufps.cedcufps.dto.PerfilRolUsuarioDto;
 import com.ufps.cedcufps.dto.PersonaDto;
 import com.ufps.cedcufps.dto.UsuarioAppDto;
 import com.ufps.cedcufps.dto.UsuarioDto;
 import com.ufps.cedcufps.exception.CustomException;
+import com.ufps.cedcufps.mapper.IDepartamentoMapper;
+import com.ufps.cedcufps.mapper.IEducacionContinuaMapper;
+import com.ufps.cedcufps.mapper.IProgramaMapper;
 import com.ufps.cedcufps.mapper.IUsuarioMapper;
 import com.ufps.cedcufps.modelos.Administrativo;
 import com.ufps.cedcufps.modelos.Departamento;
 import com.ufps.cedcufps.modelos.Docente;
+import com.ufps.cedcufps.modelos.EducacionContinua;
 import com.ufps.cedcufps.modelos.EstadoCivil;
 import com.ufps.cedcufps.modelos.Estudiante;
 import com.ufps.cedcufps.modelos.Externo;
@@ -93,6 +100,15 @@ public class PersonaService implements IPersonaService, UserDetailsService {
 	private IUsuarioMapper usuarioMapper;
 	
 	@Autowired
+	private IProgramaMapper programaMapper;
+	
+	@Autowired
+	private IEducacionContinuaMapper educacionContinuaMapper;
+	
+	@Autowired
+	private IDepartamentoMapper departamentoMapper;
+	
+	@Autowired
 	private IProgramaDao programaDao;
 	
 	@Autowired
@@ -100,6 +116,9 @@ public class PersonaService implements IPersonaService, UserDetailsService {
 	
 	@Autowired
 	private ITipoPersonaDao tipoPersonaDao;
+	
+	@Autowired
+	private IEducacionContinuaDao educacionContinuaDao;
 	
 	private Logger logger= LoggerFactory.getLogger(PersonaService.class);
 	@Override
@@ -330,8 +349,9 @@ public class PersonaService implements IPersonaService, UserDetailsService {
 		if(this.isSuperAdmin()) {
 			return usuarioMapper.convertListPersonasToPersonaDto((List<Persona>)personaDao.findAll());
 		}else {
-			if(this.hasPermissionForPeople()) {
-				return usuarioMapper.convertListPersonasToPersonaDto(personaDao.findManyPeople(this.personaCustomDao.listAllPossiblePeople(this.findPersonaLogueada().getId())));
+			Persona p=this.findPersonaLogueada();
+			if(this.hasPermissionForPeople(p.getId())) {
+				return usuarioMapper.convertListPersonasToPersonaDto(personaDao.findManyPeople(this.personaCustomDao.listAllPossiblePeople(p.getId())));
 			}
 		}
 		
@@ -342,6 +362,7 @@ public class PersonaService implements IPersonaService, UserDetailsService {
 	@Override
 	public boolean isSuperAdmin() {
 		Persona p=this.findPersonaLogueada();
+		
 		for(PersonaRol pr: p.getRoles()) {
 			if(pr.getRol().getAuthority().equalsIgnoreCase("ROLE_SUPERADMIN")) {
 				return true;
@@ -351,36 +372,96 @@ public class PersonaService implements IPersonaService, UserDetailsService {
 	}
 	
 	@Override
-	public boolean hasPermissionForPeople() {
+	public boolean isDirPrograma() {
 		Persona p=this.findPersonaLogueada();
-		for(PersonaRol pr: p.getRoles()) {
-			if(pr.getRol().getAuthority().equalsIgnoreCase("ROLE_MANPEOPLE")) {
-				return true;
+		return (this.programaDao.findByDirector(p.getId()) != null );
+		
+	}
+	
+	@Override
+	public boolean hasPermissionForPeople(Long idPersona) {
+		Persona p=personaDao.findById(idPersona).get();
+		if(p!=null) {
+			for(PersonaRol pr: p.getRoles()) {
+				if(pr.getRol().getAuthority().equalsIgnoreCase("ROLE_MANPEOPLE")) {
+					return true;
+				}
+			}
+		}
+		
+		
+		return false;
+	}
+	
+	@Override
+	public boolean hasPermissionForEduContinua(Long idPersona) {
+		Persona p=personaDao.findById(idPersona).get();
+		if(p!=null) {
+			for(PersonaRol pr: p.getRoles()) {
+				if(pr.getRol().getAuthority().equalsIgnoreCase("ROLE_MANAECCU")) {
+					return true;
+				}
 			}
 		}
 		return false;
 	}
 	
 	@Override
-	public boolean hasPermissionForEduContinua() {
-		Persona p=this.findPersonaLogueada();
-		for(PersonaRol pr: p.getRoles()) {
-			if(pr.getRol().getAuthority().equalsIgnoreCase("ROLE_MANAECCU")) {
-				return true;
+	public boolean hasPermissionForAttendance(Long idPersona) {
+		Persona p=personaDao.findById(idPersona).get();
+		if(p!=null) {
+			for(PersonaRol pr: p.getRoles()) {
+				if(pr.getRol().getAuthority().equalsIgnoreCase("ROLE_ATTENDANCE")) {
+					return true;
+				}
 			}
 		}
 		return false;
 	}
-	
+
 	@Override
-	public boolean hasPermissionForAttendance() {
-		Persona p=this.findPersonaLogueada();
-		for(PersonaRol pr: p.getRoles()) {
-			if(pr.getRol().getAuthority().equalsIgnoreCase("ROLE_ATTENDANCE")) {
-				return true;
+	public PerfilRolUsuarioDto findPermisos(Long idUsuario) {
+		// TODO Auto-generated method stub
+		Persona autoridad= this.findPersonaLogueada();
+		Persona usuario= this.findOne(idUsuario).get();
+		PerfilRolUsuarioDto dto= new PerfilRolUsuarioDto();
+		if(usuario!=null) {
+			dto.setIdPersona(usuario.getId());
+			dto.setEstudiante(usuario.isEstudiante());
+			dto.setDocente(usuario.isDocente());
+			dto.setAdministrativo(usuario.isAdministrativo());
+			dto.setGraduado(usuario.isGraduado());
+			dto.setExterno(usuario.isExterno());
+			dto.setSuperadmin(autoridad.getId().equals(usuario.getId()));
+			if(this.isSuperAdmin()) {//quien asigna permisos es superadmin
+				Programa p=programaDao.findByDirector(usuario.getId());
+				dto.setSuperadmin(p!=null);
+				if(p!=null) {//usuario a quien le vamos a dar permisos es director programa
+					dto.setIdProgramaDirector(p.getId());
+					dto.setProgramaDirector(p.getPrograma());
+					List<Long> listProgramasExceptuar= new ArrayList<Long>();
+					listProgramasExceptuar.add(p.getId());
+					dto.setHasPermissionForEduContinua(this.hasPermissionForEduContinua(usuario.getId()));
+					dto.setHasPermissionForUsuarios(this.hasPermissionForPeople(usuario.getId()));
+					dto.setHasPermissionForAttendance(this.hasPermissionForAttendance(usuario.getId()));
+					dto.setProgramasForEduContinua(programaMapper.convertListProgramaToProgramaDto(this.programaDao.findProgramasPermisosEduContinuaForDirProgramaExceptOwn(usuario.getId(), p.getId())));
+					dto.setSelectProgramasForEduContinua(programaMapper.convertListProgramaToProgramaDto((List<Programa>)this.programaDao.findAll()));
+					dto.setProgramasForEstudiantes(programaMapper.convertListProgramaToProgramaDto(this.programaDao.findProgramasPermisosEstudiantesForDirProgramaExceptOwn(usuario.getId(), p.getId())));
+					dto.setProgramasForGraduados(programaMapper.convertListProgramaToProgramaDto(this.programaDao.findProgramasPermisosGraduadosForDirProgramaExceptOwn(usuario.getId(), p.getId())));
+					dto.setDeptosForDocentes(departamentoMapper.convertListDepartamentoToDepartamentosDto(this.departamentoDao.findDeptosPermisosDocentesForDirPrograma(usuario.getId())));
+					dto.setSelectDeptosForDocentes(departamentoMapper.convertListDepartamentoToDepartamentosDto((List<Departamento>)this.departamentoDao.findAll()));
+					dto.setSelectProgramasForEstudiantes(programaMapper.convertListProgramaToProgramaDto((List<Programa>)this.programaDao.findAll()));
+					dto.setSelectProgramasForGraduados(programaMapper.convertListProgramaToProgramaDto((List<Programa>)this.programaDao.findAll()));
+					dto.setSelectEduContinuasForAttendance(educacionContinuaMapper.convertEducacionContinuaToApp((List<EducacionContinua>)educacionContinuaDao.findAll()));
+					dto.setEduContinuasForAttendance(educacionContinuaMapper.convertEducacionContinuaToApp(educacionContinuaDao.findEduContinuasPermissionForAttendance(usuario.getId())));
+					dto.setHasPermissionForAdminvos(this.personaDao.hasPermissionForAdminvos(usuario.getId())>0);
+					dto.setHasPermissionForExternos(this.personaDao.hasPermissionForExternos(usuario.getId())>0);
+					return dto;
+				}
 			}
 		}
-		return false;
+		
+		return null;
 	}
 
 }

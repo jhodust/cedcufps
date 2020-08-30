@@ -31,6 +31,7 @@ import com.ufps.cedcufps.modelos.Diploma;
 import com.ufps.cedcufps.modelos.EducacionContinua;
 import com.ufps.cedcufps.modelos.Jornada;
 import com.ufps.cedcufps.modelos.Participante;
+import com.ufps.cedcufps.modelos.Persona;
 import com.ufps.cedcufps.modelos.TipoBeneficiario;
 import com.ufps.cedcufps.modelos.TipoEducacionContinua;
 import com.ufps.cedcufps.utils.Archivo;
@@ -279,10 +280,11 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 	@Override
 	public List<EducacionContinuaAppDto> findPosiblesEduContinuaGestionar() {
 		// TODO Auto-generated method stub
+		Persona p=personaService.findPersonaLogueada();
 		if(personaService.isSuperAdmin()) {
 			return educacionContinuaMapper.convertEducacionContinuaToApp((List<EducacionContinua>) educacionContinuaDao.findAll());
-		}else if(personaService.hasPermissionForEduContinua()){
-			return educacionContinuaMapper.convertEducacionContinuaToApp(educacionContinuaDao.findByManyIds(educacionContinuaCustomDao.listAllPossibleEducacionContinua(personaService.findPersonaLogueada().getId())));
+		}else if(personaService.hasPermissionForEduContinua(p.getId())){
+			return educacionContinuaMapper.convertEducacionContinuaToApp(educacionContinuaDao.findByManyIds(educacionContinuaCustomDao.listAllPossibleEducacionContinua(p.getId())));
 		}
 		return null;
 	}

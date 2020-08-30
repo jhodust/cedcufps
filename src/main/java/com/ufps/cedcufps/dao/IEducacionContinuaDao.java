@@ -55,4 +55,9 @@ public interface IEducacionContinuaDao extends CrudRepository<EducacionContinua,
 	
 	@Query("select e from EducacionContinua e where e.id IN (?1)")
 	public List<EducacionContinua> findByManyIds(List<Long> idsEduContinua);
+	
+	@Query(value = "select e.* from rol_persona_asistencia rpa join educacion_continua e on rpa.id_edu_continua=e.id where rpa.id_persona= ?1", nativeQuery = true)
+	public List<EducacionContinua> findEduContinuasPermissionForAttendance(Long idPersona);
+	
+	
 }

@@ -84,14 +84,8 @@ public class PersonaController {
 	
 	@RequestMapping(value = "/persona/{id}/permisos")
 	public String permisos(@PathVariable(value = "id") Long idPersona, Map<String, Object> model) {
-		model.put("persona",personaService.findOne(idPersona).get());
-		model.put("programas",programaService.findAll());
-		model.put("departamentos",departamentoService.findAll());
-		System.out.println(personaService.findOne(idPersona).get().isEstudiante());
-		System.out.println(personaService.findOne(idPersona).get().isDocente());
-		System.out.println(personaService.findOne(idPersona).get().isAdministrativo());
-		System.out.println(personaService.findOne(idPersona).get().isGraduado());
-		System.out.println(personaService.findOne(idPersona).get().isExterno());
+		model.put("persona",personaService.findPermisos(idPersona));
+		
 		return "persona/permisos";
 	}
 }

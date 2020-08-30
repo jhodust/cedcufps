@@ -3,6 +3,7 @@ package com.ufps.cedcufps.services;
 import java.util.List;
 import java.util.Optional;
 
+import com.ufps.cedcufps.dto.PerfilRolUsuarioDto;
 import com.ufps.cedcufps.dto.PersonaDto;
 import com.ufps.cedcufps.dto.UsuarioAppDto;
 import com.ufps.cedcufps.dto.UsuarioDto;
@@ -63,10 +64,14 @@ public interface IPersonaService {
 	
 	public boolean isSuperAdmin();
 	
-	public boolean hasPermissionForPeople();
+	public boolean isDirPrograma();
 	
-	public boolean hasPermissionForEduContinua();
+	public boolean hasPermissionForPeople(Long idPersona);
 	
-	public boolean hasPermissionForAttendance();
+	public boolean hasPermissionForEduContinua(Long idPersona);
+	
+	public boolean hasPermissionForAttendance(Long idPersona);
+	
+	public PerfilRolUsuarioDto findPermisos(Long idUsuario);
 
 }

@@ -41,7 +41,7 @@ public class AppRestController {
 		
 		GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(new NetHttpTransport(),  new JacksonFactory())
 			    // Specify the CLIENT_ID of the app that accesses the backend:
-			    .setAudience(Collections.singletonList("460942427313-o7mqvi3ksnuvslpahmkdgsm7u24qnhkt.apps.googleusercontent.com"))
+			    .setAudience(Collections.singletonList("835770905354-89itpo5t6vfvtrmfltvmfj1765vlr1va.apps.googleusercontent.com"))
 			    // Or, if multiple clients access the backend:
 			    //.setAudience(Arrays.asList(CLIENT_ID_1, CLIENT_ID_2, CLIENT_ID_3))
 			    .build();
@@ -97,7 +97,7 @@ public class AppRestController {
     }
 	
 	public boolean buscarPermisosAdminsitradorCursosYEventos(Persona p) {
-		if(p.getEmail().equalsIgnoreCase("dumarkekselbm@ufps.edu.co")) {
+		if(p.getEmail().equalsIgnoreCase("dumaryekselbm@ufps.edu.co")) {
 			return true;
 		}
 		/*for(Rol r:p.getRoles()) {

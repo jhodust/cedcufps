@@ -49,6 +49,9 @@
 							<center>
 							<h5>Roles</h5>
 							</center>
+							<form th:action="@{/persona/permisos}"
+										 method="post"
+										enctype="multipart/form-data">
 							<div id="accordion-1" class="accordion accordion-stacked">
     
 						    <!-- Accordion card 1 -->
@@ -60,7 +63,7 @@
 						            <div class="card-body">
 						            	<div class="row">
 							            	<div class="custom-control custom-switch">
-											  <input type="checkbox" class="custom-control-input switch" id="switchEduContinua" data-role="ROLE_ADMIN_CEEC">
+											  <input type="checkbox" class="custom-control-input switch" id="switchEduContinua" data-role="ROLE_ADMIN_CEEC" th:checked="${persona.hasPermissionForEduContinua}">
 											  <label class="custom-control-label" for="switchEduContinua"><strong>Gestionar Eventos de Educación Continua (Registrar, Editar, Actualizar, Visualizar)</strong></label>
 											</div>
 										</div>
@@ -72,6 +75,7 @@
 														data-toggle="select" id="programasEC" multiple="multiple">
 														<option value="0">Seleccione el programa...</option>
 														<option th:each="p: ${persona.selectProgramasForEduContinua}" th:value="${p.id}"
+														 
 															th:text="${p.programa}"></option>
 													</select>
 													<small class="form-text text-danger"><strong></strong></small>
@@ -91,7 +95,7 @@
 						            <div class="card-body">
 						                <div class="row">
 							            	<div class="custom-control custom-switch">
-											  <input type="checkbox" class="custom-control-input switch" id="switchEduContinua" data-role="ROLE_ADMIN_CEEC">
+											  <input type="checkbox" class="custom-control-input switch" id="switchEduContinua" data-role="ROLE_ADMIN_CEEC" th:checked="${persona.hasPermissionForUsuarios}">
 											  <label class="custom-control-label" for="switchEduContinua"><strong>Gestionar Usuarios (Registrar, Editar, Actualizar, Visualizar)</strong></label>
 											</div>
 										</div>
@@ -100,7 +104,7 @@
 											<div class="col-md-12">
 												<div class="form-group">
 													<label class="form-control-label"> ¿En cuáles Programas Académicos desea gestionar Estudiantes?</label> <select class="form-control"
-														data-toggle="select" id="programasUsuarios" multiple="multiple">
+														data-toggle="select" id="programasEstudiantes" multiple="multiple">
 														<option value="0">Seleccione los programas...</option>
 														<option th:each="p: ${persona.selectProgramasForEstudiantes}" th:value="${p.id}"
 															th:text="${p.programa}"></option>
@@ -113,7 +117,7 @@
 											<div class="col-md-12">
 												<div class="form-group">
 													<label class="form-control-label">¿En cuáles Departamentos Académicos desea gestionar docentes?</label> <select class="form-control"
-														data-toggle="select" id="departamentos" multiple="multiple">
+														data-toggle="select" id="deptosDocentes" multiple="multiple">
 														<option value="0">Seleccione los departamentos...</option>
 														<option th:each="d: ${persona.selectDeptosForDocentes}" th:value="${d.id}"
 															th:text="${d.departamento}"></option>
@@ -138,13 +142,13 @@
 										<div class="row">
 											<div class="col-md-6">
 											<div class="custom-control custom-checkbox">
-												<input type="checkbox" class="custom-control-input">
+												<input type="checkbox" class="custom-control-input"  th:checked="${persona.hasPermissionForAdminvos}">
 												 <label class="custom-control-label">Administrativos</label>
 											</div>
 										</div>
 										<div class="col-md-6">
 											<div class="custom-control custom-checkbox">
-												<input type="checkbox" class="custom-control-input">
+												<input type="checkbox" class="custom-control-input"  th:checked="${persona.hasPermissionForAdminvos}">
 												 <label class="custom-control-label">Externos</label>
 											</div>
 										</div>
@@ -161,7 +165,7 @@
 						            <div class="card-body">
 						                <div class="row">
 							            	<div class="custom-control custom-switch">
-											  <input type="checkbox" class="custom-control-input switch" id="switchEduContinua" data-role="ROLE_ADMIN_CEEC">
+											  <input type="checkbox" class="custom-control-input switch" id="switchEduContinua" data-role="ROLE_ADMIN_CEEC" th:checked="${persona.hasPermissionForAttendance}">
 											  <label class="custom-control-label" for="switchEduContinua"><strong>Tomar Asistencias en dispositivo móvil</strong></label>
 											</div>
 										</div>
@@ -184,6 +188,7 @@
 						    
 						</div>
 							</div>
+							</form>
 						</div>
 					</div>
 					
@@ -204,6 +209,51 @@
   <!-- Core JS - includes jquery, bootstrap, popper, in-view and sticky-kit -->
   <div th:replace="layouts/layout :: scripts"></div>
   <script type="text/javascript" th:inline="javascript">
+ 
+  $( document ).ready(function() {
+	  var idsEduCForPrograma= [];
+	  var eduCForPrograma= [[${persona.programasForEduContinua}]];
+	  eduCForPrograma.forEach(element => idsEduCForPrograma.push(element.id));
+
+	  console.log(idsEduCForPrograma);
+	  $('#programasEC').val(idsEduCForPrograma);
+	  $('#programasEC').trigger('change');
+	  
+	  var idsProgramaForEst= [];
+	  var prograForEst= [[${persona.programasForEstudiantes}]];
+	  prograForEst.forEach(element => idsProgramaForEst.push(element.id));
+
+	  console.log(idsProgramaForEst);
+	  $('#programasEstudiantes').val(idsProgramaForEst);
+	  $('#programasEstudiantes').trigger('change');
+	  
+	  var idsProgramaForGrad= [];
+	  var prograForGradu= [[${persona.programasForGraduados}]];
+	  prograForGradu.forEach(element => idsProgramaForGrad.push(element.id));
+
+	  console.log(idsProgramaForGrad);
+	  $('#programasGraduados').val(idsProgramaForGrad);
+	  $('#programasGraduados').trigger('change');
+	  
+	  var idsDeptoForDocentes= [];
+	  var deptoForDoc= [[${persona.deptosForDocentes}]];
+	  deptoForDoc.forEach(element => idsDeptoForDocentes.push(element.id));
+
+	  console.log(idsDeptoForDocentes);
+	  $('#deptosDocentes').val(idsDeptoForDocentes);
+	  $('#deptosDocentes').trigger('change');
+	  
+	  var idsEduCForAtten= [];
+	  var eduCForAtten= [[${persona.eduContinuasForAttendance}]];
+	  eduCForAtten.forEach(element => idsEduCForAtten.push(element.id));
+
+	  console.log(idsEduCForAtten);
+	  $('#educacionesContinuas').val(idsEduCForAtten);
+	  $('#educacionesContinuas').trigger('change');
+	});
+  
+  
+ 
   /*var token = $("meta[name='_csrf']").attr("content");
   var persona= [[${persona}]];
   console.log(persona);

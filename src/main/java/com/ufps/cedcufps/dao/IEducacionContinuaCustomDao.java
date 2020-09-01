@@ -9,4 +9,6 @@ public interface IEducacionContinuaCustomDao {
 
 	public List<Long> listAllPossibleEducacionContinua(Long idPersona);
 	public boolean  docenteHasPermission(String nombreEduContinua, Long idPersona);
+	
+	public int registrarAsistencia(Long idJornada,Long idParticipante);
 }

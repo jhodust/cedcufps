@@ -8,6 +8,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.ufps.cedcufps.dto.DepartamentoDto;
+import com.ufps.cedcufps.dto.EducacionContinuaAppDto;
+import com.ufps.cedcufps.dto.PerfilRolUsuarioDto;
+import com.ufps.cedcufps.dto.ProgramaDto;
 import com.ufps.cedcufps.modelos.Administrativo;
 import com.ufps.cedcufps.modelos.Docente;
 import com.ufps.cedcufps.modelos.Estudiante;
@@ -84,8 +88,38 @@ public class PersonaController {
 	
 	@RequestMapping(value = "/persona/{id}/permisos")
 	public String permisos(@PathVariable(value = "id") Long idPersona, Map<String, Object> model) {
-		model.put("persona",personaService.findPermisos(idPersona));
+		PerfilRolUsuarioDto dto=personaService.findPermisos(idPersona);
+		model.put("persona",dto);
+		System.out.println("****************************************************************************************");
+		System.out.println("va a entrar a programas para edu continua");
+		System.out.println(dto.getProgramasForEduContinua().size());
+		for(ProgramaDto p: dto.getProgramasForEduContinua()) {
+			System.out.println(p.getId());
+		}
 		
+		System.out.println("va a entrar a programas para estudiantes");
+		System.out.println(dto.getProgramasForEstudiantes().size());
+		for(ProgramaDto p: dto.getProgramasForEstudiantes()) {
+			System.out.println(p.getId());
+		}
+		
+		System.out.println("va a entrar a deptos para docentes");
+		System.out.println(dto.getDeptosForDocentes().size());
+		for(DepartamentoDto p: dto.getDeptosForDocentes()) {
+			System.out.println(p.getId());
+		}
+		
+		System.out.println("va a entrar a programas para graduados");
+		System.out.println(dto.getProgramasForGraduados().size());
+		for(ProgramaDto p: dto.getProgramasForGraduados()) {
+			System.out.println(p.getId());
+		}
+		
+		System.out.println("va a entrar a educ  para asistencia");
+		System.out.println(dto.getEduContinuasForAttendance().size());
+		for(EducacionContinuaAppDto p: dto.getEduContinuasForAttendance()) {
+			System.out.println(p.getId());
+		}
 		return "persona/permisos";
 	}
 }

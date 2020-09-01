@@ -100,13 +100,7 @@ public class EducacionContinuaMapper implements IEducacionContinuaMapper {
 			
 			List<ParticipanteDto> participantes = new ArrayList<ParticipanteDto>();
 			for(Participante p: e.getParticipantes()) {
-				ParticipanteDto pdto= new ParticipanteDto();
-				pdto.setId(p.getId());
-				pdto.setIdPersona(p.getPersona().getId());
-				pdto.setNombrePersona(this.convertFieldsFullName(p.getPersona()));
-				pdto.setIdTipoParticipante(p.getTipoParticipante().getId());
-				pdto.setTipoParticipante(p.getTipoParticipante().getTipoParticipante());
-				participantes.add(pdto);
+				participantes.add(this.convertParticipanteToParticipanteDto(p));
 			}
 			
 			List<JornadaAppDto> jornadas = new ArrayList<JornadaAppDto>();
@@ -144,6 +138,21 @@ public class EducacionContinuaMapper implements IEducacionContinuaMapper {
 			nombreResponsable=nombreResponsable + " " +p.getSegundoApellido();
 		}
 		return nombreResponsable;
+	}
+
+
+	@Override
+	public ParticipanteDto convertParticipanteToParticipanteDto(Participante p) {
+		// TODO Auto-generated method stub
+		ParticipanteDto pdto= new ParticipanteDto();
+		pdto.setId(p.getId());
+		pdto.setIdPersona(p.getPersona().getId());
+		pdto.setNombrePersona(this.convertFieldsFullName(p.getPersona()));
+		pdto.setIdTipoParticipante(p.getTipoParticipante().getId());
+		pdto.setTipoParticipante(p.getTipoParticipante().getTipoParticipante());
+		pdto.setIdTipoDocumento(p.getPersona().getTipoDocumento().getId());
+		pdto.setNumeroDocumento(p.getPersona().getNumeroDocumento());
+		return pdto;
 	}
 
 }

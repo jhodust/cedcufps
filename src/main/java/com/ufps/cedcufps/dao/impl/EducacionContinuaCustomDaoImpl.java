@@ -7,6 +7,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Repository;
 
@@ -62,6 +63,19 @@ public class EducacionContinuaCustomDaoImpl implements IEducacionContinuaCustomD
 	
 		
 		return Integer.parseInt(String.valueOf(q.getResultList().get(0)))>0;
+	}
+
+
+	@Transactional
+	@Override
+	public int registrarAsistencia(Long idJornada, Long idParticipante) {
+		// TODO Auto-generated method stub
+		StringBuilder query = new StringBuilder();
+		return em.createNativeQuery("insert IGNORE into asistencias(id_jornada,id_participante, fecha_asistencia) values (?,?, ?)")
+		.setParameter(1, idJornada)
+		.setParameter(2, idParticipante)
+		.setParameter(3, new Date())
+		.executeUpdate();
 	}
 
 }

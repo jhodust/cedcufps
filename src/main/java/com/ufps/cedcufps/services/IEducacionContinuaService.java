@@ -2,6 +2,7 @@ package com.ufps.cedcufps.services;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
@@ -12,6 +13,7 @@ import com.ufps.cedcufps.dto.EducacionContinuaAppDto;
 import com.ufps.cedcufps.dto.InfoEducacionContinuaDto;
 import com.ufps.cedcufps.dto.EducacionContinuaAppDto;
 import com.ufps.cedcufps.dto.JornadaAppDto;
+import com.ufps.cedcufps.dto.ParticipanteDto;
 import com.ufps.cedcufps.modelos.ClasificacionCine;
 import com.ufps.cedcufps.modelos.Diploma;
 import com.ufps.cedcufps.modelos.EducacionContinua;
@@ -76,6 +78,8 @@ public interface IEducacionContinuaService {
 	public List<EducacionContinuaAppDto> findPosiblesEduContinuaGestionar();
 	
 	public InfoEducacionContinuaDto detallesEducacionContinua(String nombreEducacionContinua);
+	
+	public Map<Integer, ParticipanteDto>  tomarAsistencia(Long idEducacionContinua, Long idJornada, String qr);
 	
 	
 	

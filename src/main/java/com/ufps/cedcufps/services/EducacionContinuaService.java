@@ -1,7 +1,9 @@
 package com.ufps.cedcufps.services;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,17 +13,20 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.itextpdf.text.log.SysoLogger;
 import com.ufps.cedcufps.dao.IClasificacionCineDao;
 import com.ufps.cedcufps.dao.IDiplomaDao;
 import com.ufps.cedcufps.dao.IEducacionContinuaCustomDao;
 import com.ufps.cedcufps.dao.IEducacionContinuaDao;
 import com.ufps.cedcufps.dao.IJornadaDao;
+import com.ufps.cedcufps.dao.IParticipanteDao;
 import com.ufps.cedcufps.dao.ITipoBeneficiarioDao;
 import com.ufps.cedcufps.dao.ITipoEducacionContinuaDao;
 import com.ufps.cedcufps.dto.EducacionContinuaAppDto;
 import com.ufps.cedcufps.dto.InfoEducacionContinuaDto;
 import com.ufps.cedcufps.dto.EducacionContinuaAppDto;
 import com.ufps.cedcufps.dto.JornadaAppDto;
+import com.ufps.cedcufps.dto.ParticipanteDto;
 import com.ufps.cedcufps.exception.CustomException;
 import com.ufps.cedcufps.mapper.IEducacionContinuaMapper;
 import com.ufps.cedcufps.mapper.IJornadaMapper;
@@ -35,6 +40,7 @@ import com.ufps.cedcufps.modelos.Persona;
 import com.ufps.cedcufps.modelos.TipoBeneficiario;
 import com.ufps.cedcufps.modelos.TipoEducacionContinua;
 import com.ufps.cedcufps.utils.Archivo;
+import com.ufps.cedcufps.utils.Encrypt;
 import com.ufps.cedcufps.utils.ReportesExcel;
 
 @Service
@@ -69,6 +75,9 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 	
 	@Autowired
 	private IEducacionContinuaCustomDao educacionContinuaCustomDao;
+	
+	@Autowired
+	private IParticipanteDao  participanteDao;
 	
 	@Override
 	public List<EducacionContinua> findAll() {
@@ -303,6 +312,52 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 		}else {
 			return educacionContinuaMapper.convertEducacionContinuaToEducacionContinuaWeb(null, false);
 		}
+		
+	}
+
+	@Override
+	public Map<Integer, ParticipanteDto> tomarAsistencia(Long idEducacionContinua, Long idJornada, String qr) {
+		// TODO Auto-generated method stub
+		int codigoError=0;
+		Map<Integer, ParticipanteDto> map= new HashMap<Integer, ParticipanteDto>();
+		ParticipanteDto dto=null;
+		if(participanteDao.validarQr(qr)==null) {
+			codigoError=500;//qr inválido
+		}else {
+			Optional<Jornada> j= jornadaDao.findById(idJornada);
+			if(j.isPresent()) {
+				String texto=Encrypt.desencriptar(qr);
+				String [] data=texto.split("_");
+				System.out.println("dataaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+				System.out.println(data[2]);
+				System.out.println(data[4]);
+				if(Long.parseLong(data[2])==idEducacionContinua) {
+					System.out.println("entraaaaaaaaaaaaaaaaaaaaaaaaaaa");
+					Participante p=participanteDao.validarParticipanteYaInscritoApp(idEducacionContinua, data[4]);
+					if(p!=null) {
+						System.out.println("existe participante....................................");
+						
+						if(educacionContinuaCustomDao.registrarAsistencia(idJornada, p.getId())==1) {
+							System.out.println("registraaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+							dto=this.educacionContinuaMapper.convertParticipanteToParticipanteDto(p);
+							codigoError=200;
+						}else {
+							System.out.println("noooooooooooo registraaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+							codigoError=0;
+						}
+					}else {
+						codigoError=412;//no se encontró participante inscrito
+						
+					}
+				}
+			}else {
+				codigoError=400;//no se encontro jornada
+			}
+		}
+		
+		map.put(codigoError, dto);
+		
+		return map;
 		
 	}
 

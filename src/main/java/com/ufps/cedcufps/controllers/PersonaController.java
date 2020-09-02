@@ -90,6 +90,7 @@ public class PersonaController {
 	public String permisos(@PathVariable(value = "id") Long idPersona, Map<String, Object> model) {
 		PerfilRolUsuarioDto dto=personaService.findPermisos(idPersona);
 		model.put("persona",dto);
+		System.out.println("is director: " + dto.isDirPrograma());
 		System.out.println("****************************************************************************************");
 		System.out.println("va a entrar a programas para edu continua");
 		System.out.println(dto.getProgramasForEduContinua().size());

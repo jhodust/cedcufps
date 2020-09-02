@@ -435,28 +435,56 @@ public class PersonaService implements IPersonaService, UserDetailsService {
 			dto.setSuperadmin(autoridad.getId().equals(usuario.getId()));
 			if(this.isSuperAdmin()) {//quien asigna permisos es superadmin
 				Programa p=programaDao.findByDirector(usuario.getId());
-				dto.setSuperadmin(p!=null);
+				System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
+				System.out.println(dto.isDirPrograma());
+				dto.setDirPrograma(p!=null);
 				if(p!=null) {//usuario a quien le vamos a dar permisos es director programa
 					dto.setIdProgramaDirector(p.getId());
 					dto.setProgramaDirector(p.getPrograma());
-					List<Long> listProgramasExceptuar= new ArrayList<Long>();
-					listProgramasExceptuar.add(p.getId());
 					dto.setHasPermissionForEduContinua(this.hasPermissionForEduContinua(usuario.getId()));
 					dto.setHasPermissionForUsuarios(this.hasPermissionForPeople(usuario.getId()));
 					dto.setHasPermissionForAttendance(this.hasPermissionForAttendance(usuario.getId()));
 					dto.setProgramasForEduContinua(programaMapper.convertListProgramaToProgramaDto(this.programaDao.findProgramasPermisosEduContinuaForDirProgramaExceptOwn(usuario.getId(), p.getId())));
-					dto.setSelectProgramasForEduContinua(programaMapper.convertListProgramaToProgramaDto((List<Programa>)this.programaDao.findAll()));
+					List<Programa> programasPosiblesSelectEduC=(List<Programa>)this.programaDao.findAll();
+					programasPosiblesSelectEduC.remove(p);
+					dto.setSelectProgramasForEduContinua(programaMapper.convertListProgramaToProgramaDto(programasPosiblesSelectEduC));
+					
 					dto.setProgramasForEstudiantes(programaMapper.convertListProgramaToProgramaDto(this.programaDao.findProgramasPermisosEstudiantesForDirProgramaExceptOwn(usuario.getId(), p.getId())));
 					dto.setProgramasForGraduados(programaMapper.convertListProgramaToProgramaDto(this.programaDao.findProgramasPermisosGraduadosForDirProgramaExceptOwn(usuario.getId(), p.getId())));
-					dto.setDeptosForDocentes(departamentoMapper.convertListDepartamentoToDepartamentosDto(this.departamentoDao.findDeptosPermisosDocentesForDirPrograma(usuario.getId())));
+					dto.setDeptosForDocentes(departamentoMapper.convertListDepartamentoToDepartamentosDto(this.departamentoDao.findDeptosPermisosDocentesForDocEstAdminvo(usuario.getId())));// el director tiene comportamiento de docente para la gestión de otros docentes de un departamento
 					dto.setSelectDeptosForDocentes(departamentoMapper.convertListDepartamentoToDepartamentosDto((List<Departamento>)this.departamentoDao.findAll()));
-					dto.setSelectProgramasForEstudiantes(programaMapper.convertListProgramaToProgramaDto((List<Programa>)this.programaDao.findAll()));
-					dto.setSelectProgramasForGraduados(programaMapper.convertListProgramaToProgramaDto((List<Programa>)this.programaDao.findAll()));
+					List<Programa> programasPosiblesSelectEst=(List<Programa>)this.programaDao.findAll();
+					programasPosiblesSelectEst.remove(p);
+					dto.setSelectProgramasForEstudiantes(programaMapper.convertListProgramaToProgramaDto(programasPosiblesSelectEst));
+					List<Programa> programasPosiblesSelectGra=(List<Programa>)this.programaDao.findAll();
+					programasPosiblesSelectGra.remove(p);
+					dto.setSelectProgramasForGraduados(programaMapper.convertListProgramaToProgramaDto(programasPosiblesSelectGra));
 					dto.setSelectEduContinuasForAttendance(educacionContinuaMapper.convertEducacionContinuaToApp((List<EducacionContinua>)educacionContinuaDao.findAll()));
 					dto.setEduContinuasForAttendance(educacionContinuaMapper.convertEducacionContinuaToApp(educacionContinuaDao.findEduContinuasPermissionForAttendance(usuario.getId())));
 					dto.setHasPermissionForAdminvos(this.personaDao.hasPermissionForAdminvos(usuario.getId())>0);
 					dto.setHasPermissionForExternos(this.personaDao.hasPermissionForExternos(usuario.getId())>0);
 					return dto;
+				}else {
+					if(usuario.isEstudiante() || usuario.isDocente() || usuario.isAdministrativo()) {
+						dto.setIdProgramaDirector(null);
+						dto.setProgramaDirector(null);
+						dto.setHasPermissionForEduContinua(this.hasPermissionForEduContinua(usuario.getId()));
+						dto.setHasPermissionForUsuarios(this.hasPermissionForPeople(usuario.getId()));
+						dto.setHasPermissionForAttendance(this.hasPermissionForAttendance(usuario.getId()));
+						dto.setProgramasForEduContinua(programaMapper.convertListProgramaToProgramaDto(this.programaDao.findProgramasPermisosEduContinuaForDocEstAdminvo(usuario.getId())));
+						dto.setSelectProgramasForEduContinua(programaMapper.convertListProgramaToProgramaDto((List<Programa>)this.programaDao.findAll()));
+						dto.setProgramasForEstudiantes(programaMapper.convertListProgramaToProgramaDto(this.programaDao.findProgramasPermisosEstudiantesForDocEstAdminvo(usuario.getId())));
+						dto.setProgramasForGraduados(programaMapper.convertListProgramaToProgramaDto(this.programaDao.findProgramasPermisosGraduadosForDocEstAdminvo(usuario.getId())));
+						dto.setDeptosForDocentes(departamentoMapper.convertListDepartamentoToDepartamentosDto(this.departamentoDao.findDeptosPermisosDocentesForDocEstAdminvo(usuario.getId())));
+						dto.setSelectDeptosForDocentes(departamentoMapper.convertListDepartamentoToDepartamentosDto((List<Departamento>)this.departamentoDao.findAll()));
+						dto.setSelectProgramasForEstudiantes(programaMapper.convertListProgramaToProgramaDto((List<Programa>)this.programaDao.findAll()));
+						dto.setSelectProgramasForGraduados(programaMapper.convertListProgramaToProgramaDto((List<Programa>)this.programaDao.findAll()));
+						dto.setSelectEduContinuasForAttendance(educacionContinuaMapper.convertEducacionContinuaToApp((List<EducacionContinua>)educacionContinuaDao.findAll()));
+						dto.setEduContinuasForAttendance(educacionContinuaMapper.convertEducacionContinuaToApp(educacionContinuaDao.findEduContinuasPermissionForAttendance(usuario.getId())));
+						dto.setHasPermissionForAdminvos(this.personaDao.hasPermissionForAdminvos(usuario.getId())>0);
+						dto.setHasPermissionForExternos(this.personaDao.hasPermissionForExternos(usuario.getId())>0);
+						return dto;
+					}
 				}
 			}
 		}

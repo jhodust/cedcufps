@@ -26,5 +26,6 @@ public interface IDepartamentoDao extends PagingAndSortingRepository<Departament
 	public int cantidadDeptosExistentes(Long idDepto, String depto);
 	
 	@Query(value = "select d.* from rol_persona_depto_per rpdp join departamentos d on rpdp.id_depto=d.id where rpdp.id_persona = ?1",nativeQuery = true)
-	public List<Departamento> findDeptosPermisosDocentesForDirPrograma(Long idDirector);
+	public List<Departamento> findDeptosPermisosDocentesForDocEstAdminvo(Long idDirector);
+	
 }

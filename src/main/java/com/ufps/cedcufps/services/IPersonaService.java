@@ -73,5 +73,10 @@ public interface IPersonaService {
 	public boolean hasPermissionForAttendance(Long idPersona);
 	
 	public PerfilRolUsuarioDto findPermisos(Long idUsuario);
+	
+	public boolean updatePermisos(Long idPersona,boolean hasPermisosEduC, boolean hasPermisosPer, boolean hasPermisosAtt,
+			List<Long> idsProEduContinua, List<Long> idsProEst, List<Long> idsDeptoDoc, List<Long> idsProGrad,
+			List<Long> idsEduAtt, boolean hasPermisosAdminvo, boolean hasPermisosExter, 
+			boolean isDirPrograma, boolean isDocente,Long idProgramaDirector);
 
 }

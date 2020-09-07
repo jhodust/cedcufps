@@ -26,9 +26,15 @@ public class PerfilRolUsuarioDto {
 	private List<ProgramaDto> programasForEstudiantes;
 	private List<ProgramaDto> programasForGraduados;
 	private List<DepartamentoDto> deptosForDocentes;
+	private List<EducacionContinuaAppDto> eduContinuasForAttendance;
 	private boolean hasPermissionForAdminvos;//checkbox
 	private boolean hasPermissionForExternos;//checkbox
-	private List<EducacionContinuaAppDto> eduContinuasForAttendance;
+	
+	private List<ProgramaDto> programasForEduContinuaIntocables;
+	private List<ProgramaDto> programasForEstudiantesIntocables;
+	private List<ProgramaDto> programasForGraduadosIntocables;
+	private List<DepartamentoDto> deptosForDocentesIntocables;
+	private List<EducacionContinuaAppDto> eduContinuasForAttendanceIntocables;
 	public Long getIdPersona() {
 		return idPersona;
 	}
@@ -221,6 +227,57 @@ public class PerfilRolUsuarioDto {
 	public void setSelectEduContinuasForAttendance(List<EducacionContinuaAppDto> selectEduContinuasForAttendance) {
 		this.selectEduContinuasForAttendance = selectEduContinuasForAttendance;
 	}
+	public List<ProgramaDto> getProgramasForEduContinuaIntocables() {
+		return programasForEduContinuaIntocables;
+	}
+	public void setProgramasForEduContinuaIntocables(List<ProgramaDto> programasForEduContinuaIntocables) {
+		this.programasForEduContinuaIntocables = programasForEduContinuaIntocables;
+	}
+	public List<ProgramaDto> getProgramasForEstudiantesIntocables() {
+		return programasForEstudiantesIntocables;
+	}
+	public void setProgramasForEstudiantesIntocables(List<ProgramaDto> programasForEstudiantesIntocables) {
+		this.programasForEstudiantesIntocables = programasForEstudiantesIntocables;
+	}
+	public List<ProgramaDto> getProgramasForGraduadosIntocables() {
+		return programasForGraduadosIntocables;
+	}
+	public void setProgramasForGraduadosIntocables(List<ProgramaDto> programasForGraduadosIntocables) {
+		this.programasForGraduadosIntocables = programasForGraduadosIntocables;
+	}
+	public List<DepartamentoDto> getDeptosForDocentesIntocables() {
+		return deptosForDocentesIntocables;
+	}
+	public void setDeptosForDocentesIntocables(List<DepartamentoDto> deptosForDocentesIntocables) {
+		this.deptosForDocentesIntocables = deptosForDocentesIntocables;
+	}
+	public List<EducacionContinuaAppDto> getEduContinuasForAttendanceIntocables() {
+		return eduContinuasForAttendanceIntocables;
+	}
+	public void setEduContinuasForAttendanceIntocables(List<EducacionContinuaAppDto> eduContinuasForAttendanceIntocables) {
+		this.eduContinuasForAttendanceIntocables = eduContinuasForAttendanceIntocables;
+	}
 	
+	public void addProgramaForEstudiantesIntocable(ProgramaDto p) {
+		this.programasForEstudiantesIntocables.add(p);
+	}
+	
+	public void addProgramaForGraduadosIntocable(ProgramaDto p) {
+		this.programasForGraduadosIntocables.add(p);
+	}
+	
+	public void addDeptosForDocentesIntocable(DepartamentoDto d) {
+		this.deptosForDocentesIntocables.add(d);
+	}
+	
+	public void addProgramaForEduContinuaIntocable(ProgramaDto p) {
+		this.programasForEduContinuaIntocables.add(p);
+	}
+	
+	public void addEduContinuaForAtendanceIntocable(EducacionContinuaAppDto e) {
+		this.eduContinuasForAttendanceIntocables.add(e);
+	}
+	
+
 	
 }

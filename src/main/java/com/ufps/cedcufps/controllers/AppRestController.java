@@ -53,9 +53,9 @@ public class AppRestController {
 		
 		GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(new NetHttpTransport(),  new JacksonFactory())
 			    // Specify the CLIENT_ID of the app that accesses the backend:
-			   .setAudience(Collections.singletonList(idDebug))
+			   //.setAudience(Collections.singletonList(idDebug))
 			    // Or, if multiple clients access the backend:
-			    //.setAudience(Arrays.asList(idDebug, idPro))
+			    .setAudience(Arrays.asList(idDebug, idPro))
 			    .build();
 
 			// (Receive idTokenString by HTTPS POST)

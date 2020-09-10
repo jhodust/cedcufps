@@ -12,6 +12,7 @@ import com.ufps.cedcufps.dto.DepartamentoDto;
 import com.ufps.cedcufps.dto.EducacionContinuaAppDto;
 import com.ufps.cedcufps.dto.PerfilRolUsuarioDto;
 import com.ufps.cedcufps.dto.ProgramaDto;
+import com.ufps.cedcufps.dto.UsuarioDto;
 import com.ufps.cedcufps.modelos.Administrativo;
 import com.ufps.cedcufps.modelos.Docente;
 import com.ufps.cedcufps.modelos.Estudiante;
@@ -60,6 +61,31 @@ public class PersonaController {
 		model.put("estados_civiles",personaService.findAllEstadosCiviles());
 		return "persona/form";
 	}*/
+	
+	@RequestMapping(value = "/usuarios/registro")
+	public String crear(Map<String, Object> model) {
+		model.put("persona",new UsuarioDto());
+		model.put("titulo","FORMULARIO PERSONA");
+		model.put("tipos_documento",personaService.findAllTiposDocumento());
+		model.put("tipos_persona",personaService.findAllTiposPersona());
+		model.put("programas",personaService.findAllProgramas());
+		model.put("generos",personaService.findAllGeneros());
+		model.put("estados_civiles",personaService.findAllEstadosCiviles());
+		/*if(p.getTipoPersona().getTipoPersona().equalsIgnoreCase("Estudiante")) {
+			model.put("estudiante",(Estudiante)personaService.findOne(id).get());
+			return "redirect:/usuarios/estudiante/registro/"+p.getId();
+		}else if(p.getTipoPersona().getTipoPersona().equalsIgnoreCase("Docente")) {
+			model.put("docente",(Docente)personaService.findOne(id).get());
+			return "redirect:/usuarios/docente/registro/"+p.getId();
+		}else if(p.getTipoPersona().getTipoPersona().equalsIgnoreCase("Administrativo")) {
+			model.put("administrativo",(Administrativo)personaService.findOne(id).get());
+			return "redirect:/usuarios/administrativo/registro/"+p.getId();
+		}else{
+			model.put("externo",(Externo)personaService.findOne(id).get());
+			return "redirect:/usuarios/externo/registro/"+p.getId();
+		}*/
+		return "persona/form";
+	}
 	
 	@RequestMapping(value = "/usuarios/registro/{id}")
 	public String editar(@PathVariable(value = "id") Long id, Map<String, Object> model) {

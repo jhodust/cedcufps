@@ -45,6 +45,8 @@ public class Docente extends Persona{
 	@OneToOne(mappedBy = "directorPrograma")
     private Programa programaACargoDirector;
 	
+	private boolean estado;
+	
 	public Docente() {
 		educacionesContinuas=new ArrayList<EducacionContinua>();
 	}
@@ -83,6 +85,14 @@ public class Docente extends Persona{
 
 	public void setProgramaACargoDirector(Programa programaACargoDirector) {
 		this.programaACargoDirector = programaACargoDirector;
+	}
+
+	public boolean isEstado() {
+		return estado;
+	}
+
+	public void setEstado(boolean estado) {
+		this.estado = estado;
 	}
 
 	

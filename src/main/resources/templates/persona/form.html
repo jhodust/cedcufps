@@ -46,9 +46,7 @@
         </div>
         <hr/>
         
-			<form th:action="@{/usuarios/registro}"
-											th:object="${persona}" method="post"
-											enctype="multipart/form-data">
+			
 						
 				<div class="row">
 							<div class="col-lg-6" id="infoBasica">
@@ -64,7 +62,7 @@
 												<div class="form-group">
 													<label class="form-control-label">Tipo Documento</label> <select
 														class="form-control" data-toggle="select"
-														id="selectTipoDoc" th:field="*{tipoDocumento}">
+														id="selectTipoDoc">
 														<option value="0">Seleccione Tipo Documento...</option>
 														<option th:each="t: ${tipos_documento}" th:value="${t.id}"
 															th:text="${t.tipoDocumento}"></option>
@@ -76,7 +74,7 @@
 													<label class="form-control-label">Número Documento</label>
 													<input class="form-control" type="text"
 														placeholder="Ingrese su número de documento..."
-														id="numDoc" th:field="*{numeroDocumento}" /> <small class="form-text text-danger"><strong></strong></small>
+														id="numDoc"/> <small class="form-text text-danger"><strong></strong></small>
 												</div>
 											</div>
 
@@ -87,7 +85,7 @@
 													<label class="form-control-label">Fecha Expedición
 														Documento</label> <input type="text"
 														class="form-control flatpickr-input" data-toggle="date"
-														placeholder="Seleccione fecha..." id="fechaExp" th:field="*{fechaExpedicionDocumento}" /> <small
+														placeholder="Seleccione fecha..." id="fechaExp"/> <small
 														class="form-text text-danger"><strong></strong></small>
 												</div>
 											</div>
@@ -97,7 +95,7 @@
 												<div class="form-group">
 													<label class="form-control-label">Primer Nombre</label> <input
 														class="form-control" type="text"
-														placeholder="Ingrese su primer nombre..." id="primNom" th:field="*{primerNombre}" />
+														placeholder="Ingrese su primer nombre..." id="primNom"/>
 													<small class="form-text text-danger"><strong></strong></small>
 												</div>
 											</div>
@@ -105,7 +103,7 @@
 												<div class="form-group">
 													<label class="form-control-label">Segundo Nombre</label> <input
 														class="form-control" type="text"
-														placeholder="Ingrese su segundo nombre..." id="segNom" th:field="*{segundoNombre}"/>
+														placeholder="Ingrese su segundo nombre..." id="segNom"/>
 													<small class="form-text text-danger"><strong></strong></small>
 												</div>
 											</div>
@@ -115,7 +113,7 @@
 												<div class="form-group">
 													<label class="form-control-label">Primer Apellido</label> <input
 														class="form-control" type="text"
-														placeholder="Ingrese su primer apellido..." id="primApe" th:field="*{primerApellido}"/>
+														placeholder="Ingrese su primer apellido..." id="primApe" />
 													<small class="form-text text-danger"><strong></strong></small>
 												</div>
 											</div>
@@ -123,7 +121,7 @@
 												<div class="form-group">
 													<label class="form-control-label">Segundo Apellido</label>
 													<input class="form-control" type="text"
-														placeholder="Ingrese su segundo apellido..." id="segApe" th:field="*{segundoApellido}"/>
+														placeholder="Ingrese su segundo apellido..." id="segApe"/>
 													<small class="form-text text-danger"><strong></strong></small>
 												</div>
 											</div>
@@ -151,7 +149,7 @@
 															class="custom-control custom-radio custom-control-inline"
 															th:each="g: ${generos}">
 															<input type="radio" th:id="${g.genero}" name="genero"
-																class="custom-control-input" th:value="${g.id}" th:field="*{genero}" /> <label
+																class="custom-control-input" th:value="${g.id}" /> <label
 																class="custom-control-label" th:for="${g.genero}"
 																th:text="${g.genero}"></label>
 														</div>
@@ -173,7 +171,7 @@
 															th:each="e: ${estados_civiles}">
 															<input type="radio" th:id="${e.estadoCivil}"
 																name="estadoCivil" class="custom-control-input"
-																th:value="${e.id}" th:field="*{dependencia}"/> <label
+																th:value="${e.id}" /> <label
 																class="custom-control-label" th:for="${e.estadoCivil}" th:field="*{estadoCivil}" 
 																th:text="${e.estadoCivil}"></label>
 														</div>
@@ -191,14 +189,14 @@
 													<input type="text" class="form-control flatpickr-input"
 														data-toggle="date"
 														placeholder="Seleccione su fecha de nacimiento..."
-														id="fechaNac" th:field="*{fechaNacimiento}"/> <small class="form-text text-danger"><strong></strong></small>
+														id="fechaNac"/> <small class="form-text text-danger"><strong></strong></small>
 												</div>
 											</div>
 											<div class="col-md-6">
 												<div class="form-group">
 													<label class="form-control-label">Pais Nacimiento</label> <select
 														class="form-control" data-toggle="select"
-														id="selectPaisNacimiento" th:field="*{idPaisNacimiento}">
+														id="selectPaisNacimiento">
 														<option value="0">Seleccione pais...</option>
 													</select> <small class="form-text text-danger"><strong></strong></small>
 												</div>
@@ -209,7 +207,7 @@
 												<div class="form-group">
 													<label class="form-control-label">Departamento
 														Nacimiento</label> <select class="form-control"
-														data-toggle="select" id="selectDepartamentoNacimiento" th:field="*{idDepartamentoNacimiento}">
+														data-toggle="select" id="selectDepartamentoNacimiento">
 														<option value="0" >Seleccione departamento...</option>
 													</select> <small class="form-text text-danger"><strong></strong></small>
 												</div>
@@ -218,7 +216,7 @@
 												<div class="form-group">
 													<label class="form-control-label">Municipio
 														Nacimiento</label> <select class="form-control"
-														data-toggle="select" id="selectMunicipioNacimiento" th:field="*{idMunicipioNacimiento}">
+														data-toggle="select" id="selectMunicipioNacimiento">
 														<option value="0">Seleccione municipio...</option>
 													</select> <small class="form-text text-danger"><strong></strong></small>
 												</div>
@@ -283,7 +281,7 @@
 												<div class="form-group">
 													<label class="form-control-label">Email</label> <input
 														class="form-control" type="email"
-														placeholder="Ingrese su email..." id="email" th:field="*{email}" /> <small
+														placeholder="Ingrese su email..." id="email"/> <small
 														class="form-text text-danger"><strong></strong></small>
 												</div>
 											</div>
@@ -295,7 +293,7 @@
 													<label class="form-control-label">Telefono</label> <input
 														class="form-control" type="text"
 														placeholder="Ingrese su telefono de contacto..."
-														id="telefono" th:field="*{direccion}" /> <small class="form-text text-danger"><strong></strong></small>
+														id="telefono" /> <small class="form-text text-danger"><strong></strong></small>
 												</div>
 											</div>
 										</div>
@@ -305,7 +303,7 @@
 													<label class="form-control-label">Dirección</label> <input
 														class="form-control" type="text"
 														placeholder="Ingrese su dirección de residencia..."
-														id="direccion" th:field="*{telefono}"/> <small class="form-text text-danger"><strong></strong></small>
+														id="direccion" /> <small class="form-text text-danger"><strong></strong></small>
 												</div>
 											</div>
 										</div>
@@ -327,7 +325,7 @@
 													<div class="form-group">
 														<label class="form-control-label">Programa
 															Académico</label> <select class="form-control"
-															data-toggle="select" id="programaAsociado" th:field="*{programa}">
+															data-toggle="select" id="programaAsociado">
 															<option value="0">Seleccione el programa...</option>
 															<option th:each="p: ${programas}" th:value="${p.id}"
 																th:text="${p.programa}"></option>
@@ -338,7 +336,7 @@
 													<div class="form-group">
 														<label class="form-control-label">Código</label><input
 															class="form-control" type="text" data-mask="000-0000"
-															placeholder="000-0000" id="codigo" th:field="*{codigo}"/>
+															placeholder="000-0000" id="codigo"/>
 													</div>
 													<small class="form-text text-danger"><strong></strong></small>
 												</div>
@@ -354,7 +352,7 @@
 													<div class="form-group">
 														<label class="form-control-label">Departamento
 															Académico Adscrito(a)</label> <select class="form-control"
-															data-toggle="select" id="selectDeptoAdscrito" th:field="*{deptoAdscrito}">
+															data-toggle="select" id="selectDeptoAdscrito" >
 															<option value="0">Seleccione el departamento...</option>
 															<option th:each="d: ${departamentos}" th:value="${d.id}"
 																th:text="${d.departamento}"></option>
@@ -381,7 +379,7 @@
 													<div class="form-group">
 														<label class="form-control-label">Dependencia
 															Adscrito(a)</label> <input class="form-control" type="text"
-															placeholder="Ingrese la dependencia..." id="dependencia" th:field="*{dependencia}"/> <small
+															placeholder="Ingrese la dependencia..." id="dependencia"/> <small
 															class="form-text text-danger"><strong></strong></small>
 													</div>
 												</div>
@@ -389,7 +387,7 @@
 													<div class="form-group">
 														<label class="form-control-label">Cargo</label> <input
 															class="form-control" type="text"
-															placeholder="Ingrese su cargo..." id="cargo" th:field="*{cargo}"/> <small
+															placeholder="Ingrese su cargo..." id="cargo"/> <small
 															class="form-text text-danger"><strong></strong></small>
 													</div>
 												</div>
@@ -405,7 +403,7 @@
 													<div class="form-group">
 														<label class="form-control-label">Programa
 															del cuál se graduó</label> <select class="form-control"
-															data-toggle="select" id="selectProgramaGraduado" th:field="*{programaGraduado}">
+															data-toggle="select" id="selectProgramaGraduado">
 															<option value="0">Seleccione el programa...</option>
 															<option th:each="p: ${programas}" th:value="${p.id}"
 																th:text="${p.programa}"></option>
@@ -416,7 +414,7 @@
 													<div class="form-group">
 														<label class="form-control-label">Año</label> <input
 															class="form-control" type="text"
-															placeholder="Ingrese el año en el que se graduó cargo..." id="anioGraduado" th:field="*{anioGraduado}"/> <small
+															placeholder="Ingrese el año en el que se graduó cargo..." id="anioGraduado"/> <small
 															class="form-text text-danger"><strong></strong></small>
 													</div>
 												</div>
@@ -432,7 +430,7 @@
 													<div class="form-group">
 														<label class="form-control-label">Profesión</label> <input
 															class="form-control" type="text"
-															placeholder="Ingrese su profesión..." id="profesion" th:field="*{profesion}" /> <small
+															placeholder="Ingrese su profesión..." id="profesion"  /> <small
 															class="form-text text-danger"><strong></strong></small>
 													</div>
 												</div>
@@ -440,7 +438,7 @@
 													<div class="form-group">
 														<label class="form-control-label">Empresa en la que labora</label> <input
 															class="form-control" type="text"
-															placeholder="Ingrese la empresa..." id="empresa" th:field="*{empresa}" /> <small
+															placeholder="Ingrese la empresa..." id="empresa" /> <small
 															class="form-text text-danger"><strong></strong></small>
 													</div>
 												</div>
@@ -462,7 +460,6 @@
 							</div>
 						</div>
 					
-			</form>
 		</div>
 	  </div>
     
@@ -473,6 +470,10 @@
   <!-- Scripts -->
   <!-- Core JS - includes jquery, bootstrap, popper, in-view and sticky-kit -->
   <div th:replace="layouts/layout :: scripts"></div>
+  <script type="text/javascript">
+		var caso=1;
+	</script>
+	<script th:src="@{/js/usuario.js}" type="text/javascript"></script>
 </body>
 
 </html>

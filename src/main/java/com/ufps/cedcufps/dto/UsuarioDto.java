@@ -5,6 +5,7 @@ import java.util.Date;
 
 public class UsuarioDto {
 	
+	private Long id;
 	private Long tipoDocumento;
 	private String numeroDocumento;
 	private String fechaExpedicionDocumento;
@@ -25,14 +26,15 @@ public class UsuarioDto {
 	private Long programa;
 	private String profesion;
 	private String empresa;
-	private int isEstudiante;
-	private int isDocente;
-	private int isAdministrativo;
-	private int isGraduado;
-	private int isExterno;
+	private boolean isEstudiante;
+	private boolean isDocente;
+	private boolean isAdministrativo;
+	private boolean isGraduado;
+	private boolean isExterno;
 	private Long programaGraduado;
 	private String anioGraduado;
 	private Long deptoAdscrito;
+	private boolean estadoDocente;
 	private String codigoDocente;
 	private String dependencia;
 	private String cargo;
@@ -196,37 +198,50 @@ public class UsuarioDto {
 	public void setEmpresa(String empresa) {
 		this.empresa = empresa;
 	}
-	public int getIsEstudiante() {
+	
+	public boolean isEstudiante() {
 		return isEstudiante;
 	}
-	public void setIsEstudiante(int isEstudiante) {
+	public void setEstudiante(boolean isEstudiante) {
 		this.isEstudiante = isEstudiante;
 	}
-	public int getIsDocente() {
+	public boolean isDocente() {
 		return isDocente;
 	}
-	public void setIsDocente(int isDocente) {
+	public void setDocente(boolean isDocente) {
 		this.isDocente = isDocente;
 	}
-	public int getIsAdministrativo() {
+	public boolean isAdministrativo() {
 		return isAdministrativo;
 	}
-	public void setIsAdministrativo(int isAdministrativo) {
+	public void setAdministrativo(boolean isAdministrativo) {
 		this.isAdministrativo = isAdministrativo;
 	}
-	public int getIsGraduado() {
+	public boolean isGraduado() {
 		return isGraduado;
 	}
-	public void setIsGraduado(int isGraduado) {
+	public void setGraduado(boolean isGraduado) {
 		this.isGraduado = isGraduado;
 	}
-	public int getIsExterno() {
+	public boolean isExterno() {
 		return isExterno;
 	}
-	public void setIsExterno(int isExterno) {
+	public void setExterno(boolean isExterno) {
 		this.isExterno = isExterno;
 	}
-
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
+	public boolean isEstadoDocente() {
+		return estadoDocente;
+	}
+	public void setEstadoDocente(boolean estadoDocente) {
+		this.estadoDocente = estadoDocente;
+	}
+	
 	
 	
 }

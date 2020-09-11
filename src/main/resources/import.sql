@@ -85,18 +85,18 @@ insert into personas (id,direccion,email,numero_documento,primer_nombre,segundo_
 
 
 
-insert into docentes (id_persona,codigo,id_departamento) values (21,'05848',1);
-insert into docentes (id_persona,codigo,id_departamento) values (22,'08465',1);
-insert into docentes (id_persona,codigo,id_departamento) values (23,'01516',1);
-insert into docentes (id_persona,codigo,id_departamento) values (24,'05154',1);
-insert into docentes (id_persona,codigo,id_departamento) values (25,'03546',1);
-insert into docentes (id_persona,codigo,id_departamento) values (26,'84456',7);
-insert into docentes (id_persona,codigo,id_departamento) values (27,'51515',4);
-insert into docentes (id_persona,codigo,id_departamento) values (28,'14848',3);
-insert into docentes (id_persona,codigo,id_departamento) values (29,'14488',4);
-insert into docentes (id_persona,codigo,id_departamento) values (30,'84862',7);
-insert into docentes (id_persona,codigo,id_departamento) values (31,'65348',8);
-insert into docentes (id_persona,codigo,id_departamento) values (32,'52514',1);
+insert into docentes (id_persona,codigo,id_departamento,estado) values (21,'05848',1,1);
+insert into docentes (id_persona,codigo,id_departamento,estado) values (22,'08465',1,1);
+insert into docentes (id_persona,codigo,id_departamento,estado) values (23,'01516',1,1);
+insert into docentes (id_persona,codigo,id_departamento,estado) values (24,'05154',1,1);
+insert into docentes (id_persona,codigo,id_departamento,estado) values (25,'03546',1,1);
+insert into docentes (id_persona,codigo,id_departamento,estado) values (26,'84456',7,1);
+insert into docentes (id_persona,codigo,id_departamento,estado) values (27,'51515',4,1);
+insert into docentes (id_persona,codigo,id_departamento,estado) values (28,'14848',3,1);
+insert into docentes (id_persona,codigo,id_departamento,estado) values (29,'14488',4,1);
+insert into docentes (id_persona,codigo,id_departamento,estado) values (30,'84862',7,1);
+insert into docentes (id_persona,codigo,id_departamento,estado) values (31,'65348',8,1);
+insert into docentes (id_persona,codigo,id_departamento,estado) values (32,'52514',1,1);
 
 insert into programas(id,codigo,programa,id_facultad,id_director) values(1,'111','Ingeniería Civil',6,23);
 insert into programas(id,codigo,programa,id_facultad,id_director) values(2,'115','Ingeniería de Sistemas',6,28);

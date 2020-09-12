@@ -1,6 +1,7 @@
 package com.ufps.cedcufps.mapper;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.ufps.cedcufps.dto.PersonaDto;
 import com.ufps.cedcufps.dto.UsuarioAppDto;
@@ -31,4 +32,7 @@ public interface IUsuarioMapper {
 	public List<PersonaDto> convertListPersonasToPersonaDto(List<Persona> personas);
 	
 	public PersonaDto convertPersonaToPersonaDto(Persona persona);
+	
+	public UsuarioDto convertPersonaToUsuarioDto(Persona p, Optional<Estudiante> e, Optional<Docente> d, 
+			Optional<Administrativo> a, Optional<Graduado> g, Optional<Externo> ex);
 }

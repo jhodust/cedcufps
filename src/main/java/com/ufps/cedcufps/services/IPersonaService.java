@@ -58,7 +58,7 @@ public interface IPersonaService {
 
 	public Persona findByEmail(String email);
 	
-	public void registrarse(UsuarioDto u);
+	public void guardar(UsuarioDto u);
 	
 	public List<PersonaDto> findAllPersonasPosibles();
 	
@@ -73,6 +73,8 @@ public interface IPersonaService {
 	public boolean hasPermissionForAttendance(Long idPersona);
 	
 	public PerfilRolUsuarioDto findPermisos(Long idUsuario);
+	
+	public UsuarioDto editarUsuario(Long idUsuario);
 	
 	public boolean updatePermisos(Long idPersona,boolean hasPermisosEduC, boolean hasPermisosPer, boolean hasPermisosAtt,
 			List<Long> idsProEduContinua, List<Long> idsProEst, List<Long> idsDeptoDoc, List<Long> idsProGrad,

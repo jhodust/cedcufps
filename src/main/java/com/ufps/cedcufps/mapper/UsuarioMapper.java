@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -125,24 +126,12 @@ public class UsuarioMapper implements IUsuarioMapper {
 		pe.setEmail(u.getEmail());
 		pe.setDireccion(u.getDireccion());
 		pe.setTelefono(u.getTelefono());
+		pe.setEstudiante(u.isEstudiante());
+		pe.setDocente(u.isDocente());
+		pe.setAdministrativo(u.isAdministrativo());
+		pe.setGraduado(u.isGraduado());
+		pe.setExterno(u.isExterno());
 		
-		if(u.getIsExterno()==1) {
-			pe.setExterno(true);
-		}else {
-			if(u.getIsEstudiante()==1) {
-				pe.setEstudiante(true);
-			}
-			if(u.getIsDocente()==1) {
-				pe.setDocente(true);
-			}
-			if(u.getIsAdministrativo()==1) {
-				pe.setAdministrativo(true);
-			}
-			if(u.getIsGraduado()==1) {
-				pe.setGraduado(true);
-			}
-			
-		}
 		
 		List<Rol> r= new ArrayList<>();
 		Rol rol= new Rol();
@@ -198,6 +187,7 @@ public class UsuarioMapper implements IUsuarioMapper {
 		d.setId(idPersona);
 		d.setDepartamento(de);
 		d.setCodigo(u.getCodigoDocente());
+		d.setEstado(true);
 		return d;
 	}
 
@@ -323,6 +313,63 @@ public class UsuarioMapper implements IUsuarioMapper {
 			}
 		}
 		dto.setPerfiles(perfiles);
+		return dto;
+	}
+
+	@Override
+	public UsuarioDto convertPersonaToUsuarioDto(Persona p, Optional<Estudiante> e, Optional<Docente> d, 
+			Optional<Administrativo> a, Optional<Graduado> g, Optional<Externo> ex) {
+		// TODO Auto-generated method stub
+		UsuarioDto dto= new UsuarioDto();
+		dto.setId(p.getId());
+		dto.setPrimerNombre(p.getPrimerNombre());
+		dto.setSegundoNombre(p.getSegundoNombre());
+		dto.setPrimerApellido(p.getPrimerApellido());
+		dto.setSegundoApellido(p.getSegundoApellido());
+		dto.setTipoDocumento(p.getTipoDocumento().getId());
+		dto.setNumeroDocumento(p.getNumeroDocumento());
+		dto.setGenero(p.getGenero().getId());
+		dto.setEstadoCivil(p.getEstadoCivil().getId());
+		dto.setFechaNacimiento(p.getFechaNacimiento().toString());
+		dto.setFechaExpedicionDocumento(p.getFechaExpedicionDocumento().toString());
+		dto.setIdPaisNacimiento(p.getIdPaisNacimiento());
+		dto.setIdDepartamentoNacimiento(p.getIdDepartamentoNacimiento());
+		dto.setIdMunicipioNacimiento(p.getIdMunicipioNacimiento());
+		dto.setEmail(p.getEmail());
+		dto.setDireccion(p.getDireccion());
+		dto.setTelefono(p.getTelefono());
+		dto.setEstudiante(p.isEstudiante());
+		dto.setDocente(p.isDocente());
+		dto.setAdministrativo(p.isAdministrativo());
+		dto.setGraduado(p.isGraduado());
+		dto.setAdministrativo(p.isAdministrativo());
+		
+		if(e!=null) {
+			dto.setPrograma(e.get().getPrograma().getId());
+			dto.setCodigo(e.get().getCodigo());
+		}
+		
+		if(d!=null) {
+			dto.setDeptoAdscrito(d.get().getDepartamento().getId());
+			dto.setCodigoDocente(d.get().getCodigo());
+			dto.setEstadoDocente(d.get().isEstado());
+		}
+		
+		if(a!=null) {
+			dto.setCargo(a.get().getCargo());
+			dto.setDependencia(a.get().getDependencia());
+		}
+		
+		if(g!=null) {
+			dto.setProgramaGraduado(g.get().getId());
+			dto.setAnioGraduado(g.get().getAnio());
+		}
+		
+		if(ex!=null) {
+			dto.setEmpresa(ex.get().getEmpresa());
+			dto.setProfesion(ex.get().getProfesion());
+		}
+		
 		return dto;
 	}
 

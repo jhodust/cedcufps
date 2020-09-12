@@ -276,7 +276,7 @@ public class PersonaService implements IPersonaService, UserDetailsService {
 	}
 
 	@Override
-	public void registrarse(UsuarioDto u) {
+	public void guardar(UsuarioDto u) {
 		// TODO Auto-generated method stub
 		/*if(String.valueOf(u.getTipoPersona()).equalsIgnoreCase("1")) {
 			Estudiante e= usuarioMapper.convertUsuarioToEstudiante(u);
@@ -289,16 +289,18 @@ public class PersonaService implements IPersonaService, UserDetailsService {
 			System.out.println("save externo");
 			personaDao.save(e);
 		}*/
+		if(u.getId() != null) {
+			Optional<Persona> o=personaDao.findById(u.getId());
+			Persona persona=null;
+			if(o!=null) {
+				persona=o.get();
+			}
+		}
 		Persona p= usuarioMapper.convertUsuarioToPersona(u);
 		logger.info("llega de mappear");
 		personaDao.save(p);
 		logger.info("guarda la persona");
-		System.out.println(u.getIsEstudiante());
-		System.out.println(u.getIsDocente());
-		System.out.println(u.getIsAdministrativo());
-		System.out.println(u.getIsGraduado());
-		System.out.println(u.getIsExterno());
-		if(u.getIsExterno()==1) {
+		if(u.isExterno()) {
 			logger.info("Es externo");
 			Externo e=usuarioMapper.convertUsuarioToExterno(u,p.getId());
 			logger.info(e.getId().toString());
@@ -306,7 +308,7 @@ public class PersonaService implements IPersonaService, UserDetailsService {
 			logger.info(e.getProfesion());
 			personaCustomDao.saveExterno(e);
 		}else {
-			if(u.getIsEstudiante()==1) {
+			if(u.isEstudiante()) {
 				logger.info("Es estudiante");
 				Estudiante e=usuarioMapper.convertUsuarioToEstudiante(u,p.getId());
 				logger.info(e.getId().toString());
@@ -314,15 +316,25 @@ public class PersonaService implements IPersonaService, UserDetailsService {
 				logger.info(e.getCodigo());
 				personaCustomDao.saveEstudiante(e);
 			}
-			if(u.getIsDocente()==1) {
+			if(u.isDocente()) {
 				logger.info("Es docente");
 				Docente d= usuarioMapper.convertUsuarioToDocente(u,p.getId());
 				logger.info(d.getId().toString());
 				logger.info(d.getDepartamento().getDepartamento());
 				logger.info(d.getCodigo());
 				personaCustomDao.saveDocente(d);
+			}else {
+				if(u.getId() !=null) {//actualizar
+					Optional<Docente> doc=docenteDao.findById(u.getId());
+					if(doc!=null) {
+						Docente d= doc.get();
+						d.setEstado(false);
+						personaCustomDao.saveDocente(d);
+					}
+					
+				}
 			}
-			if(u.getIsAdministrativo()==1) {
+			if(u.isAdministrativo()) {
 				logger.info("Es administrativo");
 				Administrativo a= usuarioMapper.convertUsuarioToAdministrativo(u,p.getId());
 				logger.info(a.getId().toString());
@@ -330,7 +342,7 @@ public class PersonaService implements IPersonaService, UserDetailsService {
 				logger.info(a.getCargo());
 				personaCustomDao.saveAdministrativo(a);
 			}
-			if(u.getIsGraduado()==1) {
+			if(u.isGraduado()) {
 				logger.info("Es graduado");
 				Graduado g= usuarioMapper.convertUsuarioToGraduado(u,p.getId());
 				logger.info(g.getId().toString());
@@ -541,6 +553,21 @@ public class PersonaService implements IPersonaService, UserDetailsService {
 		System.out.println(this.personaRolDao.updateRolesPersona(idPersona, hasPermisosEduC, hasPermisosPer, hasPermisosAtt, idsProEduContinua,
 				idsProEst, idsDeptoDoc, idsProGrad, idsEduAtt, hasPermisosAdminvo, hasPermisosExter, isDirPrograma, isDocente, idProgramaDirector));
 		return false;
+	}
+
+	@Override
+	public UsuarioDto editarUsuario(Long idUsuario) {
+		// TODO Auto-generated method stub
+		Optional<Persona> p= personaDao.findById(idUsuario);
+		Optional<Estudiante> es=estudianteDao.findById(idUsuario);
+		Optional<Docente> doc=docenteDao.findById(idUsuario);
+		Optional<Administrativo> ad=administrativoDao.findById(idUsuario);
+		Optional<Graduado> gr=graduadoDao.findById(idUsuario);
+		Optional<Externo> ex=externoDao.findById(idUsuario);
+		if(p!=null) {
+			return usuarioMapper.convertPersonaToUsuarioDto(p.get(),es,doc,ad,gr,ex);
+		}
+		return null;
 	}
 
 }

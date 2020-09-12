@@ -96,6 +96,7 @@ public class PersonaController {
 		model.put("programas",personaService.findAllProgramas());
 		model.put("generos",personaService.findAllGeneros());
 		model.put("estados_civiles",personaService.findAllEstadosCiviles());
+		model.put("persona", p);
 		/*if(p.getTipoPersona().getTipoPersona().equalsIgnoreCase("Estudiante")) {
 			model.put("estudiante",(Estudiante)personaService.findOne(id).get());
 			return "redirect:/usuarios/estudiante/registro/"+p.getId();

@@ -96,7 +96,8 @@
 														 
 															th:text="${p.programa}"></option>
 													</select>
-													<small class="form-text text-danger"><strong></strong></small>
+													<div class="alert alert-warning shadow-lg mt-2" role="alert" id="wPEC" style="display:none"></div>
+													<div class="alert alert-danger shadow-lg mt-2" role="alert" id="ePEC" style="display:none"></div>
 												</div>
 												
 											</div>
@@ -146,7 +147,6 @@
 														<option th:each="p: ${persona.selectProgramasForEstudiantes}" th:value="${p.id}"
 															th:text="${p.programa}"></option>
 													</select>
-													<small class="form-text text-danger"><strong></strong></small>
 												</div>
 											</div>
 										</div>
@@ -160,7 +160,7 @@
 														<option th:each="d: ${persona.selectDeptosForDocentes}" th:value="${d.id}"
 															th:text="${d.departamento}"></option>
 													</select>
-													<small class="form-text text-danger"><strong></strong></small>
+													
 												</div>
 											</div>
 										</div>
@@ -227,13 +227,26 @@
 										<div class="row">
 											<div class="col-md-12">
 												<div class="form-group">
-													<label class="form-control-label"> Educaciones Continuas</label> <select class="form-control"
+													<label class="form-control-label"> Educaciones Continuas</label> 
+													<div th:if="${persona.eduContinuasForAttendanceIntocables!=null and #arrays.length(persona.eduContinuasForAttendanceIntocables) > 0}">
+														<div class="alert alert-info" role="alertd">
+														   El usuario ya tiene otorgados permisos para la toma de asistencias
+														   <ul th:each="e: ${persona.eduContinuasForAttendanceIntocables}">
+														   		<li th:text="${e.nombre}">
+														   		</li>
+														   </ul>
+														</div>
+													</div>
+													
+													
+													<select class="form-control"
 														data-toggle="select" id="educacionesContinuas" multiple="multiple">
 														<option value="0">Seleccione los programas...</option>
 														<option th:each="e: ${persona.selectEduContinuasForAttendance}" th:value="${e.id}"
 															th:text="${e.nombre}"></option>
 													</select>
-													<small class="form-text text-danger"><strong></strong></small>
+													<div class="alert alert-warning shadow-lg mt-2" role="alert" id="wA" style="display:none"></div>
+													<div class="alert alert-danger shadow-lg mt-2" role="alert" id="eA" style="display:none"></div>
 												</div>
 											</div>
 										</div>
@@ -243,7 +256,7 @@
 						    
 						</div>
 							</div>
-							<button type="button" class="btn btn-red-ufps btn-sm" onclick="actualizarPermisos()">
+							<button type="button" class="btn btn-red-ufps btn-sm" id="guardarPermisos">
 							    GUARDAR
 							</button>
 							</form>

@@ -33,6 +33,6 @@ public interface IUsuarioMapper {
 	
 	public PersonaDto convertPersonaToPersonaDto(Persona persona);
 	
-	public UsuarioDto convertPersonaToUsuarioDto(Persona p, Optional<Estudiante> e, Optional<Docente> d, 
-			Optional<Administrativo> a, Optional<Graduado> g, Optional<Externo> ex);
+	public UsuarioDto convertPersonaToUsuarioDto(Persona p, Estudiante e, Docente d, 
+			Administrativo a, Graduado g, Externo ex);
 }

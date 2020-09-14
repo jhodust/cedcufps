@@ -4,8 +4,10 @@ $(document).ready(function ()
 			var id=null;
 			if(caso==0){
 				id=null;
+				url="/";
 			}else{
-				
+				id=persona.id;
+				url="/usuarios";
 			}
 		/*ocultar('formEstudiante');
 		ocultar('formDocente');
@@ -22,8 +24,8 @@ $(document).ready(function ()
 							userJSON.id=id;
 							userJSON.tipoDocumento = $('#selectTipoDoc').val();
 							userJSON.numeroDocumento = $('#numDoc').val();
-							userJSON.fechaExpedicionDocumento = $('#fechaExp')
-									.val();
+							var partsDateED =$('#fechaExp').val().split('/');
+							userJSON.fechaExpedicionDocumento = new Date(partsDateED[2], partsDateED[1] - 1, partsDateED[0]); 
 							userJSON.primerNombre = $('#primNom').val();
 							userJSON.segundoNombre = $('#segNom').val();
 							userJSON.primerApellido = $('#primApe').val();
@@ -32,7 +34,8 @@ $(document).ready(function ()
 									.val();
 							userJSON.estadoCivil = $(
 									'input[name="estadoCivil"]:checked').val();
-							userJSON.fechaNacimiento = $('#fechaNac').val();
+							var partsDateFN =$('#fechaNac').val().split('/');
+							userJSON.fechaNacimiento = new Date(partsDateFN[2], partsDateFN[1] - 1, partsDateFN[0]); 
 							userJSON.idPaisNacimiento = $(
 									'#selectPaisNacimiento').val();
 							userJSON.idDepartamentoNacimiento = $(
@@ -50,11 +53,11 @@ $(document).ready(function ()
 							//userJSON.isAdministrativo=document.getElementById("cbAdminvo").checked ? 1:0;
 							//userJSON.isGraduado=document.getElementById("cbGraduado").checked ? 1:0;
 							//userJSON.isExterno=document.getElementById("cbExt").checked ? 1:0;
-							userJSON.isEstudiante=document.getElementById("cbEst").checked;
-							userJSON.isDocente=document.getElementById("cbDoc").checked;
-							userJSON.isAdministrativo=document.getElementById("cbAdminvo").checked;
-							userJSON.isGraduado=document.getElementById("cbGraduado").checked;
-							userJSON.isExterno=document.getElementById("cbExt").checked;
+							userJSON.estudiante=document.getElementById("cbEst").checked;
+							userJSON.docente=document.getElementById("cbDoc").checked;
+							userJSON.administrativo=document.getElementById("cbAdminvo").checked;
+							userJSON.graduado=document.getElementById("cbGraduado").checked;
+							userJSON.externo=document.getElementById("cbExt").checked;
 							userJSON.programaGraduado=$('#selectProgramaGraduado').val();
 							userJSON.anioGraduado=$('#anioGraduado').val();
 							userJSON.deptoAdscrito=$('#selectDeptoAdscrito').val();
@@ -62,6 +65,13 @@ $(document).ready(function ()
 							userJSON.dependencia=$('#dependencia').val();
 							userJSON.cargo=$('#cargo').val();
 							userJSON.empresa=$('#empresa').val();
+							if(id!=null && persona.docente){
+								userJSON.estadoDocente=document.getElementById("switchEstadoDocente").checked;
+							}else if(userJSON.docente){
+								userJSON.estadoDocente=true;
+							}else{
+								userJSON.estadoDocente=false;
+							}
 							
 							console.log(userJSON);
 							$
@@ -75,14 +85,23 @@ $(document).ready(function ()
 										url : "/registrarse",
 										cache : false,
 										success : function(result) {
-											toastr
-													.success(
-															'Se ha creado su usuario, inicie Sesión para acceder',
-															'Excelente!')
+											if(caso==0){
+											
+												toastr
+														.success(
+																'Se ha creado su usuario, inicie Sesión para acceder',
+																'Excelente!')
+												
+											}else{
+												toastr
+														.success(
+																'Se ha registrado el usuario exitosamente',
+																'Excelente!');
+											
+											}
 											/*window.setTimeout(function() {
-												window.location.href = "/"
-											}, 1000);
-											*/
+													window.location.href = url;
+												}, 1000);*/
 										},
 										error : function(err) {
 											toastr
@@ -172,5 +191,27 @@ $(document).ready(function ()
 
 		} else {
 			ocultar('formExterno');
+		}
+	}
+	
+	
+	function loadUsuario(){
+		if(id!=null){
+			$('#selectTipoDoc').val();
+			$('#numDoc').val();
+			$('#fechaExp').val();
+			$('#primNom').val();
+			$('#segNom').val();
+			$('#primApe').val();
+			$('#segApe').val();
+			$('#fechaNac').val();
+			$('#selectPaisNacimiento').val();
+			$('#selectDepartamentoNacimiento').val();
+			$('#selectMunicipioNacimiento').val();
+			$('#email').val();
+			$('#telefono').val();
+			$('#direccion').val();
+			$('#selectTipoDoc').val();
+			$('#selectTipoDoc').val();
 		}
 	}

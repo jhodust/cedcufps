@@ -24,4 +24,14 @@ public interface IPersonaCustomDao {
 	
 	public List<Long> listAllPossiblePeople(Long idPersona);
 	
+	public Estudiante findOnlyEstudiante(Long idPersona);
+	
+	public Docente findOnlyDocente(Long idPersona);
+	
+	public Administrativo findOnlyAdministrativo(Long idPersona);
+	
+	public Graduado findOnlyGraduado(Long idPersona);
+	
+	public Externo findOnlyExterno(Long idPersona);
+	
 }

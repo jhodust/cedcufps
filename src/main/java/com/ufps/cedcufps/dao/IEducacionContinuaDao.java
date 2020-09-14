@@ -60,4 +60,12 @@ public interface IEducacionContinuaDao extends CrudRepository<EducacionContinua,
 	public List<EducacionContinua> findEduContinuasPermissionForAttendance(Long idPersona);
 	
 	
+	@Query(value = "select e.* from educacion_continua e  where e.id_programa=?1", nativeQuery = true)
+	public List<EducacionContinua> findEduContinuasPermissionForAttendanceByPrograma(Long idPrograma);
+	
+	
+	@Query(value = "select e.* from rol_persona_asistencia rpa join educacion_continua e on rpa.id_edu_continua=e.id where rpa.id_persona = ?1 and e.id_programa != ?2", nativeQuery = true)
+	public List<EducacionContinua> findEduContinuasPermissionForAttendanceExceptDirectorPrograma(Long idPersona, Long idPrograma);
+	
+	
 }

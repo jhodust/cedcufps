@@ -99,27 +99,21 @@ public class UsuarioMapper implements IUsuarioMapper {
 		}	
 			
 		  
-		
+		pe.setId(u.getId());
 		pe.setTipoDocumento(td);
 		pe.setNumeroDocumento(u.getNumeroDocumento());
-		try {
-			pe.setFechaExpedicionDocumento(new SimpleDateFormat("dd/MM/yyyy").parse(u.getFechaExpedicionDocumento()));
-		} catch (ParseException e1) {
-			// TODO Auto-generated catch block
-			throw new CustomException("Fecha Expedición Documento inválida");
-		}
+		
+			pe.setFechaExpedicionDocumento(u.getFechaExpedicionDocumento());
+		
 		pe.setPrimerNombre(u.getPrimerNombre());
 		pe.setSegundoNombre(u.getSegundoNombre());
 		pe.setPrimerApellido(u.getPrimerApellido());
 		pe.setSegundoApellido(u.getSegundoApellido());
 		pe.setGenero(g);
 		pe.setEstadoCivil(ec);
-		try {
-			pe.setFechaNacimiento(new SimpleDateFormat("dd/MM/yyyy").parse(u.getFechaNacimiento()));
-		} catch (ParseException e1) {
-			// TODO Auto-generated catch block
-			throw new CustomException("Fecha Nacimiento inválida");
-		}
+		
+			pe.setFechaNacimiento(u.getFechaNacimiento());
+		
 		pe.setIdPaisNacimiento(u.getIdPaisNacimiento());
 		pe.setIdMunicipioNacimiento(u.getIdMunicipioNacimiento());
 		pe.setIdDepartamentoNacimiento(u.getIdDepartamentoNacimiento());
@@ -132,6 +126,13 @@ public class UsuarioMapper implements IUsuarioMapper {
 		pe.setGraduado(u.isGraduado());
 		pe.setExterno(u.isExterno());
 		
+		System.out.println("**********************************************************");
+		System.out.println("**********************************************************");
+		System.out.println(u.isEstudiante());
+		System.out.println(u.isDocente());
+		System.out.println(u.isAdministrativo());
+		System.out.println(u.isGraduado());
+		System.out.println(u.isExterno());
 		
 		List<Rol> r= new ArrayList<>();
 		Rol rol= new Rol();
@@ -187,7 +188,7 @@ public class UsuarioMapper implements IUsuarioMapper {
 		d.setId(idPersona);
 		d.setDepartamento(de);
 		d.setCodigo(u.getCodigoDocente());
-		d.setEstado(true);
+		d.setEstado(u.isEstadoDocente());
 		return d;
 	}
 
@@ -317,8 +318,8 @@ public class UsuarioMapper implements IUsuarioMapper {
 	}
 
 	@Override
-	public UsuarioDto convertPersonaToUsuarioDto(Persona p, Optional<Estudiante> e, Optional<Docente> d, 
-			Optional<Administrativo> a, Optional<Graduado> g, Optional<Externo> ex) {
+	public UsuarioDto convertPersonaToUsuarioDto(Persona p, Estudiante e, Docente d, 
+			Administrativo a, Graduado g, Externo ex) {
 		// TODO Auto-generated method stub
 		UsuarioDto dto= new UsuarioDto();
 		dto.setId(p.getId());
@@ -330,8 +331,8 @@ public class UsuarioMapper implements IUsuarioMapper {
 		dto.setNumeroDocumento(p.getNumeroDocumento());
 		dto.setGenero(p.getGenero().getId());
 		dto.setEstadoCivil(p.getEstadoCivil().getId());
-		dto.setFechaNacimiento(p.getFechaNacimiento().toString());
-		dto.setFechaExpedicionDocumento(p.getFechaExpedicionDocumento().toString());
+		dto.setFechaNacimiento(p.getFechaNacimiento());
+		dto.setFechaExpedicionDocumento(p.getFechaExpedicionDocumento());
 		dto.setIdPaisNacimiento(p.getIdPaisNacimiento());
 		dto.setIdDepartamentoNacimiento(p.getIdDepartamentoNacimiento());
 		dto.setIdMunicipioNacimiento(p.getIdMunicipioNacimiento());
@@ -344,30 +345,36 @@ public class UsuarioMapper implements IUsuarioMapper {
 		dto.setGraduado(p.isGraduado());
 		dto.setAdministrativo(p.isAdministrativo());
 		
+		System.out.println("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
+		System.out.println(e!=null);
+		System.out.println(d!=null);
+		System.out.println(a!=null);
+		System.out.println(g!=null);
+		System.out.println(ex!=null);
 		if(e!=null) {
-			dto.setPrograma(e.get().getPrograma().getId());
-			dto.setCodigo(e.get().getCodigo());
+			dto.setPrograma(e.getPrograma().getId());
+			dto.setCodigo(e.getCodigo());
 		}
 		
 		if(d!=null) {
-			dto.setDeptoAdscrito(d.get().getDepartamento().getId());
-			dto.setCodigoDocente(d.get().getCodigo());
-			dto.setEstadoDocente(d.get().isEstado());
+			dto.setDeptoAdscrito(d.getDepartamento().getId());
+			dto.setCodigoDocente(d.getCodigo());
+			dto.setEstadoDocente(d.isEstado());
 		}
 		
 		if(a!=null) {
-			dto.setCargo(a.get().getCargo());
-			dto.setDependencia(a.get().getDependencia());
+			dto.setCargo(a.getCargo());
+			dto.setDependencia(a.getDependencia());
 		}
 		
 		if(g!=null) {
-			dto.setProgramaGraduado(g.get().getId());
-			dto.setAnioGraduado(g.get().getAnio());
+			dto.setProgramaGraduado(g.getId());
+			dto.setAnioGraduado(g.getAnio());
 		}
 		
 		if(ex!=null) {
-			dto.setEmpresa(ex.get().getEmpresa());
-			dto.setProfesion(ex.get().getProfesion());
+			dto.setEmpresa(ex.getEmpresa());
+			dto.setProfesion(ex.getProfesion());
 		}
 		
 		return dto;

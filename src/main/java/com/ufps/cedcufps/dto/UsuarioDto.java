@@ -8,14 +8,14 @@ public class UsuarioDto {
 	private Long id;
 	private Long tipoDocumento;
 	private String numeroDocumento;
-	private String fechaExpedicionDocumento;
+	private Date fechaExpedicionDocumento;
 	private String primerNombre;
 	private String segundoNombre;
 	private String primerApellido;
 	private String segundoApellido;
 	private Long genero;
 	private Long estadoCivil;
-	private String fechaNacimiento;
+	private Date fechaNacimiento;
 	private String idPaisNacimiento;
 	private String idDepartamentoNacimiento;
 	private String idMunicipioNacimiento;
@@ -26,11 +26,11 @@ public class UsuarioDto {
 	private Long programa;
 	private String profesion;
 	private String empresa;
-	private boolean isEstudiante;
-	private boolean isDocente;
-	private boolean isAdministrativo;
-	private boolean isGraduado;
-	private boolean isExterno;
+	private boolean estudiante;
+	private boolean docente;
+	private boolean administrativo;
+	private boolean graduado;
+	private boolean externo;
 	private Long programaGraduado;
 	private String anioGraduado;
 	private Long deptoAdscrito;
@@ -52,10 +52,10 @@ public class UsuarioDto {
 	public void setNumeroDocumento(String numeroDocumento) {
 		this.numeroDocumento = numeroDocumento;
 	}
-	public String getFechaExpedicionDocumento() {
+	public Date getFechaExpedicionDocumento() {
 		return fechaExpedicionDocumento;
 	}
-	public void setFechaExpedicionDocumento(String fechaExpedicionDocumento) {
+	public void setFechaExpedicionDocumento(Date fechaExpedicionDocumento) {
 		this.fechaExpedicionDocumento = fechaExpedicionDocumento;
 	}
 	public String getPrimerNombre() {
@@ -94,10 +94,10 @@ public class UsuarioDto {
 	public void setEstadoCivil(Long estadoCivil) {
 		this.estadoCivil = estadoCivil;
 	}
-	public String getFechaNacimiento() {
+	public Date getFechaNacimiento() {
 		return fechaNacimiento;
 	}
-	public void setFechaNacimiento(String fechaNacimiento) {
+	public void setFechaNacimiento(Date fechaNacimiento) {
 		this.fechaNacimiento = fechaNacimiento;
 	}
 	public String getIdPaisNacimiento() {
@@ -199,35 +199,36 @@ public class UsuarioDto {
 		this.empresa = empresa;
 	}
 	
+	
 	public boolean isEstudiante() {
-		return isEstudiante;
+		return estudiante;
 	}
-	public void setEstudiante(boolean isEstudiante) {
-		this.isEstudiante = isEstudiante;
+	public void setEstudiante(boolean estudiante) {
+		this.estudiante = estudiante;
 	}
 	public boolean isDocente() {
-		return isDocente;
+		return docente;
 	}
-	public void setDocente(boolean isDocente) {
-		this.isDocente = isDocente;
+	public void setDocente(boolean docente) {
+		this.docente = docente;
 	}
 	public boolean isAdministrativo() {
-		return isAdministrativo;
+		return administrativo;
 	}
-	public void setAdministrativo(boolean isAdministrativo) {
-		this.isAdministrativo = isAdministrativo;
+	public void setAdministrativo(boolean administrativo) {
+		this.administrativo = administrativo;
 	}
 	public boolean isGraduado() {
-		return isGraduado;
+		return graduado;
 	}
-	public void setGraduado(boolean isGraduado) {
-		this.isGraduado = isGraduado;
+	public void setGraduado(boolean graduado) {
+		this.graduado = graduado;
 	}
 	public boolean isExterno() {
-		return isExterno;
+		return externo;
 	}
-	public void setExterno(boolean isExterno) {
-		this.isExterno = isExterno;
+	public void setExterno(boolean externo) {
+		this.externo = externo;
 	}
 	public Long getId() {
 		return id;

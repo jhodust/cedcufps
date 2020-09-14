@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ufps.cedcufps.dto.DepartamentoDto;
 import com.ufps.cedcufps.dto.EducacionContinuaAppDto;
@@ -69,6 +70,7 @@ public class PersonaController {
 		model.put("tipos_documento",personaService.findAllTiposDocumento());
 		model.put("tipos_persona",personaService.findAllTiposPersona());
 		model.put("programas",personaService.findAllProgramas());
+		model.put("departamentos",personaService.findAllDepartamentos());
 		model.put("generos",personaService.findAllGeneros());
 		model.put("estados_civiles",personaService.findAllEstadosCiviles());
 		/*if(p.getTipoPersona().getTipoPersona().equalsIgnoreCase("Estudiante")) {
@@ -89,14 +91,14 @@ public class PersonaController {
 	
 	@RequestMapping(value = "/usuarios/registro/{id}")
 	public String editar(@PathVariable(value = "id") Long id, Map<String, Object> model) {
-		Persona p= personaService.findOne(id).get();
 		model.put("titulo","FORMULARIO PERSONA");
 		model.put("tipos_documento",personaService.findAllTiposDocumento());
 		model.put("tipos_persona",personaService.findAllTiposPersona());
 		model.put("programas",personaService.findAllProgramas());
 		model.put("generos",personaService.findAllGeneros());
 		model.put("estados_civiles",personaService.findAllEstadosCiviles());
-		model.put("persona", p);
+		model.put("departamentos",personaService.findAllDepartamentos());
+		model.put("persona", personaService.editarUsuario(id));
 		/*if(p.getTipoPersona().getTipoPersona().equalsIgnoreCase("Estudiante")) {
 			model.put("estudiante",(Estudiante)personaService.findOne(id).get());
 			return "redirect:/usuarios/estudiante/registro/"+p.getId();
@@ -110,12 +112,16 @@ public class PersonaController {
 			model.put("externo",(Externo)personaService.findOne(id).get());
 			return "redirect:/usuarios/externo/registro/"+p.getId();
 		}*/
-		return null;
+		return "persona/form";
 	}
 	
 	@RequestMapping(value = "/persona/{id}/permisos")
-	public String permisos(@PathVariable(value = "id") Long idPersona, Map<String, Object> model) {
+	public String permisos(@PathVariable(value = "id") Long idPersona, Map<String, Object> model,RedirectAttributes redirectAttributes) {
 		PerfilRolUsuarioDto dto=personaService.findPermisos(idPersona);
+		if(dto==null) {
+			redirectAttributes.addFlashAttribute("errorMessage", "No es posible que gestione los permisos de otros usuarios");
+			return "redirect:/usuarios";
+		}
 		model.put("persona",dto);
 		System.out.println("is director: " + dto.isDirPrograma());
 		System.out.println("****************************************************************************************");

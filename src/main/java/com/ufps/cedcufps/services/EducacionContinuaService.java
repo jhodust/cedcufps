@@ -333,6 +333,8 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 				System.out.println(data[4]);
 				if(Long.parseLong(data[2])==idEducacionContinua) {
 					System.out.println("entraaaaaaaaaaaaaaaaaaaaaaaaaaa");
+					System.out.println(idEducacionContinua);
+					System.out.println(data[4]);
 					Participante p=participanteDao.validarParticipanteYaInscritoApp(idEducacionContinua, data[4]);
 					if(p!=null) {
 						System.out.println("existe participante....................................");
@@ -346,9 +348,12 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 							codigoError=0;
 						}
 					}else {
+						System.out.println("codigo error 412");
 						codigoError=412;//no se encontró participante inscrito
 						
 					}
+				}else {
+					codigoError=500;//qr inválido
 				}
 			}else {
 				codigoError=400;//no se encontro jornada

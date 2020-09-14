@@ -16,11 +16,13 @@ import org.springframework.stereotype.Repository;
 import com.ufps.cedcufps.dao.IPersonaCustomDao;
 import com.ufps.cedcufps.dto.PersonaDto;
 import com.ufps.cedcufps.modelos.Administrativo;
+import com.ufps.cedcufps.modelos.Departamento;
 import com.ufps.cedcufps.modelos.Docente;
 import com.ufps.cedcufps.modelos.Estudiante;
 import com.ufps.cedcufps.modelos.Externo;
 import com.ufps.cedcufps.modelos.Graduado;
 import com.ufps.cedcufps.modelos.Persona;
+import com.ufps.cedcufps.modelos.Programa;
 
 @Repository
 public class PersonaCustomDaoImpl implements IPersonaCustomDao {
@@ -148,5 +150,111 @@ public class PersonaCustomDaoImpl implements IPersonaCustomDao {
 		}
 		return list;
 	}
+	
+	@Override
+	public Estudiante findOnlyEstudiante(Long idPersona) {
+		// TODO Auto-generated method stub
+		StringBuilder query = new StringBuilder();
+		query.append("select  e.id_persona,e.codigo, e.id_programa, p.programa from estudiantes e join programas p on e.id_programa=p.id where id_persona=?1");
+		Query q=em.createNativeQuery(query.toString());
+		q.setParameter(1, idPersona);
+		List<Object []> result=q.getResultList();
+		Estudiante e=null;
+		if(result.size()>0) {
+			e=new Estudiante();
+			e.setId(Long.parseLong(String.valueOf(result.get(0)[0])));
+			e.setCodigo(String.valueOf(result.get(0)[1]));
+			Programa p= new Programa();
+			p.setId(Long.parseLong(String.valueOf(result.get(0)[2])));
+			p.setPrograma(String.valueOf(result.get(0)[3]));
+			e.setPrograma(p);
+		}
+		return e;
+		
+	}
+	
+	@Override
+	public Docente findOnlyDocente(Long idPersona) {
+		// TODO Auto-generated method stub
+		StringBuilder query = new StringBuilder();
+		query.append("select  d.id_persona, d.codigo, d.id_departamento, depto.departamento, d.estado from docentes d join departamentos depto on d.id_departamento=depto.id where id_persona=?1");
+		Query q=em.createNativeQuery(query.toString());
+		q.setParameter(1, idPersona);
+		List<Object []> result=q.getResultList();
+		Docente d=null;
+		if(result.size()>0) {
+			d=new Docente();
+			d.setId(Long.parseLong(String.valueOf(result.get(0)[0])));
+			d.setCodigo(String.valueOf(result.get(0)[1]));
+			Departamento depto= new Departamento();
+			depto.setId(Long.parseLong(String.valueOf(result.get(0)[2])));
+			depto.setDepartamento(String.valueOf(result.get(0)[3]));
+			d.setDepartamento(depto);
+			d.setEstado(Boolean.parseBoolean(String.valueOf(result.get(0)[4])));
+		}
+		return d;
+		
+	}
+	
+	@Override
+	public Graduado findOnlyGraduado(Long idPersona) {
+		// TODO Auto-generated method stub
+		StringBuilder query = new StringBuilder();
+		query.append("select  g.id_persona,g.anio, g.id_programa, p.programa from graduados g join programas p on g.id_programa=p.id where id_persona=?1");
+		Query q=em.createNativeQuery(query.toString());
+		q.setParameter(1, idPersona);
+		List<Object []> result=q.getResultList();
+		Graduado g=null;
+		if(result.size()>0) {
+			g=new Graduado();
+			g.setId(Long.parseLong(String.valueOf(result.get(0)[0])));
+			g.setAnio(String.valueOf(result.get(0)[1]));
+			Programa p= new Programa();
+			p.setId(Long.parseLong(String.valueOf(result.get(0)[2])));
+			p.setPrograma(String.valueOf(result.get(0)[3]));
+			g.setPrograma(p);
+		}
+		return g;
+		
+	}
+	
+	@Override
+	public Administrativo findOnlyAdministrativo(Long idPersona) {
+		// TODO Auto-generated method stub
+		StringBuilder query = new StringBuilder();
+		query.append("select id_persona, dependencia, cargo from administrativos where id_persona=?1");
+		Query q=em.createNativeQuery(query.toString());
+		q.setParameter(1, idPersona);
+		List<Object []> result=q.getResultList();
+		Administrativo a=null;
+		if(result.size()>0) {
+			a=new Administrativo();
+			a.setId(Long.parseLong(String.valueOf(result.get(0)[0])));
+			a.setDependencia(String.valueOf(result.get(0)[1]));
+			a.setCargo(String.valueOf(result.get(0)[2]));
+		}
+		return a;
+		
+	}
+	
+	@Override
+	public Externo findOnlyExterno(Long idPersona) {
+		// TODO Auto-generated method stub
+		StringBuilder query = new StringBuilder();
+		query.append("select  id_persona, profesion, empresa from externos where id_persona=?1");
+		Query q=em.createNativeQuery(query.toString());
+		q.setParameter(1, idPersona);
+		List<Object []> result=q.getResultList();
+		Externo e=null;
+		if(result.size()>0) {
+			e=new Externo();
+			e.setId(Long.parseLong(String.valueOf(result.get(0)[0])));
+			e.setProfesion(String.valueOf(result.get(0)[1]));
+			e.setEmpresa(String.valueOf(result.get(0)[2]));
+		}
+		return e;
+		
+	}
+
 
 }

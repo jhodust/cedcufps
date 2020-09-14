@@ -42,6 +42,11 @@ $( document ).ready(function() {
 	  $('#educacionesContinuas').trigger('change');
 	  
 	  
+	validadorErroresPermisos();
+	  
+	  $('#guardarPermisos').click(function(){
+	  	actualizarPermisos()
+	  });
 	});
   
  
@@ -91,7 +96,12 @@ $( document ).ready(function() {
 		console.log(cbAdminvo.checked);
 		console.log(cbE.checked);
 		
-		$.ajax({
+		if((switchEdC.checked && idsProgramasEdC.length==0 ) || (switchP.checked && idsProgramasPerEst.length==0 && 
+		idsDeptosDoc.length==0 && idsProgramasPerGra.length==0 && !cbAdminvo.checked && !cbE.checked) || 
+		(switchA.checked && idsEduAtt.length==0 )){
+			toastr.error('Por favor, diligencie el formulario correctamente', 'Error!');
+		}else{
+			$.ajax({
 			headers: {"X-CSRF-TOKEN": token},
 			type: "GET",
 			contentType: "application/json; charset=utf-8",
@@ -112,6 +122,209 @@ $( document ).ready(function() {
 				toastr.error(err.responseJSON.message, 'Error!');
 			}
 		});
+		}
 		
+		
+		
+	}
+	
+	
+	function validadorErroresPermisos(){
+		$("#switchEduContinua").click(function() {
+	  	if(document.getElementById("switchEduContinua").checked){
+	  	console.log($("#programasEC").val().length);
+	  		if($("#programasEC").val().length==0){
+	  			console.log("entra");
+	  			document.getElementById("ePEC").style.display='block';
+	  			document.getElementById("ePEC").innerText="Debes seleccionar como mínimo un Programa Académico al cual se va a gestionar las educaciones continuas";
+	  			
+	  			document.getElementById("wPEC").innerText="";
+	  			document.getElementById("wPEC").style.display='none';
+	  			
+	  		}else{
+	  			document.getElementById("ePEC").innerText="";
+	  			document.getElementById("ePEC").style.display='none';
+	  			document.getElementById("wPEC").innerText="";
+	  			document.getElementById("wPEC").style.display='none';
+	  			
+	  		}
+	  	}else{
+	  		if($("#programasEC").val().length==0){
+	  			document.getElementById("wPEC").style.display='none';
+	  			document.getElementById("wPEC").innerText="";
+	  			document.getElementById("ePEC").innerText="";
+	  			document.getElementById("ePEC").style.display='none';
+	  			
+	  			
+	  			
+	  		}else{
+	  			document.getElementById("ePEC").innerText="";
+	  			document.getElementById("ePEC").style.display='none';
+	  			document.getElementById("wPEC").innerText="Debes activar el estado del permiso para que sea válido el registro";
+	  			document.getElementById("wPEC").style.display='block';
+	  			
+	  		}
+	  	}
+	  	
+	  });
+	  
+	  $('#programasEC').on('select2:select', function (e) { 
+		if($("#programasEC").val().length==0){
+			if(document.getElementById("switchEduContinua").checked){
+				document.getElementById("ePEC").style.display='block';
+				document.getElementById("ePEC").innerText="Debes seleccionar como mínimo un Programa Académico al cual se va a gestionar las educaciones continuas";
+				document.getElementById("wPEC").innerText="";
+				document.getElementById("wPEC").style.display='none';
+				
+			}else{
+				document.getElementById("ePEC").innerText="";
+				document.getElementById("ePEC").style.display='none';
+				document.getElementById("wPEC").innerText="";
+				document.getElementById("wPEC").style.display='none';
+				
+			}
+		
+		}else{
+			if(document.getElementById("switchEduContinua").checked){
+				document.getElementById("ePEC").innerText="";
+				document.getElementById("ePEC").style.display='none';
+				document.getElementById("wPEC").innerText="";
+				document.getElementById("wPEC").style.display='none';
+				
+			}else{
+				document.getElementById("wPEC").style.display='block';
+				document.getElementById("wPEC").innerText="Debes activar el estado del permiso para que sea válido el registro";
+				document.getElementById("ePEC").innerText="";
+				document.getElementById("ePEC").style.display='none';
+				
+			}
+		}
+	});
+	
+	$('#programasEC').on('select2:unselect', function (e) { 
+	console.log("entra a ca");
+	console.log($("#programasEC").val());
+		if($("#programasEC").val().length==0){
+			if(document.getElementById("switchEduContinua").checked){
+				document.getElementById("ePEC").style.display='block';
+				document.getElementById("ePEC").innerText="Debes seleccionar como mínimo un Programa Académico al cual se va a gestionar las educaciones continuas";
+				document.getElementById("wPEC").innerText="";
+				document.getElementById("wPEC").style.display='none';
+				
+			}else{
+				document.getElementById("wPEC").style.display='block';
+				document.getElementById("wPEC").innerText="Debes activar el estado del permiso para que sea válido el registro";
+				document.getElementById("ePEC").innerText="";
+				document.getElementById("ePEC").style.display='none';
+				
+			}
+		
+		}else{
+			document.getElementById("ePEC").innerText="";
+			document.getElementById("ePEC").style.display='none';
+			document.getElementById("wPEC").innerText="";
+			document.getElementById("wPEC").style.display='none';
+			
+		}
+	});
+	
+	
+	$("#switchAsistencias").click(function() {
+	  	if(document.getElementById("switchAsistencias").checked){
+	  	console.log($("#educacionesContinuas").val().length);
+	  		if($("#educacionesContinuas").val().length==0){
+	  			console.log("entra");
+	  			document.getElementById("eA").style.display='block';
+	  			document.getElementById("eA").innerText="Debes seleccionar como mínimo una educación continua al cual se va a gestionar la asistencia mediante la app"
+	  			
+	  			document.getElementById("wA").innerText="";
+	  			document.getElementById("wA").style.display='none';
+	  			
+	  		}else{
+	  			document.getElementById("eA").innerText="";
+	  			document.getElementById("eA").style.display='none';
+	  			document.getElementById("wA").innerText="";
+	  			document.getElementById("wA").style.display='none';
+	  			
+	  		}
+	  	}else{
+	  		if($("#educacionesContinuas").val().length==0){
+	  			document.getElementById("wA").style.display='none';
+	  			document.getElementById("wA").innerText="";
+	  			document.getElementById("eA").innerText="";
+	  			document.getElementById("eA").style.display='none';
+	  			
+	  			
+	  			
+	  		}else{
+	  			document.getElementById("eA").innerText="";
+	  			document.getElementById("eA").style.display='none';
+	  			document.getElementById("wA").innerText="Debes activar el estado del permiso para que sea válido el registro";
+	  			document.getElementById("wA").style.display='block';
+	  			
+	  		}
+	  	}
+	  	
+	  });
+	  
+	  $('#educacionesContinuas').on('select2:select', function (e) { 
+		if($("#educacionesContinuas").val().length==0){
+			if(document.getElementById("switchAsistencias").checked){
+				document.getElementById("eA").style.display='block';
+				document.getElementById("eA").innerText="Debes seleccionar como mínimo una educación continua al cual se va a gestionar la asistencia mediante la app"
+				document.getElementById("wA").innerText="";
+				document.getElementById("wA").style.display='none';
+				
+			}else{
+				document.getElementById("eA").innerText="";
+				document.getElementById("eA").style.display='none';
+				document.getElementById("wA").innerText="";
+				document.getElementById("wA").style.display='none';
+				
+			}
+		
+		}else{
+			if(document.getElementById("switchAsistencias").checked){
+				document.getElementById("eA").innerText="";
+				document.getElementById("eA").style.display='none';
+				document.getElementById("wA").innerText="";
+				document.getElementById("wA").style.display='none';
+				
+			}else{
+				document.getElementById("wA").style.display='block';
+				document.getElementById("wA").innerText="Debes activar el estado del permiso para que sea válido el registro";
+				document.getElementById("eA").innerText="";
+				document.getElementById("eA").style.display='none';
+				
+			}
+		}
+	});
+	
+	$('#educacionesContinuas').on('select2:unselect', function (e) { 
+	console.log("entra a ca");
+	console.log($("#educacionesContinuas").val());
+		if($("#educacionesContinuas").val().length==0){
+			if(document.getElementById("switchAsistencias").checked){
+				document.getElementById("eA").style.display='block';
+				document.getElementById("eA").innerText="Debes seleccionar como mínimo una educación continua al cual se va a gestionar la asistencia mediante la app";
+				document.getElementById("wA").innerText="";
+				document.getElementById("wA").style.display='none';
+				
+			}else{
+				document.getElementById("wA").style.display='block';
+				document.getElementById("wA").innerText="Debes activar el estado del permiso para que sea válido el registro";
+				document.getElementById("eA").innerText="";
+				document.getElementById("eA").style.display='none';
+				
+			}
+		
+		}else{
+			document.getElementById("eA").innerText="";
+			document.getElementById("eA").style.display='none';
+			document.getElementById("wA").innerText="";
+			document.getElementById("wA").style.display='none';
+			
+		}
+	});
 	}
  

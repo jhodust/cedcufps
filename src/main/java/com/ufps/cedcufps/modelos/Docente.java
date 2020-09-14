@@ -3,6 +3,7 @@ package com.ufps.cedcufps.modelos;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
@@ -14,6 +15,8 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+
+import org.hibernate.annotations.Type;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -45,6 +48,7 @@ public class Docente extends Persona{
 	@OneToOne(mappedBy = "directorPrograma")
     private Programa programaACargoDirector;
 	
+	@Column(columnDefinition = "boolean default true")
 	private boolean estado;
 	
 	public Docente() {

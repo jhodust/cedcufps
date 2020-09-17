@@ -256,6 +256,12 @@ insert into rol_persona_programa_per (id_persona, id_rol, id_tipo_persona,id_pro
 insert into rol_persona_programa_per (id_persona, id_rol, id_tipo_persona,id_programa) values (25,3,4,8);
 
 
+insert into personas_x_roles (id_persona, id_rol) values (1,5),(2,5),(3,5),(4,5),(5,5),(6,5),(7,5),(8,5),(9,5),(10,5);
+insert into personas_x_roles (id_persona, id_rol) values (11,5),(12,5),(13,5),(14,5),(15,5),(16,5),(17,5),(18,5),(19,5),(20,5);
+insert into personas_x_roles (id_persona, id_rol) values (21,5),(24,5),(27,5),(29,5);
+
+
+
 
 
 insert into tipos_participante(id,tipo_participante) values(1,'Asistente');

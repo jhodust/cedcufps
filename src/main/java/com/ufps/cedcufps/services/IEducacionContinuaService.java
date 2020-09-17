@@ -68,7 +68,7 @@ public interface IEducacionContinuaService {
 	
 	public Diploma generarDiploma(Long idEduContinua);
 	
-	public List<Jornada> findJornadasByEducacionContinua(Long idEduContinua);
+	public List<JornadaAppDto> findJornadasByEducacionContinua(String eduContinua);
 	
 	
 	public List<EducacionContinuaAppDto> findAllEducacionesApp();

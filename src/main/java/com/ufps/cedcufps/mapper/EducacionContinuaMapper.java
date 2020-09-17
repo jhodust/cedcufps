@@ -151,8 +151,20 @@ public class EducacionContinuaMapper implements IEducacionContinuaMapper {
 		pdto.setIdTipoParticipante(p.getTipoParticipante().getId());
 		pdto.setTipoParticipante(p.getTipoParticipante().getTipoParticipante());
 		pdto.setIdTipoDocumento(p.getPersona().getTipoDocumento().getId());
+		pdto.setTipoDocumento(p.getPersona().getTipoDocumento().getTipoDocumento());
 		pdto.setNumeroDocumento(p.getPersona().getNumeroDocumento());
 		return pdto;
+	}
+
+
+	@Override
+	public List<ParticipanteDto> convertParticipantesToParticipanteDto(List<Participante> participantes) {
+		// TODO Auto-generated method stub
+		List<ParticipanteDto> dto= new ArrayList<>();
+		for(Participante p:participantes) {
+			dto.add(this.convertParticipanteToParticipanteDto(p));
+		}
+		return dto;
 	}
 
 }

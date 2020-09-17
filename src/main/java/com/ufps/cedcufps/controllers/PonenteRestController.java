@@ -51,7 +51,7 @@ public class PonenteRestController {
 	
 	@GetMapping(value = "/educacion-continua/{id}/ponentes", produces = "application/json")
 	public List<Participante> listarPonentes(@PathVariable Long id) {
-		return participanteService.findAllPonentesOfOneEducacionContinua(id);
+		return participanteService.findAllPonentesOfOneEducacionContinuaById(id);
 	}
 	
 	@GetMapping(value="/educacion-continua/ponente/search/{id}", produces = "application/json")

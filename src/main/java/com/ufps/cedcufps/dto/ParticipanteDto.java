@@ -9,6 +9,7 @@ public class ParticipanteDto {
 	private String tipoParticipante;
 	private Long idTipoDocumento;
 	private String numeroDocumento;
+	private String tipoDocumento;
 	
 	
 	public Long getId() {
@@ -52,6 +53,12 @@ public class ParticipanteDto {
 	}
 	public void setIdTipoDocumento(Long idTipoDocumento) {
 		this.idTipoDocumento = idTipoDocumento;
+	}
+	public String getTipoDocumento() {
+		return tipoDocumento;
+	}
+	public void setTipoDocumento(String tipoDocumento) {
+		this.tipoDocumento = tipoDocumento;
 	}
 	
 	

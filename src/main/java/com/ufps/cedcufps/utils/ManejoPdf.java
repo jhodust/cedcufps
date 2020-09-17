@@ -33,13 +33,14 @@ import java.io.FileOutputStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import com.ufps.cedcufps.dto.ParticipanteDto;
 import com.ufps.cedcufps.modelos.EducacionContinua;
 import com.ufps.cedcufps.modelos.Participante;
 
 public class ManejoPdf {
 	private static final Logger logger = LoggerFactory.getLogger(ManejoPdf.class);
 
-	public static ByteArrayInputStream generarPDFParticipantes(List<Participante> participantes, EducacionContinua e) {
+	public static ByteArrayInputStream generarPDFParticipantes(List<ParticipanteDto> participantes, EducacionContinua e) {
 
 		Document document = new Document(PageSize.LETTER, 50, 50, 100, 100);//creo el documento con margenes para la información (titulo, subtitulo, tabla)
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -119,15 +120,8 @@ public class ManejoPdf {
 				while (i <= j) {
 					if (i <= participantes.size()) {
 						
-						Participante p = participantes.get(i - 1);
-						String nombreCompleto = p.getPersona().getPrimerApellido();
-						if (p.getPersona().getSegundoApellido() != null) {
-							nombreCompleto = nombreCompleto + " " + p.getPersona().getSegundoApellido();
-						}
-						nombreCompleto = nombreCompleto + " " + p.getPersona().getPrimerNombre();
-						if (p.getPersona().getSegundoNombre() != null) {
-							nombreCompleto = nombreCompleto + " " + p.getPersona().getSegundoNombre();
-						}
+						ParticipanteDto p = participantes.get(i - 1);
+						
 						PdfPCell cell;
 
 						cell = new PdfPCell(new Phrase(String.valueOf(i)));
@@ -135,12 +129,12 @@ public class ManejoPdf {
 						cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 						table.addCell(cell);
 
-						cell = new PdfPCell(new Phrase(p.getPersona().getNumeroDocumento()));
+						cell = new PdfPCell(new Phrase(p.getNumeroDocumento()));
 						cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 						cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 						table.addCell(cell);
 
-						cell = new PdfPCell(new Phrase(nombreCompleto));
+						cell = new PdfPCell(new Phrase(p.getNombrePersona()));
 						cell.setPaddingLeft(5);
 						cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 						cell.setHorizontalAlignment(Element.ALIGN_LEFT);

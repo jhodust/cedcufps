@@ -15,4 +15,6 @@ public interface IEducacionContinuaMapper {
 	public List<EducacionContinuaAppDto> convertEducacionContinuaToApp(List<EducacionContinua> edc);
 	public InfoEducacionContinuaDto convertEducacionContinuaToEducacionContinuaWeb(EducacionContinua e, boolean hasPermission);
 	public ParticipanteDto convertParticipanteToParticipanteDto(Participante p);
+	public List<ParticipanteDto> convertParticipantesToParticipanteDto(List<Participante> p);
+	
 }

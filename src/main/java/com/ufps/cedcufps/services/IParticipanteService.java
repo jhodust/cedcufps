@@ -2,6 +2,8 @@ package com.ufps.cedcufps.services;
 
 import java.util.List;
 import java.util.Optional;
+
+import com.ufps.cedcufps.dto.ParticipanteDto;
 import com.ufps.cedcufps.modelos.Participante;
 import com.ufps.cedcufps.modelos.Ponente;
 import com.ufps.cedcufps.modelos.TipoParticipante;
@@ -23,7 +25,9 @@ public interface IParticipanteService {
 	
 	public void deleteParticipante(Participante p);
 	
-	public List<Participante> findAllPonentesOfOneEducacionContinua(Long idEducacionContinua);
+	public List<Participante> findAllPonentesOfOneEducacionContinua(String educacionContinua);
+	
+	public List<Participante> findAllPonentesOfOneEducacionContinuaById(Long idEducacionContinua);
 	
 	public Participante findParticipante(Long id);
 	
@@ -31,7 +35,7 @@ public interface IParticipanteService {
 	
 	public List<Participante> findAllParticipacionesActivasByParticipante(String numDocumento);
 	
-	public List<Participante> findAllParticipantesByEducacionContinua(Long idEduContinua);
+	public List<ParticipanteDto> findAllParticipantesByEducacionContinua(String idEduContinua);
 	
 	public TipoParticipante findTipoParticipanteById(Long id);
 	

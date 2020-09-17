@@ -39,7 +39,7 @@ public class PersonaController {
 	public String listar(Model model) {
 		model.addAttribute("titulo","PROGRAMAS");
 		model.addAttribute("personas",personaService.findAllPersonasPosibles());
-		
+		model.addAttribute("otorganPermisos",personaService.isSuperAdmin() || personaService.isDirPrograma() );
 		
 		return "persona/index";
 	}
@@ -99,6 +99,7 @@ public class PersonaController {
 		model.put("estados_civiles",personaService.findAllEstadosCiviles());
 		model.put("departamentos",personaService.findAllDepartamentos());
 		model.put("persona", personaService.editarUsuario(id));
+		model.put("otorganPermisos",personaService.isSuperAdmin() || personaService.isDirPrograma() );
 		/*if(p.getTipoPersona().getTipoPersona().equalsIgnoreCase("Estudiante")) {
 			model.put("estudiante",(Estudiante)personaService.findOne(id).get());
 			return "redirect:/usuarios/estudiante/registro/"+p.getId();

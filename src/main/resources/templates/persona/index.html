@@ -41,18 +41,17 @@
         </div>
         <hr/>
         
-		<div class="col-lg-12">
 				<div class="card">
 					<div class="card-body">
 					<!-- Table -->
-					<div class="table-responsive">
-							<table id="myTable" class="row-border table align-items-center">
+					<div>
+							<table id="myTable" class="row-border table">
 								<thead>
 									<tr>
 										<th></th>
 										<th>Documento</th>
 										<th>Nombre</th>
-										<th>Perfiles</th>
+										<th width="10%">Perfiles</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -63,7 +62,7 @@
 											data-toggle="tooltip" data-placement="top" title="Editar">
 												<span class="btn-inner--icon"><i
 													class="fas fa-user-edit"></i></span>
-										</a> <a
+										</a> <a th:if="${otorganPermisos}"
 											class="btn btn-sm btn-red-ufps rounded-circle btn-icon-only hover-scale-110"
 											th:href="@{/persona/{id}/permisos(id=${p.id})}"
 											data-toggle="tooltip" data-placement="top" title="Permisos">
@@ -78,7 +77,6 @@
 							</table>
 					</div>
 					</div>
-				</div>
 				</div>
 
 				

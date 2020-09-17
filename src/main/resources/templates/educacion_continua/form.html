@@ -19,7 +19,7 @@
 		  <ol class="breadcrumb breadcrumb-links">
 		    <li class="breadcrumb-item"><a class="red-ufps-breadcrumb" th:href="@{/}">Inicio</a></li>
 		    <li class="breadcrumb-item"><a class="red-ufps-breadcrumb" th:href="@{/educacion-continua}">Educaciones Continuas</a></li>
-		    <li class="breadcrumb-item" th:if="${educacionContinua.id != null}"><a class="red-ufps-breadcrumb"  th:href="@{/educacion-continua/{id}/detalles(id=${educacionContinua.id})}">Detalles</a></li>
+		    <li class="breadcrumb-item" th:if="${educacionContinua.id != null}"><a class="red-ufps-breadcrumb" th:href="@{/educacion-continua/detalles?educacionContinua={educacionContinua}(educacionContinua=${educacionContinua.nombre})}">Detalles</a></li>
 		    <li class="breadcrumb-item active" aria-current="page">Formulario</li>
 		  </ol>
 		</nav>
@@ -260,6 +260,17 @@
 											</div>
 											
 										</div>
+										<div class="row">
+											<div class="col-md-12">
+												<div class="form-group">
+													<label class="form-control-label">Porcentaje de Asistencia (*)</label> 
+													<input
+														class="form-control" type="text"
+														placeholder="Ingrese el costo que tendrá la inscripción del participante" th:field="*{porcentajeAsistencia}" th:errorclass="'form-control is-invalid'"/>
+														<small class="form-text text-danger" th:if="${#fields.hasErrors('porcentajeAsistencia')}"><strong th:errors="*{porcentajeAsistencia}"></strong></small>
+												</div>
+											</div>
+										</div>
 										
 										
 									</div>
@@ -331,7 +342,7 @@
 										
 										<!-- Save changes buttons -->
 										<button type="submit"
-											class="btn btn-sm btn-red-ufps rounded-pill" id="btnGuardar">Guardar</button>
+											class="btn btn-sm btn-red-ufps" id="btnGuardar">Guardar</button>
 										
 									</div>
 								</div>

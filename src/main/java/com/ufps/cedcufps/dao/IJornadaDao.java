@@ -14,4 +14,8 @@ public interface IJornadaDao extends CrudRepository<Jornada, Long> {
 	  public List<Jornada> findByIdEducacionContinua(Long idEducacionContinua);
 	
 	
+	@Query("select j from Jornada j where j.educacionContinua.id = (select e.id from EducacionContinua e where e.nombre = ?1) order by j.horaInicio")
+	  public List<Jornada> findByNombreEducacionContinua(String eduContinua);
+	
+	
 }

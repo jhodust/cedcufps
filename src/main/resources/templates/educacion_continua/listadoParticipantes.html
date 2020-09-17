@@ -26,7 +26,7 @@
 		  <ol class="breadcrumb breadcrumb-links">
 		    <li class="breadcrumb-item"><a class="red-ufps-breadcrumb" th:href="@{/}">Inicio</a></li>
 		    <li class="breadcrumb-item"><a class="red-ufps-breadcrumb" th:href="@{/educacion-continua}">Educaciones Continuas</a></li>
-		    <li class="breadcrumb-item" th:if="${educacionContinua.id != null}"><a class="red-ufps-breadcrumb"  th:href="@{/educacion-continua/{id}/detalles(id=${educacionContinua.id})}">Detalles</a></li>
+		    <li class="breadcrumb-item" th:if="${educacionContinua.id != null}"><a class="red-ufps-breadcrumb"  th:href="@{/educacion-continua/detalles?educacionContinua={educacionContinua}(educacionContinua=${educacionContinua.nombre})}">Detalles</a></li>
 		    <li class="breadcrumb-item active" aria-current="page">Listado Participantes</li>
 		  </ol>
 		</nav>
@@ -67,18 +67,16 @@
 						<thead>
 							<tr>
 								<th>Documento</th>
-								<th>Nombres</th>
-								<th>Apellidos</th>
+								<th>Nombre</th>
 								<th>Tipo Participante</th>
 								<th th:if="${educacionContinua.estado != 'Activo'}">Asistencia<br><input type="checkbox" th:each="j : ${jornadas}" th:id="${j.id}+'_all'" class="all" th:data-jornada="${j.id}" data-toggle="tooltip" data-placement="top" th:title="${#strings.capitalizeWords(#dates.format(j.horaInicio, 'dd MMMM yyyy HH:mm'))}"/></th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr th:each="p : ${participantes}">
-								<td th:text="${p.persona.tipoDocumento.tipoDocumento + ' ' + p.persona.numeroDocumento}"></td>
-								<td th:text="(${p?.persona?.primerNombre} ?:'') +' '+ (${p?.persona?.segundoNombre} ?:'')"></td>
-								<td th:text="(${p?.persona?.primerApellido} ?:'') +' '+ (${p?.persona?.segundoApellido} ?:'')"></td>
-								<td th:text="${p.tipoParticipante.tipoParticipante}"></td>
+								<td th:text="${p.tipoDocumento + ' ' + p.numeroDocumento}"></td>
+								<td th:text="${p.nombrePersona}"></td>
+								<td th:text="${p.tipoParticipante}"></td>
 								<td th:if="${educacionContinua.estado != 'Activo'}"><input type="checkbox" th:each="j : ${jornadas}" th:class="'checkAsistencia j_'+${j.id}" th:id="${j.id}+'_'+${p.id}" th:data-jornada="${j.id}" th:data-participante="${p.id}" data-toggle="tooltip" data-placement="top" th:title="${#strings.capitalizeWords(#dates.format(j.horaInicio, 'dd MMMM yyyy HH:mm'))}"/></td>
     							
 							</tr>

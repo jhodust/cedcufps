@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ufps.cedcufps.dao.IAsistenciaDao;
+import com.ufps.cedcufps.dto.JornadaAppDto;
 import com.ufps.cedcufps.modelos.Asistencia;
 import com.ufps.cedcufps.modelos.Jornada;
 
@@ -23,15 +24,19 @@ public class AsistenciaService implements IAsistenciaService {
 	}
 	
 	@Override
-	public List<Asistencia> findAsistenciasByJornadas(List<Jornada> jornadas) {
+	public List<Asistencia> findAsistenciasByJornadas(List<JornadaAppDto> jornadas) {
 		// TODO Auto-generated method stub
-		return asistenciaDao.findAsistenciasByJornadas(jornadas);
+		List<Long> idsJornadas=new ArrayList<>();
+		for(JornadaAppDto j: jornadas) {
+			idsJornadas.add(j.getId());
+		}
+		return asistenciaDao.findAsistenciasByJornadas(idsJornadas);
 	}
 
 	@Override
-	public List<?> countAsistenciasByJornadas(Long idEduContinua) {
+	public List<?> countAsistenciasByJornadas(String eduContinua) {
 		// TODO Auto-generated method stub
-		return asistenciaDao.countByJornada(idEduContinua);
+		return asistenciaDao.countByJornada(eduContinua);
 	}
 
 	@Override

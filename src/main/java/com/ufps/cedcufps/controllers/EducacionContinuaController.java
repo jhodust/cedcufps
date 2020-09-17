@@ -36,6 +36,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ufps.cedcufps.dto.EducacionContinuaWebDto;
 import com.ufps.cedcufps.dto.InfoEducacionContinuaDto;
+import com.ufps.cedcufps.dto.JornadaAppDto;
 import com.ufps.cedcufps.modelos.Docente;
 import com.ufps.cedcufps.modelos.EducacionContinua;
 import com.ufps.cedcufps.modelos.Jornada;
@@ -161,9 +162,9 @@ public class EducacionContinuaController {
 		return "educacion_continua/form";
 	}
 	
-	@RequestMapping(value = "/educacion-continua/{id}/jornadas")
-	public String mostrarJornadas(@PathVariable(value = "id") Long id, Map<String, Object> model, Authentication auth, RedirectAttributes redirectAttributes) {
-		EducacionContinua e=educacionContinuaService.findOne(id).get();
+	@RequestMapping(value = "/educacion-continua/jornadas")
+	public String mostrarJornadas(@RequestParam(name="educacionContinua") String educacionContinua, Map<String, Object> model, Authentication auth, RedirectAttributes redirectAttributes) {
+		//EducacionContinua e=educacionContinuaService.findOne(id).get();
 		/*if(buscarAuthority(auth, "ROLE_DIRPROGRAMA")) {
 			Docente p= (Docente)personaService.findPersonaLogueada();
 			if(e.getProgramaResponsable().getId() != p.getProgramaACargoDirector().getId() && e.getDocenteResponsable().getId()!=p.getId() ) {
@@ -179,18 +180,17 @@ public class EducacionContinuaController {
 			}
 			
 		}*/
-		if(e.getEstado().equalsIgnoreCase("Terminado")) {
+		/*if(e.getEstado().equalsIgnoreCase("Terminado")) {
 			redirectAttributes.addFlashAttribute("errorMessage", "El estado de la Educación Continua es " + e.getEstado());
 			return "redirect:/educacion-continua/"+e.getId()+"/detalles";
-		}
+		}*/
 		model.put("titulo","JORNADAS");
-		model.put("educacionContinua",e);
+		model.put("educacionContinua",educacionContinuaService.detallesEducacionContinua(educacionContinua).getEducacionContinua());
 		return "educacion_continua/jornada/index";
 	}
 	
-	@RequestMapping(value = "/educacion-continua/{id}/ponentes")
-	public String mostrarPonentes(@PathVariable(value = "id") Long id, Map<String, Object> model, Authentication auth, RedirectAttributes redirectAttributes) {
-		EducacionContinua e=educacionContinuaService.findOne(id).get();
+	@RequestMapping(value = "/educacion-continua/ponentes")
+	public String mostrarPonentes(@RequestParam(name="educacionContinua") String educacionContinua, Map<String, Object> model, Authentication auth, RedirectAttributes redirectAttributes) {
 		/*if(buscarAuthority(auth, "ROLE_DIRPROGRAMA")) {
 			Docente p= (Docente)personaService.findPersonaLogueada();
 			if(e.getProgramaResponsable().getId() != p.getProgramaACargoDirector().getId() && e.getDocenteResponsable().getId()!=p.getId() ) {
@@ -206,13 +206,13 @@ public class EducacionContinuaController {
 			}
 			
 		}*/
-		if(e.getEstado().equalsIgnoreCase("Terminado")) {
+		/*if(e.getEstado().equalsIgnoreCase("Terminado")) {
 			redirectAttributes.addFlashAttribute("errorMessage", "El estado de la Educación Continua es " + e.getEstado());
 			return "redirect:/educacion-continua/"+e.getId()+"/detalles";
-		}
+		}*/
 		model.put("titulo","JORNADAS");
-		model.put("educacionContinua",e);
-		model.put("ponentes",participanteService.findAllPonentesOfOneEducacionContinua(e.getId()));
+		model.put("educacionContinua",educacionContinuaService.detallesEducacionContinua(educacionContinua).getEducacionContinua());
+		model.put("ponentes",participanteService.findAllPonentesOfOneEducacionContinua(educacionContinua));
 		model.put("posiblesPonentes",personaService.findAllPersonas());
 		return "educacion_continua/ponente/index";
 	}
@@ -244,9 +244,9 @@ public class EducacionContinuaController {
 		return "preinscripcion";
 	}
 	
-	@RequestMapping(value = "/educacion-continua/{id}/listado-participantes")
-	public String listadoParticipantes(@PathVariable(value = "id") Long id, Map<String, Object> model, Authentication auth, RedirectAttributes redirectAttributes) {
-		EducacionContinua e=educacionContinuaService.findOne(id).get();
+	@RequestMapping(value = "/educacion-continua/listado-participantes")
+	public String listadoParticipantes(@RequestParam(name="educacionContinua") String educacionContinua, Map<String, Object> model, Authentication auth, RedirectAttributes redirectAttributes) {
+		//EducacionContinua e=educacionContinuaService.findOne(id).get();
 		/*if(buscarAuthority(auth, "ROLE_DIRPROGRAMA")) {
 			Docente p= (Docente)personaService.findPersonaLogueada();
 			if(e.getProgramaResponsable().getId() != p.getProgramaACargoDirector().getId() && e.getDocenteResponsable().getId()!=p.getId() ) {
@@ -262,15 +262,16 @@ public class EducacionContinuaController {
 			}
 			
 		}*/
-		List<Jornada> jornadas=educacionContinuaService.findJornadasByEducacionContinua(id);
+		InfoEducacionContinuaDto dto= educacionContinuaService.detallesEducacionContinua(educacionContinua);
+		List<JornadaAppDto> jornadas=educacionContinuaService.findJornadasByEducacionContinua(educacionContinua);
 		System.out.println("jornadas");
 		System.out.println(jornadas.size());
-		model.put("educacionContinua",e);
+		model.put("educacionContinua",dto.getEducacionContinua());
 		model.put("jornadas",jornadas);
-		model.put("participantes",participanteService.findAllParticipantesByEducacionContinua(id));
+		model.put("participantes",participanteService.findAllParticipantesByEducacionContinua(educacionContinua));
 		if(jornadas.size()>0) {
 			model.put("asistencias",asistenciaService.findAsistenciasByJornadas(jornadas));
-			model.put("asistenciaGlobal",asistenciaService.countAsistenciasByJornadas(id));
+			model.put("asistenciaGlobal",asistenciaService.countAsistenciasByJornadas(educacionContinua));
 			
 		}
 		
@@ -345,7 +346,7 @@ public class EducacionContinuaController {
 
         EducacionContinua e= educacionContinuaService.findOneByNombre(nombreEduContinua);
 		
-        ByteArrayInputStream bis = ManejoPdf.generarPDFParticipantes(participanteService.findAllParticipantesByEducacionContinua(e.getId()),e);
+        ByteArrayInputStream bis = ManejoPdf.generarPDFParticipantes(participanteService.findAllParticipantesByEducacionContinua(nombreEduContinua),e);
 
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Disposition", "inline; filename=participantes.pdf");

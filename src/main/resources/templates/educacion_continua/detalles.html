@@ -40,19 +40,19 @@
         <hr/>
         <ul class="nav justify-content-end" sec:authorize="hasAnyRole('ROLE_SUPERADMIN','ROLE_DOCENTE','ROLE_DIRPROGRAMA')">
 		  <li class="nav-item">
-		    <a class="nav-link red-ufps" th:href="@{/educacion-continua/{id}/registro(id=${educacionContinua.id})}"><i class="fas fa-edit"></i> Editar</a>
+		    <a class="nav-link red-ufps" th:href="@{/educacion-continua/{id}/registro(id=${ec.educacionContinua.id})}"><i class="fas fa-edit"></i> Editar</a>
 		  </li>
 		  <li class="nav-item">
-		    <a class="nav-link red-ufps" th:href="@{/educacion-continua/{id}/ponentes(id=${educacionContinua.id})}"><i class="fas fa-user-circle"></i> Ponentes</a>
+		    <a class="nav-link red-ufps" th:href="@{/educacion-continua/ponentes?educacionContinua={educacionContinua}(educacionContinua=${ec.educacionContinua.nombre})}"><i class="fas fa-user-circle"></i> Ponentes</a>
 		  </li>
 		  <li class="nav-item">
-		    <a class="nav-link red-ufps" th:href="@{/educacion-continua/{id}/jornadas(id=${educacionContinua.id})}"><i class="far fa-calendar-alt"></i> Jornadas</a>
+		    <a class="nav-link red-ufps" th:href="@{/educacion-continua/jornadas?educacionContinua={educacionContinua}(educacionContinua=${ec.educacionContinua.nombre})}"><i class="far fa-calendar-alt"></i> Jornadas</a>
 		  </li>
 		  <li class="nav-item">
-		    <a class="nav-link red-ufps" th:href="@{/educacion-continua/{id}/listado-participantes(id=${educacionContinua.id})}"><i class="fas fa-clipboard-list"></i> Listado Participantes</a>
+		    <a class="nav-link red-ufps" th:href="@{/educacion-continua/listado-participantes?educacionContinua={educacionContinua}(educacionContinua=${ec.educacionContinua.nombre})}"><i class="fas fa-clipboard-list"></i> Listado Participantes</a>
 		  </li>
 		  <li class="nav-item">
-		    <a class="nav-link red-ufps" th:href="@{/educacion-continua/{id}/personalizar-diploma(id=${educacionContinua.id})}"><i class="fas fa-money-check"></i> Personalizar Diploma</a>
+		    <a class="nav-link red-ufps" th:href="@{/educacion-continua/{id}/personalizar-diploma(id=${ec.educacionContinua.id})}"><i class="fas fa-money-check"></i> Personalizar Diploma</a>
 		  </li>
 		</ul>
 		<div class="row">

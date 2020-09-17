@@ -263,9 +263,10 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 	}
 
 	@Override
-	public List<Jornada> findJornadasByEducacionContinua(Long idEduContinua) {
+	public List<JornadaAppDto> findJornadasByEducacionContinua(String eduContinua) {
 		// TODO Auto-generated method stub
-		return jornadaDao.findByIdEducacionContinua(idEduContinua);
+		return jornadaMapper.convertJornadasToJornadaAppDto(jornadaDao.findByNombreEducacionContinua(eduContinua));
+		
 	}
 
 	
@@ -301,7 +302,7 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 	@Override
 	public InfoEducacionContinuaDto detallesEducacionContinua(String nombreEducacionContinua) {
 		// TODO Auto-generated method stub
-		if(educacionContinuaCustomDao.docenteHasPermission(nombreEducacionContinua, personaService.findPersonaLogueada().getId())) {
+		if(personaService.isSuperAdmin() || educacionContinuaCustomDao.docenteHasPermission(nombreEducacionContinua, personaService.findPersonaLogueada().getId())) {
 			EducacionContinua e=educacionContinuaDao.findByNombre(nombreEducacionContinua);
 			if(e!=null) {
 				return educacionContinuaMapper.convertEducacionContinuaToEducacionContinuaWeb(e, true);
@@ -310,6 +311,8 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 			}
 			
 		}else {
+			System.out.println("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
+			System.out.println("entra a ca");
 			return educacionContinuaMapper.convertEducacionContinuaToEducacionContinuaWeb(null, false);
 		}
 		

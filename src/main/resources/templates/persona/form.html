@@ -34,7 +34,7 @@
 									Registro Usuarios</strong></h5>
               </div>
             </div>
-            <div  th:if="${persona.id != null}" class="col-md-6 d-flex align-items-center justify-content-between justify-content-md-end">
+            <div  th:if="${persona.id != null and otorganPermisos}" class="col-md-6 d-flex align-items-center justify-content-between justify-content-md-end">
               <div class="actions actions-dark d-inline-block">
                 <a th:href="@{/persona/{id}/permisos(id=${persona.id})}" class="btn btn-sm btn-white">
                   <i class="fas fa-user-cog mr-2"></i>Roles Usuario

@@ -13,7 +13,9 @@ import com.ufps.cedcufps.dao.IEducacionContinuaDao;
 import com.ufps.cedcufps.dao.IParticipanteDao;
 import com.ufps.cedcufps.dao.IPersonaDao;
 import com.ufps.cedcufps.dao.ITipoParticipanteDao;
+import com.ufps.cedcufps.dto.ParticipanteDto;
 import com.ufps.cedcufps.exception.CustomException;
+import com.ufps.cedcufps.mapper.IEducacionContinuaMapper;
 import com.ufps.cedcufps.modelos.EducacionContinua;
 import com.ufps.cedcufps.modelos.Participante;
 import com.ufps.cedcufps.modelos.Persona;
@@ -38,6 +40,9 @@ public class ParticipanteService implements IParticipanteService{
 	
 	@Autowired
 	private ITipoParticipanteDao tipoParticipanteDao;
+	
+	@Autowired
+	private IEducacionContinuaMapper educacionContinuaMapper;
 	
 	@Override
 	public List<TipoParticipante> findAllTiposParticipante() {
@@ -90,9 +95,15 @@ public class ParticipanteService implements IParticipanteService{
 	}
 
 	@Override
-	public List<Participante> findAllPonentesOfOneEducacionContinua(Long idEducacionContinua) {
+	public List<Participante> findAllPonentesOfOneEducacionContinua(String educacionContinua) {
 		// TODO Auto-generated method stub
-		return participanteDao.findAllPonentesOfOneEducacionContinua(idEducacionContinua);
+		return participanteDao.findAllPonentesOfOneEducacionContinua(educacionContinua);
+	}
+	
+	@Override
+	public List<Participante> findAllPonentesOfOneEducacionContinuaById(Long idEducacionContinua) {
+		// TODO Auto-generated method stub
+		return participanteDao.findAllPonentesOfOneEducacionContinuaById(idEducacionContinua);
 	}
 
 	@Override
@@ -114,9 +125,9 @@ public class ParticipanteService implements IParticipanteService{
 	}
 
 	@Override
-	public List<Participante> findAllParticipantesByEducacionContinua(Long idEduContinua) {
+	public List<ParticipanteDto> findAllParticipantesByEducacionContinua(String eduContinua) {
 		// TODO Auto-generated method stub
-		return participanteDao.findAllParticipantesByEducacionContinua(idEduContinua);
+		return educacionContinuaMapper.convertParticipantesToParticipanteDto(participanteDao.findAllParticipantesByEducacionContinua(eduContinua));
 	}
 
 	@Override

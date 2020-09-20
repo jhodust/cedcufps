@@ -1,6 +1,7 @@
 package com.ufps.cedcufps.dto;
 
 import java.util.Date;
+import java.util.List;
 
 public class EducacionContinuaAppDto {
 
@@ -8,10 +9,12 @@ public class EducacionContinuaAppDto {
 	private String nombre;
 	private Date fechaInicio;
 	private Date fechaFin;
+	private Date fechaLimInscripcion;
 	private int cantidadParticipantes;
 	private String tipoEduContinua;
 	private String programaResponsable;
 	private String docenteResponsable;
+	private List<JornadaAppDto> jornadas;
 	public Long getId() {
 		return id;
 	}
@@ -59,6 +62,18 @@ public class EducacionContinuaAppDto {
 	}
 	public void setDocenteResponsable(String docenteResponsable) {
 		this.docenteResponsable = docenteResponsable;
+	}
+	public List<JornadaAppDto> getJornadas() {
+		return jornadas;
+	}
+	public void setJornadas(List<JornadaAppDto> jornadas) {
+		this.jornadas = jornadas;
+	}
+	public Date getFechaLimInscripcion() {
+		return fechaLimInscripcion;
+	}
+	public void setFechaLimInscripcion(Date fechaLimInscripcion) {
+		this.fechaLimInscripcion = fechaLimInscripcion;
 	}
 	
 	

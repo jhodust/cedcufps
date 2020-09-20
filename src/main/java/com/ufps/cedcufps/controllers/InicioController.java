@@ -70,6 +70,7 @@ public class InicioController {
 		model.put("departamentos",personaService.findAllDepartamentos());
 		model.put("generos",personaService.findAllGeneros());
 		model.put("estados_civiles",personaService.findAllEstadosCiviles());
+		model.put("persona",new UsuarioDto());
 		//educacionContinuaService.generarReporteSNIESEducacionContinua(new Date(), 0);
 		return "registrarse";
 	}

@@ -49,102 +49,217 @@
 							<center>
 							<h5>Roles</h5>
 							</center>
-							<div class="row">
-							<div class="table-responsive col-md-6">
-							<table class="table align-items-center">
-								<tr th:if="${persona.isEstudiante() or persona.isDocente() or persona.isAdministrativo()}">
-									<td class="text-dark">
-									
-									<strong>Administrar Eventos de Educación Continua</strong></td>
-									<td>
-										<div class="custom-control custom-switch">
-										  <input type="checkbox" class="custom-control-input switch" id="switchEduContinua" data-role="ROLE_ADMIN_CEEC">
-										  <label class="custom-control-label" for="switchEduContinua"></label>
+							<form th:action="@{/persona/permisos}"
+										 method="post"
+										enctype="multipart/form-data">
+							<div id="accordion-1" class="accordion accordion-stacked">
+    
+						    <!-- Accordion card 1 -->
+						    <div class="card">
+						        <div class="card-header py-4" id="heading-1-1" data-toggle="collapse" role="button" data-target="#collapse-1-1" aria-expanded="false" aria-controls="collapse-1-1">
+						            <h6 class="mb-0"><i class="fas fa-user-shield mr-3"></i>Educación Continua</h6>
+						        </div>
+						        <div id="collapse-1-1" class="collapse" aria-labelledby="heading-1-1" data-parent="#accordion-1">
+						            <div class="card-body">
+						            	<div class="row">
+							            	<div class="custom-control custom-switch">
+											  <input type="checkbox" class="custom-control-input switch" id="switchEduContinua" th:checked="${persona.hasPermissionForEduContinua}" th:disabled="${persona.isDirPrograma()}">
+											  <label class="custom-control-label" for="switchEduContinua"><strong>Gestionar Eventos de Educación Continua (Registrar, Editar, Actualizar, Visualizar)</strong></label>
+											</div>
 										</div>
-									</td>
-									
-								</tr>
-							</table>
-								<div class="row">
-									<div class="col-md-12">
-										<div class="form-group">
-											<label class="form-control-label">Programa
-												Académicos asociados</label> <select class="form-control"
-												data-toggle="select" id="programasEC" multiple="multiple">
-												<option value="0">Seleccione el programa...</option>
-												<option th:each="p: ${programas}" th:value="${p.id}"
-													th:text="${p.programa}"></option>
-											</select>
-											<small class="form-text text-danger"><strong></strong></small>
+										<br>
+										
+										<div class="row">
+											<div class="col-md-12">
+												<div class="form-group">
+													<label class="form-control-label">¿A cuáles Programas Académicos desea asociar los permisos?</label> 
+													<div th:if="${persona.programasForEduContinuaIntocables!=null and #arrays.length(persona.programasForEduContinuaIntocables) > 0}">
+														<div class="alert alert-info" role="alert" th:if="${persona.isDirPrograma()}">
+														   El usuario ya tiene otorgados permisos para la gestión de cursos y/o eventos de educación continua dado que es Director(a)
+															<ul th:each="p: ${persona.programasForEduContinuaIntocables}">
+														   		<li th:text="${p.programa}">
+														   		</li>
+														   </ul>
+														</div>
+														<div class="alert alert-info" role="alert" th:unless="${persona.isDirPrograma()}">
+														   El usuario ya tiene otorgados permisos para la gestión de cursos y/o eventos de educación continua por parte de otros roles
+															<ul th:each="p: ${persona.programasForEduContinuaIntocables}">
+														   		<li th:text="${p.programa}">
+														   		</li>
+														   </ul>
+														</div>
+													</div>
+													<select class="form-control"
+														data-toggle="select" id="programasEC" multiple="multiple">
+														<option value="0">Seleccione el programa...</option>
+														<option th:each="p: ${persona.selectProgramasForEduContinua}" th:value="${p.id}"
+														 
+															th:text="${p.programa}"></option>
+													</select>
+													<div class="alert alert-warning shadow-lg mt-2" role="alert" id="wPEC" style="display:none"></div>
+													<div class="alert alert-danger shadow-lg mt-2" role="alert" id="ePEC" style="display:none"></div>
+												</div>
+												
+											</div>
 										</div>
-									</div>
-								</div>
+						            </div>
+						        </div>
+						    </div>
+						    
+						    <!-- Accordion card 2 -->
+						    <div class="card">
+						        <div class="card-header py-4" id="heading-1-2" data-toggle="collapse" role="button" data-target="#collapse-1-2" aria-expanded="false" aria-controls="collapse-1-2">
+						            <h6 class="mb-0"><i class="fas fa-user-shield mr-3"></i>Usuarios</h6>
+						        </div>
+						        <div id="collapse-1-2" class="collapse" aria-labelledby="heading-1-2" data-parent="#accordion-1">
+						            <div class="card-body">
+						                <div class="row">
+							            	<div class="custom-control custom-switch">
+											  <input type="checkbox" class="custom-control-input switch" id="switchPersonas"  th:checked="${persona.hasPermissionForUsuarios}"  th:disabled="${persona.isDirPrograma()}">
+											  <label class="custom-control-label" for="switchPersonas"><strong>Gestionar Usuarios (Registrar, Editar, Actualizar, Visualizar)</strong></label>
+											</div>
+										</div>
+										<br>
+										
+										<div class="row">
+											<div class="col-md-12">
+												<div class="form-group">
+													<label class="form-control-label"> ¿En cuáles Programas Académicos desea gestionar Estudiantes?</label> 
+													<div th:if="${persona.programasForEstudiantesIntocables!=null and #arrays.length(persona.programasForEstudiantesIntocables)>0}">
+														<div class="alert alert-info" role="alert" th:if="${persona.isDirPrograma()}">
+														   El usuario ya tiene otorgados permisos para la gestión de estudiantes dado que es Director(a)
+														   <ul th:each="p: ${persona.programasForEstudiantesIntocables}">
+														   		<li th:text="${p.programa}">
+														   		</li>
+														   </ul>
+														</div>
+														<div class="alert alert-info" role="alert" th:unless="${persona.isDirPrograma()}">
+														   El usuario ya tiene otorgados permisos para la gestión de estudiantes por parte de otros roles
+														   <ul th:each="p: ${persona.programasForEstudiantesIntocables}">
+														   		<li th:text="${p.programa}">
+														   		</li>
+														   </ul>
+														</div>
+													</div>
+													<select class="form-control"
+														data-toggle="select" id="programasEstudiantes" multiple="multiple">
+														<option value="0">Seleccione los programas...</option>
+														<option th:each="p: ${persona.selectProgramasForEstudiantes}" th:value="${p.id}"
+															th:text="${p.programa}"></option>
+													</select>
+												</div>
+											</div>
+										</div>
+										
+										<div class="row">
+											<div class="col-md-12">
+												<div class="form-group">
+													<label class="form-control-label">¿En cuáles Departamentos Académicos desea gestionar docentes?</label> <select class="form-control"
+														data-toggle="select" id="deptosDocentes" multiple="multiple">
+														<option value="0">Seleccione los departamentos...</option>
+														<option th:each="d: ${persona.selectDeptosForDocentes}" th:value="${d.id}"
+															th:text="${d.departamento}"></option>
+													</select>
+													
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-md-12">
+												<div class="form-group">
+													<label class="form-control-label"> ¿En cuáles Programas Académicos desea gestionar Graduados?</label> 
+													<div th:if="${persona.programasForGraduadosIntocables!=null and #arrays.length(persona.programasForGraduadosIntocables) > 0}">
+														<div class="alert alert-info" role="alert" th:if="${persona.isDirPrograma()}">
+														   El usuario ya tiene otorgados permisos para la gestión de graduados dado que es Director(a)
+														   <ul th:each="p: ${persona.programasForGraduadosIntocables}">
+														   		<li th:text="${p.programa}">
+														   		</li>
+														   </ul>
+														</div>
+														<div class="alert alert-info" role="alert" th:unless="${persona.isDirPrograma()}">
+														   El usuario ya tiene otorgados permisos para la gestión de graduados por parte de otros roles
+														   <ul th:each="p: ${persona.programasForGraduadosIntocables}">
+														   		<li th:text="${p.programa}">
+														   		</li>
+														   </ul>
+														</div>
+													</div>
+													<select class="form-control"
+														data-toggle="select" id="programasGraduados" multiple="multiple">
+														<option value="0">Seleccione los programas...</option>
+														<option th:each="p: ${persona.selectProgramasForGraduados}" th:value="${p.id}"
+															th:text="${p.programa}"></option>
+													</select>
+													<small class="form-text text-danger"><strong></strong></small>
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-md-6">
+											<div class="custom-control custom-checkbox">
+												<input type="checkbox" class="custom-control-input"  id="cbAdminvo" th:checked="${persona.hasPermissionForAdminvos}" th:disabled="${persona.isDirPrograma()}">
+												 <label class="custom-control-label" for="cbAdminvo">Administrativos</label>
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="custom-control custom-checkbox">
+												<input type="checkbox" class="custom-control-input" id="cbE"  th:checked="${persona.hasPermissionForExternos}" th:disabled="${persona.isDirPrograma()}">
+												 <label class="custom-control-label" for="cbE">Externos</label>
+											</div>
+										</div>
+						            </div>
+						        </div>
+						    </div>
+						    
+						    <!-- Accordion card 3 -->
+						    <div class="card">
+						        <div class="card-header py-4" id="heading-1-3" data-toggle="collapse" role="button" data-target="#collapse-1-3" aria-expanded="false" aria-controls="collapse-1-3">
+						            <h6 class="mb-0"><i class="fas fa-user-shield mr-3"></i>Toma de Asistencias</h6>
+						        </div>
+						        <div id="collapse-1-3" class="collapse" aria-labelledby="heading-1-3" data-parent="#accordion-1">
+						            <div class="card-body">
+						                <div class="row">
+							            	<div class="custom-control custom-switch">
+											  <input type="checkbox" class="custom-control-input switch" id="switchAsistencias" data-role="ROLE_ADMIN_CEEC" th:checked="${persona.hasPermissionForAttendance}">
+											  <label class="custom-control-label" for="switchAsistencias"><strong>Tomar Asistencias en dispositivo móvil</strong></label>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-md-12">
+												<div class="form-group">
+													<label class="form-control-label"> Educaciones Continuas</label> 
+													<div th:if="${persona.eduContinuasForAttendanceIntocables!=null and #arrays.length(persona.eduContinuasForAttendanceIntocables) > 0}">
+														<div class="alert alert-info" role="alertd">
+														   El usuario ya tiene otorgados permisos para la toma de asistencias
+														   <ul th:each="e: ${persona.eduContinuasForAttendanceIntocables}">
+														   		<li th:text="${e.nombre}">
+														   		</li>
+														   </ul>
+														</div>
+													</div>
+													
+													
+													<select class="form-control"
+														data-toggle="select" id="educacionesContinuas" multiple="multiple">
+														<option value="0">Seleccione los programas...</option>
+														<option th:each="e: ${persona.selectEduContinuasForAttendance}" th:value="${e.id}"
+															th:text="${e.nombre}"></option>
+													</select>
+													<div class="alert alert-warning shadow-lg mt-2" role="alert" id="wA" style="display:none"></div>
+													<div class="alert alert-danger shadow-lg mt-2" role="alert" id="eA" style="display:none"></div>
+												</div>
+											</div>
+										</div>
+						            </div>
+						        </div>
+						    </div>
+						    
+						</div>
 							</div>
-							<div class="table-responsive col-md-6">
-							<table class="table align-items-center">
-								<tr th:if="${persona.isEstudiante() or persona.isDocente() or persona.isAdministrativo()}">
-									<td class="text-dark">
-									
-									<strong>Administrar Usuarios</strong></td>
-									<td>
-										<div class="custom-control custom-switch">
-										  <input type="checkbox" class="custom-control-input switch" id="switchUsuarios" data-role="ROLE_ADMIN_USERS">
-										  <label class="custom-control-label" for="switchUsuarios"></label>
-										</div>
-									</td>
-									
-								</tr>
-							</table>
-								<div class="row">
-									<div class="col-md-12">
-										<div class="form-group">
-											<label class="form-control-label"> Estudiantes de Programas
-												Académicos asociados</label> <select class="form-control"
-												data-toggle="select" id="programasUsuarios" multiple="multiple">
-												<option value="0">Seleccione los programas...</option>
-												<option th:each="p: ${programas}" th:value="${p.id}"
-													th:text="${p.programa}"></option>
-											</select>
-											<small class="form-text text-danger"><strong></strong></small>
-										</div>
-									</div>
-								</div>
-								<div class="row">
-									<div class="col-md-12">
-										<div class="form-group">
-											<label class="form-control-label">Docentes de Departamentos
-												Académicos asociados</label> <select class="form-control"
-												data-toggle="select" id="departamentos" multiple="multiple">
-												<option value="0">Seleccione los departamentos...</option>
-												<option th:each="d: ${departamentos}" th:value="${d.id}"
-													th:text="${d.departamento}"></option>
-											</select>
-											<small class="form-text text-danger"><strong></strong></small>
-										</div>
-									</div>
-								</div>
-								<div class="row">
-									<div class="col-md-4">
-									<div class="custom-control custom-checkbox">
-										<input type="checkbox" class="custom-control-input">
-										 <label class="custom-control-label">Administrativos</label>
-									</div>
-								</div>
-								<div class="col-md-4">
-									<div class="custom-control custom-checkbox">
-										<input type="checkbox" class="custom-control-input">
-										 <label class="custom-control-label">Graduados</label>
-									</div>
-								</div>
-								<div class="col-md-4">
-									<div class="custom-control custom-checkbox">
-										<input type="checkbox" class="custom-control-input">
-										 <label class="custom-control-label">Externos</label>
-									</div>
-								</div>
-								</div>
-							</div>
-							</div>
+							<button type="button" class="btn btn-red-ufps btn-sm" id="guardarPermisos">
+							    GUARDAR
+							</button>
+							</form>
 						</div>
 					</div>
 					
@@ -165,11 +280,7 @@
   <!-- Core JS - includes jquery, bootstrap, popper, in-view and sticky-kit -->
   <div th:replace="layouts/layout :: scripts"></div>
   <script type="text/javascript" th:inline="javascript">
-  var token = $("meta[name='_csrf']").attr("content");
-  var persona= [[${persona}]];
-  console.log(persona);
-  console.log(persona.roles);
-  
+  	var persona= [[${persona}]];
   </script>
   
   <script th:src="@{/js/permisos.js}" type="text/javascript"></script>

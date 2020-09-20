@@ -5,16 +5,17 @@ import java.util.Date;
 
 public class UsuarioDto {
 	
+	private Long id;
 	private Long tipoDocumento;
 	private String numeroDocumento;
-	private String fechaExpedicionDocumento;
+	private Date fechaExpedicionDocumento;
 	private String primerNombre;
 	private String segundoNombre;
 	private String primerApellido;
 	private String segundoApellido;
 	private Long genero;
 	private Long estadoCivil;
-	private String fechaNacimiento;
+	private Date fechaNacimiento;
 	private String idPaisNacimiento;
 	private String idDepartamentoNacimiento;
 	private String idMunicipioNacimiento;
@@ -25,14 +26,15 @@ public class UsuarioDto {
 	private Long programa;
 	private String profesion;
 	private String empresa;
-	private int isEstudiante;
-	private int isDocente;
-	private int isAdministrativo;
-	private int isGraduado;
-	private int isExterno;
+	private boolean estudiante;
+	private boolean docente;
+	private boolean administrativo;
+	private boolean graduado;
+	private boolean externo;
 	private Long programaGraduado;
 	private String anioGraduado;
 	private Long deptoAdscrito;
+	private boolean estadoDocente;
 	private String codigoDocente;
 	private String dependencia;
 	private String cargo;
@@ -50,10 +52,10 @@ public class UsuarioDto {
 	public void setNumeroDocumento(String numeroDocumento) {
 		this.numeroDocumento = numeroDocumento;
 	}
-	public String getFechaExpedicionDocumento() {
+	public Date getFechaExpedicionDocumento() {
 		return fechaExpedicionDocumento;
 	}
-	public void setFechaExpedicionDocumento(String fechaExpedicionDocumento) {
+	public void setFechaExpedicionDocumento(Date fechaExpedicionDocumento) {
 		this.fechaExpedicionDocumento = fechaExpedicionDocumento;
 	}
 	public String getPrimerNombre() {
@@ -92,10 +94,10 @@ public class UsuarioDto {
 	public void setEstadoCivil(Long estadoCivil) {
 		this.estadoCivil = estadoCivil;
 	}
-	public String getFechaNacimiento() {
+	public Date getFechaNacimiento() {
 		return fechaNacimiento;
 	}
-	public void setFechaNacimiento(String fechaNacimiento) {
+	public void setFechaNacimiento(Date fechaNacimiento) {
 		this.fechaNacimiento = fechaNacimiento;
 	}
 	public String getIdPaisNacimiento() {
@@ -196,37 +198,51 @@ public class UsuarioDto {
 	public void setEmpresa(String empresa) {
 		this.empresa = empresa;
 	}
-	public int getIsEstudiante() {
-		return isEstudiante;
+	
+	
+	public boolean isEstudiante() {
+		return estudiante;
 	}
-	public void setIsEstudiante(int isEstudiante) {
-		this.isEstudiante = isEstudiante;
+	public void setEstudiante(boolean estudiante) {
+		this.estudiante = estudiante;
 	}
-	public int getIsDocente() {
-		return isDocente;
+	public boolean isDocente() {
+		return docente;
 	}
-	public void setIsDocente(int isDocente) {
-		this.isDocente = isDocente;
+	public void setDocente(boolean docente) {
+		this.docente = docente;
 	}
-	public int getIsAdministrativo() {
-		return isAdministrativo;
+	public boolean isAdministrativo() {
+		return administrativo;
 	}
-	public void setIsAdministrativo(int isAdministrativo) {
-		this.isAdministrativo = isAdministrativo;
+	public void setAdministrativo(boolean administrativo) {
+		this.administrativo = administrativo;
 	}
-	public int getIsGraduado() {
-		return isGraduado;
+	public boolean isGraduado() {
+		return graduado;
 	}
-	public void setIsGraduado(int isGraduado) {
-		this.isGraduado = isGraduado;
+	public void setGraduado(boolean graduado) {
+		this.graduado = graduado;
 	}
-	public int getIsExterno() {
-		return isExterno;
+	public boolean isExterno() {
+		return externo;
 	}
-	public void setIsExterno(int isExterno) {
-		this.isExterno = isExterno;
+	public void setExterno(boolean externo) {
+		this.externo = externo;
 	}
-
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
+	public boolean isEstadoDocente() {
+		return estadoDocente;
+	}
+	public void setEstadoDocente(boolean estadoDocente) {
+		this.estadoDocente = estadoDocente;
+	}
+	
 	
 	
 }

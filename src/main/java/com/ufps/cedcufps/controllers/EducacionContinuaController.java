@@ -34,6 +34,9 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.ufps.cedcufps.dto.EducacionContinuaWebDto;
+import com.ufps.cedcufps.dto.InfoEducacionContinuaDto;
+import com.ufps.cedcufps.dto.JornadaAppDto;
 import com.ufps.cedcufps.modelos.Docente;
 import com.ufps.cedcufps.modelos.EducacionContinua;
 import com.ufps.cedcufps.modelos.Jornada;
@@ -73,67 +76,21 @@ public class EducacionContinuaController {
 	
 	@RequestMapping(value = "/educacion-continua")
 	public String listar(Model model, Authentication auth) {
-		int cantCursos=educacionContinuaService.cantidadCursos();
-		int cantTalleres=educacionContinuaService.cantidadTalleres();
-		int cantDiplomados=educacionContinuaService.cantidadDiplomados();
-		int cantSeminarios=educacionContinuaService.cantidadSeminarios();
-		int cantCongresos=educacionContinuaService.cantidadCongresos();
-		int cantSimposios=educacionContinuaService.cantidadSimposios();
-		int total=cantCursos+cantTalleres+cantDiplomados+cantSeminarios+cantCongresos+cantSimposios;
 		model.addAttribute("titulo","EDUCACIÓN CONTINUA");
-		model.addAttribute("educacionesContinuas",educacionesContinuasSegunTipoGestionante(auth));
-		model.addAttribute("cantCursos",cantCursos);
-		model.addAttribute("cantTalleres",cantTalleres);
-		model.addAttribute("cantDiplomados",cantCursos);
-		model.addAttribute("cantSeminarios",cantSeminarios);
-		model.addAttribute("cantCongresos",cantCongresos);
-		model.addAttribute("cantSimposios",cantSimposios);
-		model.addAttribute("porcCursos",cantCursos*100/total);
-		model.addAttribute("porcTalleres",cantTalleres*100/total);
-		model.addAttribute("porcDiplomados",cantDiplomados*100/total);
-		model.addAttribute("porcSeminarios",cantSeminarios*100/total);
-		model.addAttribute("porcCongresos",cantCongresos*100/total);
-		model.addAttribute("porcSimposios",cantSimposios*100/total);
-		
+		model.addAttribute("educacionesContinuas",educacionContinuaService.findPosiblesEduContinuaGestionar());
 		return "educacion_continua/index";
 	}
 	
-	public List<EducacionContinua> educacionesContinuasSegunTipoGestionante(Authentication auth){
-		
-		
-		if(buscarAuthority(auth, "ROLE_SUPERADMIN")) {
-			return educacionContinuaService.findAll();
-		}
-		if(buscarAuthority(auth, "ROLE_DIRPROGRAMA")) {
-			Docente d=(Docente)personaService.findPersonaLogueada();
-			return educacionContinuaService.findAllEducacionContinuaACargoDirector(d.getNumeroDocumento(),d.getProgramaACargoDirector().getId());
-		}
-		if(buscarAuthority(auth, "ROLE_DOCENTE")) {
-			return educacionContinuaService.findAllEducacionContinuaACargoDocente(personaService.findPersonaLogueada().getNumeroDocumento());
-		}
-		return null;
-		
-	}
 	
-	public boolean buscarAuthority(Authentication auth, String rol) {
-		List<GrantedAuthority> authorities= (List<GrantedAuthority>) auth.getAuthorities();
-		for(GrantedAuthority g:authorities) {
-			if(g.getAuthority().equalsIgnoreCase(rol)) {
-				return true;
-			}
-			System.out.println("authority controller: " + g.getAuthority());
-		}
-		return false;
-	}
 	
 	@RequestMapping(value = "/educacion-continua/registro")
 	public String agregar(Map<String, Object> model, Authentication auth) {
 		EducacionContinua ec= new EducacionContinua(); 
 		model.put("titulo","FORMULARIO EDUCACIÓN CONTINUA");
 	
-		if(buscarAuthority(auth, "ROLE_DOCENTE")) {
+		/*if(buscarAuthority(auth, "ROLE_DOCENTE")) {
 			ec.setDocenteResponsable((Docente)personaService.findPersonaLogueada());
-		}
+		}*/
 		model.put("educacionContinua",ec);
 		model.put("tipos_educacion_continua",educacionContinuaService.findAllTiposEducacionContinua());
 		model.put("clasificacion_cine",educacionContinuaService.findAllClasificacionCine());
@@ -174,7 +131,7 @@ public class EducacionContinuaController {
 	@RequestMapping(value = "/educacion-continua/{id}/registro")
 	public String editar(@PathVariable(value = "id") Long id, Map<String, Object> model, Authentication auth,RedirectAttributes redirectAttributes) {
 		EducacionContinua e= educacionContinuaService.findOne(id).get();
-		if(buscarAuthority(auth, "ROLE_DIRPROGRAMA")) {
+		/*if(buscarAuthority(auth, "ROLE_DIRPROGRAMA")) {
 			Docente p= (Docente)personaService.findPersonaLogueada();
 			if(e.getProgramaResponsable().getId() != p.getProgramaACargoDirector().getId() && e.getDocenteResponsable().getId()!=p.getId() ) {
 				redirectAttributes.addFlashAttribute("errorMessage", "No tiene permisos para administrar la Educación Continua...");
@@ -188,7 +145,7 @@ public class EducacionContinuaController {
 				return "redirect:/educacion-continua";
 			}
 			
-		}
+		}*/
 		
 		if(e.getEstado().equalsIgnoreCase("Terminado")) {
 			redirectAttributes.addFlashAttribute("errorMessage", "El estado de la Educación Continua es " + e.getEstado());
@@ -205,10 +162,10 @@ public class EducacionContinuaController {
 		return "educacion_continua/form";
 	}
 	
-	@RequestMapping(value = "/educacion-continua/{id}/jornadas")
-	public String mostrarJornadas(@PathVariable(value = "id") Long id, Map<String, Object> model, Authentication auth, RedirectAttributes redirectAttributes) {
-		EducacionContinua e=educacionContinuaService.findOne(id).get();
-		if(buscarAuthority(auth, "ROLE_DIRPROGRAMA")) {
+	@RequestMapping(value = "/educacion-continua/jornadas")
+	public String mostrarJornadas(@RequestParam(name="educacionContinua") String educacionContinua, Map<String, Object> model, Authentication auth, RedirectAttributes redirectAttributes) {
+		//EducacionContinua e=educacionContinuaService.findOne(id).get();
+		/*if(buscarAuthority(auth, "ROLE_DIRPROGRAMA")) {
 			Docente p= (Docente)personaService.findPersonaLogueada();
 			if(e.getProgramaResponsable().getId() != p.getProgramaACargoDirector().getId() && e.getDocenteResponsable().getId()!=p.getId() ) {
 				redirectAttributes.addFlashAttribute("errorMessage", "No tiene permisos para administrar la Educación Continua...");
@@ -222,20 +179,19 @@ public class EducacionContinuaController {
 				return "redirect:/educacion-continua";
 			}
 			
-		}
-		if(e.getEstado().equalsIgnoreCase("Terminado")) {
+		}*/
+		/*if(e.getEstado().equalsIgnoreCase("Terminado")) {
 			redirectAttributes.addFlashAttribute("errorMessage", "El estado de la Educación Continua es " + e.getEstado());
 			return "redirect:/educacion-continua/"+e.getId()+"/detalles";
-		}
+		}*/
 		model.put("titulo","JORNADAS");
-		model.put("educacionContinua",e);
+		model.put("educacionContinua",educacionContinuaService.detallesEducacionContinua(educacionContinua).getEducacionContinua());
 		return "educacion_continua/jornada/index";
 	}
 	
-	@RequestMapping(value = "/educacion-continua/{id}/ponentes")
-	public String mostrarPonentes(@PathVariable(value = "id") Long id, Map<String, Object> model, Authentication auth, RedirectAttributes redirectAttributes) {
-		EducacionContinua e=educacionContinuaService.findOne(id).get();
-		if(buscarAuthority(auth, "ROLE_DIRPROGRAMA")) {
+	@RequestMapping(value = "/educacion-continua/ponentes")
+	public String mostrarPonentes(@RequestParam(name="educacionContinua") String educacionContinua, Map<String, Object> model, Authentication auth, RedirectAttributes redirectAttributes) {
+		/*if(buscarAuthority(auth, "ROLE_DIRPROGRAMA")) {
 			Docente p= (Docente)personaService.findPersonaLogueada();
 			if(e.getProgramaResponsable().getId() != p.getProgramaACargoDirector().getId() && e.getDocenteResponsable().getId()!=p.getId() ) {
 				redirectAttributes.addFlashAttribute("errorMessage", "No tiene permisos para administrar la Educación Continua...");
@@ -249,31 +205,29 @@ public class EducacionContinuaController {
 				return "redirect:/educacion-continua";
 			}
 			
-		}
-		if(e.getEstado().equalsIgnoreCase("Terminado")) {
+		}*/
+		/*if(e.getEstado().equalsIgnoreCase("Terminado")) {
 			redirectAttributes.addFlashAttribute("errorMessage", "El estado de la Educación Continua es " + e.getEstado());
 			return "redirect:/educacion-continua/"+e.getId()+"/detalles";
-		}
+		}*/
 		model.put("titulo","JORNADAS");
-		model.put("educacionContinua",e);
-		model.put("ponentes",participanteService.findAllPonentesOfOneEducacionContinua(e.getId()));
+		model.put("educacionContinua",educacionContinuaService.detallesEducacionContinua(educacionContinua).getEducacionContinua());
+		model.put("ponentes",participanteService.findAllPonentesOfOneEducacionContinua(educacionContinua));
 		model.put("posiblesPonentes",personaService.findAllPersonas());
 		return "educacion_continua/ponente/index";
 	}
 	
-	@RequestMapping(value = "/educacion-continua/{id}/detalles")
-	public String mostrar(@PathVariable(value = "id") Long id, Map<String, Object> model) {
-		Optional<EducacionContinua> ec= educacionContinuaService.findOne(id); 
+	@RequestMapping(value = "/educacion-continua/detalles")
+	public String mostrar(@RequestParam(name="educacionContinua") String educacionContinua, Map<String, Object> model,RedirectAttributes redirectAttributes) {
 		model.put("titulo","DETALLES EDUCACIÓN CONTINUA");
-		model.put("educacionContinua",ec.get());
-		model.put("jornadas",ec.get());
-		model.put("jornadas",educacionContinuaService.findJornadasByEducacionContinua(id));
-		model.put("ponentes",participanteService.findAllPonentesOfOneEducacionContinua(id));
-		try {
-		model.put("participante",participanteService.findByIdEducacionContinuaAndIdPersona(id,personaService.findPersonaLogueada().getId()));
-		}catch(Exception e) {
-			model.put("participante",null);
+		InfoEducacionContinuaDto dto= educacionContinuaService.detallesEducacionContinua(educacionContinua);
+		if(dto.isHasPermission()) {
+			model.put("ec",dto);
+		}else {
+			redirectAttributes.addFlashAttribute("errorMessage", "No tiene permisos para administrar la Educación Continua indicada...");
+			return "redirect:/educacion-continua";
 		}
+		
 		return "educacion_continua/detalles";
 	}
 	
@@ -290,10 +244,10 @@ public class EducacionContinuaController {
 		return "preinscripcion";
 	}
 	
-	@RequestMapping(value = "/educacion-continua/{id}/listado-participantes")
-	public String listadoParticipantes(@PathVariable(value = "id") Long id, Map<String, Object> model, Authentication auth, RedirectAttributes redirectAttributes) {
-		EducacionContinua e=educacionContinuaService.findOne(id).get();
-		if(buscarAuthority(auth, "ROLE_DIRPROGRAMA")) {
+	@RequestMapping(value = "/educacion-continua/listado-participantes")
+	public String listadoParticipantes(@RequestParam(name="educacionContinua") String educacionContinua, Map<String, Object> model, Authentication auth, RedirectAttributes redirectAttributes) {
+		//EducacionContinua e=educacionContinuaService.findOne(id).get();
+		/*if(buscarAuthority(auth, "ROLE_DIRPROGRAMA")) {
 			Docente p= (Docente)personaService.findPersonaLogueada();
 			if(e.getProgramaResponsable().getId() != p.getProgramaACargoDirector().getId() && e.getDocenteResponsable().getId()!=p.getId() ) {
 				redirectAttributes.addFlashAttribute("errorMessage", "No tiene permisos para acceder al listado de participantes...");
@@ -307,16 +261,17 @@ public class EducacionContinuaController {
 				return "redirect:/educacion-continua";
 			}
 			
-		}
-		List<Jornada> jornadas=educacionContinuaService.findJornadasByEducacionContinua(id);
+		}*/
+		InfoEducacionContinuaDto dto= educacionContinuaService.detallesEducacionContinua(educacionContinua);
+		List<JornadaAppDto> jornadas=educacionContinuaService.findJornadasByEducacionContinua(educacionContinua);
 		System.out.println("jornadas");
 		System.out.println(jornadas.size());
-		model.put("educacionContinua",e);
+		model.put("educacionContinua",dto.getEducacionContinua());
 		model.put("jornadas",jornadas);
-		model.put("participantes",participanteService.findAllParticipantesByEducacionContinua(id));
+		model.put("participantes",participanteService.findAllParticipantesByEducacionContinua(educacionContinua));
 		if(jornadas.size()>0) {
 			model.put("asistencias",asistenciaService.findAsistenciasByJornadas(jornadas));
-			model.put("asistenciaGlobal",asistenciaService.countAsistenciasByJornadas(id));
+			model.put("asistenciaGlobal",asistenciaService.countAsistenciasByJornadas(educacionContinua));
 			
 		}
 		
@@ -391,7 +346,7 @@ public class EducacionContinuaController {
 
         EducacionContinua e= educacionContinuaService.findOneByNombre(nombreEduContinua);
 		
-        ByteArrayInputStream bis = ManejoPdf.generarPDFParticipantes(participanteService.findAllParticipantesByEducacionContinua(e.getId()),e);
+        ByteArrayInputStream bis = ManejoPdf.generarPDFParticipantes(participanteService.findAllParticipantesByEducacionContinua(nombreEduContinua),e);
 
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Disposition", "inline; filename=participantes.pdf");

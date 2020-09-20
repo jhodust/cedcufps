@@ -166,11 +166,11 @@
 						</thead>
 						<tbody>
 							<tr th:each="ec : ${educacionesContinuas}">
-								<td><a class="btn btn-sm btn-rojoufps rounded-circle btn-icon-only hover-scale-110" th:href="@{/educacion-continua/{id}/detalles(id=${ec.id})}" data-toggle="tooltip" data-placement="top" title="Ver Detalles">
+								<td><a class="btn btn-sm btn-rojoufps rounded-circle btn-icon-only hover-scale-110" th:href="@{/educacion-continua/detalles?educacionContinua={educacionContinua}(educacionContinua=${ec.nombre})}" data-toggle="tooltip" data-placement="top" title="Ver Detalles">
     								<span class="btn-inner--icon"><i class="fas fa-search-plus"></i></span></a>
     								</td>
-								<td th:text="${ec.tipoEduContinua.tipoEduContinua}"></td>
-								<td th:text="${ec.programaResponsable.programa}"></td>
+								<td th:text="${ec.tipoEduContinua}"></td>
+								<td th:text="${ec.programaResponsable}"></td>
 								<td th:text="${ec.nombre}"></td>
 								<td th:text="${#dates.format(ec.fechaInicio, 'dd-MM-yyyy')}"></td>
 								<td th:text="${#dates.format(ec.fechaFin, 'dd-MM-yyyy')}"></td>

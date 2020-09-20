@@ -8,15 +8,18 @@ import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -30,7 +33,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 
 @Entity
-@Table(name="personas")
+@Table(name="personas", uniqueConstraints={
+		   @UniqueConstraint(columnNames={"numero_documento"},name = "UK_document_people"),
+		   @UniqueConstraint(columnNames={"email"},name = "UK_email_people")})
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Persona implements Serializable {//*
 	
@@ -48,7 +53,7 @@ public class Persona implements Serializable {//*
 	@NotNull(message = "Seleccione el tipo de documento")
 	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="id_tipo_documento")
+	@JoinColumn(name="id_tipo_documento", foreignKey=@ForeignKey(name = "Fk_type_document_people"))
 	private TipoDocumento tipoDocumento;
 	
 	@NotEmpty(message = "El campo número documento es requerido")
@@ -88,13 +93,13 @@ public class Persona implements Serializable {//*
 	@NotNull(message = "El campo género es requerido")
 	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="id_genero")
+	@JoinColumn(name="id_genero", foreignKey=@ForeignKey(name = "Fk_gender_people"))
 	private Genero genero;
 	
 	@NotNull(message = "El campo estado civil es requerido")
 	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="id_estado_civil")
+	@JoinColumn(name="id_estado_civil", foreignKey=@ForeignKey(name = "Fk_est_civil_people"))
 	private EstadoCivil estadoCivil;
 	
 	@NotNull(message = "Ingrese su fecha de nacimiento")
@@ -159,14 +164,13 @@ public class Persona implements Serializable {//*
 	
 	
 	
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinColumn(name = "id_persona")
-	private List<Rol> roles;
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "persona", cascade = CascadeType.ALL)
+	private List<PersonaRol> personaXRoles;
 	
 	
 	
 	public Persona() {
-		this.roles = new ArrayList<Rol>();;
+		this.personaXRoles = new ArrayList<PersonaRol>();;
 	}
 
 	public Long getId() {
@@ -243,14 +247,14 @@ public class Persona implements Serializable {//*
 		this.tipoPersona = tipoPersona;
 	}*/
 	
-	public void addRol(Rol r) {
-		this.roles.add(r);
+	public void addRol(PersonaRol r) {
+		this.personaXRoles.add(r);
 	}
-	public List<Rol> getRoles() {
-		return roles;
+	public List<PersonaRol> getRoles() {
+		return personaXRoles;
 	}
-	public void setRoles(List<Rol> roles) {
-		this.roles = roles;
+	public void setRoles(List<PersonaRol> roles) {
+		this.personaXRoles = roles;
 	}
 	public String getUsername() {
 		return username;

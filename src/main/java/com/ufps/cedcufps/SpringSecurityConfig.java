@@ -64,6 +64,7 @@ import org.springframework.security.core.GrantedAuthority;
 import com.ufps.cedcufps.auth.handler.LoginSuccessHandler;
 import com.ufps.cedcufps.exception.CustomException;
 import com.ufps.cedcufps.modelos.Persona;
+import com.ufps.cedcufps.modelos.PersonaRol;
 import com.ufps.cedcufps.modelos.Rol;
 import com.ufps.cedcufps.services.PersonaService;
 
@@ -91,12 +92,12 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		// TODO Auto-generated method stub
 		http.authorizeRequests().antMatchers("/","/registrarse","/search/programa/**","/files/**","/pdfreport","/home","/plantilla/**", "/logos/**","/data/**","/js/**","/css/**","/programa/save", "/uploads/**","/app/**").permitAll()
-		.antMatchers("/persona/**").hasAnyRole("SUPERADMIN", "ESTUDIANTE")
+		.antMatchers("/persona/**").hasAnyRole("SUPERADMIN", "MANPEOPLE")
 		.antMatchers("/programa/**").hasAnyRole("SUPERADMIN")
 		.antMatchers("/tipo-documento/**").hasAnyRole("SUPERADMIN")
-		.antMatchers("/educacion-continua/**").hasAnyRole("SUPERADMIN","ADMIN","DOCENTE","DIRPROGRAMA")
+		.antMatchers("/educacion-continua/**").hasAnyRole("SUPERADMIN","MANAECCU")
 		.antMatchers("/participaciones-educacion-continua","/preinscripcion/**", "/realizar-inscripcion/**","/cancelar-inscripcion/**").hasRole("USER")
-		.antMatchers("/educacion-continua-a-cargo").hasRole("DOCENTE")
+		.antMatchers("/educacion-continua-a-cargo").hasRole("MANAECCU")
 		.anyRequest().authenticated()
 		//.and().cors().configurationSource(corsConfigurationSource())
 		.and()
@@ -219,8 +220,11 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 			Set<GrantedAuthority> mappedAuthorities = new HashSet<>();
 			Persona p=personaService.findByEmail(oidcUser.getEmail());
 			if(p!=null) {
-				for(Rol r:p.getRoles()) {
-					mappedAuthorities.add(new SimpleGrantedAuthority(r.getAuthority()));
+				for(PersonaRol r:p.getRoles()) {
+					System.out.println("imprimiendo informacion");
+					System.out.println(r.getPersona().getPrimerNombre());
+					System.out.println(r.getRol().getAuthority());
+					mappedAuthorities.add(new SimpleGrantedAuthority(r.getRol().getAuthority()));
 				}
 				oidcUser = new DefaultOidcUser(mappedAuthorities, oidcUser.getIdToken(), oidcUser.getUserInfo());
 			}else {
@@ -265,9 +269,10 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 					System.out.println(userAttributes.get("email"));
 					Persona p=personaService.findByEmail(String.valueOf(userAttributes.get("email")));
 					List<GrantedAuthority> authoritiess= new ArrayList<GrantedAuthority>();
-					for(Rol r:p.getRoles()) {
+					/*for(Rol r:p.getRoles()) {
 						mappedAuthorities.add(new SimpleGrantedAuthority(r.getAuthority()));
-					}
+					}*/
+					mappedAuthorities.add(new SimpleGrantedAuthority("ROLE_SUPERADMIN"));
 				}
 				
 				

@@ -7,13 +7,12 @@ public class JornadaAppDto {
 	private Long id;
 	private Date horaInicio;
 	private Date horaFin;
-	private Long idEducacionContinua;
-	private Date fechaInicioEduContinua;
-	private Date fechaFinEduContinua;
+
 	private String fechaJornadaString;
 	private String horaInicioString;
 	private String horaFinString;
 	
+
 	public Long getId() {
 		return id;
 	}
@@ -32,23 +31,24 @@ public class JornadaAppDto {
 	public void setHoraFin(Date horaFin) {
 		this.horaFin = horaFin;
 	}
-	public Long getIdEducacionContinua() {
-		return idEducacionContinua;
+	
+	public String getFechaJornadaString() {
+		return fechaJornadaString;
 	}
-	public void setIdEducacionContinua(Long idEducacionContinua) {
-		this.idEducacionContinua = idEducacionContinua;
+	public void setFechaJornadaString(String fechaJornadaString) {
+		this.fechaJornadaString = fechaJornadaString;
 	}
-	public Date getFechaInicioEduContinua() {
-		return fechaInicioEduContinua;
+	public String getHoraInicioString() {
+		return horaInicioString;
 	}
-	public void setFechaInicioEduContinua(Date fechaInicioEduContinua) {
-		this.fechaInicioEduContinua = fechaInicioEduContinua;
+	public void setHoraInicioString(String horaInicioString) {
+		this.horaInicioString = horaInicioString;
 	}
-	public Date getFechaFinEduContinua() {
-		return fechaFinEduContinua;
+	public String getHoraFinString() {
+		return horaFinString;
 	}
-	public void setFechaFinEduContinua(Date fechaFinEduContinua) {
-		this.fechaFinEduContinua = fechaFinEduContinua;
+	public void setHoraFinString(String horaFinString) {
+		this.horaFinString = horaFinString;
 	}
 	public String getFechaJornadaString() {
 		return fechaJornadaString;
@@ -68,7 +68,6 @@ public class JornadaAppDto {
 	public void setHoraFinString(String horaFinString) {
 		this.horaFinString = horaFinString;
 	}
-	
 	
 	
 }

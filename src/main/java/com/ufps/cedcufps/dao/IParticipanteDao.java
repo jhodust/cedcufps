@@ -10,8 +10,11 @@ import com.ufps.cedcufps.modelos.Participante;
 
 public interface IParticipanteDao extends CrudRepository<Participante, Long> {
 
+	@Query("select p from Participante p where p.educacionContinua.id = (select e.id from EducacionContinua e where e.nombre = ?1) and p.tipoParticipante.id = '2'")
+	public List<Participante> findAllPonentesOfOneEducacionContinua(String educacionContinua);
+	
 	@Query("select p from Participante p where p.educacionContinua.id = ?1 and p.tipoParticipante.id = '2'")
-	public List<Participante> findAllPonentesOfOneEducacionContinua(Long idEducacionContinua);
+	public List<Participante> findAllPonentesOfOneEducacionContinuaById(Long idEducacionContinua);
 	
 	@Query("select p from Participante p where p.educacionContinua.id = ?1 and p.tipoParticipante.tipoParticipante=?2")
 	  public List<Participante> findTipoParticipantesByIdEducacionContinua(Long idEducacionContinua, String tipoParticipante );
@@ -23,8 +26,17 @@ public interface IParticipanteDao extends CrudRepository<Participante, Long> {
 	List<Participante> findAllParticipacionesActivasByParticipante(String numDocumento);
 	
 	@Query("select p from Participante p where p.educacionContinua.id = ?1 ORDER BY p.persona.primerApellido")
-	List<Participante> findAllParticipantesByEducacionContinua(Long idEduContinua);
+	List<Participante> findAllParticipantesEducacionContinua(Long idEduContinua);
+	
+	@Query("select p from Participante p where p.educacionContinua.id = (select e.id from EducacionContinua e where e.nombre = ?1) ORDER BY p.persona.primerApellido")
+	List<Participante> findAllParticipantesByEducacionContinua(String eduContinua);
 	
 	@Query("select p from Participante p where p.educacionContinua.id = ?1 and p.persona.id = ?2")
 	public Participante validarParticipanteYaInscrito(Long idEduContinua, Long idPersona);
+	
+	@Query("select p from Participante p where p.educacionContinua.id = ?1 and p.persona.numeroDocumento = ?2")
+	public Participante validarParticipanteYaInscritoApp(Long idEduContinua, String documento);
+	
+	@Query("select p from Participante p where p.codigoQR = ?1 ")
+	public Participante validarQr(String qr);
 }

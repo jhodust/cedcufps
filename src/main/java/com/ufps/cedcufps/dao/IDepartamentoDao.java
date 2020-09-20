@@ -9,6 +9,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
 import com.ufps.cedcufps.modelos.Departamento;
+import com.ufps.cedcufps.modelos.Programa;
 
 
 public interface IDepartamentoDao extends PagingAndSortingRepository<Departamento, Long>{
@@ -23,4 +24,8 @@ public interface IDepartamentoDao extends PagingAndSortingRepository<Departament
 	
 	@Query("select count(d) from Departamento d where d.id != ?1 and d.departamento = ?2")
 	public int cantidadDeptosExistentes(Long idDepto, String depto);
+	
+	@Query(value = "select d.* from rol_persona_depto_per rpdp join departamentos d on rpdp.id_depto=d.id where rpdp.id_persona = ?1",nativeQuery = true)
+	public List<Departamento> findDeptosPermisosDocentesForDocEstAdminvo(Long idDirector);
+	
 }

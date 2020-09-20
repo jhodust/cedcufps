@@ -20,6 +20,9 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -42,9 +45,12 @@ public class Departamento implements Serializable {//1
 
 
 	@JsonIgnore //ignora esta referencia cuando se hace mediante ajax(json) 
-	@OneToMany(fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_departamento")
+	//@OneToMany(fetch = FetchType.LAZY)
+	//@JoinColumn(name = "id_departamento")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "departamento")
 	private List<Docente> docentes;
+	
+	
 	
 	
 	@NotNull(message =  "Seleccione la facultad")

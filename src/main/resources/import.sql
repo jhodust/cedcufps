@@ -39,18 +39,21 @@ insert into tipos_documento(id,tipo_documento,descripcion) values(6,'CA','Certif
 insert into tipos_persona(id,tipo_persona) values(1,'Estudiante');
 insert into tipos_persona(id,tipo_persona) values(2,'Docente');
 insert into tipos_persona(id,tipo_persona) values(3,'Administrativo');
-insert into tipos_persona(id,tipo_persona) values(4,'Externo');
+insert into tipos_persona(id,tipo_persona) values(4,'Graduado');
+insert into tipos_persona(id,tipo_persona) values(5,'Externo');
 
-insert into personas (id,direccion,email,numero_documento,primer_nombre,segundo_nombre,primer_apellido,segundo_apellido,telefono,is_estudiante,is_docente,is_administrativo,is_graduado,is_externo,id_tipo_documento,username,password,enabled,id_pais_nacimiento,id_departamento_nacimiento,id_municipio_nacimiento,fecha_nacimiento,fecha_expedicion_documento,id_estado_civil,id_genero) values (1,'atalaya','jhocelsuescun1997@gmail.com','10905015','Jhocel','Duvan','Suescun','Torres','32184602',1,0,0,0,0,1,'jhocel','$2a$10$n8.oDbyejLtZAcpKKRSsfuUSGMJ6LZ.qNmTURpganDyTZ.s6F.vkm',1,'170','54','54001','1997-01-03','2015-01-06',1,1);
-insert into personas (id,direccion,email,numero_documento,primer_nombre,segundo_nombre,primer_apellido,segundo_apellido,telefono,is_estudiante,is_docente,is_administrativo,is_graduado,is_externo,id_tipo_documento,username,password,enabled,id_pais_nacimiento,id_departamento_nacimiento,id_municipio_nacimiento,fecha_nacimiento,fecha_expedicion_documento,id_estado_civil,id_genero) values (2,'limonar','irmatom.02@gmail.com','1515436','Javier','Eduardo','Calderon','Villamizar','32318485',1,0,0,0,0,1,'javier','$2a$10$aMefgC8nnLjkzHfYjTjA6eKpdjqhVOlVczgvtJqAD0EUFaWO3U0JO',1,'170','54','54239','1948-10-22','1966-07-04',1,1);
-insert into personas (id,direccion,email,numero_documento,primer_nombre,segundo_nombre,primer_apellido,segundo_apellido,telefono,is_estudiante,is_docente,is_administrativo,is_graduado,is_externo,id_tipo_documento,username,password,enabled,id_pais_nacimiento,id_departamento_nacimiento,id_municipio_nacimiento,fecha_nacimiento,fecha_expedicion_documento,id_estado_civil,id_genero) values (3,'ceci','irgentorresm@gmail.com','1051869','Janes',null,'Duran','Sierra','31482102',1,0,0,0,0,1,'janes','$2a$10$nUMgvSKj1bmtQ.wmDGxu4uioN0GW16uzJUQ0A0aDl.nW4KjU2pPma',1,'170','54','54001','1997-01-03','2015-01-06',2,1);
-insert into personas (id,direccion,email,numero_documento,primer_nombre,segundo_nombre,primer_apellido,segundo_apellido,telefono,is_estudiante,is_docente,is_administrativo,is_graduado,is_externo,id_tipo_documento,username,password,enabled,id_pais_nacimiento,id_departamento_nacimiento,id_municipio_nacimiento,fecha_nacimiento,fecha_expedicion_documento,id_estado_civil,id_genero) values (4,'libertad','jose@gmail.com','159847','Jose','Andres','Hernandez','Florez','31651231',1,0,0,0,0,1,'jose','$2a$10$JzE1av/GQv2Vfbg4UnN2.OIGgV.esym88yyGuAaiWKX/emJ6NSfCK',1,'170','54','54239','1948-10-22','1966-07-04',3,1);
+
+insert into personas (id,direccion,email,numero_documento,primer_nombre,segundo_nombre,primer_apellido,segundo_apellido,telefono,is_estudiante,is_docente,is_administrativo,is_graduado,is_externo,id_tipo_documento,username,password,enabled,id_pais_nacimiento,id_departamento_nacimiento,id_municipio_nacimiento,fecha_nacimiento,fecha_expedicion_documento,id_estado_civil,id_genero) values (1,'atalaya','jhocel@gmail.com','10905015','Jhocel','Duvan','Suescun','Torres','32184602',1,0,0,0,0,1,'jhocel','$2a$10$n8.oDbyejLtZAcpKKRSsfuUSGMJ6LZ.qNmTURpganDyTZ.s6F.vkm',1,'170','54','54001','1997-01-03','2015-01-06',1,1);
+insert into personas (id,direccion,email,numero_documento,primer_nombre,segundo_nombre,primer_apellido,segundo_apellido,telefono,is_estudiante,is_docente,is_administrativo,is_graduado,is_externo,id_tipo_documento,username,password,enabled,id_pais_nacimiento,id_departamento_nacimiento,id_municipio_nacimiento,fecha_nacimiento,fecha_expedicion_documento,id_estado_civil,id_genero) values (2,'limonar','irgentorresm@gmail.com','1515436','Javier','Eduardo','Calderon','Villamizar','32318485',1,0,0,0,0,1,'javier','$2a$10$aMefgC8nnLjkzHfYjTjA6eKpdjqhVOlVczgvtJqAD0EUFaWO3U0JO',1,'170','54','54239','1948-10-22','1966-07-04',1,1);
+insert into personas (id,direccion,email,numero_documento,primer_nombre,segundo_nombre,primer_apellido,segundo_apellido,telefono,is_estudiante,is_docente,is_administrativo,is_graduado,is_externo,id_tipo_documento,username,password,enabled,id_pais_nacimiento,id_departamento_nacimiento,id_municipio_nacimiento,fecha_nacimiento,fecha_expedicion_documento,id_estado_civil,id_genero) values (3,'ceci','irmatom.02@gmail.com','1051869','Janes',null,'Duran','Sierra','31482102',1,0,0,0,0,1,'janes','$2a$10$nUMgvSKj1bmtQ.wmDGxu4uioN0GW16uzJUQ0A0aDl.nW4KjU2pPma',1,'170','54','54001','1997-01-03','2015-01-06',2,1);
+insert into personas (id,direccion,email,numero_documento,primer_nombre,segundo_nombre,primer_apellido,segundo_apellido,telefono,is_estudiante,is_docente,is_administrativo,is_graduado,is_externo,id_tipo_documento,username,password,enabled,id_pais_nacimiento,id_departamento_nacimiento,id_municipio_nacimiento,fecha_nacimiento,fecha_expedicion_documento,id_estado_civil,id_genero) values (4,'libertad','jhocelduvanst@ufps.edu.co','159847','Jose','Andres','Hernandez','Florez','31651231',1,0,0,0,0,1,'jose','$2a$10$JzE1av/GQv2Vfbg4UnN2.OIGgV.esym88yyGuAaiWKX/emJ6NSfCK',1,'170','54','54239','1948-10-22','1966-07-04',3,1);
+
 insert into personas (id,direccion,email,numero_documento,primer_nombre,segundo_nombre,primer_apellido,segundo_apellido,telefono,is_estudiante,is_docente,is_administrativo,is_graduado,is_externo,id_tipo_documento,username,password,enabled,id_pais_nacimiento,id_departamento_nacimiento,id_municipio_nacimiento,fecha_nacimiento,fecha_expedicion_documento,id_estado_civil,id_genero) values (5,'zulima','dumar.l.27@gmail.com','10694894','Dumar','Yeksel','Basto','Moreno','321515402',1,0,0,0,0,3,'dumar','$2a$10$NiEunU/JrCcRN3/eIsyJNOaeVBI9.H.5A62GVISEKA4YMCLiXZ0hW',1,'170','54','54001','1997-01-03','2015-01-06',5,1);
 insert into personas (id,direccion,email,numero_documento,primer_nombre,segundo_nombre,primer_apellido,segundo_apellido,telefono,is_estudiante,is_docente,is_administrativo,is_graduado,is_externo,id_tipo_documento,username,password,enabled,id_pais_nacimiento,id_departamento_nacimiento,id_municipio_nacimiento,fecha_nacimiento,fecha_expedicion_documento,id_estado_civil,id_genero) values (6,'lleras','rafael@gmail.com','10518498','Jose','Rafael','Cano','Pabon','32318794',1,0,0,0,0,1,'rafael','$2a$10$eY49DH.rQf5xKaB2MRU/4OE2uFeXM5sj1w90sTn9QsnC9/O6BtMAe',1,'170','54','54239','1948-10-22','1966-07-04',5,1);
 insert into personas (id,direccion,email,numero_documento,primer_nombre,segundo_nombre,primer_apellido,segundo_apellido,telefono,is_estudiante,is_docente,is_administrativo,is_graduado,is_externo,id_tipo_documento,username,password,enabled,id_pais_nacimiento,id_departamento_nacimiento,id_municipio_nacimiento,fecha_nacimiento,fecha_expedicion_documento,id_estado_civil,id_genero) values (7,'barrio blanco','maria@gmail.com','108484','Maria','Alejandra','Mendoza','Serrano','3148492102',1,0,0,0,0,2,'alejandra','$2a$10$GtFcCQ06SgmB4f5M9u.nbuVvHdeP2izJCld.uukBFwlB6uzsTLE.2',1,'170','54','54001','1997-01-03','2015-01-06',4,2);
 insert into personas (id,direccion,email,numero_documento,primer_nombre,segundo_nombre,primer_apellido,segundo_apellido,telefono,is_estudiante,is_docente,is_administrativo,is_graduado,is_externo,id_tipo_documento,username,password,enabled,id_pais_nacimiento,id_departamento_nacimiento,id_municipio_nacimiento,fecha_nacimiento,fecha_expedicion_documento,id_estado_civil,id_genero) values (8,'quinta oriental','fabian@gmail.com','1051484','Jeison','Fabian','Suarez','Ruiz','32321531',1,0,0,0,0,1,'fabian','$2a$10$bfsaFSDiZPsOgbjSEIR2guA9f1KSLVGt3UHxGL5F1J/LkANusberu',1,'170','54','54239','1948-10-22','1966-07-04',8,1);
 
-insert into personas (id,direccion,email,numero_documento,primer_nombre,segundo_nombre,primer_apellido,segundo_apellido,telefono,is_estudiante,is_docente,is_administrativo,is_graduado,is_externo,id_tipo_documento,username,password,enabled,id_pais_nacimiento,id_departamento_nacimiento,id_municipio_nacimiento,fecha_nacimiento,fecha_expedicion_documento,id_estado_civil,id_genero) values (10,'ceiba','yhuver@gmail.com','15845','Yhuver','Andrey','Quintero','Niño','32378741',1,0,0,0,0,3,'yhuver','$2a$10$agPJ4bVyDr9MrKFFn0IdcOzymOIWfkHDrThQrX5cbla7xcpAI/YIe',1,'170','54','54239','1948-10-22','1966-07-04',4,1);
+insert into personas (id,direccion,email,numero_documento,primer_nombre,segundo_nombre,primer_apellido,segundo_apellido,telefono,is_estudiante,is_docente,is_administrativo,is_graduado,is_externo,id_tipo_documento,username,password,enabled,id_pais_nacimiento,id_departamento_nacimiento,id_municipio_nacimiento,fecha_nacimiento,fecha_expedicion_documento,id_estado_civil,id_genero) values (10,'ceiba','auramoreno543@gmail.com','15845','Yhuver','Andrey','Quintero','Niño','32378741',0,0,0,1,0,3,'yhuver','$2a$10$agPJ4bVyDr9MrKFFn0IdcOzymOIWfkHDrThQrX5cbla7xcpAI/YIe',1,'170','54','54239','1948-10-22','1966-07-04',4,1);
 insert into personas (id,direccion,email,numero_documento,primer_nombre,segundo_nombre,primer_apellido,segundo_apellido,telefono,is_estudiante,is_docente,is_administrativo,is_graduado,is_externo,id_tipo_documento,username,password,enabled,id_pais_nacimiento,id_departamento_nacimiento,id_municipio_nacimiento,fecha_nacimiento,fecha_expedicion_documento,id_estado_civil,id_genero) values (11,'prados norte','carla@gmail.com','14854898','Carla','Elena','Ochoa','Florez','321156402',1,0,0,0,0,1,'carla','$2a$10$CjxUPn9nRlH1PxSKBWo9re10x/pke6u5pgsDKFdPgLF87uVJ9gNye',1,'170','54','54001','1997-01-03','2015-01-06',6,2);
 insert into personas (id,direccion,email,numero_documento,primer_nombre,segundo_nombre,primer_apellido,segundo_apellido,telefono,is_estudiante,is_docente,is_administrativo,is_graduado,is_externo,id_tipo_documento,username,password,enabled,id_pais_nacimiento,id_departamento_nacimiento,id_municipio_nacimiento,fecha_nacimiento,fecha_expedicion_documento,id_estado_civil,id_genero) values (12,'garcia herreros','deysi@gmail.com','18456','Deysi','Yuliet','Rincon','Medina','323654891',1,0,0,0,0,1,'deysi','$2a$10$g8Fg3YE0367m3oDfDDCB6u20qy8/m78momOy3lR8woM9lFNLuXcJa',1,'170','54','54239','1948-10-22','1966-07-04',2,2);
 insert into personas (id,direccion,email,numero_documento,primer_nombre,segundo_nombre,primer_apellido,segundo_apellido,telefono,is_estudiante,is_docente,is_administrativo,is_graduado,is_externo,id_tipo_documento,username,password,enabled,id_pais_nacimiento,id_departamento_nacimiento,id_municipio_nacimiento,fecha_nacimiento,fecha_expedicion_documento,id_estado_civil,id_genero) values (13,'motilones','daniela@gmail.com','1087454','Daniela',null,'Rojas','Bernal','321024184',1,0,0,0,0,1,'daniela','$2a$10$A.xBF7LRJIcXr8BW5qE/oe9mSA9Fqih5dip6B/OpT8rwFLc63Z.u2',1,'170','54','54001','1997-01-03','2015-01-06',4,2);
@@ -64,13 +67,13 @@ insert into personas (id,direccion,email,numero_documento,primer_nombre,segundo_
 
 insert into personas (id,direccion,email,numero_documento,primer_nombre,segundo_nombre,primer_apellido,segundo_apellido,telefono,is_estudiante,is_docente,is_administrativo,is_graduado,is_externo,id_tipo_documento,username,password,enabled,id_pais_nacimiento,id_departamento_nacimiento,id_municipio_nacimiento,fecha_nacimiento,fecha_expedicion_documento,id_estado_civil,id_genero) values (21,'sdhfishfiks','trabajogradojj@gmail.com','87984651','Marco','Antonio','Adarme','Jaimes','3157654',0,1,0,0,0,1,'marco','$2y$12$ZtRDeYhOkJ4CIVoHq6rXFe880TXfvPecO84ehzs6AWHqzqTCLACdG',1,'170','05','05001','2002-08-12','2020-06-21',8,1);
 insert into personas (id,direccion,email,numero_documento,primer_nombre,segundo_nombre,primer_apellido,segundo_apellido,telefono,is_estudiante,is_docente,is_administrativo,is_graduado,is_externo,id_tipo_documento,username,password,enabled,id_pais_nacimiento,id_departamento_nacimiento,id_municipio_nacimiento,fecha_nacimiento,fecha_expedicion_documento,id_estado_civil,id_genero) values (22,'hnfisdfiksd','jairofuentes@gmail.com','89787554','Jairo','Alberto','Fuentes','Camargo','354156481',0,1,0,0,0,1,'jairo','$2y$12$m2ZNAm7Y/AhZX6L26ysWpuEZiICqgbNVnNYfWLwyCwY2jJNiKLst2',1,'170','68','68001','1995-04-17','2013-03-07',2,1);
-insert into personas (id,direccion,email,numero_documento,primer_nombre,segundo_nombre,primer_apellido,segundo_apellido,telefono,is_estudiante,is_docente,is_administrativo,is_graduado,is_externo,id_tipo_documento,username,password,enabled,id_pais_nacimiento,id_departamento_nacimiento,id_municipio_nacimiento,fecha_nacimiento,fecha_expedicion_documento,id_estado_civil,id_genero) values (23,'safhiahfhian','oscargallardo@gmail.com','78968754','Oscar','Alberto','Gallardo','Perez','3465455464',0,1,0,0,0,1,'oscar','$2y$12$.0WE21UcXFmZ0v86bicaN.YWOlLZrH5MrTinJS5AKmUhyuQ/vSlQW',1,'408',null,null,'1985-11-04','2003-10-17',4,1);
+insert into personas (id,direccion,email,numero_documento,primer_nombre,segundo_nombre,primer_apellido,segundo_apellido,telefono,is_estudiante,is_docente,is_administrativo,is_graduado,is_externo,id_tipo_documento,username,password,enabled,id_pais_nacimiento,id_departamento_nacimiento,id_municipio_nacimiento,fecha_nacimiento,fecha_expedicion_documento,id_estado_civil,id_genero) values (23,'safhiahfhian','oscar@gmail.com','78968754','Oscar','Alberto','Gallardo','Perez','3465455464',0,1,0,0,0,1,'oscar','$2y$12$.0WE21UcXFmZ0v86bicaN.YWOlLZrH5MrTinJS5AKmUhyuQ/vSlQW',1,'408',null,null,'1985-11-04','2003-10-17',4,1);
 insert into personas (id,direccion,email,numero_documento,primer_nombre,segundo_nombre,primer_apellido,segundo_apellido,telefono,is_estudiante,is_docente,is_administrativo,is_graduado,is_externo,id_tipo_documento,username,password,enabled,id_pais_nacimiento,id_departamento_nacimiento,id_municipio_nacimiento,fecha_nacimiento,fecha_expedicion_documento,id_estado_civil,id_genero) values (24,'uhsfuahn','jairo@gmail.com','89484854','Jairo','Wilgberto','Cely','Niño','31587654',0,1,0,0,0,1,'cely','$2a$10$VBK3Yrn/JMIJ6.wqJBtdI.Y203/8s99N3vMkphI8BXzVK6d60rv0i',1,'170','05','05001','2002-08-12','2020-06-21',8,1);
 insert into personas (id,direccion,email,numero_documento,primer_nombre,segundo_nombre,primer_apellido,segundo_apellido,telefono,is_estudiante,is_docente,is_administrativo,is_graduado,is_externo,id_tipo_documento,username,password,enabled,id_pais_nacimiento,id_departamento_nacimiento,id_municipio_nacimiento,fecha_nacimiento,fecha_expedicion_documento,id_estado_civil,id_genero) values (25,'hsifais','pilar@gmail.com','847854','Judith','del Pilar','Rodriguez','Tenjo','3154887',0,1,0,0,0,1,'pilar','$2a$10$KdwIuJc.yZimQMiE/6VrEOqUry3QFC/BV3e1f3JapsHaG.BbtB/Ru',1,'170','05','05001','2000-04-17','2020-01-19',3,2);
 
 insert into personas (id,direccion,email,numero_documento,primer_nombre,segundo_nombre,primer_apellido,segundo_apellido,telefono,is_estudiante,is_docente,is_administrativo,is_graduado,is_externo,id_tipo_documento,username,password,enabled,id_pais_nacimiento,id_departamento_nacimiento,id_municipio_nacimiento,fecha_nacimiento,fecha_expedicion_documento,id_estado_civil,id_genero) values (26,'safuabujs','mariela@gmail.com','6987418754','Lina','Mariela','Ardila','Marin','348455464',0,1,0,0,0,1,'mariela','$2a$10$5UoetcXYKzSUE8sZBQmlH.Xw7tx/zakSoNminmS33RQGt0t.r6GJe',1,'408',null,null,'1985-11-04','2003-10-17',6,2);
 insert into personas (id,direccion,email,numero_documento,primer_nombre,segundo_nombre,primer_apellido,segundo_apellido,telefono,is_estudiante,is_docente,is_administrativo,is_graduado,is_externo,id_tipo_documento,username,password,enabled,id_pais_nacimiento,id_departamento_nacimiento,id_municipio_nacimiento,fecha_nacimiento,fecha_expedicion_documento,id_estado_civil,id_genero) values (27,'shfuahsfish','olga@gmail.com','841584651','Maria','Olga','Caceres','Carvajal','321487654',0,1,0,0,0,1,'olga','$2a$10$PKiS04lPKqQyNiVLNrlZTOJFVOGRvWbmS1QONq1JR6IK3EGDF6AwO',1,'170','05','05001','2002-08-12','2020-06-21',5,2);
-insert into personas (id,direccion,email,numero_documento,primer_nombre,segundo_nombre,primer_apellido,segundo_apellido,telefono,is_estudiante,is_docente,is_administrativo,is_graduado,is_externo,id_tipo_documento,username,password,enabled,id_pais_nacimiento,id_departamento_nacimiento,id_municipio_nacimiento,fecha_nacimiento,fecha_expedicion_documento,id_estado_civil,id_genero) values (28,'ushfuahsbfu','claudia@gmail.com','874587554','Claudia','Yamile','Gomez','Llanez','354156481',0,1,0,0,0,1,'claudia','$2a$10$n2KzljRmeJTPXupW/dJ2IOwIr.Ma5JZrwQ/2GXwmhGzsYNP3ApiYG',1,'170','68','68001','1995-04-17','2013-03-07',2,2);
+insert into personas (id,direccion,email,numero_documento,primer_nombre,segundo_nombre,primer_apellido,segundo_apellido,telefono,is_estudiante,is_docente,is_administrativo,is_graduado,is_externo,id_tipo_documento,username,password,enabled,id_pais_nacimiento,id_departamento_nacimiento,id_municipio_nacimiento,fecha_nacimiento,fecha_expedicion_documento,id_estado_civil,id_genero) values (28,'ushfuahsbfu','jhocelsuescun19978@gmail.com','874587554','Claudia','Yamile','Gomez','Llanez','354156481',0,1,0,0,0,1,'claudia','$2a$10$n2KzljRmeJTPXupW/dJ2IOwIr.Ma5JZrwQ/2GXwmhGzsYNP3ApiYG',1,'170','68','68001','1995-04-17','2013-03-07',2,2);
 insert into personas (id,direccion,email,numero_documento,primer_nombre,segundo_nombre,primer_apellido,segundo_apellido,telefono,is_estudiante,is_docente,is_administrativo,is_graduado,is_externo,id_tipo_documento,username,password,enabled,id_pais_nacimiento,id_departamento_nacimiento,id_municipio_nacimiento,fecha_nacimiento,fecha_expedicion_documento,id_estado_civil,id_genero) values (29,'fdsiuahfi','jessica@gmail.com','98768754','Jessica','Lorena','Leal','Pabon','3514455464',0,1,0,0,0,1,'jessica','$2a$10$c5kwuKK0LMze/iqB8op3e.nRvZM7G8PobQ/IfMJsdhOfYhZ8ut2jm',1,'408',null,null,'1985-11-04','2003-10-17',4,2);
 insert into personas (id,direccion,email,numero_documento,primer_nombre,segundo_nombre,primer_apellido,segundo_apellido,telefono,is_estudiante,is_docente,is_administrativo,is_graduado,is_externo,id_tipo_documento,username,password,enabled,id_pais_nacimiento,id_departamento_nacimiento,id_municipio_nacimiento,fecha_nacimiento,fecha_expedicion_documento,id_estado_civil,id_genero) values (30,'hfuashfuish','hugo@gmail.com','84184651','Hugo','Enrique','Maldonado',null,'37887654',0,1,0,0,0,1,'hugo','$2a$10$4unT6JVFsq1iwTZjWYUudOrV3xl1wrzZs1fMcgzPHzTnL0ITSQ6Su',1,'170','05','05001','2002-08-12','2020-06-21',3,1);
 insert into personas (id,direccion,email,numero_documento,primer_nombre,segundo_nombre,primer_apellido,segundo_apellido,telefono,is_estudiante,is_docente,is_administrativo,is_graduado,is_externo,id_tipo_documento,username,password,enabled,id_pais_nacimiento,id_departamento_nacimiento,id_municipio_nacimiento,fecha_nacimiento,fecha_expedicion_documento,id_estado_civil,id_genero) values (31,'sfhsuifhu','ludwig@gmail.com','8987554','Ludwig','Enrique','Sierra','Higuera','398156481',0,1,0,0,0,1,'ludwig','$2a$10$m/0/mfDlg7d5FBSbOjLTtO.PHFeGWcQ.ePoilr1rg8vm11jsLQclK',1,'170','68','68001','1995-04-17','2013-03-07',2,1);
@@ -84,18 +87,18 @@ insert into personas (id,direccion,email,numero_documento,primer_nombre,segundo_
 
 
 
-insert into docentes (id_persona,codigo,id_departamento) values (21,'05848',1);
-insert into docentes (id_persona,codigo,id_departamento) values (22,'08465',1);
-insert into docentes (id_persona,codigo,id_departamento) values (23,'01516',1);
-insert into docentes (id_persona,codigo,id_departamento) values (24,'05154',1);
-insert into docentes (id_persona,codigo,id_departamento) values (25,'03546',1);
-insert into docentes (id_persona,codigo,id_departamento) values (26,'84456',7);
-insert into docentes (id_persona,codigo,id_departamento) values (27,'51515',4);
-insert into docentes (id_persona,codigo,id_departamento) values (28,'14848',3);
-insert into docentes (id_persona,codigo,id_departamento) values (29,'14488',4);
-insert into docentes (id_persona,codigo,id_departamento) values (30,'84862',7);
-insert into docentes (id_persona,codigo,id_departamento) values (31,'65348',8);
-insert into docentes (id_persona,codigo,id_departamento) values (32,'52514',1);
+insert into docentes (id_persona,codigo,id_departamento,estado) values (21,'05848',1,1);
+insert into docentes (id_persona,codigo,id_departamento,estado) values (22,'08465',1,1);
+insert into docentes (id_persona,codigo,id_departamento,estado) values (23,'01516',1,1);
+insert into docentes (id_persona,codigo,id_departamento,estado) values (24,'05154',1,1);
+insert into docentes (id_persona,codigo,id_departamento,estado) values (25,'03546',1,1);
+insert into docentes (id_persona,codigo,id_departamento,estado) values (26,'84456',7,1);
+insert into docentes (id_persona,codigo,id_departamento,estado) values (27,'51515',4,1);
+insert into docentes (id_persona,codigo,id_departamento,estado) values (28,'14848',3,1);
+insert into docentes (id_persona,codigo,id_departamento,estado) values (29,'14488',4,1);
+insert into docentes (id_persona,codigo,id_departamento,estado) values (30,'84862',7,1);
+insert into docentes (id_persona,codigo,id_departamento,estado) values (31,'65348',8,1);
+insert into docentes (id_persona,codigo,id_departamento,estado) values (32,'52514',1,1);
 
 insert into programas(id,codigo,programa,id_facultad,id_director) values(1,'111','Ingeniería Civil',6,23);
 insert into programas(id,codigo,programa,id_facultad,id_director) values(2,'115','Ingeniería de Sistemas',6,28);
@@ -108,85 +111,183 @@ insert into programas(id,codigo,programa,id_facultad,id_director) values(8,'134'
 
 
 
-insert into estudiantes (codigo,id_persona,id_programa) values ('115-1241',1,2);
-insert into estudiantes (codigo,id_persona,id_programa) values ('115-1229',2,2);
-insert into estudiantes (codigo,id_persona,id_programa) values ('164-4552',3,3);
-insert into estudiantes (codigo,id_persona,id_programa) values ('150-1956',4,4);
-insert into estudiantes (codigo,id_persona,id_programa) values ('126-8465',5,5);
-insert into estudiantes (codigo,id_persona,id_programa) values ('122-2151',6,6);
-insert into estudiantes (codigo,id_persona,id_programa) values ('180-1845',7,7);
-insert into estudiantes (codigo,id_persona,id_programa) values ('134-4865',8,8);
-insert into estudiantes (codigo,id_persona,id_programa) values ('115-3547',10,2);
-insert into estudiantes (codigo,id_persona,id_programa) values ('164-8941',11,3);
-insert into estudiantes (codigo,id_persona,id_programa) values ('150-6542',12,4);
-insert into estudiantes (codigo,id_persona,id_programa) values ('126-8796',13,5);
-insert into estudiantes (codigo,id_persona,id_programa) values ('122-3214',14,6);
-insert into estudiantes (codigo,id_persona,id_programa) values ('134-8978',16,8);
-insert into estudiantes (codigo,id_persona,id_programa) values ('111-1562',17,1);
-insert into estudiantes (codigo,id_persona,id_programa) values ('164-3546',19,3);
-insert into estudiantes (codigo,id_persona,id_programa) values ('150-8861',20,4);
+insert into estudiantes (codigo,id_persona,id_programa) values ('1151241',1,2);
+insert into estudiantes (codigo,id_persona,id_programa) values ('1151229',2,2);
+insert into estudiantes (codigo,id_persona,id_programa) values ('1644552',3,3);
+insert into estudiantes (codigo,id_persona,id_programa) values ('1501956',4,4);
+insert into estudiantes (codigo,id_persona,id_programa) values ('1268465',5,5);
+insert into estudiantes (codigo,id_persona,id_programa) values ('1222151',6,6);
+insert into estudiantes (codigo,id_persona,id_programa) values ('1801845',7,7);
+insert into estudiantes (codigo,id_persona,id_programa) values ('1344865',8,8);
+insert into estudiantes (codigo,id_persona,id_programa) values ('1648941',11,3);
+insert into estudiantes (codigo,id_persona,id_programa) values ('1506542',12,4);
+insert into estudiantes (codigo,id_persona,id_programa) values ('1268796',13,5);
+insert into estudiantes (codigo,id_persona,id_programa) values ('1223214',14,6);
+insert into estudiantes (codigo,id_persona,id_programa) values ('1348978',16,8);
+insert into estudiantes (codigo,id_persona,id_programa) values ('1111562',17,1);
+insert into estudiantes (codigo,id_persona,id_programa) values ('1643546',19,3);
+insert into estudiantes (codigo,id_persona,id_programa) values ('1508861',20,4);
 
+insert into graduados (anio,id_persona,id_programa) values ('2015',10,2);
 
 insert into administrativos (id_persona,cargo) values (33,'secretaria');
 insert into administrativos (id_persona,cargo) values (34,'vicerector de extension');
 
 insert into externos (id_persona,profesion) values (35,'ing de sistemas');
 
+insert into roles (id, authority) values (1,'ROLE_SUPERADMIN');
+insert into roles (id, authority) values (2,'ROLE_MANAECCU');
+insert into roles (id, authority) values (3,'ROLE_MANPEOPLE');
+insert into roles (id, authority) values (4,'ROLE_ATTENDANCE');
+insert into roles (id, authority) values (5,'ROLE_USER');
+
+##roles superadmin
+insert into personas_x_roles (id_persona, id_rol) values (34,1);
+insert into personas_x_roles (id_persona, id_rol) values (34,5);
+
+##rol gallardo-civil
+insert into personas_x_roles (id_persona, id_rol) values (23,2);
+insert into personas_x_roles (id_persona, id_rol) values (23,3);
+insert into personas_x_roles (id_persona, id_rol) values (23,5);
+
+insert into roles_personas_programas_ec (id_persona, id_rol, id_programa) values (23,2,1);
+insert into rol_persona_tip_pers (id_persona, id_rol, id_tipo_persona) values (23,3,1);
+insert into rol_persona_tip_pers (id_persona, id_rol, id_tipo_persona) values (23,3,3);
+insert into rol_persona_tip_pers (id_persona, id_rol, id_tipo_persona) values (23,3,4);
+insert into rol_persona_tip_pers (id_persona, id_rol, id_tipo_persona) values (23,3,5);
+insert into rol_persona_programa_per (id_persona, id_rol, id_tipo_persona,id_programa) values (23,3,1,1);
+insert into rol_persona_programa_per (id_persona, id_rol, id_tipo_persona,id_programa) values (23,3,4,1);
 
 
-insert into roles(id,authority,id_persona) values(1,'ROLE_USER',1);
-insert into roles(id,authority,id_persona) values(2,'ROLE_BECA',1);
-insert into roles(id,authority,id_persona) values(3,'ROLE_USER',2);
-insert into roles(id,authority,id_persona) values(4,'ROLE_USER',3);
-insert into roles(id,authority,id_persona) values(5,'ROLE_USER',4);
-insert into roles(id,authority,id_persona) values(6,'ROLE_USER',5);
-insert into roles(id,authority,id_persona) values(7,'ROLE_USER',6);
-insert into roles(id,authority,id_persona) values(8,'ROLE_USER',7);
-insert into roles(id,authority,id_persona) values(9,'ROLE_USER',8);
-insert into roles(id,authority,id_persona) values(11,'ROLE_USER',10);
-insert into roles(id,authority,id_persona) values(12,'ROLE_USER',11);
-insert into roles(id,authority,id_persona) values(13,'ROLE_USER',12);
-insert into roles(id,authority,id_persona) values(14,'ROLE_USER',13);
-insert into roles(id,authority,id_persona) values(15,'ROLE_USER',14);
-insert into roles(id,authority,id_persona) values(17,'ROLE_USER',16);
-insert into roles(id,authority,id_persona) values(18,'ROLE_USER',17);
-insert into roles(id,authority,id_persona) values(20,'ROLE_USER',19);
-insert into roles(id,authority,id_persona) values(21,'ROLE_USER',20);
+##rol claudia-sistemas
+insert into personas_x_roles (id_persona, id_rol) values (28,2);
+insert into personas_x_roles (id_persona, id_rol) values (28,3);
+insert into personas_x_roles (id_persona, id_rol) values (28,5);
+
+insert into roles_personas_programas_ec (id_persona, id_rol, id_programa) values (28,2,2);
+insert into rol_persona_tip_pers (id_persona, id_rol, id_tipo_persona) values (28,3,1);
+insert into rol_persona_tip_pers (id_persona, id_rol, id_tipo_persona) values (28,3,2);
+insert into rol_persona_tip_pers (id_persona, id_rol, id_tipo_persona) values (28,3,3);
+insert into rol_persona_tip_pers (id_persona, id_rol, id_tipo_persona) values (28,3,4);
+insert into rol_persona_tip_pers (id_persona, id_rol, id_tipo_persona) values (28,3,5);
+insert into rol_persona_programa_per (id_persona, id_rol, id_tipo_persona,id_programa) values (28,3,1,2);
+insert into rol_persona_programa_per (id_persona, id_rol, id_tipo_persona,id_programa) values (28,3,4,2);
+insert into rol_persona_depto_per (id_persona, id_rol, id_tipo_persona,id_depto) values (28,3,2,4);
+insert into rol_persona_depto_per (id_persona, id_rol, id_tipo_persona,id_depto) values (28,3,2,8);
+
+##rol rene-agroindustrial
+insert into personas_x_roles (id_persona, id_rol) values (32,2);
+insert into personas_x_roles (id_persona, id_rol) values (32,3);
+insert into personas_x_roles (id_persona, id_rol) values (32,5);
+
+insert into roles_personas_programas_ec (id_persona, id_rol, id_programa) values (32,2,3);
+insert into rol_persona_tip_pers (id_persona, id_rol, id_tipo_persona) values (32,3,1);
+insert into rol_persona_tip_pers (id_persona, id_rol, id_tipo_persona) values (32,3,3);
+insert into rol_persona_tip_pers (id_persona, id_rol, id_tipo_persona) values (32,3,4);
+insert into rol_persona_tip_pers (id_persona, id_rol, id_tipo_persona) values (32,3,5);
+insert into rol_persona_programa_per (id_persona, id_rol, id_tipo_persona,id_programa) values (32,3,1,3);
+insert into rol_persona_programa_per (id_persona, id_rol, id_tipo_persona,id_programa) values (32,3,4,3);
 
 
-insert into roles(id,authority,id_persona) values(22,'ROLE_USER',21);
-insert into roles(id,authority,id_persona) values(23,'ROLE_USER',22);
-insert into roles(id,authority,id_persona) values(24,'ROLE_USER',23);
-insert into roles(id,authority,id_persona) values(25,'ROLE_USER',24);
-insert into roles(id,authority,id_persona) values(26,'ROLE_USER',25);
-insert into roles(id,authority,id_persona) values(27,'ROLE_USER',26);
-insert into roles(id,authority,id_persona) values(28,'ROLE_USER',27);
-insert into roles(id,authority,id_persona) values(29,'ROLE_USER',28);
-insert into roles(id,authority,id_persona) values(30,'ROLE_USER',29);
-insert into roles(id,authority,id_persona) values(31,'ROLE_USER',30);
-insert into roles(id,authority,id_persona) values(32,'ROLE_USER',31);
-insert into roles(id,authority,id_persona) values(33,'ROLE_USER',32);
+##rol ludwing-arquitectura
+insert into personas_x_roles (id_persona, id_rol) values (31,2);
+insert into personas_x_roles (id_persona, id_rol) values (31,3);
+insert into personas_x_roles (id_persona, id_rol) values (31,5);
 
-insert into roles(id,authority,id_persona) values(34,'ROLE_ADMIN_CEEC',21);
-insert into roles(id,authority,id_persona) values(35,'ROLE_DOCENTE',22);
-insert into roles(id,authority,id_persona) values(36,'ROLE_ADMIN_CEEC',23);
-insert into roles(id,authority,id_persona) values(37,'ROLE_ADMIN_CEEC',24);
-insert into roles(id,authority,id_persona) values(38,'ROLE_DOCENTE',25);
-insert into roles(id,authority,id_persona) values(39,'ROLE_DOCENTE',26);
-insert into roles(id,authority,id_persona) values(40,'ROLE_ADMIN_CEEC',27);
-insert into roles(id,authority,id_persona) values(41,'ROLE_DOCENTE',28);
-insert into roles(id,authority,id_persona) values(42,'ROLE_DOCENTE',29);
-insert into roles(id,authority,id_persona) values(43,'ROLE_ADMIN_CEEC',30);
-insert into roles(id,authority,id_persona) values(44,'ROLE_DOCENTE',31);
-insert into roles(id,authority,id_persona) values(45,'ROLE_DOCENTE',32);
+insert into roles_personas_programas_ec (id_persona, id_rol, id_programa) values (31,2,4);
+insert into rol_persona_tip_pers (id_persona, id_rol, id_tipo_persona) values (31,3,1);
+insert into rol_persona_tip_pers (id_persona, id_rol, id_tipo_persona) values (31,3,3);
+insert into rol_persona_tip_pers (id_persona, id_rol, id_tipo_persona) values (31,3,4);
+insert into rol_persona_tip_pers (id_persona, id_rol, id_tipo_persona) values (31,3,5);
+insert into rol_persona_programa_per (id_persona, id_rol, id_tipo_persona,id_programa) values (31,3,1,4);
+insert into rol_persona_programa_per (id_persona, id_rol, id_tipo_persona,id_programa) values (31,3,4,4);
+
+##rol lina mariela-comercio
+insert into personas_x_roles (id_persona, id_rol) values (26,2);
+insert into personas_x_roles (id_persona, id_rol) values (26,3);
+insert into personas_x_roles (id_persona, id_rol) values (26,5);
+
+insert into roles_personas_programas_ec (id_persona, id_rol, id_programa) values (26,2,5);
+insert into rol_persona_tip_pers (id_persona, id_rol, id_tipo_persona) values (26,3,1);
+insert into rol_persona_tip_pers (id_persona, id_rol, id_tipo_persona) values (26,3,3);
+insert into rol_persona_tip_pers (id_persona, id_rol, id_tipo_persona) values (26,3,4);
+insert into rol_persona_tip_pers (id_persona, id_rol, id_tipo_persona) values (26,3,5);
+insert into rol_persona_programa_per (id_persona, id_rol, id_tipo_persona,id_programa) values (26,3,1,5);
+insert into rol_persona_programa_per (id_persona, id_rol, id_tipo_persona,id_programa) values (26,3,4,5);
 
 
-insert into roles(id,authority,id_persona) values(46,'ROLE_DIRPROGRAMA',25);
-insert into roles(id,authority,id_persona) values(47,'ROLE_DIRPROGRAMA',23);
-insert into roles(id,authority,id_persona) values(48,'ROLE_USER',33);
-insert into roles(id,authority,id_persona) values(50,'ROLE_USER',34);
-insert into roles(id,authority,id_persona) values(51,'ROLE_SUPERADMIN',34);
-insert into roles(id,authority,id_persona) values(52,'ROLE_USER',35);
+##rol maldonado-contaduria
+insert into personas_x_roles (id_persona, id_rol) values (30,2);
+insert into personas_x_roles (id_persona, id_rol) values (30,3);
+insert into personas_x_roles (id_persona, id_rol) values (30,5);
+
+insert into roles_personas_programas_ec (id_persona, id_rol, id_programa) values (30,2,6);
+insert into rol_persona_tip_pers (id_persona, id_rol, id_tipo_persona) values (30,3,1);
+insert into rol_persona_tip_pers (id_persona, id_rol, id_tipo_persona) values (30,3,3);
+insert into rol_persona_tip_pers (id_persona, id_rol, id_tipo_persona) values (30,3,4);
+insert into rol_persona_tip_pers (id_persona, id_rol, id_tipo_persona) values (30,3,5);
+insert into rol_persona_programa_per (id_persona, id_rol, id_tipo_persona,id_programa) values (30,3,1,6);
+insert into rol_persona_programa_per (id_persona, id_rol, id_tipo_persona,id_programa) values (30,3,4,6);
+
+
+##rol fuentes-enfermeria
+insert into personas_x_roles (id_persona, id_rol) values (22,2);
+insert into personas_x_roles (id_persona, id_rol) values (22,3);
+insert into personas_x_roles (id_persona, id_rol) values (22,5);
+
+insert into roles_personas_programas_ec (id_persona, id_rol, id_programa) values (1,2,7);
+insert into rol_persona_tip_pers (id_persona, id_rol, id_tipo_persona) values (22,3,1);
+insert into rol_persona_tip_pers (id_persona, id_rol, id_tipo_persona) values (22,3,3);
+insert into rol_persona_tip_pers (id_persona, id_rol, id_tipo_persona) values (22,3,4);
+insert into rol_persona_tip_pers (id_persona, id_rol, id_tipo_persona) values (22,3,5);
+insert into rol_persona_programa_per (id_persona, id_rol, id_tipo_persona,id_programa) values (22,3,1,7);
+insert into rol_persona_programa_per (id_persona, id_rol, id_tipo_persona,id_programa) values (22,3,4,7);
+
+
+##rol pilar-trabajo social
+insert into personas_x_roles (id_persona, id_rol) values (25,2);
+insert into personas_x_roles (id_persona, id_rol) values (25,3);
+insert into personas_x_roles (id_persona, id_rol) values (25,5);
+
+insert into roles_personas_programas_ec (id_persona, id_rol, id_programa) values (25,2,8);
+insert into rol_persona_tip_pers (id_persona, id_rol, id_tipo_persona) values (25,3,1);
+insert into rol_persona_tip_pers (id_persona, id_rol, id_tipo_persona) values (25,3,3);
+insert into rol_persona_tip_pers (id_persona, id_rol, id_tipo_persona) values (25,3,4);
+insert into rol_persona_tip_pers (id_persona, id_rol, id_tipo_persona) values (25,3,5);
+insert into rol_persona_programa_per (id_persona, id_rol, id_tipo_persona,id_programa) values (25,3,1,8);
+insert into rol_persona_programa_per (id_persona, id_rol, id_tipo_persona,id_programa) values (25,3,4,8);
+
+
+insert into personas_x_roles (id_persona, id_rol) values (1,5);
+insert into personas_x_roles (id_persona, id_rol) values (2,5);
+insert into personas_x_roles (id_persona, id_rol) values (3,5);
+insert into personas_x_roles (id_persona, id_rol) values (4,5);
+insert into personas_x_roles (id_persona, id_rol) values (5,5);
+insert into personas_x_roles (id_persona, id_rol) values (6,5);
+insert into personas_x_roles (id_persona, id_rol) values (7,5);
+insert into personas_x_roles (id_persona, id_rol) values (8,5);
+insert into personas_x_roles (id_persona, id_rol) values (9,5);
+insert into personas_x_roles (id_persona, id_rol) values (10,5);
+
+insert into personas_x_roles (id_persona, id_rol) values (11,5);
+insert into personas_x_roles (id_persona, id_rol) values (12,5);
+insert into personas_x_roles (id_persona, id_rol) values (13,5);
+insert into personas_x_roles (id_persona, id_rol) values (14,5);
+insert into personas_x_roles (id_persona, id_rol) values (15,5);
+insert into personas_x_roles (id_persona, id_rol) values (16,5);
+insert into personas_x_roles (id_persona, id_rol) values (17,5);
+insert into personas_x_roles (id_persona, id_rol) values (18,5);
+insert into personas_x_roles (id_persona, id_rol) values (19,5);
+insert into personas_x_roles (id_persona, id_rol) values (20,5);
+
+
+insert into personas_x_roles (id_persona, id_rol) values (21,5);
+insert into personas_x_roles (id_persona, id_rol) values (24,5);
+insert into personas_x_roles (id_persona, id_rol) values (27,5);
+insert into personas_x_roles (id_persona, id_rol) values (29,5);
+
+
+
 
 
 insert into tipos_participante(id,tipo_participante) values(1,'Asistente');
@@ -287,7 +388,7 @@ insert into tipos_educacion_continua(id,tipo_educacion_continua) values(4,'Talle
 insert into tipos_educacion_continua(id,tipo_educacion_continua) values(5,'Seminario');
 insert into tipos_educacion_continua(id,tipo_educacion_continua) values(6,'Congreso');
 
-insert into educacion_continua(id,nombre,fecha_inicio,fecha_fin,fecha_lim_inscripcion,contenido_general,cant_max_participantes,resumen,costo,duracion,id_tipo_educacion_continua,imagen,id_docente,id_programa,consecutivo,id_clasificacion_cine,id_tipo_beneficiario,lugar,estado) values(1,'CIINATIC','2020-01-10','2020-01-15','2020-01-08','contenido generalll CIINATIC','10','BBBBB','30000',26,6,'files/uploads/educacion-continua/1/portada.jpg',21,1,'001',711,1,'Auditorio Biblioteca','Activo');
+insert into educacion_continua(id,nombre,fecha_inicio,fecha_fin,fecha_lim_inscripcion,contenido_general,cant_max_participantes,resumen,costo,duracion,id_tipo_educacion_continua,imagen,id_docente,id_programa,consecutivo,id_clasificacion_cine,id_tipo_beneficiario,lugar,estado) values(1,'CIINATIC','2020-01-10','2020-01-15','2020-01-08','contenido generalll CIINATIC','10','BBBBB','30000',26,6,'files/uploads/educacion-continua/1/portada.jpg',28,1,'001',711,1,'Auditorio Biblioteca','Activo');
 insert into educacion_continua(id,nombre,fecha_inicio,fecha_fin,fecha_lim_inscripcion,contenido_general,cant_max_participantes,resumen,costo,duracion,id_tipo_educacion_continua,imagen,id_docente,id_programa,consecutivo,id_clasificacion_cine,id_tipo_beneficiario,lugar,estado) values(2,'EISI','2020-05-30','2020-06-10','2020-05-29','contenido generalll EISI','100','aaaa','52000',40,4,'files/uploads/educacion-continua/2/portada.jpg',27,8,'002',711,2,'Auditorio Eustorgio Colmenares Batista','Activo');
 insert into educacion_continua(id,nombre,fecha_inicio,fecha_fin,fecha_lim_inscripcion,contenido_general,cant_max_participantes,resumen,costo,duracion,id_tipo_educacion_continua,imagen,id_docente,id_programa,consecutivo,id_clasificacion_cine,id_tipo_beneficiario,lugar,estado) values(3,'SEMINARIO VIII ENCUENTRO SEMILLERO Y PROYECTO AULA','2020-02-25','2020-02-29','2020-02-24','contenido generalll de la bienal','10','jdihsig','20000',35,1,'files/uploads/educacion-continua/3/portada.png',29,3,'001',541,1,'Auditorio Postgrados','Activo');
 insert into educacion_continua(id,nombre,fecha_inicio,fecha_fin,fecha_lim_inscripcion,contenido_general,cant_max_participantes,resumen,costo,duracion,id_tipo_educacion_continua,imagen,id_docente,id_programa,consecutivo,id_clasificacion_cine,id_tipo_beneficiario,lugar,estado) values(4,'EISI2','2020-03-05','2020-03-10','2020-03-07','contenido generalll del eisi2','10','indgisng','34800',20,2,'files/uploads/educacion-continua/4/portada.jpg',30,6,'001',1021,3,'Auditorio Jorge Luis Acero Jordán','Activo');
@@ -416,14 +517,14 @@ insert into asistentes(id_participante) values(30);
 insert into asistentes(id_participante) values(31);
 insert into asistentes(id_participante) values(32);
 
-insert into asistencias(id,id_jornada,id_participante) values (1,1,1);
-insert into asistencias(id,id_jornada,id_participante) values (2,2,5);
-insert into asistencias(id,id_jornada,id_participante) values (3,1,11);
-insert into asistencias(id,id_jornada,id_participante) values (4,2,18);
-insert into asistencias(id,id_jornada,id_participante) values (5,1,22);
-insert into asistencias(id,id_jornada,id_participante) values (6,2,22);
-insert into asistencias(id,id_jornada,id_participante) values (7,1,33);
-insert into asistencias(id,id_jornada,id_participante) values (8,1,34);
+##insert into asistencias(id,id_jornada,id_participante) values (1,1,1);
+##insert into asistencias(id,id_jornada,id_participante) values (2,2,5);
+##insert into asistencias(id,id_jornada,id_participante) values (3,1,11);
+##insert into asistencias(id,id_jornada,id_participante) values (4,2,18);
+##insert into asistencias(id,id_jornada,id_participante) values (5,1,22);
+##insert into asistencias(id,id_jornada,id_participante) values (6,2,22);
+##insert into asistencias(id,id_jornada,id_participante) values (7,1,33);
+##insert into asistencias(id,id_jornada,id_participante) values (8,1,34);
 
 
 insert into informes_snies(id,anio,informe_cursos,informe_educacion_continua,informe_participante) values (1,'2020','files/reportes_snies/informe_cursos_snies_2020.xlsx','files/reportes_snies/informe_educacion_continua_snies_2020.xlsx',null);

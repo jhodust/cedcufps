@@ -20,6 +20,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -89,6 +90,12 @@ public class EducacionContinua implements Serializable {
 	private String resumen;
 	
 	private String costo;
+	
+	@NotEmpty(message="El campo porcentaje asistencia es requerido")
+	@Column(name = "porcentaje_asistencia")
+	@Min(value = 1, message = "El porcentaje de asistencia debe estar entre 1 y 100")
+	@Max(value = 100, message = "El porcentaje de asistencia debe estar entre 1 y 100")
+	private String porcentajeAsistencia;
 	
 	@NotNull(message="Seleccione el tipo de Educación Continua")
 	@ManyToOne(fetch = FetchType.EAGER)//cambié lazy por eager
@@ -346,6 +353,14 @@ public class EducacionContinua implements Serializable {
 
 	public void setEstado(String estado) {
 		this.estado = estado;
+	}
+
+	public String getPorcentajeAsistencia() {
+		return porcentajeAsistencia;
+	}
+
+	public void setPorcentajeAsistencia(String porcentajeAsistencia) {
+		this.porcentajeAsistencia = porcentajeAsistencia;
 	}
 	
 	

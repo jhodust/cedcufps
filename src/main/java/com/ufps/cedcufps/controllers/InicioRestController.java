@@ -18,13 +18,14 @@ public class InicioRestController {
 	
 	@PostMapping(value = "/registrarse",produces = "application/json")
 	public ResponseEntity<?> nuevoUsuarioEstudiante(@RequestBody UsuarioDto u) {
-		System.out.println("Entra al metodo");
-		System.out.println(u.getIsEstudiante());
-		System.out.println(u.getIsDocente());
-		System.out.println(u.getIsAdministrativo());
-		System.out.println(u.getIsGraduado());
-		System.out.println(u.getIsExterno());
-		personaService.registrarse(u);
+		System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!**********************************************************");
+		System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!**********************************************************");
+		System.out.println(u.isEstudiante());
+		System.out.println(u.isDocente());
+		System.out.println(u.isAdministrativo());
+		System.out.println(u.isGraduado());
+		System.out.println(u.isExterno());
+		personaService.guardar(u);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 

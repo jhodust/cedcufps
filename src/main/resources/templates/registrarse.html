@@ -32,109 +32,90 @@
 						</div>
 					</div>
 					<hr />
-					<form th:action="@{/usuarios/externo/registro}"
-						th:object="${externo}" method="post" enctype="multipart/form-data">
-						<div class="row">
-							<div class="col-lg-6" id="infoBasica">
-
-								<div class="card pb-5">
-									<div class="card-body">
-										<!-- General information -->
-										<div class="row">
-											<span class="badge badge-red-ufps">Información Básica</span>
-										</div>
-										<div class="row">
-											<div class="col-md-6">
-												<div class="form-group">
-													<label class="form-control-label">Tipo Documento</label> <select
-														class="form-control" data-toggle="select"
-														id="selectTipoDoc">
-														<option value="0">Seleccione Tipo Documento...</option>
-														<option th:each="t: ${tipos_documento}" th:value="${t.id}"
-															th:text="${t.tipoDocumento}"></option>
-													</select> <small class="form-text text-danger"><strong></strong></small>
-												</div>
-											</div>
-											<div class="col-md-6">
-												<div class="form-group">
-													<label class="form-control-label">Número Documento</label>
-													<input class="form-control" type="text"
-														placeholder="Ingrese su número de documento..."
-														id="numDoc" /> <small class="form-text text-danger"><strong></strong></small>
-												</div>
-											</div>
-
-										</div>
-										<div class="row">
-											<div class="col-md-12">
-												<div class="form-group">
-													<label class="form-control-label">Fecha Expedición
-														Documento</label> <input type="text"
-														class="form-control flatpickr-input" data-toggle="date"
-														placeholder="Seleccione fecha..." id="fechaExp" /> <small
-														class="form-text text-danger"><strong></strong></small>
-												</div>
-											</div>
-										</div>
-										<div class="row">
-											<div class="col-md-6">
-												<div class="form-group">
-													<label class="form-control-label">Primer Nombre</label> <input
-														class="form-control" type="text"
-														placeholder="Ingrese su primer nombre..." id="primNom" />
-													<small class="form-text text-danger"><strong></strong></small>
-												</div>
-											</div>
-											<div class="col-md-6">
-												<div class="form-group">
-													<label class="form-control-label">Segundo Nombre</label> <input
-														class="form-control" type="text"
-														placeholder="Ingrese su segundo nombre..." id="segNom" />
-													<small class="form-text text-danger"><strong></strong></small>
-												</div>
-											</div>
-										</div>
-										<div class="row">
-											<div class="col-md-6">
-												<div class="form-group">
-													<label class="form-control-label">Primer Apellido</label> <input
-														class="form-control" type="text"
-														placeholder="Ingrese su primer apellido..." id="primApe" />
-													<small class="form-text text-danger"><strong></strong></small>
-												</div>
-											</div>
-											<div class="col-md-6">
-												<div class="form-group">
-													<label class="form-control-label">Segundo Apellido</label>
-													<input class="form-control" type="text"
-														placeholder="Ingrese su segundo apellido..." id="segApe" />
-													<small class="form-text text-danger"><strong></strong></small>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-
-							</div>
-							<div class="col-lg-6" id="infoPersonal">
+					<label class="reglasForms">Los campos marcados con</label> <label class="requerido pl-2">*</label> <label class="reglasForms">son obligatorios</label>
+						<div th:fragment="formRegistroNuevaPersona">
+							<div id="infoBasica">
 
 								<div class="card">
 									<div class="card-body">
 										<!-- General information -->
 										<div class="row">
-											<span class="badge badge-red-ufps">Información
-												Personal</span>
+											<span class="badge badge-red-ufps">Información Personal</span>
 										</div>
-										<div class="row align-items-center">
+										<div class="row">
+											<div class="col-md-4">
+												<div class="form-group">
+													<label class="form-control-label">Tipo Documento</label><label class="requerido pl-2">*</label> <select
+														class="form-control" data-toggle="select"
+														id="selectTipoDoc">
+														<option value="0">Seleccione Tipo Documento...</option>
+														<option th:each="t: ${tipos_documento}" th:value="${t.id}"
+															th:text="${t.tipoDocumento}" th:selected="${persona.tipoDocumento == t.id}"></option>
+													</select> <small class="form-text text-danger"><strong></strong></small>
+												</div>
+											</div>
+											<div class="col-md-4">
+												<div class="form-group">
+													<label class="form-control-label">Número Documento</label><label class="requerido pl-2">*</label>
+													<input class="form-control" type="text"
+														placeholder="Ingrese su número de documento..." th:value="${persona.numeroDocumento}"
+														id="numDoc" /> <small class="form-text text-danger"><strong></strong></small>
+												</div>
+											</div>
+											<div class="col-md-4">
+												<div class="form-group">
+													<label class="form-control-label">Fecha Expedición
+														Documento</label><label class="requerido pl-2">*</label> <input type="text"
+														class="form-control flatpickr-input" data-toggle="date"
+														placeholder="Seleccione fecha..." id="fechaExp" th:value="${#dates.format(persona.fechaExpedicionDocumento, 'dd/MM/yyyy')}" /> <small
+														class="form-text text-danger"><strong></strong></small>
+												</div>
+											</div>
 
+										</div>
+										<div class="row">
+											<div class="col-md-3">
+												<div class="form-group">
+													<label class="form-control-label">Primer Nombre</label><label class="requerido pl-2">*</label> <input
+														class="form-control" type="text"
+														placeholder="Ingrese su primer nombre..." id="primNom" th:value="${persona.primerNombre}"/>
+													<small class="form-text text-danger"><strong></strong></small>
+												</div>
+											</div>
+											<div class="col-md-3">
+												<div class="form-group">
+													<label class="form-control-label">Segundo Nombre</label> <input
+														class="form-control" type="text"
+														placeholder="Ingrese su segundo nombre..." id="segNom" th:value="${persona.segundoNombre}"/>
+													<small class="form-text text-danger"><strong></strong></small>
+												</div>
+											</div>
+											<div class="col-md-3">
+												<div class="form-group">
+													<label class="form-control-label">Primer Apellido</label><label class="requerido pl-2">*</label> <input
+														class="form-control" type="text"
+														placeholder="Ingrese su primer apellido..." id="primApe" th:value="${persona.primerApellido}"/>
+													<small class="form-text text-danger"><strong></strong></small>
+												</div>
+											</div>
+											<div class="col-md-3">
+												<div class="form-group">
+													<label class="form-control-label">Segundo Apellido</label><label class="requerido pl-2">*</label>
+													<input class="form-control" type="text" th:value="${persona.segundoApellido}"
+														placeholder="Ingrese su segundo apellido..." id="segApe" />
+													<small class="form-text text-danger"><strong></strong></small>
+												</div>
+											</div>
+										</div>
+										<div class="row">
 											<div class="col-md-12">
 												<div class="form-group">
-													<label class="form-control-label">Género</label>
+													<label class="form-control-label">Género</label><label class="requerido pl-2">*</label>
 													<div class="col">
 														<div
 															class="custom-control custom-radio custom-control-inline"
 															th:each="g: ${generos}">
-															<input type="radio" th:id="${g.genero}" name="genero"
+															<input type="radio" th:id="${g.genero}" name="genero" th:checked="${persona.genero == g.id}"
 																class="custom-control-input" th:value="${g.id}" /> <label
 																class="custom-control-label" th:for="${g.genero}"
 																th:text="${g.genero}"></label>
@@ -143,19 +124,19 @@
 													</div>
 												</div>
 											</div>
+										
 										</div>
-										<div class="row align-items-center">
-
-											<div class="col-md-12">
+										<div class="row">
+											<div class="col-md-13">
 
 												<div class="form-group">
-													<label class="form-control-label">Estado Civil</label>
+													<label class="form-control-label">Estado Civil</label><label class="requerido pl-2">*</label>
 
 													<div class="col">
 														<div
 															class="custom-control custom-radio custom-control-inline"
 															th:each="e: ${estados_civiles}">
-															<input type="radio" th:id="${e.estadoCivil}"
+															<input type="radio" th:id="${e.estadoCivil}" th:checked="${persona.estadoCivil == e.id}"
 																name="estadoCivil" class="custom-control-input"
 																th:value="${e.id}" /> <label
 																class="custom-control-label" th:for="${e.estadoCivil}"
@@ -167,49 +148,49 @@
 												</div>
 											</div>
 										</div>
-										<div class="row align-items-center">
-
-											<div class="col-md-6">
+										<div class="row">
+											<div class="col-md-3">
 												<div class="form-group">
-													<label class="form-control-label">Fecha Nacimiento</label>
+													<label class="form-control-label">Fecha Nacimiento</label><label class="requerido pl-2">*</label>
 													<input type="text" class="form-control flatpickr-input"
-														data-toggle="date"
+														data-toggle="date" th:value="${#dates.format(persona.fechaNacimiento, 'dd/MM/yyyy')}" 
 														placeholder="Seleccione su fecha de nacimiento..."
 														id="fechaNac" /> <small class="form-text text-danger"><strong></strong></small>
 												</div>
 											</div>
-											<div class="col-md-6">
+											<div class="col-md-3">
 												<div class="form-group">
-													<label class="form-control-label">Pais Nacimiento</label> <select
+													<label class="form-control-label">Pais Nacimiento</label><label class="requerido pl-2">*</label> <select
 														class="form-control" data-toggle="select"
 														id="selectPaisNacimiento">
 														<option value="0">Seleccione pais...</option>
 													</select> <small class="form-text text-danger"><strong></strong></small>
 												</div>
 											</div>
-										</div>
-										<div class="row" id="rowDeptoYMpioColombia">
-											<div class="col-md-6">
-												<div class="form-group">
-													<label class="form-control-label">Departamento
-														Nacimiento</label> <select class="form-control"
-														data-toggle="select" id="selectDepartamentoNacimiento">
-														<option value="0">Seleccione departamento...</option>
-													</select> <small class="form-text text-danger"><strong></strong></small>
-												</div>
-											</div>
-											<div class="col-md-6">
-												<div class="form-group">
-													<label class="form-control-label">Municipio
-														Nacimiento</label> <select class="form-control"
-														data-toggle="select" id="selectMunicipioNacimiento">
-														<option value="0">Seleccione municipio...</option>
-													</select> <small class="form-text text-danger"><strong></strong></small>
-												</div>
+											<div class="col-md-6" id="rowDeptoYMpioColombia">
+													<div class="col-md-6">
+														<div class="form-group">
+															<label class="form-control-label">Departamento
+																Nacimiento</label><label class="requerido pl-2">*</label> <select class="form-control"
+																data-toggle="select" id="selectDepartamentoNacimiento">
+																<option value="0">Seleccione departamento...</option>
+															</select> <small class="form-text text-danger"><strong></strong></small>
+														</div>
+													</div>
+													<div class="col-md-6">
+														<div class="form-group">
+															<label class="form-control-label">Municipio
+																Nacimiento</label><label class="requerido pl-2">*</label> <select class="form-control"
+																data-toggle="select" id="selectMunicipioNacimiento">
+																<option value="0">Seleccione municipio...</option>
+															</select> <small class="form-text text-danger"><strong></strong></small>
+														</div>
+													</div>
 											</div>
 										</div>
 									</div>
 								</div>
+
 							</div>
 						</div>
 						<div class="row">
@@ -221,32 +202,32 @@
 										</div>
 										Por favor seleccione una o varias de las opciones, esta
 										información permite determinar el perfil al momento de
-										interactuar en el sistema. <br> <br>
+										interactuar en el sistema. <label class="requerido pl-2">*</label> <br> <br>
 										<div class="row">
 											<div class="col-md-12">
 												<div class="custom-control custom-checkbox">
 													<input type="checkbox" class="custom-control-input"
-														id="cbEst" onclick="estudiante()"> <label
+														id="cbEst" onclick="estudiante()" th:checked="${persona.isEstudiante()}"> <label
 														class="custom-control-label" for="cbEst">Estudiante</label>
 												</div>
 												<div class="custom-control custom-checkbox">
 													<input type="checkbox" class="custom-control-input"
-														id="cbDoc" onclick="docente()"> <label
+														id="cbDoc" onclick="docente()" th:checked="${persona.isDocente()}" th:disabled="${persona.isDocente()}"> <label
 														class="custom-control-label" for="cbDoc">Docente</label>
 												</div>
 												<div class="custom-control custom-checkbox">
 													<input type="checkbox" class="custom-control-input"
-														id="cbAdminvo" onclick="adminvo()"> <label
+														id="cbAdminvo" onclick="adminvo()" th:checked="${persona.isAdministrativo()}"> <label
 														class="custom-control-label" for="cbAdminvo">Administrativo</label>
 												</div>
 												<div class="custom-control custom-checkbox">
 													<input type="checkbox" class="custom-control-input"
-														id="cbGraduado" onclick="graduado()"> <label
+														id="cbGraduado" onclick="graduado()" th:checked="${persona.isGraduado()}" > <label
 														class="custom-control-label" for="cbGraduado">Graduado</label>
 												</div>
 												<div class="custom-control custom-checkbox">
 													<input type="checkbox" class="custom-control-input"
-														id="cbExt" onclick="externo()"> <label
+														id="cbExt" onclick="externo()" th:checked="${persona.isExterno()}"> <label
 														class="custom-control-label" for="cbExt">Externo
 														(No vinculado)</label>
 												</div>
@@ -265,8 +246,8 @@
 										<div class="row">
 											<div class="col-md-12">
 												<div class="form-group">
-													<label class="form-control-label">Email</label> <input
-														class="form-control" type="email"
+													<label class="form-control-label">Email</label><label class="requerido pl-2">*</label> <input
+														class="form-control" type="email" th:value="${persona.email}"
 														placeholder="Ingrese su email..." id="email" /> <small
 														class="form-text text-danger"><strong></strong></small>
 												</div>
@@ -276,8 +257,8 @@
 										<div class="row">
 											<div class="col-md-12">
 												<div class="form-group">
-													<label class="form-control-label">Telefono</label> <input
-														class="form-control" type="text"
+													<label class="form-control-label">Telefono</label><label class="requerido pl-2">*</label> <input
+														class="form-control" type="text"  th:value="${persona.telefono}"
 														placeholder="Ingrese su telefono de contacto..."
 														id="telefono" /> <small class="form-text text-danger"><strong></strong></small>
 												</div>
@@ -287,7 +268,7 @@
 											<div class="col-md-12">
 												<div class="form-group">
 													<label class="form-control-label">Dirección</label> <input
-														class="form-control" type="text"
+														class="form-control" type="text" th:value="${persona.direccion}"
 														placeholder="Ingrese su dirección de residencia..."
 														id="direccion" /> <small class="form-text text-danger"><strong></strong></small>
 												</div>
@@ -297,65 +278,74 @@
 								</div>
 							</div>
 						</div>
-						<div class="row">
+						<div class="row" id="divAdicional" style="display:none">
 							<div class="col-lg-12">
 								<div class="card">
 									<div class="card-body">
-										<div id="formEstudiante">
+										<div id="formEstudiante" style="display:none">
 											<div class="row">
 												<span class="badge badge-red-ufps">Información
-													Académica</span>
+													Académica Estudiante</span>
 											</div>
 											<div class="row">
 												<div class="col-md-6">
 													<div class="form-group">
 														<label class="form-control-label">Programa
-															Académico</label> <select class="form-control"
+															Académico</label><label class="requerido pl-2">*</label> <select class="form-control"
 															data-toggle="select" id="programaAsociado">
 															<option value="0">Seleccione el programa...</option>
 															<option th:each="p: ${programas}" th:value="${p.id}"
-																th:text="${p.programa}"></option>
+																th:text="${p.programa}" th:selected="${persona.programa == p.id}"></option>
 														</select> <small class="form-text text-danger"><strong></strong></small>
 													</div>
 												</div>
 												<div class="col-md-6">
 													<div class="form-group">
-														<label class="form-control-label">Código</label><input
-															class="form-control" type="text" data-mask="000-0000"
-															placeholder="000-0000" id="codigo" />
+														<label class="form-control-label">Código</label><label class="requerido pl-2">*</label><input
+															class="form-control" type="text" data-mask="0000000" th:value="${persona.codigo}"
+															placeholder="0000000" id="codigo" />
 													</div>
 													<small class="form-text text-danger"><strong></strong></small>
 												</div>
 											</div>
 										</div>
-										<div id="formDocente">
+										<div id="formDocente" style="display:none">
 											<div class="row">
 												<span class="badge badge-red-ufps">Información
-													Académica</span>
+													Académica Docente</span>
 											</div>
 											<div class="row">
 												<div class="col-md-6">
 													<div class="form-group">
 														<label class="form-control-label">Departamento
-															Académico Adscrito(a)</label> <select class="form-control"
+															Académico Adscrito(a)</label><label class="requerido pl-2">*</label> <select class="form-control"
 															data-toggle="select" id="selectDeptoAdscrito">
 															<option value="0">Seleccione el departamento...</option>
 															<option th:each="d: ${departamentos}" th:value="${d.id}"
-																th:text="${d.departamento}"></option>
+																th:text="${d.departamento}" th:selected="${persona.deptoAdscrito == d.id}"></option>
 														</select> <small class="form-text text-danger"><strong></strong></small>
 													</div>
 												</div>
 												<div class="col-md-6">
 													<div class="form-group">
-														<label class="form-control-label">Código</label> <input
-															class="form-control" type="text"
+														<label class="form-control-label">Código</label><label class="requerido pl-2">*</label> <input
+															class="form-control" type="text" th:value="${persona.codigoDocente}"
 															placeholder="Ingrese su código de docente" id="codDocente" /> <small
 															class="form-text text-danger"><strong></strong></small>
 													</div>
 												</div>
 											</div>
+											<div class="row" th:if="${persona.id != null and persona.isDocente()}">
+												<div class="col-md-6">
+													<div class="custom-control custom-switch">
+													  <input type="checkbox" class="custom-control-input switch" id="switchEstadoDocente"  th:checked="${persona.isEstadoDocente()}">
+													  <label class="custom-control-label" for="switchEstadoDocente"><strong>Estado</strong></label>
+													</div>
+												</div>
+												
+											</div>
 										</div>
-										<div id="formAdministrativo">
+										<div id="formAdministrativo" style="display:none">
 											<div class="row">
 												<span class="badge badge-red-ufps">Información
 													Laboral-Administrativa</span>
@@ -364,22 +354,22 @@
 												<div class="col-md-6">
 													<div class="form-group">
 														<label class="form-control-label">Dependencia
-															Adscrito(a)</label> <input class="form-control" type="text"
-															placeholder="Ingrese la dependencia..." id="dependencia" /> <small
+															Adscrito(a)</label><label class="requerido pl-2">*</label> <input class="form-control" type="text"
+															placeholder="Ingrese la dependencia..." id="dependencia" th:value="${persona.dependencia}" /> <small
 															class="form-text text-danger"><strong></strong></small>
 													</div>
 												</div>
 												<div class="col-md-6">
 													<div class="form-group">
-														<label class="form-control-label">Cargo</label> <input
-															class="form-control" type="text"
+														<label class="form-control-label">Cargo</label><label class="requerido pl-2">*</label> <input
+															class="form-control" type="text" th:value="${persona.cargo}"
 															placeholder="Ingrese su cargo..." id="cargo"/> <small
 															class="form-text text-danger"><strong></strong></small>
 													</div>
 												</div>
 											</div>
 										</div>
-										<div id="formGraduado">
+										<div id="formGraduado" style="display:none">
 											<div class="row">
 												<span class="badge badge-red-ufps">Información
 													Graduado</span>
@@ -388,25 +378,25 @@
 												<div class="col-md-6">
 													<div class="form-group">
 														<label class="form-control-label">Programa
-															del cuál se graduó</label> <select class="form-control"
+															del cuál se graduó</label><label class="requerido pl-2">*</label> <select class="form-control"
 															data-toggle="select" id="selectProgramaGraduado">
 															<option value="0">Seleccione el programa...</option>
 															<option th:each="p: ${programas}" th:value="${p.id}"
-																th:text="${p.programa}"></option>
+																th:text="${p.programa}" th:selected="${persona.programaGraduado == p.id}"></option>
 														</select> <small class="form-text text-danger"><strong></strong></small>
 													</div>
 												</div>
 												<div class="col-md-6">
 													<div class="form-group">
-														<label class="form-control-label">Año</label> <input
-															class="form-control" type="text"
+														<label class="form-control-label">Año</label><label class="requerido pl-2">*</label> <input
+															class="form-control" type="text" th:value="${persona.anioGraduado}"
 															placeholder="Ingrese el año en el que se graduó cargo..." id="anioGraduado"/> <small
 															class="form-text text-danger"><strong></strong></small>
 													</div>
 												</div>
 											</div>
 										</div>
-										<div id="formExterno">
+										<div id="formExterno" style="display:none">
 											<div class="row">
 												<span class="badge badge-red-ufps">Información
 													Laboral</span>
@@ -414,16 +404,16 @@
 											<div class="row">
 												<div class="col-md-6">
 													<div class="form-group">
-														<label class="form-control-label">Profesión</label> <input
+														<label class="form-control-label">Profesión</label><label class="requerido pl-2">*</label> <input
 															class="form-control" type="text"
-															placeholder="Ingrese su profesión..." id="profesion" /> <small
+															placeholder="Ingrese su profesión..." id="profesion" th:value="${persona.profesion}"/> <small
 															class="form-text text-danger"><strong></strong></small>
 													</div>
 												</div>
 												<div class="col-md-6">
 													<div class="form-group">
-														<label class="form-control-label">Empresa en la que labora</label> <input
-															class="form-control" type="text"
+														<label class="form-control-label">Empresa en la que labora</label><label class="requerido pl-2">*</label> <input
+															class="form-control" type="text" th:value="${persona.empresa}"
 															placeholder="Ingrese la empresa..." id="empresa" /> <small
 															class="form-text text-danger"><strong></strong></small>
 													</div>
@@ -436,18 +426,17 @@
 									</div>
 									
 								</div>
-								<div class="row">
+								
+							</div>
+						</div>
+						<div class="row">
 										<button type="button"
 											class="btn btn-sm btn-red-ufps">Cancelar</button>
 										
 										<button type="submit"
 											class="btn btn-sm btn-red-ufps save">Guardar</button>
 								</div>
-							</div>
-						</div>
-						
-
-					</form>
+					
 				</div>
 			</div>
 
@@ -459,167 +448,12 @@
 	<!-- Core JS - includes jquery, bootstrap, popper, in-view and sticky-kit -->
 	<div th:replace="layouts/layout :: scripts"></div>
 	<script th:src="@{/js/usuario.js}" type="text/javascript"></script>
-	<script>
-	$(document).ready(function ()
-			{
-		/*ocultar('formEstudiante');
-		ocultar('formDocente');
-		ocultar('formAdministrativo');
-		ocultar('formGraduado');
-		ocultar('formExterno');
-		*/
-		$('.save')
-				.on(
-						'click',
-						function(e) {
-							e.preventDefault();
-							var userJSON = {};
-							userJSON.tipoDocumento = $('#selectTipoDoc').val();
-							userJSON.numeroDocumento = $('#numDoc').val();
-							userJSON.fechaExpedicionDocumento = $('#fechaExp')
-									.val();
-							userJSON.primerNombre = $('#primNom').val();
-							userJSON.segundoNombre = $('#segNom').val();
-							userJSON.primerApellido = $('#primApe').val();
-							userJSON.segundoApellido = $('#segApe').val();
-							userJSON.genero = $('input[name="genero"]:checked')
-									.val();
-							userJSON.estadoCivil = $(
-									'input[name="estadoCivil"]:checked').val();
-							userJSON.fechaNacimiento = $('#fechaNac').val();
-							userJSON.idPaisNacimiento = $(
-									'#selectPaisNacimiento').val();
-							userJSON.idDepartamentoNacimiento = $(
-									'#selectDepartamentoNacimiento').val();
-							userJSON.idMunicipioNacimiento = $(
-									'#selectMunicipioNacimiento').val();
-							userJSON.email = $('#email').val();
-							userJSON.direccion = $('#direccion').val();
-							userJSON.telefono = $('#telefono').val();
-							userJSON.codigo = $('#codigo').val();
-							userJSON.programa = $('#programaAsociado').val();
-							userJSON.profesion = $('#codigo').val();
-							userJSON.isEstudiante=document.getElementById("cbEst").checked ? 1:0;
-							userJSON.isDocente=document.getElementById("cbDoc").checked ? 1:0;
-							userJSON.isAdministrativo=document.getElementById("cbAdminvo").checked ? 1:0;
-							userJSON.isGraduado=document.getElementById("cbGraduado").checked ? 1:0;
-							userJSON.isExterno=document.getElementById("cbExt").checked ? 1:0;
-							userJSON.programaGraduado=$('#selectProgramaGraduado').val();
-							userJSON.anioGraduado=$('#anioGraduado').val();
-							userJSON.deptoAdscrito=$('#selectDeptoAdscrito').val();
-							userJSON.codigoDocente=$('#codDocente').val();
-							userJSON.dependencia=$('#dependencia').val();
-							userJSON.cargo=$('#cargo').val();
-							userJSON.empresa=$('#empresa').val();
-							
-							console.log(userJSON);
-							$
-									.ajax({
-										headers : {
-											"X-CSRF-TOKEN" : token
-										},
-										type : "POST",
-										contentType : "application/json; charset=utf-8",
-										data : JSON.stringify(userJSON),//variable idEducacionContinua la recibo de un script al final del index de jornadas
-										url : "/registrarse",
-										cache : false,
-										success : function(result) {
-											toastr
-													.success(
-															'Se ha creado su usuario, inicie Sesión para acceder',
-															'Excelente!')
-											/*window.setTimeout(function() {
-												window.location.href = "/"
-											}, 1000);
-											*/
-										},
-										error : function(err) {
-											toastr
-													.error(
-															'No se pudo procesar la solicitud...',
-															'Error!');
-											console.log(err);
-											/*err.responseJSON.forEach(function(error){
-												if(error.field=="horaInicio"){
-													var inputHoraInicio=document.getElementById('horaInicio');
-													var errorHoraInicio=document.getElementById('errorHoraInicio');
-													errorHoraInicio.innerText=error.defaultMessage;
-													inputHoraInicio.classList.add("is-invalid");
-												}
-												if(error.field=="horaFin"){
-													var inputHoraFin=document.getElementById('horaFin');
-													var errorHoraFin=document.getElementById('errorHoraFin');
-													errorHoraFin.innerText=error.defaultMessage;
-													inputHoraFin.classList.add("is-invalid");
-												}
-											  });*/
-										}
-									});
-						});
-			});
-	function estudiante() {
-		var cbEst = document.getElementById("cbEst");
-		if (cbEst.checked == true) {
-			mostrar('formEstudiante','block');
-			ocultar('formExterno');
-			$("#cbExt").prop("checked", false);
-		} else {
-			ocultar('formEstudiante');
-		}
-	}
-
-	function docente() {
-		var cbDoc = document.getElementById("cbDoc");
-		if (cbDoc.checked == true) {
-			mostrar('formDocente','block');
-			ocultar('formExterno');
-			$("#cbExt").prop("checked", false);
-		} else {
-			ocultar('formDocente');
-		}
-	}
-
-	function adminvo() {
-		var cbAdmin = document.getElementById("cbAdminvo");
-		if (cbAdmin.checked == true) {
-			mostrar('formAdministrativo','block');
-			ocultar('formExterno');
-			$("#cbExt").prop("checked", false);
-		} else {
-			ocultar('formAdministrativo');
-		}
-	}
-
-	function graduado() {
-		var cbGrad = document.getElementById("cbGraduado");
-		if (cbGrad.checked == true) {
-			mostrar('formGraduado','block');
-			ocultar('formExterno');
-			$("#cbExt").prop("checked", false);
-		} else {
-			ocultar('formGraduado');
-		}
-	}
-
-	function externo() {
-		var cbEx = document.getElementById("cbExt");
-		if (cbEx.checked == true) {
-			$("#cbEst").prop("checked", false);
-			$("#cbDoc").prop("checked", false);
-			$("#cbAdminvo").prop("checked", false);
-			$("#cbGraduado").prop("checked", false);
-			mostrar('formExterno','block');
-			ocultar('formEstudiante','block');
-			ocultar('formDocente','block');
-			ocultar('formAdministrativo','block');
-			ocultar('formGraduado','block');
-
-		} else {
-			ocultar('formExterno');
-		}
-	}
-
+	<script type="text/javascript">
+		var caso=0;
 	</script>
+	<script th:src="@{/js/registroUsuario.js}" type="text/javascript"></script>
+	<script th:src="@{/js/validacionRegistroUsuario.js}" type="text/javascript"></script>
+	
 </body>
 
 </html>

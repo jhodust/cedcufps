@@ -21,9 +21,6 @@ public class JornadaMapper implements IJornadaMapper {
 				jornada.setId(j.getId());
 				jornada.setHoraFin(j.getHoraFin());
 				jornada.setHoraInicio(j.getHoraInicio());
-				jornada.setIdEducacionContinua(j.getEducacionContinua().getId());
-				jornada.setFechaInicioEduContinua(j.getEducacionContinua().getFechaInicio());
-				jornada.setFechaFinEduContinua(j.getEducacionContinua().getFechaFin());
 				jadto.add(jornada);
 			}
 		}

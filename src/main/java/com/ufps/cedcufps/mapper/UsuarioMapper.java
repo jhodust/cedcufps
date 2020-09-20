@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -15,9 +16,11 @@ import org.springframework.stereotype.Repository;
 import com.ufps.cedcufps.dao.IDepartamentoDao;
 import com.ufps.cedcufps.dao.IEstadoCivilDao;
 import com.ufps.cedcufps.dao.IGeneroDao;
+import com.ufps.cedcufps.dao.IPersonaDao;
 import com.ufps.cedcufps.dao.IProgramaDao;
 import com.ufps.cedcufps.dao.ITipoDocumentoDao;
 import com.ufps.cedcufps.dao.ITipoPersonaDao;
+import com.ufps.cedcufps.dto.PersonaDto;
 import com.ufps.cedcufps.dto.UsuarioAppDto;
 import com.ufps.cedcufps.dto.UsuarioDto;
 import com.ufps.cedcufps.exception.CustomException;
@@ -38,6 +41,9 @@ import com.ufps.cedcufps.modelos.TipoPersona;
 @Repository
 public class UsuarioMapper implements IUsuarioMapper {
 
+	@Autowired
+	private IPersonaDao personaDao;
+	
 	@Autowired
 	private ITipoDocumentoDao tipoDocumentoDao;
 	
@@ -63,8 +69,6 @@ public class UsuarioMapper implements IUsuarioMapper {
 		TipoDocumento td=null;
 		Genero g=null;
 		EstadoCivil ec=null;
-		TipoPersona tp=null;
-		Programa p=null;
 		try {
 			td = tipoDocumentoDao.findById(u.getTipoDocumento()).get();
 		}catch(Exception ex) {
@@ -83,71 +87,59 @@ public class UsuarioMapper implements IUsuarioMapper {
 			throw new CustomException("No se encontró el estado civil en la base de datos");
 		}
 		
-		try {
-			tp= tipoPersonaDao.findById((long) 1).get();
-		}catch(Exception ex) {
-			throw new CustomException("No se encontró el tipo usuario en la base de datos");
-		}
-			
 		
-		try {
-			p= programaDao.findById(u.getPrograma()).get();
-		}catch(Exception ex) {
-			throw new CustomException("No se encontró el programa en la base de datos");
-		}	
+			
+		if(personaDao.validarDocumentoRegistrado(u.getId(), u.getNumeroDocumento())>0) {
+			throw new CustomException("El documento ingresado ya fue registrado en la base de datos");
+		}
+		
+		
+		if(personaDao.validarEmailRegistrado(u.getNumeroDocumento(), u.getEmail())>0) {
+			throw new CustomException("El email ingresado ya fue registrado en la base de datos");
+		}
+		
 			
 		  
-		
+		pe.setId(u.getId());
 		pe.setTipoDocumento(td);
 		pe.setNumeroDocumento(u.getNumeroDocumento());
-		try {
-			pe.setFechaExpedicionDocumento(new SimpleDateFormat("dd/MM/yyyy").parse(u.getFechaExpedicionDocumento()));
-		} catch (ParseException e1) {
-			// TODO Auto-generated catch block
-			throw new CustomException("Fecha Expedición Documento inválida");
-		}
+		
+			pe.setFechaExpedicionDocumento(u.getFechaExpedicionDocumento());
+		
 		pe.setPrimerNombre(u.getPrimerNombre());
 		pe.setSegundoNombre(u.getSegundoNombre());
 		pe.setPrimerApellido(u.getPrimerApellido());
 		pe.setSegundoApellido(u.getSegundoApellido());
 		pe.setGenero(g);
 		pe.setEstadoCivil(ec);
-		try {
-			pe.setFechaNacimiento(new SimpleDateFormat("dd/MM/yyyy").parse(u.getFechaNacimiento()));
-		} catch (ParseException e1) {
-			// TODO Auto-generated catch block
-			throw new CustomException("Fecha Nacimiento inválida");
-		}
+		
+			pe.setFechaNacimiento(u.getFechaNacimiento());
+		
 		pe.setIdPaisNacimiento(u.getIdPaisNacimiento());
 		pe.setIdMunicipioNacimiento(u.getIdMunicipioNacimiento());
 		pe.setIdDepartamentoNacimiento(u.getIdDepartamentoNacimiento());
 		pe.setEmail(u.getEmail());
 		pe.setDireccion(u.getDireccion());
 		pe.setTelefono(u.getTelefono());
+		pe.setEstudiante(u.isEstudiante());
+		pe.setDocente(u.isDocente());
+		pe.setAdministrativo(u.isAdministrativo());
+		pe.setGraduado(u.isGraduado());
+		pe.setExterno(u.isExterno());
 		
-		if(u.getIsExterno()==1) {
-			pe.setExterno(true);
-		}else {
-			if(u.getIsEstudiante()==1) {
-				pe.setEstudiante(true);
-			}
-			if(u.getIsDocente()==1) {
-				pe.setDocente(true);
-			}
-			if(u.getIsAdministrativo()==1) {
-				pe.setAdministrativo(true);
-			}
-			if(u.getIsGraduado()==1) {
-				pe.setGraduado(true);
-			}
-			
-		}
+		System.out.println("**********************************************************");
+		System.out.println("**********************************************************");
+		System.out.println(u.isEstudiante());
+		System.out.println(u.isDocente());
+		System.out.println(u.isAdministrativo());
+		System.out.println(u.isGraduado());
+		System.out.println(u.isExterno());
 		
 		List<Rol> r= new ArrayList<>();
 		Rol rol= new Rol();
 		rol.setAuthority("ROLE_USER");
 		r.add(rol);
-		pe.setRoles(r);
+		//pe.setRoles(r);
 		return pe;
 	}
 	
@@ -197,6 +189,7 @@ public class UsuarioMapper implements IUsuarioMapper {
 		d.setId(idPersona);
 		d.setDepartamento(de);
 		d.setCodigo(u.getCodigoDocente());
+		d.setEstado(u.isEstadoDocente());
 		return d;
 	}
 
@@ -216,7 +209,7 @@ public class UsuarioMapper implements IUsuarioMapper {
 		Programa p=null;
 		
 		try {
-			p= programaDao.findById(u.getPrograma()).get();
+			p= programaDao.findById(u.getProgramaGraduado()).get();
 		}catch(Exception ex) {
 			throw new CustomException("No se encontró el programa del cuál se graduó en la base de datos");
 		}
@@ -244,6 +237,147 @@ public class UsuarioMapper implements IUsuarioMapper {
 		dto.setAdministrativo(p.isAdministrativo());
 		dto.setGraduado(p.isGraduado());
 		dto.setExterno(p.isExterno());
+		return dto;
+	}
+
+	@Override
+	public List<PersonaDto> convertListPersonasToPersonaDto(List<Persona> personas) {
+		// TODO Auto-generated method stub
+		List<PersonaDto> list= new ArrayList<PersonaDto>();
+		for(Persona p: personas) {
+			list.add(this.convertPersonaToPersonaDto(p));
+		}
+		return list;
+	}
+
+	@Override
+	public PersonaDto convertPersonaToPersonaDto(Persona persona) {
+		// TODO Auto-generated method stub
+		PersonaDto dto= new PersonaDto();
+		dto.setId(persona.getId());
+		dto.setDocumento(persona.getNumeroDocumento());
+		dto.setEmail(persona.getEmail());
+		String nombre="";
+		if( persona.getPrimerNombre()!=null) {
+			nombre=persona.getPrimerNombre();
+		}
+		
+		if( persona.getSegundoNombre()!=null) {
+			nombre=nombre + " " + persona.getSegundoNombre();
+		}
+		
+		if(persona.getPrimerApellido()!=null ) {
+			nombre=nombre + " " + persona.getPrimerApellido();
+		}
+		
+		if( persona.getSegundoApellido()!=null) {
+			nombre=nombre + " " + persona.getSegundoApellido();
+		}
+		
+		dto.setNombre(nombre);
+		
+		String perfiles="";
+		if(persona.isEstudiante()) {
+			if(perfiles.isEmpty()) {
+				perfiles="estudiante";
+			}
+		}
+		
+		if(persona.isDocente()) {
+			if(perfiles.isEmpty()) {
+				perfiles="docente";
+			}else {
+				perfiles=perfiles+"-docente";
+			}
+		}
+		
+		if(persona.isAdministrativo()) {
+			if(perfiles.isEmpty()) {
+				perfiles="administrativo";
+			}else {
+				perfiles=perfiles+"-administrativo";
+			}
+		}
+		
+		if(persona.isGraduado()) {
+			if(perfiles.isEmpty()) {
+				perfiles="graduado";
+			}else {
+				perfiles=perfiles+"-graduado";
+			}
+		}
+		
+		if(persona.isExterno()) {
+			if(perfiles.isEmpty()) {
+				perfiles="externo";
+			}else {
+				perfiles=perfiles+"-externo";
+			}
+		}
+		dto.setPerfiles(perfiles);
+		return dto;
+	}
+
+	@Override
+	public UsuarioDto convertPersonaToUsuarioDto(Persona p, Estudiante e, Docente d, 
+			Administrativo a, Graduado g, Externo ex) {
+		// TODO Auto-generated method stub
+		UsuarioDto dto= new UsuarioDto();
+		dto.setId(p.getId());
+		dto.setPrimerNombre(p.getPrimerNombre());
+		dto.setSegundoNombre(p.getSegundoNombre());
+		dto.setPrimerApellido(p.getPrimerApellido());
+		dto.setSegundoApellido(p.getSegundoApellido());
+		dto.setTipoDocumento(p.getTipoDocumento().getId());
+		dto.setNumeroDocumento(p.getNumeroDocumento());
+		dto.setGenero(p.getGenero().getId());
+		dto.setEstadoCivil(p.getEstadoCivil().getId());
+		dto.setFechaNacimiento(p.getFechaNacimiento());
+		dto.setFechaExpedicionDocumento(p.getFechaExpedicionDocumento());
+		dto.setIdPaisNacimiento(p.getIdPaisNacimiento());
+		dto.setIdDepartamentoNacimiento(p.getIdDepartamentoNacimiento());
+		dto.setIdMunicipioNacimiento(p.getIdMunicipioNacimiento());
+		dto.setEmail(p.getEmail());
+		dto.setDireccion(p.getDireccion());
+		dto.setTelefono(p.getTelefono());
+		dto.setEstudiante(p.isEstudiante());
+		dto.setDocente(p.isDocente());
+		dto.setAdministrativo(p.isAdministrativo());
+		dto.setGraduado(p.isGraduado());
+		dto.setAdministrativo(p.isAdministrativo());
+		
+		System.out.println("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
+		System.out.println(e!=null);
+		System.out.println(d!=null);
+		System.out.println(a!=null);
+		System.out.println(g!=null);
+		System.out.println(ex!=null);
+		if(e!=null) {
+			dto.setPrograma(e.getPrograma().getId());
+			dto.setCodigo(e.getCodigo());
+		}
+		
+		if(d!=null) {
+			dto.setDeptoAdscrito(d.getDepartamento().getId());
+			dto.setCodigoDocente(d.getCodigo());
+			dto.setEstadoDocente(d.isEstado());
+		}
+		
+		if(a!=null) {
+			dto.setCargo(a.getCargo());
+			dto.setDependencia(a.getDependencia());
+		}
+		
+		if(g!=null) {
+			dto.setProgramaGraduado(g.getId());
+			dto.setAnioGraduado(g.getAnio());
+		}
+		
+		if(ex!=null) {
+			dto.setEmpresa(ex.getEmpresa());
+			dto.setProfesion(ex.getProfesion());
+		}
+		
 		return dto;
 	}
 

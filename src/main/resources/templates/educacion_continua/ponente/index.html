@@ -19,7 +19,7 @@
 		  <ol class="breadcrumb breadcrumb-links">
 		    <li class="breadcrumb-item"><a class="red-ufps-breadcrumb" th:href="@{/}">Inicio</a></li>
 		    <li class="breadcrumb-item"><a class="red-ufps-breadcrumb" th:href="@{/educacion-continua}">Educaciones Continuas</a></li>
-		    <li class="breadcrumb-item" th:if="${educacionContinua.id != null}"><a class="red-ufps-breadcrumb"  th:href="@{/educacion-continua/{id}/detalles(id=${educacionContinua.id})}">Detalles</a></li>
+		    <li class="breadcrumb-item" th:if="${educacionContinua.id != null}"><a class="red-ufps-breadcrumb" th:href="@{/educacion-continua/detalles?educacionContinua={educacionContinua}(educacionContinua=${educacionContinua.nombre})}">Detalles</a></li>
 		    <li class="breadcrumb-item active" aria-current="page">Ponentes</li>
 		  </ol>
 		</nav>

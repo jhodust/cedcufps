@@ -7,7 +7,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.ufps.cedcufps.dto.DepartamentoDto;
+import com.ufps.cedcufps.dto.EducacionContinuaAppDto;
+import com.ufps.cedcufps.dto.PerfilRolUsuarioDto;
+import com.ufps.cedcufps.dto.ProgramaDto;
+import com.ufps.cedcufps.dto.UsuarioDto;
 import com.ufps.cedcufps.modelos.Administrativo;
 import com.ufps.cedcufps.modelos.Docente;
 import com.ufps.cedcufps.modelos.Estudiante;
@@ -32,12 +38,8 @@ public class PersonaController {
 	@RequestMapping(value = "/usuarios")
 	public String listar(Model model) {
 		model.addAttribute("titulo","PROGRAMAS");
-		model.addAttribute("personas",personaService.findAllPersonas());
-		model.addAttribute("estudiantes",personaService.findAllEstudiantes());
-		model.addAttribute("docentes",personaService.findAllDocentes());
-		model.addAttribute("administrativos",personaService.findAllAdministrativos());
-		model.addAttribute("externos",personaService.findAllExternos());
-		
+		model.addAttribute("personas",personaService.findAllPersonasPosibles());
+		model.addAttribute("otorganPermisos",personaService.isSuperAdmin() || personaService.isDirPrograma() );
 		
 		return "persona/index";
 	}
@@ -61,13 +63,14 @@ public class PersonaController {
 		return "persona/form";
 	}*/
 	
-	@RequestMapping(value = "/usuarios/registro/{id}")
-	public String editar(@PathVariable(value = "id") Long id, Map<String, Object> model) {
-		Persona p= personaService.findOne(id).get();
+	@RequestMapping(value = "/usuarios/registro")
+	public String crear(Map<String, Object> model) {
+		model.put("persona",new UsuarioDto());
 		model.put("titulo","FORMULARIO PERSONA");
 		model.put("tipos_documento",personaService.findAllTiposDocumento());
 		model.put("tipos_persona",personaService.findAllTiposPersona());
 		model.put("programas",personaService.findAllProgramas());
+		model.put("departamentos",personaService.findAllDepartamentos());
 		model.put("generos",personaService.findAllGeneros());
 		model.put("estados_civiles",personaService.findAllEstadosCiviles());
 		/*if(p.getTipoPersona().getTipoPersona().equalsIgnoreCase("Estudiante")) {
@@ -83,19 +86,75 @@ public class PersonaController {
 			model.put("externo",(Externo)personaService.findOne(id).get());
 			return "redirect:/usuarios/externo/registro/"+p.getId();
 		}*/
-		return null;
+		return "persona/form";
+	}
+	
+	@RequestMapping(value = "/usuarios/registro/{id}")
+	public String editar(@PathVariable(value = "id") Long id, Map<String, Object> model) {
+		model.put("titulo","FORMULARIO PERSONA");
+		model.put("tipos_documento",personaService.findAllTiposDocumento());
+		model.put("tipos_persona",personaService.findAllTiposPersona());
+		model.put("programas",personaService.findAllProgramas());
+		model.put("generos",personaService.findAllGeneros());
+		model.put("estados_civiles",personaService.findAllEstadosCiviles());
+		model.put("departamentos",personaService.findAllDepartamentos());
+		model.put("persona", personaService.editarUsuario(id));
+		model.put("otorganPermisos",personaService.isSuperAdmin() || personaService.isDirPrograma() );
+		/*if(p.getTipoPersona().getTipoPersona().equalsIgnoreCase("Estudiante")) {
+			model.put("estudiante",(Estudiante)personaService.findOne(id).get());
+			return "redirect:/usuarios/estudiante/registro/"+p.getId();
+		}else if(p.getTipoPersona().getTipoPersona().equalsIgnoreCase("Docente")) {
+			model.put("docente",(Docente)personaService.findOne(id).get());
+			return "redirect:/usuarios/docente/registro/"+p.getId();
+		}else if(p.getTipoPersona().getTipoPersona().equalsIgnoreCase("Administrativo")) {
+			model.put("administrativo",(Administrativo)personaService.findOne(id).get());
+			return "redirect:/usuarios/administrativo/registro/"+p.getId();
+		}else{
+			model.put("externo",(Externo)personaService.findOne(id).get());
+			return "redirect:/usuarios/externo/registro/"+p.getId();
+		}*/
+		return "persona/form";
 	}
 	
 	@RequestMapping(value = "/persona/{id}/permisos")
-	public String permisos(@PathVariable(value = "id") Long idPersona, Map<String, Object> model) {
-		model.put("persona",personaService.findOne(idPersona).get());
-		model.put("programas",programaService.findAll());
-		model.put("departamentos",departamentoService.findAll());
-		System.out.println(personaService.findOne(idPersona).get().isEstudiante());
-		System.out.println(personaService.findOne(idPersona).get().isDocente());
-		System.out.println(personaService.findOne(idPersona).get().isAdministrativo());
-		System.out.println(personaService.findOne(idPersona).get().isGraduado());
-		System.out.println(personaService.findOne(idPersona).get().isExterno());
+	public String permisos(@PathVariable(value = "id") Long idPersona, Map<String, Object> model,RedirectAttributes redirectAttributes) {
+		PerfilRolUsuarioDto dto=personaService.findPermisos(idPersona);
+		if(dto==null) {
+			redirectAttributes.addFlashAttribute("errorMessage", "No es posible que gestione los permisos de otros usuarios");
+			return "redirect:/usuarios";
+		}
+		model.put("persona",dto);
+		System.out.println("is director: " + dto.isDirPrograma());
+		System.out.println("****************************************************************************************");
+		System.out.println("va a entrar a programas para edu continua");
+		System.out.println(dto.getProgramasForEduContinua().size());
+		for(ProgramaDto p: dto.getProgramasForEduContinua()) {
+			System.out.println(p.getId());
+		}
+		
+		System.out.println("va a entrar a programas para estudiantes");
+		System.out.println(dto.getProgramasForEstudiantes().size());
+		for(ProgramaDto p: dto.getProgramasForEstudiantes()) {
+			System.out.println(p.getId());
+		}
+		
+		System.out.println("va a entrar a deptos para docentes");
+		System.out.println(dto.getDeptosForDocentes().size());
+		for(DepartamentoDto p: dto.getDeptosForDocentes()) {
+			System.out.println(p.getId());
+		}
+		
+		System.out.println("va a entrar a programas para graduados");
+		System.out.println(dto.getProgramasForGraduados().size());
+		for(ProgramaDto p: dto.getProgramasForGraduados()) {
+			System.out.println(p.getId());
+		}
+		
+		System.out.println("va a entrar a educ  para asistencia");
+		System.out.println(dto.getEduContinuasForAttendance().size());
+		for(EducacionContinuaAppDto p: dto.getEduContinuasForAttendance()) {
+			System.out.println(p.getId());
+		}
 		return "persona/permisos";
 	}
 }

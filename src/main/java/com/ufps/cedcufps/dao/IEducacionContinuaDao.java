@@ -50,5 +50,22 @@ public interface IEducacionContinuaDao extends CrudRepository<EducacionContinua,
 	@Query("select e from EducacionContinua e where e.docenteResponsable.numeroDocumento = ?1 or e.programaResponsable.id = ?2")
 	public List<EducacionContinua> findAllEducacionContinuaACargoDirector(String numDocumento,Long idProgramaDirector);
 	
+	
 	public EducacionContinua findByNombre(String educacionContinua);
+	
+	@Query("select e from EducacionContinua e where e.id IN (?1)")
+	public List<EducacionContinua> findByManyIds(List<Long> idsEduContinua);
+	
+	@Query(value = "select e.* from rol_persona_asistencia rpa join educacion_continua e on rpa.id_edu_continua=e.id where rpa.id_persona= ?1", nativeQuery = true)
+	public List<EducacionContinua> findEduContinuasPermissionForAttendance(Long idPersona);
+	
+	
+	@Query(value = "select e.* from educacion_continua e  where e.id_programa=?1", nativeQuery = true)
+	public List<EducacionContinua> findEduContinuasPermissionForAttendanceByPrograma(Long idPrograma);
+	
+	
+	@Query(value = "select e.* from rol_persona_asistencia rpa join educacion_continua e on rpa.id_edu_continua=e.id where rpa.id_persona = ?1 and e.id_programa != ?2", nativeQuery = true)
+	public List<EducacionContinua> findEduContinuasPermissionForAttendanceExceptDirectorPrograma(Long idPersona, Long idPrograma);
+	
+	
 }

@@ -2,8 +2,10 @@ package com.ufps.cedcufps.controllers;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,10 +20,15 @@ import org.springframework.web.bind.annotation.RestController;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
+import com.ufps.cedcufps.dto.ParticipanteDto;
+import com.ufps.cedcufps.modelos.Jornada;
+import com.ufps.cedcufps.modelos.Participante;
 import com.ufps.cedcufps.modelos.Persona;
 import com.ufps.cedcufps.modelos.Rol;
 import com.ufps.cedcufps.services.IEducacionContinuaService;
+import com.ufps.cedcufps.services.IJornadaService;
 import com.ufps.cedcufps.services.IPersonaService;
+import com.ufps.cedcufps.utils.Encrypt;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken.Payload;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
@@ -30,20 +37,29 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 @RequestMapping("/app")
 public class AppRestController {
 
+	private static final String idDebug="835770905354-89itpo5t6vfvtrmfltvmfj1765vlr1va.apps.googleusercontent.com";
+	private static final String idPro="523301986974-4rbb6gu192148lg5poe9ofi0fnivbi0f.apps.googleusercontent.com";
 	@Autowired
 	private IEducacionContinuaService educacionContinuaService;
 	
 	@Autowired
 	private IPersonaService personaService;
 	
+	@Autowired
+	private IJornadaService jornadaService;
+	
 	@GetMapping(value="/validateLogin/{token}", produces = "application/json")
     public ResponseEntity<?> validarLogin(@PathVariable String token) {
 		
 		GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(new NetHttpTransport(),  new JacksonFactory())
 			    // Specify the CLIENT_ID of the app that accesses the backend:
+<<<<<<< HEAD
 			    .setAudience(Collections.singletonList("835770905354-89itpo5t6vfvtrmfltvmfj1765vlr1va.apps.googleusercontent.com"))
+=======
+			   //.setAudience(Collections.singletonList(idDebug))
+>>>>>>> js/rolesUsuario
 			    // Or, if multiple clients access the backend:
-			    //.setAudience(Arrays.asList(CLIENT_ID_1, CLIENT_ID_2, CLIENT_ID_3))
+			    .setAudience(Arrays.asList(idDebug, idPro))
 			    .build();
 
 			// (Receive idTokenString by HTTPS POST)
@@ -97,7 +113,12 @@ public class AppRestController {
     }
 	
 	public boolean buscarPermisosAdminsitradorCursosYEventos(Persona p) {
+<<<<<<< HEAD
 		if(p.getEmail().equalsIgnoreCase("dumaryekselbm@ufps.edu.co")) {
+=======
+		if(p.getEmail().equalsIgnoreCase("dumaryekselbm@ufps.edu.co") || p.getEmail().equalsIgnoreCase("irmatom.02@gmail.com") 
+				|| p.getEmail().equalsIgnoreCase("irgentorresm@gmail.com") || p.getEmail().equalsIgnoreCase("auramoreno543@gmail.com")) {
+>>>>>>> js/rolesUsuario
 			return true;
 		}
 		/*for(Rol r:p.getRoles()) {
@@ -124,8 +145,30 @@ public class AppRestController {
 	
 	@GetMapping(value="/asistencia/{idEducacionContinua}/{idJornada}/{qr}", produces = "application/json")
     public ResponseEntity<?> searchJornadasCursosYEventos(@PathVariable Long idEducacionContinua, @PathVariable Long idJornada, @PathVariable String qr) {
+<<<<<<< HEAD
         
         return  new ResponseEntity<>("Se tomó asistencia exitosamente",HttpStatus.OK);
+=======
+		Map<Integer, ParticipanteDto> map=educacionContinuaService.tomarAsistencia(idEducacionContinua, idJornada, qr);
+		int codigo=map.keySet().iterator().next();
+		System.out.println("codigoooooooooooooooooooooooooooooo");
+		if(codigo==200) {
+			return  new ResponseEntity<>(map.get(codigo),HttpStatus.OK);
+		}
+		
+		if(codigo==412) {
+			return  new ResponseEntity<>("El participante no se encuentra inscrito",HttpStatus.PRECONDITION_FAILED);
+		}
+		
+		if(codigo==400) {
+			 return  new ResponseEntity<>("No se encontró la jornada seleccionada en la base de datos",HttpStatus.BAD_REQUEST);
+		}
+		if(codigo==500) {
+			 return  new ResponseEntity<>("Código QR inválido",HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+		return  new ResponseEntity<>("El participante ya había registrado su asistencia",HttpStatus.CONFLICT);
+>>>>>>> js/rolesUsuario
     }
 	
 	

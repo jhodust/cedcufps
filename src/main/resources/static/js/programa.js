@@ -63,14 +63,13 @@ $(document).ready(function ()
 			cache: false,
 			success: function(result) {
 				console.log(result);
+				var element=document.getElementById("alertDirector");
 				if(result.length > 0){
-					toastr.info("El/La docente ya es director del programa " + result[0].programa + " y sería desvinculado.", 'Atención!',
-					{ "closeButton": true,
-					  "positionClass": "toast-top-right",
-					  "preventDuplicates": false,
-					  "showDuration": "200",
-					  "hideDuration": "1000",
-					  "timeOut": "12000"})
+					element.innerText="El/La docente ya es director del programa " + result[0].programa + " y sería desvinculado.";
+					element.style.display = 'inline';
+				}else{
+					element.innerText="";
+					element.style.display = 'none';
 				}
 				
 			},
@@ -161,7 +160,7 @@ function editarPrograma(elemento){
 		headers: {"X-CSRF-TOKEN": token},
 		type: "GET",
 		contentType: "application/json; charset=utf-8",
-		url: "/programa/search/"+elemento.dataset.id,
+		url: "/search/programa/"+elemento.dataset.id,
 		cache: false,
 		success: function(result) {
 			console.log(result);
@@ -169,10 +168,10 @@ function editarPrograma(elemento){
 			idPrograma=result.id;
 			$('#codigo').val(result.codigo);
 			$('#programa').val(result.programa);
-			$('#select_facultad_programa').val(result.facultad.id);
+			$('#select_facultad_programa').val(result.idFacultad);
 			$('#select_facultad_programa').select2().trigger('change');
-			if(result.directorPrograma!=null){
-				$('#select_director_programa').val(result.directorPrograma.id);	
+			if(result.idDirector!=null){
+				$('#select_director_programa').val(result.idDirector);	
 			}
 			$('#select_director_programa').select2().trigger('change');
 			

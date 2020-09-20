@@ -16,6 +16,7 @@ import org.springframework.stereotype.Repository;
 import com.ufps.cedcufps.dao.IDepartamentoDao;
 import com.ufps.cedcufps.dao.IEstadoCivilDao;
 import com.ufps.cedcufps.dao.IGeneroDao;
+import com.ufps.cedcufps.dao.IPersonaDao;
 import com.ufps.cedcufps.dao.IProgramaDao;
 import com.ufps.cedcufps.dao.ITipoDocumentoDao;
 import com.ufps.cedcufps.dao.ITipoPersonaDao;
@@ -41,6 +42,9 @@ import com.ufps.cedcufps.modelos.TipoPersona;
 public class UsuarioMapper implements IUsuarioMapper {
 
 	@Autowired
+	private IPersonaDao personaDao;
+	
+	@Autowired
 	private ITipoDocumentoDao tipoDocumentoDao;
 	
 	@Autowired
@@ -65,8 +69,6 @@ public class UsuarioMapper implements IUsuarioMapper {
 		TipoDocumento td=null;
 		Genero g=null;
 		EstadoCivil ec=null;
-		TipoPersona tp=null;
-		Programa p=null;
 		try {
 			td = tipoDocumentoDao.findById(u.getTipoDocumento()).get();
 		}catch(Exception ex) {
@@ -85,18 +87,17 @@ public class UsuarioMapper implements IUsuarioMapper {
 			throw new CustomException("No se encontró el estado civil en la base de datos");
 		}
 		
-		try {
-			tp= tipoPersonaDao.findById((long) 1).get();
-		}catch(Exception ex) {
-			throw new CustomException("No se encontró el tipo usuario en la base de datos");
-		}
-			
 		
-		try {
-			p= programaDao.findById(u.getPrograma()).get();
-		}catch(Exception ex) {
-			throw new CustomException("No se encontró el programa en la base de datos");
-		}	
+			
+		if(personaDao.validarDocumentoRegistrado(u.getId(), u.getNumeroDocumento())>0) {
+			throw new CustomException("El documento ingresado ya fue registrado en la base de datos");
+		}
+		
+		
+		if(personaDao.validarEmailRegistrado(u.getNumeroDocumento(), u.getEmail())>0) {
+			throw new CustomException("El email ingresado ya fue registrado en la base de datos");
+		}
+		
 			
 		  
 		pe.setId(u.getId());
@@ -208,7 +209,7 @@ public class UsuarioMapper implements IUsuarioMapper {
 		Programa p=null;
 		
 		try {
-			p= programaDao.findById(u.getPrograma()).get();
+			p= programaDao.findById(u.getProgramaGraduado()).get();
 		}catch(Exception ex) {
 			throw new CustomException("No se encontró el programa del cuál se graduó en la base de datos");
 		}

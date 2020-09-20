@@ -14,6 +14,13 @@ import com.ufps.cedcufps.modelos.Persona;
 
 public interface IPersonaDao extends CrudRepository<Persona, Long> {
 
+	@Query("select count(p) from Persona p where p.id != ?1 and p.numeroDocumento=?2")
+	public int validarDocumentoRegistrado(Long idPersona, String numeroDocumento);
+	
+	@Query("select count(p) from Persona p where p.numeroDocumento != ?1 and p.email = ?2")
+	public int validarEmailRegistrado(String numeroDocumento, String email);
+	
+	
 	public Persona findByUsername(String username);
 	
 	public Optional<Persona> findByEmail(String email);

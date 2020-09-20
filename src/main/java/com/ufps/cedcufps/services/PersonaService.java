@@ -278,7 +278,7 @@ public class PersonaService implements IPersonaService, UserDetailsService {
 	@Override
 	public void guardar(UsuarioDto u) {
 		// TODO Auto-generated method stub
-		if(u.getId()==null) {
+		if(u.getId()==0) {
 			this.addUsuario(u);
 		}else {
 			this.updateUsuario(u);
@@ -297,11 +297,12 @@ public class PersonaService implements IPersonaService, UserDetailsService {
 		System.out.println(p.isGraduado());
 		System.out.println(p.isExterno());
 		logger.info("llega de mappear");
-		personaDao.save(p);
+		Persona per=personaDao.save(p);
 		logger.info("guarda la persona");
 		if(u.isExterno()) {
 			logger.info("Es externo");
-			Externo e=usuarioMapper.convertUsuarioToExterno(u,p.getId());
+			System.out.println(per.getId());
+			Externo e=usuarioMapper.convertUsuarioToExterno(u,per.getId());
 			logger.info(e.getId().toString());
 			logger.info(e.getEmpresa());
 			logger.info(e.getProfesion());
@@ -309,7 +310,8 @@ public class PersonaService implements IPersonaService, UserDetailsService {
 		}else {
 			if(u.isEstudiante()) {
 				logger.info("Es estudiante");
-				Estudiante e=usuarioMapper.convertUsuarioToEstudiante(u,p.getId());
+				System.out.println(per.getId());
+				Estudiante e=usuarioMapper.convertUsuarioToEstudiante(u,per.getId());
 				logger.info(e.getId().toString());
 				logger.info(e.getPrograma().getPrograma());
 				logger.info(e.getCodigo());
@@ -317,7 +319,8 @@ public class PersonaService implements IPersonaService, UserDetailsService {
 			}
 			if(u.isDocente()) {
 				logger.info("Es docente");
-				Docente d= usuarioMapper.convertUsuarioToDocente(u,p.getId());
+				System.out.println(per.getId());
+				Docente d= usuarioMapper.convertUsuarioToDocente(u,per.getId());
 				logger.info(d.getId().toString());
 				logger.info(d.getDepartamento().getDepartamento());
 				logger.info(d.getCodigo());
@@ -325,7 +328,8 @@ public class PersonaService implements IPersonaService, UserDetailsService {
 			}
 			if(u.isAdministrativo()) {
 				logger.info("Es administrativo");
-				Administrativo a= usuarioMapper.convertUsuarioToAdministrativo(u,p.getId());
+				System.out.println(per.getId());
+				Administrativo a= usuarioMapper.convertUsuarioToAdministrativo(u,per.getId());
 				logger.info(a.getId().toString());
 				logger.info(a.getDependencia());
 				logger.info(a.getCargo());
@@ -333,7 +337,8 @@ public class PersonaService implements IPersonaService, UserDetailsService {
 			}
 			if(u.isGraduado()) {
 				logger.info("Es graduado");
-				Graduado g= usuarioMapper.convertUsuarioToGraduado(u,p.getId());
+				System.out.println(per.getId());
+				Graduado g= usuarioMapper.convertUsuarioToGraduado(u,per.getId());
 				logger.info(g.getId().toString());
 				logger.info(g.getPrograma().getPrograma());
 				logger.info(g.getAnio());

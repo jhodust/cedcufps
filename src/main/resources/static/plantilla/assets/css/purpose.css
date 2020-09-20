@@ -68,3 +68,11 @@ color:#ec0017;
 	box-shadow: 5px 5px 5px #818386;
 	transform: scale(1.1); 
 }
+
+.requerido{
+	color:red;
+}
+
+.reglasForms{
+	color:black;
+}

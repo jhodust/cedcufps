@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -18,6 +19,7 @@ import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -31,7 +33,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 
 @Entity
-@Table(name="personas")
+@Table(name="personas", uniqueConstraints={
+		   @UniqueConstraint(columnNames={"numero_documento"},name = "UK_document_people"),
+		   @UniqueConstraint(columnNames={"email"},name = "UK_email_people")})
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Persona implements Serializable {//*
 	
@@ -49,7 +53,7 @@ public class Persona implements Serializable {//*
 	@NotNull(message = "Seleccione el tipo de documento")
 	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="id_tipo_documento")
+	@JoinColumn(name="id_tipo_documento", foreignKey=@ForeignKey(name = "Fk_type_document_people"))
 	private TipoDocumento tipoDocumento;
 	
 	@NotEmpty(message = "El campo número documento es requerido")
@@ -89,13 +93,13 @@ public class Persona implements Serializable {//*
 	@NotNull(message = "El campo género es requerido")
 	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="id_genero")
+	@JoinColumn(name="id_genero", foreignKey=@ForeignKey(name = "Fk_gender_people"))
 	private Genero genero;
 	
 	@NotNull(message = "El campo estado civil es requerido")
 	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="id_estado_civil")
+	@JoinColumn(name="id_estado_civil", foreignKey=@ForeignKey(name = "Fk_est_civil_people"))
 	private EstadoCivil estadoCivil;
 	
 	@NotNull(message = "Ingrese su fecha de nacimiento")

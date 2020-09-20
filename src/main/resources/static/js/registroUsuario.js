@@ -1,9 +1,9 @@
 $(document).ready(function ()
 			{
 			var url=null;
-			var id=null;
+			var id=0;
 			if(caso==0){
-				id=null;
+				id=0;
 				url="/";
 			}else{
 				id=persona.id;
@@ -20,6 +20,101 @@ $(document).ready(function ()
 						'click',
 						function(e) {
 							e.preventDefault();
+							
+							if($('#selectPaisNacimiento').val()=="170"){
+								console.log("entra al if de pais");
+									if($('#selectDepartamentoNacimiento').val() == "0" || $('#selectMunicipioNacimiento').val() == "0"){
+										console.log("entra");
+										toastr
+													.error(
+															'Debes seleccionar el departamento y municipio de nacimiento',
+															'Error!');
+															return;
+									}
+								}
+								
+								
+							if(document.getElementById("cbEst").checked){
+									if($('#programaAsociado').val() == "0" || $('#codigo').val() == ""){
+										toastr
+													.error(
+															'Debes diligenciar la información academica como estudiante',
+															'Error!');
+															return;
+									}
+								
+								}
+								if(document.getElementById("cbDoc").checked){
+									if($('#selectDeptoAdscrito').val() == "0" || $('#codDocente').val() == ""){
+										toastr
+													.error(
+															'Debes diligenciar la información academica como docente',
+															'Error!');
+															return;
+									}
+								
+								}
+								if(document.getElementById("cbAdminvo").checked){
+									if($('#dependencia').val() == "" || $('#cargo').val() == ""){
+										toastr
+													.error(
+															'Debes diligenciar la información academica como administrativo',
+															'Error!');
+															return;
+									}
+								
+								}
+								if(document.getElementById("cbGraduado").checked){
+								console.log("entra a validar graduado");
+									if($('#selectProgramaGraduado').val() == "0" || $('#anioGraduado').val() == ""){
+										toastr
+													.error(
+															'Debes diligenciar la información como graduado',
+															'Error!');
+															return;
+									}else{
+									 var date=new Date();
+									 console.log(date.getFullYear());
+									 console.log($('#anioGraduado').val());
+									 if($('#anioGraduado').val()>date.getFullYear()){
+									 	toastr
+													.error(
+															'El año de graduación ingresado es superior al actual',
+															'Error!');
+															return;
+									 }
+									}
+								
+								}
+								if(document.getElementById("cbExt").checked){
+									if($('#profesion').val() == "" || $('#empresa').val() == ""){
+										toastr
+													.error(
+															'Debes diligenciar la información laboral',
+															'Error!');
+															return;
+									}
+								
+								}
+								
+							if($('#selectTipoDoc').val() == "0" || $('#numDoc').val() == "" || $('#fechaExp').val() == "" 
+							|| $('#primNom').val() == "" || $('#segNom').val() == "" || $('#primApe').val() == "" 
+							|| $('#segApe').val() == "" || $('input[name="genero"]:checked').val() == null || 
+							$('input[name="estadoCivil"]:checked').val() == null 
+							|| $('#selectPaisNacimiento').val() == "0" || $('#fechaNac').val() == "" || $('#email').val() == "" 
+							|| $('#telefono').val() == "" || (!document.getElementById("cbEst").checked && !document.getElementById("cbDoc").checked
+							&& !document.getElementById("cbAdminvo").checked && !document.getElementById("cbGraduado").checked && !document.getElementById("cbExt").checked)){
+							
+								
+								
+								
+								toastr
+													.error(
+															'Diligencie el formulario correctamente, algunos campos son requeridos',
+															'Error!');
+															return;
+							}
+							console.log();
 							var userJSON = {};
 							userJSON.id=id;
 							userJSON.tipoDocumento = $('#selectTipoDoc').val();
@@ -48,11 +143,6 @@ $(document).ready(function ()
 							userJSON.codigo = $('#codigo').val();
 							userJSON.programa = $('#programaAsociado').val();
 							userJSON.profesion = $('#codigo').val();
-							//userJSON.isEstudiante=document.getElementById("cbEst").checked ? 1:0;
-							//userJSON.isDocente=document.getElementById("cbDoc").checked ? 1:0;
-							//userJSON.isAdministrativo=document.getElementById("cbAdminvo").checked ? 1:0;
-							//userJSON.isGraduado=document.getElementById("cbGraduado").checked ? 1:0;
-							//userJSON.isExterno=document.getElementById("cbExt").checked ? 1:0;
 							userJSON.estudiante=document.getElementById("cbEst").checked;
 							userJSON.docente=document.getElementById("cbDoc").checked;
 							userJSON.administrativo=document.getElementById("cbAdminvo").checked;
@@ -65,7 +155,7 @@ $(document).ready(function ()
 							userJSON.dependencia=$('#dependencia').val();
 							userJSON.cargo=$('#cargo').val();
 							userJSON.empresa=$('#empresa').val();
-							if(id!=null && persona.docente){
+							if(id!=0 && persona.docente){
 								userJSON.estadoDocente=document.getElementById("switchEstadoDocente").checked;
 							}else if(userJSON.docente){
 								userJSON.estadoDocente=true;
@@ -99,30 +189,17 @@ $(document).ready(function ()
 																'Excelente!');
 											
 											}
-											/*window.setTimeout(function() {
+											window.setTimeout(function() {
 													window.location.href = url;
-												}, 1000);*/
+												}, 1000);
 										},
 										error : function(err) {
 											toastr
 													.error(
 															'No se pudo procesar la solicitud...',
 															'Error!');
-											console.log(err);
-											/*err.responseJSON.forEach(function(error){
-												if(error.field=="horaInicio"){
-													var inputHoraInicio=document.getElementById('horaInicio');
-													var errorHoraInicio=document.getElementById('errorHoraInicio');
-													errorHoraInicio.innerText=error.defaultMessage;
-													inputHoraInicio.classList.add("is-invalid");
-												}
-												if(error.field=="horaFin"){
-													var inputHoraFin=document.getElementById('horaFin');
-													var errorHoraFin=document.getElementById('errorHoraFin');
-													errorHoraFin.innerText=error.defaultMessage;
-													inputHoraFin.classList.add("is-invalid");
-												}
-											  });*/
+											console.log(err.responseJSON.message);
+											
 										}
 									});
 						});

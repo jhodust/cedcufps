@@ -32,7 +32,8 @@ $(document).ready(function ()
 	$('#programaAsociado').on('select2:select', function (e) { 
 		$('#codigo').val("");
 		if(e.params.data.id!="0"){
-			$.ajax({
+			$('#codigo').mask("0000000", {placeholder: "0000000"});
+			/*$.ajax({
 				headers: {"X-CSRF-TOKEN": token},
 				type: "GET",
 				contentType: "application/json; charset=utf-8",
@@ -46,9 +47,7 @@ $(document).ready(function ()
 					console.log(err);
 					$('#codigo').mask("000-0000", {placeholder: "000-0000"});
 				}
-			});
-		}else{
-			$('#codigo').mask("000-0000", {placeholder: "000-0000"});
+			});*/
 		}
 		
 		});

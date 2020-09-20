@@ -53,11 +53,7 @@ public class AppRestController {
 		
 		GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(new NetHttpTransport(),  new JacksonFactory())
 			    // Specify the CLIENT_ID of the app that accesses the backend:
-<<<<<<< HEAD
-			    .setAudience(Collections.singletonList("835770905354-89itpo5t6vfvtrmfltvmfj1765vlr1va.apps.googleusercontent.com"))
-=======
 			   //.setAudience(Collections.singletonList(idDebug))
->>>>>>> js/rolesUsuario
 			    // Or, if multiple clients access the backend:
 			    .setAudience(Arrays.asList(idDebug, idPro))
 			    .build();
@@ -113,12 +109,10 @@ public class AppRestController {
     }
 	
 	public boolean buscarPermisosAdminsitradorCursosYEventos(Persona p) {
-<<<<<<< HEAD
-		if(p.getEmail().equalsIgnoreCase("dumaryekselbm@ufps.edu.co")) {
-=======
+
 		if(p.getEmail().equalsIgnoreCase("dumaryekselbm@ufps.edu.co") || p.getEmail().equalsIgnoreCase("irmatom.02@gmail.com") 
 				|| p.getEmail().equalsIgnoreCase("irgentorresm@gmail.com") || p.getEmail().equalsIgnoreCase("auramoreno543@gmail.com")) {
->>>>>>> js/rolesUsuario
+
 			return true;
 		}
 		/*for(Rol r:p.getRoles()) {
@@ -145,10 +139,7 @@ public class AppRestController {
 	
 	@GetMapping(value="/asistencia/{idEducacionContinua}/{idJornada}/{qr}", produces = "application/json")
     public ResponseEntity<?> searchJornadasCursosYEventos(@PathVariable Long idEducacionContinua, @PathVariable Long idJornada, @PathVariable String qr) {
-<<<<<<< HEAD
-        
-        return  new ResponseEntity<>("Se tomó asistencia exitosamente",HttpStatus.OK);
-=======
+
 		Map<Integer, ParticipanteDto> map=educacionContinuaService.tomarAsistencia(idEducacionContinua, idJornada, qr);
 		int codigo=map.keySet().iterator().next();
 		System.out.println("codigoooooooooooooooooooooooooooooo");
@@ -168,7 +159,7 @@ public class AppRestController {
 		}
 		
 		return  new ResponseEntity<>("El participante ya había registrado su asistencia",HttpStatus.CONFLICT);
->>>>>>> js/rolesUsuario
+
     }
 	
 	

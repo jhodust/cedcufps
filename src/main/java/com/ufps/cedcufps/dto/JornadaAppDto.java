@@ -31,43 +31,25 @@ public class JornadaAppDto {
 	public void setHoraFin(Date horaFin) {
 		this.horaFin = horaFin;
 	}
+	public String getFechaJornadaString() {
+		return fechaJornadaString;
+	}
+	public void setFechaJornadaString(String fechaJornadaString) {
+		this.fechaJornadaString = fechaJornadaString;
+	}
+	public String getHoraInicioString() {
+		return horaInicioString;
+	}
+	public void setHoraInicioString(String horaInicioString) {
+		this.horaInicioString = horaInicioString;
+	}
+	public String getHoraFinString() {
+		return horaFinString;
+	}
+	public void setHoraFinString(String horaFinString) {
+		this.horaFinString = horaFinString;
+	}
 	
-	public String getFechaJornadaString() {
-		return fechaJornadaString;
-	}
-	public void setFechaJornadaString(String fechaJornadaString) {
-		this.fechaJornadaString = fechaJornadaString;
-	}
-	public String getHoraInicioString() {
-		return horaInicioString;
-	}
-	public void setHoraInicioString(String horaInicioString) {
-		this.horaInicioString = horaInicioString;
-	}
-	public String getHoraFinString() {
-		return horaFinString;
-	}
-	public void setHoraFinString(String horaFinString) {
-		this.horaFinString = horaFinString;
-	}
-	public String getFechaJornadaString() {
-		return fechaJornadaString;
-	}
-	public void setFechaJornadaString(String fechaJornadaString) {
-		this.fechaJornadaString = fechaJornadaString;
-	}
-	public String getHoraInicioString() {
-		return horaInicioString;
-	}
-	public void setHoraInicioString(String horaInicioString) {
-		this.horaInicioString = horaInicioString;
-	}
-	public String getHoraFinString() {
-		return horaFinString;
-	}
-	public void setHoraFinString(String horaFinString) {
-		this.horaFinString = horaFinString;
-	}
 	
 	
 }

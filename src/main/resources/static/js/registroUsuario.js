@@ -198,7 +198,7 @@ $(document).ready(function ()
 													.error(
 															'No se pudo procesar la solicitud...',
 															'Error!');
-											console.log(err.responseJSON.message);
+											console.log(err);
 											
 										}
 									});

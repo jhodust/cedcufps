@@ -7,7 +7,7 @@
 <body>
 	<!-- Modal -->
 <div class="modal fade" id="modalRegistroDepartamento" tabindex="-1" role="dialog" aria-labelledby="modalRegistroDepartamento" aria-hidden="true" th:fragment="modalRegistro">
-    <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-dialog" role="document">
         <form>
             <div class="modal-content">
                 <div class="modal-header">
@@ -26,10 +26,11 @@
                     </button>
                 </div>
                 <div class="modal-body">
+                <label class="form-control-label reglasForms">Los campos marcados con</label> <label class="requerido pl-2">*</label> <label class="form-control-label reglasForms">son obligatorios</label>
                     <div class="row">
                     	<div class="col-sm-12">
                             <div class="form-group">
-                                <label class="form-control-label">Facultad perteneciente</label>
+                                <label class="form-control-label">Facultad perteneciente</label><label class="requerido pl-2">*</label>
                                 <select class="form-control" data-toggle="select"
 														id="select_facultad_departamento">
 														<option value="0">Seleccione la facultad...</option>
@@ -44,7 +45,7 @@
                      <div class="row">
                         <div class="col-sm-12">
                             <div class="form-group">
-                                <label class="form-control-label">Departamento</label>
+                                <label class="form-control-label">Departamento</label><label class="requerido pl-2">*</label>
                                 <input class="form-control" id="departamento" type="text" data-toggle="autosize"/>
                             	<small class="form-text text-danger"><strong id="errorDepartamento"></strong></small>
                             </div>

@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
-@Table(name="facultades",uniqueConstraints={@UniqueConstraint(columnNames={"facultad"})})
+@Table(name="facultades",uniqueConstraints={@UniqueConstraint(columnNames={"facultad"},name = "UK_facultad")})
 public class Facultad implements Serializable {//1
 	/**
 	 * 

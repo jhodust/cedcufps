@@ -17,6 +17,14 @@ $(document).ready(function ()
 
 function guardarFacultad(){
 	var facultad = $('#facultad').val();
+	if(facultad == ""){
+		toastr
+			.error(
+					'Diligencie el formulario correctamente',
+					'Error!');
+					return;
+	
+	}
 	$.ajax({
 		headers: {"X-CSRF-TOKEN": token},
 		type: "POST",

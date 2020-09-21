@@ -81,6 +81,7 @@ $(document).ready(function ()
 
 
 function guardarPrograma(){
+	limpiarErrores();
 	var codigo = $('#codigo').val();
 	var programa = $('#programa').val();
 	var id_facultad = document.getElementById("select_facultad_programa").value;
@@ -98,7 +99,15 @@ function guardarPrograma(){
 		JSONprograma.directorPrograma={};
 		JSONprograma.directorPrograma.id=id_director;
 	}
-	limpiarErrores();
+	
+	if(codigo == "" || programa == "" || id_facultad==0 || id_facultad==id_director){
+		toastr
+			.error(
+					'Diligencie el formulario correctamente, los campos son requeridos',
+					'Error!');
+					return;
+	
+	}
 	console.log("json enviado: ");
 	console.log(JSONprograma);
 	$.ajax({

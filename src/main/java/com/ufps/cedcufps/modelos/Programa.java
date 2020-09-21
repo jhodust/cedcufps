@@ -8,6 +8,7 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -27,7 +28,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name="programas", uniqueConstraints={
-		   @UniqueConstraint(columnNames={"codigo"})})
+		   @UniqueConstraint(columnNames={"codigo"},name = "UK_code_programa")})
 public class Programa implements Serializable {//1
 	/**
 	 * 
@@ -45,7 +46,7 @@ public class Programa implements Serializable {//1
 	private String codigo;
 	
 	@NotEmpty(message = "El campo programa es requerido")
-	@Size(max = 60, message = "El campo programa no puede exceder los 60 caracteres")
+	@Size(max = 80, message = "El campo programa no puede exceder los 80 caracteres")
 	@Column(name = "programa")
 	private String programa;
 
@@ -56,7 +57,7 @@ public class Programa implements Serializable {//1
 
 	@NotNull(message =  "Seleccione la facultad")
 	@ManyToOne(fetch = FetchType.EAGER)//eager para que sirva el ajax
-	@JoinColumn(name="id_facultad")
+	@JoinColumn(name="id_facultad", foreignKey=@ForeignKey(name = "FK_programa_facultad"))
 	private Facultad facultad;
 	
 	@JsonIgnore //ignora esta referencia cuando se hace mediante ajax(json) 
@@ -66,7 +67,7 @@ public class Programa implements Serializable {//1
 	
 	//@NotNull(message =  "Seleccione director(a) del Programa")
 	@OneToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="id_director")
+	@JoinColumn(name="id_director", foreignKey=@ForeignKey(name = "FK_programa_director"))
 	private Docente directorPrograma;
 	
 	public Programa() {

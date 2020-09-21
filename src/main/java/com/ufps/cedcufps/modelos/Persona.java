@@ -53,7 +53,7 @@ public class Persona implements Serializable {//*
 	@NotNull(message = "Seleccione el tipo de documento")
 	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="id_tipo_documento", foreignKey=@ForeignKey(name = "Fk_type_document_people"))
+	@JoinColumn(name="id_tipo_documento", foreignKey=@ForeignKey(name = "FK_type_document_people"))
 	private TipoDocumento tipoDocumento;
 	
 	@NotEmpty(message = "El campo número documento es requerido")
@@ -93,13 +93,13 @@ public class Persona implements Serializable {//*
 	@NotNull(message = "El campo género es requerido")
 	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="id_genero", foreignKey=@ForeignKey(name = "Fk_gender_people"))
+	@JoinColumn(name="id_genero", foreignKey=@ForeignKey(name = "FK_gender_people"))
 	private Genero genero;
 	
 	@NotNull(message = "El campo estado civil es requerido")
 	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="id_estado_civil", foreignKey=@ForeignKey(name = "Fk_est_civil_people"))
+	@JoinColumn(name="id_estado_civil", foreignKey=@ForeignKey(name = "FK_est_civil_people"))
 	private EstadoCivil estadoCivil;
 	
 	@NotNull(message = "Ingrese su fecha de nacimiento")

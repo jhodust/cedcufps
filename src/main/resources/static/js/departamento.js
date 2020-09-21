@@ -29,6 +29,7 @@ $(document).ready(function ()
 
 
 function guardarDepartamento(){
+	limpiarErrores();
 	var departamento = $('#departamento').val();
 	var id_facultad = document.getElementById("select_facultad_departamento").value;
 	var JSONdepartamento={};
@@ -38,7 +39,15 @@ function guardarDepartamento(){
 		JSONdepartamento.facultad={};
 		JSONdepartamento.facultad.id=id_facultad;
 	}
-	limpiarErrores();
+	if(departamento == "" || id_facultad==0){
+		toastr
+			.error(
+					'Diligencie el formulario correctamente, los campos son requeridos',
+					'Error!');
+					return;
+	
+	}
+	
 	$.ajax({
 		headers: {"X-CSRF-TOKEN": token},
 		type: "POST",

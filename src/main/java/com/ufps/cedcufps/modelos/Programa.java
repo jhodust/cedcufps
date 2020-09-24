@@ -28,7 +28,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name="programas", uniqueConstraints={
-		   @UniqueConstraint(columnNames={"codigo"},name = "UK_code_programa")})
+		   @UniqueConstraint(columnNames={"codigo"},name = "UK_code_programa"),
+		   @UniqueConstraint(columnNames={"programa"},name = "UK_programa")})
 public class Programa implements Serializable {//1
 	/**
 	 * 

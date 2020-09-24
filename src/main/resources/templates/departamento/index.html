@@ -66,6 +66,13 @@
 		<div class="row">
 			<div class="col-lg-3 col-sm-6 hover-scale-110"  th:each="d: ${departamentos}">
             <div class="card card-fluid">
+            <div class="card-header">
+              <div class="actions d-flex justify-content-between ">
+                <a href="#" onclick="editarDepartamento(this)" class="action-item editarPrograma red-ufps" th:data-id="${d.id}" data-toggle="tooltip" data-placement="bottom" title="Editar">
+                   <i class="far fa-edit"></i>
+                  </a>
+                  </div>
+                </div>
               <div class="card-body text-center d-flex flex-column justify-content-center">
               	
                 <h6 class="mb-4" th:text="${d.departamento}"></h6>
@@ -75,16 +82,7 @@
                 </div>-->
 				
 			  </div>
-              <div class="card-footer">
-              <div class="actions d-flex justify-content-between px-4">
-                <a href="#" onclick="editarDepartamento(this)" class="action-item editarPrograma" th:data-id="${d.id}" data-toggle="tooltip" data-placement="bottom" title="Editar">
-                    <i class="far fa-edit"></i>
-                  </a>
-                  <a href="#" class="action-item text-danger" data-toggle="tooltip" data-placement="bottom" title="Eliminar">
-                    <i class="far fa-trash-alt"></i>
-                  </a>
-                  </div>
-                </div>
+              
             </div>
           </div>
 		

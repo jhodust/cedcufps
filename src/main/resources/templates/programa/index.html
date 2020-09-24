@@ -64,6 +64,13 @@
 		<div class="row">
           <div class="col-lg-4 hover-scale-110" th:each="p: ${programas}">
             <div class="card card-stats">
+            <div class="card-header">
+              <div class="actions d-flex justify-content-between ">
+               <a href="#" onclick="editarPrograma(this)" class="action-item editarPrograma red-ufps" th:data-id="${p.id}" data-toggle="tooltip" data-placement="bottom" title="Editar">
+                    <i class="far fa-edit"></i>
+                  </a>
+                  </div>
+                </div>
               <!-- Card body -->
               <div class="card-body">
                 <div class="row">
@@ -83,13 +90,8 @@
                 </p>
                 </center>
                
-                  <a href="#" onclick="editarPrograma(this)" class="action-item editarPrograma" th:data-id="${p.id}" data-toggle="tooltip" data-placement="bottom" title="Editar">
-                    <i class="far fa-edit"></i>
-                  </a>
                   
-                  <a href="#" class="action-item text-danger" data-toggle="tooltip" data-placement="bottom" title="Eliminar">
-                    <i class="far fa-trash-alt"></i>
-                  </a>
+                 
                 
               </div>
               

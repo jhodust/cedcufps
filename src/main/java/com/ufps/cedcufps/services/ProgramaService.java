@@ -79,6 +79,9 @@ public class ProgramaService implements IProgramaService {
 	public void save(Programa p) {
 		//las siguientes validaciones son porque no sé porque no captura en todos los casos de duplicidad la excepcion DataIntegrityViolationException
 		boolean asignarPermisosDir=true;
+		if(programaDao.cantidadProgramaExistentes(p.getId(), p.getPrograma())>0) {
+			throw new CustomException("El nombre del programa ingresado ya se encuentra registrado", HttpStatus.BAD_REQUEST);
+		}
 		if(programaDao.cantidadCodigosExistentes(p.getId(), p.getCodigo())>0) {
 			throw new CustomException("El código ingresado ya está asignado a otro programa", HttpStatus.BAD_REQUEST);
 		}

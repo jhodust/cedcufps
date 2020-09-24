@@ -47,11 +47,20 @@
 		<div class="row">
         	<div class="col-lg-4 col-sm-6 " th:each="f: ${facultades}">
             <div class="card hover-shadow-lg hover-scale-110">
-              <div class="card-body text-center">
+            <div class="card-header">
+              <div class="actions d-flex justify-content-between ">
+               <a href="#" onclick="editarFacultad(this)" class="action-item editarPrograma red-ufps" th:data-id="${f.id}" th:data-facultad="${f.facultad}" data-toggle="tooltip" data-placement="bottom" title="Editar">
+                     <i class="far fa-edit"></i>
+                  </a>
+                  </div>
+                </div>
+              <div class="card-body text-center d-flex flex-column justify-content-center">
               
                 <!-- <div class="avatar-parent-child">
                   <img alt="Image placeholder" th:src="@{/logos/logo_no_disponible.png}" class="avatar  rounded-circle avatar-lg">
                 </div> -->
+                
+                  
                 <h5 class="h6 mt-4 mb-4"><strong th:text="${f.facultad}"></strong></h5>
                 <div class="col">
                 
@@ -62,15 +71,7 @@
                     <i class="bg-red-ufps"></i>Programas Académicos
                 </a>
                 </div>
-                <div class="actions d-flex justify-content-between px-4">
-                  <a href="#" onclick="editarFacultad(this)" class="action-item editarPrograma" th:data-id="${f.id}" th:data-facultad="${f.facultad}" data-toggle="tooltip" data-placement="bottom" title="Editar">
-                    <i class="far fa-edit"></i>
-                  </a>
-                  <a href="#" class="action-item text-danger" data-toggle="tooltip" data-placement="bottom" title="Eliminar">
-                    <i class="far fa-trash-alt"></i>
-                  </a>
-                  
-                </div>
+                
               </div>
             </div>
           </div>   	

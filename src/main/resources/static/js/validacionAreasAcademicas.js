@@ -35,6 +35,18 @@ $(document).ready(function(){
   $("#programa").bind('keypress', function(event) {
 	  return text(event);
 	});
+	
+	 $("#codigo").focusout(function(){
+    if($("#codigo").val() == ""){
+		document.getElementById('codigo').classList.add("is-invalid");
+	}else{
+		document.getElementById('codigo').classList.remove("is-invalid");
+	}
+  });
+  
+  $("#codigo").bind('keypress', function(event) {
+	  return numbers(event);
+	});
   
 });
 function numbers(event){

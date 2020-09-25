@@ -190,23 +190,23 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 	}
 
 	@Override
-	public String generarReporteSNIESFormatoEducacionContinua(String año) {
+	public String generarReporteSNIESFormatoEducacionContinua(String anio) {
 		// TODO Auto-generated method stub
-		List<EducacionContinua> educacionesContinuas=(List<EducacionContinua>)educacionContinuaDao.findAllEducacionContinuaByAñoReporte(Integer.parseInt(año));
+		List<EducacionContinua> educacionesContinuas=(List<EducacionContinua>)educacionContinuaDao.findAllEducacionContinuaByAnioReporte(Integer.parseInt(anio));
 		System.out.println("******************************PREPARANDO INFORME EXCEL 1******************");
-		return ReportesExcel.reporteEducacionContinua(educacionesContinuas,año);
+		return ReportesExcel.reporteEducacionContinua(educacionesContinuas,anio);
 		//ReportesExcel.reporteCursos("/formatos_reportes_excel/formato_cursos.xlsx",educacionesContinuas,año);
 		//ReportesExcel.reporteEducacionContinuaHoja1("/formatos_reportes_excel/nuevo.xlsx",educacionesContinuas);
 		
 	}
 	
 	@Override
-	public String generarReporteSNIESFormatoCurso(String año) {
+	public String generarReporteSNIESFormatoCurso(String anio) {
 		// TODO Auto-generated method stub
-		List<EducacionContinua> educacionesContinuas=(List<EducacionContinua>)educacionContinuaDao.findAllEducacionContinuaByAñoReporte(Integer.parseInt(año));
+		List<EducacionContinua> educacionesContinuas=(List<EducacionContinua>)educacionContinuaDao.findAllEducacionContinuaByAnioReporte(Integer.parseInt(anio));
 		System.out.println("******************************PREPARANDO INFORME EXCEL 2******************");
 		//ReportesExcel.reporteEducacionContinua("/formatos_reportes_excel/formato_educacion_continua.xlsx",educacionesContinuas,año);
-		return ReportesExcel.reporteCursos(educacionesContinuas,año);
+		return ReportesExcel.reporteCursos(educacionesContinuas,anio);
 		//ReportesExcel.reporteEducacionContinuaHoja1("/formatos_reportes_excel/nuevo.xlsx",educacionesContinuas);
 		
 	}

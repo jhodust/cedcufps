@@ -42,7 +42,7 @@ public interface IEducacionContinuaDao extends CrudRepository<EducacionContinua,
 	public List<EducacionContinua> educacionContinuasByTipoAndPrograma(Long idTipo, Long idPrograma);
 	
 	@Query("select e from EducacionContinua e where year(e.fechaInicio) = ?1")
-	public List<EducacionContinua> findAllEducacionContinuaByAñoReporte(int año);
+	public List<EducacionContinua> findAllEducacionContinuaByAnioReporte(int anio);
 	
 	@Query("select e from EducacionContinua e where e.docenteResponsable.numeroDocumento = ?1")
 	public List<EducacionContinua> findAllEducacionContinuaACargoDocente(String numDocumento);

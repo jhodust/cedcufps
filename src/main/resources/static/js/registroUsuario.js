@@ -6,7 +6,14 @@ $(document).ready(function ()
 				id=0;
 				url="/";
 			}else{
-				id=persona.id;
+			console.log("id persona en caso 1");
+			console.log(persona.id);
+				if(persona.id==null){
+					id=0;
+				}else{
+					id=persona.id;
+				}
+				
 				url="/usuarios";
 			}
 		/*ocultar('formEstudiante');
@@ -23,7 +30,9 @@ $(document).ready(function ()
 							
 							if($('#selectPaisNacimiento').val()=="170"){
 								console.log("entra al if de pais");
-									if($('#selectDepartamentoNacimiento').val() == "0" || $('#selectMunicipioNacimiento').val() == "0"){
+								console.log($('#selectDepartamentoNacimiento').val());
+								console.log($('#selectMunicipioNacimiento').val());
+									if($('#selectDepartamentoNacimiento').val() == null || $('#selectMunicipioNacimiento').val() == null || $('#selectDepartamentoNacimiento').val() == "0" || $('#selectMunicipioNacimiento').val() == "0"){
 										console.log("entra");
 										toastr
 													.error(
@@ -164,7 +173,7 @@ $(document).ready(function ()
 							}
 							
 							console.log(userJSON);
-							$
+							/*$
 									.ajax({
 										headers : {
 											"X-CSRF-TOKEN" : token
@@ -201,7 +210,7 @@ $(document).ready(function ()
 											console.log(err);
 											
 										}
-									});
+									});*/
 						});
 			});
 	function estudiante() {

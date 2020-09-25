@@ -13,13 +13,15 @@ $(document).ready(function ()
 	$('#selectPaisNacimiento').on('select2:select', function (e) { 
 		var idPaisSeleccionado=e.params.data.id;
 		if(idPaisSeleccionado=='170'){//id de Colombia
-			mostrar('rowDeptoYMpioColombia','flex');
+			mostrar('rowDeptoColombia','flex');
+	   		mostrar('rowMpioColombia','flex');
 		}else{
 			$('#selectDepartamentoNacimiento').val('0').trigger('change');
 			$('#selectMunicipioNacimiento').empty().trigger("change");
 			$('#selectMunicipioNacimiento').val('0').trigger('change');
 			
-			ocultar('rowDeptoYMpioColombia');
+			ocultar('rowDeptoColombia');//div row del departamento y municipio
+			ocultar('rowMpioColombia');
 		}
 	});
 	
@@ -58,7 +60,7 @@ $(document).ready(function ()
 /***funcion para cargar el select de paises***/
 function cargarPaises(){
 	/***ajax que carga el select del pais de nacimiento***/
-	$.getJSON( "/data/countries_iso3166.json", function( json )
+	$.getJSON( "/data/paises.json", function( json )
 	{       
     var datos_paises = json;
     var x = document.getElementById("selectPaisNacimiento");
@@ -71,7 +73,8 @@ function cargarPaises(){
   //caso de editar usuario
    $('#selectPaisNacimiento').val(idPaisNac).trigger('select');//esto se hace en caso de editar usuario ya que recibo las variables mediante un script en el form de camposPersona
    if(idPaisNac=='170'){
-	   mostrar('rowDeptoYMpioColombia','flex');
+	   mostrar('rowDeptoColombia','flex');
+	   mostrar('rowMpioColombia','flex');
    }
    //termina caso de editar usuario
   });
@@ -81,13 +84,18 @@ function cargarPaises(){
 /***funcion para cargar el select de departamentos***/
 function cargarDepartamentosColombia(){
 	/***ajax que carga el select del departamento de nacimiento (solo colombia)***/
-	$.getJSON( "https://www.datos.gov.co/resource/gdxc-w37w.json", function( json )
+	var deptoTemp=null;
+	$.getJSON( "/data/divipola.json", function( json )
 	{       
 		console.log(json);
 				datos_colombia=json;
 			    datos_colombia.forEach(function(elemento){
-			        var newOption = new Option(elemento.dpto, elemento.cod_depto, false, false);
-			        $('#selectDepartamentoNacimiento').append(newOption).trigger('change');
+			    	if(deptoTemp == null || deptoTemp!=elemento.dpto){
+			    		deptoTemp=elemento.dpto;
+			    		var newOption = new Option(elemento.dpto, elemento.cod_depto, false, false);
+			        	$('#selectDepartamentoNacimiento').append(newOption).trigger('change');
+			    	}
+			        
 			    });
 			    
 			    //caso de editar usuario
@@ -119,7 +127,8 @@ function getFilteredByKey(array, key, value) {
 
 function comportamientoSelectsNacimiento(){
 	cargarPaises();
-	ocultar('rowDeptoYMpioColombia');//div row del departamento y municipio
+	ocultar('rowDeptoColombia');//div row del departamento y municipio
+	ocultar('rowMpioColombia');
 	cargarDepartamentosColombia();
 }
 

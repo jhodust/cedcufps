@@ -281,6 +281,8 @@
   <div th:replace="layouts/layout :: scripts"></div>
   <script type="text/javascript" th:inline="javascript">
   	var persona= [[${persona}]];
+  	console.log(persona);
+  	console.log("permisos");
   </script>
   
   <script th:src="@{/js/permisos.js}" type="text/javascript"></script>

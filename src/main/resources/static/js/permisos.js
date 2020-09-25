@@ -95,12 +95,21 @@ $( document ).ready(function() {
 		console.log(switchA.checked);
 		console.log(cbAdminvo.checked);
 		console.log(cbE.checked);
-		
-		if((switchEdC.checked && idsProgramasEdC.length==0 ) || (switchP.checked && idsProgramasPerEst.length==0 && 
-		idsDeptosDoc.length==0 && idsProgramasPerGra.length==0 && !cbAdminvo.checked && !cbE.checked) || 
-		(switchA.checked && idsEduAtt.length==0 )){
-			toastr.error('Por favor, diligencie el formulario correctamente', 'Error!');
+		if(persona.docente){
+			if((switchP.checked && idsProgramasPerEst.length==0 && 
+				idsDeptosDoc.length==0 && idsProgramasPerGra.length==0 && !cbAdminvo.checked && !cbE.checked) || 
+				(switchA.checked && idsEduAtt.length==0 )){
+					toastr.error('Por favor, diligencie el formulario correctamente', 'Error!');
+					return;
+				}
 		}else{
+			if((switchEdC.checked && idsProgramasEdC.length==0 ) || (switchP.checked && idsProgramasPerEst.length==0 && 
+			idsDeptosDoc.length==0 && idsProgramasPerGra.length==0 && !cbAdminvo.checked && !cbE.checked) || 
+			(switchA.checked && idsEduAtt.length==0 )){
+				toastr.error('Por favor, diligencie el formulario correctamente', 'Error!');
+				return;
+			}
+		}
 			$.ajax({
 			headers: {"X-CSRF-TOKEN": token},
 			type: "GET",
@@ -122,7 +131,6 @@ $( document ).ready(function() {
 				toastr.error(err.responseJSON.message, 'Error!');
 			}
 		});
-		}
 		
 		
 		
@@ -134,12 +142,24 @@ $( document ).ready(function() {
 	  	if(document.getElementById("switchEduContinua").checked){
 	  	console.log($("#programasEC").val().length);
 	  		if($("#programasEC").val().length==0){
-	  			console.log("entra");
-	  			document.getElementById("ePEC").style.display='block';
-	  			document.getElementById("ePEC").innerText="Debes seleccionar como mínimo un Programa Académico al cual se va a gestionar las educaciones continuas";
+	  		console.log("no hay educaciones");
+	  		console.log(persona);
+	  			if(persona.docente){
+	  				console.log("entra");
+		  			document.getElementById("ePEC").style.display='none';
+		  			document.getElementById("ePEC").innerText="";
+		  			
+		  			document.getElementById("wPEC").innerText="Solo podrá gestionar las educaciones continuas en las que el docente sea responsable";
+		  			document.getElementById("wPEC").style.display='block';
+	  			}else{
+	  				console.log("entra");
+		  			document.getElementById("ePEC").style.display='block';
+		  			document.getElementById("ePEC").innerText="Debes seleccionar como mínimo un Programa Académico al cual se va a gestionar las educaciones continuas";
+		  			
+		  			document.getElementById("wPEC").innerText="";
+		  			document.getElementById("wPEC").style.display='none';
+	  			}
 	  			
-	  			document.getElementById("wPEC").innerText="";
-	  			document.getElementById("wPEC").style.display='none';
 	  			
 	  		}else{
 	  			document.getElementById("ePEC").innerText="";

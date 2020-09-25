@@ -419,13 +419,17 @@ public class PersonaService implements IPersonaService, UserDetailsService {
 	@Override
 	public List<PersonaDto> findAllPersonasPosibles() {
 		// TODO Auto-generated method stub
-		
+		Persona p=this.findPersonaLogueada();
 		if(this.isSuperAdmin()) {
-			return usuarioMapper.convertListPersonasToPersonaDto((List<Persona>)personaDao.findAll());
+			List<Persona> personas=(List<Persona>)personaDao.findAll();
+			personas.remove(p);
+			return usuarioMapper.convertListPersonasToPersonaDto(personas);
 		}else {
-			Persona p=this.findPersonaLogueada();
+			
 			if(this.hasPermissionForPeople(p.getId())) {
-				return usuarioMapper.convertListPersonasToPersonaDto(personaDao.findManyPeople(this.personaCustomDao.listAllPossiblePeople(p.getId())));
+				List<Persona> personas=personaDao.findManyPeople(this.personaCustomDao.listAllPossiblePeople(p.getId()));
+				personas.remove(p);
+				return usuarioMapper.convertListPersonasToPersonaDto(personas);
 			}
 		}
 		

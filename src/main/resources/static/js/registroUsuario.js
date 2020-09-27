@@ -173,7 +173,7 @@ $(document).ready(function ()
 							}
 							
 							console.log(userJSON);
-							/*$
+							$
 									.ajax({
 										headers : {
 											"X-CSRF-TOKEN" : token
@@ -210,7 +210,7 @@ $(document).ready(function ()
 											console.log(err);
 											
 										}
-									});*/
+									});
 						});
 			});
 	function estudiante() {

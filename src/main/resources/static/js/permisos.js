@@ -232,22 +232,360 @@ $( document ).ready(function() {
 				document.getElementById("wPEC").style.display='none';
 				
 			}else{
+				document.getElementById("ePEC").innerText="";
+				document.getElementById("ePEC").style.display='none';
+				document.getElementById("wPEC").innerText="";
+				document.getElementById("wPEC").style.display='none';
+				
+			}
+		
+		}else{
+			if(document.getElementById("switchEduContinua").checked){
+				document.getElementById("ePEC").innerText="";
+				document.getElementById("ePEC").style.display='none';
+				document.getElementById("wPEC").innerText="";
+				document.getElementById("wPEC").style.display='none';
+				
+			}else{
 				document.getElementById("wPEC").style.display='block';
 				document.getElementById("wPEC").innerText="Debes activar el estado del permiso para que sea válido el registro";
 				document.getElementById("ePEC").innerText="";
 				document.getElementById("ePEC").style.display='none';
 				
 			}
-		
-		}else{
-			document.getElementById("ePEC").innerText="";
-			document.getElementById("ePEC").style.display='none';
-			document.getElementById("wPEC").innerText="";
-			document.getElementById("wPEC").style.display='none';
 			
 		}
 	});
 	
+	$("#switchPersonas").click(function() {
+	  	if(document.getElementById("switchPersonas").checked){
+	  	console.log($("#programasEC").val().length);
+	  		if($("#programasEstudiantes").val().length==0 && $("#deptosDocentes").val().length==0 && $("#programasGraduados").val().length==0 && !document.getElementById("cbAdminvo").checked && !document.getElementById("cbE").checked){
+	  		console.log("no hay items para personas");
+	  		console.log(persona);
+	  			
+  				console.log("entra");
+	  			document.getElementById("ePP").style.display='block';
+	  			document.getElementById("ePP").innerText="Debes seleccionar como mínimo alguno de los aspectos que se encuentran a continuación";
+	  			
+	  			document.getElementById("wPP").innerText="";
+	  			document.getElementById("wPP").style.display='none';
+	  			
+	  			
+	  			
+	  		}else{
+	  			document.getElementById("ePP").innerText="";
+	  			document.getElementById("ePP").style.display='none';
+	  			document.getElementById("wPP").innerText="";
+	  			document.getElementById("wPP").style.display='none';
+	  			
+	  		}
+	  	}else{
+	  		if($("#programasEstudiantes").val().length==0 && $("#deptosDocentes").val().length==0 && $("#programasGraduados").val().length==0 && !cbAdminvo.checked && !cbE.checked){
+	  			document.getElementById("wPP").style.display='none';
+	  			document.getElementById("wPP").innerText="";
+	  			document.getElementById("ePP").innerText="";
+	  			document.getElementById("ePP").style.display='none';
+	  			
+	  			
+	  			
+	  		}else{
+	  			document.getElementById("ePP").innerText="";
+	  			document.getElementById("ePP").style.display='none';
+	  			document.getElementById("wPP").innerText="Debes activar el estado del permiso para que sea válido el registro";
+	  			document.getElementById("wPP").style.display='block';
+	  			
+	  		}
+	  	}
+	  	
+	  });
+	
+	$("#cbAdminvo").click(function() {
+	  	if(document.getElementById("cbAdminvo").checked){
+	  		if(document.getElementById("switchPersonas").checked){
+	  		
+	  			
+		  		document.getElementById("ePP").innerText="";
+	  			document.getElementById("ePP").style.display='none';
+	  			document.getElementById("wPP").innerText="";
+	  			document.getElementById("wPP").style.display='none';
+	  			
+	  			
+	  			
+	  		}else{
+	  			document.getElementById("ePP").innerText="";
+	  			document.getElementById("ePP").style.display='none';
+	  			document.getElementById("wPP").innerText="Debes activar el estado del permiso para que sea válido el registro";
+	  			document.getElementById("wPP").style.display='block';
+	  			
+	  		}
+	  	}else{
+	  		if(document.getElementById("switchPersonas").checked){
+	  			if($("#programasEstudiantes").val().length==0 && 
+	  				$("#deptosDocentes").val().length==0 && $("#programasGraduados").val().length==0 && 
+	  				!document.getElementById("cbE").checked){
+	  				document.getElementById("ePP").style.display='block';
+		  			document.getElementById("ePP").innerText="Debes seleccionar como mínimo alguno de los aspectos que se encuentran a continuación";
+		  			
+		  			document.getElementById("wPP").innerText="";
+		  			document.getElementById("wPP").style.display='none';
+	  			}else{
+	  				document.getElementById("ePP").innerText="";
+		  			document.getElementById("ePP").style.display='none';
+		  			document.getElementById("wPP").innerText="";
+		  			document.getElementById("wPP").style.display='none';
+	  			}
+	  		}else{
+	  			if($("#programasEstudiantes").val().length==0 && 
+		  				$("#deptosDocentes").val().length==0 && $("#programasGraduados").val().length==0 && 
+		  				!document.getElementById("cbE").checked){
+		  				document.getElementById("ePP").innerText="";
+			  			document.getElementById("ePP").style.display='none';
+			  			document.getElementById("wPP").innerText="";
+			  			document.getElementById("wPP").style.display='none';
+		  			}else{
+		  				document.getElementById("ePP").innerText="";
+			  			document.getElementById("ePP").style.display='none';
+			  			document.getElementById("wPP").innerText="Debes activar el estado del permiso para que sea válido el registro";
+			  			document.getElementById("wPP").style.display='block';
+		  			}
+	  			
+	  		}
+	  	}
+	  	
+	  });
+	
+	$("#cbE").click(function() {
+	  	if(document.getElementById("cbE").checked){
+	  		if(document.getElementById("switchPersonas").checked){
+	  		
+	  			
+		  		document.getElementById("ePP").innerText="";
+	  			document.getElementById("ePP").style.display='none';
+	  			document.getElementById("wPP").innerText="";
+	  			document.getElementById("wPP").style.display='none';
+	  			
+	  			
+	  			
+	  		}else{
+	  			document.getElementById("ePP").innerText="";
+	  			document.getElementById("ePP").style.display='none';
+	  			document.getElementById("wPP").innerText="Debes activar el estado del permiso para que sea válido el registro";
+	  			document.getElementById("wPP").style.display='block';
+	  			
+	  		}
+	  	}else{
+	  		if(document.getElementById("switchPersonas").checked){
+	  			if($("#programasEstudiantes").val().length==0 && 
+	  				$("#deptosDocentes").val().length==0 && $("#programasGraduados").val().length==0 && 
+	  				!document.getElementById("cbAdminvo").checked){
+	  				document.getElementById("ePP").style.display='block';
+		  			document.getElementById("ePP").innerText="Debes seleccionar como mínimo alguno de los aspectos que se encuentran a continuación";
+		  			
+		  			document.getElementById("wPP").innerText="";
+		  			document.getElementById("wPP").style.display='none';
+	  			}else{
+	  				document.getElementById("ePP").innerText="";
+		  			document.getElementById("ePP").style.display='none';
+		  			document.getElementById("wPP").innerText="";
+		  			document.getElementById("wPP").style.display='none';
+	  			}
+	  		}else{
+	  			if($("#programasEstudiantes").val().length==0 && 
+		  				$("#deptosDocentes").val().length==0 && $("#programasGraduados").val().length==0 && 
+		  				!document.getElementById("cbAdminvo").checked){
+		  				document.getElementById("ePP").innerText="";
+			  			document.getElementById("ePP").style.display='none';
+			  			document.getElementById("wPP").innerText="";
+			  			document.getElementById("wPP").style.display='none';
+		  			}else{
+		  				document.getElementById("ePP").innerText="";
+			  			document.getElementById("ePP").style.display='none';
+			  			document.getElementById("wPP").innerText="Debes activar el estado del permiso para que sea válido el registro";
+			  			document.getElementById("wPP").style.display='block';
+		  			}
+	  			
+	  		}
+	  	}
+	  	
+	  });
+	
+	 $('#programasEstudiantes').on('select2:select', function (e) { 
+			if($("#programasEstudiantes").val().length>0){
+				if(document.getElementById("switchPersonas").checked){
+					document.getElementById("ePP").innerText="";
+		  			document.getElementById("ePP").style.display='none';
+		  			document.getElementById("wPP").innerText="";
+		  			document.getElementById("wPP").style.display='none';
+					
+				}else{
+					
+					document.getElementById("ePP").innerText="";
+		  			document.getElementById("ePP").style.display='none';
+		  			document.getElementById("wPP").innerText="Debes activar el estado del permiso para que sea válido el registro";
+		  			document.getElementById("wPP").style.display='block';
+				}
+					
+			
+			}
+		});
+	 
+	 $('#programasEstudiantes').on('select2:unselect', function (e) { 
+			if($("#programasEstudiantes").val().length==0){
+				if(document.getElementById("switchPersonas").checked){
+					if($("#deptosDocentes").val().length==0 && $("#programasGraduados").val().length==0 
+							&& !document.getElementById("cbAdminvo").checked && !document.getElementById("cbE").checked){
+						document.getElementById("ePP").style.display='block';
+			  			document.getElementById("ePP").innerText="Debes seleccionar como mínimo alguno de los aspectos que se encuentran a continuación";
+			  			
+			  			document.getElementById("wPP").innerText="";
+			  			document.getElementById("wPP").style.display='none';
+					
+					}else{
+						document.getElementById("ePP").innerText="";
+			  			document.getElementById("ePP").style.display='none';
+			  			document.getElementById("wPP").innerText="";
+			  			document.getElementById("wPP").style.display='none';
+					}
+					
+					
+				}
+					
+			
+			}else{
+				if($("#deptosDocentes").val().length==0 && $("#programasGraduados").val().length==0 
+						&& !document.getElementById("cbAdminvo").checked && !document.getElementById("cbE").checked){
+					document.getElementById("ePP").innerText="";
+		  			document.getElementById("ePP").style.display='none';
+		  			document.getElementById("wPP").innerText="";
+		  			document.getElementById("wPP").style.display='none';
+				
+				}else{
+					document.getElementById("ePP").innerText="";
+		  			document.getElementById("ePP").style.display='none';
+		  			document.getElementById("wPP").innerText="Debes activar el estado del permiso para que sea válido el registro";
+		  			document.getElementById("wPP").style.display='block';
+				}
+			}
+		});
+	 
+	 $('#deptosDocentes').on('select2:select', function (e) { 
+			if($("#deptosDocentes").val().length>0){
+				if(document.getElementById("switchPersonas").checked){
+					document.getElementById("ePP").innerText="";
+		  			document.getElementById("ePP").style.display='none';
+		  			document.getElementById("wPP").innerText="";
+		  			document.getElementById("wPP").style.display='none';
+					
+				}else{
+					
+					document.getElementById("ePP").innerText="";
+		  			document.getElementById("ePP").style.display='none';
+		  			document.getElementById("wPP").innerText="Debes activar el estado del permiso para que sea válido el registro";
+		  			document.getElementById("wPP").style.display='block';
+				}
+					
+			
+			}
+		});
+	 
+	 $('#deptosDocentes').on('select2:unselect', function (e) { 
+			if($("#deptosDocentes").val().length==0){
+				if(document.getElementById("switchPersonas").checked){
+					if($("#programasEstudiantes").val().length==0 && $("#programasGraduados").val().length==0 
+							&& !document.getElementById("cbAdminvo").checked && !document.getElementById("cbE").checked){
+						document.getElementById("ePP").style.display='block';
+			  			document.getElementById("ePP").innerText="Debes seleccionar como mínimo alguno de los aspectos que se encuentran a continuación";
+			  			
+			  			document.getElementById("wPP").innerText="";
+			  			document.getElementById("wPP").style.display='none';
+					
+					}else{
+						document.getElementById("ePP").innerText="";
+			  			document.getElementById("ePP").style.display='none';
+			  			document.getElementById("wPP").innerText="";
+			  			document.getElementById("wPP").style.display='none';
+					}
+					
+					
+				}
+					
+			
+			}else{
+				if($("#programasEstudiantes").val().length==0 && $("#programasGraduados").val().length==0 
+						&& !document.getElementById("cbAdminvo").checked && !document.getElementById("cbE").checked){
+					document.getElementById("ePP").innerText="";
+		  			document.getElementById("ePP").style.display='none';
+		  			document.getElementById("wPP").innerText="";
+		  			document.getElementById("wPP").style.display='none';
+				
+				}else{
+					document.getElementById("ePP").innerText="";
+		  			document.getElementById("ePP").style.display='none';
+		  			document.getElementById("wPP").innerText="Debes activar el estado del permiso para que sea válido el registro";
+		  			document.getElementById("wPP").style.display='block';
+				}
+			}
+		});
+	 
+	 $('#programasGraduados').on('select2:select', function (e) { 
+			if($("#programasGraduados").val().length>0){
+				if(document.getElementById("switchPersonas").checked){
+					document.getElementById("ePP").innerText="";
+		  			document.getElementById("ePP").style.display='none';
+		  			document.getElementById("wPP").innerText="";
+		  			document.getElementById("wPP").style.display='none';
+					
+				}else{
+					
+					document.getElementById("ePP").innerText="";
+		  			document.getElementById("ePP").style.display='none';
+		  			document.getElementById("wPP").innerText="Debes activar el estado del permiso para que sea válido el registro";
+		  			document.getElementById("wPP").style.display='block';
+				}
+					
+			
+			}
+		});
+	 
+	 $('#programasGraduados').on('select2:unselect', function (e) { 
+			if($("#programasGraduados").val().length==0){
+				if(document.getElementById("switchPersonas").checked){
+					if($("#deptosDocentes").val().length==0 && $("#programasEstudiantes").val().length==0 
+							&& !document.getElementById("cbAdminvo").checked && !document.getElementById("cbE").checked){
+						document.getElementById("ePP").style.display='block';
+			  			document.getElementById("ePP").innerText="Debes seleccionar como mínimo alguno de los aspectos que se encuentran a continuación";
+			  			
+			  			document.getElementById("wPP").innerText="";
+			  			document.getElementById("wPP").style.display='none';
+					
+					}else{
+						document.getElementById("ePP").innerText="";
+			  			document.getElementById("ePP").style.display='none';
+			  			document.getElementById("wPP").innerText="";
+			  			document.getElementById("wPP").style.display='none';
+					}
+					
+					
+				}else{
+					if($("#deptosDocentes").val().length==0 && $("#programasEstudiantes").val().length==0 
+							&& !document.getElementById("cbAdminvo").checked && !document.getElementById("cbE").checked){
+						document.getElementById("ePP").innerText="";
+			  			document.getElementById("ePP").style.display='none';
+			  			document.getElementById("wPP").innerText="";
+			  			document.getElementById("wPP").style.display='none';
+					
+					}else{
+						document.getElementById("ePP").innerText="";
+			  			document.getElementById("ePP").style.display='none';
+			  			document.getElementById("wPP").innerText="Debes activar el estado del permiso para que sea válido el registro";
+			  			document.getElementById("wPP").style.display='block';
+					}
+				}
+					
+			
+			}
+		});
 	
 	$("#switchAsistencias").click(function() {
 	  	if(document.getElementById("switchAsistencias").checked){
@@ -331,18 +669,28 @@ $( document ).ready(function() {
 				document.getElementById("wA").style.display='none';
 				
 			}else{
+				document.getElementById("eA").innerText="";
+				document.getElementById("eA").style.display='none';
+				document.getElementById("wA").innerText="";
+				document.getElementById("wA").style.display='none';
+				
+			}
+		
+		}else{
+			if(document.getElementById("switchAsistencias").checked){
+				document.getElementById("eA").innerText="";
+				document.getElementById("eA").style.display='none';
+				document.getElementById("wA").innerText="";
+				document.getElementById("wA").style.display='none';
+				
+			}else{
 				document.getElementById("wA").style.display='block';
 				document.getElementById("wA").innerText="Debes activar el estado del permiso para que sea válido el registro";
 				document.getElementById("eA").innerText="";
 				document.getElementById("eA").style.display='none';
 				
 			}
-		
-		}else{
-			document.getElementById("eA").innerText="";
-			document.getElementById("eA").style.display='none';
-			document.getElementById("wA").innerText="";
-			document.getElementById("wA").style.display='none';
+			
 			
 		}
 	});

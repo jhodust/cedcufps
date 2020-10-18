@@ -41,7 +41,7 @@ public class DocenteController {
 		return "persona/formRegistroDocente";
 	}
 	
-	@RequestMapping(value = "/usuarios/docente/registro/{id}")
+	/*@RequestMapping(value = "/usuarios/docente/registro/{id}")
 	public String editar(@PathVariable(value = "id") Long id, Map<String, Object> model) {
 		Docente d= (Docente)personaService.findOne(id).get();
 		model.put("titulo","FORMULARIO PERSONA");
@@ -52,7 +52,7 @@ public class DocenteController {
 		model.put("generos",personaService.findAllGeneros());
 		model.put("estados_civiles",personaService.findAllEstadosCiviles());
 		return "persona/formRegistroDocente";
-	}
+	}*/
 	
 	@RequestMapping(value = "/usuarios/docente/registro", method = RequestMethod.POST)
 	public String save(@Valid Docente d, BindingResult result,Map<String, Object> model, SessionStatus status,RedirectAttributes redirectAttributes) {

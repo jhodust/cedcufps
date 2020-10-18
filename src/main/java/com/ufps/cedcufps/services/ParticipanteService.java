@@ -8,12 +8,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ufps.cedcufps.dao.IEducacionContinuaDao;
 import com.ufps.cedcufps.dao.IParticipanteDao;
 import com.ufps.cedcufps.dao.IPersonaDao;
 import com.ufps.cedcufps.dao.ITipoParticipanteDao;
 import com.ufps.cedcufps.dto.ParticipanteDto;
+import com.ufps.cedcufps.dto.PonenteDto;
 import com.ufps.cedcufps.exception.CustomException;
 import com.ufps.cedcufps.mapper.IEducacionContinuaMapper;
 import com.ufps.cedcufps.modelos.EducacionContinua;
@@ -43,6 +45,9 @@ public class ParticipanteService implements IParticipanteService{
 	
 	@Autowired
 	private IEducacionContinuaMapper educacionContinuaMapper;
+	
+	@Autowired
+	private IPersonaService personaService;
 	
 	@Override
 	public List<TipoParticipante> findAllTiposParticipante() {
@@ -75,23 +80,41 @@ public class ParticipanteService implements IParticipanteService{
 	}
 
 	@Override
-	public Participante findByIdEducacionContinuaAndIdPersona(Long idEducacionContinua, Long idPersona) {
+	public ParticipanteDto findByIdEducacionContinuaAndIdPersona(Long idEducacionContinua, Long idPersona) {
 		// TODO Auto-generated method stub
-		return participanteDao.findParticipanteByIdEducacionContinuaAndIdPersona(idEducacionContinua, idPersona);
+		return educacionContinuaMapper.convertParticipanteToParticipanteDto(participanteDao.findParticipanteByIdEducacionContinuaAndIdPersona(idEducacionContinua, idPersona));
 	}
 
 	@Override
 	@Transactional(rollbackFor = CustomException.class)
-	public void deleteParticipante(Participante p) {
+	public void deleteParticipante(Long idParticipante) {
 		// TODO Auto-generated method stub
-		Participante pa= participanteDao.findById(p.getId()).orElseThrow(() -> new CustomException("El participante a eliminar no fue encontrado en la base de datos"));
-		String iQR=pa.getImagenCodigoQR();
-		String iT=pa.getTarjetaInscripcion();
-		participanteDao.delete(pa);
-		Archivo.deleteImage(iQR);
-		Archivo.deleteImage(iT);
+		Participante pa= participanteDao.findParticipanteById(idParticipante); 
+		if(pa==null) {
+			throw new CustomException("El participante a eliminar no fue encontrado en la base de datos");
+		}
+		
+		this.deleteInfoParticipante(idParticipante, pa.getCodigoQR(), pa.getTarjetaInscripcion());
 		
 		
+	}
+	
+	private void deleteInfoParticipante(Long idParticipante, String codigoQr, String tarjetaInscripcion) {
+		participanteDao.deleteParticipante(idParticipante);
+		Archivo.deleteImage(codigoQr);
+		Archivo.deleteImage(tarjetaInscripcion);
+	}
+	
+	@Override
+	@Transactional(rollbackFor = CustomException.class)
+	public void cancelarInscripcion(Long idEduContinua) {
+		// TODO Auto-generated method stub
+		Participante pa = participanteDao.findParticipanteByIdEducacionContinuaAndIdPersona(idEduContinua, personaService.findPersonaLogueada().getId());
+		if(pa==null) {
+			throw new CustomException("La inscripción a eliminar no fue encontrada en la base de datos");
+		}
+		
+		this.deleteInfoParticipante(pa.getId(), pa.getCodigoQR(), pa.getTarjetaInscripcion());
 	}
 
 	@Override
@@ -107,9 +130,15 @@ public class ParticipanteService implements IParticipanteService{
 	}
 
 	@Override
-	public Participante findParticipante(Long id) {
+	public ParticipanteDto findParticipante(Long id) {
 		// TODO Auto-generated method stub
-		return participanteDao.findById(id).get();
+		return educacionContinuaMapper.convertParticipanteToParticipanteDto(participanteDao.findById(id).get());
+	}
+	
+	@Override
+	public PonenteDto findPonente(Long id) {
+		// TODO Auto-generated method stub
+		return educacionContinuaMapper.convertPonenteToPonenteDto((Ponente)participanteDao.findById(id).get());
 	}
 
 	@Override
@@ -140,7 +169,7 @@ public class ParticipanteService implements IParticipanteService{
 	@Transactional(rollbackFor = CustomException.class)
 	public void savePonente(Ponente ponente) {
 		// TODO Auto-generated method stub
-		if(ponente.getId() == null) {
+		if(ponente.getId() == null || ponente.getId().equals(0L) ) {
 			Participante participanteValidado = participanteDao.validarParticipanteYaInscrito(ponente.getEducacionContinua().getId(), ponente.getPersona().getId());
 			if( participanteValidado != null) {
 				throw new CustomException("La persona ya se encuentra registrada como " + participanteValidado.getTipoParticipante().getTipoParticipante(), HttpStatus.BAD_REQUEST);
@@ -151,8 +180,15 @@ public class ParticipanteService implements IParticipanteService{
 		EducacionContinua ec=educacionContinuaDao.findById(ponente.getEducacionContinua().getId()).orElseThrow(() -> new CustomException("No fue posible encontrar la educación continua asociada en la base de datos"));
 		TipoParticipante tp=tipoParticipanteDao.findById(ponente.getTipoParticipante().getId()).orElseThrow(() -> new CustomException("No fue posible encontrar el tipo de participante asociado"));
 		/*preparando qr de inscripcion*/
-		if(ponente.getId()==null) {
+		System.out.println("ponete");
+		System.out.println(ponente.getId()==null);
+		System.out.println(ponente.getId().equals(0L));
+		if(ponente.getId()==null || ponente.getId().equals(0L)) {
+			System.out.println("entra al if");
+			System.out.println(p!=null);
+			System.out.println(ec!=null);
 			if(p!=null && ec!=null) {
+				System.out.println("entra al otro if");
 				ponente.setPersona(p);
 				ponente.setEducacionContinua(ec);
 				ponente.setTipoParticipante(tp);
@@ -160,6 +196,7 @@ public class ParticipanteService implements IParticipanteService{
 				String texto=ec.getProgramaResponsable().getCodigo()+"_"+ec.getTipoEduContinua().getId()+"_"+ec.getId()+"_"+ponente.getTipoParticipante().getId()+"_"+p.getNumeroDocumento();
 				String nombreArchivo=p.getNumeroDocumento()+".png";
 				ponente.setCodigoQR(Encrypt.encriptar(texto));
+				System.out.println("guarda qr");
 				try {
 					System.out.println("encriptado: " + ponente.getCodigoQR());
 					System.out.println("desencriptado: " + Encrypt.desencriptar(ponente.getCodigoQR()));
@@ -178,5 +215,17 @@ public class ParticipanteService implements IParticipanteService{
 			
 			participanteDao.save(ponente);
 	}
+
+	@Override
+	public void saveTarjetaInscripcion(MultipartFile file, Long idParticipante) {
+		// TODO Auto-generated method stub
+		Optional<Participante> p= participanteDao.findById(idParticipante);
+		if(p!=null) {
+			p.get().setTarjetaInscripcion(Archivo.saveImageAboutEducacionContinua(file,p.get().getEducacionContinua().getId()+"/tarjetas-inscripcion/inscripcion_"+p.get().getPersona().getNumeroDocumento()));
+			participanteDao.save(p.get());
+		}
+	}
+
+	
 
 }

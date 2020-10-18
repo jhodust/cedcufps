@@ -60,24 +60,34 @@
           <!-- Table -->
           <div class="col-md-4">
           
-				</div>						
+				</div>		
+				<div th:fragment="listadoParticipantes">
+				<div class="alert-messages" th:if="${ec.educacionContinua.estado != 'En Desarrollo'}">
+				<div class="alert alert-info" role="alert">
+				     La asistencia se habilitará una vez la educación continua haya iniciado
+				</div>
+				</div>			
           <div class="table-responsive">
           <div class="col-lg-12">
-            <table id="myTable" style="width: 100%;" class="row-border table align-items-center">
+            <table id="myTable" style="width: 100%;"class="row-border table align-items-center" >
 						<thead>
 							<tr>
 								<th>Documento</th>
 								<th>Nombre</th>
 								<th>Tipo Participante</th>
-								<th th:if="${educacionContinua.estado != 'Activo'}">Asistencia<br><input type="checkbox" th:each="j : ${jornadas}" th:id="${j.id}+'_all'" class="all" th:data-jornada="${j.id}" data-toggle="tooltip" data-placement="top" th:title="${#strings.capitalizeWords(#dates.format(j.horaInicio, 'dd MMMM yyyy HH:mm'))}"/></th>
+								<th th:if="${ec.educacionContinua.estado != 'Activo'}">Asistencia<br>
+									<input type="checkbox" th:each="j : ${ec.educacionContinua.jornadas}" th:id="${j.id}+'_all'" class="all" th:data-jornada="${j.id}" data-toggle="tooltip" data-placement="top" th:title="${#strings.capitalizeWords(#dates.format(j.horaInicio, 'dd MMMM yyyy HH:mm'))}"/>
+								</th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr th:each="p : ${participantes}">
+							<tr th:each="p : ${ec.educacionContinua.participantes}">
 								<td th:text="${p.tipoDocumento + ' ' + p.numeroDocumento}"></td>
 								<td th:text="${p.nombrePersona}"></td>
 								<td th:text="${p.tipoParticipante}"></td>
-								<td th:if="${educacionContinua.estado != 'Activo'}"><input type="checkbox" th:each="j : ${jornadas}" th:class="'checkAsistencia j_'+${j.id}" th:id="${j.id}+'_'+${p.id}" th:data-jornada="${j.id}" th:data-participante="${p.id}" data-toggle="tooltip" data-placement="top" th:title="${#strings.capitalizeWords(#dates.format(j.horaInicio, 'dd MMMM yyyy HH:mm'))}"/></td>
+								<td th:if="${ec.educacionContinua.estado != 'Activo'}">
+									<input type="checkbox" th:each="j : ${ec.educacionContinua.jornadas}" th:checked="${p.jornadasAsistencias.get(j.id)}" th:class="'checkAsistencia j_'+${j.id}" th:id="${j.id}+'_'+${p.id}" th:data-jornada="${j.id}" th:data-participante="${p.id}" data-toggle="tooltip" data-placement="top" th:title="${#strings.capitalizeWords(#dates.format(j.horaInicio, 'dd MMMM yyyy HH:mm'))}"/>
+								</td>
     							
 							</tr>
 							
@@ -85,6 +95,7 @@
 					</table>
 					</div>
           </div>
+          </div>	
         </div>
 		</div>
 	  </div>
@@ -130,6 +141,7 @@
   }
   </script>
   <script th:if="${educacionContinua.estado != 'Activo'}" th:src="@{/js/asistencia.js}" type="text/javascript"></script>
+
 </body>
 
 </html>

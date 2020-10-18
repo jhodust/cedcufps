@@ -6,13 +6,16 @@ import java.util.Optional;
 
 import javax.transaction.Transactional;
 
+import org.springframework.data.jpa.datatables.mapping.DataTablesOutput;
+import org.springframework.data.jpa.datatables.repository.DataTablesRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 import com.ufps.cedcufps.modelos.Persona;
 
-public interface IPersonaDao extends CrudRepository<Persona, Long> {
+
+public interface IPersonaDao extends CrudRepository<Persona, Long>, DataTablesRepository<Persona, Long> {
 
 	@Query("select count(p) from Persona p where p.id != ?1 and p.numeroDocumento=?2")
 	public int validarDocumentoRegistrado(Long idPersona, String numeroDocumento);
@@ -46,7 +49,22 @@ public interface IPersonaDao extends CrudRepository<Persona, Long> {
 			String idPaisNacimiento, String idDepartamentoNacimiento, String idMunicipioNacimiento, String email, String direccion, String telefono,
 			boolean isEstudiante, boolean isDocente, boolean isAdministrativo, boolean isGraduado, boolean isExterno, Long id);
 	
+	@Query(value ="select p " + 
+			"from Persona p " + 
+			"where CONCAT(p.primerNombre,' ', p.segundoNombre,' ',p.primerApellido,' ', p.segundoApellido) like ?1")	
+	public List<Persona> findPosiblePonenteByNombre(String nombre);
 	
 	
-
+	
+	@Query(value ="select p " + 
+			"from Persona p " + 
+			"where p.numeroDocumento = ?1")	
+	public List<Persona> findPosiblePonenteByNumeroDocumento(String numeroDocumento);
+	
+	@Query(value ="select p " + 
+			"from Persona p " + 
+			"where p.email = ?1")	
+	public List<Persona> findPosiblePonenteByEmail(String email);
+	
+	
 }

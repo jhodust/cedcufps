@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.ufps.cedcufps.dto.ParticipanteDto;
 import com.ufps.cedcufps.modelos.Asistente;
 import com.ufps.cedcufps.modelos.EducacionContinua;
 import com.ufps.cedcufps.modelos.Facultad;
@@ -83,22 +84,16 @@ public class AsistenteRestController {
 	@ResponseBody
 	public ResponseEntity<?> guardarTarjetaInscripcion(MultipartFile file, String idParticipante){
 		System.out.println("imagen: " + file.getName());
-		Participante p= participanteService.findParticipante(Long.parseLong(idParticipante));
-		System.out.println("participante: " + idParticipante);
-		System.out.println("participante educacion continua: " + p.getEducacionContinua().getId());
-		p.setTarjetaInscripcion(Archivo.saveImageAboutEducacionContinua(file,p.getEducacionContinua().getId()+"/tarjetas-inscripcion/inscripcion_"+p.getPersona().getNumeroDocumento()));
-		participanteService.save(p);
-		System.out.println("tarjeta participante: " + p.getTarjetaInscripcion());
+		participanteService.saveTarjetaInscripcion(file, Long.parseLong(idParticipante));
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/cancelar-inscripcion/{id_evento}",produces = "application/json")
 	public ResponseEntity<Participante> cancelarInscripcion(@PathVariable(value = "id_evento") Long id, Map<String, Object> model) {
 		
-		Participante p=participanteService.findByIdEducacionContinuaAndIdPersona(id, personaService.findPersonaLogueada().getId());
-		Archivo.deleteImage(p.getImagenCodigoQR());
-		Archivo.deleteImage(p.getTarjetaInscripcion());
-		participanteService.deleteParticipante(p);
+		//Archivo.deleteImage(p.getImagenQr());
+		//Archivo.deleteImage(p.getTarjetaInscripcion());
+		participanteService.cancelarInscripcion(id);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 }

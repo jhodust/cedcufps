@@ -5,47 +5,13 @@
 </head>
 <body>
   <!-- Application container -->
-  <div class="container-fluid container-application">
-    <!-- Content -->
-    <div class="main-content position-relative">
-      <!-- Main nav -->
-      <div th:replace="layouts/logosHead :: logosHead"></div>
-      <nav th:replace="layouts/navbar :: navbar"></nav>
-      
-      <!-- Page content -->
-      <div class="page-content col-lg-9 center">
-       <!-- Project cards -->
-       <nav aria-label="breadcrumb">
-		  <ol class="breadcrumb breadcrumb-links">
-		    <li class="breadcrumb-item"><a class="red-ufps-breadcrumb" th:href="@{/}">Inicio</a></li>
-		    <li class="breadcrumb-item"><a class="red-ufps-breadcrumb" th:href="@{/educacion-continua}">Educaciones Continuas</a></li>
-		    <li class="breadcrumb-item" th:if="${educacionContinua.id != null}"><a class="red-ufps-breadcrumb" th:href="@{/educacion-continua/detalles?educacionContinua={educacionContinua}(educacionContinua=${educacionContinua.nombre})}">Detalles</a></li>
-		    <li class="breadcrumb-item active" aria-current="page">Ponentes</li>
-		  </ol>
-		</nav>
-        <!-- Page title -->
-       	<div class="contenido ml-3 mr-3 pb-2" >
-        <br>
-        <div class="page-title">
-          <div class="row justify-content-between align-items-center">
-            <div class="col-md-6 d-flex align-items-center justify-content-between justify-content-md-start mb-3 mb-md-0">
-              <!-- Page title + Go Back button -->
-              <div class="d-inline-block">
-                <h5 class="h4 d-inline-block font-weight-400 mb-0 text-dark" ><strong>Ponentes</strong></h5>
-	              <a href="#" data-toggle="modal" data-target="#modalPonentes" class="btn btn-sm btn-white btn-icon-only rounded-circle ml-4">
-                <span class="btn-inner--icon"><i class="fas fa-plus"></i></span>
-              </a>	
-              </div>
-            </div>
-            
-          </div>
-        </div>
-        <hr/>
-        <div th:if="${#lists.size(ponentes) == 0}">
+  <div th:fragment="indexPonentes">
+  
+  	<div th:if="${#lists.size(ec.educacionContinua.ponentes) == 0}">
         	<center><span class="badge badge-red-ufps">No existen ponentes registrados(as)</span></center>
         </div>
 		<div class="row">
-			<div class="col-lg-4 hover-scale-110" th:each="p: ${ponentes}">
+			<div class="col-lg-6 hover-scale-110" th:each="p: ${ec.educacionContinua.ponentes}">
             <div class="card hover-shadow-sm-">
             
               <div class="card-header"> 
@@ -55,23 +21,27 @@
                   <div class="avatar-parent-child">
                     
                     <img alt="Image placeholder" th:src="@{/logos/ponente.png}" class="avatar">
-                   	<div class="row ml-1">
-                    	<a href="#" onclick="editarPonente(this)" class="action-item actions-red-ufps" th:data-id="${p.id}" data-toggle="tooltip" data-placement="bottom" title="Editar">
+                   	<div class="row">
+                   	  <a th:href="@{${'/'+p.participante.tarjetaInscripcion}}" data-caption="Tarjeta Inscripción"  data-fancybox="group" class="action-item actions-red-ufps" th:data-id="${p.participante.id}" data-toggle="tooltip" data-placement="bottom" title="Ver tarjeta inscripción">
+	                    <i class="far fa-address-card"></i>
+	                   
+	                  </a>
+	                 <a href="#" onclick="editarPonente(this)" class="action-item actions-red-ufps" th:data-id="${p.participante.id}" data-toggle="tooltip" data-placement="bottom" title="Editar">
 	                    <i class="far fa-edit"></i>
 	                  </a>
-	                  <a href="#" onclick="eliminarPonente(this)" class="action-item actions-red-ufps" th:data-id="${p.id}" data-toggle="tooltip" data-placement="bottom" title="Eliminar">
+	                  <a href="#" onclick="eliminarPonente(this)" class="action-item actions-red-ufps" th:data-id="${p.participante.id}" data-toggle="tooltip" data-placement="bottom" title="Eliminar">
 	                    <i class="far fa-trash-alt"></i>
 	                  </a>
 	                  
                     </div>
                   </div>
                   
-                  <div class="avatar-content ml-2">
+                  <div class="avatar-content ml-4">
                    
 					
                     <strong><span class="text-sm text-muted"><i class="fas fa-info-circle"></i> Nombre</span></strong>
                     <br>
-                    <p class="text-sm text-muted" th:text="(${p?.persona?.primerNombre} ?:'') +' '+ (${p?.persona?.segundoNombre} ?:'') +' '+ (${p?.persona?.primerApellido} ?:'')+' '+ (${p?.persona?.segundoApellido} ?:'')"></p>
+                    <p class="text-sm text-muted" th:text="${p.participante.nombrePersona}"></p>
                     <strong><span class="text-sm text-muted"><i class="fas fa-info-circle"></i> Tema</span></strong>
                     <br>
                     <p class="text-sm text-muted"  th:text="${p.tema}"></p>
@@ -84,17 +54,10 @@
           </div>
 			
 		</div>
-        
-        
-		</div>
-	  </div>
     
-    </div>
-    <div th:replace="layouts/footer :: footer"></div>
-    <div th:replace="educacion_continua/ponente/formModal :: modalRegistro"></div>
-    <div th:replace="educacion_continua/tarjetas_inscripcion/canvas_modal :: canvas"></div>
     
   </div>
+ 
   <!-- Scripts -->
   <!-- Core JS - includes jquery, bootstrap, popper, in-view and sticky-kit -->
   

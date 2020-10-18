@@ -27,6 +27,7 @@ public class EducacionContinuaWebDto {
 	private String tipoEduContinua;
 	private List<JornadaAppDto> jornadas;
 	private List<ParticipanteDto> participantes;
+	private List<PonenteDto> ponentes;
 	private Long idProgramaResp;
 	private String programaResp;
 	private Long idDocenteResp;
@@ -35,9 +36,11 @@ public class EducacionContinuaWebDto {
 	private String clasificacion;
 	private Long idTipoBeneficiario;
 	private String tipoBeneficiario;
-	private Long idDiploma;
+	private DiplomaDto diploma;
 	private String estado;
 	private int cantidadInscritos;
+	private Long idFacultad;
+	private String facultad;
 	
 	public Long getId() {
 		return id;
@@ -189,12 +192,7 @@ public class EducacionContinuaWebDto {
 	public void setTipoBeneficiario(String tipoBeneficiario) {
 		this.tipoBeneficiario = tipoBeneficiario;
 	}
-	public Long getIdDiploma() {
-		return idDiploma;
-	}
-	public void setIdDiploma(Long idDiploma) {
-		this.idDiploma = idDiploma;
-	}
+	
 	public String getEstado() {
 		return estado;
 	}
@@ -212,6 +210,30 @@ public class EducacionContinuaWebDto {
 	}
 	public void setContenidoGral(String contenidoGral) {
 		this.contenidoGral = contenidoGral;
+	}
+	public List<PonenteDto> getPonentes() {
+		return ponentes;
+	}
+	public void setPonentes(List<PonenteDto> ponentes) {
+		this.ponentes = ponentes;
+	}
+	public DiplomaDto getDiploma() {
+		return diploma;
+	}
+	public void setDiploma(DiplomaDto diploma) {
+		this.diploma = diploma;
+	}
+	public Long getIdFacultad() {
+		return idFacultad;
+	}
+	public void setIdFacultad(Long idFacultad) {
+		this.idFacultad = idFacultad;
+	}
+	public String getFacultad() {
+		return facultad;
+	}
+	public void setFacultad(String facultad) {
+		this.facultad = facultad;
 	}
 	
 	

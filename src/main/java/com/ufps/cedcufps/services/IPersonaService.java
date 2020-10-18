@@ -3,6 +3,8 @@ package com.ufps.cedcufps.services;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.jpa.datatables.mapping.DataTablesOutput;
+
 import com.ufps.cedcufps.dto.PerfilRolUsuarioDto;
 import com.ufps.cedcufps.dto.PersonaDto;
 import com.ufps.cedcufps.dto.UsuarioAppDto;
@@ -52,7 +54,7 @@ public interface IPersonaService {
 	
 	public UsuarioAppDto convertPersonaLogueadaApp(Persona p);
 	
-	public Optional<Persona> findOne(Long id);
+	public PersonaDto findOne(Long id);
 	
 	public Persona findByUsername(String username);
 
@@ -80,5 +82,7 @@ public interface IPersonaService {
 			List<Long> idsProEduContinua, List<Long> idsProEst, List<Long> idsDeptoDoc, List<Long> idsProGrad,
 			List<Long> idsEduAtt, boolean hasPermisosAdminvo, boolean hasPermisosExter, 
 			boolean isDirPrograma, boolean isDocente,Long idProgramaDirector);
+	
+	public DataTablesOutput<PersonaDto> findPossiblePonente(int tipoBusqueda, String value);
 
 }

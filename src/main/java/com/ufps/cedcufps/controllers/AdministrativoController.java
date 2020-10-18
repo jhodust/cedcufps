@@ -41,7 +41,7 @@ public class AdministrativoController {
 		return "persona/formRegistroAdministrativo";
 	}
 	
-	@RequestMapping(value = "/usuarios/administrativo/registro/{id}")
+	/*@RequestMapping(value = "/usuarios/administrativo/registro/{id}")
 	public String editar(@PathVariable(value = "id") Long id, Map<String, Object> model) {
 		Administrativo a= (Administrativo)personaService.findOne(id).get();
 		model.put("titulo","FORMULARIO PERSONA");
@@ -52,7 +52,7 @@ public class AdministrativoController {
 		model.put("generos",personaService.findAllGeneros());
 		model.put("estados_civiles",personaService.findAllEstadosCiviles());
 		return "persona/formRegistroAdministrativo";
-	}
+	}*/
 	
 	@RequestMapping(value = "/usuarios/administrativo/registro", method = RequestMethod.POST)
 	public String save(@Valid Administrativo a, BindingResult result,Map<String, Object> model, SessionStatus status,RedirectAttributes redirectAttributes) {

@@ -43,7 +43,7 @@ public class EstudianteController {
 		return "persona/formRegistroEstudiante";
 	}
 	
-	@RequestMapping(value = "/usuarios/estudiante/registro/{id}")
+	/*@RequestMapping(value = "/usuarios/estudiante/registro/{id}")
 	public String editar(@PathVariable(value = "id") Long id, Map<String, Object> model) {
 		Estudiante e= (Estudiante)personaService.findOne(id).get();
 		model.put("titulo","FORMULARIO PERSONA");
@@ -54,7 +54,7 @@ public class EstudianteController {
 		model.put("generos",personaService.findAllGeneros());
 		model.put("estados_civiles",personaService.findAllEstadosCiviles());
 		return "persona/formRegistroEstudiante";
-	}
+	}*/
 	
 	
 	@RequestMapping(value = "/usuarios/estudiante/registro", method = RequestMethod.POST)

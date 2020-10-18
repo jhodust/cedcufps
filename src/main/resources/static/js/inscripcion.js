@@ -64,16 +64,16 @@ function realizarInscripcion(){
 
 function creacionTarjetaInscripcion(p){
 	console.log(p);
-	var educacionContinua = p.educacionContinua.nombre;
-    var primerNombre = p.persona.primerNombre;
-    var segundoNombre = p.persona.segundoNombre;
-    var primerApellido = p.persona.primerApellido;
-    var segundoApellido = p.persona.segundoApellido;
-    var tipoParticipante = p.tipoParticipante.tipoParticipante;
-    var lugar = p.educacionContinua.lugar;
-    var fecha=new Date(p.educacionContinua.fechaInicio);
-    var imgQR="/"+p.imagenCodigoQR;
-    var tipoEduContinua=p.educacionContinua.tipoEduContinua.tipoEduContinua;
+	var educacionContinua = p.educacionContinua;
+    var primerNombre = p.primerNombre;
+    var segundoNombre = p.segundoNombre;
+    var primerApellido = p.primerApellido;
+    var segundoApellido = p.segundoApellido;
+    var tipoParticipante = p.tipoParticipante;
+    var lugar = p.lugarEducacionContinua;
+    var fecha=new Date(p.fechaInicioEduContinua);
+    var imgQR="/"+p.imagenQr;
+    var tipoEduContinua=p.tipoEduContinua;
     
     var nombres="";
     if(segundoNombre!=null){

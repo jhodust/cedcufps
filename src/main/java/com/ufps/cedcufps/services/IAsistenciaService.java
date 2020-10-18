@@ -17,9 +17,11 @@ public interface IAsistenciaService {
 	
 	public Asistencia findAsistenciaByJornadaAndParticipante(Long idJornada, Long idParticipante);
 	
-	public void saveAsistencias(ArrayList<Asistencia> asistencias);
+	public void saveAsistencias(Long idJornada);
 	
-	public void save(Asistencia a);
+	public boolean marcarAsistencia(Long idJornada, Long idParticipante, int cantParticipantes);
+	
+	
 	
 	public void deleteAll(List<Asistencia> asistencias);
 	

@@ -138,7 +138,7 @@ public class AppRestController {
     }
 	
 	@GetMapping(value="/asistencia/{idEducacionContinua}/{idJornada}/{qr}", produces = "application/json")
-    public ResponseEntity<?> searchJornadasCursosYEventos(@PathVariable Long idEducacionContinua, @PathVariable Long idJornada, @PathVariable String qr) {
+    public ResponseEntity<?> tomarAsistenciaApp(@PathVariable Long idEducacionContinua, @PathVariable Long idJornada, @PathVariable String qr) {
 
 		Map<Integer, ParticipanteDto> map=educacionContinuaService.tomarAsistencia(idEducacionContinua, idJornada, qr);
 		int codigo=map.keySet().iterator().next();

@@ -1,5 +1,6 @@
 package com.ufps.cedcufps.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -32,4 +33,12 @@ public interface IAsistenciaDao extends CrudRepository<Asistencia, Long> {
 	@Modifying
 	@Query("delete from Asistencia a where a.jornada.id=?1")
 	public void deleteAsistenciasByJornada(Long idJornada);
+	
+	@Transactional
+	@Modifying
+	@Query(value="insert into asistencias (fecha_asistencia, id_jornada, id_participante) values (?1,?2,?3)", nativeQuery=true)
+	public void matchAsistencia(Date fechaAsistencia,Long idJornada, Long idParticipante);
+	
+	@Query(value="SELECT count(*) FROM asistencias WHERE id_jornada=?1",nativeQuery=true)
+	public int countAsistenciasOfJornada(Long idJornada);
 }

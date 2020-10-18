@@ -255,6 +255,7 @@ public class UsuarioMapper implements IUsuarioMapper {
 		// TODO Auto-generated method stub
 		PersonaDto dto= new PersonaDto();
 		dto.setId(persona.getId());
+		dto.setTipoDocumento(persona.getTipoDocumento().getTipoDocumento());
 		dto.setDocumento(persona.getNumeroDocumento());
 		dto.setEmail(persona.getEmail());
 		String nombre="";

@@ -8,4 +8,6 @@ import com.ufps.cedcufps.modelos.Jornada;
 public interface IJornadaMapper {
 
 	public List<JornadaAppDto> convertJornadasToJornadaAppDto(List<Jornada> jornadas);
+	
+	public JornadaAppDto convertJornadaToJornadaAppDto(Jornada jornada);
 }

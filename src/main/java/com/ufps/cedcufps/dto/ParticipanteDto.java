@@ -1,5 +1,11 @@
 package com.ufps.cedcufps.dto;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 public class ParticipanteDto {
 
 	private Long id;
@@ -10,8 +16,29 @@ public class ParticipanteDto {
 	private Long idTipoDocumento;
 	private String numeroDocumento;
 	private String tipoDocumento;
+	private String tipoEduContinua;
+	private String educacionContinua;
+	private Date fechaInicioEduContinua;
+	private Date fechaFinEduContinua;
+	private String lugarEducacionContinua;
+	private String imagenQr;
+	private String tarjetaInscripcion;
+	Map<Long, Boolean> jornadasAsistencias;
+	public String getTarjetaInscripcion() {
+		return tarjetaInscripcion;
+	}
+	public void setTarjetaInscripcion(String tarjetaInscripcion) {
+		this.tarjetaInscripcion = tarjetaInscripcion;
+	}
+	private String primerNombre;
+	private String segundoNombre;
+	private String primerApellido;
+	private String segundoApellido;
 	
 	
+	public ParticipanteDto() {
+		this.jornadasAsistencias=new HashMap<>();
+	}
 	public Long getId() {
 		return id;
 	}
@@ -60,6 +87,79 @@ public class ParticipanteDto {
 	public void setTipoDocumento(String tipoDocumento) {
 		this.tipoDocumento = tipoDocumento;
 	}
+	public String getTipoEduContinua() {
+		return tipoEduContinua;
+	}
+	public void setTipoEduContinua(String tipoEduContinua) {
+		this.tipoEduContinua = tipoEduContinua;
+	}
+	public String getEducacionContinua() {
+		return educacionContinua;
+	}
+	public void setEducacionContinua(String educacionContinua) {
+		this.educacionContinua = educacionContinua;
+	}
+	
+	public Date getFechaInicioEduContinua() {
+		return fechaInicioEduContinua;
+	}
+	public void setFechaInicioEduContinua(Date fechaInicioEduContinua) {
+		this.fechaInicioEduContinua = fechaInicioEduContinua;
+	}
+	public Date getFechaFinEduContinua() {
+		return fechaFinEduContinua;
+	}
+	public void setFechaFinEduContinua(Date fechaFinEduContinua) {
+		this.fechaFinEduContinua = fechaFinEduContinua;
+	}
+	public String getLugarEducacionContinua() {
+		return lugarEducacionContinua;
+	}
+	public void setLugarEducacionContinua(String lugarEducacionContinua) {
+		this.lugarEducacionContinua = lugarEducacionContinua;
+	}
+	public String getImagenQr() {
+		return imagenQr;
+	}
+	public void setImagenQr(String imagenQr) {
+		this.imagenQr = imagenQr;
+	}
+	public String getPrimerNombre() {
+		return primerNombre;
+	}
+	public void setPrimerNombre(String primerNombre) {
+		this.primerNombre = primerNombre;
+	}
+	public String getSegundoNombre() {
+		return segundoNombre;
+	}
+	public void setSegundoNombre(String segundoNombre) {
+		this.segundoNombre = segundoNombre;
+	}
+	public String getPrimerApellido() {
+		return primerApellido;
+	}
+	public void setPrimerApellido(String primerApellido) {
+		this.primerApellido = primerApellido;
+	}
+	public String getSegundoApellido() {
+		return segundoApellido;
+	}
+	public void setSegundoApellido(String segundoApellido) {
+		this.segundoApellido = segundoApellido;
+	}
+	
+	public void addAsistencia(Long idJornada, boolean status) {
+		this.jornadasAsistencias.put(idJornada, status);
+	}
+	
+	public Map<Long, Boolean> getJornadasAsistencias() {
+		return jornadasAsistencias;
+	}
+	public void setJornadasAsistencias(Map<Long, Boolean> jornadasAsistencias) {
+		this.jornadasAsistencias = jornadasAsistencias;
+	}
+	
 	
 	
 }

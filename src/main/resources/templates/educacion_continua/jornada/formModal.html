@@ -18,7 +18,7 @@
                   </div>
               </div>
               <div>
-                  <h6 class="mb-0">Formulario Registro Jornada</h6>
+                  <h6 class="mb-0 text-white">Formulario Registro Jornada</h6>
               </div>
           </div>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -26,24 +26,29 @@
           </button>
       </div>
       <div class="modal-body">
+      <label class="form-control-label">Los campos marcados con</label> <label class="requerido pl-2">*</label> <label class="form-control-label">son obligatorios</label>
         <div class="row">
           	<div class="col-sm-6">
                   <div class="form-group">
-                      <label class="form-control-label">Hora Inicio</label>
+                      <label class="form-control-label">Hora Inicio </label><label class="requerido pl-2">*</label>
                       <input type="date" class="form-control flatpickr-input" id="horaInicio" data-toggle="date" readOnly/>
                   	<small class="form-text text-danger"><strong id="errorHoraInicio"></strong></small>
                   </div>
               </div>
               <div class="col-sm-6">
                   <div class="form-group">
-                      <label class="form-control-label">Hora Fin</label>
+                      <label class="form-control-label">Hora Fin </label><label class="requerido pl-2">*</label>
                        <input type="date" class="form-control flatpickr-input" id="horaFin" data-toggle="date" readOnly/>
                   		<small class="form-text text-danger"><strong id="errorHoraFin"></strong></small>
                   </div>
               </div>
           </div>
-          <div class="row">
-               	<button type="button" onclick="guardarJornada()" class="btn btn-sm btn-red-ufps">Guardar</button>
+          
+      </div>
+      <div class="modal-footer">
+      	<div class="row">
+      			<button type="button" data-dismiss="modal" class="btn btn-sm btn-red-ufps"><i class="fas fa-times"></i> Cancelar</button>
+               	<button type="button" onclick="guardarJornada()" class="btn btn-sm btn-red-ufps"><i class="fas fa-save"></i> Guardar</button>
          </div>
       </div>
     </div>

@@ -26,32 +26,43 @@
           </button>
       </div>
       <div class="modal-body">
+      <label class="form-control-label">Los campos marcados con</label> <label class="requerido pl-2">*</label> <label class="form-control-label">son obligatorios</label>
+        <div class="row">
+          	<div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="form-control-label">Tipo Documento </label><label class="requerido pl-2">*</label>
+                        <input class="form-control" type="text" id="tdPonente" disabled/>
+                    </div>
+                </div>
+             <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="form-control-label">Documento </label><label class="requerido pl-2">*</label>
+                        <input class="form-control" type="text" id="documentoPonente" disabled/>
+                    </div>
+                </div>
+        </div>
         <div class="row">
           	<div class="col-sm-12">
                     <div class="form-group">
-                        <label class="form-control-label">Ponente</label>
-                        <select class="form-control" data-toggle="select"
-						id="select_ponentes">
-							<option value="0">Seleccione el ponente</option>
-							<option th:each="p: ${posiblesPonentes}" th:value="${p.id}" 
-							  th:text="(${p.primerNombre} ?:'') +' '+ (${p.segundoNombre} ?:'') +' '+ (${p.primerApellido} ?:'')+' '+ (${p.segundoApellido} ?:'')"></option>
-						</select>
-						<small class="form-text text-danger"><strong id="errorPonente"></strong></small>
-                       
+                        <label class="form-control-label">Nombre </label><label class="requerido pl-2">*</label>
+                        <input class="form-control" type="text" id="nombrePonente" disabled/>
                     </div>
                 </div>
         </div>
         <div class="row">
                 <div class="col-sm-12">
                     <div class="form-group">
-                        <label class="form-control-label">Tema</label>
+                        <label class="form-control-label">Tema </label><label class="requerido pl-2">*</label>
                         <input class="form-control" type="text" id="temaPonente"/>
                         <small class="form-text text-danger"><strong id="errorTema"></strong></small>
                     </div>
                 </div>
           </div>
-          <div class="row">
-               	<button type="button" onclick="guardarPonente()" class="btn btn-sm btn-red-ufps">Guardar</button>
+      </div>
+      <div class="modal-footer">
+      	<div class="row">
+      			<button type="button" data-dismiss="modal" class="btn btn-sm btn-red-ufps"><i class="fas fa-times"></i> Cancelar</button>
+               	<button type="button" onclick="guardarPonente()" class="btn btn-sm btn-red-ufps"><i class="fas fa-save"></i> Guardar</button>
          </div>
       </div>
     </div>

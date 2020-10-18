@@ -1,25 +1,16 @@
-if(jornadas.length>0){
+if(eduContinua.jornadas.length>0){
 	if(asistenciaGlobal!=null){
 		  asistenciaGlobal.forEach(function(a){
 			    console.log(a);
-			   if(a[0]==participantes.length){
+			   if(a[0]==eduContinua.participantes.length){
 				   var idCheckBox=a[1]+'_all';
-				   $('#'+idCheckBox).attr('checked', true);  
+				   $('#'+idCheckBox).prop('checked', true);  
 			   }
 			  }); 
 	  }
-	  if(asistencias!=null){
-		  asistencias.forEach(function(j){
-			    var idCheckBox = j.jornada.id+"_"+j.participante.id;
-			    $('#'+idCheckBox).attr('checked', true);  
-			    console.log("for each");
-			  }); 
-	  }
+	  
 }	  
-	  console.log("entra a aplicar cambios");
-	  document.getElementById('cardListado').style.display='flex';
-	  document.getElementById('spinner').style.display='none';
-	  console.log("aplicó cambios");
+	 
 	  
 	  
 	 
@@ -35,16 +26,19 @@ if(jornadas.length>0){
 			   		headers: {"X-CSRF-TOKEN": token},
 			   		type: "GET",
 			   		contentType: "application/json; charset=utf-8",
-			   		url: "/asistencia-general-marcar/"+idJornada,
+			   		url: "/asistencia-general-marcar",
+			   		data:{'id_jornada':idJornada},
 			   		cache: false,
 			   		success: function(result) {
 			   			toastr.success('Se han actualizado las asistencias de la Jornada', 'Excelente!',{"positionClass": "toast-top-right"});
-			   			$('.j_'+idJornada).attr('checked', true);  
+			   			$('.j_'+idJornada).prop('checked', true);  
 			   			
 			   		},
 			   		error: function(err) {
+			   			console.log("entra aca");
+			   			console.log(idJornada+'_all');
 			   			toastr.error('No se guardaron las asistencias de la Jornada', 'Error!',{"positionClass": "toast-top-right"});
-			   			$('#'+idJornada+'_all').attr('checked', false); 
+			   			$('#'+idJornada+'_all').prop('checked', false); 
 			   		}
 			   	});
 		       
@@ -53,16 +47,19 @@ if(jornadas.length>0){
 			   		headers: {"X-CSRF-TOKEN": token},
 			   		type: "GET",
 			   		contentType: "application/json; charset=utf-8",
-			   		url: "/asistencia-general-desmarcar/"+idJornada,
+			   		url: "/asistencia-general-desmarcar",
+			   		data:{'id_jornada':idJornada},
 			   		cache: false,
 			   		success: function(result) {
 			   			toastr.success('Se han actualizado las asistencias de la Jornada', 'Excelente!',{"positionClass": "toast-top-right"});
-			   		 	$('.j_'+idJornada).attr('checked', false); 
+			   		 	$('.j_'+idJornada).prop('checked', false); 
 			   			
 			   		},
 			   		error: function(err) {
+			   			console.log("entra en else");
+			   			console.log(idJornada+'_all');
 			   			toastr.error('No se guardaron las asistencias de la Jornada', 'Error!',{"positionClass": "toast-top-right"});
-			   			$('#'+idJornada+'_all').attr('checked', true); 
+			   			$('#'+idJornada+'_all').prop('checked', true); 
 			   		}
 			   	});
 			}  
@@ -80,16 +77,17 @@ if(jornadas.length>0){
 			   		headers: {"X-CSRF-TOKEN": token},
 			   		type: "GET",
 			   		contentType: "application/json; charset=utf-8",
-			   		url: "/asistencia-marcar/"+idJornada+"/"+idParticipante,
+			   		url: "/asistencia-marcar",
+			   		data:{'id_jornada':idJornada, 'id_participante':idParticipante, 'cant_participantes':eduContinua.participantes.length},
 			   		cache: false,
 			   		success: function(result) {
 			   			toastr.success('Se ha actualizado la asistencia del Participante', 'Excelente!',{"positionClass": "toast-top-right"});
-			   			
+			   			$('#'+idJornada+'_all').prop('checked', result); 
 			   			
 			   		},
 			   		error: function(err) {
 			   			toastr.error('No se guardó la asistencia del Participante', 'Error!',{"positionClass": "toast-top-right"});
-			   			$('#'+idJornada+'_'+idParticipante).attr('checked', false); 
+			   			$('#'+idJornada+'_'+idParticipante).prop('checked', false); 
 			   		}
 			   	});
 		       
@@ -98,16 +96,18 @@ if(jornadas.length>0){
 			   		headers: {"X-CSRF-TOKEN": token},
 			   		type: "GET",
 			   		contentType: "application/json; charset=utf-8",
-			   		url: "/asistencia-desmarcar/"+idJornada+"/"+idParticipante,
+			   		url: "/asistencia-desmarcar",
+			   		data:{'id_jornada':idJornada, 'id_participante':idParticipante},
 			   		cache: false,
 			   		success: function(result) {
+			   			$('#'+idJornada+'_all').prop('checked', false); 
 			   			toastr.success('Se ha actualizado la asistencia del Participante', 'Excelente!',{"positionClass": "toast-top-right"});
 			   		 	
 			   			
 			   		},
 			   		error: function(err) {
 			   			toastr.error('No se guardó la asistencia del Participante', 'Error!',{"positionClass": "toast-top-right"});
-			   			$('#'+idJornada+'_'+idParticipante).attr('checked', true); 
+			   			$('#'+idJornada+'_'+idParticipante).prop('checked', true); 
 			   		}
 			   	});
 			}  

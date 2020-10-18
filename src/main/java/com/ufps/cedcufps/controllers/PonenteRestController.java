@@ -20,9 +20,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.support.SessionStatus;
 
+import com.ufps.cedcufps.dto.ParticipanteDto;
+import com.ufps.cedcufps.dto.PersonaDto;
+import com.ufps.cedcufps.dto.PonenteDto;
 import com.ufps.cedcufps.modelos.Departamento;
 import com.ufps.cedcufps.modelos.EducacionContinua;
 import com.ufps.cedcufps.modelos.Participante;
@@ -55,8 +59,8 @@ public class PonenteRestController {
 	}
 	
 	@GetMapping(value="/educacion-continua/ponente/search/{id}", produces = "application/json")
-    public Participante buscarPonente(@PathVariable Long id) {
-		return  participanteService.findParticipante(id);
+    public PonenteDto buscarPonente(@PathVariable Long id) {
+		return  participanteService.findPonente(id);
     }
 	
 	
@@ -67,15 +71,28 @@ public class PonenteRestController {
 		if(result.hasErrors()) {
 			return new ResponseEntity<>(result.getAllErrors(),HttpStatus.BAD_REQUEST);
 		}
+		System.out.println("va a guardar ponente");
 		participanteService.savePonente(ponente);
 		return new ResponseEntity<>(participanteService.findByIdEducacionContinuaAndIdPersona(ponente.getEducacionContinua().getId(), ponente.getPersona().getId()),HttpStatus.OK);
 	}
 	
-	@PostMapping(value="/educacion-continua/ponente/delete")
-    public ResponseEntity<?> deletePonente(@RequestBody Ponente ponente) {
-		participanteService.deleteParticipante(ponente);
+	@GetMapping(value="/educacion-continua/ponente/delete")
+    public ResponseEntity<?> deletePonente(@RequestParam(value = "id",required = true) String idParticipante) {
+		participanteService.deleteParticipante(Long.parseLong(idParticipante));
 		return new ResponseEntity<>("Se ha eliminado el ponente exitosamente",HttpStatus.OK);
 		
     }
+	
+	@GetMapping(value = "/ponente/posible", produces = "application/json")
+	public ResponseEntity<?> findPossiblePonentes(@RequestParam(value = "tipo_busqueda",required = false) String tipoBusqueda, 
+			@RequestParam(value = "value",required = false) String valor) {
+		
+		return new ResponseEntity<>(personaService.findPossiblePonente(Integer.parseInt(tipoBusqueda), valor),HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/ponente/findPersona", produces = "application/json")
+	public ResponseEntity<?> findPersona(@RequestParam(value = "id",required = true) String id) {
+		return new ResponseEntity<>(personaService.findOne(Long.parseLong(id)),HttpStatus.OK);
+	}
 
 }

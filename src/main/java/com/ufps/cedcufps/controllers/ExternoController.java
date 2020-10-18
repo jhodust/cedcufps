@@ -41,7 +41,7 @@ public class ExternoController {
 		return "persona/formRegistroExterno";
 	}
 	
-	@RequestMapping(value = "/usuarios/externo/registro/{id}")
+	/*@RequestMapping(value = "/usuarios/externo/registro/{id}")
 	public String editar(@PathVariable(value = "id") Long id, Map<String, Object> model) {
 		Externo e= (Externo)personaService.findOne(id).get();
 		model.put("titulo","FORMULARIO PERSONA");
@@ -52,7 +52,7 @@ public class ExternoController {
 		model.put("generos",personaService.findAllGeneros());
 		model.put("estados_civiles",personaService.findAllEstadosCiviles());
 		return "persona/formRegistroExterno";
-	}
+	}*/
 	
 	@RequestMapping(value = "/usuarios/externo/registro", method = RequestMethod.POST)
 	public String save(@Valid Externo e, BindingResult result,Map<String, Object> model, SessionStatus status,RedirectAttributes redirectAttributes) {

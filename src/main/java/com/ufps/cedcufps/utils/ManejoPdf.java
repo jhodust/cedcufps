@@ -94,9 +94,9 @@ public class ManejoPdf {
 				document.add(Chunk.NEWLINE);
 
 				/***********************tabla participantes **************************/
-				PdfPTable table = new PdfPTable(4);
+				PdfPTable table = new PdfPTable(3);
 				table.setWidthPercentage(90);
-				table.setWidths(new int[] { 1, 2, 6, 2 });
+				table.setWidths(new int[] { 1, 3, 7 });
 				
 				Font headFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD);
 
@@ -113,9 +113,9 @@ public class ManejoPdf {
 				hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				table.addCell(hcell);
 
-				hcell = new PdfPCell(new Phrase("Participante", headFont));
-				hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
-				table.addCell(hcell);
+				//hcell = new PdfPCell(new Phrase("Participante", headFont));
+				//hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				//table.addCell(hcell);
 
 				while (i <= j) {
 					if (i <= participantes.size()) {

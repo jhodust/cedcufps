@@ -6,6 +6,7 @@ public class PersonaDto {
 	private String nombre;
 	private String email;
 	private String documento;
+	private String tipoDocumento;
 	private String perfiles;
 	public Long getId() {
 		return id;
@@ -36,6 +37,12 @@ public class PersonaDto {
 	}
 	public void setPerfiles(String perfiles) {
 		this.perfiles = perfiles;
+	}
+	public String getTipoDocumento() {
+		return tipoDocumento;
+	}
+	public void setTipoDocumento(String tipoDocumento) {
+		this.tipoDocumento = tipoDocumento;
 	}
 	
 	

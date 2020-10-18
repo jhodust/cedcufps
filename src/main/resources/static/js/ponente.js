@@ -1,6 +1,7 @@
 var token = $("meta[name='_csrf']").attr("content");
 console.log(idEducacionContinua);
 var idPonente;
+var id_persona;
 $(document).ready(function ()
 		{
 				
@@ -13,13 +14,13 @@ $(document).ready(function ()
 		limpiarErrores();
 		
 	});
-
+	 
+	
 });
 
 
 function guardarPonente(){
 	var tema = $('#temaPonente').val();
-	var id_persona = document.getElementById("select_ponentes").value;
 	limpiarErrores();
 	var JSONponente={};
 	JSONponente.id=idPonente;
@@ -32,6 +33,7 @@ function guardarPonente(){
 		JSONponente.persona={};
 		JSONponente.persona.id=id_persona;
 	}
+	console.log(JSONponente);
 	$.ajax({
 		headers: {"X-CSRF-TOKEN": token},
 		type: "POST",
@@ -87,12 +89,14 @@ function editarPonente(elemento){
 		url: "/educacion-continua/ponente/search/"+elemento.dataset.id,
 		cache: false,
 		success: function(result) {
+			console.log(result);
 			$('#modalPonentes').modal();
 			$('#temaPonente').val(result.tema);
-			 $('#select_ponentes').val(result.persona.id);
-			 $('#select_ponentes').select2().trigger('change');
-			 $("#select_ponentes").prop("disabled", true);
-			 idPonente=result.id;
+			$('#tdPonente').val(result.participante.tipoDocumento);
+			$('#documentoPonente').val(result.participante.numeroDocumento);
+			$('#nombrePonente').val(result.participante.nombrePersona);
+			 idPonente=result.participante.id;
+			 id_persona=result.participante.idPersona;
 			 
 		},
 		error: function(err) {
@@ -106,9 +110,9 @@ function eliminarPonente(elemento){
 	
 	$.ajax({
 		headers: {"X-CSRF-TOKEN": token},
-		type: "POST",
+		type: "GET",
 		contentType: "application/json; charset=utf-8",
-		data: JSON.stringify({'id':elemento.dataset.id}),
+		data: {id:elemento.dataset.id},
 		url: "/educacion-continua/ponente/delete",
 		cache: false,
 		success: function(result) {
@@ -122,6 +126,59 @@ function eliminarPonente(elemento){
 	});
 		
 }
+
+
+function searchPosiblePonente(){
+	
+	var value=$('#valueBusqueda').val();
+	var tipoBusqueda=$('#selectTipoBusqueda').val();
+	if(value=="" || tipoBusqueda==0){
+		toastr.error('Diligencie los filtros de búsqueda correctamente', 'Error!');
+		return;
+	}
+	document.getElementById('tablaPonentes').style.display='inline';
+	table =$('#table2').DataTable( {
+		destroy: true,
+		lengthMenu: [5],
+		language: {
+            "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+        },
+		ajax: {
+	    	headers: {"X-CSRF-TOKEN": token},
+	    	contentType: "application/json; charset=utf-8",
+	    	url: "/ponente/posible",
+	    	type: "GET",
+	    	data: {tipo_busqueda:tipoBusqueda,value:value}
+	    	
+	    },
+	    columns: [{
+            data: "documento"
+        },
+        {
+            data: "tipoDocumento"
+        },
+        {
+            data: "nombre"
+        },
+        {
+        	data: "id",
+            render: function(data) {
+            	console.log(data);
+                return '<button type="button" class="btn btn-sm btn-rojoufps btn-icon-only" onclick="agregarPonente(this)" data-id="'+data+'" data-toggle="tooltip" data-placement="right" title="Agregar Ponente">'+
+                '<span class="btn-inner--icon">'+
+		        '<i class="far fa-user"></i>'+
+		    '</span>'+
+		'</button>';
+            }
+        }
+    ],
+    drawCallback: function( settings ) {
+    	$('[data-toggle="tooltip"]').tooltip();
+    }
+	} );
+		
+}
+
 
 /*function ponentes(elemento){
 	$('#modalPonentes').modal();
@@ -152,6 +209,9 @@ function eliminarPonente(elemento){
 	function limpiarForm(){
 		$('#temaPonente').val("");
 		$('#select_ponentes').val(0).trigger('change');
+		$('#tpPonente').val("");
+		$('#documentoPonente').val("");
+		$('#nombrePonente').val("");
 		idPonente=null;
 		$("#select_ponentes").prop("disabled", false);
 	}
@@ -212,11 +272,35 @@ function eliminarPonente(elemento){
 		return a;
 	}
 */	
+	function agregarPonente(element){
+		console.log("ponente en agregar ponente");
+		console.log(element.dataset.id);
+		$.ajax({
+			headers: {"X-CSRF-TOKEN": token},
+			type: "GET",
+			contentType: "application/json; charset=utf-8",
+			url: "/ponente/findPersona",
+			data: {id:element.dataset.id},
+			cache: false,
+			success: function(result) {
+				console.log(result);
+				$('#modalPonentes').modal('show');
+				$('#tdPonente').val(result.tipoDocumento);
+				$('#documentoPonente').val(result.documento);
+				$('#nombrePonente').val(result.nombre);
+				id_persona=result.id;
+				idPonente=0;
+				 
+			},
+			error: function(err) {
+				$("#msg").html( "<span style='color: red'>Programa is required</span>" );
+			}
+		});
+		
+	}
+	
 	function limpiarErrores(){
-		var selectPonente=document.getElementById('select_ponentes');
-		var errorPonente=document.getElementById('errorPonente');
-		errorPonente.innerText="";
-		selectPonente.classList.remove("is-invalid");
+		
 	
 		var inputTema=document.getElementById('temaPonente');
 		var errorTema=document.getElementById('errorTema');

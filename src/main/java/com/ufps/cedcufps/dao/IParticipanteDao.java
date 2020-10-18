@@ -2,6 +2,9 @@ package com.ufps.cedcufps.dao;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
@@ -39,4 +42,12 @@ public interface IParticipanteDao extends CrudRepository<Participante, Long> {
 	
 	@Query("select p from Participante p where p.codigoQR = ?1 ")
 	public Participante validarQr(String qr);
+	
+	@Transactional
+	@Modifying
+	@Query("delete from Participante p where p.id = ?1 ")
+	public void deleteParticipante(Long idParticipante);
+	
+	@Query("select p from Participante p where p.id = ?1 ")
+	public Participante findParticipanteById(Long idParticipante);
 }

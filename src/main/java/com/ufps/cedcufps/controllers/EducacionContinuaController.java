@@ -223,6 +223,21 @@ public class EducacionContinuaController {
 		InfoEducacionContinuaDto dto= educacionContinuaService.detallesEducacionContinua(educacionContinua);
 		if(dto.isHasPermission()) {
 			model.put("ec",dto);
+			EducacionContinua e= educacionContinuaService.findOneByNombre(educacionContinua);
+			model.put("educacionContinua", e);
+			model.put("tipos_educacion_continua",educacionContinuaService.findAllTiposEducacionContinua());
+			model.put("clasificacion_cine",educacionContinuaService.findAllClasificacionCine());
+			model.put("tipo_beneficiarios",educacionContinuaService.findAllTipoBeneficiario());
+			model.put("docentes",personaService.findAllDocentes());
+			model.put("programas",programaService.findAll());
+			model.put("asistenciaGlobal",asistenciaService.countAsistenciasByJornadas(educacionContinua));
+			
+			//model.put("participantes",participanteService.findAllParticipantesByEducacionContinua(educacionContinua));
+			//if(dto.getEducacionContinua().getJornadas().size()>0) {
+				//model.put("asistencias",asistenciaService.findAsistenciasByJornadas(dto.getEducacionContinua().getJornadas()));
+				//model.put("asistenciaGlobal",asistenciaService.countAsistenciasByJornadas(educacionContinua));
+				
+			//}
 		}else {
 			redirectAttributes.addFlashAttribute("errorMessage", "No tiene permisos para administrar la Educación Continua indicada...");
 			return "redirect:/educacion-continua";
@@ -243,7 +258,7 @@ public class EducacionContinuaController {
 		}
 		return "preinscripcion";
 	}
-	
+	/*
 	@RequestMapping(value = "/educacion-continua/listado-participantes")
 	public String listadoParticipantes(@RequestParam(name="educacionContinua") String educacionContinua, Map<String, Object> model, Authentication auth, RedirectAttributes redirectAttributes) {
 		//EducacionContinua e=educacionContinuaService.findOne(id).get();
@@ -262,7 +277,7 @@ public class EducacionContinuaController {
 			}
 			
 		}*/
-		InfoEducacionContinuaDto dto= educacionContinuaService.detallesEducacionContinua(educacionContinua);
+	/*	InfoEducacionContinuaDto dto= educacionContinuaService.detallesEducacionContinua(educacionContinua);
 		List<JornadaAppDto> jornadas=educacionContinuaService.findJornadasByEducacionContinua(educacionContinua);
 		System.out.println("jornadas");
 		System.out.println(jornadas.size());
@@ -277,7 +292,7 @@ public class EducacionContinuaController {
 		
 		return "educacion_continua/listadoParticipantes";
 	}
-	
+	*/
 	
 	
 	@RequestMapping(value = "/participaciones-educacion-continua")
@@ -289,6 +304,7 @@ public class EducacionContinuaController {
 	@RequestMapping(value = "/educacion-continua/{id}/personalizar-diploma")
 	public String personalizarDiploma(@PathVariable(value = "id") Long id, Map<String, Object> model) {
 		EducacionContinua e=educacionContinuaService.findOne(id).get();
+		
 		if(e.getDiploma()!=null) {
 			model.put("imagenes", diplomaService.findImagenesByDiploma(e.getDiploma().getId()));
 			model.put("textos", diplomaService.findTextoByDiploma(e.getDiploma().getId()));

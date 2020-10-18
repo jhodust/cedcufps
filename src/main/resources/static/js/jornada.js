@@ -119,13 +119,34 @@ function editarJornada(elemento){
 		success: function(result) {
 			console.log(result);
 			$('#modalRegistroJornada').modal();
-			$('#horaInicio').val(result.horaInicio);
-			$('#horaFin').val(result.horaFin);
+			$('#horaInicio').val(result.fechaJornadaString + " " + result.horaInicioString);
+			$('#horaFin').val(result.fechaJornadaString + " " + result.horaFinString);
 			idJornada=result.id;
 			document.getElementById("horaFin").disabled = true;
 		},
 		error: function(err) {
 			
+		}
+	});
+		
+}
+
+function eliminarJornada(elemento){
+	
+	$.ajax({
+		headers: {"X-CSRF-TOKEN": token},
+		type: "GET",
+		contentType: "application/json; charset=utf-8",
+		data: {id:elemento.dataset.id},
+		url: "/educacion-continua/jornada/delete",
+		cache: false,
+		success: function(result) {
+			 console.log(result);
+			 toastr.success(result, 'Excelente!');
+			 window.setTimeout(function(){location.reload()},1000);
+		},
+		error: function(err) {
+			toastr.error(err.responseJSON.message, 'Error!');
 		}
 	});
 		

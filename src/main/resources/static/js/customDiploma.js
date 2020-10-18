@@ -1,166 +1,4 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<head th:replace="layouts/layout :: head">
-	<meta charset="UTF-8"/>
-</head>
-<body>
-  <!-- Application container -->
-  <div class="container-fluid container-application">
-    <!-- Content -->
-    <div class="main-content position-relative">
-      <!-- Main nav -->
-      <div th:replace="layouts/logosHead :: logosHead"></div>
-      <nav th:replace="layouts/navbar :: navbar"></nav>
-      
-      <!-- Page content -->
-      <div class="page-content col-lg-9 center">
-       <!-- Project cards -->
-       <nav aria-label="breadcrumb">
-		  <ol class="breadcrumb breadcrumb-links">
-		    <li class="breadcrumb-item"><a class="red-ufps-breadcrumb" th:href="@{/}">Inicio</a></li>
-		    <li class="breadcrumb-item"><a class="red-ufps-breadcrumb" th:href="@{/educacion-continua}">Educaciones Continuas</a></li>
-		    <li class="breadcrumb-item" th:if="${educacionContinua.id != null}"><a class="red-ufps-breadcrumb"  th:href="@{/educacion-continua/detalles?educacionContinua={educacionContinua}(educacionContinua=${educacionContinua.nombre})}">Detalles</a></li>
-		    <li class="breadcrumb-item active" aria-current="page">Diploma<li>
-		  </ol>
-		</nav>
-        <!-- Page title -->
-       	<div class="contenido ml-3 mr-3 pb-2" >
-        
-        <div class="page-title">
-          <div class="row justify-content-between align-items-center">
-            <div class="col-md-6 d-flex align-items-center justify-content-between justify-content-md-start mb-3 mb-md-0">
-              <!-- Page title + Go Back button -->
-              <div class="d-inline-block">
-                <h5 class="h4 d-inline-block font-weight-400 mb-0 text-dark" ><strong>Personalizar Diploma</strong></h5>
-	              
-              </div>
-            </div>
-            
-          </div>
-        </div>
-        <hr/>
-        
-        <div class="card col-md-12" th:fragment="plantilla">
-        	<div class="card-body">
-        		<div class="row">
-        			<button class="btn btn-sm btn-red-ufps" id="btnActualizar">Actualizar Cambios</button>
-			  	<button class="btn btn-sm btn-red-ufps" id="btnGuardar">Guardar Plantilla</button>
-        		</div>
-			  	<div class="row mt-4">
-			  		<div class="col-md-4">
-						<div class="form-group">
-							<label class="form-control-label"><strong>Fondo</strong></label> 
-							<input class="form-control" type="file" id="inputFondo"/>
-						</div>
-					</div>
-			  		<div class="col-md-4">
-						<div class="form-group">
-							<label class="form-control-label"><strong>Texto #1 (Titulo)</strong></label> 
-							<input class="form-control" type="text" id="inputTexto1"/>
-						</div>
-					</div>
-					<div class="col-md-4">
-						<div class="form-group">
-							<label class="form-control-label"><strong>Texto #2 (Subtitulo)</strong></label> 
-							<input class="form-control" type="text" id="inputTexto2"/>
-						</div>
-					</div>
-			  	</div>
-			  	<div class="row">
-			  		<div class="col-md-6">
-			  			<div class="row">
-				  			<div class="col-md-6">
-								<div class="form-group">
-									<label class="form-control-label"><strong>Logo #1 (Lado izquierdo)</strong></label> 
-										<input class="form-control" type="file" id="inputLogo1" accept = "image/*"/>
-										<input type="checkbox" id="checkBoxLogo1">Visibilidad</input>
-										<div  id="croppieLogo1"></div>
-								</div>
-							</div>
-							<div class="col-md-6">
-								<div class="form-group">
-									<label class="form-control-label"><strong>Logo #2 (Lado derecho)</strong></label> 
-										<input class="form-control" type="file" id="inputLogo2" accept = "image/*"/>
-										<input type="checkbox" id="checkBoxLogo2">Visibilidad</input>
-										<div  id="croppieLogo2"></div>
-								</div>
-							</div>
-						</div>
-					</div>
-			  		<canvas class="col-md-6" id="canvas" width="970" height="750"></canvas>
-			  	</div>
-			  	<div class="row">
-			  		<div class="col-md-6">
-			  			<div class="form-group">
-							<h6><strong>Firma 1</strong></h6>
-							<label class="form-control-label">Nombre</label> 
-							<input class="form-control" type="text" id="inputNombreFirma1"></input>
-							<label class="form-control-label">Cargo</label> 
-							<input class="form-control" type="text" id="inputCargoFirma1"></input>
-							<label class="form-control-label">Firma Digital</label> 
-							<input class="form-control" type="file" id="inputFirmaDigital1"></input>
-							<input type="checkbox" id="checkBoxFirma1">Visibilidad</input>
-						</div>
-	  					<div class="col-md-12">
-							<div id="croppieFirma1"></div>
-						</div>
-			  		</div>
-					<div class="col-md-6">
-						<div class="form-group">
-							<h6><strong>Firma 2</strong></h6>
-							<label class="form-control-label">Nombre</label> 
-							<input class="form-control" type="text" id="inputNombreFirma2"></input>
-							<label class="form-control-label">Cargo</label> 
-							<input class="form-control" type="text" id="inputCargoFirma2"></input>
-							<label class="form-control-label">Firma Digital</label> 
-							<input class="form-control" type="file" id="inputFirmaDigital2"></input>
-							<input type="checkbox" id="checkBoxFirma2">Visibilidad</input>
-						</div>
-						<div class="col-md-12">
-							<div id="croppieFirma2"></div>
-						</div>
-						
-					</div>
-			  	</div>
-			  	
-			  	
-			  	</div>
-				
-			  </div>
-			  
-			</div>
-        </div>
-		
-		</div>
-	  </div>
-    
-    <div th:fragment="plantillaOculta">
-    <div class="modal fade"  tabindex="-1" role="dialog"  aria-hidden="true" >
-	    <div class="modal-dialog modal-dialog-centered" role="document">
-	       <div class="modal-content">
-	               
-	                <div class="modal-body">
-	                	
-	                    <canvas class="col-md-6" id="canvas2" width="970" height="750"></canvas>
-	                </div>
-	            </div>
-	    </div>
-	</div>
-	</div>
-	
-    <div th:replace="layouts/footer :: footer"></div>
-    
-  <!-- Scripts -->
-  <!-- Core JS - includes jquery, bootstrap, popper, in-view and sticky-kit -->
-  <div th:replace="layouts/layout :: scripts"></div>
-  
- 
-  
-  <script type="application/javascript" th:inline="javascript">
-  var token = $("meta[name='_csrf']").attr("content");
-  /***************************DEFINIR DATOS POR DEFAULT******************/
-  
-  var logoIzq={};
+var logoIzq={};
   logoIzq.id=null;
   logoIzq.x=80;
   logoIzq.y=150;
@@ -264,7 +102,8 @@ croppieLogo1 = $('#croppieLogo1').croppie({
 		height: 120,
 		type: 'square'
 	},
-	enforceBoundary:false,
+	enforceBoundary:false, 
+	mouseWheelZoom: true,
 	 boundary: { width: 165, height: 165 },
 	enableExif: true
 });
@@ -303,17 +142,18 @@ croppieFirma2 = $('#croppieFirma2').croppie({
 });
 
   /*******************************OBTENER DATOS***************************/
-  var educacionContinua= [[${educacionContinua}]];
-  console.log(educacionContinua);
-  var arrayImagenes= [[${imagenes}]];
-  var arrayTextos= [[${textos}]];
-  var arrayFirmas= [[${firmas}]];
-  console.log("imagenes asociadas al diploma");
-  console.log(arrayImagenes);
-  console.log("textos asociadas al diploma");
-  console.log(arrayTextos);
-  console.log("firmas asociadas al diploma");
-  console.log(arrayFirmas);
+  console.log("obtener datos");
+  console.log(eduContinua);
+  var arrayImagenes= null;
+  var arrayTextos= null;
+  var arrayFirmas= null;
+  
+  if(  eduContinua.diploma != null){
+	  arrayImagenes= eduContinua.diploma.imagenes;
+	  arrayTextos= eduContinua.diploma.textos;
+	  arrayFirmas= eduContinua.diploma.firmas;
+  }
+  
   
  
   /******************************DEFINO VARIABLES DE CAMBIOS INICIALES***********/
@@ -326,13 +166,12 @@ croppieFirma2 = $('#croppieFirma2').croppie({
   
   if(arrayImagenes!=null){
 	  arrayImagenes.forEach(function(imagen) {
-		  console.log(imagen);
 		  if (imagen.x == 80) {
 			  logoInicialIzq=imagen;
 			  /*croppieLogo1.bind({
 				    url: logoInicialIzq.ruta,
 				});*/
-				croppieLogo1.croppie('bind', {url: logoInicialIzq.ruta,});
+				croppieLogo1.croppie('bind', {url: logoInicialIzq.imagen });
 			  document.getElementById('checkBoxLogo1').checked=true;
 		  }
 		  if (imagen.x == 765) {
@@ -340,7 +179,7 @@ croppieFirma2 = $('#croppieFirma2').croppie({
 			  /*croppieLogo2.bind({
 				    url: logoInicialDer.ruta,
 				});*/
-				croppieLogo2.croppie('bind', {url: logoInicialDer.ruta,});
+				croppieLogo2.croppie('bind', {url: logoInicialDer.imagen});
 			  document.getElementById('checkBoxLogo2').checked=true;
 		  }
 		});  
@@ -356,7 +195,6 @@ croppieFirma2 = $('#croppieFirma2').croppie({
   
   if(arrayTextos!=null){
 	  arrayTextos.forEach(function(texto) {
-		  console.log(texto);
 		  if (texto.categoria == "titulo") {
 			  tituloInicial=texto;
 		  }
@@ -369,11 +207,11 @@ croppieFirma2 = $('#croppieFirma2').croppie({
   
   
   if(tituloInicial.texto==""){
-	  tituloInicial.texto="Facultad de " + educacionContinua.programaResponsable.facultad.facultad;
+	  tituloInicial.texto="Facultad de " + eduContinua.facultad;
   }
   $("#inputTexto1").val(tituloInicial.texto);
   if(subtituloInicial.texto==""){
-	  subtituloInicial.texto="Programa de " + educacionContinua.programaResponsable.programa;
+	  subtituloInicial.texto="Programa de " + eduContinua.programa;
   }
   $("#inputTexto2").val(subtituloInicial.texto);
   
@@ -384,19 +222,17 @@ croppieFirma2 = $('#croppieFirma2').croppie({
 			  document.getElementById('checkBoxFirma1').checked=true;
 			  $("#inputNombreFirma1").val(firma1Inicial.nombre);
 			  $("#inputCargoFirma1").val(firma1Inicial.cargo);
-			  croppieFirma1.croppie('bind', {url: firma1Inicial.imagenFirmaDigital,});
+			  croppieFirma1.croppie('bind', {url: firma1Inicial.imagen,});
 			  
-			  console.log("guarda firma1");
 		 }else if(firma2Inicial.nombre==""){
 			  firma2Inicial=firma;
 			  document.getElementById('checkBoxFirma2').checked=true;
 			  $("#inputNombreFirma2").val(firma2Inicial.nombre);
 			  $("#inputCargoFirma2").val(firma2Inicial.cargo);
-			  croppieFirma2.croppie('bind', {url: firma2Inicial.imagenFirmaDigital,});
+			  croppieFirma2.croppie('bind', {url: firma2Inicial.imagen,});
 			  /*croppieFirma2.bind({
 				    url: firma2Inicial.imagenFirmaDigital,
 				});*/
-			  console.log("guarda firma2");
 		  }
 		});  
   }
@@ -414,19 +250,6 @@ croppieFirma2 = $('#croppieFirma2').croppie({
   var rutaLogo2;
   var rutaFirma1;
   var rutaFirma2;
-  console.log("imprimiendo configuraciones");
-  console.log("logo izq");
-  console.log(logo1);
-  console.log("logo der");
-  console.log(logo2);
-  console.log("titulo");
-  console.log(titulo);
-  console.log("subtitulo");
-  console.log(subtitulo);
-  console.log("firma1");
-  console.log(firma1);
-  console.log("firma2");
-  console.log(firma2);
   
   var arrayTextos=null;
   var arrayImagenes=null;
@@ -438,9 +261,10 @@ croppieFirma2 = $('#croppieFirma2').croppie({
   
   /*********************DIBUJO CANVAS CON CONFIGURACIONES INICIALES**********/
   //canvas visible
-  llenarCanvas('canvas',logo1 ,logo2,titulo,subtitulo,'Estudiante','Identificado con C.C. XXXXX, participó en el ' + educacionContinua.tipoEduContinua.tipoEduContinua, educacionContinua.nombre, educacionContinua.duracion,firma1,firma2);
+  
+  llenarCanvas('canvas',logo1 ,logo2,titulo,subtitulo,'Estudiante','Identificado con C.C. XXXXX, participó en el ' + eduContinua.tipoEduContinua, eduContinua.nombre, eduContinua.duracion,firma1,firma2);
   //canvas definitivo
-  llenarCanvas('canvas2',logo1 ,logo2,titulo,subtitulo,'','', educacionContinua.nombre, educacionContinua.duracion,firma1,firma2);
+  llenarCanvas('canvas2',logo1 ,logo2,titulo,subtitulo,'','', eduContinua.nombre, eduContinua.duracion,firma1,firma2);
   /***********COMPORTAMIENTO DEL INPUT IMAGEN LOGOS*******************/
   $("#inputLogo1").on("change",function(e){
 	  /*console.log(this.files.length);
@@ -625,7 +449,6 @@ croppieFirma2 = $('#croppieFirma2').croppie({
 				type: 'canvas',
 				size: 'viewport'
 			}).then(function (resp) {
-				console.log(resp);
 				logo1.ruta=resp;
 				arrayImagenes.push(logo1);
 			});
@@ -650,7 +473,6 @@ croppieFirma2 = $('#croppieFirma2').croppie({
 				type: 'canvas',
 				size: 'viewport'
 			}).then(function (resp) {
-				console.log(resp);
 				logo2.ruta=resp;
 				arrayImagenes.push(logo2);
 			});
@@ -766,7 +588,6 @@ croppieFirma2 = $('#croppieFirma2').croppie({
 				type: 'canvas',
 				size: 'viewport'
 			}).then(function (resp) {
-				console.log(resp);
 				firma1.imagenFirmaDigital=resp;
 				  arrayFirmas.push(firma1);
 			});
@@ -800,11 +621,11 @@ croppieFirma2 = $('#croppieFirma2').croppie({
 	  
 	 
 	  
-	  
+	 
 	  //canvas visible
-	  llenarCanvas('canvas',logo1 ,logo2,titulo,subtitulo,'Estudiante','Identificado con C.C. XXXXX, participó en el ' + educacionContinua.tipoEduContinua.tipoEduContinua, educacionContinua.nombre, educacionContinua.duracion,firma1,firma2);
+	  llenarCanvas('canvas',logo1 ,logo2,titulo,subtitulo,'Estudiante','Identificado con C.C. XXXXX, participó en el ' + eduContinua.tipoEduContinua, eduContinua.nombre, eduContinua.duracion,firma1,firma2);
 	  //canvas definitivo
-	  llenarCanvas('canvas2',logo1 ,logo2,titulo,subtitulo,'','', educacionContinua.nombre, educacionContinua.duracion,firma1,firma2);
+	  llenarCanvas('canvas2',logo1 ,logo2,titulo,subtitulo,'','', eduContinua.nombre, eduContinua.duracion,firma1,firma2);
   });
   
   
@@ -814,15 +635,11 @@ croppieFirma2 = $('#croppieFirma2').croppie({
 	  var canvas = document.getElementById('canvas2');
 	  var ctx = canvas.getContext('2d');
 	  var dataURL = canvas.toDataURL('image/jpg');
-	  console.log("dataURl");
-	  console.log(dataURL);
+	 
 		var blob = dataURItoBlob(dataURL);
-		console.log("blob");
-		console.log(blob)
 		//var formData = new FormData();
 		var newFile = new File([blob], 'plantilla.jpg', {type: 'image/jpg'});
-		console.log("file");
-		console.log(newFile);
+		
 		//formData.append('file', newFile);
 		//formData.append("idEduContinua",educacionContinua.id);
 		//formData.append('imagenes', JSON.stringify(arrayImagenes));
@@ -866,7 +683,7 @@ croppieFirma2 = $('#croppieFirma2').croppie({
 	    	url: "/educacion-continua/generar-plantilla-diploma",
 	        type: "POST",
 	        //data: formData,
-	        data: JSON.stringify({"id":educacionContinua.id,"diploma":{"id":idDiploma, "imagenPlantilla":dataDiploma,"textos":arrayTextos, "imagenes":arrayImagenes, "firmas":arrayFirmas}}),
+	        data: JSON.stringify({"id":eduContinua.id,"diploma":{"id":idDiploma, "imagenPlantilla":dataDiploma,"textos":arrayTextos, "imagenes":arrayImagenes, "firmas":arrayFirmas}}),
 	        enctype: 'multipart/form-data',
 	        contentType: "application/json; charset=utf-8",
 	        processData: false,
@@ -923,12 +740,9 @@ croppieFirma2 = $('#croppieFirma2').croppie({
     		//dibujo logo1
     		if(logo1!=null){
     			var imgLogo1 = new Image();
-        		imgLogo1.src=logo1.ruta;
+        		imgLogo1.src=logo1.imagen;
         		imgLogo1.onload = function() {
         	    	//imgLogo1= redimensionarLogos(imgLogo1);
-        	    	console.log("tamaños logo1");
-        	    	console.log(imgLogo1.width);
-        	    	console.log(imgLogo1.height);
         	    	ctx.drawImage(imgLogo1, logo1.x, logo1.y, imgLogo1.width, imgLogo1.height);//max 150 width
             	};	
     		}
@@ -937,13 +751,10 @@ croppieFirma2 = $('#croppieFirma2').croppie({
         	//dibujo logo2
     		if(logo2!=null){
     			var imgLogo2 = new Image();
-      		    imgLogo2.src=logo2.ruta;
+      		    imgLogo2.src=logo2.imagen;
         	    imgLogo2.onload = function() {
         	    	//imgLogo2= redimensionarLogos(imgLogo2);
-        	    	console.log("tamaños logo2");
-        	    	console.log(imgLogo2.width);
-        	    	console.log(imgLogo2.height);
-            	    ctx.drawImage(imgLogo2, logo2.x, logo2.y, imgLogo2.width, imgLogo2.height);//max 150 width
+        	    	ctx.drawImage(imgLogo2, logo2.x, logo2.y, imgLogo2.width, imgLogo2.height);//max 150 width
         	    };
     		}
     	    
@@ -989,7 +800,7 @@ croppieFirma2 = $('#croppieFirma2').croppie({
             console.log(firmaD2);
             if(firmaD1.nombre!="" && firmaD1.cargo!="" ){
     			var imgFirma1 = new Image();
-    			imgFirma1.src=firmaD1.imagenFirmaDigital;
+    			imgFirma1.src=firmaD1.imagen;
     			//imgFirma1.src="/firma3.jpg";
     			imgFirma1.onload = function() {
         	    	//imgFirma1= redimensionarFirmas(imgFirma1);
@@ -1032,14 +843,11 @@ croppieFirma2 = $('#croppieFirma2').croppie({
         	    };*/
         	    if(firmaD2.nombre!="" && firmaD2.cargo!="" ){
 	        	   var imgFirma2 = new Image();
-	    			imgFirma2.src=firmaD2.imagenFirmaDigital;
+	    			imgFirma2.src=firmaD2.imagen;
 	    			//imgFirma2.src="/firma2.png";
 	    			imgFirma2.onload = function() {
 	        	    	//imgFirma1= redimensionarFirmas(imgFirma1);
-	        	    	console.log("tamaños firma2");
-	        	    	console.log(imgFirma2.width);
-	        	    	console.log(imgFirma2.height);
-	            	    ctx.drawImage(imgFirma2, firmaD2.x+10, firmaD2.y-70, imgFirma2.width, imgFirma2.height);
+	        	    	 ctx.drawImage(imgFirma2, firmaD2.x+10, firmaD2.y-70, imgFirma2.width, imgFirma2.height);
 	            	    
 	            	    ctx.moveTo(firmaD2.x,firmaD2.y);
 	               	    ctx.lineTo(firmaD2.x+270,firmaD2.y);
@@ -1054,7 +862,9 @@ croppieFirma2 = $('#croppieFirma2').croppie({
         	    }
         	    ctx.font = '23px Monotype Corsiva';
         	    ctx.textAlign="right"; 
-        	    ctx.fillText('San José de Cúcuta, 13 de Mayo de 2020', 870, 665);
+        	    var fecha= new Date(eduContinua.fechaFin);
+        	   var months = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre" ,"Diciembre"];
+        	    ctx.fillText('San José de Cúcuta, ' +fecha.getDate()+ ' de ' + months[fecha.getMonth()] + ' de ' + fecha.getFullYear(), 870, 665);
             //}
     	}
     	
@@ -1165,8 +975,3 @@ croppieFirma2 = $('#croppieFirma2').croppie({
 
 	    return new Blob([ia], {type: mimeString});
 	}
-  </script>
- 
-</body>
-
-</html>

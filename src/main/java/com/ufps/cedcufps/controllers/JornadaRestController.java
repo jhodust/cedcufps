@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.support.SessionStatus;
 
@@ -44,11 +45,14 @@ public class JornadaRestController {
 	
 	@GetMapping(value="/educacion-continua/jornada/search/{id}", produces = "application/json")
     public ResponseEntity<?> buscarJornada(@PathVariable Long id) {
-		Jornada j=jornadaService.findOne(id).get();
-        if(j==null) {
-        	return new ResponseEntity<>("No se encontró la jornada",HttpStatus.BAD_REQUEST);
-        }
-        return  new ResponseEntity<>(j,HttpStatus.OK);
+		
+        return  new ResponseEntity<>(jornadaService.findOne(id),HttpStatus.OK);
     }
 	
+	@GetMapping(value="/educacion-continua/jornada/delete")
+    public ResponseEntity<?> deleteJornada(@RequestParam(value = "id",required = true) String idJornada) {
+		jornadaService.deleteJornada(Long.parseLong(idJornada));
+		return new ResponseEntity<>("Se ha eliminado la jornada exitosamente",HttpStatus.OK);
+		
+    }
 }

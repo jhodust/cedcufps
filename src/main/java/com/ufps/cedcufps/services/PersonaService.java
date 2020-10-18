@@ -9,6 +9,7 @@ import org.aspectj.weaver.patterns.PerThisOrTargetPointcutVisitor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.datatables.mapping.DataTablesOutput;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -101,6 +102,8 @@ public class PersonaService implements IPersonaService, UserDetailsService {
 	@Autowired
 	private IUsuarioMapper usuarioMapper;
 	
+	
+	
 	@Autowired
 	private IProgramaMapper programaMapper;
 	
@@ -126,6 +129,7 @@ public class PersonaService implements IPersonaService, UserDetailsService {
 	private IPersonaRolCustomDao personaRolDao;
 	
 	private Logger logger= LoggerFactory.getLogger(PersonaService.class);
+	
 	@Override
 	public List<Persona> findAllPersonas() {
 		// TODO Auto-generated method stub
@@ -203,9 +207,9 @@ public class PersonaService implements IPersonaService, UserDetailsService {
 	}
 
 	@Override
-	public Optional<Persona> findOne(Long id) {
+	public PersonaDto findOne(Long id) {
 		// TODO Auto-generated method stub
-		return personaDao.findById(id);
+		return usuarioMapper.convertPersonaToPersonaDto(personaDao.findById(id).get());
 	}
 
 	@Override
@@ -501,7 +505,7 @@ public class PersonaService implements IPersonaService, UserDetailsService {
 	public PerfilRolUsuarioDto findPermisos(Long idUsuario) {
 		// TODO Auto-generated method stub
 		Persona autoridad= this.findPersonaLogueada();
-		Persona usuario= this.findOne(idUsuario).get();
+		Persona usuario= personaDao.findById(idUsuario).get();
 		PerfilRolUsuarioDto dto= new PerfilRolUsuarioDto();
 		if(usuario!=null) {
 			dto.setIdPersona(usuario.getId());
@@ -629,6 +633,41 @@ public class PersonaService implements IPersonaService, UserDetailsService {
 		if(p!=null) {
 			return usuarioMapper.convertPersonaToUsuarioDto(p.get(),es,doc,ad,gr,ex);
 		}
+		return null;
+	}
+
+	@Override
+	public DataTablesOutput<PersonaDto> findPossiblePonente(int tipoBusqueda, String value) {
+		// TODO Auto-generated method stub
+		List<Persona> p=null;
+		DataTablesOutput<PersonaDto> dto= new DataTablesOutput<>();
+		
+		switch(tipoBusqueda) {
+			case 1:
+				p=personaDao.findPosiblePonenteByNumeroDocumento(value);
+				break;
+			case 2:
+				p=personaDao.findPosiblePonenteByNombre("%"+value+"%");
+				break;
+			case 3:
+				p=estudianteDao.findEstudianteByCodigo(value);
+				break;
+			case 4:
+				p=docenteDao.findDocenteByCodigo(value);
+				break;
+			case 5:
+				p=personaDao.findPosiblePonenteByEmail(value);
+				break;
+		}
+		
+		if(p!=null) {
+			List<PersonaDto> personasDto=usuarioMapper.convertListPersonasToPersonaDto(p);
+			dto.setData(personasDto);
+			dto.setRecordsFiltered(personasDto.size());
+			dto.setRecordsTotal(p.size());
+			return dto;
+		}
+		
 		return null;
 	}
 

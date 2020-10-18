@@ -11,6 +11,7 @@ import org.springframework.data.repository.CrudRepository;
 import com.ufps.cedcufps.modelos.Asistencia;
 import com.ufps.cedcufps.modelos.Docente;
 import com.ufps.cedcufps.modelos.Estudiante;
+import com.ufps.cedcufps.modelos.Persona;
 
 public interface IDocenteDao extends CrudRepository<Docente, Long> {
 
@@ -24,4 +25,9 @@ public interface IDocenteDao extends CrudRepository<Docente, Long> {
 	@Modifying
 	@Query(value = "INSERT INTO docentes (codigo, id_departamento, estado, id_persona) VALUES(?1,?2,?3,?4) ON DUPLICATE KEY  UPDATE codigo=VALUES(codigo), id_departamento=VALUES(id_departamento),estado=VALUES(estado)", nativeQuery = true)
 	public void updateOnlyDocente(String codigo, Long idDepartamento, boolean estado, Long idPersona);
+
+	@Query(value ="select d " + 
+			"from Docente d " + 
+			"where d.codigo = ?1")	
+	public List<Persona> findDocenteByCodigo(String codigo);
 }

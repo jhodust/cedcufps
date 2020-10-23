@@ -49,35 +49,9 @@ public class AsistenteRestController {
 	
 	
 	@GetMapping(value = "/realizar-inscripcion/{id_evento}",produces = "application/json")
-	public ResponseEntity<Participante> realizarInscripcion(@PathVariable(value = "id_evento") Long id, Map<String, Object> model) {
+	public ResponseEntity<ParticipanteDto> realizarInscripcion(@PathVariable(value = "id_evento") Long id, Map<String, Object> model) {
 		
-		EducacionContinua ec= educacionContinuaService.findOne(id).get();
-		Persona p= personaService.findPersonaLogueada();
-		Asistente a= new Asistente(); 
-		a.setEducacionContinua(ec);
-		a.setTipoParticipante(participanteService.findByTipoParticipante("Asistente"));
-		a.setPersona(p);
-		
-		    
-		String texto=ec.getProgramaResponsable().getCodigo()+"_"+ec.getTipoEduContinua().getId()+"_"+ec.getId()+"_"+a.getTipoParticipante().getId()+"_"+p.getNumeroDocumento();
-		String nombreArchivo=p.getNumeroDocumento()+".png";
-		System.out.println("texto original: " + texto);
-		texto=Encrypt.encriptar(texto);
-		try {
-			;
-			System.out.println("encriptado: " + texto);
-			System.out.println("desencriptado: " + Encrypt.desencriptar(texto));
-			a.setImagenCodigoQR(CodigoQR.generateQR(ec.getId()+"/qr-participantes/"+nombreArchivo, texto));
-			a.setCodigoQR(texto);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
-		
-		participanteService.save(a);
-		return ResponseEntity.ok(a);
+		return ResponseEntity.ok(participanteService.saveAsistente(id));
 	}
 	
 	@PostMapping(value = "/realizar-inscripcion/generar-tarjeta-inscripcion" ,produces = "application/json")

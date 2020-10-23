@@ -7,7 +7,6 @@ import org.springframework.stereotype.Repository;
 
 import com.ufps.cedcufps.modelos.Facultad;
 
-@Repository
 public interface IFacultadDao extends PagingAndSortingRepository<Facultad, Long>{
 
 	public Facultad findByFacultad(String facultad);

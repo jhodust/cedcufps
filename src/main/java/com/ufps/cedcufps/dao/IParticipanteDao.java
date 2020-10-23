@@ -4,14 +4,17 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
 import com.ufps.cedcufps.modelos.EducacionContinua;
 import com.ufps.cedcufps.modelos.Participante;
 
-public interface IParticipanteDao extends CrudRepository<Participante, Long> {
+
+public interface IParticipanteDao extends JpaRepository<Participante, Long>{
 
 	@Query("select p from Participante p where p.educacionContinua.id = (select e.id from EducacionContinua e where e.nombre = ?1) and p.tipoParticipante.id = '2'")
 	public List<Participante> findAllPonentesOfOneEducacionContinua(String educacionContinua);
@@ -45,9 +48,31 @@ public interface IParticipanteDao extends CrudRepository<Participante, Long> {
 	
 	@Transactional
 	@Modifying
-	@Query("delete from Participante p where p.id = ?1 ")
+	@Query(value = "delete from participantes  where id = ?1 ", nativeQuery=true)
 	public void deleteParticipante(Long idParticipante);
 	
 	@Query("select p from Participante p where p.id = ?1 ")
 	public Participante findParticipanteById(Long idParticipante);
+	
+	@Transactional
+	@Modifying
+	@Query(value="insert into asistentes (id_participante) values (?1) ", nativeQuery = true)
+	public void insertAsistente(Long idParticipante);
+	
+	@Transactional
+	@Modifying
+	@Query(value="insert into ponentes (id_participante, tema) values (?1, ?2) ", nativeQuery = true)
+	public void insertPonente(Long idParticipante, String tema);
+	
+	@Transactional
+	@Modifying
+	@Query(value="update ponentes set tema = ?1 where id_participante = ?2 ", nativeQuery = true)
+	public void updatePonente(String tema, Long idParticipante);
+	
+	@Transactional
+	@Modifying
+	@Query(value="update participantes set tarjeta_inscripcion = ?1 where id = ?2 ", nativeQuery = true)
+	public void updateTarjetaInscripcion(String tarjetaInscripcion, Long idParticipante);
+	
+	
 }

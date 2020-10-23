@@ -18,7 +18,7 @@ public interface IParticipanteService {
 	
 	public List<Participante> findAllParticipante();
 	
-	public void save(Participante p);
+	public ParticipanteDto saveAsistente(Long idEduContinua);
 	
 	public Optional<Participante> findOne(Long id);
 	
@@ -48,5 +48,5 @@ public interface IParticipanteService {
 	
 	public TipoParticipante findTipoParticipanteById(Long id);
 	
-	public void savePonente(Ponente p);
+	public ParticipanteDto savePonente(Ponente p);
 }

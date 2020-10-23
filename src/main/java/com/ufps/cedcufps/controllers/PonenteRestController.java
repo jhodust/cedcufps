@@ -72,8 +72,8 @@ public class PonenteRestController {
 			return new ResponseEntity<>(result.getAllErrors(),HttpStatus.BAD_REQUEST);
 		}
 		System.out.println("va a guardar ponente");
-		participanteService.savePonente(ponente);
-		return new ResponseEntity<>(participanteService.findByIdEducacionContinuaAndIdPersona(ponente.getEducacionContinua().getId(), ponente.getPersona().getId()),HttpStatus.OK);
+		ParticipanteDto dto = participanteService.savePonente(ponente);
+		return new ResponseEntity<>(dto,HttpStatus.OK);
 	}
 	
 	@GetMapping(value="/educacion-continua/ponente/delete")

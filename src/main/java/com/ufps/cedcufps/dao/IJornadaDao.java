@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -11,7 +12,7 @@ import org.springframework.data.repository.CrudRepository;
 import com.ufps.cedcufps.modelos.EducacionContinua;
 import com.ufps.cedcufps.modelos.Jornada;
 
-public interface IJornadaDao extends CrudRepository<Jornada, Long> {
+public interface IJornadaDao extends JpaRepository<Jornada, Long> {
 
 	@Query("select j from Jornada j where j.id= ?1 ")
 	public Jornada findOneById(Long id);

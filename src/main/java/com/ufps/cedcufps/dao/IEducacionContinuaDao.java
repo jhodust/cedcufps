@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
@@ -11,7 +12,7 @@ import com.ufps.cedcufps.modelos.Departamento;
 import com.ufps.cedcufps.modelos.EducacionContinua;
 import com.ufps.cedcufps.modelos.Participante;
 
-public interface IEducacionContinuaDao extends CrudRepository<EducacionContinua, Long> {
+public interface IEducacionContinuaDao extends JpaRepository<EducacionContinua, Long> {
 
 	@Query("select count(e) from EducacionContinua e where e.tipoEduContinua.id = '1'")
 	public int cantidadCursos();
@@ -52,6 +53,9 @@ public interface IEducacionContinuaDao extends CrudRepository<EducacionContinua,
 	
 	
 	public EducacionContinua findByNombre(String educacionContinua);
+	
+	@Query(value= "select * from educacion_continua e where e.id=?1", nativeQuery = true)
+	public EducacionContinua findEducacionContinuaById(Long id);
 	
 	@Query("select e from EducacionContinua e where e.id IN (?1)")
 	public List<EducacionContinua> findByManyIds(List<Long> idsEduContinua);

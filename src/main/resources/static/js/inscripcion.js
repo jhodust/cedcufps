@@ -64,16 +64,13 @@ function realizarInscripcion(){
 
 function creacionTarjetaInscripcion(p){
 	console.log(p);
-	var educacionContinua = p.educacionContinua;
+	
     var primerNombre = p.primerNombre;
     var segundoNombre = p.segundoNombre;
     var primerApellido = p.primerApellido;
     var segundoApellido = p.segundoApellido;
-    var tipoParticipante = p.tipoParticipante;
-    var lugar = p.lugarEducacionContinua;
     var fecha=new Date(p.fechaInicioEduContinua);
     var imgQR="/"+p.imagenQr;
-    var tipoEduContinua=p.tipoEduContinua;
     
     var nombres="";
     if(segundoNombre!=null){
@@ -132,7 +129,7 @@ function creacionTarjetaInscripcion(p){
 	ctx.fillText(apellidos, 80, 390);
 	
 	ctx.font = "800 38px Arial";
-	ctx.fillText(tipoParticipante.toUpperCase(), 120, 480);
+	ctx.fillText(p.tipoParticipante.toUpperCase(), 120, 480);
 	
 	
 	
@@ -143,7 +140,7 @@ function creacionTarjetaInscripcion(p){
 	
 	ctx.font = "normal 33px Berlin Sans FB";
 	ctx.fillStyle = "#000";
-	ctx.fillText(lugar, 80, 620);
+	ctx.fillText(p.lugarEducacionContinua, 80, 620);
 	
 	ctx.font = "italic 30px Arial";
 	ctx.fillStyle = "#484A4B";
@@ -167,22 +164,22 @@ function creacionTarjetaInscripcion(p){
 	
 	ctx.font = "800 38px Arial";
 	ctx.textAlign = "center";
-	ctx.fillText(tipoEduContinua.toUpperCase(), 580, 550);
+	ctx.fillText(p.tipoEduContinua.toUpperCase(), 580, 550);
 	
 	
-	var array= educacionContinua.split(" ");
+	var array= p.educacionContinua.split(" ");
     var cantCaracteres=0;
     var y=0;
     var z=0;
     var cad="";
-    console.log("longitud nombre: " + educacionContinua.length);
-    if(educacionContinua.length<25){
+    console.log("longitud nombre: " + p.educacionContinua.length);
+    if(p.educacionContinua.length<25){
     	var height=120;
     	ctx.font = "bold 38px Trebuchet MS";
-    }else if(educacionContinua.length<=50){
+    }else if(p.educacionContinua.length<=50){
     	var height=100;
     	ctx.font = "bold 36px Trebuchet MS";
-    }else if(educacionContinua.length<100){
+    }else if(p.educacionContinua.length<100){
     	var height=80;
     	ctx.font = "bold 32px Trebuchet MS";
     }
@@ -200,8 +197,8 @@ function creacionTarjetaInscripcion(p){
     		
     		cantCaracteres=0;
     		console.log("i: "+ i + " z: " + z);
-    		cad=educacionContinua.substring(y,z);
-    		console.log(educacionContinua.substring(y,z));
+    		cad=p.educacionContinua.substring(y,z);
+    		console.log(p.educacionContinua.substring(y,z));
     		ctx.fillText(cad, 530, height);
     		console.log("escribe");
     		height=height+35;
@@ -213,8 +210,8 @@ function creacionTarjetaInscripcion(p){
     		
     		cantCaracteres=0;
     		console.log("i: "+ i + " z: " + z);
-    		cad=educacionContinua.substring(y,z);
-    		console.log(educacionContinua.substring(y,z));
+    		cad=p.educacionContinua.substring(y,z);
+    		console.log(p.educacionContinua.substring(y,z));
     		ctx.fillText(cad, 530, height);
     		console.log("escribe");
     		height=height+35;

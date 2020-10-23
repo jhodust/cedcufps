@@ -8,6 +8,7 @@ import javax.transaction.Transactional;
 
 import org.springframework.data.jpa.datatables.mapping.DataTablesOutput;
 import org.springframework.data.jpa.datatables.repository.DataTablesRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -15,7 +16,7 @@ import org.springframework.data.repository.CrudRepository;
 import com.ufps.cedcufps.modelos.Persona;
 
 
-public interface IPersonaDao extends CrudRepository<Persona, Long>, DataTablesRepository<Persona, Long> {
+public interface IPersonaDao extends JpaRepository<Persona, Long>, DataTablesRepository<Persona, Long> {
 
 	@Query("select count(p) from Persona p where p.id != ?1 and p.numeroDocumento=?2")
 	public int validarDocumentoRegistrado(Long idPersona, String numeroDocumento);
@@ -23,6 +24,8 @@ public interface IPersonaDao extends CrudRepository<Persona, Long>, DataTablesRe
 	@Query("select count(p) from Persona p where p.numeroDocumento != ?1 and p.email = ?2")
 	public int validarEmailRegistrado(String numeroDocumento, String email);
 	
+	@Query(value="select p from Persona p where p.id = ?1")
+	public Persona findPersonaById(Long id);
 	
 	public Persona findByUsername(String username);
 	

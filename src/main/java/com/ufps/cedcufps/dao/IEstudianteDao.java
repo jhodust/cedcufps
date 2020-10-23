@@ -4,13 +4,14 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import com.ufps.cedcufps.modelos.Estudiante;
 import com.ufps.cedcufps.modelos.Persona;
 
-public interface IEstudianteDao extends CrudRepository<Estudiante, Long>{
+public interface IEstudianteDao extends JpaRepository<Estudiante, Long>{
 
 	@Query(value = "select * from estudiantes where id_persona=?1", nativeQuery = true)
 	public Estudiante findOnlyEstudiante(Long id);

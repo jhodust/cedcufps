@@ -17,19 +17,17 @@ public class ParticipanteDto {
 	private String numeroDocumento;
 	private String tipoDocumento;
 	private String tipoEduContinua;
+	private Long idTipoEduContinua;
+	private Long idEducacionContinua;
 	private String educacionContinua;
 	private Date fechaInicioEduContinua;
 	private Date fechaFinEduContinua;
 	private String lugarEducacionContinua;
+	private Date fechaInscripcion;
+	private String codigoQR;
 	private String imagenQr;
 	private String tarjetaInscripcion;
 	Map<Long, Boolean> jornadasAsistencias;
-	public String getTarjetaInscripcion() {
-		return tarjetaInscripcion;
-	}
-	public void setTarjetaInscripcion(String tarjetaInscripcion) {
-		this.tarjetaInscripcion = tarjetaInscripcion;
-	}
 	private String primerNombre;
 	private String segundoNombre;
 	private String primerApellido;
@@ -158,6 +156,36 @@ public class ParticipanteDto {
 	}
 	public void setJornadasAsistencias(Map<Long, Boolean> jornadasAsistencias) {
 		this.jornadasAsistencias = jornadasAsistencias;
+	}
+	public Date getFechaInscripcion() {
+		return fechaInscripcion;
+	}
+	public void setFechaInscripcion(Date fechaInscripcion) {
+		this.fechaInscripcion = fechaInscripcion;
+	}
+	public String getCodigoQR() {
+		return codigoQR;
+	}
+	public void setCodigoQR(String codigoQR) {
+		this.codigoQR = codigoQR;
+	}
+	public String getTarjetaInscripcion() {
+		return tarjetaInscripcion;
+	}
+	public void setTarjetaInscripcion(String tarjetaInscripcion) {
+		this.tarjetaInscripcion = tarjetaInscripcion;
+	}
+	public Long getIdEducacionContinua() {
+		return idEducacionContinua;
+	}
+	public void setIdEducacionContinua(Long idEducacionContinua) {
+		this.idEducacionContinua = idEducacionContinua;
+	}
+	public Long getIdTipoEduContinua() {
+		return idTipoEduContinua;
+	}
+	public void setIdTipoEduContinua(Long idTipoEduContinua) {
+		this.idTipoEduContinua = idTipoEduContinua;
 	}
 	
 	

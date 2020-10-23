@@ -2,6 +2,7 @@ package com.ufps.cedcufps.dao;
 
 import javax.transaction.Transactional;
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -10,7 +11,7 @@ import com.ufps.cedcufps.modelos.Administrativo;
 import com.ufps.cedcufps.modelos.Estudiante;
 
 
-public interface IAdministrativoDao extends CrudRepository<Administrativo, Long>{
+public interface IAdministrativoDao extends JpaRepository<Administrativo, Long>{
 
 
 	@Query(value = "select * from administrativos where id_persona=?1", nativeQuery = true)

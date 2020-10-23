@@ -42,8 +42,9 @@ function guardarPonente(){
 		url: "/educacion-continua/ponente/save",
 		cache: false,
 		success: function(result) {
+			console.log("result ponente");
 			console.log(result);
-			if(result.tarjetaInscripcion==null){
+			if(result != null){
 				creacionTarjetaInscripcion(result);
 			}
 			toastr.success('Se ha guardado el ponente', 'Excelente!');

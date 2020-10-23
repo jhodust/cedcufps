@@ -11,13 +11,17 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ufps.cedcufps.dao.IEducacionContinuaDao;
+import com.ufps.cedcufps.dao.IParticipanteCustomDao;
 import com.ufps.cedcufps.dao.IParticipanteDao;
 import com.ufps.cedcufps.dao.IPersonaDao;
 import com.ufps.cedcufps.dao.ITipoParticipanteDao;
 import com.ufps.cedcufps.dto.ParticipanteDto;
+import com.ufps.cedcufps.dto.PersonaDto;
 import com.ufps.cedcufps.dto.PonenteDto;
 import com.ufps.cedcufps.exception.CustomException;
 import com.ufps.cedcufps.mapper.IEducacionContinuaMapper;
+import com.ufps.cedcufps.mapper.IUsuarioMapper;
+import com.ufps.cedcufps.modelos.Asistente;
 import com.ufps.cedcufps.modelos.EducacionContinua;
 import com.ufps.cedcufps.modelos.Participante;
 import com.ufps.cedcufps.modelos.Persona;
@@ -41,13 +45,22 @@ public class ParticipanteService implements IParticipanteService{
 	private IParticipanteDao participanteDao;
 	
 	@Autowired
+	private IParticipanteCustomDao participanteCustomDao;
+	
+	@Autowired
 	private ITipoParticipanteDao tipoParticipanteDao;
 	
 	@Autowired
 	private IEducacionContinuaMapper educacionContinuaMapper;
 	
 	@Autowired
+	private IUsuarioMapper usuarioMapper;
+	
+	@Autowired
 	private IPersonaService personaService;
+	
+	@Autowired
+	private IEmailService emailService;
 	
 	@Override
 	public List<TipoParticipante> findAllTiposParticipante() {
@@ -62,9 +75,62 @@ public class ParticipanteService implements IParticipanteService{
 	}
 
 	@Override
-	public void save(Participante p) {
+	public ParticipanteDto saveAsistente(Long idEduContinua) {
 		// TODO Auto-generated method stub
-		participanteDao.save(p);
+		ParticipanteDto dto=this.saveParticipante(idEduContinua, personaService.findPersonaLogueada(),"Asistente");
+		this.participanteDao.insertAsistente(dto.getId());
+		
+		return dto;
+	}
+	
+	public ParticipanteDto saveParticipante(Long idEduContinua, Persona p, String tipoParticipante) {
+		ParticipanteDto dto=new ParticipanteDto();
+		EducacionContinua e= educacionContinuaDao.findEducacionContinuaById(idEduContinua);
+		if(e == null) {
+			throw new CustomException("No se encontró la educación continua en la base de datos");
+		}else {
+			dto.setIdEducacionContinua(idEduContinua);
+			dto.setEducacionContinua(e.getNombre());
+			dto.setFechaInicioEduContinua(e.getFechaInicio());
+			dto.setFechaFinEduContinua(e.getFechaFin());
+			dto.setTipoEduContinua(e.getTipoEduContinua().getTipoEduContinua());
+			dto.setIdTipoEduContinua(e.getTipoEduContinua().getId());
+			dto.setLugarEducacionContinua(e.getLugar());
+		}
+		
+		TipoParticipante tp= tipoParticipanteDao.findByTipoParticipante(tipoParticipante);
+		if(tp == null) {
+			throw new CustomException("No se encontró el tipo participante 'Asistente' en la base de datos");
+		}else {
+			dto.setIdTipoParticipante(tp.getId());
+			dto.setTipoParticipante(tp.getTipoParticipante());
+		}
+		PersonaDto perDto=usuarioMapper.convertPersonaToPersonaDto(p); 
+		dto.setIdPersona(perDto.getId());
+		dto.setPrimerNombre(p.getPrimerNombre());
+		dto.setSegundoNombre(p.getSegundoNombre());
+		dto.setPrimerApellido(p.getPrimerApellido());
+		dto.setSegundoApellido(p.getSegundoApellido());
+		    
+		String texto=e.getProgramaResponsable().getCodigo()+"_"+e.getTipoEduContinua().getId()+"_"+e.getId()+"_"+tp.getId()+"_"+p.getNumeroDocumento();
+		String nombreArchivo=p.getNumeroDocumento()+".png";
+		System.out.println("texto original: " + texto);
+		texto=Encrypt.encriptar(texto);
+		try {
+			;
+			System.out.println("encriptado: " + texto);
+			System.out.println("desencriptado: " + Encrypt.desencriptar(texto));
+			dto.setImagenQr(CodigoQR.generateQR(e.getId()+"/qr-participantes/"+nombreArchivo, texto));
+			dto.setCodigoQR(texto);
+		} catch (Exception exc) {
+			// TODO Auto-generated catch block
+			exc.printStackTrace();
+		}
+		participanteCustomDao.saveParticipante(dto);
+		System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+		System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+		System.out.println(dto.getId());
+		return dto;
 	}
 
 	@Override
@@ -114,7 +180,7 @@ public class ParticipanteService implements IParticipanteService{
 			throw new CustomException("La inscripción a eliminar no fue encontrada en la base de datos");
 		}
 		
-		this.deleteInfoParticipante(pa.getId(), pa.getCodigoQR(), pa.getTarjetaInscripcion());
+		this.deleteInfoParticipante(pa.getId(), pa.getImagenCodigoQR(), pa.getTarjetaInscripcion());
 	}
 
 	@Override
@@ -167,7 +233,7 @@ public class ParticipanteService implements IParticipanteService{
 
 	@Override
 	@Transactional(rollbackFor = CustomException.class)
-	public void savePonente(Ponente ponente) {
+	public ParticipanteDto savePonente(Ponente ponente) {
 		// TODO Auto-generated method stub
 		if(ponente.getId() == null || ponente.getId().equals(0L) ) {
 			Participante participanteValidado = participanteDao.validarParticipanteYaInscrito(ponente.getEducacionContinua().getId(), ponente.getPersona().getId());
@@ -175,16 +241,22 @@ public class ParticipanteService implements IParticipanteService{
 				throw new CustomException("La persona ya se encuentra registrada como " + participanteValidado.getTipoParticipante().getTipoParticipante(), HttpStatus.BAD_REQUEST);
 			}
 		}
-		
-		Persona p=personaDao.findById(ponente.getPersona().getId()).get();
+		Persona p=personaDao.findPersonaById(ponente.getPersona().getId());
+		if(p==null) {
+			throw new CustomException("La persona no fue encontrada en la base de datos ", HttpStatus.BAD_REQUEST);
+		}
+		/*Persona p=personaDao.findById(ponente.getPersona().getId()).get();
 		EducacionContinua ec=educacionContinuaDao.findById(ponente.getEducacionContinua().getId()).orElseThrow(() -> new CustomException("No fue posible encontrar la educación continua asociada en la base de datos"));
 		TipoParticipante tp=tipoParticipanteDao.findById(ponente.getTipoParticipante().getId()).orElseThrow(() -> new CustomException("No fue posible encontrar el tipo de participante asociado"));
 		/*preparando qr de inscripcion*/
-		System.out.println("ponete");
+		/*System.out.println("ponete");
 		System.out.println(ponente.getId()==null);
-		System.out.println(ponente.getId().equals(0L));
+		System.out.println(ponente.getId().equals(0L));*/
 		if(ponente.getId()==null || ponente.getId().equals(0L)) {
-			System.out.println("entra al if");
+			ParticipanteDto dto=this.saveParticipante(ponente.getEducacionContinua().getId(), p, "Ponente");
+			this.participanteDao.insertPonente(dto.getId(), ponente.getTema());
+			return dto;
+			/*System.out.println("entra al if");
 			System.out.println(p!=null);
 			System.out.println(ec!=null);
 			if(p!=null && ec!=null) {
@@ -206,26 +278,36 @@ public class ParticipanteService implements IParticipanteService{
 					// TODO Auto-generated catch block
 					throw new CustomException("No fue posible generar el código QR del ponente, registro fallido", HttpStatus.BAD_REQUEST);
 				}
-			}
+			}*/
 		}else {
-			Ponente po=(Ponente)participanteDao.findById(ponente.getId()).orElseThrow(() -> new CustomException("No se encontró el ponente asociado en la base de datos"));
+			/*Ponente po=(Ponente)participanteDao.findById(ponente.getId()).orElseThrow(() -> new CustomException("No se encontró el ponente asociado en la base de datos"));
 			po.setTema(ponente.getTema());
-			ponente=po;
+			ponente=po;*/
+			participanteDao.updatePonente(ponente.getTema(),ponente.getId());
+			return null;
 		}
 			
-			participanteDao.save(ponente);
+			/*participanteDao.save(ponente);*/
 	}
 
 	@Override
 	public void saveTarjetaInscripcion(MultipartFile file, Long idParticipante) {
 		// TODO Auto-generated method stub
-		Optional<Participante> p= participanteDao.findById(idParticipante);
-		if(p!=null) {
-			p.get().setTarjetaInscripcion(Archivo.saveImageAboutEducacionContinua(file,p.get().getEducacionContinua().getId()+"/tarjetas-inscripcion/inscripcion_"+p.get().getPersona().getNumeroDocumento()));
-			participanteDao.save(p.get());
-		}
+		Participante p= participanteDao.findParticipanteById(idParticipante);
+		String tarjetaInscripcion=Archivo.saveImageAboutEducacionContinua(file,p.getEducacionContinua().getId()+"/tarjetas-inscripcion/inscripcion_"+p.getPersona().getNumeroDocumento());
+		participanteDao.updateTarjetaInscripcion(tarjetaInscripcion, idParticipante);
+		System.out.println("#############################################################################");
+		System.out.println("tarjeta inscripcion");
+		notificarViaEmail(p.getPersona().getEmail(), tarjetaInscripcion, p.getEducacionContinua().getTipoEduContinua().getTipoEduContinua(), p.getEducacionContinua().getNombre());
+		
 	}
 
+	public void notificarViaEmail(String email, String tarjetaInscripcion, String tipoEduContinua, String educacionContinua) {
+		String contenido="Cordial Saludo,  \r\n \r\n "+
+				 "Su inscripción a la educación continua xxx se ha realizado exitosamente. A continuación se adjunta "+
+				 "su respectiva tarjeta de participación. \r\n \r\n";
+		emailService.sendEmailInscripcion(email, "Inscripción realizada", contenido, tarjetaInscripcion, "tarjeta inscripcion");
+	}
 	
 
 }

@@ -2,6 +2,7 @@ package com.ufps.cedcufps.dao;
 
 import javax.transaction.Transactional;
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -9,7 +10,7 @@ import org.springframework.data.repository.CrudRepository;
 import com.ufps.cedcufps.modelos.Estudiante;
 import com.ufps.cedcufps.modelos.Externo;
 
-public interface IExternoDao extends CrudRepository<Externo, Long>{
+public interface IExternoDao extends JpaRepository<Externo, Long>{
 
 
 	@Query(value = "select * from externos where id_persona=?1", nativeQuery = true)

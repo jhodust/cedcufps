@@ -5,9 +5,13 @@ import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 @Entity
 @Table(name="ponentes")
 @PrimaryKeyJoinColumn(name="id_participante")
+@OnDelete(action = OnDeleteAction.CASCADE)
 public class Ponente extends Participante{
 
 	/**

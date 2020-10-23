@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -13,7 +14,7 @@ import com.ufps.cedcufps.modelos.Asistencia;
 import com.ufps.cedcufps.modelos.EducacionContinua;
 import com.ufps.cedcufps.modelos.Jornada;
 
-public interface IAsistenciaDao extends CrudRepository<Asistencia, Long> {
+public interface IAsistenciaDao extends JpaRepository<Asistencia, Long> {
 
 	@Query("SELECT a FROM Asistencia a WHERE a.jornada.id IN (:jornadas)")
 	public List<Asistencia> findAsistenciasByJornadas(List<Long> jornadas);

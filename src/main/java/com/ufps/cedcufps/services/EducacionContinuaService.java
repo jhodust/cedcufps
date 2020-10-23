@@ -47,6 +47,9 @@ import com.ufps.cedcufps.utils.ReportesExcel;
 public class EducacionContinuaService implements IEducacionContinuaService{
 
 	@Autowired
+	private IParticipanteDao  participanteDao;
+	
+	@Autowired
 	private IEducacionContinuaDao educacionContinuaDao;
 	
 	@Autowired
@@ -76,8 +79,7 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 	@Autowired
 	private IEducacionContinuaCustomDao educacionContinuaCustomDao;
 	
-	@Autowired
-	private IParticipanteDao  participanteDao;
+	
 	
 	@Override
 	public List<EducacionContinua> findAll() {

@@ -1,9 +1,12 @@
 package com.ufps.cedcufps.services;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -162,13 +165,20 @@ public class ParticipanteService implements IParticipanteService{
 		
 		this.deleteInfoParticipante(idParticipante, pa.getCodigoQR(), pa.getTarjetaInscripcion());
 		
+		PersonaDto perDto=usuarioMapper.convertPersonaToPersonaDto(pa.getPersona());
+		this.prepararEmailCancelarInscripcion(pa.getEducacionContinua(), perDto);
 		
 	}
 	
 	private void deleteInfoParticipante(Long idParticipante, String codigoQr, String tarjetaInscripcion) {
-		participanteDao.deleteParticipante(idParticipante);
-		Archivo.deleteImage(codigoQr);
-		Archivo.deleteImage(tarjetaInscripcion);
+		try {
+			participanteDao.deleteParticipante(idParticipante);
+			Archivo.deleteImage(codigoQr);
+			Archivo.deleteImage(tarjetaInscripcion);
+		}catch(DataIntegrityViolationException e) {
+			throw new CustomException("El participante ya tiene asistencias registradas y no es posible cancelar su inscripción");
+		}
+		
 	}
 	
 	@Override
@@ -181,6 +191,8 @@ public class ParticipanteService implements IParticipanteService{
 		}
 		
 		this.deleteInfoParticipante(pa.getId(), pa.getImagenCodigoQR(), pa.getTarjetaInscripcion());
+		PersonaDto perDto=usuarioMapper.convertPersonaToPersonaDto(pa.getPersona());
+		this.prepararEmailCancelarInscripcion(pa.getEducacionContinua(), perDto);
 	}
 
 	@Override
@@ -298,15 +310,38 @@ public class ParticipanteService implements IParticipanteService{
 		participanteDao.updateTarjetaInscripcion(tarjetaInscripcion, idParticipante);
 		System.out.println("#############################################################################");
 		System.out.println("tarjeta inscripcion");
-		notificarViaEmail(p.getPersona().getEmail(), tarjetaInscripcion, p.getEducacionContinua().getTipoEduContinua().getTipoEduContinua(), p.getEducacionContinua().getNombre());
+		
+		PersonaDto perDto=usuarioMapper.convertPersonaToPersonaDto(p.getPersona());
+		
+		
+		prepararEmailInscripcion(p.getEducacionContinua(), perDto, tarjetaInscripcion);
+		
 		
 	}
 
-	public void notificarViaEmail(String email, String tarjetaInscripcion, String tipoEduContinua, String educacionContinua) {
-		String contenido="Cordial Saludo,  \r\n \r\n "+
-				 "Su inscripción a la educación continua xxx se ha realizado exitosamente. A continuación se adjunta "+
-				 "su respectiva tarjeta de participación. \r\n \r\n";
-		emailService.sendEmailInscripcion(email, "Inscripción realizada", contenido, tarjetaInscripcion, "tarjeta inscripcion");
+	public void prepararEmailInscripcion(EducacionContinua e, PersonaDto persona, String tarjetaInscripcion) {
+		String strDateFormat = "dd/MM/yyyy hh:mm a"; // El formato de fecha está especificado  
+	     SimpleDateFormat objSDF = new SimpleDateFormat(strDateFormat);
+	     
+		String contenido=String.format("La inscripción al %s %s se ha realizado exitosamente. "
+				+ "Recuerde que la educación continua inica %s A continuación se adjunta su respectiva tarjeta de inscripción.",
+				e.getTipoEduContinua().getTipoEduContinua(),e.getNombre(), objSDF.format(e.getFechaInicio())); 
+		
+		notificarViaEmail(persona.getEmail(), "Inscripción Realizada " + e.getNombre(), tarjetaInscripcion, contenido, persona.getNombre(),true);
+	}
+	
+	public void prepararEmailCancelarInscripcion(EducacionContinua e, PersonaDto persona) {
+		
+	     
+		String contenido=String.format("La inscripción al %s %s se ha cancelado exitosamente. ",
+				e.getTipoEduContinua().getTipoEduContinua(),e.getNombre()); 
+		
+		notificarViaEmail(persona.getEmail(), "Inscripción Cancelada " + e.getNombre(), null, contenido, persona.getNombre(),false);
+	}
+	
+	public void notificarViaEmail(String email, String asunto, String tarjetaInscripcion, String contenido, String nombreParticipante, boolean adjuntarImagen) {
+		emailService.sendEmailInscripcion(email, asunto, tarjetaInscripcion, contenido, nombreParticipante,adjuntarImagen);
+		
 	}
 	
 

@@ -12,6 +12,8 @@ import java.net.URL;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Formatter;
 import java.util.Random;
 
@@ -24,10 +26,14 @@ public class TestQRCode {
 
     public static void main(String[] args) {
 
-    	BCryptPasswordEncoder password= new BCryptPasswordEncoder();
+    	/*BCryptPasswordEncoder password= new BCryptPasswordEncoder();
     	for(int i=0; i<8;i++) {
     		System.out.println(password.encode("12345"));
-    	}
+    	}*/
+    	
+    	 String strDateFormat = "dd/MM/yyyy hh:mm a"; // El formato de fecha está especificado  
+	     SimpleDateFormat objSDF = new SimpleDateFormat(strDateFormat);
+	     System.out.println(objSDF.format(new Date()));
     	
     	
     	int total=65;

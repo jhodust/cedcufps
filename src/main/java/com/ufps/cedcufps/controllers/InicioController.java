@@ -1,7 +1,9 @@
 package com.ufps.cedcufps.controllers;
 
+import java.io.File;
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
@@ -73,6 +75,16 @@ public class InicioController {
 		model.put("persona",new UsuarioDto());
 		//educacionContinuaService.generarReporteSNIESEducacionContinua(new Date(), 0);
 		return "registrarse";
+	}
+	
+	@GetMapping(value = "/email")
+	public String plantillaEmailparainscripcion(Map<String, Object> model) {
+		 
+		model.put("participante","ccccccccccccc");
+		model.put("contenido", "La inscripción al Simposio Bienal3 se ha realizado con exitósamente. Recuerde que la educación continua inica 18/08/2020 12:00 a. m.. A continuación se adjunta su respectiva tarjeta de inscripción.");
+		model.put("logo", new File("img/geduco.png").getAbsolutePath());
+		//educacionContinuaService.generarReporteSNIESEducacionContinua(new Date(), 0);
+		return "email/plantilla";
 	}
 	
 	

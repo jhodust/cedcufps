@@ -30,18 +30,68 @@
             <div class="col-md-6 d-flex align-items-center justify-content-between justify-content-md-start mb-3 mb-md-0">
               <!-- Page title + Go Back button -->
               <div class="d-inline-block">
-                <h5 class="h4 d-inline-block font-weight-400 mb-0 text-dark" ><strong>Educación Continua</strong></h5>
+              <div class="row">
+              	 <h5 class="h4 d-inline-block font-weight-400 mb-0 text-dark" ><strong>Educación Continua</strong></h5>
 	              	
+              </div>
+               
               </div>
             </div>
             
           </div>
         </div>
         <hr/>
+        <div class="card">
+			<div class="col-md-12">
+				<div class="custom-control custom-checkbox">
+				    <input type="checkbox" class="custom-control-input" id="cbEdCExistente">
+				    <label class="custom-control-label" for="cbEdCExistente">Tomar Registro Educación Continua Existente</label>
+				</div>
+
+			</div>
+		</div>
+		<div class="row" id="divEdCBase" style="display:none">
+						<div class="col-md-12 card">
+							<div class="card-body">
+								<div class="row">
+									<span class="badge badge-red-ufps">Modo Registro Base</span>
+								</div>
+								<div class="row">
+									<div class="col-md-4" th:if="${programasBase != null}">
+										<div class="form-group">
+											<label class="form-control-label">Programa Académico </label><select
+												class="form-control" data-toggle="select" id="selectProgramaBase">
+												<option value="0">Seleccione el programa...</option>
+												<option th:each="p: ${programasBase}"
+													th:value="${p.id}" th:text="${p.programa}"></option>
+												
+											</select>
+											<small class="form-text text-danger"><strong></strong></small>
+										</div>
+									</div>
+									<div class="col-md-8">
+										<div class="form-group">
+											<label class="form-control-label">Educación Continua</label><select
+												class="form-control" data-toggle="select" id="selectEdCBase">
+												<option value="0">Seleccione la educación Continua...</option>
+												<option th:each="e: ${educacionesContinuasBase}"
+													th:value="${e.id}" th:text="${e.nombre}" ></option>
+												
+											</select>
+											<small class="form-text text-danger"><strong></strong></small>
+										</div>
+									</div>
+									
+								</div>
+								
+								
+								
+							</div>
+						</div>
+					</div>
         <div th:fragment="form">
-		<form th:action="@{/educacion-continua/registro}"
-										th:object="${educacionContinua}" method="post"
-										enctype="multipart/form-data">
+		<form enctype="multipart/form-data">
+					
 					<div class="row">
 
 							<div class="col-md-12 card">
@@ -54,20 +104,21 @@
 										<div class="col-md-6">
 											<div class="form-group">
 												<label class="form-control-label">Tipo Educación Continua </label><label class="requerido pl-2">*</label> <select
-													class="form-control" data-toggle="select" th:field="*{tipoEduContinua}" th:errorclass="'form-control is-invalid'" id="selectTipoContinua">
+													class="form-control" data-toggle="select" id="selectTipoContinua">
 													<option value="0">Seleccione el tipo...</option>
-													<option th:each="tec: ${tipos_educacion_continua}"
-														th:value="${tec.id}" th:text="${tec.tipoEduContinua}"></option>
+													<option th:each="tec: ${tipos_educacion_continua}" th:value="${tec.id}"
+															th:text="${tec.tipoEduContinua}" th:selected="${educacionContinua.idTipoEduContinua == tec.id}"></option>
+													
 												</select>
-												<small class="form-text text-danger" th:if="${#fields.hasErrors('tipoEduContinua')}"><strong th:errors="*{tipoEduContinua}"></strong></small>
+												<small class="form-text text-danger"><strong></strong></small>
 											</div>
 										</div>
 										<div class="col-md-6">
 											<div class="form-group">
 												<label class="form-control-label">Nombre </label><label class="requerido pl-2">*</label> <input
-													class="form-control" type="text"
-													placeholder="Ingrese el nombre del evento" th:field="*{nombre}" th:errorclass="'form-control is-invalid'"/>
-													<small class="form-text text-danger" th:if="${#fields.hasErrors('nombre')}"><strong th:errors="*{nombre}"></strong></small>
+													class="form-control" type="text" id="nombreEdc"
+													placeholder="Ingrese el nombre del evento" th:value="${educacionContinua.nombre}"/>
+													<small class="form-text text-danger"><strong></strong></small>
 											</div>
 										</div>
 									</div>
@@ -75,28 +126,29 @@
 										<div class="col-md-4">
 											<div class="form-group">
 												<label class="form-control-label">Clasificación CINE </label><label class="requerido pl-2">*</label> <select
-													class="form-control" data-toggle="select" th:field="*{clasificacionCine}" th:errorclass="'form-control is-invalid'">
+													class="form-control" data-toggle="select" id="selectClasificacionCINE">
 													<option value="0">Seleccione...</option>
 													<option th:each="c: ${clasificacion_cine}"
-														th:value="${c.id}" th:text="${c.clasificacionCine}"></option>
+														th:value="${c.id}" th:text="${c.clasificacionCine}" th:selected="${educacionContinua.idClasificacion == c.id}"></option>
+															
 												</select>
-												<small class="form-text text-danger" th:if="${#fields.hasErrors('clasificacionCine')}"><strong th:errors="*{clasificacionCine}"></strong></small>
+												<small class="form-text text-danger"><strong></strong></small>
 											</div>
 										</div>
 										<div class="col-md-4">
 											<div class="form-group">
 												<label class="form-control-label">Fecha Inicio </label><label class="requerido pl-2">*</label> <input type="text"
 													class="form-control flatpickr-input" data-toggle="date"
-													placeholder="Seleccione la fecha de inicio..." id="fechaInicioEduCont" th:field="*{fechaInicio}" th:errorclass="'form-control is-invalid'"/>
-													<small class="form-text text-danger" th:if="${#fields.hasErrors('fechaInicio')}"><strong th:errors="*{fechaInicio}"></strong></small>
+													placeholder="Seleccione la fecha de inicio..." id="fechaInicioEduCont" th:value="${#dates.format(educacionContinua.fechaInicio, 'dd/MM/yyyy HH:mm')}"/>
+													<small class="form-text text-danger"><strong></strong></small>
 											</div>
 										</div>
 										<div class="col-md-4">
 											<div class="form-group">
 												<label class="form-control-label">Fecha Fin </label><label class="requerido pl-2">*</label> <input type="text"
 													class="form-control flatpickr-input" data-toggle="date"
-													placeholder="Seleccione la fecha de finalización..." id="fechaFinEduCont" th:field="*{fechaFin}" th:errorclass="'form-control is-invalid'"/>
-													<small class="form-text text-danger" th:if="${#fields.hasErrors('fechaFin')}"><strong th:errors="*{fechaFin}"></strong></small>
+													placeholder="Seleccione la fecha de finalización..." id="fechaFinEduCont" th:value="${#dates.format(educacionContinua.fechaFin, 'dd/MM/yyyy HH:mm')}"/>
+													<small class="form-text text-danger"><strong></strong></small>
 											</div>
 										</div>
 									</div>
@@ -104,9 +156,9 @@
 									<script th:inline="javascript">
 										console.log("fechas evento");
 										
-									    var fechaInicioEvento = [[*{#dates.format(fechaInicio, 'dd/MM/yyyy HH:mm')}]];
-									    var fechaFinEvento = [[*{#dates.format(fechaFin, 'dd/MM/yyyy HH:mm')}]];
-									    var fechaLimInscripcionEvento = [[*{#dates.format(fechaLimInscripcion, 'dd/MM/yyyy HH:mm')}]];
+									    var fechaInicioEvento = [[${#dates.format(educacionContinua.fechaInicio, 'dd/MM/yyyy HH:mm')}]];
+									    var fechaFinEvento = [[${#dates.format(educacionContinua.fechaFin, 'dd/MM/yyyy HH:mm')}]];
+									    var fechaLimInscripcionEvento = [[${#dates.format(educacionContinua.fechaLimInscripcion, 'dd/MM/yyyy HH:mm')}]];
 								 		console.log("formatos");
 								 		console.log(fechaInicioEvento);
 								 		console.log(fechaFinEvento);
@@ -117,11 +169,19 @@
 											<div class="form-group">
 												<label class="form-control-label">Duración(horas) </label><label class="requerido pl-2">*</label> <input
 													class="form-control" type="number"
-													placeholder="Ingrese la duración del evento..." id="duracion" th:field="*{duracion}" th:errorclass="'form-control is-invalid'"/>
-													<small class="form-text text-danger" th:if="${#fields.hasErrors('duracion')}"><strong id="inputErrorDuracion" th:errors="*{duracion}"></strong></small>
-													<small class="form-text text-danger"><strong id="inputErrorDuracion"></strong></small>
+													placeholder="Ingrese la duración del evento..." id="duracion" th:value="${educacionContinua.duracion}"/>
+													<small class="form-text text-danger"><strong id="inputErrorDuracion" ></strong></small>
 											</div>
 										</div>
+										<div class="col-md-4">
+												<div class="form-group">
+													<label class="form-control-label">Costo de la educación Continua </label><label class="requerido pl-2">*</label>
+													<input
+														class="form-control" type="text" id="costoTotalEdc" th:value="${educacionContinua.costoEducacionContinua}"
+														placeholder="Ingrese el costo de la educación continua"/>
+														<small class="form-text text-danger"><strong></strong></small>
+												</div>
+											</div>
 										<div class="col-md-4">
 											<div class="form-group">
 												<label class="form-control-label">Imagen</label> 
@@ -147,38 +207,40 @@
 												<span class="badge badge-red-ufps">Información Organizador</span>
 											</div>
 											<div class="row" >
-												<div class="col-md-6" sec:authorize="hasAnyRole('ROLE_SUPERADMIN','ROLE_DOCENTE')">
+												<div class="col-md-6" sec:authorize="hasAnyRole('ROLE_SUPERADMIN','ROLE_MANAECCU')">
 													<div class="form-group">
 														<label class="form-control-label">Programa Académico </label><label class="requerido pl-2">*</label> <select
-															class="form-control" data-toggle="select" th:field="*{programaResponsable}" th:errorclass="'form-control is-invalid'">
+															class="form-control" data-toggle="select" id="programaResponsable">
 															<option value="0">Seleccione el programa...</option>
 															<option th:each="p: ${programas}"
-																th:value="${p.id}" th:text="${p.programa}"></option>
+																th:value="${p.id}" th:text="${p.programa}" th:selected="${educacionContinua.idProgramaResp == p.id}"></option>
+															
 														</select>
-														<small class="form-text text-danger" th:if="${#fields.hasErrors('programaResponsable')}"><strong th:errors="*{programaResponsable}"></strong></small>
+														<small class="form-text text-danger"><strong></strong></small>
 													</div>
 												</div>
 												<div class="col-md-6" sec:authorize="hasAnyRole('ROLE_DIRPROGRAMA')">
 													<div class="form-group">
 														<label class="form-control-label">Programa Académico </label><label class="requerido pl-2">*</label> <label
-															class="form-control" th:text="${educacionContinua.programaResponsable.programa}" readOnly></label>
+															class="form-control" th:text="${educacionContinua.programaResp}" readOnly></label>
 													</div>
 												</div>
 												<div class="col-md-6" sec:authorize="hasAnyRole('ROLE_SUPERADMIN','ROLE_DIRPROGRAMA')">
 													<div class="form-group">
 														<label class="form-control-label">Docente Responsable </label><label class="requerido pl-2">*</label> <select
-															class="form-control" data-toggle="select" th:field="*{docenteResponsable}" th:errorclass="'form-control is-invalid'">
+															class="form-control" data-toggle="select" id="docenteResponsable">
 															<option value="0">Seleccione el tipo...</option>
 															<option th:each="d: ${docentes}"
-																th:value="${d.id}" th:text="${d.codigo + ' - ' + d.primerNombre + ' ' + d.segundoNombre + ' ' + d.primerApellido + ' ' + d.segundoApellido}"></option>
+																th:value="${d.id}" th:text="${d.codigo + ' - ' + d.nombre}" th:selected="${educacionContinua.idDocenteResp == d.id}"></option>
+															
 														</select>
-														<small class="form-text text-danger" th:if="${#fields.hasErrors('docenteResponsable')}"><strong th:errors="*{docenteResponsable}"></strong></small>
+														<small class="form-text text-danger"><strong></strong></small>
 													</div>
 												</div>
-												<div class="col-md-12" sec:authorize="hasRole('ROLE_DOCENTE') and !hasRole('ROLE_DIRPROGRAMA') ">
+												<div class="col-md-6" sec:authorize="hasRole('ROLE_MANAECCU') and !hasRole('ROLE_DIRPROGRAMA') ">
 													<div class="form-group">
 														<label class="form-control-label">Docente Responsable </label><label class="requerido pl-2">*</label> <label
-															class="form-control" th:text="${educacionContinua.docenteResponsable.codigo + ' - ' + educacionContinua.docenteResponsable.primerNombre + ' ' + educacionContinua.docenteResponsable.segundoNombre + ' ' + educacionContinua.docenteResponsable.primerApellido + ' ' + educacionContinua.docenteResponsable.segundoApellido}" readOnly></label>
+															class="form-control" th:text="${educacionContinua.codigoDocenteResp + ' - ' + educacionContinua.nombreDocenteResp}" readOnly></label>
 													</div>
 												</div>
 											</div>
@@ -198,20 +260,21 @@
 											<div class="col-md-6">
 												<div class="form-group">
 													<label class="form-control-label">Tipo Beneficiarios </label><label class="requerido pl-2">*</label><select
-														class="form-control" data-toggle="select" th:field="*{tipoBeneficiario}" th:errorclass="'form-control is-invalid'">
+														class="form-control" data-toggle="select" multiple="multiple" id="selectTipoBeneficiarios">
 														<option value="0">Seleccione...</option>
 														<option th:each="tb: ${tipo_beneficiarios}"
 															th:value="${tb.id}" th:text="${tb.tipoBeneficiario}"></option>
+														
 													</select>
-													<small class="form-text text-danger" th:if="${#fields.hasErrors('tipoBeneficiario')}"><strong th:errors="*{tipoBeneficiario}"></strong></small>
+													<small class="form-text text-danger"><strong ></strong></small>
 												</div>
 											</div>
 											<div class="col-md-6">
 												<div class="form-group">
 													<label class="form-control-label">Fecha Límite Inscripción </label><label class="requerido pl-2">*</label> <input type="text"
 														class="form-control flatpickr-input" data-toggle="date"
-														placeholder="Seleccione la fecha límite de inscripción..." id="fechaLimInscripcionEduCont" th:field="*{fechaLimInscripcion}" th:errorclass="'form-control is-invalid'" readOnly />
-														<small class="form-text text-danger" th:if="${#fields.hasErrors('fechaLimInscripcion')}"><strong th:errors="*{fechaLimInscripcion}"></strong></small>
+														placeholder="Seleccione la fecha límite de inscripción..." id="fechaLimInscripcionEduCont" th:value="${#dates.format(educacionContinua.fechaLimInscripcion, 'dd/MM/yyyy HH:mm')}" readOnly />
+														<small class="form-text text-danger"><strong></strong></small>
 												</div>
 											</div>
 										</div>
@@ -219,11 +282,11 @@
 										<div class="row">
 											<div class="col-md-4">
 												<div class="form-group">
-													<label class="form-control-label">Costo </label><label class="requerido pl-2">*</label>
+													<label class="form-control-label">Costo Inscripción </label><label class="requerido pl-2">*</label>
 													<input
-														class="form-control" type="text"
-														placeholder="Ingrese el costo que tendrá la inscripción del participante" th:field="*{costo}" th:errorclass="'form-control is-invalid'"/>
-														<small class="form-text text-danger" th:if="${#fields.hasErrors('costo')}"><strong th:errors="*{costo}"></strong></small>
+														class="form-control" type="text" id="costoInscripcionEdc"
+														placeholder="Ingrese el costo que tendrá la inscripción del participante" th:value="${educacionContinua.costoInscripcion}"/>
+														<small class="form-text text-danger"><strong></strong></small>
 												</div>
 												<div class="alert alert-info" role="alert">
 													    Deje el campo vacío si la inscripción es gratuita
@@ -234,9 +297,9 @@
 													<label class="form-control-label">Cantidad Participantes(Max) </label><label class="requerido pl-2">*</label>
 													
 													<input
-														class="form-control" type="number"
-														placeholder="Ingrese la cantidad máxima de participantes" th:field="*{cantMaxParticipantes}" th:errorclass="'form-control is-invalid'"/>
-														<small class="form-text text-danger" th:if="${#fields.hasErrors('cantMaxParticipantes')}"><strong th:errors="*{cantMaxParticipantes}"></strong></small>
+														class="form-control" type="number" id="cantMaxPartEdc"
+														placeholder="Ingrese la cantidad máxima de participantes" th:value="${educacionContinua.cantMaxParticipantes}"/>
+														<small class="form-text text-danger"><strong></strong></small>
 												</div>
 												<div class="alert alert-info" role="alert">
 													    Deje el campo vacío si la educación continua no tiene límite de participantes
@@ -244,11 +307,11 @@
 											</div>
 											<div class="col-md-4">
 												<div class="form-group">
-													<label class="form-control-label">Porcentaje de asistencia para certificado</label><label class="requerido pl-2">*</label>
+													<label class="form-control-label">Porcentaje de asistencia mínimo</label><label class="requerido pl-2">*</label>
 													<input
-														class="form-control" type="text"
-														placeholder="Ingrese el porcentaje" th:field="*{porcentajeAsistencia}" th:errorclass="'form-control is-invalid'"/>
-														<small class="form-text text-danger" th:if="${#fields.hasErrors('porcentajeAsistencia')}"><strong th:errors="*{porcentajeAsistencia}"></strong></small>
+														class="form-control" type="text" id="porcentajeAsistenciaEdc"
+														placeholder="Ingrese el porcentaje" th:value="${educacionContinua.porcentajeAsistencia}"/>
+														<small class="form-text text-danger"><strong></strong></small>
 												</div>
 											</div>
 										</div>
@@ -265,10 +328,10 @@
 											<div class="col-md-12">
 												<div class="form-group">
 													<label class="form-control-label">Lugar </label><label class="requerido pl-2">*</label>
-													<textarea class="form-control" data-toggle="autosize" 
+													<textarea class="form-control" data-toggle="autosize"  id="lugarEdc"
 													placeholder="Ingrese el lugar donde se llevará a cabo el evento..." rows="1" 
-													th:field="*{lugar}" th:errorclass="'form-control is-invalid'"></textarea>
-													<small class="form-text text-danger" th:if="${#fields.hasErrors('lugar')}"><strong th:errors="*{lugar}"></strong></small>
+													th:value="${educacionContinua.lugar}"></textarea>
+													<small class="form-text text-danger"><strong></strong></small>
 												</div>
 											</div>
 										</div>
@@ -277,9 +340,9 @@
 												<div class="form-group">
 													<label class="form-control-label">Requisitos</label> 
 													<textarea class="form-control" data-toggle="autosize" 
-													placeholder="Ingrese los requisitos del evento..." rows="1" 
-													th:field="*{requisitos}" th:errorclass="'form-control is-invalid'"></textarea>
-													<small class="form-text text-danger" th:if="${#fields.hasErrors('requisitos')}"><strong th:errors="*{requisitos}"></strong></small>
+													placeholder="Ingrese los requisitos del evento..." rows="1"  id="requisitosEdc"
+													th:value="${educacionContinua.requisitos}"></textarea>
+													<small class="form-text text-danger"><strong></strong></small>
 												</div>
 											</div>
 										</div>
@@ -287,10 +350,10 @@
 											<div class="col-md-12">
 												<div class="form-group">
 													<label class="form-control-label">Objetivo</label> 
-													<textarea class="form-control" data-toggle="autosize" 
+													<textarea class="form-control" data-toggle="autosize" id="objetivoEdc"
 													placeholder="Ingrese el objetivo del evento..." rows="1" 
-													th:field="*{objetivo}" th:errorclass="'form-control is-invalid'"></textarea>
-													<small class="form-text text-danger" th:if="${#fields.hasErrors('objetivo')}"><strong th:errors="*{objetivo}"></strong></small>
+													th:value="${educacionContinua.objetivo}"></textarea>
+													<small class="form-text text-danger"><strong></strong></small>
 												</div>
 											</div>
 										</div>
@@ -299,9 +362,9 @@
 												<div class="form-group">
 													<label class="form-control-label">Contenido General</label> 
 													<textarea class="form-control" data-toggle="autosize" 
-													placeholder="Ingrese el contenido general del evento" rows="1" 
-													th:field="*{contenidoGeneral}" th:errorclass="'form-control is-invalid'"></textarea>
-													<small class="form-text text-danger" th:if="${#fields.hasErrors('contenidoGeneral')}"><strong th:errors="*{contenidoGeneral}"></strong></small>
+													placeholder="Ingrese el contenido general del evento" rows="1"  id="contenidoGeneralEdc"
+													th:value="${educacionContinua.contenidoGral}"></textarea>
+													<small class="form-text text-danger"><strong></strong></small>
 												</div>
 											</div>
 										</div>
@@ -311,17 +374,17 @@
 												<div class="form-group">
 													<label class="form-control-label">Resumen</label> 
 													<textarea class="form-control" data-toggle="autosize" 
-													placeholder="Ingrese un resumen del evento..." rows="1" 
-													th:field="*{resumen}" th:errorclass="'form-control is-invalid'"></textarea>
-													<small class="form-text text-danger" th:if="${#fields.hasErrors('resumen')}"><strong th:errors="*{resumen}"></strong></small>
+													placeholder="Ingrese un resumen del evento..." rows="1" id="resumenEdc"
+													th:value="${educacionContinua.resumen}"></textarea>
+													<small class="form-text text-danger"><strong></strong></small>
 												</div>
 											</div>
 										</div>
 									
 										
 										<!-- Save changes buttons -->
-										<button type="submit"
-											class="btn btn-sm btn-red-ufps" id="btnGuardar">Guardar</button>
+										<button type="button"
+											class="btn btn-sm btn-red-ufps" id="btnGuardarEdC" onclick="guardarEdc()">Guardar</button>
 										
 									</div>
 								</div>

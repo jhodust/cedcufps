@@ -14,6 +14,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.ufps.cedcufps.dao.IPersonaCustomDao;
+import com.ufps.cedcufps.dto.DocenteDto;
 import com.ufps.cedcufps.dto.PersonaDto;
 import com.ufps.cedcufps.modelos.Administrativo;
 import com.ufps.cedcufps.modelos.Departamento;
@@ -255,6 +256,31 @@ public class PersonaCustomDaoImpl implements IPersonaCustomDao {
 		return e;
 		
 	}
+	
+	
+	@Override
+	public List<DocenteDto> findAllDocentesActivos() {
+		// TODO Auto-generated method stub
+		StringBuilder query = new StringBuilder();
+		query.append("SELECT p.id, d.codigo, CONCAT(COALESCE(p.primer_nombre,''),' ',COALESCE(p.segundo_nombre,''),' ',")
+				.append("COALESCE(p.primer_apellido,''),' ',COALESCE(p.segundo_apellido,'')) from docentes as d")
+				.append(" join personas as p on d.id_persona=p.id")
+				.append(" where d.estado");
+		Query q=em.createNativeQuery(query.toString());
+		List<Object []> result=q.getResultList();
+		List<DocenteDto> list= new ArrayList<DocenteDto>();
+		for(Object[] o: result) {
+			DocenteDto dto=new DocenteDto();
+			dto.setId(Long.parseLong(String.valueOf(o[0])));
+			dto.setCodigo(String.valueOf(o[1]));
+			dto.setNombre(String.valueOf(o[2]));
+			list.add(dto);
+		}
+		
+		return list;
+		
+	}
+	
 
 
 }

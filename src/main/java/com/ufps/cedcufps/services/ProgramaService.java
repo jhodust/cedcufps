@@ -1,5 +1,6 @@
 package com.ufps.cedcufps.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -55,6 +56,9 @@ public class ProgramaService implements IProgramaService {
 	
 	@Autowired
 	private IPersonaDao personaDao;
+	
+	@Autowired
+	private IPersonaService personaService;
 	
 	@Autowired
 	private ITipoPersonaDao tipoPersonaDao;
@@ -212,4 +216,21 @@ public class ProgramaService implements IProgramaService {
 		return programaMapper.convertProgramaToProgramaDto(p); 
 	}
 
+	@Override
+	public List<Programa> programasParaEduContinuaBase(){
+		Persona p= personaService.findPersonaLogueada();
+		List<Programa> programas= new ArrayList<Programa>();
+		if(personaService.isSuperAdmin(p)) {
+			System.out.println("es admin y lista todo");
+			return (List<Programa>)programaDao.findAll();
+		}else if (personaService.isDirPrograma(p)) {
+			System.out.println("es director y lista programas director");
+			
+			programas.add(programaDao.findByDirector(p.getId()));
+			return programas;
+		}else {
+			System.out.println("es docente y lista null");
+			return null;
+		}
+	}
 }

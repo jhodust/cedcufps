@@ -24,6 +24,9 @@ public class TipoEducacionContinua implements Serializable {
 	
 	@Column(name = "tipo_educacion_continua")
 	private String tipoEduContinua;
+	
+	@Column(name ="estado_oficial")
+	private boolean estadoOficial;
 
 	public Long getId() {
 		return id;
@@ -40,6 +43,16 @@ public class TipoEducacionContinua implements Serializable {
 	public void setTipoEduContinua(String tipoEduContinua) {
 		this.tipoEduContinua = tipoEduContinua;
 	}
+
+	public boolean isEstadoOficial() {
+		return estadoOficial;
+	}
+
+	public void setEstadoOficial(boolean estadoOficial) {
+		this.estadoOficial = estadoOficial;
+	}
+	
+	
 	
 	
 

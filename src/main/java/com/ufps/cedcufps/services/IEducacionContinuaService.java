@@ -7,9 +7,11 @@ import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ufps.cedcufps.dto.EducacionContinuaAppDto;
+import com.ufps.cedcufps.dto.EducacionContinuaWebDto;
 import com.ufps.cedcufps.dto.InfoEducacionContinuaDto;
 import com.ufps.cedcufps.dto.EducacionContinuaAppDto;
 import com.ufps.cedcufps.dto.JornadaAppDto;
@@ -19,6 +21,7 @@ import com.ufps.cedcufps.modelos.Diploma;
 import com.ufps.cedcufps.modelos.EducacionContinua;
 import com.ufps.cedcufps.modelos.Jornada;
 import com.ufps.cedcufps.modelos.Participante;
+import com.ufps.cedcufps.modelos.Programa;
 import com.ufps.cedcufps.modelos.TipoBeneficiario;
 import com.ufps.cedcufps.modelos.TipoEducacionContinua;
 
@@ -36,27 +39,17 @@ public interface IEducacionContinuaService {
 	
 	public EducacionContinua findOneByNombre(String educacionContinua);
 	
-	public List<TipoEducacionContinua> findAllTiposEducacionContinua();
+	public EducacionContinuaWebDto editarEducacionContinuaByNombre(String educacionContinua);
+	
+	public List<TipoEducacionContinua> findAllTiposEducacionContinua(Long id);
 	
 	public List<ClasificacionCine> findAllClasificacionCine();
 	
 	public List<TipoBeneficiario> findAllTipoBeneficiario();
 	
-	public int cantidadCursos();
-	
-	public int cantidadTalleres();
-		
-	public int cantidadDiplomados();
-	
-	public int cantidadSeminarios();
-	
-	public int cantidadCongresos();
-	
-	public int cantidadSimposios();
 	
 	public List<EducacionContinua> educacionContinuasByTipoAndPrograma(Long idTipo, Long idPrograma);
 	
-	public void updateCodigoEducacionContinua(EducacionContinua ec);
 	
 	public String generarReporteSNIESFormatoEducacionContinua(String anio);
 	
@@ -80,6 +73,22 @@ public interface IEducacionContinuaService {
 	public InfoEducacionContinuaDto detallesEducacionContinua(String nombreEducacionContinua);
 	
 	public Map<Integer, ParticipanteDto>  tomarAsistencia(Long idEducacionContinua, Long idJornada, String qr);
+	
+	public void saveEducacionContinua(MultipartFile file,  String id,
+			 String nombre,  String fechaInicio,  String fechaFin,  String duracion, String cantMaxParticipantes,
+			 String fechaLimInscripcion,  String costoInscripcion,  String lugar,
+			 String costoEducacionContinua,  String requisitos,  String objetivo,
+			 String porcentajeAsistencia,  String resumen,  String contenidoGeneral,
+			 String idTipoEduContinua,  String tipoEduContinua,  String idProgramaResponsable,
+			 String idDocenteResponsable,  String idClasificacionCine, String consecutivo, String idTipoBeneficiarios);
+	
+	public List<EducacionContinuaWebDto> findEducacionesContinuasBase(List<Programa> programasBase);
+	
+	public EducacionContinuaWebDto findEducacionContinuaBase(Long id);
+	
+	public EducacionContinuaWebDto createEducacionContinua();
+	
+	
 	
 	
 	

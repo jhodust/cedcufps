@@ -89,7 +89,12 @@ public class EducacionContinua implements Serializable {
 	
 	private String resumen;
 	
-	private String costo;
+	@Column(name = "costo_inscripcion")
+	private String costoInscripcion;
+	
+	@NotEmpty(message="El campo costo educación continua es requerido")
+	@Column(name = "costo_educacion_continua")
+	private String costoEducacionContinua;
 	
 	@NotEmpty(message="El campo porcentaje asistencia es requerido")
 	@Column(name = "porcentaje_asistencia")
@@ -128,12 +133,8 @@ public class EducacionContinua implements Serializable {
 	private ClasificacionCine clasificacionCine;
 	
 	@JsonIgnore
-	@NotNull(message="El campo tipo de beneficiario del evento es requerido")
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="id_tipo_beneficiario")
-	private TipoBeneficiario tipoBeneficiario;
-	
-	
+	@OneToMany(mappedBy = "educacionContinua",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<EducacionContinuaTipoBeneficiario> tipoBeneficiarios;
 
 	
 	
@@ -241,12 +242,14 @@ public class EducacionContinua implements Serializable {
 		this.resumen = resumen;
 	}
 
-	public String getCosto() {
-		return costo;
+	
+
+	public String getCostoInscripcion() {
+		return costoInscripcion;
 	}
 
-	public void setCosto(String costo) {
-		this.costo = costo;
+	public void setCostoInscripcion(String costoInscripcion) {
+		this.costoInscripcion = costoInscripcion;
 	}
 
 	public TipoEducacionContinua getTipoEduContinua() {
@@ -322,14 +325,17 @@ public class EducacionContinua implements Serializable {
 		this.clasificacionCine = clasificacionCine;
 	}
 
-	public TipoBeneficiario getTipoBeneficiario() {
-		return tipoBeneficiario;
+	public List<EducacionContinuaTipoBeneficiario> getTipoBeneficiarios() {
+		return this.tipoBeneficiarios;
 	}
 
-	public void setTipoBeneficiario(TipoBeneficiario tipoBeneficiario) {
-		this.tipoBeneficiario = tipoBeneficiario;
+	public void setBeneficiarios(List<EducacionContinuaTipoBeneficiario> beneficiarios) {
+		this.tipoBeneficiarios = beneficiarios;
 	}
-
+	
+	public void addTipoBeneficiario(EducacionContinuaTipoBeneficiario tb) {
+		this.tipoBeneficiarios.add(tb);
+	}
 
 	public String getLugar() {
 		return lugar;
@@ -361,6 +367,14 @@ public class EducacionContinua implements Serializable {
 
 	public void setPorcentajeAsistencia(String porcentajeAsistencia) {
 		this.porcentajeAsistencia = porcentajeAsistencia;
+	}
+
+	public String getCostoEducacionContinua() {
+		return costoEducacionContinua;
+	}
+
+	public void setCostoEducacionContinua(String costoEducacionContinua) {
+		this.costoEducacionContinua = costoEducacionContinua;
 	}
 	
 	

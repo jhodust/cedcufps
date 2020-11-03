@@ -2,6 +2,7 @@ package com.ufps.cedcufps.dao;
 
 import java.util.List;
 
+import com.ufps.cedcufps.dto.DocenteDto;
 import com.ufps.cedcufps.dto.PersonaDto;
 import com.ufps.cedcufps.modelos.Administrativo;
 import com.ufps.cedcufps.modelos.Docente;
@@ -34,4 +35,5 @@ public interface IPersonaCustomDao {
 	
 	public Externo findOnlyExterno(Long idPersona);
 	
+	public List<DocenteDto> findAllDocentesActivos();
 }

@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.datatables.mapping.DataTablesOutput;
 
+import com.ufps.cedcufps.dto.DocenteDto;
 import com.ufps.cedcufps.dto.PerfilRolUsuarioDto;
 import com.ufps.cedcufps.dto.PersonaDto;
 import com.ufps.cedcufps.dto.UsuarioAppDto;
@@ -28,7 +29,7 @@ public interface IPersonaService {
 	
 	public List<Estudiante> findAllEstudiantes();
 	
-	public List<Docente> findAllDocentes();
+	public List<DocenteDto> findAllDocentes() ;
 	
 	public List<Administrativo> findAllAdministrativos();
 	
@@ -66,7 +67,11 @@ public interface IPersonaService {
 	
 	public boolean isSuperAdmin();
 	
+	public boolean isSuperAdmin(Persona p);
+	
 	public boolean isDirPrograma();
+	
+	public boolean isDirPrograma(Persona p);
 	
 	public boolean hasPermissionForPeople(Long idPersona);
 	

@@ -2,9 +2,12 @@ package com.ufps.cedcufps.dao;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
@@ -14,23 +17,6 @@ import com.ufps.cedcufps.modelos.Participante;
 
 public interface IEducacionContinuaDao extends JpaRepository<EducacionContinua, Long> {
 
-	@Query("select count(e) from EducacionContinua e where e.tipoEduContinua.id = '1'")
-	public int cantidadCursos();
-	
-	@Query("select count(e) from EducacionContinua e where e.tipoEduContinua.id = '4'")
-	public int cantidadTalleres();
-	
-	@Query("select count(e) from EducacionContinua e where e.tipoEduContinua.id = '2'")
-	public int cantidadDiplomados();
-	
-	@Query("select count(e) from EducacionContinua e where e.tipoEduContinua.id = '3'")
-	public int cantidadSimposios();
-	
-	@Query("select count(e) from EducacionContinua e where e.tipoEduContinua.id = '5'")
-	public int cantidadSeminarios();
-	
-	@Query("select count(e) from EducacionContinua e where e.tipoEduContinua.id = '6'")
-	public int cantidadCongresos();
 	
 	@Query(value= "SELECT * FROM educacion_continua ec where ec.estado='Activo' ORDER BY ec.fecha_inicio DESC LIMIT 5",nativeQuery = true)
 	public List<EducacionContinua> educacionesContinuasRecientes();
@@ -41,6 +27,9 @@ public interface IEducacionContinuaDao extends JpaRepository<EducacionContinua, 
 	
 	@Query("select e from EducacionContinua e where e.tipoEduContinua.id = ?1 or e.programaResponsable.id = ?2 order by e.consecutivo ASC")
 	public List<EducacionContinua> educacionContinuasByTipoAndPrograma(Long idTipo, Long idPrograma);
+	
+	@Query(value="select consecutivo from educacion_continua where id_tipo_educacion_continua = ?1 and id_programa = ?2 order by consecutivo DESC limit 1", nativeQuery=true)
+	public String findLastConsecutivo(Long idTipo, Long idPrograma);
 	
 	@Query("select e from EducacionContinua e where year(e.fechaInicio) = ?1")
 	public List<EducacionContinua> findAllEducacionContinuaByAnioReporte(int anio);
@@ -70,6 +59,31 @@ public interface IEducacionContinuaDao extends JpaRepository<EducacionContinua, 
 	
 	@Query(value = "select e.* from rol_persona_asistencia rpa join educacion_continua e on rpa.id_edu_continua=e.id where rpa.id_persona = ?1 and e.id_programa != ?2", nativeQuery = true)
 	public List<EducacionContinua> findEduContinuasPermissionForAttendanceExceptDirectorPrograma(Long idPersona, Long idPrograma);
+	
+	@Transactional
+	@Modifying
+	@Query(value = "update educacion_continua set imagen = ?1 where id = ?2", nativeQuery = true)
+	public void updateImagenPortada(String imagen, Long idEducacionContinua);
+	
+	@Transactional
+	@Modifying
+	@Query(value = "update educacion_continua set consecutivo = ?1 where id = ?2", nativeQuery = true)
+	public void updateConsecutivo(String consecutivo, Long idEducacionContinua);
+	
+	
+	@Query(value = "select e from EducacionContinua e where e.id= ?1")
+	public EducacionContinua findOneEducacionContinua (Long idEducacionContinua);
+	
+	@Transactional
+	@Modifying
+	@Query(value = "insert into educacion_continua_tipo_beneficiario (id_educacion_continua, id_tipo_beneficiario) values (?1, ?2)", nativeQuery = true)
+	public void insertBeneficiarios(Long idEducacionContinua, Long idTipoBeneficiario);
+	
+	@Transactional
+	@Modifying
+	@Query(value = "delete from educacion_continua_tipo_beneficiario where id_educacion_continua = ?1", nativeQuery = true)
+	public void deleteBeneficiarios(Long idEducacionContinua);
+	
 	
 	
 }

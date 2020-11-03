@@ -18,9 +18,11 @@ import com.ufps.cedcufps.dto.JornadaAppDto;
 import com.ufps.cedcufps.dto.ParticipanteDto;
 import com.ufps.cedcufps.dto.PonenteDto;
 import com.ufps.cedcufps.dto.TextosDiplomaDto;
+import com.ufps.cedcufps.dto.TipoBeneficiarioDto;
 import com.ufps.cedcufps.modelos.Asistencia;
 import com.ufps.cedcufps.modelos.Diploma;
 import com.ufps.cedcufps.modelos.EducacionContinua;
+import com.ufps.cedcufps.modelos.EducacionContinuaTipoBeneficiario;
 import com.ufps.cedcufps.modelos.FirmaDiploma;
 import com.ufps.cedcufps.modelos.ImagenDiploma;
 import com.ufps.cedcufps.modelos.Jornada;
@@ -70,34 +72,9 @@ public class EducacionContinuaMapper implements IEducacionContinuaMapper {
 		InfoEducacionContinuaDto dto= new InfoEducacionContinuaDto();
 		dto.setHasPermission(hasPermission);
 		if(e!=null) {
-			EducacionContinuaWebDto eduContinuaDto= new EducacionContinuaWebDto();
-			eduContinuaDto.setId(e.getId());
-			eduContinuaDto.setNombre(e.getNombre());
-			eduContinuaDto.setFechaInicio(e.getFechaInicio());
-			eduContinuaDto.setFechaFin(e.getFechaFin());
-			eduContinuaDto.setFechaLimInscripcion(e.getFechaLimInscripcion());
-			eduContinuaDto.setCosto(e.getCosto());
-			eduContinuaDto.setCantMaxParticipantes(e.getCantMaxParticipantes());
-			eduContinuaDto.setLugar(e.getLugar());
-			eduContinuaDto.setDuracion(e.getDuracion());
-			eduContinuaDto.setImagen(e.getImagen());
-			eduContinuaDto.setContenidoGral(e.getContenidoGeneral());
-			eduContinuaDto.setObjetivo(e.getObjetivo());
-			eduContinuaDto.setRequisitos(e.getRequisitos());
-			eduContinuaDto.setResumen(e.getResumen());
-			eduContinuaDto.setEstado(e.getEstado());
-			eduContinuaDto.setIdTipoEduContinua(e.getTipoEduContinua().getId());
-			eduContinuaDto.setTipoEduContinua(e.getTipoEduContinua().getTipoEduContinua());
-			eduContinuaDto.setIdDocenteResp(e.getDocenteResponsable().getId());
-			eduContinuaDto.setNombreDocenteResp(this.convertFieldsFullName(e.getDocenteResponsable()));
-			eduContinuaDto.setIdProgramaResp(e.getProgramaResponsable().getId());
-			eduContinuaDto.setProgramaResp(e.getProgramaResponsable().getPrograma());
-			eduContinuaDto.setIdFacultad(e.getProgramaResponsable().getFacultad().getId());
-			eduContinuaDto.setFacultad(e.getProgramaResponsable().getFacultad().getFacultad());
-			eduContinuaDto.setIdClasificacion(e.getClasificacionCine().getId());
-			eduContinuaDto.setClasificacion(e.getClasificacionCine().getClasificacionCine());
-			eduContinuaDto.setIdTipoBeneficiario(e.getTipoBeneficiario().getId());
-			eduContinuaDto.setTipoBeneficiario(e.getTipoBeneficiario().getTipoBeneficiario());
+			EducacionContinuaWebDto eduContinuaDto= this.convertEducacionContinuaToEduContinuaWebDto(e);
+			//eduContinuaDto.setIdTipoBeneficiario(e.getTipoBeneficiario().getId());
+			//eduContinuaDto.setTipoBeneficiario(e.getTipoBeneficiario().getTipoBeneficiario());
 			if(e.getDiploma()!=null) {
 				eduContinuaDto.setDiploma(this.convertDiplomaToDiplomaDto(e.getDiploma()));
 			}else {
@@ -108,9 +85,6 @@ public class EducacionContinuaMapper implements IEducacionContinuaMapper {
 			List<ParticipanteDto> participantes = new ArrayList<ParticipanteDto>();
 			List<PonenteDto> ponentes = new ArrayList<PonenteDto>();
 			System.out.println("******************************************");
-			System.out.println(e.getParticipantes().get(0).getTarjetaInscripcion());
-			System.out.println(e.getParticipantes().get(2).getTarjetaInscripcion());
-			System.out.println(e.getParticipantes().get(1).getTarjetaInscripcion());
 			for(Participante p: e.getParticipantes()) {
 				
 				if(p.getTipoParticipante().getTipoParticipante().equalsIgnoreCase("ponente")) {
@@ -146,6 +120,7 @@ public class EducacionContinuaMapper implements IEducacionContinuaMapper {
 		
 	}
 	
+	@Override
 	public String convertFieldsFullName(Persona p) {
 		String nombreResponsable=null;
 		if(p.getPrimerNombre()!="") {
@@ -294,5 +269,105 @@ public class EducacionContinuaMapper implements IEducacionContinuaMapper {
 		}
 		return dto;
 	}
+
+
+	@Override
+	public EducacionContinuaWebDto convertInfoToEduContinuaDto(String id, String nombre, Date fechaInicio,
+			Date fechaFin, String duracion, String cantMaxParticipantes, Date fechaLimInscripcion, String costoInscripcion, String lugar,
+			String costoEducacionContinua, String requisitos, String objetivo, String porcentajeAsistencia,
+			String resumen, String contenidoGeneral, String idTipoEduContinua, String tipoEduContinua,
+			String idProgramaResponsable, String idDocenteResponsable, String idClasificacionCine, String consecutivo,
+			String[] idTipoBeneficiarios) {
+		// TODO Auto-generated method stub
+		EducacionContinuaWebDto dto= new EducacionContinuaWebDto();
+		dto.setId(Long.parseLong(id));
+		dto.setNombre(nombre);
+		dto.setFechaInicio(fechaInicio);
+		dto.setFechaFin(fechaFin);
+		dto.setFechaLimInscripcion(fechaLimInscripcion);
+		dto.setDuracion(Integer.parseInt(duracion));
+		dto.setCostoInscripcion(costoInscripcion);
+		dto.setLugar(lugar);
+		dto.setResumen(resumen);
+		dto.setContenidoGral(contenidoGeneral);
+		dto.setIdTipoEduContinua(Long.parseLong(idTipoEduContinua));
+		dto.setTipoEduContinua(tipoEduContinua);
+		dto.setIdProgramaResp(Long.parseLong(idProgramaResponsable));
+		dto.setIdDocenteResp(Long.parseLong(idDocenteResponsable));
+		dto.setIdClasificacion(Long.parseLong(idClasificacionCine));
+		dto.setCantMaxParticipantes(cantMaxParticipantes);
+		dto.setPorcentajeAsistencia(porcentajeAsistencia);
+		dto.setCostoEducacionContinua(costoEducacionContinua);
+		dto.setObjetivo(objetivo);
+		dto.setRequisitos(requisitos);
+		dto.setConsecutivo(consecutivo);
+		List<TipoBeneficiarioDto> list = new ArrayList<TipoBeneficiarioDto>();
+		for(String a:idTipoBeneficiarios) {
+			TipoBeneficiarioDto d = new TipoBeneficiarioDto();
+			d.setId(Long.parseLong(a));
+			list.add(d);
+		}
+		dto.setTipoBeneficiarios(list);
+		return dto;
+	}
+
+
+	@Override
+	public EducacionContinuaWebDto convertEducacionContinuaToEduContinuaWebDto(EducacionContinua e) {
+		// TODO Auto-generated method stub
+		EducacionContinuaWebDto eduContinuaDto= new EducacionContinuaWebDto();
+		eduContinuaDto.setId(e.getId());
+		eduContinuaDto.setNombre(e.getNombre());
+		eduContinuaDto.setFechaInicio(e.getFechaInicio());
+		eduContinuaDto.setFechaFin(e.getFechaFin());
+		eduContinuaDto.setFechaLimInscripcion(e.getFechaLimInscripcion());
+		eduContinuaDto.setCostoInscripcion(e.getCostoInscripcion());
+		eduContinuaDto.setCantMaxParticipantes(e.getCantMaxParticipantes());
+		eduContinuaDto.setLugar(e.getLugar());
+		eduContinuaDto.setDuracion(e.getDuracion());
+		eduContinuaDto.setImagen(e.getImagen());
+		eduContinuaDto.setContenidoGral(e.getContenidoGeneral());
+		eduContinuaDto.setObjetivo(e.getObjetivo());
+		eduContinuaDto.setRequisitos(e.getRequisitos());
+		eduContinuaDto.setResumen(e.getResumen());
+		eduContinuaDto.setEstado(e.getEstado());
+		eduContinuaDto.setIdTipoEduContinua(e.getTipoEduContinua().getId());
+		eduContinuaDto.setTipoEduContinua(e.getTipoEduContinua().getTipoEduContinua());
+		eduContinuaDto.setIdDocenteResp(e.getDocenteResponsable().getId());
+		eduContinuaDto.setNombreDocenteResp(this.convertFieldsFullName(e.getDocenteResponsable()));
+		eduContinuaDto.setCodigoDocenteResp(e.getDocenteResponsable().getCodigo());
+		eduContinuaDto.setIdProgramaResp(e.getProgramaResponsable().getId());
+		eduContinuaDto.setProgramaResp(e.getProgramaResponsable().getPrograma());
+		eduContinuaDto.setIdFacultad(e.getProgramaResponsable().getFacultad().getId());
+		eduContinuaDto.setFacultad(e.getProgramaResponsable().getFacultad().getFacultad());
+		eduContinuaDto.setIdClasificacion(e.getClasificacionCine().getId());
+		eduContinuaDto.setClasificacion(e.getClasificacionCine().getClasificacionCine());
+		eduContinuaDto.setConsecutivo(e.getConsecutivo());
+		eduContinuaDto.setPorcentajeAsistencia(e.getPorcentajeAsistencia());
+		eduContinuaDto.setCostoEducacionContinua(e.getCostoEducacionContinua());
+		eduContinuaDto.setEstadoOficialTipoEducacionContinua(e.getTipoEduContinua().isEstadoOficial());
+		List<TipoBeneficiarioDto> list = new ArrayList<TipoBeneficiarioDto>();
+		for(EducacionContinuaTipoBeneficiario ectb:e.getTipoBeneficiarios()) {
+			TipoBeneficiarioDto d = new TipoBeneficiarioDto();
+			d.setId(ectb.getTipoBeneficiario().getId());
+			d.setTipoBeneficiario(ectb.getTipoBeneficiario().getTipoBeneficiario());
+			list.add(d);
+		}
+		eduContinuaDto.setTipoBeneficiarios(list);
+		return eduContinuaDto;
+	}
+	
+	@Override
+	public List<EducacionContinuaWebDto> convertListEducacionContinuaToListEduContinuaWebDto(List<EducacionContinua> educacionesContinuas) {
+		// TODO Auto-generated method stub
+		List<EducacionContinuaWebDto> list = new ArrayList<EducacionContinuaWebDto>();
+		for(EducacionContinua e: educacionesContinuas) {
+			list.add(convertEducacionContinuaToEduContinuaWebDto(e));
+		}
+		return list;
+	}
+
+
+	
 
 }

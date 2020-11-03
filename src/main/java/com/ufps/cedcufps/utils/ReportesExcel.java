@@ -153,7 +153,7 @@ public class ReportesExcel {
 
 				// valor curso
 				cell = row.createCell(5);
-				cell.setCellValue("$"+e.getCosto());
+				cell.setCellValue("$"+e.getCostoEducacionContinua());
 				cell.setCellStyle(styleNumero);
 
 				// tipo documento responsable
@@ -167,7 +167,7 @@ public class ReportesExcel {
 
 				// id tipo beneficiario extension
 				cell = row.createCell(8);
-				cell.setCellValue(e.getTipoBeneficiario().getId()+"-"+e.getTipoBeneficiario().getTipoBeneficiario().toUpperCase());
+				//cell.setCellValue(e.getTipoBeneficiario().getId()+"-"+e.getTipoBeneficiario().getTipoBeneficiario().toUpperCase());
 
 				// cantidad beneficiarios
 				cell = row.createCell(9);
@@ -239,7 +239,7 @@ public class ReportesExcel {
 					
 					// id tipo beneficio extension
 					cell = row.createCell(1);
-					cell.setCellValue(e.getTipoBeneficiario().getId()+"-"+e.getTipoBeneficiario().getTipoBeneficiario());
+					//cell.setCellValue(e.getTipoBeneficiario().getId()+"-"+e.getTipoBeneficiario().getTipoBeneficiario());
 					cell.setCellStyle(style1);
 					
 					// nombre curso
@@ -286,7 +286,7 @@ public class ReportesExcel {
 					
 					// valor de curso
 					cell = row.createCell(9);
-					cell.setCellValue(e.getCosto());
+					cell.setCellValue(e.getCostoEducacionContinua());
 					cell.setCellStyle(styleNumero2);
 					
 					// numero horas curso

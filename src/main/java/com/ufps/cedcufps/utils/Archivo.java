@@ -12,6 +12,7 @@ import org.apache.commons.io.FileUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.google.common.io.Files;
+import com.ufps.cedcufps.modelos.EducacionContinua;
 
 
 public class Archivo {
@@ -105,5 +106,12 @@ public class Archivo {
     	n = (char)(rnd.nextDouble() * 26.0 + 65.0 );
     	cadena += n; }
     	return cadena.toLowerCase();
+	}
+	
+	public static void generarDirectoriosPropiosEducacionContinua(Long idEducacionContinua) {
+		Archivo.crearDirectorio(String.valueOf(idEducacionContinua));//directorio de la educacion continua
+		Archivo.crearDirectorio(idEducacionContinua+"/qr-participantes");//directorio interno de los qr de participantes de la educacion continua
+		Archivo.crearDirectorio(idEducacionContinua+"/tarjetas-inscripcion");
+		Archivo.crearDirectorio(idEducacionContinua+"/plantilla-diploma");
 	}
 }

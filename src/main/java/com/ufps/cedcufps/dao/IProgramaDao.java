@@ -25,6 +25,9 @@ public interface IProgramaDao extends PagingAndSortingRepository<Programa, Long>
 	@Query("select count(p) from Programa p where p.id != ?1 and p.programa = ?2")
 	public int cantidadProgramaExistentes(Long id, String programa);
 	
+	@Query("select p from Programa p where p.id = ?1")
+	public Programa findProgramaById(Long id);
+	
 	@Query("select p from Programa p where p.directorPrograma.id = ?1")
 	public Programa findByDirector(Long idDir);
 	

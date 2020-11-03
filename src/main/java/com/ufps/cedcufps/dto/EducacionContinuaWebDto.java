@@ -22,7 +22,7 @@ public class EducacionContinuaWebDto {
 	private String contenidoGral;
 	private String cantMaxParticipantes;
 	private String resumen;
-	private String costo;
+	private String costoInscripcion;
 	private Long idTipoEduContinua;
 	private String tipoEduContinua;
 	private List<JornadaAppDto> jornadas;
@@ -32,16 +32,26 @@ public class EducacionContinuaWebDto {
 	private String programaResp;
 	private Long idDocenteResp;
 	private String nombreDocenteResp;
+	private String codigoDocenteResp;
 	private Long idClasificacion;
 	private String clasificacion;
-	private Long idTipoBeneficiario;
-	private String tipoBeneficiario;
 	private DiplomaDto diploma;
 	private String estado;
 	private int cantidadInscritos;
 	private Long idFacultad;
 	private String facultad;
+	private String costoEducacionContinua;
+	private List<TipoBeneficiarioDto> tipoBeneficiarios;
+	private String porcentajeAsistencia;
+	private String consecutivo;
+	private boolean estadoOficialTipoEducacionContinua;
 	
+	public String getCostoEducacionContinua() {
+		return costoEducacionContinua;
+	}
+	public void setCostoEducacionContinua(String costoEducacionContinua) {
+		this.costoEducacionContinua = costoEducacionContinua;
+	}
 	public Long getId() {
 		return id;
 	}
@@ -114,11 +124,12 @@ public class EducacionContinuaWebDto {
 	public void setResumen(String resumen) {
 		this.resumen = resumen;
 	}
-	public String getCosto() {
-		return costo;
+	
+	public String getCostoInscripcion() {
+		return costoInscripcion;
 	}
-	public void setCosto(String costo) {
-		this.costo = costo;
+	public void setCostoInscripcion(String costoInscripcion) {
+		this.costoInscripcion = costoInscripcion;
 	}
 	public Long getIdTipoEduContinua() {
 		return idTipoEduContinua;
@@ -180,18 +191,7 @@ public class EducacionContinuaWebDto {
 	public void setClasificacion(String clasificacion) {
 		this.clasificacion = clasificacion;
 	}
-	public Long getIdTipoBeneficiario() {
-		return idTipoBeneficiario;
-	}
-	public void setIdTipoBeneficiario(Long idTipoBeneficiario) {
-		this.idTipoBeneficiario = idTipoBeneficiario;
-	}
-	public String getTipoBeneficiario() {
-		return tipoBeneficiario;
-	}
-	public void setTipoBeneficiario(String tipoBeneficiario) {
-		this.tipoBeneficiario = tipoBeneficiario;
-	}
+	
 	
 	public String getEstado() {
 		return estado;
@@ -235,8 +235,40 @@ public class EducacionContinuaWebDto {
 	public void setFacultad(String facultad) {
 		this.facultad = facultad;
 	}
+	public List<TipoBeneficiarioDto> getTipoBeneficiarios() {
+		return tipoBeneficiarios;
+	}
+	public void setTipoBeneficiarios(List<TipoBeneficiarioDto> tipoBeneficiarios) {
+		this.tipoBeneficiarios = tipoBeneficiarios;
+	}
 	
-	
+	public void addTipoBeneficiarioDto(TipoBeneficiarioDto dto) {
+		this.tipoBeneficiarios.add(dto);
+	}
+	public String getPorcentajeAsistencia() {
+		return porcentajeAsistencia;
+	}
+	public void setPorcentajeAsistencia(String porcentajeAsistencia) {
+		this.porcentajeAsistencia = porcentajeAsistencia;
+	}
+	public String getConsecutivo() {
+		return consecutivo;
+	}
+	public void setConsecutivo(String consecutivo) {
+		this.consecutivo = consecutivo;
+	}
+	public boolean isEstadoOficialTipoEducacionContinua() {
+		return estadoOficialTipoEducacionContinua;
+	}
+	public void setEstadoOficialTipoEducacionContinua(boolean estadoOficialTipoEducacionContinua) {
+		this.estadoOficialTipoEducacionContinua = estadoOficialTipoEducacionContinua;
+	}
+	public String getCodigoDocenteResp() {
+		return codigoDocenteResp;
+	}
+	public void setCodigoDocenteResp(String codigoDocenteResp) {
+		this.codigoDocenteResp = codigoDocenteResp;
+	}
 	
 	
 }

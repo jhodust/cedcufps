@@ -37,6 +37,7 @@ import com.ufps.cedcufps.dao.IPersonaRolCustomDao;
 import com.ufps.cedcufps.dao.IProgramaDao;
 import com.ufps.cedcufps.dao.ITipoDocumentoDao;
 import com.ufps.cedcufps.dao.ITipoPersonaDao;
+import com.ufps.cedcufps.dto.DocenteDto;
 import com.ufps.cedcufps.dto.PerfilRolUsuarioDto;
 import com.ufps.cedcufps.dto.PersonaDto;
 import com.ufps.cedcufps.dto.ProgramaDto;
@@ -237,14 +238,10 @@ public class PersonaService implements IPersonaService, UserDetailsService {
 	}
 
 	@Override
-	public List<Docente> findAllDocentes() {
+	public List<DocenteDto> findAllDocentes() {
 		// TODO Auto-generated method stub
-		List<Docente> docentes=docenteDao.findDocentes();
-		System.out.println("tamaño docentes: " + docentes.size() );
-		for(Docente d: docentes) {
-			System.out.println(d.getCodigo() + " - " +d.getPrimerNombre());
-		}
-		return docentes;
+		return personaCustomDao.findAllDocentesActivos();
+		
 	}
 
 	@Override
@@ -454,8 +451,25 @@ public class PersonaService implements IPersonaService, UserDetailsService {
 	}
 	
 	@Override
+	public boolean isSuperAdmin(Persona p) {
+		
+		for(PersonaRol pr: p.getRoles()) {
+			if(pr.getRol().getAuthority().equalsIgnoreCase("ROLE_SUPERADMIN")) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	@Override
 	public boolean isDirPrograma() {
 		Persona p=this.findPersonaLogueada();
+		return (this.programaDao.findByDirector(p.getId()) != null );
+		
+	}
+	
+	@Override
+	public boolean isDirPrograma(Persona p) {
 		return (this.programaDao.findByDirector(p.getId()) != null );
 		
 	}

@@ -108,7 +108,7 @@
 		    				</tr>
 		    				<tr>
 		    					<td class="h6 text-sm"><strong>Costo</strong></td>
-		    					<td class="text-sm" th:text="${ec.educacionContinua.costo != ''} ? ('$ '+${#numbers.formatDecimal(ec.educacionContinua.costo, 0, 'COMMA', 0, 'POINT')}):'No Aplica'"></td>
+		    					<td class="text-sm" th:text="${ec.educacionContinua.costoInscripcion != ''} ? ('$ '+${#numbers.formatDecimal(ec.educacionContinua.costoInscripcion, 0, 'COMMA', 0, 'POINT')}):'No Aplica'"></td>
 		    				</tr>
 		    				<tr>
 		    					<td class="h6 text-sm"><strong>Cantidad (Máx) Participantes</strong></td>
@@ -350,7 +350,7 @@
 		  <div class="fade" id="pills-participantes" role="tabpanel" aria-labelledby="pills-participantes-tab">
 		  	<div class="card">
 		  	<div class="card-header">
-			  	<h5 class="h4 d-inline-block font-weight-400 mb-0 text-dark" ><strong>Listado Participantes</strong></h5>
+			  	<h5 class="h4 d-inline-block font-weight-400 mb-0 text-dark" ><strong>Listado Asistentes</strong></h5>
 		              
 		              <a target="_blank" th:href="@{/educacion-continua/listado-participantes/{eduContinuaNombre} (eduContinuaNombre=${educacionContinua.nombre})}" data-toggle="tooltip" data-placement="top" title="Generar PDF" class="btn btn-white btn-icon-only rounded-circle ml-4">
 		                <span class="btn-inner--icon"><i class="far fa-file-pdf"></i></span>

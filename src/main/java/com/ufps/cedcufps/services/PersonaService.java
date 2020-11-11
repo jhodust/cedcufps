@@ -40,6 +40,7 @@ import com.ufps.cedcufps.dao.ITipoPersonaDao;
 import com.ufps.cedcufps.dto.DocenteDto;
 import com.ufps.cedcufps.dto.PerfilRolUsuarioDto;
 import com.ufps.cedcufps.dto.PersonaDto;
+import com.ufps.cedcufps.dto.PersonaDtoLogueada;
 import com.ufps.cedcufps.dto.ProgramaDto;
 import com.ufps.cedcufps.dto.UsuarioAppDto;
 import com.ufps.cedcufps.dto.UsuarioDto;
@@ -364,7 +365,7 @@ public class PersonaService implements IPersonaService, UserDetailsService {
 				p.getPrimerNombre(), p.getSegundoNombre(), p.getPrimerApellido(), p.getSegundoApellido(), p.getGenero().getId(),
 				p.getEstadoCivil().getId(), p.getFechaNacimiento(), p.getIdPaisNacimiento(), p.getIdDepartamentoNacimiento(),
 				p.getIdMunicipioNacimiento(), p.getEmail(), p.getDireccion(), p.getTelefono(), p.isEstudiante(), p.isDocente(), 
-				p.isAdministrativo(), p.isGraduado(), p.isExterno(), p.getId());
+				p.isAdministrativo(), p.isGraduado(), p.isExterno(), p.getIdsTipoPersona(), p.getId());
 		if(u.isExterno()) {
 			logger.info("Es externo");
 			Externo e=usuarioMapper.convertUsuarioToExterno(u,p.getId());
@@ -473,6 +474,20 @@ public class PersonaService implements IPersonaService, UserDetailsService {
 		return (this.programaDao.findByDirector(p.getId()) != null );
 		
 	}
+	
+	@Override
+	public boolean isDocente() {
+		Persona p=this.findPersonaLogueada();
+		return (this.docenteDao.findOnlyDocente(p.getId()) != null );
+		
+	}
+	
+	@Override
+	public boolean isDocente(Persona p) {
+		return (this.docenteDao.findOnlyDocente(p.getId()) != null );
+		
+	}
+	
 	
 	@Override
 	public boolean hasPermissionForPeople(Long idPersona) {
@@ -683,6 +698,18 @@ public class PersonaService implements IPersonaService, UserDetailsService {
 		}
 		
 		return null;
+	}
+	
+	
+	
+	@Override
+	public PersonaDtoLogueada findPersonaLogueadaDto(Persona p) {
+		PersonaDtoLogueada dto = new PersonaDtoLogueada();
+		dto.setSuperAdmin(this.isSuperAdmin(p));
+		dto.setDirPrograma(this.isDirPrograma(p));
+		dto.setDocente(this.isDocente(p));
+		dto.setHasPermisosEdC(this.hasPermissionForEduContinua(p.getId()));
+		return dto;
 	}
 
 }

@@ -32,7 +32,7 @@ public class ParticipanteDto {
 	private String segundoNombre;
 	private String primerApellido;
 	private String segundoApellido;
-	
+	private Long idTipoPersona;
 	
 	public ParticipanteDto() {
 		this.jornadasAsistencias=new HashMap<>();
@@ -186,6 +186,12 @@ public class ParticipanteDto {
 	}
 	public void setIdTipoEduContinua(Long idTipoEduContinua) {
 		this.idTipoEduContinua = idTipoEduContinua;
+	}
+	public Long getIdTipoPersona() {
+		return idTipoPersona;
+	}
+	public void setIdTipoPersona(Long idTipoPersona) {
+		this.idTipoPersona = idTipoPersona;
 	}
 	
 	

@@ -52,9 +52,51 @@ public class EducacionContinuaRestController {
 	}
 	
 	@GetMapping(value = "/educacion-continua/search-base")
-	public ResponseEntity<?> save(@RequestParam(name="idEducacionContinua", required=true)  String id) {
-		
-		
+	public ResponseEntity<?> searchEducacionContinuaBase(@RequestParam(name="idEducacionContinua", required=true)  String id) {
 		return new ResponseEntity<>(educacionContinuaService.findEducacionContinuaBase(Long.parseLong(id)),HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/educacion-continua/search-educaciones-continuas-base")
+	public ResponseEntity<?> searchListEducacionesContinuasByPrograma(@RequestParam(name="idPrograma", required=true)  String id) {
+		return new ResponseEntity<>(educacionContinuaService.findEducacionesContinuasBaseByIdPrograma(Long.parseLong(id)),HttpStatus.OK);
+	}
+	
+	
+	@PostMapping(value = "/educacion-continua/generar-plantilla-diploma" ,produces = "application/json")
+	@ResponseBody // ImagenDiploma[] imagenes MultipartFile file @RequestBody  EducacionContinua edu
+	public ResponseEntity<?> guardarPlantillaDiploma(@RequestBody EducacionContinua eduContinua ){
+		//Diploma d=educacionContinuaService.generarDiploma(educacionContinua.getId());
+		
+		
+		
+		
+		educacionContinuaService.saveDiploma(eduContinua);
+		
+		return new ResponseEntity<>(HttpStatus.OK);
+		//return "sisas " + String.valueOf(e.getId());
+		/*
+		List<ElementoDiploma> elementos=new ArrayList<ElementoDiploma>();
+		texto1.setId(null);
+		texto2.setId(null);
+		texto1.setDiploma(d);
+		texto2.setDiploma(d);
+		elementos.add(texto1);
+		elementos.add(texto2);
+		elementoDiplomaService.saveElementos(d.getId(), elementos);
+		/*System.out.println("imagen: " + file.getName());
+		Participante p= participanteService.findParticipante(Long.parseLong(idParticipante));
+		System.out.println("participante: " + idParticipante);
+		System.out.println("participante educacion continua: " + p.getEducacionContinua().getId());
+		p.setTarjetaInscripcion(Archivo.saveImage(file,"/uploads/educacion-continua/"+p.getEducacionContinua().getId()+"/tarjetas-inscripcion/inscripcion_"+p.getPersona().getNumeroDocumento()));
+		participanteService.save(p);
+		System.out.println("tarjeta participante: " + p.getTarjetaInscripcion());
+		return new ResponseEntity<>(HttpStatus.OK);*/
+		/*if(d!=null) {
+			return new ResponseEntity<>(d,HttpStatus.OK);
+		}else {
+			return new ResponseEntity<>(d,HttpStatus.BAD_REQUEST);
+		}*/
+		
+		
 	}
 }

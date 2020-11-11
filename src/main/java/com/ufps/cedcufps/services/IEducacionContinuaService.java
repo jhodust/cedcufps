@@ -16,11 +16,14 @@ import com.ufps.cedcufps.dto.InfoEducacionContinuaDto;
 import com.ufps.cedcufps.dto.EducacionContinuaAppDto;
 import com.ufps.cedcufps.dto.JornadaAppDto;
 import com.ufps.cedcufps.dto.ParticipanteDto;
+import com.ufps.cedcufps.dto.RequisitosInscripcionDto;
 import com.ufps.cedcufps.modelos.ClasificacionCine;
 import com.ufps.cedcufps.modelos.Diploma;
 import com.ufps.cedcufps.modelos.EducacionContinua;
+import com.ufps.cedcufps.modelos.EducacionContinuaTipoBeneficiario;
 import com.ufps.cedcufps.modelos.Jornada;
 import com.ufps.cedcufps.modelos.Participante;
+import com.ufps.cedcufps.modelos.Persona;
 import com.ufps.cedcufps.modelos.Programa;
 import com.ufps.cedcufps.modelos.TipoBeneficiario;
 import com.ufps.cedcufps.modelos.TipoEducacionContinua;
@@ -39,7 +42,9 @@ public interface IEducacionContinuaService {
 	
 	public EducacionContinua findOneByNombre(String educacionContinua);
 	
-	public EducacionContinuaWebDto editarEducacionContinuaByNombre(String educacionContinua);
+	public EducacionContinua findOneByNombreAndFecha(String educacionContinua, String fechaInicio);
+	
+	public EducacionContinuaWebDto editarEducacionContinuaByNombre(String educacionContinua, String fechaInicio);
 	
 	public List<TipoEducacionContinua> findAllTiposEducacionContinua(Long id);
 	
@@ -50,10 +55,6 @@ public interface IEducacionContinuaService {
 	
 	public List<EducacionContinua> educacionContinuasByTipoAndPrograma(Long idTipo, Long idPrograma);
 	
-	
-	public String generarReporteSNIESFormatoEducacionContinua(String anio);
-	
-	public String generarReporteSNIESFormatoCurso(String anio);
 	
 	public List<EducacionContinua> findAllEducacionContinuaACargoDocente(String numDocumento);
 	
@@ -70,7 +71,7 @@ public interface IEducacionContinuaService {
 	
 	public List<EducacionContinuaAppDto> findPosiblesEduContinuaGestionar();
 	
-	public InfoEducacionContinuaDto detallesEducacionContinua(String nombreEducacionContinua);
+	public InfoEducacionContinuaDto detallesEducacionContinua(String nombreEducacionContinua, String fechaInicio);
 	
 	public Map<Integer, ParticipanteDto>  tomarAsistencia(Long idEducacionContinua, Long idJornada, String qr);
 	
@@ -86,9 +87,15 @@ public interface IEducacionContinuaService {
 	
 	public EducacionContinuaWebDto findEducacionContinuaBase(Long id);
 	
-	public EducacionContinuaWebDto createEducacionContinua();
+	public EducacionContinuaWebDto createEducacionContinua(Persona p, boolean isAdmin, boolean isDirPrograma, boolean isDocente);
 	
+	public List<EducacionContinuaWebDto> findEducacionesContinuasBaseByIdPrograma(Long idPrograma);
 	
+	public List<Object[]> tiposPersonaParaInscripcion(List<EducacionContinuaTipoBeneficiario> tipoBeneficiarios);
+	
+	public RequisitosInscripcionDto consultarRequisitosInscripcion(String nombreEduContinua, String fechaInicio);
+	
+	public void saveDiploma(EducacionContinua ec);
 	
 	
 	

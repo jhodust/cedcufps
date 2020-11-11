@@ -46,11 +46,11 @@ public interface IPersonaDao extends JpaRepository<Persona, Long>, DataTablesRep
 			+ "segundo_nombre=?5, primer_apellido=?6, segundo_apellido=?7, id_genero=?8, id_estado_civil=?9,"
 			+ "fecha_nacimiento=?10, id_pais_nacimiento=?11, id_departamento_nacimiento=?12, id_municipio_nacimiento=?13,"
 			+ "email=?14, direccion=?15, telefono=?16, is_estudiante=?17, is_docente=?18, is_administrativo=?19,"
-			+ "is_graduado=?20, is_externo=?21 where id=?22", nativeQuery = true)
+			+ "is_graduado=?20, is_externo=?21, ids_tipo_persona = ?22 where id=?23", nativeQuery = true)
 	public void updateOnlyPersona(Long idTipoDocumento, String numeroDocumento, Date fechaExpedicionDocumento, String primerNombre,
 			String segundoNombre, String primerApellido, String segundoApellido, Long idGenero, Long idEstadoCivil, Date fechaNacimiento,
 			String idPaisNacimiento, String idDepartamentoNacimiento, String idMunicipioNacimiento, String email, String direccion, String telefono,
-			boolean isEstudiante, boolean isDocente, boolean isAdministrativo, boolean isGraduado, boolean isExterno, Long id);
+			boolean isEstudiante, boolean isDocente, boolean isAdministrativo, boolean isGraduado, boolean isExterno, String idsTipoPersona, Long id );
 	
 	@Query(value ="select p " + 
 			"from Persona p " + 

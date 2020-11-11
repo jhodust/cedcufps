@@ -48,10 +48,11 @@ public class AsistenteRestController {
 	private IPersonaService personaService;
 	
 	
-	@GetMapping(value = "/realizar-inscripcion/{id_evento}",produces = "application/json")
-	public ResponseEntity<ParticipanteDto> realizarInscripcion(@PathVariable(value = "id_evento") Long id, Map<String, Object> model) {
+	@GetMapping(value = "/realizar-inscripcion",produces = "application/json")
+	public ResponseEntity<ParticipanteDto> realizarInscripcion(@RequestParam(name = "idEduContinua") String idEduContinua, 
+			@RequestParam(name = "idTipoPersona",required = false,defaultValue = "0") String idTipoPersona, Map<String, Object> model) {
 		
-		return ResponseEntity.ok(participanteService.saveAsistente(id));
+		return ResponseEntity.ok(participanteService.saveAsistente(Long.parseLong(idEduContinua),Long.parseLong(idTipoPersona)));
 	}
 	
 	@PostMapping(value = "/realizar-inscripcion/generar-tarjeta-inscripcion" ,produces = "application/json")

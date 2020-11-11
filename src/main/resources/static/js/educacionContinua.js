@@ -7,6 +7,11 @@ $(document).ready(function ()
 		findEducacionContinuaBase(e.params.data.id);
 	});
 	
+	$('#selectProgramaBase').on('select2:select', function (e) { 
+		console.log(e.params.data);
+		loadListEduContinuaBase(e.params.data.id);
+	});
+	
 	$("#selectTipoContinua").select2({
 		  tags: true,
 		  createTag: function (params) {
@@ -21,9 +26,10 @@ $(document).ready(function ()
 	
 	$('#selectTipoContinua').on("change", function (e) { 
 		e.preventDefault();
+		validateSelect('selectTipoContinua','errTipoEdc');
 		var tipoContinua= $(this).find('option:selected');
 		var inputDuracion=document.getElementById('duracion');
-		var errorDuracion=document.getElementById('inputErrorDuracion');
+		var errorDuracion=document.getElementById('errDuracionEdc');
 		var boton = document.getElementById('btnGuardarEdC');
 		console.log("error");
 		console.log(errorDuracion);
@@ -51,11 +57,31 @@ $(document).ready(function ()
 		
 	});
 	
+	$('#selectClasificacionCINE').on("change", function (e) { 
+		e.preventDefault();
+		validateSelect('selectClasificacionCINE','errClasificacionEdc');
+	});
+	
+	$('#programaResponsable').on("change", function (e) { 
+		e.preventDefault();
+		validateSelect('programaResponsable','errProgRespEdc');
+	});
+	
+	$('#docenteResponsable').on("change", function (e) { 
+		e.preventDefault();
+		validateSelect('docenteResponsable','errDocRespEdc');
+	});
+	
+	$('#selectTipoBeneficiarios').on("change", function (e) { 
+		e.preventDefault();
+		validateSelect('selectTipoBeneficiarios','errTipoBenefEdc');
+	});
+	
 	 $('#duracion').keyup(function(event) {
 		 var horas = event.target.value;
 		 var tipoContinua= $('#selectTipoContinua').find('option:selected');
 		var inputDuracion=document.getElementById('duracion');
-		var errorDuracion=document.getElementById('inputErrorDuracion');
+		var errorDuracion=document.getElementById('errDuracionEdc');
 			var boton = document.getElementById('btnGuardarEdC');
 			console.log("horas");
 			console.log(horas);
@@ -137,13 +163,16 @@ console.log("preparando datepicker");
 	});
 	
 	$("#cbEdCExistente").click(function() {
-	  	if(document.getElementById("cbEdCExistente").checked){
+		if(document.getElementById("cbEdCExistente").checked){
 	  		document.getElementById("divEdCBase").style.display='block';
 	  	}else{
+	  		$('#selectProgramaBase').val('0').trigger('change');
+	  		clearSelectEduContinuaBase()
 	  		clearEduContinuaBase();
 	  		document.getElementById("divEdCBase").style.display='none';
 	  		
 	  	}
+		clearErrors();
 	})
 });
 
@@ -200,7 +229,31 @@ function guardarEdc(){
 	  var idProgramaResponsable=$('#programaResponsable').val();
 	  var idDocenteResponsable=$('#docenteResponsable').val();
 	  var idClasificacionCine=$('#selectClasificacionCINE').val();
-	  
+	  if(nombre=="" || fechaInicio=="" || fechaFin=="" || duracion<=0 || duracion=="" || fechaLimInscripcion=="" ||
+			  cantMaxParticipantes<=0 || costoInscripcion<=0 || lugar=="" || costoEducacionContinua<=0 || costoEducacionContinua=="" ||
+			  porcentajeAsistencia <0 || porcentajeAsistencia>100 || porcentajeAsistencia=="" || idTipoEduContinua==0 || 
+			  idProgramaResponsable==0 || idDocenteResponsable==0 || idClasificacionCine==0){
+		  validateInputTextRequerido('nombreEdc','errNombreEdc');
+		  validateInputTextRequerido('fechaInicioEduCont','errFechaInicioEdc');
+		  validateInputTextRequerido('fechaFinEduCont','errFechaFinEdc');
+		  validateInputTextRequerido('fechaLimInscripcionEduCont','errFechaLimInscEdc');
+		  validateInputNumberRequerido('duracion','errDuracionEdc');
+		  validateInputNumberRequerido('costoTotalEdc','errCostoTotalEdc');
+		  validateInputNumberNotRequired('costoInscripcionEdc','errCostoInscripEdc');
+		  validateInputNumberNotRequired('cantMaxPartEdc','errCantPartEdc');
+		  validateInputPorcentaje('porcentajeAsistenciaEdc','errPorcAsisEdc');
+		  validateInputTextRequerido('lugarEdc','errLugarEdc');
+		  validateSelect('selectTipoContinua','errTipoEdc');
+		  validateSelect('selectTipoBeneficiarios','errTipoBenefEdc');
+		  validateSelect('selectClasificacionCINE','errClasificacionEdc');
+		  validateSelect('programaResponsable','errProgRespEdc');
+		  validateSelect('docenteResponsable','errDocRespEdc');
+		  toastr
+			.error(
+					'Debes ingresar todos los campos requeridos',
+					'Error!');
+					return;
+	  }
 	  
 	  var imagen = $('#inputImagenEvento')[0].files;
 	  console.log(imagen[0]);
@@ -292,7 +345,38 @@ function findEducacionContinuaBase(id){
 	});
 }
 
+function loadListEduContinuaBase(idPrograma){
+	console.log("cargando");
+	clearSelectEduContinuaBase()
+	$.ajax({
+		headers: {"X-CSRF-TOKEN": token},
+		url: "/educacion-continua/search-educaciones-continuas-base",
+		type: "GET",
+        data: {'idPrograma':idPrograma},
+        contentType: "application/json; charset=utf-8",
+        cache: false,
+		success: function(result) {
+			console.log(result);
+			result.forEach(function(element){
+				console.log(element);
+				var newOption = new Option(element.nombre, element.id, false, false);
+				$('#selectEdCBase').append(newOption).trigger('change');
+			});
+		},
+		error: function(err) {
+			console.log(err);
+			
+		}
+	});
+	
+	
+}
 
+function clearSelectEduContinuaBase(){
+	$('#selectEdCBase').empty().trigger("change");
+	var newOption = new Option('Seleccione...', '0', false, false);
+	$('#selectEdCBase').append(newOption).trigger('change');
+}
 function loadEduContinuaBase(e){
 	$('#nombreEdc').val(e.nombre);
 	$('#duracion').val(e.duracion);
@@ -308,9 +392,15 @@ function loadEduContinuaBase(e){
 	$('#selectTipoContinua').val(e.idTipoEduContinua).trigger('change');
 	$('#selectClasificacionCINE').val(e.idClasificacion).trigger('change');
 	$('#programaResponsable').val(e.idProgramaResp).trigger('change');
+	$('#docenteResponsable').val(e.idDocenteResp).trigger('change');
+	console.log("idProgramaResp");
+	console.log(e.idProgramaResp);
+	console.log("idDocenteResp");
+	console.log(e.idDocenteResp)
 	var idsTB= [];
     e.tipoBeneficiarios.forEach(element => idsTB.push(element.id));
     $('#selectTipoBeneficiarios').val(idsTB).trigger('change');
+    consecutivo=e.consecutivo;
 }
 
 function clearEduContinuaBase(){
@@ -329,4 +419,24 @@ function clearEduContinuaBase(){
 	$('#selectClasificacionCINE').val('0').trigger('change');
 	$('#programaResponsable').val('0').trigger('change');
     $('#selectTipoBeneficiarios').val([]).trigger('change');
+    consecutivo=undefined;
+}
+
+function clearErrors(){
+	cleanError('selectTipoContinua','errTipoEdc');
+	cleanError('nombreEdc','errNombreEdc');
+	cleanError('selectClasificacionCINE','errClasificacionEdc');
+	cleanError('fechaInicioEduCont','errFechaInicioEdc');
+	cleanError('fechaFinEduCont','errFechaFinEdc');
+	cleanError('duracion','errDuracionEdc');
+	cleanError('costoTotalEdc','errCostoTotalEdc');
+	cleanError('programaResponsable','errProgRespEdc');
+	cleanError('docenteResponsable','errDocRespEdc');
+	cleanError('selectTipoBeneficiarios','errTipoBenefEdc');
+	cleanError('fechaLimInscripcionEduCont','errFechaLimInscEdc');
+	cleanError('costoInscripcionEdc','errCostoInscripEdc');
+	cleanError('cantMaxPartEdc','errCantPartEdc');
+	cleanError('porcentajeAsistenciaEdc','errPorcAsisEdc');
+	cleanError('lugarEdc','errLugarEdc');
+	
 }

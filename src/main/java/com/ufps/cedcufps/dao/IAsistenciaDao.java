@@ -19,8 +19,8 @@ public interface IAsistenciaDao extends JpaRepository<Asistencia, Long> {
 	@Query("SELECT a FROM Asistencia a WHERE a.jornada.id IN (:jornadas)")
 	public List<Asistencia> findAsistenciasByJornadas(List<Long> jornadas);
 	
-	@Query(value= "SELECT count(a.id_jornada) as 'total', a.id_jornada as 'jornada' FROM asistencias a JOIN jornadas j on (j.id=a.id_jornada) WHERE (j.educacion_continua_id=(select e.id from educacion_continua e where e.nombre = ?1)) GROUP BY (a.id_jornada)  ORDER BY a.id_jornada ASC", nativeQuery = true)
-	public List<?> countByJornada(String eduContinua);
+	@Query(value= "SELECT count(a.id_jornada) as 'total', a.id_jornada as 'jornada' FROM asistencias a JOIN jornadas j on (j.id=a.id_jornada) WHERE (j.educacion_continua_id=(select e.id from educacion_continua e where e.nombre = ?1 and e.fecha_inicio = ?2 )) GROUP BY (a.id_jornada)  ORDER BY a.id_jornada ASC", nativeQuery = true)
+	public List<?> countByJornada(String eduContinua, Date fechaInicio);
 	
 	@Query("SELECT a FROM Asistencia a WHERE a.jornada.id=?1 and a.participante.id=?2")
 	public Asistencia findAsistenciasByJornadaAndParticipante(Long idJornada, Long idParticipante);

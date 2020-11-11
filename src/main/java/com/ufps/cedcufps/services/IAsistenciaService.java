@@ -13,7 +13,7 @@ public interface IAsistenciaService {
 	
 	public List<Asistencia> findAsistenciasByJornadas(List<JornadaAppDto> jornadas);
 	
-	public List<?> countAsistenciasByJornadas(String eduContinua);
+	public List<?> countAsistenciasByJornadas(String eduContinua,String fechaInicio);
 	
 	public Asistencia findAsistenciaByJornadaAndParticipante(Long idJornada, Long idParticipante);
 	

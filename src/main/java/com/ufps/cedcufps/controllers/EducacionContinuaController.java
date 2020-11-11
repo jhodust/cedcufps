@@ -37,6 +37,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.ufps.cedcufps.dto.EducacionContinuaWebDto;
 import com.ufps.cedcufps.dto.InfoEducacionContinuaDto;
 import com.ufps.cedcufps.dto.JornadaAppDto;
+import com.ufps.cedcufps.dto.PersonaDtoLogueada;
 import com.ufps.cedcufps.modelos.Docente;
 import com.ufps.cedcufps.modelos.EducacionContinua;
 import com.ufps.cedcufps.modelos.Jornada;
@@ -94,12 +95,28 @@ public class EducacionContinuaController {
 		}*/
 		System.out.println("------------------------------------------------------------------------");
 		//System.out.println(ec.getIdClasificacion());
-		model.put("educacionContinua",educacionContinuaService.createEducacionContinua());
+		Persona p= personaService.findPersonaLogueada();
+		boolean isSuperAdmin= personaService.isSuperAdmin(p);
+		boolean isDirPrograma = personaService.isDirPrograma(p);
+		boolean isDocente=personaService.isDocente(p);
+		
+		PersonaDtoLogueada peopleLogin = personaService.findPersonaLogueadaDto(p);
+		System.out.println("issuperadmin");
+		System.out.println(peopleLogin.isSuperAdmin());
+		System.out.println("isdirprograma");
+		System.out.println(peopleLogin.isDirPrograma());
+		System.out.println("isdocente");
+		System.out.println(peopleLogin.isDocente());
+		System.out.println("has permisos");
+		System.out.println(peopleLogin.isHasPermisosEdC());
+		model.put("educacionContinua",educacionContinuaService.createEducacionContinua(p, peopleLogin.isSuperAdmin(), 
+				peopleLogin.isDirPrograma(), peopleLogin.isDocente()));
 		model.put("tipos_educacion_continua",educacionContinuaService.findAllTiposEducacionContinua(0L));//metodo que busca los tipos de educacion oficiales y el 'otro' si es de una educacion continua en especifico
 		model.put("clasificacion_cine",educacionContinuaService.findAllClasificacionCine());
 		model.put("tipo_beneficiarios",educacionContinuaService.findAllTipoBeneficiario());
 		model.put("docentes",personaService.findAllDocentes());
 		model.put("programas",programaService.findAll());
+		model.put("peopleLogin", peopleLogin);
 		List<Programa> programasBase=programaService.programasParaEduContinuaBase();
 		model.put("programasBase",programasBase);
 		model.put("educacionesContinuasBase",educacionContinuaService.findEducacionesContinuasBase(programasBase));
@@ -169,7 +186,7 @@ public class EducacionContinuaController {
 		return "educacion_continua/form";
 	}*/
 	
-	@RequestMapping(value = "/educacion-continua/jornadas")
+	/*@RequestMapping(value = "/educacion-continua/jornadas")
 	public String mostrarJornadas(@RequestParam(name="educacionContinua") String educacionContinua, Map<String, Object> model, Authentication auth, RedirectAttributes redirectAttributes) {
 		//EducacionContinua e=educacionContinuaService.findOne(id).get();
 		/*if(buscarAuthority(auth, "ROLE_DIRPROGRAMA")) {
@@ -191,12 +208,12 @@ public class EducacionContinuaController {
 			redirectAttributes.addFlashAttribute("errorMessage", "El estado de la Educación Continua es " + e.getEstado());
 			return "redirect:/educacion-continua/"+e.getId()+"/detalles";
 		}*/
-		model.put("titulo","JORNADAS");
+		/*model.put("titulo","JORNADAS");
 		model.put("educacionContinua",educacionContinuaService.detallesEducacionContinua(educacionContinua).getEducacionContinua());
 		return "educacion_continua/jornada/index";
-	}
+	}*/
 	
-	@RequestMapping(value = "/educacion-continua/ponentes")
+	/*@RequestMapping(value = "/educacion-continua/ponentes")
 	public String mostrarPonentes(@RequestParam(name="educacionContinua") String educacionContinua, Map<String, Object> model, Authentication auth, RedirectAttributes redirectAttributes) {
 		/*if(buscarAuthority(auth, "ROLE_DIRPROGRAMA")) {
 			Docente p= (Docente)personaService.findPersonaLogueada();
@@ -217,27 +234,30 @@ public class EducacionContinuaController {
 			redirectAttributes.addFlashAttribute("errorMessage", "El estado de la Educación Continua es " + e.getEstado());
 			return "redirect:/educacion-continua/"+e.getId()+"/detalles";
 		}*/
-		model.put("titulo","JORNADAS");
+		/*model.put("titulo","JORNADAS");
 		model.put("educacionContinua",educacionContinuaService.detallesEducacionContinua(educacionContinua).getEducacionContinua());
 		model.put("ponentes",participanteService.findAllPonentesOfOneEducacionContinua(educacionContinua));
 		model.put("posiblesPonentes",personaService.findAllPersonas());
 		return "educacion_continua/ponente/index";
-	}
+	}*/
 	
 	@RequestMapping(value = "/educacion-continua/detalles")
-	public String mostrar(@RequestParam(name="educacionContinua") String educacionContinua, Map<String, Object> model,RedirectAttributes redirectAttributes) {
+	public String mostrar(@RequestParam(name = "educacionContinua") String educacionContinua,@RequestParam(name = "fecha") String fechaEduContinua, Map<String, Object> model,RedirectAttributes redirectAttributes) {
 		model.put("titulo","DETALLES EDUCACIÓN CONTINUA");
-		InfoEducacionContinuaDto dto= educacionContinuaService.detallesEducacionContinua(educacionContinua);
+		InfoEducacionContinuaDto dto= educacionContinuaService.detallesEducacionContinua(educacionContinua,fechaEduContinua);
 		if(dto.isHasPermission()) {
 			model.put("ec",dto);
-			EducacionContinuaWebDto e= educacionContinuaService.editarEducacionContinuaByNombre(educacionContinua);
+			EducacionContinuaWebDto e= educacionContinuaService.editarEducacionContinuaByNombre(educacionContinua,fechaEduContinua);
+			Persona p= personaService.findPersonaLogueada();
+			PersonaDtoLogueada peopleLogin = personaService.findPersonaLogueadaDto(p);
 			model.put("educacionContinua", e);
 			model.put("tipos_educacion_continua",educacionContinuaService.findAllTiposEducacionContinua(e.getIdTipoEduContinua()));
 			model.put("clasificacion_cine",educacionContinuaService.findAllClasificacionCine());
 			model.put("tipo_beneficiarios",educacionContinuaService.findAllTipoBeneficiario());
 			model.put("docentes",personaService.findAllDocentes());
 			model.put("programas",programaService.findAll());
-			model.put("asistenciaGlobal",asistenciaService.countAsistenciasByJornadas(educacionContinua));
+			model.put("asistenciaGlobal",asistenciaService.countAsistenciasByJornadas(educacionContinua,fechaEduContinua));
+			model.put("peopleLogin", peopleLogin);
 			
 			//model.put("participantes",participanteService.findAllParticipantesByEducacionContinua(educacionContinua));
 			//if(dto.getEducacionContinua().getJornadas().size()>0) {
@@ -253,16 +273,23 @@ public class EducacionContinuaController {
 		return "educacion_continua/detalles";
 	}
 	
-	@RequestMapping(value = "/preinscripcion/{nombre}")
-	public String preinscripcionEducacionContinua(@PathVariable(value = "nombre") String nombreEvento, Map<String, Object> model) {
-		EducacionContinua ec= educacionContinuaService.findOneByNombre(nombreEvento);
+	@RequestMapping(value = "/preinscripcion")
+	public String preinscripcionEducacionContinua(@RequestParam(name = "educacionContinua") String nombreEvento,@RequestParam(name = "fecha") String fechaEvento , Map<String, Object> model) {
+		//EducacionContinua ec= educacionContinuaService.findOneByNombreAndFecha(nombreEvento,fechaEvento);
+		System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+		System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+		System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+		System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+		System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 		model.put("titulo","DETALLES EDUCACIÓN CONTINUA");
-		model.put("educacionContinua",ec);
-		try {
-		model.put("participante",participanteService.findByIdEducacionContinuaAndIdPersona(ec.getId(),personaService.findPersonaLogueada().getId()));
-		}catch(Exception e) {
-			model.put("participante",null);
-		}
+		model.put("requisitosInscripcion",educacionContinuaService.consultarRequisitosInscripcion(nombreEvento, fechaEvento));
+		//System.out.println(ec.getId());
+		//model.put("listTipoPersonaValidInscripcion",educacionContinuaService.tiposPersonaParaInscripcion(ec.getTipoBeneficiarios()));
+		//try {
+		//model.put("participante",participanteService.findByIdEducacionContinuaAndIdPersona(ec.getId(),personaService.findPersonaLogueada().getId()));
+		//}catch(Exception e) {
+		//	model.put("participante",null);
+		//}
 		return "preinscripcion";
 	}
 	/*

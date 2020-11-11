@@ -32,8 +32,8 @@ public class ParticipanteCustomDao implements IParticipanteCustomDao {
 	@Override
 	public void saveParticipante(ParticipanteDto p) {
 		// TODO Auto-generated method stub
-		StringBuilder query = new StringBuilder().append("insert into participantes (codigoqr, fecha_registro, imagen_codigo_qr, educacion_continua_id, id_persona, id_tipo_participante)")
-				.append(" VALUES (?,?,?,?,?,?)");
+		StringBuilder query = new StringBuilder().append("insert into participantes (codigoqr, fecha_registro, imagen_codigo_qr, educacion_continua_id, id_persona, id_tipo_participante, id_tipo_persona)")
+				.append(" VALUES (?,?,?,?,?,?,?)");
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 		jdbcTemplate.update(new PreparedStatementCreator() {
 
@@ -46,6 +46,7 @@ public class ParticipanteCustomDao implements IParticipanteCustomDao {
 				ps.setLong(4, p.getIdEducacionContinua());
 				ps.setLong(5, p.getIdPersona());
 				ps.setLong(6, p.getIdTipoParticipante());
+				ps.setObject(7, p.getIdTipoPersona());
 				
 				return ps;
 			}

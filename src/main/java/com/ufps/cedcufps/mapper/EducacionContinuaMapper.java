@@ -315,6 +315,8 @@ public class EducacionContinuaMapper implements IEducacionContinuaMapper {
 	@Override
 	public EducacionContinuaWebDto convertEducacionContinuaToEduContinuaWebDto(EducacionContinua e) {
 		// TODO Auto-generated method stub
+		System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+		System.out.println("mapperrrrrrrrrrrrrrrrrrrrrrrrrrr");
 		EducacionContinuaWebDto eduContinuaDto= new EducacionContinuaWebDto();
 		eduContinuaDto.setId(e.getId());
 		eduContinuaDto.setNombre(e.getNombre());
@@ -347,10 +349,18 @@ public class EducacionContinuaMapper implements IEducacionContinuaMapper {
 		eduContinuaDto.setCostoEducacionContinua(e.getCostoEducacionContinua());
 		eduContinuaDto.setEstadoOficialTipoEducacionContinua(e.getTipoEduContinua().isEstadoOficial());
 		List<TipoBeneficiarioDto> list = new ArrayList<TipoBeneficiarioDto>();
+		System.out.println("educacion continuaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+		System.out.println(e.getId());
+		System.out.println(e.getNombre());
+		System.out.println("cantidad beneficiarios");
+		System.out.println(e.getTipoBeneficiarios().size());
 		for(EducacionContinuaTipoBeneficiario ectb:e.getTipoBeneficiarios()) {
+			System.out.println("--------------------");
+			System.out.println(ectb.getTipoBeneficiario().getTipoBeneficiario());
 			TipoBeneficiarioDto d = new TipoBeneficiarioDto();
 			d.setId(ectb.getTipoBeneficiario().getId());
 			d.setTipoBeneficiario(ectb.getTipoBeneficiario().getTipoBeneficiario());
+			d.setHomologacion(ectb.getTipoBeneficiario().getHomologacion());
 			list.add(d);
 		}
 		eduContinuaDto.setTipoBeneficiarios(list);

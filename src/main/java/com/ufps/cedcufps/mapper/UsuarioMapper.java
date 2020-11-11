@@ -134,6 +134,37 @@ public class UsuarioMapper implements IUsuarioMapper {
 		System.out.println(u.isAdministrativo());
 		System.out.println(u.isGraduado());
 		System.out.println(u.isExterno());
+		String tiposPersona="";
+		if(u.isEstudiante()) {
+			if(tiposPersona.isEmpty()) {
+				tiposPersona="1";
+			}
+		}
+		if(u.isDocente()) {
+			if(tiposPersona.isEmpty()) {
+				tiposPersona="2";
+			}else {
+				tiposPersona=tiposPersona+",2";
+			}
+		}
+		if(u.isAdministrativo()) {
+			if(tiposPersona.isEmpty()) {
+				tiposPersona="3";
+			}else {
+				tiposPersona=tiposPersona+",3";
+			}
+		}
+		if(u.isGraduado()) {
+			if(tiposPersona.isEmpty()) {
+				tiposPersona="4";
+			}else {
+				tiposPersona=tiposPersona+",4";
+			}
+		}
+		if(u.isExterno()) {
+			tiposPersona="5";
+		}
+		pe.setIdsTipoPersona(tiposPersona);
 		
 		List<Rol> r= new ArrayList<>();
 		Rol rol= new Rol();

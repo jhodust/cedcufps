@@ -43,71 +43,7 @@ public class ElementoDiplomaRestController {
 	@Autowired
 	private IPersonaService personaService;
 	
-	@PostMapping(value = "/educacion-continua/generar-plantilla-diploma" ,produces = "application/json")
-	@ResponseBody // ImagenDiploma[] imagenes MultipartFile file @RequestBody  EducacionContinua edu
-	public ResponseEntity<?> guardarPlantillaDiploma(@RequestBody EducacionContinua eduContinua ){
-		//Diploma d=educacionContinuaService.generarDiploma(educacionContinua.getId());
-		
-		EducacionContinua e= educacionContinuaService.findOne(eduContinua.getId()).get();
-		if(e.getDiploma()==null) {
-			e.setDiploma(new Diploma());
-		}
-		e.getDiploma().setImagenPlantilla(Archivo.saveImagenBase64("/uploads/educacion-continua/"+e.getId()+"/diploma_base.jpg", eduContinua.getDiploma().getImagenPlantilla()));
-		
-		if(eduContinua.getDiploma().getTextos()!=null) {
-			for(TextoDiploma t:eduContinua.getDiploma().getTextos()) {
-				t.setDiploma(e.getDiploma());
-			}
-			e.getDiploma().setTextos(eduContinua.getDiploma().getTextos());
-		}
-		
-		if(eduContinua.getDiploma().getImagenes()!=null) {
-			for(ImagenDiploma i:eduContinua.getDiploma().getImagenes()) {
-				i.setDiploma(e.getDiploma());
-				i.setRuta(Archivo.saveImagenBase64("/uploads/educacion-continua/"+e.getId()+"/plantilla-diploma/"+Archivo.generarNombreAleatorio()+".png", i.getRuta()));
-			}
-			e.getDiploma().setImagenes(eduContinua.getDiploma().getImagenes());
-		}
-		
-		
-		if(eduContinua.getDiploma().getFirmas()!=null) {
-			for(FirmaDiploma f:eduContinua.getDiploma().getFirmas()) {
-				f.setDiploma(e.getDiploma());
-				f.setImagenFirmaDigital(Archivo.saveImagenBase64("/uploads/educacion-continua/"+e.getId()+"/plantilla-diploma/"+Archivo.generarNombreAleatorio()+".png", f.getImagenFirmaDigital()));
-			}
-			e.getDiploma().setFirmas(eduContinua.getDiploma().getFirmas());
-		}
-		
-		
-		educacionContinuaService.save(e);
-		
-		return new ResponseEntity<>(e,HttpStatus.OK);
-		//return "sisas " + String.valueOf(e.getId());
-		/*
-		List<ElementoDiploma> elementos=new ArrayList<ElementoDiploma>();
-		texto1.setId(null);
-		texto2.setId(null);
-		texto1.setDiploma(d);
-		texto2.setDiploma(d);
-		elementos.add(texto1);
-		elementos.add(texto2);
-		elementoDiplomaService.saveElementos(d.getId(), elementos);
-		/*System.out.println("imagen: " + file.getName());
-		Participante p= participanteService.findParticipante(Long.parseLong(idParticipante));
-		System.out.println("participante: " + idParticipante);
-		System.out.println("participante educacion continua: " + p.getEducacionContinua().getId());
-		p.setTarjetaInscripcion(Archivo.saveImage(file,"/uploads/educacion-continua/"+p.getEducacionContinua().getId()+"/tarjetas-inscripcion/inscripcion_"+p.getPersona().getNumeroDocumento()));
-		participanteService.save(p);
-		System.out.println("tarjeta participante: " + p.getTarjetaInscripcion());
-		return new ResponseEntity<>(HttpStatus.OK);*/
-		/*if(d!=null) {
-			return new ResponseEntity<>(d,HttpStatus.OK);
-		}else {
-			return new ResponseEntity<>(d,HttpStatus.BAD_REQUEST);
-		}*/
-		
-		
-	}
+	
 }
 
 //escribir texto en una imagen

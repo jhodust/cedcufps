@@ -78,15 +78,15 @@ public class ParticipanteService implements IParticipanteService{
 	}
 
 	@Override
-	public ParticipanteDto saveAsistente(Long idEduContinua) {
+	public ParticipanteDto saveAsistente(Long idEduContinua, Long idTipoPersona) {
 		// TODO Auto-generated method stub
-		ParticipanteDto dto=this.saveParticipante(idEduContinua, personaService.findPersonaLogueada(),"Asistente");
+		ParticipanteDto dto=this.saveParticipante(idEduContinua, personaService.findPersonaLogueada(),"Asistente", idTipoPersona);
 		this.participanteDao.insertAsistente(dto.getId());
 		
 		return dto;
 	}
 	
-	public ParticipanteDto saveParticipante(Long idEduContinua, Persona p, String tipoParticipante) {
+	public ParticipanteDto saveParticipante(Long idEduContinua, Persona p, String tipoParticipante, Long idTipoPersona) {
 		ParticipanteDto dto=new ParticipanteDto();
 		EducacionContinua e= educacionContinuaDao.findEducacionContinuaById(idEduContinua);
 		if(e == null) {
@@ -128,6 +128,18 @@ public class ParticipanteService implements IParticipanteService{
 		} catch (Exception exc) {
 			// TODO Auto-generated catch block
 			exc.printStackTrace();
+		}
+		System.out.println("##########################################################");
+		System.out.println(idTipoPersona);
+		if(idTipoPersona == 0L) {
+			if(tp.getTipoParticipante().equalsIgnoreCase("Ponente")) {
+				dto.setIdTipoPersona(null);
+			}else {
+				dto.setIdTipoPersona(Long.parseLong(p.getIdsTipoPersona()));
+			}
+			
+		}else {
+			dto.setIdTipoPersona(idTipoPersona);
 		}
 		participanteCustomDao.saveParticipante(dto);
 		System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
@@ -265,7 +277,8 @@ public class ParticipanteService implements IParticipanteService{
 		System.out.println(ponente.getId()==null);
 		System.out.println(ponente.getId().equals(0L));*/
 		if(ponente.getId()==null || ponente.getId().equals(0L)) {
-			ParticipanteDto dto=this.saveParticipante(ponente.getEducacionContinua().getId(), p, "Ponente");
+			System.out.println("entra a crear");
+			ParticipanteDto dto=this.saveParticipante(ponente.getEducacionContinua().getId(), p, "Ponente",0L);
 			this.participanteDao.insertPonente(dto.getId(), ponente.getTema());
 			return dto;
 			/*System.out.println("entra al if");
@@ -295,6 +308,7 @@ public class ParticipanteService implements IParticipanteService{
 			/*Ponente po=(Ponente)participanteDao.findById(ponente.getId()).orElseThrow(() -> new CustomException("No se encontró el ponente asociado en la base de datos"));
 			po.setTema(ponente.getTema());
 			ponente=po;*/
+			System.out.println("entra a actualizar");
 			participanteDao.updatePonente(ponente.getTema(),ponente.getId());
 			return null;
 		}

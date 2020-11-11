@@ -161,7 +161,8 @@ public class Persona implements Serializable {//*
 	@Type(type = "org.hibernate.type.NumericBooleanType")
 	private boolean isExterno;
 	
-	
+	@Column(name = "ids_tipo_persona")
+	private String idsTipoPersona;
 	
 	
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "persona", cascade = CascadeType.ALL)
@@ -365,6 +366,22 @@ public class Persona implements Serializable {//*
 
 	public void setExterno(boolean isExterno) {
 		this.isExterno = isExterno;
+	}
+
+	public String getIdsTipoPersona() {
+		return idsTipoPersona;
+	}
+
+	public void setIdsTipoPersona(String idsTipoPersona) {
+		this.idsTipoPersona = idsTipoPersona;
+	}
+
+	public List<PersonaRol> getPersonaXRoles() {
+		return personaXRoles;
+	}
+
+	public void setPersonaXRoles(List<PersonaRol> personaXRoles) {
+		this.personaXRoles = personaXRoles;
 	}
 
 	

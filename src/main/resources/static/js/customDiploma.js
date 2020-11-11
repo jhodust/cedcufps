@@ -149,6 +149,7 @@ croppieFirma2 = $('#croppieFirma2').croppie({
   var arrayFirmas= null;
   
   if(  eduContinua.diploma != null){
+	  console.log("entra al if");
 	  arrayImagenes= eduContinua.diploma.imagenes;
 	  arrayTextos= eduContinua.diploma.textos;
 	  arrayFirmas= eduContinua.diploma.firmas;
@@ -163,7 +164,8 @@ croppieFirma2 = $('#croppieFirma2').croppie({
   var subtituloInicial=subtituloDefault;
   var firma1Inicial=firma1Default;
   var firma2Inicial=firma2Default;
-  
+  console.log("arrayImagenes");
+  console.log(arrayImagenes);
   if(arrayImagenes!=null){
 	  arrayImagenes.forEach(function(imagen) {
 		  if (imagen.x == 80) {
@@ -211,7 +213,7 @@ croppieFirma2 = $('#croppieFirma2').croppie({
   }
   $("#inputTexto1").val(tituloInicial.texto);
   if(subtituloInicial.texto==""){
-	  subtituloInicial.texto="Programa de " + eduContinua.programa;
+	  subtituloInicial.texto="Programa de " + eduContinua.programaResp;
   }
   $("#inputTexto2").val(subtituloInicial.texto);
   
@@ -657,7 +659,7 @@ croppieFirma2 = $('#croppieFirma2').croppie({
 		console.log(JSON.stringify(subtitulo));*/
 		
 		var idDiploma=null;
-		if(educacionContinua.diploma == null){
+		if(eduContinua.diploma == null){
 			/*var eduContinuaJson={};
 			var diplomaJson={};
 			//diplomaJson.imagenPlantilla="ruta imagen.jpg";
@@ -673,10 +675,10 @@ croppieFirma2 = $('#croppieFirma2').croppie({
   });
   
   function guardarPlantilla(dataDiploma,idDiploma){
-	  var formData = new FormData();
+	  //var formData = new FormData();
 	  //formData.append('file', file);
 	   //formData.append('educacionContinua', JSON.stringify({'id':educacionContinua.id}));
-	  formData.append('edu', JSON.stringify({"id":educacionContinua.id,"nombre":educacionContinua.nombre}));
+	  //formData.append('edu', JSON.stringify({"id":educacionContinua.id,"nombre":educacionContinua.nombre}));
 	 
 	  $.ajax({
 	    	headers: {"X-CSRF-TOKEN": token},
@@ -738,9 +740,14 @@ croppieFirma2 = $('#croppieFirma2').croppie({
     	    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
     		
     		//dibujo logo1
-    		if(logo1!=null){
+    	    console.log("llenando logos");
+    	    console.log(logo1);
+    		if(logo1.ruta != ""){
+    			console.log("enra al if de logo1!=null");
     			var imgLogo1 = new Image();
-        		imgLogo1.src=logo1.imagen;
+    			console.log("logo1")
+    			console.log(logo1);
+        		imgLogo1.src=logo1.ruta;
         		imgLogo1.onload = function() {
         	    	//imgLogo1= redimensionarLogos(imgLogo1);
         	    	ctx.drawImage(imgLogo1, logo1.x, logo1.y, imgLogo1.width, imgLogo1.height);//max 150 width
@@ -749,9 +756,11 @@ croppieFirma2 = $('#croppieFirma2').croppie({
     	    
         	
         	//dibujo logo2
-    		if(logo2!=null){
+    		if(logo2.ruta != ""){
     			var imgLogo2 = new Image();
-      		    imgLogo2.src=logo2.imagen;
+    			console.log("logo2")
+    			console.log(logo2);
+      		    imgLogo2.src=logo2.ruta;
         	    imgLogo2.onload = function() {
         	    	//imgLogo2= redimensionarLogos(imgLogo2);
         	    	ctx.drawImage(imgLogo2, logo2.x, logo2.y, imgLogo2.width, imgLogo2.height);//max 150 width
@@ -800,8 +809,11 @@ croppieFirma2 = $('#croppieFirma2').croppie({
             console.log(firmaD2);
             if(firmaD1.nombre!="" && firmaD1.cargo!="" ){
     			var imgFirma1 = new Image();
-    			imgFirma1.src=firmaD1.imagen;
+    			imgFirma1.src=firmaD1.imagenFirmaDigital;
+    			console.log("firma1")
+    			console.log(firmaD1);
     			//imgFirma1.src="/firma3.jpg";
+    			console.log(imgFirma1);
     			imgFirma1.onload = function() {
         	    	//imgFirma1= redimensionarFirmas(imgFirma1);
         	    	console.log("tamaños firma1");
@@ -843,7 +855,9 @@ croppieFirma2 = $('#croppieFirma2').croppie({
         	    };*/
         	    if(firmaD2.nombre!="" && firmaD2.cargo!="" ){
 	        	   var imgFirma2 = new Image();
-	    			imgFirma2.src=firmaD2.imagen;
+	    			imgFirma2.src=firmaD2.imagenFirmaDigital;
+	    			console.log("firma2")
+	    			console.log(firmaD2);
 	    			//imgFirma2.src="/firma2.png";
 	    			imgFirma2.onload = function() {
 	        	    	//imgFirma1= redimensionarFirmas(imgFirma1);

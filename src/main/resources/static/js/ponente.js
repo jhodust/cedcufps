@@ -44,7 +44,11 @@ function guardarPonente(){
 		success: function(result) {
 			console.log("result ponente");
 			console.log(result);
-			if(result != null){
+			console.log(result != null);
+			console.log(result == "");
+			if(result != null && result != ""){
+				console.log("entra a crear");
+				
 				creacionTarjetaInscripcion(result);
 			}
 			toastr.success('Se ha guardado el ponente', 'Excelente!');

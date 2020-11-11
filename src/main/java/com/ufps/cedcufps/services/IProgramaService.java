@@ -26,6 +26,8 @@ public interface IProgramaService {
 	
 	public List<ProgramaDto> findProgramaByDirector(Long idDir,Long idPrograma);
 	
+	public Programa findProgramaByDirector(Long idDir);
+	
 	public ProgramaDto searchProgramaById(Long id);
 	
 	public List<Programa> programasParaEduContinuaBase();

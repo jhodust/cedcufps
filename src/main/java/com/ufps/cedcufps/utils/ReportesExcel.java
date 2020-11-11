@@ -29,6 +29,10 @@ import org.apache.poi.ss.util.CellRangeAddressList;
 import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import com.ufps.cedcufps.dto.InformeCursosDto;
+import com.ufps.cedcufps.dto.InformeDetalleEducacionContinuaDto;
+import com.ufps.cedcufps.dto.InformeEducacionContinuaDto;
+import com.ufps.cedcufps.dto.InformeParticipanteResponsableDto;
 import com.ufps.cedcufps.modelos.EducacionContinua;
 import com.ufps.cedcufps.modelos.Participante;
 
@@ -41,18 +45,19 @@ public class ReportesExcel {
 	
 	public final static String rutaPlantillaEducacionContinua="src/main/resources/static/formatos_reportes_excel/formato_educacion_continua.xlsx";
 	public final static String rutaPlantillaCursos="src/main/resources/static/formatos_reportes_excel/formato_cursos.xlsx";
+	public final static String rutaPlantillaDocentesResponsables="src/main/resources/static/formatos_reportes_excel/formato_participante.xlsx";
 	public final static String rutaReportes="files/reportes_snies/";
 	
-	public static String reporteCursos(List<EducacionContinua> ec, String anio) {
-		String filename=rutaReportes+"informe_cursos_snies_"+anio+".xlsx";
-		Path rutaArchivo = Paths.get(rutaPlantillaEducacionContinua);
+	public static String reporteCursos(List<InformeCursosDto> result, String nombre) {
+		String filename=rutaReportes+"informe_cursos_snies_"+nombre+".xlsx";
+		Path rutaArchivo = Paths.get(rutaPlantillaCursos);
 		FileInputStream file;
 		try {
 			file = new FileInputStream(rutaArchivo.toFile());
 			Workbook workbook = new XSSFWorkbook(file);
 			Sheet sheet = workbook.getSheetAt(0);
 			int i = 1;
-			for (EducacionContinua e : ec) {
+			for (InformeCursosDto dto : result) {
 				Row row = sheet.getRow(i);
 				System.out.println("i: " + i);
 				if (row == null) {
@@ -61,29 +66,25 @@ public class ReportesExcel {
 
 				// codigo curso
 				Cell cell = row.createCell(0);
-				cell.setCellValue(e.getProgramaResponsable().getCodigo() + "-"
-						+ e.getTipoEduContinua().getTipoEduContinua() + "" + e.getConsecutivo());
+				cell.setCellValue(dto.getCodigoCurso());
 
 
 				// nombre curso
 				cell = row.createCell(1);
-				cell.setCellValue(e.getNombre());
+				cell.setCellValue(dto.getNombreCurso());
 
 				// clasificacion cine
 				cell = row.createCell(2);
-				cell.setCellValue(e.getClasificacionCine().getId() + " " + e.getClasificacionCine().getClasificacionCine());
+				cell.setCellValue(dto.getClasificacionCine());
 
 				// es extension
 				cell = row.createCell(3);
-				cell.setCellValue("S");
+				cell.setCellValue(dto.getEsextension());
 
 				// activo
 				cell = row.createCell(4);
-				if(!e.getEstado().equalsIgnoreCase("Terminado")) {
-					cell.setCellValue("S");
-				}else {
-					cell.setCellValue("N");
-				}
+				cell.setCellValue(dto.getActivo());
+				
 				
 				i++;
 			}
@@ -101,9 +102,9 @@ public class ReportesExcel {
 		return filename;
 	}
 	
-	public static String reporteEducacionContinua(List<EducacionContinua> ec, String anio) {
-		String filename=rutaReportes+"informe_educacion_continua_snies_"+anio+".xlsx";
-		Path rutaArchivo = Paths.get(rutaPlantillaCursos);
+	public static String reporteEducacionContinua(List<InformeEducacionContinuaDto> resultEduContinua, List<InformeDetalleEducacionContinuaDto> resultParticipantes, String nombre) {
+		String filename=rutaReportes+"informe_educacion_continua_snies_"+nombre+".xlsx";
+		Path rutaArchivo = Paths.get(rutaPlantillaEducacionContinua);
 		FileInputStream file;
 		try {
 			file = new FileInputStream(rutaArchivo.toFile());
@@ -117,7 +118,7 @@ public class ReportesExcel {
 
 			Sheet sheet = workbook.getSheetAt(0);
 			int i = 1;
-			for (EducacionContinua e : ec) {
+			for (InformeEducacionContinuaDto dto : resultEduContinua) {
 				Row row = sheet.getRow(i);
 				System.out.println("i: " + i);
 				if (row == null) {
@@ -126,52 +127,44 @@ public class ReportesExcel {
 
 				// año
 				Cell cell = row.createCell(0);
-				cell.setCellValue(Integer.parseInt(anio));
+				cell.setCellValue(dto.getAnio());
 
 				// semestre
 				cell = row.createCell(1);
-				SimpleDateFormat dateFormat = new SimpleDateFormat("MM");
-				if(Integer.parseInt(dateFormat.format(e.getFechaInicio()))<=6) {
-					cell.setCellValue(1);
-				}else {
-					cell.setCellValue(2);
-				}
+				cell.setCellValue(dto.getSemestre());
 				
 
 				// codigo curso
 				cell = row.createCell(2);
-				cell.setCellValue(e.getProgramaResponsable().getCodigo() + "-"
-						+ e.getTipoEduContinua().getTipoEduContinua() + "" + e.getConsecutivo());
+				cell.setCellValue(dto.getCodigoCurso());
 
 				// numero horas
 				cell = row.createCell(3);
-				cell.setCellValue(e.getDuracion());
+				cell.setCellValue(dto.getNumHoras());
 
 				// id_tipo_curso extension
 				cell = row.createCell(4);
-				cell.setCellValue(asignarOpcionTipoEducacionContinuaHoja0(e.getTipoEduContinua().getId()));
+				cell.setCellValue(asignarOpcionTipoEducacionContinuaHoja0(dto.getIdTipoCurso()));
 
 				// valor curso
 				cell = row.createCell(5);
-				cell.setCellValue("$"+e.getCostoEducacionContinua());
-				cell.setCellStyle(styleNumero);
+				cell.setCellValue(dto.getValorCurso());
 
 				// tipo documento responsable
 				cell = row.createCell(6);
-				cell.setCellValue(asignarOpcionTipoDocumento(e.getDocenteResponsable().getTipoDocumento().getId()));
+				cell.setCellValue(asignarOpcionTipoDocumento(dto.getIdTipoDocumentoResponsable()));
 
 				// num documento responsable
 				cell = row.createCell(7);
-				cell.setCellValue(Double.parseDouble(e.getDocenteResponsable().getNumeroDocumento()));
-				cell.setCellStyle(styleNumero);
+				cell.setCellValue(dto.getNumDocumentoResponsable());
 
 				// id tipo beneficiario extension
 				cell = row.createCell(8);
-				//cell.setCellValue(e.getTipoBeneficiario().getId()+"-"+e.getTipoBeneficiario().getTipoBeneficiario().toUpperCase());
+				cell.setCellValue(dto.getIdTipoBeneficiario());
 
 				// cantidad beneficiarios
 				cell = row.createCell(9);
-				cell.setCellValue(e.getCantMaxParticipantes());
+				cell.setCellValue(dto.getCantidadBeneficiarios());
 
 				i++;
 			}
@@ -211,7 +204,15 @@ public class ReportesExcel {
 			i = 1;
 			int j=0;
 			int numColor=0;
-			for (EducacionContinua e : ec) {
+			int k=0;
+			int cantidadPonentes=0;
+			String idEduContinuaOld="";
+			for (InformeDetalleEducacionContinuaDto dto : resultParticipantes) {
+				cantidadPonentes=dto.getPonentes().size();
+				if(!idEduContinuaOld.equalsIgnoreCase(dto.getIdCurso()) ) {
+					idEduContinuaOld=dto.getIdCurso();
+					k=0;
+				}
 				CellStyle style1 = workbook.createCellStyle();
 				style1.setFillForegroundColor(colores.get(numColor).getIndex());
 				style1.setFillPattern(FillPatternType.SOLID_FOREGROUND);
@@ -223,99 +224,100 @@ public class ReportesExcel {
 					numColor=0;
 				}
 				
-				for (Participante p : e.getParticipantes()) {
-					Row row = sheet.getRow(i);
-					
-					System.out.println("i: " + i);
-					if (row == null) {
-						row = sheet.createRow(i);
-					}
+				Row row = sheet.getRow(i);
+				
+				System.out.println("i: " + i);
+				if (row == null) {
+					row = sheet.createRow(i);
+				}
 
-					// codigo curso
-					Cell cell = row.createCell(0);
-					cell.setCellValue(e.getProgramaResponsable().getCodigo() + "-"
-							+ e.getTipoEduContinua().getTipoEduContinua() + "" + e.getConsecutivo());
-					cell.setCellStyle(style1);
-					
-					// id tipo beneficio extension
-					cell = row.createCell(1);
-					//cell.setCellValue(e.getTipoBeneficiario().getId()+"-"+e.getTipoBeneficiario().getTipoBeneficiario());
-					cell.setCellStyle(style1);
-					
-					// nombre curso
-					cell = row.createCell(2);
-					cell.setCellValue(e.getNombre());
-					cell.setCellStyle(style1);
-					
-					// tipo curso
-					cell = row.createCell(3);
-					cell.setCellValue(asignarOpcionTipoEducacionContinuaHoja1(e.getTipoEduContinua().getId()));
-					cell.setCellStyle(style1);
-					
-					// fecha inicio curso
-					cell = row.createCell(4);
-					CellStyle styleDate = workbook.createCellStyle();
-					CreationHelper createHelper = workbook.getCreationHelper();
-					styleDate.setDataFormat(
-					    createHelper.createDataFormat().getFormat("dd/mm/yyyy"));
-					styleDate.setFillForegroundColor(style1.getFillForegroundColor());
-					styleDate.setFillPattern(style1.getFillPattern());
-					cell.setCellValue(e.getFechaInicio());
-					cell.setCellStyle(styleDate);
-					
-					// tipo documento participante
-					cell = row.createCell(5);
-					cell.setCellValue(asignarOpcionTipoDocumento(p.getPersona().getTipoDocumento().getId()));
-					cell.setCellStyle(style1);
-					
-					// num documento participante
-					cell = row.createCell(6);
-					cell.setCellValue(Double.parseDouble(p.getPersona().getNumeroDocumento()));
-					cell.setCellStyle(styleNumero2);
+				// codigo curso
+				Cell cell = row.createCell(0);
+				cell.setCellValue(dto.getCodigoCurso());
+				cell.setCellStyle(style1);
+				
+				// id tipo beneficio extension
+				cell = row.createCell(1);
+				System.out.println("imprime el beneficiario");
+				System.out.println(dto.getIdTipoBeneficiario());
+				cell.setCellValue(dto.getIdTipoBeneficiario());
+				cell.setCellStyle(style1);
+				
+				// nombre curso
+				cell = row.createCell(2);
+				cell.setCellValue(dto.getNombreCurso());
+				cell.setCellStyle(style1);
+				
+				// tipo curso
+				cell = row.createCell(3);
+				cell.setCellValue(asignarOpcionTipoEducacionContinuaHoja1(dto.getTipoCurso()));
+				cell.setCellStyle(style1);
+				
+				// fecha inicio curso
+				cell = row.createCell(4);
+				CellStyle styleDate = workbook.createCellStyle();
+				cell.setCellValue(dto.getFechaInicio());
+				
+				// tipo documento participante
+				cell = row.createCell(5);
+				cell.setCellValue(dto.getTipoDocumentoParticipante());
+				//cell.setCellStyle(style1);
+				
+				// num documento participante
+				cell = row.createCell(6);
+				cell.setCellValue(dto.getTipoDocumentoParticipante());
+				//cell.setCellStyle(styleNumero2);
 
-					// nombre y apellido participante
-					cell = row.createCell(7);
-					cell.setCellValue(p.getPersona().getPrimerNombre() + " " + p.getPersona().getSegundoNombre() + " "
-							+ p.getPersona().getPrimerApellido() + " " + p.getPersona().getSegundoApellido());
-					cell.setCellStyle(style1);
-					
-					// programa
-					cell = row.createCell(8);
-					// cell.setCellValue("2");
-					cell.setCellStyle(style1);
-					
-					// valor de curso
-					cell = row.createCell(9);
-					cell.setCellValue(e.getCostoEducacionContinua());
-					cell.setCellStyle(styleNumero2);
-					
-					// numero horas curso
-					cell = row.createCell(10);
-					cell.setCellValue(e.getDuracion());
-					cell.setCellStyle(style1);
+				// nombre y apellido participante
+				cell = row.createCell(7);
+				cell.setCellValue(dto.getNombreParticipante());
+				cell.setCellStyle(style1);
+				
+				// programa
+				cell = row.createCell(8);
+				cell.setCellValue(dto.getProgramaEstudiante());
+				cell.setCellStyle(style1);
+				
+				// valor de curso
+				cell = row.createCell(9);
+				cell.setCellValue(dto.getValorCurso());
+				cell.setCellStyle(styleNumero2);
+				
+				// numero horas curso
+				cell = row.createCell(10);
+				cell.setCellValue(dto.getNumHorasCurso());
+				cell.setCellStyle(style1);
+				
+				
+				
+				
+				if(k<cantidadPonentes  && dto.getIdCurso().equalsIgnoreCase(dto.getPonentes().get(k).getIdCurso())) {
 					
 					// docente impartió curso
 					cell = row.createCell(11);
-					cell.setCellValue(e.getDocenteResponsable().getPrimerNombre() + " "
-							+ e.getDocenteResponsable().getSegundoNombre() + " "
-							+ e.getDocenteResponsable().getPrimerApellido() + " "
-							+ e.getDocenteResponsable().getSegundoApellido());
+					cell.setCellValue(dto.getPonentes().get(k).getNombrePonente());
 					cell.setCellStyle(style1);
 					
 					// tipo documento docente impartió
 					cell = row.createCell(12);
-					cell.setCellValue(asignarOpcionTipoDocumento(e.getDocenteResponsable().getTipoDocumento().getId()));
+					cell.setCellValue(dto.getPonentes().get(k).getTipoDocumentoPonente());
 					cell.setCellStyle(style1);
 					
 					// numero documento docente impartió
 					cell = row.createCell(13);
-					cell.setCellValue(Double.parseDouble(e.getDocenteResponsable().getNumeroDocumento()));
+					cell.setCellValue(dto.getPonentes().get(k).getNumDocumentoPonente());
 					cell.setCellStyle(styleNumero2);
 					
-					i++;
+					
 				}
+				
+				
+				i++;
+				
 				numColor++;
 				j++;
+				k++;
+				
 			}
 
 			
@@ -331,10 +333,107 @@ public class ReportesExcel {
 		
 		return filename;
 	}
+	
+	public static String reporteDocentesParticipantesResponsables(List<InformeParticipanteResponsableDto> result, String nombre) {
+		String filename=rutaReportes+"informe_participante_snies_"+nombre+".xlsx";
+		Path rutaArchivo = Paths.get(rutaPlantillaDocentesResponsables);
+		FileInputStream file;
+		try {
+			file = new FileInputStream(rutaArchivo.toFile());
+			Workbook workbook = new XSSFWorkbook(file);
+			Sheet sheet = workbook.getSheetAt(0);
+			int i = 1;
+			for (InformeParticipanteResponsableDto dto : result) {
+				Row row = sheet.getRow(i);
+				System.out.println("i: " + i);
+				if (row == null) {
+					row = sheet.createRow(i);
+				}
+
+				// tipo documento
+				Cell cell = row.createCell(0);
+				cell.setCellValue(dto.getIdTipoDocumento());
 
 
-	public static String asignarOpcionTipoEducacionContinuaHoja0(Long idTipoEducacionContinua) {
-		switch (String.valueOf(idTipoEducacionContinua)) {
+				// numero documento
+				cell = row.createCell(1);
+				cell.setCellValue(dto.getNumDocumento());
+
+				// fecha expedicion documento
+				cell = row.createCell(2);
+				cell.setCellValue(dto.getFechaExpedicion());
+
+				// primer nombre
+				cell = row.createCell(3);
+				cell.setCellValue(dto.getPrimerNombre());
+
+				// segundo nombre
+				cell = row.createCell(4);
+				cell.setCellValue(dto.getSegundoNombre());
+				
+				// primer apellido
+				cell = row.createCell(5);
+				cell.setCellValue(dto.getPrimerApellido());
+
+				// segundo apellido
+				cell = row.createCell(6);
+				cell.setCellValue(dto.getSegundoApellido());
+				
+				// sexo biologico
+				cell = row.createCell(7);
+				cell.setCellValue(dto.getIdSexoBiologico());
+
+				// estado civil
+				cell = row.createCell(8);
+				cell.setCellValue(dto.getIdEstadoCivil());
+				
+				// fecha nacimiento
+				cell = row.createCell(9);
+				cell.setCellValue(dto.getFechaNacimiento());
+
+				// pais nacimiento
+				cell = row.createCell(10);
+				cell.setCellValue(dto.getIdPais());
+				
+				// municipio nacimiento
+				cell = row.createCell(11);
+				cell.setCellValue(dto.getIdMunicipio());
+
+				// telefono 
+				cell = row.createCell(12);
+				cell.setCellValue(dto.getTelefonoContacto());
+				
+				// email personal
+				cell = row.createCell(13);
+				cell.setCellValue(dto.getEmailPersonal());
+
+				// email institucional
+				cell = row.createCell(14);
+				cell.setCellValue(dto.getEmailInstitucional());
+				
+				// direccion institucional
+				cell = row.createCell(15);
+				cell.setCellValue(dto.getDireccionInstitucional());
+
+				i++;
+			}
+
+			
+			
+			File nuevoArchivo=Paths.get(filename).toAbsolutePath().toFile();
+			FileOutputStream outputStream = new FileOutputStream(nuevoArchivo.getAbsolutePath());
+			workbook.write(outputStream);
+			workbook.close();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return filename;
+	}
+
+
+	public static String asignarOpcionTipoEducacionContinuaHoja0(String idTipoEducacionContinua) {
+		switch (idTipoEducacionContinua) {
 		case "1":
 			return "1-CURSOS, CURSOS ESPECIALIZADOS (CERTIFICACIONES)";
 		case "2":
@@ -352,8 +451,8 @@ public class ReportesExcel {
 		}
 	}
 
-	public static String asignarOpcionTipoEducacionContinuaHoja1(Long idTipoEducacionContinua) {
-		switch (String.valueOf(idTipoEducacionContinua)) {
+	public static String asignarOpcionTipoEducacionContinuaHoja1(String idTipoEducacionContinua) {
+		switch (idTipoEducacionContinua) {
 		case "1":
 			return "Curso  (mínimo 16 horas)";
 		case "2":
@@ -371,8 +470,8 @@ public class ReportesExcel {
 		return null;
 	}
 
-	public static String asignarOpcionTipoDocumento(Long idTipoDocumento) {
-		switch (String.valueOf(idTipoDocumento)) {
+	public static String asignarOpcionTipoDocumento(String idTipoDocumento) {
+		switch (idTipoDocumento) {
 		case "1":
 			return "CC-CEDULA CIUDADANIA";
 		case "2":

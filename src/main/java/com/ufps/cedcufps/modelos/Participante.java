@@ -8,6 +8,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -76,6 +77,11 @@ public class Participante implements Serializable{
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "participante")
 	private List<Asistencia> asistencias;
+	
+	@JsonIgnore
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="id_tipo_persona", foreignKey=@ForeignKey(name = "FK_participante_type_people"))
+	private TipoPersona tipoPersona;
 	
 	@PrePersist
 	public void generarFecha() {
@@ -155,6 +161,14 @@ public class Participante implements Serializable{
 
 	public void setAsistencias(List<Asistencia> asistencias) {
 		this.asistencias = asistencias;
+	}
+
+	public TipoPersona getTipoPersona() {
+		return tipoPersona;
+	}
+
+	public void setTipoPersona(TipoPersona tipoPersona) {
+		this.tipoPersona = tipoPersona;
 	}
 
 	

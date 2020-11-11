@@ -29,7 +29,7 @@
             <div class="col-md-6 d-flex align-items-center justify-content-between justify-content-md-start mb-3 mb-md-0">
               <!-- Page title + Go Back button -->
               <div class="d-inline-block">
-                <h5 class="h4 d-inline-block font-weight-400 mb-0 text-dark" ><strong>Detalles</strong></h5>
+                <h5 class="h4 d-inline-block font-weight-400 mb-0 text-dark" ><strong>INSCRIPCIÓN</strong></h5>
 	              
               </div>
             </div>
@@ -37,23 +37,6 @@
           </div>
         </div>
         <hr/>
-        <ul class="nav" sec:authorize="hasAnyRole('ROLE_SUPERADMIN')">
-		  <li class="nav-item">
-		    <a class="nav-link red-ufps" th:href="@{/educacion-continua/{id}/registro(id=${educacionContinua.id})}"><i class="fas fa-edit"></i> Editar</a>
-		  </li>
-		  <li class="nav-item">
-		    <a class="nav-link red-ufps" th:href="@{/educacion-continua/{id}/ponentes(id=${educacionContinua.id})}"><i class="fas fa-user-circle"></i> Ponentes</a>
-		  </li>
-		  <li class="nav-item">
-		    <a class="nav-link red-ufps" th:href="@{/educacion-continua/{id}/jornadas(id=${educacionContinua.id})}"><i class="far fa-calendar-alt"></i> Jornadas</a>
-		  </li>
-		  <li class="nav-item">
-		    <a class="nav-link red-ufps" th:href="@{/educacion-continua/{id}/listado-participantes(id=${educacionContinua.id})}"><i class="fas fa-clipboard-list"></i> Listado Participantes</a>
-		  </li>
-		  <li class="nav-item">
-		    <a class="nav-link red-ufps" th:href="@{/educacion-continua/{id}/personalizar-diploma(id=${educacionContinua.id})}"><i class="fas fa-money-check"></i> Personalizar Diploma</a>
-		  </li>
-		</ul>
 		<div class="row">
         
         <div class="col-md-12">
@@ -78,27 +61,33 @@
 	    				<tbody>
 		    				<tr>
 		    					<td class="h6 text-sm"><strong>Tipo</strong></td>
-		    					<td class="text-sm" th:text="${educacionContinua.tipoEduContinua.tipoEduContinua}"></td>
+		    					<td class="text-sm" th:text="${requisitosInscripcion.educacionContinua.tipoEduContinua}"></td>
 		    				</tr>
 		    				<tr>
 		    					<td class="h6 text-sm"><strong>Nombre</strong></td>
-		    					<td class="text-sm" th:text="${educacionContinua.nombre}"></td>
+		    					<td class="text-sm" th:text="${requisitosInscripcion.educacionContinua.nombre}"></td>
 		    				</tr>
 		    				<tr>
 		    					<td class="h6 text-sm"><strong>Fecha Inicio</strong></td>
-		    					<td class="text-sm" th:text="${#strings.capitalizeWords(#dates.format(educacionContinua.fechaInicio, 'dd MMMM yyyy'))}"></td>
+		    					<td class="text-sm" th:text="${#strings.capitalizeWords(#dates.format(requisitosInscripcion.educacionContinua.fechaInicio, 'dd MMMM yyyy'))}"></td>
 		    				</tr>
 		    				<tr>
 		    					<td class="h6 text-sm"><strong>Fecha Fin</strong></td>
-		    					<td class="text-sm" th:text="${#strings.capitalizeWords(#dates.format(educacionContinua.fechaFin, 'dd MMMM yyyy'))}"></td>
+		    					<td class="text-sm" th:text="${#strings.capitalizeWords(#dates.format(requisitosInscripcion.educacionContinua.fechaFin, 'dd MMMM yyyy'))}"></td>
 		    				</tr>
 		    				<tr>
 		    					<td class="h6 text-sm"><strong>Duración (horas)</strong></td>
-		    					<td class="text-sm" th:text="${educacionContinua.duracion}"></td>
+		    					<td class="text-sm" th:text="${requisitosInscripcion.educacionContinua.duracion}"></td>
 		    				</tr>
 		    				<tr>
 		    					<td class="h6 text-sm"><strong>Lugar</strong></td>
-		    					<td class="text-sm" th:text="${educacionContinua.lugar}"></td>
+		    					<td class="text-sm" th:text="${requisitosInscripcion.educacionContinua.lugar}"></td>
+		    				</tr>
+		    				<tr>
+		    					<td class="h6 text-sm"><strong>Abierto a</strong></td>
+		    					<td class="text-sm">
+		    						<span class="badge badge-dark mr-1" th:each="tb:${requisitosInscripcion.educacionContinua.tipoBeneficiarios}" th:text="${tb.homologacion}"></span>
+		    					</td>
 		    				</tr>
 		    			</tbody>
 	    			</table>
@@ -109,8 +98,8 @@
 		            		<thead><tr><td><span class="text-white badge badge-red-ufps">Imagen</span></td></tr></thead>
 		            		<tbody>
 		            		<tr><td>
-				              <a th:href="@{'/'+${educacionContinua.imagen}}" data-fancybox data-caption="My caption">
-								 <img th:src="@{'/'+${educacionContinua.imagen}}" class="img-fluid rounded">
+				              <a th:href="@{'/'+${requisitosInscripcion.educacionContinua.imagen}}" data-fancybox data-caption="My caption">
+								 <img th:src="@{'/'+${requisitosInscripcion.educacionContinua.imagen}}" class="img-fluid rounded">
 							  </a>
 							  </td></tr></tbody>
 		            	</table>
@@ -129,37 +118,44 @@
 		    				<tbody>
 			    				<tr>
 			    					<td class="h6 text-sm"><strong>Fecha Límite Inscripción</strong></td>
-			    					<td class="text-sm" th:text="${#strings.capitalizeWords(#dates.format(educacionContinua.fechaLimInscripcion, 'dd MMMM yyyy'))}"></td>
+			    					<td class="text-sm" th:text="${#strings.capitalizeWords(#dates.format(requisitosInscripcion.educacionContinua.fechaLimInscripcion, 'dd MMMM yyyy'))}"></td>
 			    				</tr>
 			    				<tr>
 			    					<td class="h6 text-sm"><strong>Costo</strong></td>
-			    					<td class="text-sm" th:text="${educacionContinua.costo}"></td>
+			    					<td class="text-sm" th:text="${requisitosInscripcion.educacionContinua.costoInscripcion}"></td>
 			    				</tr>
 			    				<tr>
 			    					<td class="h6 text-sm"><strong>Cantidad (Máx) Participantes</strong></td>
-			    					<td class="text-sm" th:text="${educacionContinua.cantMaxParticipantes}"></td>
+			    					<td class="text-sm" th:text="${requisitosInscripcion.educacionContinua.cantMaxParticipantes}"></td>
 			    				</tr>
 			    				<tr>
 			    					<td class="h6 text-sm"><strong>Participantes Inscritos</strong></td>
-			    					<td class="text-sm">New York</td>
+			    					<td class="text-sm" th:text="${requisitosInscripcion.totalInscritos}"></td>
 			    				</tr>
 			    			</tbody>
 		    			</table>
-		            	<div th:if="${participante == null}">
+		            	<div th:if="${requisitosInscripcion.isHasCupos() and requisitosInscripcion.isHasCoincidenciasBeneficiario() and not requisitosInscripcion.isEstaInscrito() }">
 						<a href="#" onclick="realizarInscripcion()" 
 									class="btn btn-primary btn-sm" id="btn_inscripcion">INSCRIBETE!
 								</a>
 						
 						</div>
+						<div th:if="${not requisitosInscripcion.isHasCoincidenciasBeneficiario()}">
+							<span class="badge badge-info">No puedes inscribirte, no perteneces al público al cual se ofertó</span>
+						</div>
+						<div th:if="${not requisitosInscripcion.isHasCupos() and requisitosInscripcion.isHasCoincidenciasBeneficiario() }">
+							<span class="badge badge-info">No puedes inscribirte, el cupo esta completo</span>
+						</div>
 						
-						<div th:if="${participante != null and participante.tipoParticipante.tipoParticipante == 'Asistente'}">
+						<div th:if="${requisitosInscripcion.isEstaInscrito() and requisitosInscripcion.participante.tipoParticipante == 'Asistente'}">
 							<a href="#" onclick="cancelarInscripcion()" 
 									class="btn btn-primary btn-sm" id="btn_inscripcion">CANCELAR INSCRIPCIÓN!
 								</a>
 						</div>
-						<div th:if="${participante != null and participante.tipoParticipante.tipoParticipante == 'Ponente'}">
+						<div th:if="${requisitosInscripcion.isEstaInscrito() and requisitosInscripcion.participante.tipoParticipante == 'Ponente'}">
 							<span class="badge badge-dark">Te encuentras inscrito(a) como 'PONENTE'</span>
 						</div>
+						
 		              
 		            </div>
 		            <div class="col-12 col-md-6">
@@ -172,19 +168,19 @@
 		    				<tbody>
 			    				<tr>
 			    					<td class="h6 text-sm"><strong>Requisitos</strong></td>
-			    					<td class="text-sm" th:text="${educacionContinua.requisitos}"></td>
+			    					<td class="text-sm" th:text="${requisitosInscripcion.educacionContinua.requisitos}"></td>
 			    				</tr>
 			    				<tr>
 			    					<td class="h6 text-sm"><strong>Contenido General</strong></td>
-			    					<td class="text-sm" th:text="${educacionContinua.contenidoGeneral}"></td>
+			    					<td class="text-sm" th:text="${requisitosInscripcion.educacionContinua.contenidoGral}"></td>
 			    				</tr>
 			    				<tr>
 			    					<td class="h6 text-sm"><strong>Objetivos</strong></td>
-			    					<td class="text-sm" th:text="${educacionContinua.objetivo}"></td>
+			    					<td class="text-sm" th:text="${requisitosInscripcion.educacionContinua.objetivo}"></td>
 			    				</tr>
 			    				<tr>
 			    					<td class="h6 text-sm"><strong>Resumen</strong></td>
-			    					<td class="text-sm" th:text="${educacionContinua.resumen}"></td>
+			    					<td class="text-sm" th:text="${requisitosInscripcion.educacionContinua.resumen}"></td>
 			    				</tr>
 			    			</tbody>
 		    			</table>
@@ -215,9 +211,12 @@
   <!-- Core JS - includes jquery, bootstrap, popper, in-view and sticky-kit -->
   <div th:replace="layouts/layout :: scripts"></div>
   <script th:inline="javascript">
-  var idEduContinua= [[${educacionContinua.id}]];
+  var idEduContinua= [[${requisitosInscripcion.educacionContinua.id}]];
+  var listTipoPersonaValidInscripcion= [[${requisitosInscripcion.listTipoPersonaValidInscripcion}]];
   console.log("idEduContinua");
   console.log(idEduContinua);
+  console.log("tipos persona para inscripcion");
+  console.log(listTipoPersonaValidInscripcion);
   </script>
   <script th:src="@{/js/inscripcion.js}" type="text/javascript"></script>
 </body>

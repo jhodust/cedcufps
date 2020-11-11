@@ -21,6 +21,8 @@ public class Genero implements Serializable{
 	private Long id;
 	
 	private String genero;
+	
+	private String descripcion;
 
 	public Long getId() {
 		return id;
@@ -38,5 +40,14 @@ public class Genero implements Serializable{
 		this.genero = genero;
 	}
 
+	public String getDescripcion() {
+		return descripcion;
+	}
+
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
+
+	
 	
 }

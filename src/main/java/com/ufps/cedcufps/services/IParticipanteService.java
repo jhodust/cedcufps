@@ -18,7 +18,7 @@ public interface IParticipanteService {
 	
 	public List<Participante> findAllParticipante();
 	
-	public ParticipanteDto saveAsistente(Long idEduContinua);
+	public ParticipanteDto saveAsistente(Long idEduContinua, Long idTipoPersona);
 	
 	public Optional<Participante> findOne(Long id);
 	

@@ -73,6 +73,8 @@ public class PonenteRestController {
 		}
 		System.out.println("va a guardar ponente");
 		ParticipanteDto dto = participanteService.savePonente(ponente);
+		System.out.println("dtooooooooooooooo");
+		System.out.println(dto);
 		return new ResponseEntity<>(dto,HttpStatus.OK);
 	}
 	

@@ -74,5 +74,8 @@ public interface IParticipanteDao extends JpaRepository<Participante, Long>{
 	@Query(value="update participantes set tarjeta_inscripcion = ?1 where id = ?2 ", nativeQuery = true)
 	public void updateTarjetaInscripcion(String tarjetaInscripcion, Long idParticipante);
 	
+	@Query(value="select count(*) from participantes where educacion_continua_id = ?1 and id_tipo_participante = '1'", nativeQuery = true)
+	public int countTotalParticipantes(Long idEduContinua);
+	
 	
 }

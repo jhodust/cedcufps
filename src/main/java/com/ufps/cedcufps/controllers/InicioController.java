@@ -33,6 +33,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.ufps.cedcufps.dto.UsuarioDto;
 import com.ufps.cedcufps.modelos.Departamento;
 import com.ufps.cedcufps.modelos.EducacionContinua;
+import com.ufps.cedcufps.modelos.EducacionContinuaTipoBeneficiario;
 import com.ufps.cedcufps.modelos.Estudiante;
 import com.ufps.cedcufps.modelos.Externo;
 import com.ufps.cedcufps.modelos.Participante;
@@ -60,6 +61,7 @@ public class InicioController {
 		model.addAttribute("educacionesRecientes",educacionContinuaService.educacionContinuaRecientes());
 		model.addAttribute("educacionesContinuas",edc);
 		model.addAttribute("page",pageRender);
+		
 		//educacionContinuaService.generarReporteSNIESEducacionContinua(new Date(), 0);
 		return "index";
 	}

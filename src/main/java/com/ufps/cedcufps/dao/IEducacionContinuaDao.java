@@ -1,5 +1,6 @@
 package com.ufps.cedcufps.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -43,6 +44,9 @@ public interface IEducacionContinuaDao extends JpaRepository<EducacionContinua, 
 	
 	public EducacionContinua findByNombre(String educacionContinua);
 	
+	@Query(value="select e from EducacionContinua e where e.nombre = ?1 and e.fechaInicio = ?2")
+	public EducacionContinua findByNombreAndFechaInicio(String educacionContinua, Date fechaInicio);
+	
 	@Query(value= "select * from educacion_continua e where e.id=?1", nativeQuery = true)
 	public EducacionContinua findEducacionContinuaById(Long id);
 	
@@ -84,6 +88,7 @@ public interface IEducacionContinuaDao extends JpaRepository<EducacionContinua, 
 	@Query(value = "delete from educacion_continua_tipo_beneficiario where id_educacion_continua = ?1", nativeQuery = true)
 	public void deleteBeneficiarios(Long idEducacionContinua);
 	
-	
+	@Query("select distinct e from EducacionContinua e where e.programaResponsable.id = ?1 ")
+	public List<EducacionContinua> findEducacionContinuaByIdPrograma(Long idPrograma);
 	
 }

@@ -51,7 +51,7 @@
 														id="selectTipoDoc">
 														<option value="0">Seleccione Tipo Documento...</option>
 														<option th:each="t: ${tipos_documento}" th:value="${t.id}"
-															th:text="${t.tipoDocumento}" th:selected="${persona.tipoDocumento == t.id}"></option>
+															th:text="${t.tipoDocumento + ' - ' +t.descripcion}" th:selected="${persona.tipoDocumento == t.id}"></option>
 													</select> <small class="form-text text-danger"><strong></strong></small>
 												</div>
 											</div>
@@ -429,11 +429,11 @@
 							</div>
 						</div>
 						<center>
-										<button type="button"
-											class="btn btn-sm btn-red-ufps">Cancelar</button>
+						<a th:href="@{/}" type="button"
+											class="btn btn-sm btn-red-ufps"><i class="fas fa-times"></i> Cancelar</a>
 										
 										<button type="submit"
-											class="btn btn-sm btn-red-ufps save">Guardar</button>
+											class="btn btn-sm btn-red-ufps save"><i class="fas fa-save"></i> Guardar</button>
 								
 							</center>	
 								</div>

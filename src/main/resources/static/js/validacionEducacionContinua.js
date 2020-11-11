@@ -1,5 +1,7 @@
+
 $(document).ready(function(){
 	console.log("documento listo");
+	
 	$("#temaPonente").focusout(function(){
     if($("#temaPonente").val() == ""){
 		document.getElementById('temaPonente').classList.add("is-invalid");
@@ -26,18 +28,67 @@ $(document).ready(function(){
   
   
   
-  $("#departamento").focusout(function(){
-    if($("#departamento").val() == ""){
-		document.getElementById('departamento').classList.add("is-invalid");
-	}else{
-		document.getElementById('departamento').classList.remove("is-invalid");
-	}
+  $("#nombreEdc").focusout(function(){
+	  validateInputTextRequerido('nombreEdc','errNombreEdc');
   });
   
-  $("#departamento").bind('keypress', function(event) {
-	  return text(event);
+  $("#fechaInicioEduCont").focusout(function(){
+	  validateInputTextRequerido('fechaInicioEduCont','errFechaInicioEdc');
+	  });
+  
+  $("#fechaFinEduCont").focusout(function(){
+	  validateInputTextRequerido('fechaFinEduCont','errFechaFinEdc');
+	    
+	  });
+  $("#fechaLimInscripcionEduCont").focusout(function(){
+	  validateInputTextRequerido('fechaLimInscripcionEduCont','errFechaLimInscEdc');
+	    
+	  });
+  $("#duracion").focusout(function(){
+	  validateInputNumberRequerido('duracion','errDuracionEdc');
+	    
+	  });
+  
+  $("#duracion").bind('keypress', function(event) {
+	  return numbers(event);
 	});
+  
+  $("#costoTotalEdc").focusout(function(){
+	  validateInputNumberRequerido('costoTotalEdc','errCostoTotalEdc');
+	    
+	  });
+
+$("#costoTotalEdc").bind('keypress', function(event) {
+	  return numbers(event);
+	});
+
+$("#costoInscripcionEdc").focusout(function(){
+	validateInputNumberNotRequired('costoInscripcionEdc','errCostoInscripEdc');
+  });
+
+$("#costoInscripcionEdc").bind('keypress', function(event) {
+  return numbers(event);
+});
+
+$("#cantMaxPartEdc").focusout(function(){
+	validateInputNumberNotRequired('cantMaxPartEdc','errCantPartEdc');
+  });
+
+$("#cantMaxPartEdc").bind('keypress', function(event) {
+  return numbers(event);
+});
+
+$("#porcentajeAsistenciaEdc").focusout(function(){
+	validateInputPorcentaje('porcentajeAsistenciaEdc','errPorcAsisEdc');
+  });
+
+$("#porcentajeAsistenciaEdc").bind('keypress', function(event) {
+  return numbers(event);
+});
 	
+$("#lugarEdc").focusout(function(){
+	validateInputTextRequerido('lugarEdc','errLugarEdc');
+  });
 	 $("#programa").focusout(function(){
     if($("#programa").val() == ""){
 		document.getElementById('programa').classList.add("is-invalid");
@@ -81,3 +132,4 @@ function text(event){
 	    return false;
 	  }
 }
+

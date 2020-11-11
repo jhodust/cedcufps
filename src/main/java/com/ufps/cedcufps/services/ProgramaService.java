@@ -24,6 +24,8 @@ import com.ufps.cedcufps.dao.IPersonaRolCustomDao;
 import com.ufps.cedcufps.dao.IProgramaDao;
 import com.ufps.cedcufps.dao.IRolDao;
 import com.ufps.cedcufps.dao.ITipoPersonaDao;
+import com.ufps.cedcufps.dto.PersonaRolDto;
+import com.ufps.cedcufps.dto.PersonaRolEducacionContinuaDto;
 import com.ufps.cedcufps.dto.ProgramaDto;
 import com.ufps.cedcufps.exception.CustomException;
 import com.ufps.cedcufps.mapper.IProgramaMapper;
@@ -116,7 +118,7 @@ public class ProgramaService implements IProgramaService {
 				this.asignarPermisosDirector(p.getDirectorPrograma().getId(), p.getCodigo());
 			}
 		}catch(Exception e) {
-			
+			e.printStackTrace();
 		}
 		
 	}
@@ -147,66 +149,39 @@ public class ProgramaService implements IProgramaService {
 
 	}
 	
+	@Override
+	public Programa findProgramaByDirector(Long idDir) {
+		return programaDao.findByDirector(idDir);
+	}
+	
 	public void asignarPermisosDirector(Long idDirPrograma, String codigo) {
 		Programa p=programaDao.findByCodigo(codigo);
 		
+		
 		/*****************rol para administrar eventos del programa del cual es director*****************/
-		Rol r= rolDao.findByAuthority("ROLE_MANAECCU");
-		Persona per= personaDao.findById(idDirPrograma).get();
-		PersonaRol pr= new PersonaRol();
-		pr.setRol(r);
-		pr.setPersona(per);
-		RolPersonaEduCPrograma rpecp1= new RolPersonaEduCPrograma();
-		rpecp1.setRolPersona(pr);
-		rpecp1.setPrograma(p);
 		
-		pr.addProgramaForEduContinua(rpecp1);
-		personaRolCustomDao.save(pr);
+		personaRolCustomDao.save("ROLE_MANAECCU",idDirPrograma);
 		
-		/******************rol para administrar estudiantes del programa del cual es director*****************/
-		r= rolDao.findByAuthority("ROLE_MANPEOPLE");
-		PersonaRol pr2= new PersonaRol();
-		pr2.setRol(r);
-		pr2.setPersona(per);
+		personaRolCustomDao.savePermisoParaEducacionContinua("ROLE_MANAECCU",idDirPrograma,p.getId());
 		
-		RolPersonaTipoPersona rptp= new RolPersonaTipoPersona();
-		TipoPersona tp= tipoPersonaDao.findByTipoPersona("Estudiante");
-		rptp.setRolPersona(pr2);
-		rptp.setTipoPersona(tp);
+		/*
+		 * ****************************rol para administrar personas ***********************
+		 */
+		personaRolCustomDao.save("ROLE_MANPEOPLE",idDirPrograma);
+		personaRolCustomDao.savePermisoParaTipoPersonas("ROLE_MANPEOPLE", idDirPrograma, "Estudiante");
+		personaRolCustomDao.savePermisoParaTipoPersonas("ROLE_MANPEOPLE", idDirPrograma, "Graduado");
+		personaRolCustomDao.savePermisoParaTipoPersonas("ROLE_MANPEOPLE", idDirPrograma, "Administrativo");
+		personaRolCustomDao.savePermisoParaTipoPersonas("ROLE_MANPEOPLE", idDirPrograma, "Externo");
 		
-		RolPersonaPerPrograma rppp= new RolPersonaPerPrograma();
-		rppp.setRolPersonaTipPer(rptp);
-		rppp.setPrograma(p);
+		personaRolCustomDao.savePermisoParaPersonaPrograma("ROLE_MANPEOPLE", idDirPrograma, "Estudiante", p.getId());
+		personaRolCustomDao.savePermisoParaPersonaPrograma("ROLE_MANPEOPLE", idDirPrograma, "Graduado", p.getId());
 		
-		rptp.addPersonaPerPrograma(rppp);
-		pr2.addTipoPersonaForGestionPersona(rptp);
-		/********************rol para administrar graduados del programa del cual es director********************/
-		RolPersonaTipoPersona rptp2= new RolPersonaTipoPersona();
-		TipoPersona tp2= tipoPersonaDao.findByTipoPersona("Graduado");
-		rptp2.setRolPersona(pr2);
-		rptp2.setTipoPersona(tp2);
-		RolPersonaPerPrograma rppp2= new RolPersonaPerPrograma();
-		rppp2.setRolPersonaTipPer(rptp2);
-		rppp2.setPrograma(p);
-		rptp2.addPersonaPerPrograma(rppp2);
-		pr2.addTipoPersonaForGestionPersona(rptp2);
-		
-		/********************rol para administrar administrativos********************/
-		RolPersonaTipoPersona rptp3= new RolPersonaTipoPersona();
-		TipoPersona tp3= tipoPersonaDao.findByTipoPersona("Administrativo");
-		rptp3.setRolPersona(pr2);
-		rptp3.setTipoPersona(tp3);
-		pr2.addTipoPersonaForGestionPersona(rptp3);
-		
-		/********************rol para administrar externos********************/
-		RolPersonaTipoPersona rptp4= new RolPersonaTipoPersona();
-		TipoPersona tp4= tipoPersonaDao.findByTipoPersona("Externo");
-		rptp4.setRolPersona(pr2);
-		rptp4.setTipoPersona(tp4);
-		pr2.addTipoPersonaForGestionPersona(rptp4);
+		/*
+		 * ****************************rol para administrar informe snies***********************
+		 */
+		personaRolCustomDao.save("ROLE_SNIES",idDirPrograma);
 		
 		
-		personaRolCustomDao.save(pr2);
 	}
 
 	@Override

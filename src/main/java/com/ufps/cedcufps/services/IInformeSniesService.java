@@ -2,13 +2,17 @@ package com.ufps.cedcufps.services;
 
 import java.util.List;
 import java.util.Optional;
+
+import com.ufps.cedcufps.dto.InformeSniesDto;
+import com.ufps.cedcufps.modelos.EducacionContinua;
 import com.ufps.cedcufps.modelos.InformeSnies;
+import com.ufps.cedcufps.utils.ReportesExcel;
 
 public interface IInformeSniesService {
 
-	public List<InformeSnies> findAll();
+	public List<InformeSniesDto> findAll();
 	
-	public void save(InformeSnies i);
 	
-	public Optional<InformeSnies> findOne(Long id);
+	public void generarReporteSNIES(String fechaInicio, String fechaFin);
+	
 }

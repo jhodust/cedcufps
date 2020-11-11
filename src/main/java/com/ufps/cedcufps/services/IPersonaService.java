@@ -8,6 +8,7 @@ import org.springframework.data.jpa.datatables.mapping.DataTablesOutput;
 import com.ufps.cedcufps.dto.DocenteDto;
 import com.ufps.cedcufps.dto.PerfilRolUsuarioDto;
 import com.ufps.cedcufps.dto.PersonaDto;
+import com.ufps.cedcufps.dto.PersonaDtoLogueada;
 import com.ufps.cedcufps.dto.UsuarioAppDto;
 import com.ufps.cedcufps.dto.UsuarioDto;
 import com.ufps.cedcufps.modelos.Administrativo;
@@ -72,6 +73,10 @@ public interface IPersonaService {
 	public boolean isDirPrograma();
 	
 	public boolean isDirPrograma(Persona p);
+
+	public boolean isDocente();
+	
+	public boolean isDocente(Persona p);
 	
 	public boolean hasPermissionForPeople(Long idPersona);
 	
@@ -89,5 +94,8 @@ public interface IPersonaService {
 			boolean isDirPrograma, boolean isDocente,Long idProgramaDirector);
 	
 	public DataTablesOutput<PersonaDto> findPossiblePonente(int tipoBusqueda, String value);
+	
+	
+	public PersonaDtoLogueada findPersonaLogueadaDto(Persona p);
 
 }

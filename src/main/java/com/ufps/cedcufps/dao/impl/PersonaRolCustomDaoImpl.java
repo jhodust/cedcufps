@@ -1,5 +1,9 @@
 package com.ufps.cedcufps.dao.impl;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -7,10 +11,18 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.transaction.Transactional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementCreator;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import com.ufps.cedcufps.dao.IPersonaRolCustomDao;
+import com.ufps.cedcufps.dto.EducacionContinuaWebDto;
+import com.ufps.cedcufps.dto.PersonaRolDto;
+import com.ufps.cedcufps.dto.PersonaRolEducacionContinuaDto;
 import com.ufps.cedcufps.exception.CustomException;
 import com.ufps.cedcufps.modelos.PersonaRol;
 
@@ -20,19 +32,77 @@ public class PersonaRolCustomDaoImpl implements IPersonaRolCustomDao {
 	@PersistenceContext
 	private EntityManager em;
 
+	@Autowired
+	private JdbcTemplate jdbcTemplate;
+	
 	@Transactional
 	@Override
-	public void save(PersonaRol p) {
+	public void save(String authority, Long idPersona) {
 		// TODO Auto-generated method stub
-		em.persist(p);
-	}
+		em.createNativeQuery("insert into personas_x_roles (id_rol,id_persona) values ((select id from roles where authority = ?1), ?2)")
+		.setParameter(1, authority)
+		.setParameter(2, idPersona)
+		.executeUpdate();
 
+	}
+	
+	
+	@Transactional
+	@Override
+	public void savePermisoParaEducacionContinua(String authority, Long idPersona, Long idPrograma) {
+		// TODO Auto-generated method stub
+		//borrar todos los permisos menos el de tomar asistencia y el de user (default)
+		em.createNativeQuery("insert into roles_personas_programas_ec (id_rol,id_persona,id_programa) values ((select id from roles where authority = ?1), ?2, ?3)")
+		.setParameter(1, authority)
+		.setParameter(2, idPersona)
+		.setParameter(3, idPrograma)
+		.executeUpdate();
+	}
+	
+	@Transactional
+	@Override
+	public void savePermisoParaTipoPersonas(String authority, Long idPersona, String tipoPersona) {
+		// TODO Auto-generated method stub
+		//borrar todos los permisos menos el de tomar asistencia y el de user (default)
+		em.createNativeQuery("insert into rol_persona_tip_pers (id_rol,id_persona,id_tipo_persona) values ((select id from roles where authority = ?1), ?2, (select id from tipos_persona where tipo_persona = ?3))")
+		.setParameter(1, authority)
+		.setParameter(2, idPersona)
+		.setParameter(3, tipoPersona)
+		.executeUpdate();
+	}
+	
+	@Transactional
+	@Override
+	public void savePermisoParaPersonaPrograma(String authority, Long idPersona, String tipoPersona, Long idPrograma) {
+		// TODO Auto-generated method stub
+		//borrar todos los permisos menos el de tomar asistencia y el de user (default)
+		em.createNativeQuery("insert into rol_persona_programa_per (id_rol,id_persona,id_tipo_persona,id_programa) values ((select id from roles where authority = ?1), ?2, (select id from tipos_persona where tipo_persona = ?3), ?4)")
+		.setParameter(1, authority)
+		.setParameter(2, idPersona)
+		.setParameter(3, tipoPersona)
+		.setParameter(4, idPrograma)
+		.executeUpdate();
+	}
+	
+	@Transactional
+	@Override
+	public void savePermisoParaPersonaDepartamento(String authority, Long idPersona, String tipoPersona, Long idDepartamento) {
+		// TODO Auto-generated method stub
+		//borrar todos los permisos menos el de tomar asistencia y el de user (default)
+		em.createNativeQuery("insert into rol_persona_depto_per (id_rol,id_persona,id_tipo_persona,id_depto) values ((select id from roles where authority = ?1), ?2, (select id from tipos_persona where tipo_persona = ?3), ?4)")
+		.setParameter(1, authority)
+		.setParameter(2, idPersona)
+		.setParameter(3, tipoPersona)
+		.setParameter(4, idDepartamento)
+		.executeUpdate();
+	}
+	
 	@Transactional
 	@Modifying
 	@Override
 	public void deleteRolesDirPrograma(Long idPersona) {
 		// TODO Auto-generated method stub
-		
+		//borrar todos los permisos menos el de tomar asistencia y el de user (default)
 		em.createNativeQuery("delete from personas_x_roles where id_persona=?1 and id_rol NOT IN (select id from roles where authority='ROLE_ATTENDANCE' or authority='ROLE_USER')")
 		.setParameter(1, idPersona)
 		.executeUpdate();

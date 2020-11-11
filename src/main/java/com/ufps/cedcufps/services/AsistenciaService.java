@@ -1,5 +1,7 @@
 package com.ufps.cedcufps.services;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -40,9 +42,15 @@ public class AsistenciaService implements IAsistenciaService {
 	}
 
 	@Override
-	public List<?> countAsistenciasByJornadas(String eduContinua) {
+	public List<?> countAsistenciasByJornadas(String eduContinua, String fechaInicio) {
 		// TODO Auto-generated method stub
-		return asistenciaDao.countByJornada(eduContinua);
+		try {
+			return asistenciaDao.countByJornada(eduContinua,new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(fechaInicio));
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	@Override

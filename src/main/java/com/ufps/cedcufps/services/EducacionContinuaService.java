@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.itextpdf.text.log.SysoLogger;
 import com.ufps.cedcufps.dao.IClasificacionCineDao;
+import com.ufps.cedcufps.dao.IDiplomaCustomDao;
 import com.ufps.cedcufps.dao.IDiplomaDao;
 import com.ufps.cedcufps.dao.IDocenteDao;
 import com.ufps.cedcufps.dao.IEducacionContinuaCustomDao;
@@ -35,6 +36,7 @@ import com.ufps.cedcufps.dto.InfoEducacionContinuaDto;
 import com.ufps.cedcufps.dto.EducacionContinuaAppDto;
 import com.ufps.cedcufps.dto.JornadaAppDto;
 import com.ufps.cedcufps.dto.ParticipanteDto;
+import com.ufps.cedcufps.dto.RequisitosInscripcionDto;
 import com.ufps.cedcufps.dto.TipoBeneficiarioDto;
 import com.ufps.cedcufps.exception.CustomException;
 import com.ufps.cedcufps.mapper.IEducacionContinuaMapper;
@@ -44,10 +46,14 @@ import com.ufps.cedcufps.modelos.Departamento;
 import com.ufps.cedcufps.modelos.Diploma;
 import com.ufps.cedcufps.modelos.Docente;
 import com.ufps.cedcufps.modelos.EducacionContinua;
+import com.ufps.cedcufps.modelos.EducacionContinuaTipoBeneficiario;
+import com.ufps.cedcufps.modelos.FirmaDiploma;
+import com.ufps.cedcufps.modelos.ImagenDiploma;
 import com.ufps.cedcufps.modelos.Jornada;
 import com.ufps.cedcufps.modelos.Participante;
 import com.ufps.cedcufps.modelos.Persona;
 import com.ufps.cedcufps.modelos.Programa;
+import com.ufps.cedcufps.modelos.TextoDiploma;
 import com.ufps.cedcufps.modelos.TipoBeneficiario;
 import com.ufps.cedcufps.modelos.TipoEducacionContinua;
 import com.ufps.cedcufps.utils.Archivo;
@@ -98,6 +104,12 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 	
 	@Autowired
 	private IProgramaDao programaDao;
+	
+	@Autowired
+	private IParticipanteService participanteService;
+	
+	@Autowired 
+	private IDiplomaCustomDao diplomaCustomDao;
 	
 	@Override
 	public List<EducacionContinua> findAll() {
@@ -180,27 +192,8 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 		educacionContinuaDao.updateConsecutivo(consecutivo, idEduContinua);
 	}
 
-	@Override
-	public String generarReporteSNIESFormatoEducacionContinua(String anio) {
-		// TODO Auto-generated method stub
-		List<EducacionContinua> educacionesContinuas=(List<EducacionContinua>)educacionContinuaDao.findAllEducacionContinuaByAnioReporte(Integer.parseInt(anio));
-		System.out.println("******************************PREPARANDO INFORME EXCEL 1******************");
-		return ReportesExcel.reporteEducacionContinua(educacionesContinuas,anio);
-		//ReportesExcel.reporteCursos("/formatos_reportes_excel/formato_cursos.xlsx",educacionesContinuas,año);
-		//ReportesExcel.reporteEducacionContinuaHoja1("/formatos_reportes_excel/nuevo.xlsx",educacionesContinuas);
-		
-	}
 	
-	@Override
-	public String generarReporteSNIESFormatoCurso(String anio) {
-		// TODO Auto-generated method stub
-		List<EducacionContinua> educacionesContinuas=(List<EducacionContinua>)educacionContinuaDao.findAllEducacionContinuaByAnioReporte(Integer.parseInt(anio));
-		System.out.println("******************************PREPARANDO INFORME EXCEL 2******************");
-		//ReportesExcel.reporteEducacionContinua("/formatos_reportes_excel/formato_educacion_continua.xlsx",educacionesContinuas,año);
-		return ReportesExcel.reporteCursos(educacionesContinuas,anio);
-		//ReportesExcel.reporteEducacionContinuaHoja1("/formatos_reportes_excel/nuevo.xlsx",educacionesContinuas);
-		
-	}
+	
 
 	@Override
 	public List<ClasificacionCine> findAllClasificacionCine() {
@@ -233,9 +226,27 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 	}
 	
 	@Override
-	public EducacionContinuaWebDto editarEducacionContinuaByNombre(String educacionContinua) {
+	public EducacionContinua findOneByNombreAndFecha(String educacionContinua, String fechaInicio) {
 		// TODO Auto-generated method stub
-		return educacionContinuaMapper.convertEducacionContinuaToEduContinuaWebDto( educacionContinuaDao.findByNombre(educacionContinua));
+		try {
+			return educacionContinuaDao.findByNombreAndFechaInicio(educacionContinua,new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(fechaInicio));
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	@Override
+	public EducacionContinuaWebDto editarEducacionContinuaByNombre(String educacionContinua, String fechaInicio) {
+		// TODO Auto-generated method stub
+		try {
+			return educacionContinuaMapper.convertEducacionContinuaToEduContinuaWebDto( educacionContinuaDao.findByNombreAndFechaInicio(educacionContinua,new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(fechaInicio)));
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	@Override
@@ -297,10 +308,16 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 	}
 
 	@Override
-	public InfoEducacionContinuaDto detallesEducacionContinua(String nombreEducacionContinua) {
+	public InfoEducacionContinuaDto detallesEducacionContinua(String nombreEducacionContinua, String fechaInicio) {
 		// TODO Auto-generated method stub
 		if(personaService.isSuperAdmin() || educacionContinuaCustomDao.docenteHasPermission(nombreEducacionContinua, personaService.findPersonaLogueada().getId())) {
-			EducacionContinua e=educacionContinuaDao.findByNombre(nombreEducacionContinua);
+			EducacionContinua e=null;
+			try {
+				e = educacionContinuaDao.findByNombreAndFechaInicio(nombreEducacionContinua,new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(fechaInicio));
+			} catch (ParseException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			if(e!=null) {
 				return educacionContinuaMapper.convertEducacionContinuaToEducacionContinuaWeb(e, true);
 			}else {
@@ -515,15 +532,136 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 	}
 	
 	@Override
-	public EducacionContinuaWebDto createEducacionContinua() {
-		Docente d = (Docente)personaService.findPersonaLogueada();
+	public List<EducacionContinuaWebDto> findEducacionesContinuasBaseByIdPrograma(Long idPrograma){
+		return educacionContinuaMapper.convertListEducacionContinuaToListEduContinuaWebDto(educacionContinuaDao.findEducacionContinuaByIdPrograma(idPrograma));
+	}
+	
+	@Override
+	public EducacionContinuaWebDto createEducacionContinua(Persona p, boolean isAdmin, boolean isDirPrograma, boolean isDocente) {
 		EducacionContinuaWebDto dto = new EducacionContinuaWebDto();
-		if(!personaService.isSuperAdmin(d) && !personaService.isDirPrograma(d)) {
-			dto.setNombreDocenteResp(educacionContinuaMapper.convertFieldsFullName(d));
-			dto.setCodigoDocenteResp(d.getCodigo());
-			dto.setIdDocenteResp(d.getId());
+		if(!isAdmin) {
+			if(isDirPrograma) {
+				Programa programa= programaDao.findByDirector(p.getId());
+				dto.setIdProgramaResp(programa.getId());
+				dto.setProgramaResp(programa.getPrograma());
+			}else if(isDocente) {
+				dto.setNombreDocenteResp(educacionContinuaMapper.convertFieldsFullName(p));
+				dto.setCodigoDocenteResp(((Docente)p).getCodigo());
+				dto.setIdDocenteResp(((Docente)p).getId());
+			}
 		}
+			
 		return dto;
+	}
+
+	@Override
+	public List<Object[]> tiposPersonaParaInscripcion(List<EducacionContinuaTipoBeneficiario> tipoBeneficiarios) {
+		// TODO Auto-generated method stub
+		Persona p= personaService.findPersonaLogueada();
+		List<Object[]> list= new ArrayList<>();
+		if(p!=null) {
+			String[] tiposPersona=p.getIdsTipoPersona().split(",");
+			System.out.println("metodo tipos persona para inscripcion");
+			System.out.println(tipoBeneficiarios.size());
+			for(EducacionContinuaTipoBeneficiario ectb: tipoBeneficiarios) {
+				System.out.println(ectb.getTipoBeneficiario().getTipoBeneficiario());
+				for(String t: tiposPersona) {
+					System.out.println(t);
+					if(ectb.getTipoBeneficiario().getTipoPersona().getId()==Long.parseLong(t)) {
+						Object[] obj = new Object[2];
+						obj[0]=ectb.getTipoBeneficiario().getTipoPersona().getId();
+						obj[1]=ectb.getTipoBeneficiario().getTipoPersona().getTipoPersona();
+						list.add(obj);
+					}
+				}
+			}
+		}
+		return list;
+	}
+
+	@Override
+	public RequisitosInscripcionDto consultarRequisitosInscripcion(String nombreEduContinua, String fechaInicio) {
+		// TODO Auto-generated method stub
+		
+		EducacionContinua ec= this.findOneByNombreAndFecha(nombreEduContinua,fechaInicio);
+		int totalInscritos=participanteDao.countTotalParticipantes(ec.getId());
+		RequisitosInscripcionDto dto = new RequisitosInscripcionDto();
+		dto.setTotalInscritos(totalInscritos);
+		if(ec.getCantMaxParticipantes() != null) {
+			dto.setCuposDisponibles(Integer.parseInt(ec.getCantMaxParticipantes())-totalInscritos);
+			dto.setHasCupos(dto.getCuposDisponibles()>0);
+		}else {
+			dto.setCuposDisponibles(-1);
+			dto.setHasCupos(true);
+		}
+		List<Object[]> opcionesInscripcion=this.tiposPersonaParaInscripcion(ec.getTipoBeneficiarios());
+		dto.setListTipoPersonaValidInscripcion(opcionesInscripcion);
+		dto.setHasCoincidenciasBeneficiario(!opcionesInscripcion.isEmpty());
+		ParticipanteDto participante=null;
+		try {
+			participante= participanteService.findByIdEducacionContinuaAndIdPersona(ec.getId(),personaService.findPersonaLogueada().getId());
+			
+		}catch(Exception e) {
+			participante=null;
+		}
+		dto.setParticipante(participante);
+		
+		dto.setEstaInscrito(participante!=null);
+		dto.setEducacionContinua(educacionContinuaMapper.convertEducacionContinuaToEduContinuaWebDto(ec));
+		
+		return dto;
+	}
+
+	@Override
+	public void saveDiploma(EducacionContinua ec) {
+		// TODO Auto-generated method stub
+		EducacionContinua e= this.findOne(ec.getId()).get();
+		System.out.println(e.getId());
+		/*if(e.getDiploma()==null) {
+			e.setDiploma(new Diploma());
+		}*/
+		final String rutaBase ="/uploads/educacion-continua/"+e.getId();
+		Long idDiploma= diplomaCustomDao.createDiploma(Archivo.saveImagenBase64(rutaBase+"/diploma_base.jpg",ec.getDiploma().getImagenPlantilla()));
+		//e.getDiploma().setImagenPlantilla(Archivo.saveImagenBase64("/uploads/educacion-continua/"+e.getId()+"/diploma_base.jpg", ec.getDiploma().getImagenPlantilla()));
+		System.out.println("idDiplomaaaaaaaaaaaa");
+		System.out.println(idDiploma);
+		if(ec.getDiploma().getTextos()!=null) {
+			for(TextoDiploma t:ec.getDiploma().getTextos()) {
+				//t.setDiploma(e.getDiploma());
+				System.out.println("textooooooooooo");
+				System.out.println( t.getTexto());
+				System.out.println( t.getCategoria());
+				System.out.println( t.getX());
+				System.out.println( t.getY());
+				diplomaCustomDao.saveTexto(idDiploma, t.getTexto(), t.getCategoria(),t.getX(),t.getY());
+			}
+			//e.getDiploma().setTextos(ec.getDiploma().getTextos());
+		}
+		
+		if(ec.getDiploma().getImagenes()!=null) {
+			for(ImagenDiploma i:ec.getDiploma().getImagenes()) {
+				diplomaCustomDao.saveImagenDiploma(idDiploma,
+						Archivo.saveImagenBase64(rutaBase+"/plantilla-diploma/"+Archivo.generarNombreAleatorio()+".png", i.getRuta()), 
+								i.getX(), i.getY());
+				//i.setDiploma(e.getDiploma());
+				//i.setRuta());
+			}
+			e.getDiploma().setImagenes(ec.getDiploma().getImagenes());
+		}
+		
+		
+		if(ec.getDiploma().getFirmas()!=null) {
+			for(FirmaDiploma f:ec.getDiploma().getFirmas()) {
+				diplomaCustomDao.saveFirma(idDiploma, f.getCargo(), f.getxCargo(), f.getyCargo(), f.getNombre(),
+						f.getxNombre(), f.getyNombre(),
+						Archivo.saveImagenBase64(rutaBase+"/plantilla-diploma/"+Archivo.generarNombreAleatorio()+".png", f.getImagenFirmaDigital()),
+						f.getX(), f.getY());
+				//f.setDiploma(e.getDiploma());
+				//f.setImagenFirmaDigital(Archivo.saveImagenBase64("/uploads/educacion-continua/"+e.getId()+"/plantilla-diploma/"+Archivo.generarNombreAleatorio()+".png", f.getImagenFirmaDigital()));
+			}
+			e.getDiploma().setFirmas(ec.getDiploma().getFirmas());
+		}
+		diplomaCustomDao.updateDiplomaEduContinua(idDiploma, e.getId());
 	}
 	
 

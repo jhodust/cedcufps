@@ -5,15 +5,23 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 
@@ -30,9 +38,16 @@ public class InformeSnies implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@NotEmpty(message="El campo año es requerido")
-	@Pattern(regexp = "^([0-9]{4,4})*$", message = "El año debe contener 4 dígitos")
-	private String anio;
+	
+	@NotNull(message="Ingrese la fecha inicio del reporte ")
+	@DateTimeFormat(pattern="dd/MM/yyyy")
+	@Column(name = "fecha_inicio")
+	private Date fechaInicio;
+	
+	@NotNull(message="Ingrese la fecha limite del reporte ")
+	@DateTimeFormat(pattern="dd/MM/yyyy")
+	@Column(name = "fecha_fin")
+	private Date fechaFin;
 	
 	//private String semestre;
 	
@@ -44,6 +59,11 @@ public class InformeSnies implements Serializable{
 	
 	@Column(name = "informe_participante")
 	private String informeParticipante;
+	
+	@JsonIgnore
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="id_programa", foreignKey=@ForeignKey(name = "FK_snies_programa"))
+	private Programa programa;
 
 	public Long getId() {
 		return id;
@@ -53,13 +73,7 @@ public class InformeSnies implements Serializable{
 		this.id = id;
 	}
 
-	public String getAnio() {
-		return anio;
-	}
-
-	public void setAnio(String anio) {
-		this.anio = anio;
-	}
+	
 
 	/*public String getSemestre() {
 		return semestre;
@@ -68,6 +82,22 @@ public class InformeSnies implements Serializable{
 	public void setSemestre(String semestre) {
 		this.semestre = semestre;
 	}*/
+
+	public Date getFechaInicio() {
+		return fechaInicio;
+	}
+
+	public void setFechaInicio(Date fechaInicio) {
+		this.fechaInicio = fechaInicio;
+	}
+
+	public Date getFechaFin() {
+		return fechaFin;
+	}
+
+	public void setFechaFin(Date fechaFin) {
+		this.fechaFin = fechaFin;
+	}
 
 	public String getInformeEducacionContinua() {
 		return informeEducacionContinua;
@@ -91,6 +121,14 @@ public class InformeSnies implements Serializable{
 
 	public void setInformeParticipante(String informeParticipante) {
 		this.informeParticipante = informeParticipante;
+	}
+
+	public Programa getPrograma() {
+		return programa;
+	}
+
+	public void setPrograma(Programa programa) {
+		this.programa = programa;
 	}
 	
 	

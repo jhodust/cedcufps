@@ -42,14 +42,59 @@ $(document).ready(function () {
 	
 });
 
+function buildOptions(){
+	buttonsJson={};
+	console.log("declarando");
+	console.log(buttonsJson);
+	listTipoPersonaValidInscripcion.forEach(function(e){
+		console.log(e);
+		
+		var btn='btn'+e[1];
+		btnn={};
+		btnn.text=e[1];
+		btnn.value=e[0];
+		buttonsJson[btn]=btnn;
+	});
+	console.log("botones");
+	console.log(buttonsJson);
+	swal("Cómo desea realizar la inscripción?", {
+		  buttons: buttonsJson,
+		})
+		.then((value) => {
+			console.log(value);
+			if(value != null){
+				ajaxRealizarInscripcion(value);
+			}
+			
+			
+		});
+}
 
 function realizarInscripcion(){
+	var idTipoPersona;
+	
+	if(listTipoPersonaValidInscripcion.length > 1 ){
+		buildOptions();
+	}else{
+		ajaxRealizarInscripcion(idTipoPersona);
+	}
+	
+		
+}
+
+function ajaxRealizarInscripcion(idTipoPersona){
+	if(idTipoPersona==undefined){
+		var data={'idEduContinua':idEduContinua};
+	}else{
+		var data={'idEduContinua':idEduContinua, 'idTipoPersona':idTipoPersona};
+	}
 	
 	$.ajax({
 		headers: {"X-CSRF-TOKEN": token},
 		type: "GET",
 		contentType: "application/json; charset=utf-8",
-		url: "/realizar-inscripcion/"+idEduContinua,
+		url: "/realizar-inscripcion",
+		data: data,
 		cache: false,
 		success: function(result) {
 			creacionTarjetaInscripcion(result);
@@ -59,7 +104,6 @@ function realizarInscripcion(){
 			$("#msg").html( "<span style='color: red'>Programa is required</span>" );
 		}
 	});
-		
 }
 
 function creacionTarjetaInscripcion(p){

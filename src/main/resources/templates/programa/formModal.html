@@ -66,7 +66,7 @@
 									id="select_director_programa">
 									<option value="0">Seleccione el docente...</option>
 									<option th:each="d: ${docentes}" th:value="${d.id}"
-										th:text="${d.codigo}+ ' - ' +(${d.primerNombre} ?:'') +' '+ (${d.segundoNombre} ?:'') +' '+ (${d.primerApellido} ?:'')+' '+ (${d.segundoApellido} ?:'')"></option>
+										th:text="${d.codigo}+ ' - ' +${d.nombre}"></option>
 								</select>
 								<small class="form-text text-danger"><strong id="errorSelectDirectorPrograma"></strong></small>
                             </div>

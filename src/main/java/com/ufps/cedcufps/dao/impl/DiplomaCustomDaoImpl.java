@@ -63,8 +63,8 @@ public class DiplomaCustomDaoImpl implements IDiplomaCustomDao {
 		System.out.println( x);
 		System.out.println( y);
 		StringBuilder query = new StringBuilder();
-		 em.createNativeQuery("insert into imagenes_diploma(id_diploma,id_elemento,ruta) values "
-				+ "(?1,(select id from elementos_diploma where x=?2 and y=?3), ?4)")
+		 em.createNativeQuery("insert into imagenes_diploma(id_diploma,x,y,ruta) values "
+				+ "(?1,?2,?3, ?4)")
 		.setParameter(1, idDiploma)
 		.setParameter(2, x)
 		.setParameter(3, y)
@@ -78,8 +78,8 @@ public class DiplomaCustomDaoImpl implements IDiplomaCustomDao {
 	public void saveTexto(Long idDiploma, String texto, String categoria, int x, int y) {
 		// TODO Auto-generated method stub
 		StringBuilder query = new StringBuilder();
-		 em.createNativeQuery("insert into textos_diploma(id_diploma,id_elemento,categoria, texto) values "
-				+ "(?1,(select id from elementos_diploma where x=?2 and y=?3), ?4, ?5)")
+		 em.createNativeQuery("insert into textos_diploma(id_diploma,x,y,categoria, texto) values "
+				+ "(?1,?2,?3, ?4, ?5)")
 		.setParameter(1, idDiploma)
 		.setParameter(2, x)
 		.setParameter(3, y)
@@ -108,8 +108,8 @@ public class DiplomaCustomDaoImpl implements IDiplomaCustomDao {
 		
 		
 		StringBuilder query = new StringBuilder();
-		 em.createNativeQuery("insert into firmas_diploma(id_diploma,id_elemento,cargo,x_cargo,y_cargo, nombre, x_nombre, y_nombre,imagen_firma_digital) values "
-				+ "(?1,(select id from elementos_diploma where x=?2 and y=?3), ?4, ?5,?6,?7,?8,?9,?10)")
+		 em.createNativeQuery("insert into firmas_diploma(id_diploma,x,y,cargo,x_cargo,y_cargo, nombre, x_nombre, y_nombre,imagen_firma_digital) values "
+				+ "(?1,?2,?3, ?4, ?5,?6,?7,?8,?9,?10)")
 		.setParameter(1, idDiploma)
 		.setParameter(2, x)
 		.setParameter(3, y)
@@ -136,5 +136,23 @@ public class DiplomaCustomDaoImpl implements IDiplomaCustomDao {
 		.executeUpdate();
 	}
 
+	@Transactional
+	@Modifying
+	@Override
+	public void deleteElementsDiploma(Long idDiploma) {
+		// TODO Auto-generated method stub
+		
+		 em.createNativeQuery("delete from imagenes_diploma where id_diploma= ?1")
+		.setParameter(1, idDiploma)
+		.executeUpdate();
+		 
+		 em.createNativeQuery("delete from textos_diploma where id_diploma= ?1")
+			.setParameter(1, idDiploma)
+			.executeUpdate();
+		 
+		 em.createNativeQuery("delete from firmas_diploma where id_diploma= ?1")
+			.setParameter(1, idDiploma)
+			.executeUpdate();
+	}
 	
 }

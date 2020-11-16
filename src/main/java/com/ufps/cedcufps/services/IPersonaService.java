@@ -84,6 +84,8 @@ public interface IPersonaService {
 	
 	public boolean hasPermissionForAttendance(Long idPersona);
 	
+	public boolean hasPermissionForAttendance(Persona p);
+	
 	public PerfilRolUsuarioDto findPermisos(Long idUsuario);
 	
 	public UsuarioDto editarUsuario(Long idUsuario);
@@ -97,5 +99,7 @@ public interface IPersonaService {
 	
 	
 	public PersonaDtoLogueada findPersonaLogueadaDto(Persona p);
+	
+	public Persona findPersonaById(Long idPersona);
 
 }

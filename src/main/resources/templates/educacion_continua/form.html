@@ -225,7 +225,7 @@
 															class="form-control" th:text="${educacionContinua.programaResp}" readOnly></label>
 													</div>
 												</div>
-												<div class="col-md-6" th:if="${peopleLogin.isSuperAdmin() or peopleLogin.isDirPrograma() or peopleLogin.isHasPermisosEdC() }" >
+												<div class="col-md-6" th:if="${peopleLogin.isSuperAdmin() or peopleLogin.isDirPrograma() or (peopleLogin.isHasPermisosEdC() and !peopleLogin.isHasPermisosOnlyMyEdC()) }" >
 													<div class="form-group">
 														<label class="form-control-label">Docente Responsable </label><label class="requerido pl-2">*</label> <select
 															class="form-control" data-toggle="select" id="docenteResponsable">
@@ -237,7 +237,7 @@
 														<small class="form-text text-danger"><strong id="errDocRespEdc"></strong></small>
 													</div>
 												</div>
-												<div class="col-md-6" th:if="${not peopleLogin.isSuperAdmin() and not peopleLogin.isDirPrograma() and peopleLogin.isDocente() }">
+												<div class="col-md-6" th:if="${peopleLogin.isHasPermisosOnlyMyEdC() }">
 													<div class="form-group">
 														<label class="form-control-label">Docente Responsable </label><label class="requerido pl-2">*</label> <label
 															class="form-control" th:text="${educacionContinua.codigoDocenteResp + ' - ' + educacionContinua.nombreDocenteResp}" readOnly></label>

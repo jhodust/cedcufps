@@ -152,7 +152,7 @@ public class ReportesExcel {
 
 				// tipo documento responsable
 				cell = row.createCell(6);
-				cell.setCellValue(asignarOpcionTipoDocumento(dto.getIdTipoDocumentoResponsable()));
+				cell.setCellValue(dto.getIdTipoDocumentoResponsable());
 
 				// num documento responsable
 				cell = row.createCell(7);
@@ -169,7 +169,7 @@ public class ReportesExcel {
 				i++;
 			}
 			
-			List<IndexedColors> colores= new ArrayList<IndexedColors>();
+			/*List<IndexedColors> colores= new ArrayList<IndexedColors>();
 			colores.add(IndexedColors.AQUA);
 			colores.add(IndexedColors.BRIGHT_GREEN1);
 			colores.add(IndexedColors.CORAL);
@@ -197,7 +197,7 @@ public class ReportesExcel {
 			colores.add(IndexedColors.TAN);
 			colores.add(IndexedColors.TURQUOISE);
 			colores.add(IndexedColors.WHITE);
-			colores.add(IndexedColors.YELLOW);
+			colores.add(IndexedColors.YELLOW);*/
 			
 			sheet = workbook.getSheet("DETALLE");
 			
@@ -213,16 +213,16 @@ public class ReportesExcel {
 					idEduContinuaOld=dto.getIdCurso();
 					k=0;
 				}
-				CellStyle style1 = workbook.createCellStyle();
-				style1.setFillForegroundColor(colores.get(numColor).getIndex());
-				style1.setFillPattern(FillPatternType.SOLID_FOREGROUND);
-				CellStyle styleNumero2 = workbook.createCellStyle();
-				styleNumero2.setDataFormat(format.getFormat("#,###"));
-				styleNumero2.setFillForegroundColor(style1.getFillForegroundColor());
-				styleNumero2.setFillPattern(style1.getFillPattern());
-				if(numColor==colores.size()-1) {
-					numColor=0;
-				}
+				//CellStyle style1 = workbook.createCellStyle();
+				//style1.setFillForegroundColor(colores.get(numColor).getIndex());
+				//style1.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+				//CellStyle styleNumero2 = workbook.createCellStyle();
+				//styleNumero2.setDataFormat(format.getFormat("#,###"));
+				//styleNumero2.setFillForegroundColor(style1.getFillForegroundColor());
+				//styleNumero2.setFillPattern(style1.getFillPattern());
+				//if(numColor==colores.size()-1) {
+				//	numColor=0;
+				//}
 				
 				Row row = sheet.getRow(i);
 				
@@ -234,24 +234,24 @@ public class ReportesExcel {
 				// codigo curso
 				Cell cell = row.createCell(0);
 				cell.setCellValue(dto.getCodigoCurso());
-				cell.setCellStyle(style1);
+				//cell.setCellStyle(style1);
 				
 				// id tipo beneficio extension
 				cell = row.createCell(1);
 				System.out.println("imprime el beneficiario");
 				System.out.println(dto.getIdTipoBeneficiario());
 				cell.setCellValue(dto.getIdTipoBeneficiario());
-				cell.setCellStyle(style1);
+				//cell.setCellStyle(style1);
 				
 				// nombre curso
 				cell = row.createCell(2);
 				cell.setCellValue(dto.getNombreCurso());
-				cell.setCellStyle(style1);
+				//cell.setCellStyle(style1);
 				
 				// tipo curso
 				cell = row.createCell(3);
 				cell.setCellValue(asignarOpcionTipoEducacionContinuaHoja1(dto.getTipoCurso()));
-				cell.setCellStyle(style1);
+				//cell.setCellStyle(style1);
 				
 				// fecha inicio curso
 				cell = row.createCell(4);
@@ -271,22 +271,22 @@ public class ReportesExcel {
 				// nombre y apellido participante
 				cell = row.createCell(7);
 				cell.setCellValue(dto.getNombreParticipante());
-				cell.setCellStyle(style1);
+				//cell.setCellStyle(style1);
 				
 				// programa
 				cell = row.createCell(8);
 				cell.setCellValue(dto.getProgramaEstudiante());
-				cell.setCellStyle(style1);
+				//cell.setCellStyle(style1);
 				
 				// valor de curso
 				cell = row.createCell(9);
 				cell.setCellValue(dto.getValorCurso());
-				cell.setCellStyle(styleNumero2);
+				//cell.setCellStyle(styleNumero2);
 				
 				// numero horas curso
 				cell = row.createCell(10);
 				cell.setCellValue(dto.getNumHorasCurso());
-				cell.setCellStyle(style1);
+				//cell.setCellStyle(style1);
 				
 				
 				
@@ -296,17 +296,17 @@ public class ReportesExcel {
 					// docente impartió curso
 					cell = row.createCell(11);
 					cell.setCellValue(dto.getPonentes().get(k).getNombrePonente());
-					cell.setCellStyle(style1);
+					//cell.setCellStyle(style1);
 					
 					// tipo documento docente impartió
 					cell = row.createCell(12);
 					cell.setCellValue(dto.getPonentes().get(k).getTipoDocumentoPonente());
-					cell.setCellStyle(style1);
+					//cell.setCellStyle(style1);
 					
 					// numero documento docente impartió
 					cell = row.createCell(13);
 					cell.setCellValue(dto.getPonentes().get(k).getNumDocumentoPonente());
-					cell.setCellStyle(styleNumero2);
+					//cell.setCellStyle(styleNumero2);
 					
 					
 				}
@@ -314,7 +314,7 @@ public class ReportesExcel {
 				
 				i++;
 				
-				numColor++;
+				//numColor++;
 				j++;
 				k++;
 				

@@ -50,6 +50,9 @@ public interface IEducacionContinuaDao extends JpaRepository<EducacionContinua, 
 	@Query(value= "select * from educacion_continua e where e.id=?1", nativeQuery = true)
 	public EducacionContinua findEducacionContinuaById(Long id);
 	
+	@Query(value = "select * from educacion_continua where nombre= ?1 order by id desc limit 1" , nativeQuery = true)
+	public EducacionContinua findEducacionContinuaLastByNombre(String nombre);
+	
 	@Query("select e from EducacionContinua e where e.id IN (?1)")
 	public List<EducacionContinua> findByManyIds(List<Long> idsEduContinua);
 	
@@ -88,7 +91,19 @@ public interface IEducacionContinuaDao extends JpaRepository<EducacionContinua, 
 	@Query(value = "delete from educacion_continua_tipo_beneficiario where id_educacion_continua = ?1", nativeQuery = true)
 	public void deleteBeneficiarios(Long idEducacionContinua);
 	
-	@Query("select distinct e from EducacionContinua e where e.programaResponsable.id = ?1 ")
-	public List<EducacionContinua> findEducacionContinuaByIdPrograma(Long idPrograma);
+	@Query("select distinct e.nombre from EducacionContinua e where e.programaResponsable.id = ?1 ")
+	public List<String> findEducacionContinuaBaseByIdPrograma(Long idPrograma);
+	
+	@Query(value="select ec.* from educacion_continua ec " 
+			+ " join" 
+			+ " (select ec.id as idEdC from educacion_continua ec where ec.id_programa in "
+			+ " (select rpec.id_programa from roles_personas_programas_ec rpec where rpec.id_persona =?1 )"
+			+ " UNION"
+			+ " select ec.id from educacion_continua ec where ec.id_docente=?1"
+			+ " UNION"
+			+ " select rpa.id_edu_continua from rol_persona_asistencia rpa where rpa.id_persona =?1) sq "
+			+ " on sq.idEdC=ec.id"
+			+ " where ec.estado='En Desarrollo'", nativeQuery = true)
+	public List<EducacionContinua> findEducacionesContinuasForApp(Long idPersona);
 	
 }

@@ -51,14 +51,50 @@ function validateInputPorcentaje(idInput, idError){
 }
 
 function validateSelect(idSelect, idError){
-	console.log('validateSelect');
-	console.log(document.getElementById(idSelect).value);
+	//console.log('validateSelect');
+	//console.log(document.getElementById(idSelect).value);
 	if(document.getElementById(idSelect).value == 0){
 		document.getElementById(idSelect).classList.add("is-invalid");
 		document.getElementById(idError).innerText=msjSelect;
 	}else{
 		cleanError(idSelect,idError);
 	}
+}
+
+function validateCheckboxGenero(idError){
+	if($('input[name="genero"]:checked').val() == null ){
+		document.getElementById(idError).innerText=msjRequerido;
+	}else{
+		cleanMsj(idError);
+	}
+}
+
+function validateCheckboxEstadoCivil(idError){
+	if($('input[name="estadoCivil"]:checked').val() == null ){
+		document.getElementById(idError).innerText=msjRequerido;
+	}else{
+		cleanMsj(idError);
+	}
+}
+
+function validateCheckboxPerfiles(idCheckbox1,idCheckbox2,idCheckbox3,idCheckbox4,idCheckbox5,idError){
+	console.log(document.getElementById(idCheckbox1).checked);
+	console.log(document.getElementById(idCheckbox2).checked);
+	console.log(document.getElementById(idCheckbox3).checked);
+	console.log(document.getElementById(idCheckbox4).checked);
+	console.log(document.getElementById(idCheckbox5).checked);
+	if(!document.getElementById(idCheckbox1).checked && !document.getElementById(idCheckbox2).checked &&
+			!document.getElementById(idCheckbox3).checked && !document.getElementById(idCheckbox4).checked &&
+			!document.getElementById(idCheckbox5).checked){
+		document.getElementById(idError).innerText=msjRequerido;
+		ocultar('divAdicional');
+	}else{
+		cleanMsj(idError);
+	}
+}
+
+function cleanMsj(idError){
+	document.getElementById(idError).innerText='';
 }
 
 function cleanError(idCampo,idError){

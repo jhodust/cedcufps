@@ -22,18 +22,82 @@ $(document).ready(function ()
 		ocultar('formGraduado');
 		ocultar('formExterno');
 		*/
+			$('#selectTipoDoc').on("change", function (e) { 
+				e.preventDefault();
+				validateSelect('selectTipoDoc','errorTipoDoc');
+				
+			});
+			
+			$('#selectPaisNacimiento').on("change", function (e) { 
+				console.log("entra a change pais");
+				e.preventDefault();
+				validateSelect('selectPaisNacimiento','errorPaisNacimiento');
+				
+			});
+			$('#selectDepartamentoNacimiento').on("change", function (e) { 
+				e.preventDefault();
+				validateSelect('selectDepartamentoNacimiento','errorDeptoNacimiento');
+				
+			});
+			$('#selectMunicipioNacimiento').on("change", function (e) { 
+				e.preventDefault();
+				validateSelect('selectMunicipioNacimiento','errorMpioNacimiento');
+				
+			});
+			$('#programaAsociado').on("change", function (e) { 
+				e.preventDefault();
+				validateSelect('programaAsociado','errorProgramaEstudiante');
+				
+			});
+			$('#selectDeptoAdscrito').on("change", function (e) { 
+				e.preventDefault();
+				validateSelect('selectDeptoAdscrito','errorDeptoDocente');
+				
+			});
+			$('#selectProgramaGraduado').on("change", function (e) { 
+				e.preventDefault();
+				validateSelect('selectProgramaGraduado','errorProgramaGraduado');
+				
+			});
+			$('input[name="genero"]').click(function() {
+				cleanMsj('errorGenero');
+			});
+			$('input[name="estadoCivil"]').click(function() {
+				cleanMsj('errorEstadoCivil');
+			});
+			
+			$("#cbEst").click(function() {
+				validateCheckboxPerfiles('cbEst','cbDoc','cbAdminvo','cbGraduado','cbExt','errorPerfiles');
+			});
+			$("#cbDoc").click(function() {
+				validateCheckboxPerfiles('cbEst','cbDoc','cbAdminvo','cbGraduado','cbExt','errorPerfiles');
+			});
+			$("#cbAdminvo").click(function() {
+				validateCheckboxPerfiles('cbEst','cbDoc','cbAdminvo','cbGraduado','cbExt','errorPerfiles');
+			});
+			$("#cbGraduado").click(function() {
+				validateCheckboxPerfiles('cbEst','cbDoc','cbAdminvo','cbGraduado','cbExt','errorPerfiles');
+			});
+			$("#cbExt").click(function() {
+				validateCheckboxPerfiles('cbEst','cbDoc','cbAdminvo','cbGraduado','cbExt','errorPerfiles');
+			});
+			
 		$('.save')
 				.on(
 						'click',
 						function(e) {
 							e.preventDefault();
+							validateSelect('selectPaisNacimiento','errorPaisNacimiento');
 							
 							if($('#selectPaisNacimiento').val()=="170"){
 								console.log("entra al if de pais");
 								console.log($('#selectDepartamentoNacimiento').val());
 								console.log($('#selectMunicipioNacimiento').val());
+								validateSelect('selectDepartamentoNacimiento','errorDeptoNacimiento');
+								validateSelect('selectMunicipioNacimiento','errorMpioNacimiento');
 									if($('#selectDepartamentoNacimiento').val() == null || $('#selectMunicipioNacimiento').val() == null || $('#selectDepartamentoNacimiento').val() == "0" || $('#selectMunicipioNacimiento').val() == "0"){
 										console.log("entra");
+										
 										toastr
 													.error(
 															'Debes seleccionar el departamento y municipio de nacimiento',
@@ -43,42 +107,83 @@ $(document).ready(function ()
 								}
 								
 								
+							if($('#selectTipoDoc').val() == "0" || $('#numDoc').val() == "" || $('#fechaExp').val() == "" 
+							|| $('#primNom').val() == "" || $('#primApe').val() == "" 
+							|| $('#segApe').val() == "" || $('input[name="genero"]:checked').val() == null || 
+							$('input[name="estadoCivil"]:checked').val() == null 
+							|| $('#selectPaisNacimiento').val() == "0" || $('#fechaNac').val() == "" || $('#email').val() == "" 
+							|| $('#telefono').val() == "" || (!document.getElementById("cbEst").checked && !document.getElementById("cbDoc").checked
+							&& !document.getElementById("cbAdminvo").checked && !document.getElementById("cbGraduado").checked && !document.getElementById("cbExt").checked)){
+							
+								validateSelect('selectTipoDoc','errorTipoDoc');
+								validateInputTextRequerido('numDoc','errorNumeroDocumento');
+								validateInputTextRequerido('fechaExp','errorFechaExp');
+								validateInputTextRequerido('primNom','errorPrimerNombre');
+								validateInputTextRequerido('primApe','errorPrimerApellido');
+								validateInputTextRequerido('segApe','errorSegundoApellido');
+								validateInputTextRequerido('fechaNac','errorFechaNacimiento');
+								validateCheckboxGenero('errorGenero');
+								validateCheckboxEstadoCivil('errorEstadoCivil');
+								validateInputTextRequerido('email','errorEmail');
+								validateInputNumberRequerido('telefono','errorTelefono');
+								validateCheckboxPerfiles('cbEst','cbDoc','cbAdminvo','cbGraduado','cbExt','errorPerfiles');
+								
+								
+								toastr
+													.error(
+															'Diligencie el formulario correctamente, algunos campos son requeridos',
+															'Error!');
+															return;
+							}
+							
 							if(document.getElementById("cbEst").checked){
+								console.log("entra a validacion cbEst");
+								validateSelect('programaAsociado','errorProgramaEstudiante');
+								validateInputNumberRequerido('codigo','errorCodigoEstudiante');
 									if($('#programaAsociado').val() == "0" || $('#codigo').val() == ""){
 										toastr
 													.error(
-															'Debes diligenciar la información academica como estudiante',
+															'Debes diligenciar la información academica del estudiante',
 															'Error!');
 															return;
 									}
 								
 								}
 								if(document.getElementById("cbDoc").checked){
+									console.log("entra a validacion cbDoc");
+									validateSelect('selectDeptoAdscrito','errorDeptoDocente');
+									validateInputNumberRequerido('codDocente','errorCodigoDocente');
 									if($('#selectDeptoAdscrito').val() == "0" || $('#codDocente').val() == ""){
 										toastr
 													.error(
-															'Debes diligenciar la información academica como docente',
+															'Debes diligenciar la información del docente',
 															'Error!');
 															return;
 									}
 								
 								}
 								if(document.getElementById("cbAdminvo").checked){
+									console.log("entra a validacion cbAdminvo");
+									validateInputTextRequerido('dependencia','errorDependenciaAdminvo');
+									validateInputTextRequerido('cargo','errorCargoAdminvo');
 									if($('#dependencia').val() == "" || $('#cargo').val() == ""){
 										toastr
 													.error(
-															'Debes diligenciar la información academica como administrativo',
+															'Debes diligenciar la información de administrativo',
 															'Error!');
 															return;
 									}
 								
 								}
 								if(document.getElementById("cbGraduado").checked){
+									console.log("entra a validacion cbGraduado");
+									validateSelect('selectProgramaGraduado','errorProgramaGraduado');
+									validateInputNumberRequerido('anioGraduado','errorAnioGraduado');
 								console.log("entra a validar graduado");
 									if($('#selectProgramaGraduado').val() == "0" || $('#anioGraduado').val() == ""){
 										toastr
 													.error(
-															'Debes diligenciar la información como graduado',
+															'Debes diligenciar la información de graduado',
 															'Error!');
 															return;
 									}else{
@@ -96,6 +201,9 @@ $(document).ready(function ()
 								
 								}
 								if(document.getElementById("cbExt").checked){
+									console.log("entra a validacion cbExt");
+									validateInputTextRequerido('profesion','errorProfesionExterno');
+									validateInputTextRequerido('empresa','errorEmpresa');
 									if($('#profesion').val() == "" || $('#empresa').val() == ""){
 										toastr
 													.error(
@@ -105,24 +213,6 @@ $(document).ready(function ()
 									}
 								
 								}
-								
-							if($('#selectTipoDoc').val() == "0" || $('#numDoc').val() == "" || $('#fechaExp').val() == "" 
-							|| $('#primNom').val() == "" || $('#segNom').val() == "" || $('#primApe').val() == "" 
-							|| $('#segApe').val() == "" || $('input[name="genero"]:checked').val() == null || 
-							$('input[name="estadoCivil"]:checked').val() == null 
-							|| $('#selectPaisNacimiento').val() == "0" || $('#fechaNac').val() == "" || $('#email').val() == "" 
-							|| $('#telefono').val() == "" || (!document.getElementById("cbEst").checked && !document.getElementById("cbDoc").checked
-							&& !document.getElementById("cbAdminvo").checked && !document.getElementById("cbGraduado").checked && !document.getElementById("cbExt").checked)){
-							
-								
-								
-								
-								toastr
-													.error(
-															'Diligencie el formulario correctamente, algunos campos son requeridos',
-															'Error!');
-															return;
-							}
 							console.log();
 							var userJSON = {};
 							userJSON.id=id;
@@ -276,7 +366,7 @@ $(document).ready(function ()
 			ocultar('formGraduado','block');
 
 		} else {
-			ocultar('formExterno');
+			ocultar('divAdicional');
 		}
 	}
 	

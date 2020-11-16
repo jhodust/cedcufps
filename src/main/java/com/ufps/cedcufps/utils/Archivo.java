@@ -84,8 +84,9 @@ public class Archivo {
 	
 	public static String saveImagenBase64(String filename,String encoded) {
 		try {
-			File archivo=Paths.get("src//main//resources//static"+filename).toFile();
-			
+			File archivo=Paths.get(filename).toFile();
+			System.out.println("pathhhhhhhhhhhhhhhhhhhhhhhhhh");
+			System.out.println(archivo.getAbsolutePath());
 			byte[] decodedBytes = Base64.getMimeDecoder().decode(encoded.split(",")[1]);
 			//guardarImagen(decodedBytes,filename);
 			FileUtils.writeByteArrayToFile(archivo, decodedBytes);

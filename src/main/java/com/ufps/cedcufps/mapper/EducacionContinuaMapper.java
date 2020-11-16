@@ -50,6 +50,7 @@ public class EducacionContinuaMapper implements IEducacionContinuaMapper {
 				dto.setNombre(e.getNombre());
 				dto.setFechaInicio(e.getFechaInicio());
 				dto.setFechaFin(e.getFechaFin());
+				dto.setFechaLimInscripcion(e.getFechaLimInscripcion());
 				dto.setTipoEduContinua(e.getTipoEduContinua().getTipoEduContinua());
 				dto.setCantidadParticipantes(10);
 				dto.setProgramaResponsable(e.getProgramaResponsable().getPrograma());

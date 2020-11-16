@@ -166,11 +166,11 @@ public class UsuarioMapper implements IUsuarioMapper {
 		}
 		pe.setIdsTipoPersona(tiposPersona);
 		
-		List<Rol> r= new ArrayList<>();
+		/*List<Rol> r= new ArrayList<>();
 		Rol rol= new Rol();
 		rol.setAuthority("ROLE_USER");
 		r.add(rol);
-		//pe.setRoles(r);
+		pe.setr.setRoles(r);*/
 		return pe;
 	}
 	

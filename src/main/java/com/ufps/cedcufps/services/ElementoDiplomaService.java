@@ -21,7 +21,7 @@ public class ElementoDiplomaService implements IElementoDiplomaService{
 	@Override
 	public void saveElementos(Long idDiploma, List<ElementoDiploma> elementos) {
 		// TODO Auto-generated method stub
-		elementoDiplomaDao.limpiarElementosAntiguos(idDiploma);
+		//elementoDiplomaDao.limpiarElementosAntiguos(idDiploma);
 		elementoDiplomaDao.saveAll(elementos);
 	}
 	

@@ -8,9 +8,9 @@ import com.ufps.cedcufps.modelos.ElementoDiploma;
 
 public interface IElementoDiplomaDao extends JpaRepository<ElementoDiploma, Long> {
 
-	@Modifying
+	/*@Modifying
 	@Query("delete from ElementoDiploma e where e.diploma.id = ?1")
 	public void limpiarElementosAntiguos(Long idDiploma);
-	 
+	 */
 	  
 }

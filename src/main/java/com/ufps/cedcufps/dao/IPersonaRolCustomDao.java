@@ -11,6 +11,7 @@ import com.ufps.cedcufps.modelos.PersonaRol;
 public interface IPersonaRolCustomDao {
 
 	public void save(String authority, Long idPersona);
+	public void save(Long idRol, Long idPersona);
 	public void savePermisoParaEducacionContinua(String authority, Long idPersona, Long idPrograma);
 	public void savePermisoParaTipoPersonas(String authority, Long idPersona, String tipoPersona);
 	public void savePermisoParaPersonaPrograma(String authority, Long idPersona, String tipoPersona, Long idPrograma);

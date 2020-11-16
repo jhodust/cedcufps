@@ -46,6 +46,17 @@ public class PersonaRolCustomDaoImpl implements IPersonaRolCustomDao {
 
 	}
 	
+	@Transactional
+	@Override
+	public void save(Long idRol, Long idPersona) {
+		// TODO Auto-generated method stub
+		em.createNativeQuery("insert into personas_x_roles (id_rol,id_persona) values ( ?1, ?2)")
+		.setParameter(1, idRol)
+		.setParameter(2, idPersona)
+		.executeUpdate();
+
+	}
+	
 	
 	@Transactional
 	@Override

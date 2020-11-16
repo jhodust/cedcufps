@@ -280,10 +280,18 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 	
 	
 	@Override
-	public List<EducacionContinuaAppDto> findAllEducacionesApp() {
+	public List<EducacionContinuaAppDto> findAllEducacionesApp(Long idPersona) {
 		// TODO Auto-generated method stub
-		List<EducacionContinua> ec= this.findAll();
-		return educacionContinuaMapper.convertEducacionContinuaToApp(ec);
+		Persona p= personaService.findPersonaById(idPersona);
+		List<EducacionContinuaAppDto> list = new ArrayList<EducacionContinuaAppDto>();
+		if(p!=null) {
+			if(personaService.isSuperAdmin(p)){
+				list= educacionContinuaMapper.convertEducacionContinuaToApp(this.findAll());
+			}else {
+				list=educacionContinuaMapper.convertEducacionContinuaToApp(educacionContinuaDao.findEducacionesContinuasForApp(idPersona));
+			}
+		}
+		return list;
 		
 	}
 	
@@ -302,6 +310,7 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 		if(personaService.isSuperAdmin()) {
 			return educacionContinuaMapper.convertEducacionContinuaToApp((List<EducacionContinua>) educacionContinuaDao.findAll());
 		}else if(personaService.hasPermissionForEduContinua(p.getId())){
+			//mejorar metodo
 			return educacionContinuaMapper.convertEducacionContinuaToApp(educacionContinuaDao.findByManyIds(educacionContinuaCustomDao.listAllPossibleEducacionContinua(p.getId())));
 		}
 		return null;
@@ -486,8 +495,8 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 		try {
 			String format="dd/MM/yyyy HH:mm";
 			fechaInicioFormat = new SimpleDateFormat(format).parse(fechaInicio);
-			fechaFinFormat= new SimpleDateFormat(format).parse(fechaInicio);
-			fechaLimiteInscripcionFormat=new SimpleDateFormat(format).parse(fechaInicio);
+			fechaFinFormat= new SimpleDateFormat(format).parse(fechaFin);
+			fechaLimiteInscripcionFormat=new SimpleDateFormat(format).parse(fechaLimInscripcion);
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -527,13 +536,13 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 	}
 	
 	@Override
-	public EducacionContinuaWebDto findEducacionContinuaBase(Long id){
-		return educacionContinuaMapper.convertEducacionContinuaToEduContinuaWebDto(educacionContinuaDao.findEducacionContinuaById(id));
+	public EducacionContinuaWebDto findEducacionContinuaBase(String nombreEdC){
+		return educacionContinuaMapper.convertEducacionContinuaToEduContinuaWebDto(educacionContinuaDao.findEducacionContinuaLastByNombre(nombreEdC));
 	}
 	
 	@Override
-	public List<EducacionContinuaWebDto> findEducacionesContinuasBaseByIdPrograma(Long idPrograma){
-		return educacionContinuaMapper.convertListEducacionContinuaToListEduContinuaWebDto(educacionContinuaDao.findEducacionContinuaByIdPrograma(idPrograma));
+	public List<String> findEducacionesContinuasBaseByIdPrograma(Long idPrograma){
+		return educacionContinuaDao.findEducacionContinuaBaseByIdPrograma(idPrograma);
 	}
 	
 	@Override
@@ -620,8 +629,15 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 		/*if(e.getDiploma()==null) {
 			e.setDiploma(new Diploma());
 		}*/
-		final String rutaBase ="/uploads/educacion-continua/"+e.getId();
-		Long idDiploma= diplomaCustomDao.createDiploma(Archivo.saveImagenBase64(rutaBase+"/diploma_base.jpg",ec.getDiploma().getImagenPlantilla()));
+		final String rutaBase ="files/uploads/educacion-continua/"+e.getId();
+		Long idDiploma=null;
+		if(e.getDiploma()==null) {
+			idDiploma= diplomaCustomDao.createDiploma(Archivo.saveImagenBase64(rutaBase+"/diploma_base.jpg",ec.getDiploma().getImagenPlantilla()));
+		}else {
+			idDiploma=e.getDiploma().getId();
+			diplomaCustomDao.deleteElementsDiploma(idDiploma);
+		}
+		
 		//e.getDiploma().setImagenPlantilla(Archivo.saveImagenBase64("/uploads/educacion-continua/"+e.getId()+"/diploma_base.jpg", ec.getDiploma().getImagenPlantilla()));
 		System.out.println("idDiplomaaaaaaaaaaaa");
 		System.out.println(idDiploma);
@@ -646,7 +662,7 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 				//i.setDiploma(e.getDiploma());
 				//i.setRuta());
 			}
-			e.getDiploma().setImagenes(ec.getDiploma().getImagenes());
+			//e.getDiploma().setImagenes(ec.getDiploma().getImagenes());
 		}
 		
 		
@@ -659,7 +675,7 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 				//f.setDiploma(e.getDiploma());
 				//f.setImagenFirmaDigital(Archivo.saveImagenBase64("/uploads/educacion-continua/"+e.getId()+"/plantilla-diploma/"+Archivo.generarNombreAleatorio()+".png", f.getImagenFirmaDigital()));
 			}
-			e.getDiploma().setFirmas(ec.getDiploma().getFirmas());
+			//e.getDiploma().setFirmas(ec.getDiploma().getFirmas());
 		}
 		diplomaCustomDao.updateDiplomaEduContinua(idDiploma, e.getId());
 	}

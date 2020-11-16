@@ -114,6 +114,8 @@ $("#lugarEdc").focusout(function(){
 	});
   
 });
+
+
 function numbers(event){
 	 var regex = new RegExp("^[0-9]+$");
 	  var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);

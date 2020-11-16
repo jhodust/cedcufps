@@ -3,6 +3,9 @@ package com.ufps.cedcufps.modelos;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
@@ -12,19 +15,20 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "imagenes_diploma")
-@PrimaryKeyJoinColumn(name = "id_elemento")
-public class ImagenDiploma extends ElementoDiploma {
+//@PrimaryKeyJoinColumn(name = "id_elemento")
+public class ImagenDiploma {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 	private String ruta;
-
-	private int ancho;
-
-	private int alto;
+	private int x;
+	private int y;
 
 	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -39,21 +43,7 @@ public class ImagenDiploma extends ElementoDiploma {
 		this.ruta = ruta;
 	}
 
-	public int getAncho() {
-		return ancho;
-	}
-
-	public void setAncho(int ancho) {
-		this.ancho = ancho;
-	}
-
-	public int getAlto() {
-		return alto;
-	}
-
-	public void setAlto(int alto) {
-		this.alto = alto;
-	}
+	
 
 	public Diploma getDiploma() {
 		return diploma;
@@ -61,6 +51,30 @@ public class ImagenDiploma extends ElementoDiploma {
 
 	public void setDiploma(Diploma diploma) {
 		this.diploma = diploma;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public int getX() {
+		return x;
+	}
+
+	public void setX(int x) {
+		this.x = x;
+	}
+
+	public int getY() {
+		return y;
+	}
+
+	public void setY(int y) {
+		this.y = y;
 	}
 
 	

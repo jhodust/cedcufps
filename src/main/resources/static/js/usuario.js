@@ -60,24 +60,28 @@ $(document).ready(function ()
 /***funcion para cargar el select de paises***/
 function cargarPaises(){
 	/***ajax que carga el select del pais de nacimiento***/
+	
 	$.getJSON( "/data/paises.json", function( json )
 	{       
     var datos_paises = json;
     var x = document.getElementById("selectPaisNacimiento");
     datos_paises.forEach(function(elemento){
-        var id=elemento.id;
+    	var id=elemento.id;
         var newOption = new Option(elemento.pais, id, false, false);
-        $('#selectPaisNacimiento').append(newOption).trigger('change');
+        $('#selectPaisNacimiento').append(newOption);
     });
     
   //caso de editar usuario
-   $('#selectPaisNacimiento').val(idPaisNac).trigger('select');//esto se hace en caso de editar usuario ya que recibo las variables mediante un script en el form de camposPersona
-   if(idPaisNac=='170'){
-	   mostrar('rowDeptoColombia','flex');
-	   mostrar('rowMpioColombia','flex');
-   }
-   //termina caso de editar usuario
+    if(idPaisNac!=null){
+    	//$('#selectPaisNacimiento').val(idPaisNac).trigger('select');//esto se hace en caso de editar usuario ya que recibo las variables mediante un script en el form de camposPersona
+	   if(idPaisNac=='170'){
+		   mostrar('rowDeptoColombia','flex');
+		   mostrar('rowMpioColombia','flex');
+	   }
+	   //termina caso de editar usuario
+    }
   });
+	
 }
 
 
@@ -87,22 +91,25 @@ function cargarDepartamentosColombia(){
 	var deptoTemp=null;
 	$.getJSON( "/data/divipola.json", function( json )
 	{       
-		console.log(json);
+		//console.log(json);
 				datos_colombia=json;
 			    datos_colombia.forEach(function(elemento){
 			    	if(deptoTemp == null || deptoTemp!=elemento.dpto){
 			    		deptoTemp=elemento.dpto;
 			    		var newOption = new Option(elemento.dpto, elemento.cod_depto, false, false);
-			        	$('#selectDepartamentoNacimiento').append(newOption).trigger('change');
+			        	$('#selectDepartamentoNacimiento').append(newOption);
 			    	}
 			        
 			    });
-			    
-			    //caso de editar usuario
-			    $('#selectDepartamentoNacimiento').val(idDepNac).trigger('select');//esto se hace para editar usuario ya que recibo las variables mediante un script en el form de camposPersona
-			    llenarSelectMunicipios(idDepNac);
-			    $('#selectMunicipioNacimiento').val(idMunNac).trigger('select');
-			    //termina caso de editar usuario
+			  //caso de editar usuario
+			    if(idDepNac!=null){
+			    	
+				    $('#selectDepartamentoNacimiento').val(idDepNac).trigger('select');//esto se hace para editar usuario ya que recibo las variables mediante un script en el form de camposPersona
+				    llenarSelectMunicipios(idDepNac);
+				    $('#selectMunicipioNacimiento').val(idMunNac).trigger('select');
+				    
+			    }
+			  //termina caso de editar usuario
 			  });
 	
 }

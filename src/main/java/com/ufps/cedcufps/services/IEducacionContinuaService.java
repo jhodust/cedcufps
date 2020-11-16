@@ -65,7 +65,7 @@ public interface IEducacionContinuaService {
 	public List<JornadaAppDto> findJornadasByEducacionContinua(String eduContinua);
 	
 	
-	public List<EducacionContinuaAppDto> findAllEducacionesApp();
+	public List<EducacionContinuaAppDto> findAllEducacionesApp(Long idPersona);
 	
 	public List<JornadaAppDto> findAllJornadasByEduContinuaApp(Long idEduContinua);
 	
@@ -85,11 +85,11 @@ public interface IEducacionContinuaService {
 	
 	public List<EducacionContinuaWebDto> findEducacionesContinuasBase(List<Programa> programasBase);
 	
-	public EducacionContinuaWebDto findEducacionContinuaBase(Long id);
+	public EducacionContinuaWebDto findEducacionContinuaBase(String nombreEdC);
 	
 	public EducacionContinuaWebDto createEducacionContinua(Persona p, boolean isAdmin, boolean isDirPrograma, boolean isDocente);
 	
-	public List<EducacionContinuaWebDto> findEducacionesContinuasBaseByIdPrograma(Long idPrograma);
+	public List<String> findEducacionesContinuasBaseByIdPrograma(Long idPrograma);
 	
 	public List<Object[]> tiposPersonaParaInscripcion(List<EducacionContinuaTipoBeneficiario> tipoBeneficiarios);
 	

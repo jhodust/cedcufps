@@ -2,13 +2,13 @@ var logoIzq={};
   logoIzq.id=null;
   logoIzq.x=80;
   logoIzq.y=150;
-  logoIzq.ruta="/img/plantilla_diploma/logo1.jpg";
+  logoIzq.imagen="/img/plantilla_diploma/logo1.jpg";
 
   var logoDer={};
   logoDer.id=null;
   logoDer.x=765;
   logoDer.y=150;
-  logoDer.ruta="/img/plantilla_diploma/logo2.jpg";
+  logoDer.imagen="/img/plantilla_diploma/logo2.jpg";
   
   var tituloDefault={};
   tituloDefault.id=null;
@@ -33,7 +33,7 @@ var logoIzq={};
   firma1Default.cargo="";
   firma1Default.xCargo="";
   firma1Default.yCargo="";
-  firma1Default.imagenFirmaDigital="";
+  firma1Default.imagen="";
   
   var firma2Default={};
   firma2Default.x=485;
@@ -44,7 +44,7 @@ var logoIzq={};
   firma2Default.cargo="";
   firma2Default.xCargo="";
   firma2Default.yCargo="";
-  firma2Default.imagenFirmaDigital="";
+  firma2Default.imagen="";
   
   /*************INICIALIZAR CROPPIES***************************************/
 
@@ -170,6 +170,8 @@ croppieFirma2 = $('#croppieFirma2').croppie({
 	  arrayImagenes.forEach(function(imagen) {
 		  if (imagen.x == 80) {
 			  logoInicialIzq=imagen;
+			  console.log("logo inicial izq");
+			  console.log(logoInicialIzq);
 			  /*croppieLogo1.bind({
 				    url: logoInicialIzq.ruta,
 				});*/
@@ -189,10 +191,10 @@ croppieFirma2 = $('#croppieFirma2').croppie({
   
   
   if(!document.getElementById('checkBoxLogo1').checked){
-	  logoInicialIzq.ruta="";
+	  logoInicialIzq.imagen="";
   }
   if(!document.getElementById('checkBoxLogo2').checked){
-	  logoInicialDer.ruta="";
+	  logoInicialDer.imagen="";
   }
   
   if(arrayTextos!=null){
@@ -224,6 +226,8 @@ croppieFirma2 = $('#croppieFirma2').croppie({
 			  document.getElementById('checkBoxFirma1').checked=true;
 			  $("#inputNombreFirma1").val(firma1Inicial.nombre);
 			  $("#inputCargoFirma1").val(firma1Inicial.cargo);
+			  console.log("firma1Inicia");
+			  console.log(firma1Inicial);
 			  croppieFirma1.croppie('bind', {url: firma1Inicial.imagen,});
 			  
 		 }else if(firma2Inicial.nombre==""){
@@ -389,37 +393,37 @@ croppieFirma2 = $('#croppieFirma2').croppie({
   /**************COMPORTAMIENTO DE CHECKBOX*****************/
   $("#checkBoxLogo1").on("change",function(e){
 	  if(document.getElementById('checkBoxLogo1').checked){
-		  logo1.ruta=rutaAntiguaLogo1;
+		  logo1.imagen=rutaAntiguaLogo1;
 	  }else{
-		  rutaAntiguaLogo1=logo1.ruta;
-		  logo1.ruta="";
+		  rutaAntiguaLogo1=logo1.imagen;
+		  logo1.imagen="";
 	  }
   });
   
   $("#checkBoxLogo2").on("change",function(e){
 	  if(document.getElementById('checkBoxLogo2').checked){
-		  logo2.ruta=rutaAntiguaLogo2;
+		  logo2.imagen=rutaAntiguaLogo2;
 	  }else{
-		  rutaAntiguaLogo2=logo2.ruta;
-		  logo2.ruta="";
+		  rutaAntiguaLogo2=logo2.imagen;
+		  logo2.imagen="";
 	  }
   });
   
   $("#checkBoxFirma1").on("change",function(e){
 	  if(document.getElementById('checkBoxFirma1').checked){
-		  firma1.imagenFirmaDigital=rutaAntiguaFirma1;
+		  firma1.imagen=rutaAntiguaFirma1;
 	  }else{
-		  rutaAntiguaFirma1=firma1.imagenFirmaDigital;
-		  firma1.imagenFirmaDigital="";
+		  rutaAntiguaFirma1=firma1.imagen;
+		  firma1.imagen="";
 	  }
   });
   
   $("#checkBoxFirma2").on("change",function(e){
 	  if(document.getElementById('checkBoxFirma2').checked){
-		  firma2.imagenFirmaDigital=rutaAntiguaFirma2;
+		  firma2.imagen=rutaAntiguaFirma2;
 	  }else{
-		  rutaAntiguaFirma2=firma2.imagenFirmaDigital;
-		  firma2.imagenFirmaDigital="";
+		  rutaAntiguaFirma2=firma2.imagen;
+		  firma2.imagen="";
 	  }
   });
   
@@ -451,7 +455,7 @@ croppieFirma2 = $('#croppieFirma2').croppie({
 				type: 'canvas',
 				size: 'viewport'
 			}).then(function (resp) {
-				logo1.ruta=resp;
+				logo1.imagen=resp;
 				arrayImagenes.push(logo1);
 			});
 		  
@@ -475,7 +479,7 @@ croppieFirma2 = $('#croppieFirma2').croppie({
 				type: 'canvas',
 				size: 'viewport'
 			}).then(function (resp) {
-				logo2.ruta=resp;
+				logo2.imagen=resp;
 				arrayImagenes.push(logo2);
 			});
 		  
@@ -527,7 +531,7 @@ croppieFirma2 = $('#croppieFirma2').croppie({
 			 firma2.yNombre="";
 			 firma2.xCargo="";
 			 firma2.yCargo="";
-			 firma2.imagenFirmaDigital="";
+			 firma2.imagen="";
 		  }else if(!document.getElementById('checkBoxFirma1').checked && document.getElementById('checkBoxFirma2').checked){
 			 firma1.x="";
 			 firma1.y="";
@@ -537,7 +541,7 @@ croppieFirma2 = $('#croppieFirma2').croppie({
 			 firma1.cargo="";
 			 firma1.xCargo="";
 			 firma1.yCargo="";
-			 firma1.imagenFirmaDigital="";
+			 firma1.imagen="";
 			 
 			 firma2.x=345;
 			 firma2.y=590;
@@ -555,7 +559,7 @@ croppieFirma2 = $('#croppieFirma2').croppie({
 			 firma1.yNombre="";
 			 firma1.xCargo="";
 			 firma1.yCargo="";
-			 firma1.imagenFirmaDigital="";
+			 firma1.imagen="";
 			 
 			 firma2.x="";
 			 firma2.y="";
@@ -565,7 +569,7 @@ croppieFirma2 = $('#croppieFirma2').croppie({
 			 firma2.yNombre="";
 			 firma2.xCargo="";
 			 firma2.yCargo="";
-			 firma2.imagenFirmaDigital="";
+			 firma2.imagen="";
 		  }
 	  }
 	  
@@ -590,7 +594,7 @@ croppieFirma2 = $('#croppieFirma2').croppie({
 				type: 'canvas',
 				size: 'viewport'
 			}).then(function (resp) {
-				firma1.imagenFirmaDigital=resp;
+				firma1.imagen=resp;
 				  arrayFirmas.push(firma1);
 			});
 	  }
@@ -616,7 +620,7 @@ croppieFirma2 = $('#croppieFirma2').croppie({
 				size: 'viewport'
 			}).then(function (resp) {
 				console.log(resp);
-				firma2.imagenFirmaDigital=resp;
+				firma2.imagen=resp;
 				  arrayFirmas.push(firma2);
 			});
 	  }
@@ -747,7 +751,7 @@ croppieFirma2 = $('#croppieFirma2').croppie({
     			var imgLogo1 = new Image();
     			console.log("logo1")
     			console.log(logo1);
-        		imgLogo1.src=logo1.ruta;
+        		imgLogo1.src=logo1.imagen;
         		imgLogo1.onload = function() {
         	    	//imgLogo1= redimensionarLogos(imgLogo1);
         	    	ctx.drawImage(imgLogo1, logo1.x, logo1.y, imgLogo1.width, imgLogo1.height);//max 150 width
@@ -760,7 +764,7 @@ croppieFirma2 = $('#croppieFirma2').croppie({
     			var imgLogo2 = new Image();
     			console.log("logo2")
     			console.log(logo2);
-      		    imgLogo2.src=logo2.ruta;
+      		    imgLogo2.src=logo2.imagen;
         	    imgLogo2.onload = function() {
         	    	//imgLogo2= redimensionarLogos(imgLogo2);
         	    	ctx.drawImage(imgLogo2, logo2.x, logo2.y, imgLogo2.width, imgLogo2.height);//max 150 width
@@ -809,7 +813,8 @@ croppieFirma2 = $('#croppieFirma2').croppie({
             console.log(firmaD2);
             if(firmaD1.nombre!="" && firmaD1.cargo!="" ){
     			var imgFirma1 = new Image();
-    			imgFirma1.src=firmaD1.imagenFirmaDigital;
+    			console
+    			imgFirma1.src=firmaD1.imagen;
     			console.log("firma1")
     			console.log(firmaD1);
     			//imgFirma1.src="/firma3.jpg";
@@ -855,7 +860,7 @@ croppieFirma2 = $('#croppieFirma2').croppie({
         	    };*/
         	    if(firmaD2.nombre!="" && firmaD2.cargo!="" ){
 	        	   var imgFirma2 = new Image();
-	    			imgFirma2.src=firmaD2.imagenFirmaDigital;
+	    			imgFirma2.src=firmaD2.imagen;
 	    			console.log("firma2")
 	    			console.log(firmaD2);
 	    			//imgFirma2.src="/firma2.png";

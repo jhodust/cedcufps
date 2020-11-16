@@ -52,7 +52,7 @@
 														<option value="0">Seleccione Tipo Documento...</option>
 														<option th:each="t: ${tipos_documento}" th:value="${t.id}"
 															th:text="${t.tipoDocumento + ' - ' +t.descripcion}" th:selected="${persona.tipoDocumento == t.id}"></option>
-													</select> <small class="form-text text-danger"><strong></strong></small>
+													</select> <small class="form-text text-danger"><strong id="errorTipoDoc"></strong></small>
 												</div>
 											</div>
 											<div class="col-md-4">
@@ -60,7 +60,7 @@
 													<label class="form-control-label">Número Documento</label><label class="requerido pl-2">*</label>
 													<input class="form-control" type="text"
 														placeholder="Ingrese su número de documento..." th:value="${persona.numeroDocumento}"
-														id="numDoc" /> <small class="form-text text-danger"><strong></strong></small>
+														id="numDoc" /> <small class="form-text text-danger"><strong id="errorNumeroDocumento"></strong></small>
 												</div>
 											</div>
 											<div class="col-md-4">
@@ -69,7 +69,7 @@
 														Documento</label><label class="requerido pl-2">*</label> <input type="text"
 														class="form-control flatpickr-input" data-toggle="date"
 														placeholder="Seleccione fecha..." id="fechaExp" th:value="${#dates.format(persona.fechaExpedicionDocumento, 'dd/MM/yyyy')}" /> <small
-														class="form-text text-danger"><strong></strong></small>
+														class="form-text text-danger"><strong id="errorFechaExp"></strong></small>
 												</div>
 											</div>
 
@@ -80,7 +80,7 @@
 													<label class="form-control-label">Primer Nombre</label><label class="requerido pl-2">*</label> <input
 														class="form-control" type="text"
 														placeholder="Ingrese su primer nombre..." id="primNom" th:value="${persona.primerNombre}"/>
-													<small class="form-text text-danger"><strong></strong></small>
+													<small class="form-text text-danger"><strong id="errorPrimerNombre"></strong></small>
 												</div>
 											</div>
 											<div class="col-md-3">
@@ -88,7 +88,7 @@
 													<label class="form-control-label">Segundo Nombre</label> <input
 														class="form-control" type="text"
 														placeholder="Ingrese su segundo nombre..." id="segNom" th:value="${persona.segundoNombre}"/>
-													<small class="form-text text-danger"><strong></strong></small>
+													<small class="form-text text-danger"><strong id="errorSegundoNombre"></strong></small>
 												</div>
 											</div>
 											<div class="col-md-3">
@@ -96,7 +96,7 @@
 													<label class="form-control-label">Primer Apellido</label><label class="requerido pl-2">*</label> <input
 														class="form-control" type="text"
 														placeholder="Ingrese su primer apellido..." id="primApe" th:value="${persona.primerApellido}"/>
-													<small class="form-text text-danger"><strong></strong></small>
+													<small class="form-text text-danger"><strong id="errorPrimerApellido"></strong></small>
 												</div>
 											</div>
 											<div class="col-md-3">
@@ -104,7 +104,7 @@
 													<label class="form-control-label">Segundo Apellido</label><label class="requerido pl-2">*</label>
 													<input class="form-control" type="text" th:value="${persona.segundoApellido}"
 														placeholder="Ingrese su segundo apellido..." id="segApe" />
-													<small class="form-text text-danger"><strong></strong></small>
+													<small class="form-text text-danger"><strong id="errorSegundoApellido"></strong></small>
 												</div>
 											</div>
 										</div>
@@ -121,7 +121,7 @@
 																class="custom-control-label" th:for="${g.genero}"
 																th:text="${g.genero}"></label>
 														</div>
-														<small class="form-text text-danger"><strong></strong></small>
+														<small class="form-text text-danger"><strong id="errorGenero"></strong></small>
 													</div>
 												</div>
 											</div>
@@ -143,7 +143,7 @@
 																class="custom-control-label" th:for="${e.estadoCivil}"
 																th:text="${e.estadoCivil}"></label>
 														</div>
-														<small class="form-text text-danger"><strong></strong></small>
+														<small class="form-text text-danger" ><strong id="errorEstadoCivil"></strong></small>
 
 													</div>
 												</div>
@@ -156,7 +156,7 @@
 													<input type="text" class="form-control flatpickr-input"
 														data-toggle="date" th:value="${#dates.format(persona.fechaNacimiento, 'dd/MM/yyyy')}" 
 														placeholder="Seleccione su fecha de nacimiento..."
-														id="fechaNac" /> <small class="form-text text-danger"><strong></strong></small>
+														id="fechaNac" /> <small class="form-text text-danger"><strong id="errorFechaNacimiento"></strong></small>
 												</div>
 											</div>
 											<div class="col-md-3">
@@ -165,7 +165,7 @@
 														class="form-control" data-toggle="select"
 														id="selectPaisNacimiento">
 														<option value="0">Seleccione pais...</option>
-													</select> <small class="form-text text-danger"><strong></strong></small>
+													</select> <small class="form-text text-danger"><strong id="errorPaisNacimiento"></strong></small>
 												</div>
 											</div>
 											<div class="col-md-3" id="rowDeptoColombia">
@@ -174,7 +174,7 @@
 														Nacimiento</label><label class="requerido pl-2">*</label> <select class="form-control"
 														data-toggle="select" id="selectDepartamentoNacimiento">
 														<option value="0">Seleccione departamento...</option>
-													</select> <small class="form-text text-danger"><strong></strong></small>
+													</select> <small class="form-text text-danger"><strong id="errorDeptoNacimiento"></strong></small>
 												</div>
 											</div>
 											<div class="col-md-3" id="rowMpioColombia">
@@ -183,7 +183,7 @@
 														Nacimiento</label><label class="requerido pl-2">*</label> <select class="form-control"
 														data-toggle="select" id="selectMunicipioNacimiento">
 														<option value="0">Seleccione municipio...</option>
-													</select> <small class="form-text text-danger"><strong></strong></small>
+													</select> <small class="form-text text-danger"><strong id="errorMpioNacimiento"></strong></small>
 												</div>
 											</div>
 										</div>
@@ -232,6 +232,7 @@
 												</div>
 											</div>
 										</div>
+										 <small class="form-text text-danger"><strong id="errorPerfiles"></strong></small>
 									</div>
 								</div>
 							</div>
@@ -248,7 +249,7 @@
 													<label class="form-control-label">Email</label><label class="requerido pl-2">*</label> <input
 														class="form-control" type="email" th:value="${persona.email}"
 														placeholder="Ingrese su email..." id="email" /> <small
-														class="form-text text-danger"><strong></strong></small>
+														class="form-text text-danger"><strong id="errorEmail"></strong></small>
 												</div>
 											</div>
 
@@ -259,7 +260,7 @@
 													<label class="form-control-label">Telefono</label><label class="requerido pl-2">*</label> <input
 														class="form-control" type="text"  th:value="${persona.telefono}"
 														placeholder="Ingrese su telefono de contacto..."
-														id="telefono" /> <small class="form-text text-danger"><strong></strong></small>
+														id="telefono" /> <small class="form-text text-danger"><strong id="errorTelefono"></strong></small>
 												</div>
 											</div>
 										</div>
@@ -269,7 +270,7 @@
 													<label class="form-control-label">Dirección</label> <input
 														class="form-control" type="text" th:value="${persona.direccion}"
 														placeholder="Ingrese su dirección de residencia..."
-														id="direccion" /> <small class="form-text text-danger"><strong></strong></small>
+														id="direccion" /> <small class="form-text text-danger"><strong id="errorDireccion"></strong></small>
 												</div>
 											</div>
 										</div>
@@ -295,7 +296,7 @@
 															<option value="0">Seleccione el programa...</option>
 															<option th:each="p: ${programas}" th:value="${p.id}"
 																th:text="${p.programa}" th:selected="${persona.programa == p.id}"></option>
-														</select> <small class="form-text text-danger"><strong></strong></small>
+														</select> <small class="form-text text-danger"><strong id="errorProgramaEstudiante"></strong></small>
 													</div>
 												</div>
 												<div class="col-md-6">
@@ -304,7 +305,7 @@
 															class="form-control" type="text" data-mask="0000000" th:value="${persona.codigo}"
 															placeholder="0000000" id="codigo" />
 													</div>
-													<small class="form-text text-danger"><strong></strong></small>
+													<small class="form-text text-danger"><strong id="errorCodigoEstudiante"></strong></small>
 												</div>
 											</div>
 										</div>
@@ -322,7 +323,7 @@
 															<option value="0">Seleccione el departamento...</option>
 															<option th:each="d: ${departamentos}" th:value="${d.id}"
 																th:text="${d.departamento}" th:selected="${persona.deptoAdscrito == d.id}"></option>
-														</select> <small class="form-text text-danger"><strong></strong></small>
+														</select> <small class="form-text text-danger"><strong id="errorDeptoDocente"></strong></small>
 													</div>
 												</div>
 												<div class="col-md-6">
@@ -330,7 +331,7 @@
 														<label class="form-control-label">Código</label><label class="requerido pl-2">*</label> <input
 															class="form-control" type="text" th:value="${persona.codigoDocente}"
 															placeholder="Ingrese su código de docente" id="codDocente" /> <small
-															class="form-text text-danger"><strong></strong></small>
+															class="form-text text-danger"><strong id="errorCodigoDocente"></strong></small>
 													</div>
 												</div>
 											</div>
@@ -355,7 +356,7 @@
 														<label class="form-control-label">Dependencia
 															Adscrito(a)</label><label class="requerido pl-2">*</label> <input class="form-control" type="text"
 															placeholder="Ingrese la dependencia..." id="dependencia" th:value="${persona.dependencia}" /> <small
-															class="form-text text-danger"><strong></strong></small>
+															class="form-text text-danger"><strong id="errorDependenciaAdminvo"></strong></small>
 													</div>
 												</div>
 												<div class="col-md-6">
@@ -363,7 +364,7 @@
 														<label class="form-control-label">Cargo</label><label class="requerido pl-2">*</label> <input
 															class="form-control" type="text" th:value="${persona.cargo}"
 															placeholder="Ingrese su cargo..." id="cargo"/> <small
-															class="form-text text-danger"><strong></strong></small>
+															class="form-text text-danger"><strong id="errorCargoAdminvo"></strong></small>
 													</div>
 												</div>
 											</div>
@@ -382,7 +383,7 @@
 															<option value="0">Seleccione el programa...</option>
 															<option th:each="p: ${programas}" th:value="${p.id}"
 																th:text="${p.programa}" th:selected="${persona.programaGraduado == p.id}"></option>
-														</select> <small class="form-text text-danger"><strong></strong></small>
+														</select> <small class="form-text text-danger"><strong id="errorProgramaGraduado"></strong></small>
 													</div>
 												</div>
 												<div class="col-md-6">
@@ -390,7 +391,7 @@
 														<label class="form-control-label">Año</label><label class="requerido pl-2">*</label> <input
 															class="form-control" type="text" th:value="${persona.anioGraduado}"
 															placeholder="Ingrese el año en el que se graduó cargo..." id="anioGraduado"/> <small
-															class="form-text text-danger"><strong></strong></small>
+															class="form-text text-danger"><strong id="errorAnioGraduado"></strong></small>
 													</div>
 												</div>
 											</div>
@@ -406,7 +407,7 @@
 														<label class="form-control-label">Profesión</label><label class="requerido pl-2">*</label> <input
 															class="form-control" type="text"
 															placeholder="Ingrese su profesión..." id="profesion" th:value="${persona.profesion}"/> <small
-															class="form-text text-danger"><strong></strong></small>
+															class="form-text text-danger"><strong id="errorProfesionExterno"></strong></small>
 													</div>
 												</div>
 												<div class="col-md-6">
@@ -414,7 +415,7 @@
 														<label class="form-control-label">Empresa en la que labora</label><label class="requerido pl-2">*</label> <input
 															class="form-control" type="text" th:value="${persona.empresa}"
 															placeholder="Ingrese la empresa..." id="empresa" /> <small
-															class="form-text text-danger"><strong></strong></small>
+															class="form-text text-danger"><strong id="errorEmpresa"></strong></small>
 													</div>
 												</div>
 											</div>
@@ -448,11 +449,16 @@
 	<!-- Scripts -->
 	<!-- Core JS - includes jquery, bootstrap, popper, in-view and sticky-kit -->
 	<div th:replace="layouts/layout :: scripts"></div>
-	<script th:src="@{/js/usuario.js}" type="text/javascript"></script>
+	
 	<script type="text/javascript">
 		var caso=0;
-	</script>
+	    var idPaisNac = null;
+	    var idDepNac = null;
+	    var idMunNac = null;
+    </script>
+    <script th:src="@{/js/usuario.js}" type="text/javascript"></script>
 	<script th:src="@{/js/registroUsuario.js}" type="text/javascript"></script>
+	
 	<script th:src="@{/js/validacionRegistroUsuario.js}" type="text/javascript"></script>
 	
 </body>

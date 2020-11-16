@@ -52,8 +52,8 @@ public class EducacionContinuaRestController {
 	}
 	
 	@GetMapping(value = "/educacion-continua/search-base")
-	public ResponseEntity<?> searchEducacionContinuaBase(@RequestParam(name="idEducacionContinua", required=true)  String id) {
-		return new ResponseEntity<>(educacionContinuaService.findEducacionContinuaBase(Long.parseLong(id)),HttpStatus.OK);
+	public ResponseEntity<?> searchEducacionContinuaBase(@RequestParam(name="nombreEdC", required=true)  String nombreEducacionContinua) {
+		return new ResponseEntity<>(educacionContinuaService.findEducacionContinuaBase(nombreEducacionContinua),HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/educacion-continua/search-educaciones-continuas-base")

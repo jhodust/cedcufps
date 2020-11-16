@@ -37,8 +37,9 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 @RequestMapping("/app")
 public class AppRestController {
 
-	private static final String idDebug="835770905354-89itpo5t6vfvtrmfltvmfj1765vlr1va.apps.googleusercontent.com";
-	private static final String idPro="523301986974-4rbb6gu192148lg5poe9ofi0fnivbi0f.apps.googleusercontent.com";
+	private static final String idDebug="877594372056-aegs95db4kk73knee04esc80phfn3lbp.apps.googleusercontent.com";
+	private static final String idPro="362769569855-et1d0fucmaneh2urgfggho49migpbss6.apps.googleusercontent.com";
+									   
 	@Autowired
 	private IEducacionContinuaService educacionContinuaService;
 	
@@ -53,9 +54,9 @@ public class AppRestController {
 		
 		GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(new NetHttpTransport(),  new JacksonFactory())
 			    // Specify the CLIENT_ID of the app that accesses the backend:
-			   //.setAudience(Collections.singletonList(idDebug))
+			   .setAudience(Collections.singletonList(idPro))
 			    // Or, if multiple clients access the backend:
-			    .setAudience(Arrays.asList(idDebug, idPro))
+			    //.setAudience(Arrays.asList(idDebug, idPro))
 			    .build();
 
 			// (Receive idTokenString by HTTPS POST)
@@ -75,8 +76,7 @@ public class AppRestController {
 
 			  // Print user identifier
 			  String userId = payload.getSubject();
-			  System.out.println("User ID: " + userId);
-
+			  
 			  // Get profile information from payload
 			  String email = payload.getEmail();
 			  /*boolean emailVerified = Boolean.valueOf(payload.getEmailVerified());
@@ -89,8 +89,6 @@ public class AppRestController {
 			  // Use or store profile information
 			  // ...
 			  
-			  System.out.println("email");
-			  System.out.println(email);
 			  Persona p= personaService.findByEmail(email);
 		        if(p!=null) {
 		        	if(buscarPermisosAdminsitradorCursosYEventos(p)) {
@@ -101,7 +99,6 @@ public class AppRestController {
 		        	
 		        }
 			} else {
-			  System.out.println("Invalid ID token.");
 			  return  new ResponseEntity<>("Invalid ID token",HttpStatus.UNAUTHORIZED);
 			}
 		
@@ -109,18 +106,11 @@ public class AppRestController {
     }
 	
 	public boolean buscarPermisosAdminsitradorCursosYEventos(Persona p) {
-
-		if(p.getEmail().equalsIgnoreCase("dumaryekselbm@ufps.edu.co") || p.getEmail().equalsIgnoreCase("irmatom.02@gmail.com") 
-				|| p.getEmail().equalsIgnoreCase("irgentorresm@gmail.com") || p.getEmail().equalsIgnoreCase("auramoreno543@gmail.com")) {
+		if(personaService.hasPermissionForAttendance(p) || personaService.isSuperAdmin(p) || personaService.hasPermissionForEduContinua(p.getId())) {
 
 			return true;
 		}
-		/*for(Rol r:p.getRoles()) {
-			if(r.getAuthority().equalsIgnoreCase("ROLE_ADMIN_CEEC") || r.getAuthority().equalsIgnoreCase("ROLE_SUPERADMIN")) {
-				return true;
-			}
-			
-		}*/
+		
 		return false;
 	}
 	
@@ -128,7 +118,7 @@ public class AppRestController {
 	@GetMapping(value="/misCursosYEduContinua/{idPersona}", produces = "application/json")
     public ResponseEntity<?> searchCursosYEventos(@PathVariable Long idPersona) {
         
-        return  new ResponseEntity<>(educacionContinuaService.findAllEducacionesApp(),HttpStatus.OK);
+        return  new ResponseEntity<>(educacionContinuaService.findAllEducacionesApp(idPersona),HttpStatus.OK);
     }
 	
 	@GetMapping(value="/jornadasEducacionContinua/{idEducacionContinua}", produces = "application/json")

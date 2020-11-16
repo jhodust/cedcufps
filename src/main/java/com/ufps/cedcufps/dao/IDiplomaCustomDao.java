@@ -8,4 +8,5 @@ public interface IDiplomaCustomDao {
 	public void saveFirma(Long idDiploma, String cargo, int xCargo, int yCargo, 
 			String nombre, int xNombre, int yNombre, String rutaImagen, int x, int y);
 	public void updateDiplomaEduContinua(Long idDiploma, Long idEduContinua);
+	public void deleteElementsDiploma(Long idDiploma);
 }

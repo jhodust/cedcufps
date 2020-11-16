@@ -177,6 +177,11 @@ public class ProgramaService implements IProgramaService {
 		personaRolCustomDao.savePermisoParaPersonaPrograma("ROLE_MANPEOPLE", idDirPrograma, "Graduado", p.getId());
 		
 		/*
+		 * ****************************rol para tomar asistencia app***********************
+		 */
+		personaRolCustomDao.save("ROLE_ATTENDANCE",idDirPrograma);
+		
+		/*
 		 * ****************************rol para administrar informe snies***********************
 		 */
 		personaRolCustomDao.save("ROLE_SNIES",idDirPrograma);

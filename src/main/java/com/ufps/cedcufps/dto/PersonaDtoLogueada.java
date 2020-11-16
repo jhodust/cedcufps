@@ -6,6 +6,13 @@ public class PersonaDtoLogueada {
 	private boolean dirPrograma;
 	private boolean docente;
 	private boolean hasPermisosEdC;
+	private boolean hasPermisosOnlyMyEdC;
+	public boolean isHasPermisosOnlyMyEdC() {
+		return hasPermisosOnlyMyEdC;
+	}
+	public void setHasPermisosOnlyMyEdC(boolean hasPermisosOnlyMyEdC) {
+		this.hasPermisosOnlyMyEdC = hasPermisosOnlyMyEdC;
+	}
 	public boolean isSuperAdmin() {
 		return superAdmin;
 	}

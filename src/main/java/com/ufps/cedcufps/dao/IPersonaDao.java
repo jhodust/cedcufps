@@ -29,7 +29,8 @@ public interface IPersonaDao extends JpaRepository<Persona, Long>, DataTablesRep
 	
 	public Persona findByUsername(String username);
 	
-	public Optional<Persona> findByEmail(String email);
+	@Query(value="select p from Persona p where p.email = ?1")
+	public Persona findPersonaByEmail(String email);
 	
 	@Query("select p from Persona p where p.id IN (?1)")
 	public List<Persona> findManyPeople(List<Long> idsPersonas);
@@ -68,6 +69,7 @@ public interface IPersonaDao extends JpaRepository<Persona, Long>, DataTablesRep
 			"from Persona p " + 
 			"where p.email = ?1")	
 	public List<Persona> findPosiblePonenteByEmail(String email);
+	
 	
 	
 }

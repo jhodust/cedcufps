@@ -229,8 +229,30 @@ function guardarEdc(){
 	  var idProgramaResponsable=$('#programaResponsable').val();
 	  var idDocenteResponsable=$('#docenteResponsable').val();
 	  var idClasificacionCine=$('#selectClasificacionCINE').val();
+	  console.log(nombre=="" );
+	  console.log(fechaInicio=="");
+	  console.log( fechaFin=="");
+	  console.log(duracion<=0 );
+	  console.log(duracion=="");
+	  console.log(fechaLimInscripcion=="" );
+	  console.log(cantMaxParticipantes);
+	  console.log(cantMaxParticipantes<=0 && cantMaxParticipantes!="");
+	  console.log(costoInscripcion);
+	  console.log(costoInscripcion<=0 && costoInscripcion!="");
+	  
+	  console.log(lugar=="");
+	  console.log(costoEducacionContinua<=0);
+	  console.log(costoEducacionContinua=="" );
+	  console.log(porcentajeAsistencia <0);
+	  console.log(porcentajeAsistencia>100);
+	  console.log(porcentajeAsistencia=="");
+	  console.log(idTipoEduContinua==0);
+	  console.log(idProgramaResponsable==0);
+	  console.log(idDocenteResponsable==0);
+	  console.log(idClasificacionCine==0);
+	  
 	  if(nombre=="" || fechaInicio=="" || fechaFin=="" || duracion<=0 || duracion=="" || fechaLimInscripcion=="" ||
-			  cantMaxParticipantes<=0 || costoInscripcion<=0 || lugar=="" || costoEducacionContinua<=0 || costoEducacionContinua=="" ||
+			  (cantMaxParticipantes<=0 && cantMaxParticipantes!="")|| (costoInscripcion<=0 && costoInscripcion!="")|| lugar=="" || costoEducacionContinua<=0 || costoEducacionContinua=="" ||
 			  porcentajeAsistencia <0 || porcentajeAsistencia>100 || porcentajeAsistencia=="" || idTipoEduContinua==0 || 
 			  idProgramaResponsable==0 || idDocenteResponsable==0 || idClasificacionCine==0){
 		  validateInputTextRequerido('nombreEdc','errNombreEdc');
@@ -298,7 +320,7 @@ function guardarEdc(){
 		success: function(result) {
 			console.log(result);
 			toastr.success('Se ha guardado la información', 'Excelente!');
-			//window.setTimeout(function(){location.reload()},1000);
+			window.setTimeout(function(){location.reload()},1000);
 			idEduContinua=0;
 		},
 		error: function(err) {
@@ -324,12 +346,14 @@ function guardarEdc(){
 	
 }
 
-function findEducacionContinuaBase(id){
+function findEducacionContinuaBase(nombre){
+	console.log("id base");
+	console.log(nombre);
 	$.ajax({
 		headers: {"X-CSRF-TOKEN": token},
 		url: "/educacion-continua/search-base",
 		type: "GET",
-        data: {'idEducacionContinua':id},
+        data: {'nombreEdC':nombre},
         contentType: "application/json; charset=utf-8",
         cache: false,
 		success: function(result) {
@@ -359,8 +383,8 @@ function loadListEduContinuaBase(idPrograma){
 			console.log(result);
 			result.forEach(function(element){
 				console.log(element);
-				var newOption = new Option(element.nombre, element.id, false, false);
-				$('#selectEdCBase').append(newOption).trigger('change');
+				var newOption = new Option(element, element, false, false);
+				$('#selectEdCBase').append(newOption);
 			});
 		},
 		error: function(err) {
@@ -398,6 +422,8 @@ function loadEduContinuaBase(e){
 	console.log("idDocenteResp");
 	console.log(e.idDocenteResp)
 	var idsTB= [];
+	console.log("tipo beneficiarios");
+	console.log(e.tipoBeneficiarios);
     e.tipoBeneficiarios.forEach(element => idsTB.push(element.id));
     $('#selectTipoBeneficiarios').val(idsTB).trigger('change');
     consecutivo=e.consecutivo;

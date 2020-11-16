@@ -3,11 +3,8 @@ $(document).ready(function(){
 	 const pattern = new RegExp('^[A-Z]+$', 'i');
 
   $("#numDoc").focusout(function(){
-    if($("#numDoc").val() == ""){
-		document.getElementById('numDoc').classList.add("is-invalid");
-	}else{
-		document.getElementById('numDoc').classList.remove("is-invalid");
-	}
+	  validateInputTextRequerido('numDoc','errorNumeroDocumento');
+	  
   });
   
   $("#numDoc").bind('keypress', function(event) {
@@ -15,42 +12,28 @@ $(document).ready(function(){
 	});
   
   $("#fechaExp").focusout(function(){
-    if($("#fechaExp").val() == ""){
-		document.getElementById('fechaExp').classList.add("is-invalid");
-	}else{
-		document.getElementById('fechaExp').classList.remove("is-invalid");
-	}
+		validateInputTextRequerido('fechaExp','errorFechaExp');
   });
   
   
   $("#primNom").focusout(function(){
-    if($("#primNom").val() == ""){
-		document.getElementById('primNom').classList.add("is-invalid");
-	}else{
-		document.getElementById('primNom').classList.remove("is-invalid");
-	}
+	  validateInputTextRequerido('primNom','errorPrimerNombre');
+		
   });
   
   $("#primNom").bind('keypress', function(event) {
 	  return text(event);
 	});
   
-  $("#segNom").focusout(function(){
-    if($("#segNom").val() == ""){
-		document.getElementById('segNom').classList.remove("is-invalid");
-	}
-  });
+  
   
     $("#segNom").bind('keypress', function(event) {
 	  return text(event);
 	});
   
   $("#primApe").focusout(function(){
-    if($("#primApe").val() == ""){
-		document.getElementById('primApe').classList.add("is-invalid");
-	}else{
-		document.getElementById('primApe').classList.remove("is-invalid");
-	}
+	  validateInputTextRequerido('primApe','errorPrimerApellido');
+		
   });
   
    $("#primApe").bind('keypress', function(event) {
@@ -58,12 +41,8 @@ $(document).ready(function(){
 	});
   
   $("#segApe").focusout(function(){
-    if($("#segApe").val() == ""){
-		document.getElementById('segApe').classList.add("is-invalid");
-	}else{
-		document.getElementById('segApe').classList.remove("is-invalid");
+	  validateInputTextRequerido('segApe','errorSegundoApellido');
 		
-	}
   });
   
    $("#segApe").bind('keypress', function(event) {
@@ -71,27 +50,18 @@ $(document).ready(function(){
 	});
   
   $("#fechaNac").focusout(function(){
-    if($("#fechaNac").val() == ""){
-		document.getElementById('fechaNac').classList.add("is-invalid");
-	}else{
-		document.getElementById('fechaNac').classList.remove("is-invalid");
-	}
+	  validateInputTextRequerido('fechaNac','errorFechaNacimiento');
+		
+		
   });
   
   $("#email").focusout(function(){
-    if($("#email").val() == ""){
-		document.getElementById('email').classList.add("is-invalid");
-	}else{
-		document.getElementById('email').classList.remove("is-invalid");
-	}
+	  validateInputTextRequerido('email','errorEmail');
+		
   });
   
   $("#telefono").focusout(function(){
-    if($("#telefono").val() == ""){
-		document.getElementById('telefono').classList.add("is-invalid");
-	}else{
-		document.getElementById('telefono').classList.remove("is-invalid");
-	}
+	  validateInputNumberRequerido('telefono','errorTelefono');
   });
    $("#telefono").bind('keypress', function(event) {
 	 return numbers(event);

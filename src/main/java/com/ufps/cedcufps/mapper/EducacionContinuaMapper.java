@@ -127,7 +127,7 @@ public class EducacionContinuaMapper implements IEducacionContinuaMapper {
 		if(p.getPrimerNombre()!="") {
 			nombreResponsable=p.getPrimerNombre();
 		}
-		if(p.getSegundoNombre()!="") {
+		if(p.getSegundoNombre() != null && p.getSegundoNombre()!="") {
 			nombreResponsable=nombreResponsable + " " +p.getSegundoNombre();
 		}
 		if(p.getPrimerApellido()!="") {

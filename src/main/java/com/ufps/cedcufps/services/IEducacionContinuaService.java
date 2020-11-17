@@ -1,5 +1,6 @@
 package com.ufps.cedcufps.services;
 
+import java.io.ByteArrayInputStream;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -96,6 +97,8 @@ public interface IEducacionContinuaService {
 	public RequisitosInscripcionDto consultarRequisitosInscripcion(String nombreEduContinua, String fechaInicio);
 	
 	public void saveDiploma(EducacionContinua ec);
+	
+	public ByteArrayInputStream generarPdfAsistentes(String nombreEducacionContinua, String fechaInicio);
 	
 	
 	

@@ -374,14 +374,12 @@ public class EducacionContinuaController {
 		return "redirect:/educacion-continua-a-cargo";
 	}*/
 	
-	@RequestMapping(value = "/educacion-continua/listado-participantes/{eduContinuaNombre}", method = RequestMethod.GET,
+	@RequestMapping(value = "/educacion-continua/listado-participantes", method = RequestMethod.GET,
             produces = MediaType.APPLICATION_PDF_VALUE)
-    public ResponseEntity<InputStreamResource> listadoInscritos(@PathVariable(value = "eduContinuaNombre") String nombreEduContinua, Map<String, Object> model, RedirectAttributes redirectAttributes) {
+    public ResponseEntity<InputStreamResource> listadoInscritos(@RequestParam(name = "educacionContinua") String educacionContinua,
+    		@RequestParam(name = "fecha") String fechaEduContinua, Map<String, Object> model, RedirectAttributes redirectAttributes) {
 
-        EducacionContinua e= educacionContinuaService.findOneByNombre(nombreEduContinua);
-		
-        ByteArrayInputStream bis = ManejoPdf.generarPDFParticipantes(participanteService.findAllParticipantesByEducacionContinua(nombreEduContinua),e);
-
+        ByteArrayInputStream bis = educacionContinuaService.generarPdfAsistentes(educacionContinua, fechaEduContinua);
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Disposition", "inline; filename=participantes.pdf");
         

@@ -1,5 +1,6 @@
 package com.ufps.cedcufps.services;
 
+import java.io.ByteArrayInputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -58,6 +59,7 @@ import com.ufps.cedcufps.modelos.TipoBeneficiario;
 import com.ufps.cedcufps.modelos.TipoEducacionContinua;
 import com.ufps.cedcufps.utils.Archivo;
 import com.ufps.cedcufps.utils.Encrypt;
+import com.ufps.cedcufps.utils.ManejoPdf;
 import com.ufps.cedcufps.utils.ReportesExcel;
 import com.ufps.cedcufps.utils.StatusEducacionContinua;
 
@@ -678,6 +680,21 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 			//e.getDiploma().setFirmas(ec.getDiploma().getFirmas());
 		}
 		diplomaCustomDao.updateDiplomaEduContinua(idDiploma, e.getId());
+	}
+
+	@Override
+	public ByteArrayInputStream generarPdfAsistentes(String nombreEducacionContinua, String fechaInicio) {
+		// TODO Auto-generated method stub
+		EducacionContinua e;
+		try {
+			e = educacionContinuaDao.findByNombreAndFechaInicio(nombreEducacionContinua,new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(fechaInicio));
+			return ManejoPdf.generarPDFParticipantes(educacionContinuaMapper.convertParticipantesToParticipanteDto(e.getParticipantes()),e);
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		return null;
+		
 	}
 	
 

@@ -133,7 +133,7 @@ public class ManejoPdf {
 						cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 						cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 						table.addCell(cell);
-
+						
 						cell = new PdfPCell(new Phrase(p.getNombrePersona()));
 						cell.setPaddingLeft(5);
 						cell.setVerticalAlignment(Element.ALIGN_MIDDLE);

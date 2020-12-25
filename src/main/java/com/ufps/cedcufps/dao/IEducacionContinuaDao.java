@@ -47,6 +47,9 @@ public interface IEducacionContinuaDao extends JpaRepository<EducacionContinua, 
 	@Query(value="select e from EducacionContinua e where e.nombre = ?1 and e.fechaInicio = ?2")
 	public EducacionContinua findByNombreAndFechaInicio(String educacionContinua, Date fechaInicio);
 	
+	@Query(value="select e from EducacionContinua e where e.idAcceso = ?1")
+	public EducacionContinua findByIdAcceso(String idAcceso);
+	
 	@Query(value= "select * from educacion_continua e where e.id=?1", nativeQuery = true)
 	public EducacionContinua findEducacionContinuaById(Long id);
 	

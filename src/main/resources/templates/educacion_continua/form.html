@@ -41,6 +41,8 @@
           </div>
         </div>
         <hr/>
+        <div th:replace="loader :: loader"></div>
+        <div id="formEducacionContinuaBase">
         <div class="card">
 			<div class="col-md-12">
 				<div class="custom-control custom-checkbox">
@@ -89,7 +91,8 @@
 							</div>
 						</div>
 					</div>
-        <div th:fragment="form">
+		</div>
+        <div th:fragment="form" id="formEducacionContinua">
 		<form enctype="multipart/form-data">
 					
 					<div class="row">
@@ -138,7 +141,7 @@
 										<div class="col-md-4">
 											<div class="form-group">
 												<label class="form-control-label">Fecha Inicio </label><label class="requerido pl-2">*</label> <input type="text"
-													class="form-control flatpickr-input" data-toggle="date"
+													class="form-control flatpickr-input" 
 													placeholder="Seleccione la fecha de inicio..." id="fechaInicioEduCont" th:value="${#dates.format(educacionContinua.fechaInicio, 'dd/MM/yyyy HH:mm')}"/>
 													<small class="form-text text-danger"><strong id="errFechaInicioEdc"></strong></small>
 											</div>
@@ -146,7 +149,7 @@
 										<div class="col-md-4">
 											<div class="form-group">
 												<label class="form-control-label">Fecha Fin </label><label class="requerido pl-2">*</label> <input type="text"
-													class="form-control flatpickr-input" data-toggle="date"
+													class="form-control flatpickr-input" 
 													placeholder="Seleccione la fecha de finalización..." id="fechaFinEduCont" th:value="${#dates.format(educacionContinua.fechaFin, 'dd/MM/yyyy HH:mm')}"/>
 													<small class="form-text text-danger"><strong id="errFechaFinEdc"></strong></small>
 											</div>
@@ -168,7 +171,7 @@
 										<div class="col-md-4">
 											<div class="form-group">
 												<label class="form-control-label">Duración(horas) </label><label class="requerido pl-2">*</label> <input
-													class="form-control" type="number"
+													class="form-control" type="text"
 													placeholder="Ingrese la duración del evento..." id="duracion" th:value="${educacionContinua.duracion}"/>
 													<small class="form-text text-danger"><strong id="errDuracionEdc" ></strong></small>
 											</div>

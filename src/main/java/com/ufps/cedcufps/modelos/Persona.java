@@ -84,7 +84,6 @@ public class Persona implements Serializable {//*
 	@Column(name = "primer_apellido")
 	private String primerApellido;
 	
-	@NotEmpty(message = "El campo segundo apellido es requerido")
 	@Pattern(regexp = "^$|^[a-zA-ZñNáéíóúÁÉÍÓÚüÜ\\s]+$", message = "El campo segundo apellido debe contener solo letras")
 	@Size(max = 20, message = "El campo segundo apellido debe tener máximo 20 caracteres")
 	@Column(name = "segundo_apellido")
@@ -168,6 +167,9 @@ public class Persona implements Serializable {//*
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "persona", cascade = CascadeType.ALL)
 	private List<PersonaRol> personaXRoles;
 	
+	@NotNull
+	@Column(name = "id_acceso")
+	private String idAcceso;
 	
 	
 	public Persona() {
@@ -382,6 +384,14 @@ public class Persona implements Serializable {//*
 
 	public void setPersonaXRoles(List<PersonaRol> personaXRoles) {
 		this.personaXRoles = personaXRoles;
+	}
+
+	public String getIdAcceso() {
+		return idAcceso;
+	}
+
+	public void setIdAcceso(String idAcceso) {
+		this.idAcceso = idAcceso;
 	}
 
 	

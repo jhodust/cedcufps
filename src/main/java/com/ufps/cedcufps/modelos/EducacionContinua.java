@@ -73,8 +73,9 @@ public class EducacionContinua implements Serializable {
 	@Column(name = "fecha_lim_inscripcion")
 	private Date fechaLimInscripcion;
 	
+	@NotEmpty(message="El campo duración es requerido")
 	@Min(value = 1,message="El campo duración es requerido")
-	private int duracion;
+	private String duracion;
 	
 	
 	private String requisitos;
@@ -144,6 +145,9 @@ public class EducacionContinua implements Serializable {
 
 	private String estado="Activo";//activo, en curso, finalizado
 	
+	@NotNull
+	@Column(name = "id_acceso")
+	private String idAcceso;
 	
 	public EducacionContinua() {
 		this.jornadas=new ArrayList<Jornada>();
@@ -194,12 +198,18 @@ public class EducacionContinua implements Serializable {
 		this.fechaLimInscripcion = fechaLimInscripcion;
 	}
 
-	public int getDuracion() {
+	
+
+	public String getDuracion() {
 		return duracion;
 	}
 
-	public void setDuracion(int duracion) {
+	public void setDuracion(String duracion) {
 		this.duracion = duracion;
+	}
+
+	public void setTipoBeneficiarios(List<EducacionContinuaTipoBeneficiario> tipoBeneficiarios) {
+		this.tipoBeneficiarios = tipoBeneficiarios;
 	}
 
 	public String getRequisitos() {
@@ -375,6 +385,14 @@ public class EducacionContinua implements Serializable {
 
 	public void setCostoEducacionContinua(String costoEducacionContinua) {
 		this.costoEducacionContinua = costoEducacionContinua;
+	}
+
+	public String getIdAcceso() {
+		return idAcceso;
+	}
+
+	public void setIdAcceso(String idAcceso) {
+		this.idAcceso = idAcceso;
 	}
 	
 	

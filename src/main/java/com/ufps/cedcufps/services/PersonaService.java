@@ -1,6 +1,8 @@
 package com.ufps.cedcufps.services;
 
 import org.springframework.stereotype.Service;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -129,6 +131,9 @@ public class PersonaService implements IPersonaService, UserDetailsService {
 	
 	@Autowired
 	private IPersonaRolCustomDao personaRolDao;
+	
+	@Autowired
+	private IEmailService emailService;
 	
 	private Logger logger= LoggerFactory.getLogger(PersonaService.class);
 	
@@ -282,6 +287,7 @@ public class PersonaService implements IPersonaService, UserDetailsService {
 		// TODO Auto-generated method stub
 		if(u.getId()==0) {
 			this.addUsuario(u);
+			this.prepararEmailRegistro(u);
 		}else {
 			this.updateUsuario(u);
 		}
@@ -545,10 +551,10 @@ public class PersonaService implements IPersonaService, UserDetailsService {
 	}
 
 	@Override
-	public PerfilRolUsuarioDto findPermisos(Long idUsuario) {
+	public PerfilRolUsuarioDto findPermisos(String idAcceso) {
 		// TODO Auto-generated method stub
 		Persona autoridad= this.findPersonaLogueada();
-		Persona usuario= personaDao.findPersonaById(idUsuario);
+		Persona usuario= personaDao.findPersonaByIdAcceso(idAcceso);
 		PerfilRolUsuarioDto dto= new PerfilRolUsuarioDto();
 		if(usuario!=null) {
 			dto.setIdPersona(usuario.getId());
@@ -665,14 +671,14 @@ public class PersonaService implements IPersonaService, UserDetailsService {
 	}
 
 	@Override
-	public UsuarioDto editarUsuario(Long idUsuario) {
+	public UsuarioDto editarUsuario(String idAcceso) {
 		// TODO Auto-generated method stub
-		Persona p= personaDao.findPersonaById(idUsuario);
-		Estudiante es=personaCustomDao.findOnlyEstudiante(idUsuario);
-		Docente doc=personaCustomDao.findOnlyDocente(idUsuario);
-		Administrativo ad=personaCustomDao.findOnlyAdministrativo(idUsuario);
-		Graduado gr=personaCustomDao.findOnlyGraduado(idUsuario);
-		Externo ex=personaCustomDao.findOnlyExterno(idUsuario);
+		Persona p= personaDao.findPersonaByIdAcceso(idAcceso);
+		Estudiante es=personaCustomDao.findOnlyEstudiante(p.getId());
+		Docente doc=personaCustomDao.findOnlyDocente(p.getId());
+		Administrativo ad=personaCustomDao.findOnlyAdministrativo(p.getId());
+		Graduado gr=personaCustomDao.findOnlyGraduado(p.getId());
+		Externo ex=personaCustomDao.findOnlyExterno(p.getId());
 		if(p!=null) {
 			return usuarioMapper.convertPersonaToUsuarioDto(p,es,doc,ad,gr,ex);
 		}
@@ -744,5 +750,32 @@ public class PersonaService implements IPersonaService, UserDetailsService {
 		return personaDao.findPersonaById(idPersona);
 	}
 
+	public void prepararEmailRegistro(UsuarioDto usuario) {
+		
+	     
+		String contenido="La inscripción al sistema Gestión para la Educación Continua "
+				+ " se ha realizado exitosamente. Recuerde iniciar sesión mediante este correo para inscribirse y"
+				+ " participar de las educaciones continuas ofertadas por la UFPS";
+		String nombre="";
+		if(!usuario.getPrimerNombre().isEmpty()) {
+			nombre=usuario.getPrimerNombre();
+		}
+		if(!usuario.getSegundoNombre().isEmpty()) {
+			nombre=nombre + ' ' + usuario.getSegundoNombre();
+		}
+		if(!usuario.getPrimerApellido().isEmpty()) {
+			nombre=nombre + ' ' + usuario.getPrimerApellido();
+		}
+		if(!usuario.getSegundoApellido().isEmpty()) {
+			nombre=nombre + ' ' + usuario.getSegundoApellido();
+		}
+		notificarViaEmail(usuario.getEmail(), "Registro realizado", contenido, nombre);
+	}
 	
+	
+	
+	public void notificarViaEmail(String email, String asunto, String contenido, String nombreUsuario) {
+		emailService.sendEmailRegistro(email, asunto, contenido, nombreUsuario);
+		
+	}
 }

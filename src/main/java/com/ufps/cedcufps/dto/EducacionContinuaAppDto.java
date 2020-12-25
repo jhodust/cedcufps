@@ -14,6 +14,7 @@ public class EducacionContinuaAppDto {
 	private String tipoEduContinua;
 	private String programaResponsable;
 	private String docenteResponsable;
+	private String idAcceso;
 	private List<JornadaAppDto> jornadas;
 	public Long getId() {
 		return id;
@@ -74,6 +75,12 @@ public class EducacionContinuaAppDto {
 	}
 	public void setFechaLimInscripcion(Date fechaLimInscripcion) {
 		this.fechaLimInscripcion = fechaLimInscripcion;
+	}
+	public String getIdAcceso() {
+		return idAcceso;
+	}
+	public void setIdAcceso(String idAcceso) {
+		this.idAcceso = idAcceso;
 	}
 	
 	

@@ -16,8 +16,12 @@ $(document).ready(function ()
 
 
 function guardarFacultad(){
+	var boton = document.getElementById('btnGuardar');
+	boton.disabled=true;
 	var facultad = $('#facultad').val();
-	if(facultad == ""){
+	var valid=validateInputTextRequerido('facultad','errorFacultad');
+	if(!valid){
+		boton.disabled=false;
 		toastr
 			.error(
 					'Diligencie el formulario correctamente',
@@ -39,6 +43,7 @@ function guardarFacultad(){
 			idFacultad=0;
 		},
 		error: function(err) {
+			boton.disabled=false;
 			console.log(err);
 			if(err.responseJSON.length >0){
 				toastr.error('No se pudo procesar la solicitud...', 'Error!');

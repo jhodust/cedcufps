@@ -1,11 +1,8 @@
 $(document).ready(function(){
 	console.log("documento listo");
 	$("#facultad").focusout(function(){
-    if($("#facultad").val() == ""){
-		document.getElementById('facultad').classList.add("is-invalid");
-	}else{
-		document.getElementById('facultad').classList.remove("is-invalid");
-	}
+		validateInputTextRequerido('facultad','errorFacultad');
+    
   });
   
   $("#facultad").bind('keypress', function(event) {
@@ -13,11 +10,7 @@ $(document).ready(function(){
 	});
   
   $("#departamento").focusout(function(){
-    if($("#departamento").val() == ""){
-		document.getElementById('departamento').classList.add("is-invalid");
-	}else{
-		document.getElementById('departamento').classList.remove("is-invalid");
-	}
+	  validateInputTextRequerido('departamento','errorDepartamento');
   });
   
   $("#departamento").bind('keypress', function(event) {
@@ -25,11 +18,7 @@ $(document).ready(function(){
 	});
 	
 	 $("#programa").focusout(function(){
-    if($("#programa").val() == ""){
-		document.getElementById('programa').classList.add("is-invalid");
-	}else{
-		document.getElementById('programa').classList.remove("is-invalid");
-	}
+		 validateInputTextRequerido('programa','errorPrograma');
   });
   
   $("#programa").bind('keypress', function(event) {
@@ -37,11 +26,8 @@ $(document).ready(function(){
 	});
 	
 	 $("#codigo").focusout(function(){
-    if($("#codigo").val() == ""){
-		document.getElementById('codigo').classList.add("is-invalid");
-	}else{
-		document.getElementById('codigo').classList.remove("is-invalid");
-	}
+		 validateInputTextRequerido('codigo','errorCodigo');
+   
   });
   
   $("#codigo").bind('keypress', function(event) {

@@ -7,8 +7,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.ufps.cedcufps.SpringSecurityConfig;
 import com.ufps.cedcufps.dto.DepartamentoDto;
 import com.ufps.cedcufps.dto.EducacionContinuaAppDto;
 import com.ufps.cedcufps.dto.PerfilRolUsuarioDto;
@@ -40,7 +42,8 @@ public class PersonaController {
 		model.addAttribute("titulo","PROGRAMAS");
 		model.addAttribute("personas",personaService.findAllPersonasPosibles());
 		model.addAttribute("otorganPermisos",personaService.isSuperAdmin() || personaService.isDirPrograma() );
-		
+		model.addAttribute("photoUser", SpringSecurityConfig.getInfoSession().getPhoto());
+		model.addAttribute("nameUser", SpringSecurityConfig.getInfoSession().getName());
 		return "persona/index";
 	}
 	
@@ -86,11 +89,13 @@ public class PersonaController {
 			model.put("externo",(Externo)personaService.findOne(id).get());
 			return "redirect:/usuarios/externo/registro/"+p.getId();
 		}*/
+		model.put("photoUser", SpringSecurityConfig.getInfoSession().getPhoto());
+		model.put("nameUser", SpringSecurityConfig.getInfoSession().getName());
 		return "persona/form";
 	}
 	
-	@RequestMapping(value = "/usuarios/registro/{id}")
-	public String editar(@PathVariable(value = "id") Long id, Map<String, Object> model) {
+	@RequestMapping(value = "/usuarios/editar")
+	public String editar(@RequestParam(name = "id") String idAcceso, Map<String, Object> model) {
 		model.put("titulo","FORMULARIO PERSONA");
 		model.put("tipos_documento",personaService.findAllTiposDocumento());
 		model.put("tipos_persona",personaService.findAllTiposPersona());
@@ -98,7 +103,7 @@ public class PersonaController {
 		model.put("generos",personaService.findAllGeneros());
 		model.put("estados_civiles",personaService.findAllEstadosCiviles());
 		model.put("departamentos",personaService.findAllDepartamentos());
-		model.put("persona", personaService.editarUsuario(id));
+		model.put("persona", personaService.editarUsuario(idAcceso));
 		model.put("otorganPermisos",personaService.isSuperAdmin() || personaService.isDirPrograma() );
 		/*if(p.getTipoPersona().getTipoPersona().equalsIgnoreCase("Estudiante")) {
 			model.put("estudiante",(Estudiante)personaService.findOne(id).get());
@@ -113,12 +118,14 @@ public class PersonaController {
 			model.put("externo",(Externo)personaService.findOne(id).get());
 			return "redirect:/usuarios/externo/registro/"+p.getId();
 		}*/
+		model.put("photoUser", SpringSecurityConfig.getInfoSession().getPhoto());
+		model.put("nameUser", SpringSecurityConfig.getInfoSession().getName());
 		return "persona/form";
 	}
 	
-	@RequestMapping(value = "/persona/{id}/permisos")
-	public String permisos(@PathVariable(value = "id") Long idPersona, Map<String, Object> model,RedirectAttributes redirectAttributes) {
-		PerfilRolUsuarioDto dto=personaService.findPermisos(idPersona);
+	@RequestMapping(value = "/persona/permisos")
+	public String permisos( @RequestParam(name = "id") String idAcceso, Map<String, Object> model,RedirectAttributes redirectAttributes) {
+		PerfilRolUsuarioDto dto=personaService.findPermisos(idAcceso);
 		if(dto==null) {
 			redirectAttributes.addFlashAttribute("errorMessage", "No es posible que gestione los permisos de otros usuarios");
 			return "redirect:/usuarios";
@@ -155,6 +162,8 @@ public class PersonaController {
 		for(EducacionContinuaAppDto p: dto.getEduContinuasForAttendance()) {
 			System.out.println(p.getId());
 		}
+		model.put("photoUser", SpringSecurityConfig.getInfoSession().getPhoto());
+		model.put("nameUser", SpringSecurityConfig.getInfoSession().getName());
 		return "persona/permisos";
 	}
 }

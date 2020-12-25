@@ -126,7 +126,7 @@ public class UsuarioMapper implements IUsuarioMapper {
 		pe.setAdministrativo(u.isAdministrativo());
 		pe.setGraduado(u.isGraduado());
 		pe.setExterno(u.isExterno());
-		
+		pe.setIdAcceso(String.valueOf(System.currentTimeMillis()));
 		System.out.println("**********************************************************");
 		System.out.println("**********************************************************");
 		System.out.println(u.isEstudiante());
@@ -347,6 +347,7 @@ public class UsuarioMapper implements IUsuarioMapper {
 			}
 		}
 		dto.setPerfiles(perfiles);
+		dto.setIdAcceso(persona.getIdAcceso());
 		return dto;
 	}
 
@@ -376,7 +377,7 @@ public class UsuarioMapper implements IUsuarioMapper {
 		dto.setDocente(p.isDocente());
 		dto.setAdministrativo(p.isAdministrativo());
 		dto.setGraduado(p.isGraduado());
-		dto.setAdministrativo(p.isAdministrativo());
+		dto.setExterno(p.isExterno());
 		
 		System.out.println("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
 		System.out.println(e!=null);
@@ -401,7 +402,7 @@ public class UsuarioMapper implements IUsuarioMapper {
 		}
 		
 		if(g!=null) {
-			dto.setProgramaGraduado(g.getId());
+			dto.setProgramaGraduado(g.getPrograma().getId());
 			dto.setAnioGraduado(g.getAnio());
 		}
 		

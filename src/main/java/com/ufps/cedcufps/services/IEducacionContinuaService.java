@@ -18,6 +18,7 @@ import com.ufps.cedcufps.dto.EducacionContinuaAppDto;
 import com.ufps.cedcufps.dto.JornadaAppDto;
 import com.ufps.cedcufps.dto.ParticipanteDto;
 import com.ufps.cedcufps.dto.RequisitosInscripcionDto;
+import com.ufps.cedcufps.dto.TipoBeneficiarioDto;
 import com.ufps.cedcufps.modelos.ClasificacionCine;
 import com.ufps.cedcufps.modelos.Diploma;
 import com.ufps.cedcufps.modelos.EducacionContinua;
@@ -43,9 +44,8 @@ public interface IEducacionContinuaService {
 	
 	public EducacionContinua findOneByNombre(String educacionContinua);
 	
-	public EducacionContinua findOneByNombreAndFecha(String educacionContinua, String fechaInicio);
+	public EducacionContinuaWebDto findOneByIdAcceso(String idAcceso);
 	
-	public EducacionContinuaWebDto editarEducacionContinuaByNombre(String educacionContinua, String fechaInicio);
 	
 	public List<TipoEducacionContinua> findAllTiposEducacionContinua(Long id);
 	
@@ -72,7 +72,7 @@ public interface IEducacionContinuaService {
 	
 	public List<EducacionContinuaAppDto> findPosiblesEduContinuaGestionar();
 	
-	public InfoEducacionContinuaDto detallesEducacionContinua(String nombreEducacionContinua, String fechaInicio);
+	public InfoEducacionContinuaDto detallesEducacionContinua(String idAcceso);
 	
 	public Map<Integer, ParticipanteDto>  tomarAsistencia(Long idEducacionContinua, Long idJornada, String qr);
 	
@@ -92,9 +92,9 @@ public interface IEducacionContinuaService {
 	
 	public List<String> findEducacionesContinuasBaseByIdPrograma(Long idPrograma);
 	
-	public List<Object[]> tiposPersonaParaInscripcion(List<EducacionContinuaTipoBeneficiario> tipoBeneficiarios);
+	public List<Object[]> tiposPersonaParaInscripcion(List<TipoBeneficiarioDto>  tipoBeneficiarios);
 	
-	public RequisitosInscripcionDto consultarRequisitosInscripcion(String nombreEduContinua, String fechaInicio);
+	public RequisitosInscripcionDto consultarRequisitosInscripcion(String idAcceso);
 	
 	public void saveDiploma(EducacionContinua ec);
 	

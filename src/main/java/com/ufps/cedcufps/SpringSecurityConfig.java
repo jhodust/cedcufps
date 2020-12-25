@@ -25,10 +25,12 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.config.oauth2.client.CommonOAuth2Provider;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.authority.mapping.GrantedAuthoritiesMapper;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.client.InMemoryOAuth2AuthorizedClientService;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.oauth2.client.endpoint.DefaultAuthorizationCodeTokenResponseClient;
 import org.springframework.security.oauth2.client.endpoint.OAuth2AccessTokenResponseClient;
 import org.springframework.security.oauth2.client.endpoint.OAuth2AuthorizationCodeGrantRequest;
@@ -55,10 +57,12 @@ import org.springframework.security.oauth2.core.user.OAuth2UserAuthority;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.stereotype.Component;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.servlet.view.RedirectView;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 
 import com.ufps.cedcufps.auth.handler.LoginSuccessHandler;
@@ -66,6 +70,7 @@ import com.ufps.cedcufps.exception.CustomException;
 import com.ufps.cedcufps.modelos.Persona;
 import com.ufps.cedcufps.modelos.PersonaRol;
 import com.ufps.cedcufps.modelos.Rol;
+import com.ufps.cedcufps.modelos.SessionWebGoogle;
 import com.ufps.cedcufps.services.PersonaService;
 
 @Configuration
@@ -88,6 +93,28 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private ClientRegistrationRepository clientRegistrationRepository;
 	
+	
+	
+	public static SessionWebGoogle getInfoSession() {
+		// TODO Auto-generated constructor stub
+		Authentication authentication =
+			    SecurityContextHolder
+			        .getContext()
+			        .getAuthentication();
+		try {
+			
+			OAuth2AuthenticationToken oauthToken =
+				    (OAuth2AuthenticationToken) authentication;
+			SessionWebGoogle session=new SessionWebGoogle();
+			session.setName(oauthToken.getPrincipal().getAttribute("name").toString());
+			session.setEmail(oauthToken.getPrincipal().getAttribute("email").toString());
+			session.setPhoto(oauthToken.getPrincipal().getAttribute("picture").toString());
+				return session;
+		}catch(Exception e) {
+			return null;
+		}
+			
+	}
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		// TODO Auto-generated method stub

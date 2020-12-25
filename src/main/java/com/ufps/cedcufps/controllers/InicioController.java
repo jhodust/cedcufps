@@ -30,6 +30,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.ufps.cedcufps.SpringSecurityConfig;
 import com.ufps.cedcufps.dto.UsuarioDto;
 import com.ufps.cedcufps.modelos.Departamento;
 import com.ufps.cedcufps.modelos.EducacionContinua;
@@ -37,6 +38,7 @@ import com.ufps.cedcufps.modelos.EducacionContinuaTipoBeneficiario;
 import com.ufps.cedcufps.modelos.Estudiante;
 import com.ufps.cedcufps.modelos.Externo;
 import com.ufps.cedcufps.modelos.Participante;
+import com.ufps.cedcufps.modelos.SessionWebGoogle;
 import com.ufps.cedcufps.services.IEducacionContinuaService;
 import com.ufps.cedcufps.services.IPersonaService;
 import com.ufps.cedcufps.utils.ReportesExcel;
@@ -61,6 +63,11 @@ public class InicioController {
 		model.addAttribute("educacionesRecientes",educacionContinuaService.educacionContinuaRecientes());
 		model.addAttribute("educacionesContinuas",edc);
 		model.addAttribute("page",pageRender);
+		SessionWebGoogle session=SpringSecurityConfig.getInfoSession();
+		if(session!=null) {
+			model.addAttribute("photoUser", session.getPhoto());
+			model.addAttribute("nameUser", session.getName());
+		}
 		
 		//educacionContinuaService.generarReporteSNIESEducacionContinua(new Date(), 0);
 		return "index";

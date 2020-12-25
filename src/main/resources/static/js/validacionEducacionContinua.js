@@ -30,6 +30,7 @@ $(document).ready(function(){
   
   $("#nombreEdc").focusout(function(){
 	  validateInputTextRequerido('nombreEdc','errNombreEdc');
+	  validateLengthTxt('nombreEdc','errNombreEdc',100);
   });
   
   $("#fechaInicioEduCont").focusout(function(){
@@ -44,10 +45,7 @@ $(document).ready(function(){
 	  validateInputTextRequerido('fechaLimInscripcionEduCont','errFechaLimInscEdc');
 	    
 	  });
-  $("#duracion").focusout(function(){
-	  validateInputNumberRequerido('duracion','errDuracionEdc');
-	    
-	  });
+  
   
   $("#duracion").bind('keypress', function(event) {
 	  return numbers(event);
@@ -88,6 +86,7 @@ $("#porcentajeAsistenciaEdc").bind('keypress', function(event) {
 	
 $("#lugarEdc").focusout(function(){
 	validateInputTextRequerido('lugarEdc','errLugarEdc');
+	validateLengthTxt('lugarEdc','errLugarEdc',40);
   });
 	 $("#programa").focusout(function(){
     if($("#programa").val() == ""){

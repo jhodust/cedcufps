@@ -30,7 +30,7 @@ public class Docente extends Persona{
 	 */
 	private static final long serialVersionUID = 1L;
 	@NotEmpty(message = "El campo código es requerido")
-	@Pattern(regexp = "^$|^([0-9]{5,5})*$", message = "El código debe contener 5 dígitos")
+	//@Pattern(regexp = "^$|^([0-9]{5,5})*$", message = "El código debe contener 5 dígitos")
 	private String codigo;
 	
 	

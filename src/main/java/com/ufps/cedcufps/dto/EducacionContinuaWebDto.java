@@ -16,7 +16,7 @@ public class EducacionContinuaWebDto {
 	private Date fechaLimInscripcion;
 	private String imagen;
 	private String lugar;
-	private int duracion;
+	private String duracion;
 	private String requisitos;
 	private String objetivo;
 	private String contenidoGral;
@@ -94,10 +94,11 @@ public class EducacionContinuaWebDto {
 	public void setLugar(String lugar) {
 		this.lugar = lugar;
 	}
-	public int getDuracion() {
+	
+	public String getDuracion() {
 		return duracion;
 	}
-	public void setDuracion(int duracion) {
+	public void setDuracion(String duracion) {
 		this.duracion = duracion;
 	}
 	public String getRequisitos() {

@@ -43,9 +43,9 @@ import java.util.Map;
 
 public class ReportesExcel {
 	
-	public final static String rutaPlantillaEducacionContinua="src/main/resources/static/formatos_reportes_excel/formato_educacion_continua.xlsx";
-	public final static String rutaPlantillaCursos="src/main/resources/static/formatos_reportes_excel/formato_cursos.xlsx";
-	public final static String rutaPlantillaDocentesResponsables="src/main/resources/static/formatos_reportes_excel/formato_participante.xlsx";
+	public final static String rutaPlantillaEducacionContinua="files/formatos_reportes_excel/formato_educacion_continua.xlsx";
+	public final static String rutaPlantillaCursos="files/formatos_reportes_excel/formato_cursos.xlsx";
+	public final static String rutaPlantillaDocentesResponsables="files/formatos_reportes_excel/formato_participante.xlsx";
 	public final static String rutaReportes="files/reportes_snies/";
 	
 	public static String reporteCursos(List<InformeCursosDto> result, String nombre) {
@@ -93,6 +93,8 @@ public class ReportesExcel {
 			
 			File nuevoArchivo=Paths.get(filename).toAbsolutePath().toFile();
 			FileOutputStream outputStream = new FileOutputStream(nuevoArchivo.getAbsolutePath());
+			System.out.println("rutaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa educacion continua");
+			System.out.println(nuevoArchivo.getAbsolutePath());
 			workbook.write(outputStream);
 			workbook.close();
 		} catch (Exception e) {
@@ -323,6 +325,8 @@ public class ReportesExcel {
 			
 			File nuevoArchivo=Paths.get(filename).toAbsolutePath().toFile();
 			FileOutputStream outputStream = new FileOutputStream(nuevoArchivo.getAbsolutePath());
+			System.out.println("rutaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa reporte educacion continua ");
+			System.out.println(nuevoArchivo.getAbsolutePath());
 			workbook.write(outputStream);
 			workbook.close();
 		} catch (Exception e) {
@@ -422,6 +426,9 @@ public class ReportesExcel {
 			
 			File nuevoArchivo=Paths.get(filename).toAbsolutePath().toFile();
 			FileOutputStream outputStream = new FileOutputStream(nuevoArchivo.getAbsolutePath());
+			
+			System.out.println("rutaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa participantes responsables");
+			System.out.println(nuevoArchivo.getAbsolutePath());
 			workbook.write(outputStream);
 			workbook.close();
 		} catch (Exception e) {

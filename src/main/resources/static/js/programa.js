@@ -77,6 +77,16 @@ $(document).ready(function ()
 		
 	});
 	
+	$('#select_facultad_programa').on("change", function (e) { 
+		e.preventDefault();
+		validateSelect('select_facultad_programa','errorSelectFacultad');
+	});
+	
+	$('#select_director_programa').on("change", function (e) { 
+		e.preventDefault();
+		validateSelect('select_director_programa','errorSelectDirectorPrograma');
+	});
+	
 });
 
 
@@ -100,7 +110,11 @@ function guardarPrograma(){
 		JSONprograma.directorPrograma.id=id_director;
 	}
 	
-	if(codigo == "" || programa == "" || id_facultad==0 || id_facultad==id_director){
+	validateSelect('select_facultad_programa','errorSelectFacultad');
+	validateSelect('select_director_programa','errorSelectDirectorPrograma');
+	validateInputTextRequerido('programa','errorPrograma');
+	validateInputTextRequerido('codigo','errorCodigo');
+	if(codigo.trim() == "" || programa.trim() == "" || id_facultad==0 || id_director==0){
 		toastr
 			.error(
 					'Diligencie el formulario correctamente, los campos son requeridos',

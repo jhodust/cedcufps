@@ -73,7 +73,7 @@ function cargarPaises(){
     
   //caso de editar usuario
     if(idPaisNac!=null){
-    	//$('#selectPaisNacimiento').val(idPaisNac).trigger('select');//esto se hace en caso de editar usuario ya que recibo las variables mediante un script en el form de camposPersona
+    	$('#selectPaisNacimiento').val(idPaisNac).trigger('select');//esto se hace en caso de editar usuario ya que recibo las variables mediante un script en el form de camposPersona
 	   if(idPaisNac=='170'){
 		   mostrar('rowDeptoColombia','flex');
 		   mostrar('rowMpioColombia','flex');

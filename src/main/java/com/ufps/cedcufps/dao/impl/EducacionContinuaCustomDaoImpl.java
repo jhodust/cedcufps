@@ -25,6 +25,7 @@ import com.ufps.cedcufps.dao.IEducacionContinuaCustomDao;
 import com.ufps.cedcufps.dto.EducacionContinuaWebDto;
 import com.ufps.cedcufps.dto.JornadaAppDto;
 import com.ufps.cedcufps.dto.ParticipanteDto;
+import com.ufps.cedcufps.dto.TipoBeneficiarioDto;
 import com.ufps.cedcufps.modelos.EducacionContinua;
 import com.ufps.cedcufps.modelos.Persona;
 
@@ -60,20 +61,20 @@ public class EducacionContinuaCustomDaoImpl implements IEducacionContinuaCustomD
 	
 	
 	@Override
-	public boolean  docenteHasPermission(String nombreEduContinua, Long idPersona) {
+	public boolean  docenteHasPermission(String idAcceso, Long idPersona) {
 		// TODO Auto-generated method stub
 		
 		StringBuilder query = new StringBuilder();
 		query.append("select count(e.id) from educacion_continua e");
 		query.append(" where (e.id_programa IN (select rppp.id_programa from roles_personas_programas_ec rppp");
 		query.append(" where rppp.id_persona=?1 and rppp.id_rol=(select ro.id from roles ro where ro.authority='ROLE_MANAECCU'))" );
-		query.append(" or e.id_docente=?1) and e.nombre=?2 " );
+		query.append(" or e.id_docente=?1) and e.idAcceso=?2 " );
 			
 		System.out.println("*************************************** query******");
 		System.out.println(query.toString());
 		Query q=em.createNativeQuery(query.toString());
 		q.setParameter(1, idPersona);
-		q.setParameter(2, nombreEduContinua);
+		q.setParameter(2, idAcceso);
 		
 	
 		
@@ -102,8 +103,8 @@ public class EducacionContinuaCustomDaoImpl implements IEducacionContinuaCustomD
 				.append("fecha_fin,fecha_lim_inscripcion,contenido_general,cant_max_participantes,resumen,")
 				.append("costo_inscripcion,duracion,id_tipo_educacion_continua,id_docente,id_programa,")
 				.append("id_clasificacion_cine,lugar,estado,costo_educacion_continua, porcentaje_asistencia, ")
-				.append("objetivo,requisitos, consecutivo)")
-				.append(" VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+				.append("objetivo,requisitos, consecutivo, id_acceso)")
+				.append(" VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 		jdbcTemplate.update(new PreparedStatementCreator() {
 
@@ -118,7 +119,7 @@ public class EducacionContinuaCustomDaoImpl implements IEducacionContinuaCustomD
 				ps.setString(6, dto.getCantMaxParticipantes());
 				ps.setString(7, dto.getResumen());
 				ps.setString(8, dto.getCostoInscripcion());
-				ps.setInt(9, dto.getDuracion());
+				ps.setString(9, dto.getDuracion());
 				ps.setLong(10, dto.getIdTipoEduContinua());
 				ps.setLong(11, dto.getIdDocenteResp());
 				ps.setLong(12, dto.getIdProgramaResp());
@@ -130,6 +131,7 @@ public class EducacionContinuaCustomDaoImpl implements IEducacionContinuaCustomD
 				ps.setString(18, dto.getObjetivo());
 				ps.setString(19, dto.getRequisitos());
 				ps.setString(20, dto.getConsecutivo());
+				ps.setString(21, String.valueOf(System.currentTimeMillis()));
 				
 				return ps;
 			}
@@ -202,6 +204,103 @@ public class EducacionContinuaCustomDaoImpl implements IEducacionContinuaCustomD
 		
 		return Long.parseLong(String.valueOf(keyHolder.getKey()));
 
+	}
+
+
+	@Override
+	public EducacionContinuaWebDto findEduContinuaWebDtoByIdAcceso(String idAcceso) {
+		// TODO Auto-generated method stub
+		StringBuilder edcQuery = new StringBuilder();
+		edcQuery.append("select e.id as id_edu_continua, e.nombre, e.fecha_inicio, e.fecha_fin, e.fecha_lim_inscripcion,")
+		.append(" COALESCE(e.costo_inscripcion,'GRATUITO'), COALESCE(e.cant_max_participantes,'LIBRE'), e.lugar, ")
+		.append(" e.duracion, e.imagen, e.contenido_general, e.objetivo, e.requisitos, e.resumen, e.estado,")
+		.append(" e.consecutivo, e.costo_educacion_continua, e.porcentaje_asistencia,")
+		.append(" tec.id as id_tipo_edu_continua, tec.tipo_educacion_continua, tec.estado_oficial, ")
+		.append(" p.id as id_docente, CONCAT(COALESCE(p.primer_nombre,''),' ',COALESCE(p.segundo_nombre,''),' ',COALESCE(p.primer_apellido,''),' ',COALESCE(p.segundo_apellido,'')),")
+		.append(" d.codigo, pro.id as id_programa, pro.programa, f.id as id_facultad, f.facultad, c.id as id_clasificacion_cine, c.clasificacion_cine")
+		.append(" from educacion_continua e")
+		.append(" join tipos_educacion_continua tec on tec.id=e.id_tipo_educacion_continua ")
+		.append(" join docentes d on d.id_persona =e.id_docente ")
+		.append(" join personas p on p.id=d.id_persona ")
+		.append(" join programas pro on pro.id=e.id_programa")
+		.append(" join facultades f on f.id=pro.id_facultad")
+		.append(" join clasificacion_cine c on c.id=e.id_clasificacion_cine")
+		.append(" where e.id_acceso = ?1");
+		
+		
+		Query q=em.createNativeQuery(edcQuery.toString())
+		 .setParameter(1, idAcceso);
+		
+		
+		List<Object[]> result= q.getResultList();
+		if(result.size()==1) {
+			Object[] edc=result.get(0);
+			EducacionContinuaWebDto eduContinuaDto= new EducacionContinuaWebDto();
+			eduContinuaDto.setId(Long.parseLong(String.valueOf(edc[0])));
+			eduContinuaDto.setNombre(String.valueOf(edc[1]));
+			eduContinuaDto.setFechaInicio((Date) edc[2]);
+			eduContinuaDto.setFechaFin((Date) edc[3]);
+			eduContinuaDto.setFechaLimInscripcion((Date) edc[4]);
+			eduContinuaDto.setCostoInscripcion(String.valueOf(edc[5]));
+			eduContinuaDto.setCantMaxParticipantes(String.valueOf(edc[6]));
+			eduContinuaDto.setLugar(String.valueOf(edc[7]));
+			eduContinuaDto.setDuracion(String.valueOf(edc[8]));
+			eduContinuaDto.setImagen(String.valueOf(edc[9]));
+			eduContinuaDto.setContenidoGral(String.valueOf(edc[10]));
+			eduContinuaDto.setObjetivo(String.valueOf(edc[11]));
+			eduContinuaDto.setRequisitos(String.valueOf(edc[12]));
+			eduContinuaDto.setResumen(String.valueOf(edc[13]));
+			eduContinuaDto.setEstado(String.valueOf(edc[14]));
+			eduContinuaDto.setConsecutivo(String.valueOf(edc[15]));
+			eduContinuaDto.setCostoEducacionContinua(String.valueOf(edc[16]));
+			eduContinuaDto.setPorcentajeAsistencia(String.valueOf(edc[17]));
+			eduContinuaDto.setIdTipoEduContinua(Long.parseLong(String.valueOf(edc[18])));
+			eduContinuaDto.setTipoEduContinua(String.valueOf(edc[19]));
+			eduContinuaDto.setEstadoOficialTipoEducacionContinua(Boolean.parseBoolean(String.valueOf(edc[20])));
+			eduContinuaDto.setIdDocenteResp(Long.parseLong(String.valueOf(edc[21])));
+			eduContinuaDto.setNombreDocenteResp(String.valueOf(edc[22]));
+			eduContinuaDto.setCodigoDocenteResp(String.valueOf(edc[23]));
+			eduContinuaDto.setIdProgramaResp(Long.parseLong(String.valueOf(edc[24])));
+			eduContinuaDto.setProgramaResp(String.valueOf(edc[25]));
+			eduContinuaDto.setIdFacultad(Long.parseLong(String.valueOf(edc[26])));
+			eduContinuaDto.setFacultad(String.valueOf(edc[27]));
+			eduContinuaDto.setIdClasificacion(Long.parseLong(String.valueOf(edc[28])));
+			eduContinuaDto.setClasificacion(String.valueOf(edc[29]));
+			
+			System.out.println(eduContinuaDto.getObjetivo());
+			System.out.println(eduContinuaDto.getObjetivo()==null);
+			System.out.println(eduContinuaDto.getRequisitos());
+			System.out.println(eduContinuaDto.getRequisitos()==null);
+			
+			
+			StringBuilder edcTipoBeneficiarios = new StringBuilder();
+			edcTipoBeneficiarios.append("select tb.id as id_tipo_beneficiario, tb.tipo_beneficiario,")
+			.append(" tb.homologacion, tp.id as id_tipo_persona, tp.tipo_persona")
+			.append(" from educacion_continua e")
+			.append(" join educacion_continua_tipo_beneficiario ectb on ectb.id_educacion_continua=e.id ")
+			.append(" join tipos_beneficiarios tb on tb.id=ectb.id_tipo_beneficiario ")
+			.append(" join tipos_persona tp on tp.id=tb.id_tipo_persona  ")
+			.append(" where e.id = ?1");
+			
+			Query q2=em.createNativeQuery(edcTipoBeneficiarios.toString())
+					 .setParameter(1, eduContinuaDto.getId());
+			List<Object[]> resultBeneficiarios= q2.getResultList();
+			List<TipoBeneficiarioDto> list= new ArrayList<TipoBeneficiarioDto>();
+			System.out.println("result tipo beneficiariossssssssssssssss");
+			System.out.println(resultBeneficiarios.size());
+			for(Object[] o : resultBeneficiarios) {
+				TipoBeneficiarioDto dto= new TipoBeneficiarioDto();
+				dto.setId(Long.parseLong(String.valueOf(o[0])));
+				dto.setTipoBeneficiario(String.valueOf(o[1]));
+				dto.setHomologacion(String.valueOf(o[2]));
+				dto.setIdTipoPersona(Long.parseLong(String.valueOf(o[3])));
+				dto.setTipoPersona(String.valueOf(o[4]));
+				list.add(dto);
+			}
+			eduContinuaDto.setTipoBeneficiarios(list);
+			return eduContinuaDto;
+		}
+		return null;
 	}
 	
 

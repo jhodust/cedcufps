@@ -6,9 +6,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.ApplicationContext;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -18,6 +21,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -34,6 +38,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.ufps.cedcufps.SpringSecurityConfig;
 import com.ufps.cedcufps.dto.EducacionContinuaWebDto;
 import com.ufps.cedcufps.dto.InfoEducacionContinuaDto;
 import com.ufps.cedcufps.dto.JornadaAppDto;
@@ -45,6 +50,7 @@ import com.ufps.cedcufps.modelos.Participante;
 import com.ufps.cedcufps.modelos.Persona;
 import com.ufps.cedcufps.modelos.Programa;
 import com.ufps.cedcufps.modelos.Rol;
+import com.ufps.cedcufps.modelos.SessionWebGoogle;
 import com.ufps.cedcufps.services.IAsistenciaService;
 import com.ufps.cedcufps.services.IDiplomaService;
 import com.ufps.cedcufps.services.IEducacionContinuaService;
@@ -53,6 +59,7 @@ import com.ufps.cedcufps.services.IPersonaService;
 import com.ufps.cedcufps.services.IProgramaService;
 import com.ufps.cedcufps.utils.Archivo;
 import com.ufps.cedcufps.utils.ManejoPdf;
+import org.springframework.context.ApplicationContext;
 
 @Controller
 @SessionAttributes("educacionContinua")
@@ -76,10 +83,13 @@ public class EducacionContinuaController {
 	@Autowired
 	private IAsistenciaService asistenciaService;
 	
+	
 	@RequestMapping(value = "/educacion-continua")
-	public String listar(Model model, Authentication auth) {
-		model.addAttribute("titulo","EDUCACIÓN CONTINUA");
-		model.addAttribute("educacionesContinuas",educacionContinuaService.findPosiblesEduContinuaGestionar());
+	public String listar(HttpServletRequest request,Map<String, Object> model, Authentication auth) {
+		model.put("titulo","EDUCACIÓN CONTINUA");
+		model.put("photoUser", SpringSecurityConfig.getInfoSession().getPhoto());
+		model.put("nameUser", SpringSecurityConfig.getInfoSession().getName());
+		model.put("educacionesContinuas",educacionContinuaService.findPosiblesEduContinuaGestionar());
 		return "educacion_continua/index";
 	}
 	
@@ -89,7 +99,8 @@ public class EducacionContinuaController {
 	public String agregar(Map<String, Object> model, Authentication auth) {
 		//EducacionContinuaWebDto ec= new EducacionContinuaWebDto(); 
 		model.put("titulo","FORMULARIO EDUCACIÓN CONTINUA");
-	
+		model.put("photoUser", SpringSecurityConfig.getInfoSession().getPhoto());
+		model.put("nameUser", SpringSecurityConfig.getInfoSession().getName());
 		/*if(buscarAuthority(auth, "ROLE_DOCENTE")) {
 			ec.setDocenteResponsable((Docente)personaService.findPersonaLogueada());
 		}*/
@@ -242,15 +253,17 @@ public class EducacionContinuaController {
 	}*/
 	
 	@RequestMapping(value = "/educacion-continua/detalles")
-	public String mostrar(@RequestParam(name = "educacionContinua") String educacionContinua,@RequestParam(name = "fecha") String fechaEduContinua, Map<String, Object> model,RedirectAttributes redirectAttributes) {
+	public String mostrar(@RequestParam(name = "educacionContinua") String educacionContinua,
+			@RequestParam(name = "fecha") String fechaEduContinua, @RequestParam(name = "id") String idAcceso,
+			Map<String, Object> model,RedirectAttributes redirectAttributes) {
 		model.put("titulo","DETALLES EDUCACIÓN CONTINUA");
-		InfoEducacionContinuaDto dto= educacionContinuaService.detallesEducacionContinua(educacionContinua,fechaEduContinua);
+		InfoEducacionContinuaDto dto= educacionContinuaService.detallesEducacionContinua(idAcceso);
 		if(dto.isHasPermission()) {
 			model.put("ec",dto);
-			EducacionContinuaWebDto e= educacionContinuaService.editarEducacionContinuaByNombre(educacionContinua,fechaEduContinua);
+			EducacionContinuaWebDto e= educacionContinuaService.findOneByIdAcceso(idAcceso);
 			Persona p= personaService.findPersonaLogueada();
 			PersonaDtoLogueada peopleLogin = personaService.findPersonaLogueadaDto(p);
-			model.put("educacionContinua", e);
+			model.put("educacionContinua", dto.getEducacionContinua());
 			model.put("tipos_educacion_continua",educacionContinuaService.findAllTiposEducacionContinua(e.getIdTipoEduContinua()));
 			model.put("clasificacion_cine",educacionContinuaService.findAllClasificacionCine());
 			model.put("tipo_beneficiarios",educacionContinuaService.findAllTipoBeneficiario());
@@ -269,12 +282,15 @@ public class EducacionContinuaController {
 			redirectAttributes.addFlashAttribute("errorMessage", "No tiene permisos para administrar la Educación Continua indicada...");
 			return "redirect:/educacion-continua";
 		}
-		
+		model.put("photoUser", SpringSecurityConfig.getInfoSession().getPhoto());
+		model.put("nameUser", SpringSecurityConfig.getInfoSession().getName());
 		return "educacion_continua/detalles";
 	}
 	
 	@RequestMapping(value = "/preinscripcion")
-	public String preinscripcionEducacionContinua(@RequestParam(name = "educacionContinua") String nombreEvento,@RequestParam(name = "fecha") String fechaEvento , Map<String, Object> model) {
+	public String preinscripcionEducacionContinua(@RequestParam(name = "educacionContinua") String nombreEvento,
+			@RequestParam(name = "fecha") String fechaEvento, @RequestParam(name = "id") String idAcceso,
+			Map<String, Object> model) {
 		//EducacionContinua ec= educacionContinuaService.findOneByNombreAndFecha(nombreEvento,fechaEvento);
 		System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 		System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
@@ -282,7 +298,7 @@ public class EducacionContinuaController {
 		System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 		System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 		model.put("titulo","DETALLES EDUCACIÓN CONTINUA");
-		model.put("requisitosInscripcion",educacionContinuaService.consultarRequisitosInscripcion(nombreEvento, fechaEvento));
+		model.put("requisitosInscripcion",educacionContinuaService.consultarRequisitosInscripcion(idAcceso));
 		//System.out.println(ec.getId());
 		//model.put("listTipoPersonaValidInscripcion",educacionContinuaService.tiposPersonaParaInscripcion(ec.getTipoBeneficiarios()));
 		//try {
@@ -290,6 +306,8 @@ public class EducacionContinuaController {
 		//}catch(Exception e) {
 		//	model.put("participante",null);
 		//}
+		model.put("photoUser", SpringSecurityConfig.getInfoSession().getPhoto());
+		model.put("nameUser", SpringSecurityConfig.getInfoSession().getName());
 		return "preinscripcion";
 	}
 	/*
@@ -332,6 +350,8 @@ public class EducacionContinuaController {
 	@RequestMapping(value = "/participaciones-educacion-continua")
 	public String eventosActivosParticipante( Map<String, Object> model) {
 		model.put("participaciones",participanteService.findAllParticipacionesActivasByParticipante(personaService.findPersonaLogueada().getNumeroDocumento()));
+		model.put("photoUser", SpringSecurityConfig.getInfoSession().getPhoto());
+		model.put("nameUser", SpringSecurityConfig.getInfoSession().getName());
 		return "educacion_continua/tarjetas_inscripcion/index";
 	}
 	

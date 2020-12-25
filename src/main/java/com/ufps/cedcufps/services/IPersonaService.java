@@ -86,9 +86,9 @@ public interface IPersonaService {
 	
 	public boolean hasPermissionForAttendance(Persona p);
 	
-	public PerfilRolUsuarioDto findPermisos(Long idUsuario);
+	public PerfilRolUsuarioDto findPermisos(String idAcceso);
 	
-	public UsuarioDto editarUsuario(Long idUsuario);
+	public UsuarioDto editarUsuario(String idAcceso);
 	
 	public boolean updatePermisos(Long idPersona,boolean hasPermisosEduC, boolean hasPermisosPer, boolean hasPermisosAtt,
 			List<Long> idsProEduContinua, List<Long> idsProEst, List<Long> idsDeptoDoc, List<Long> idsProGrad,

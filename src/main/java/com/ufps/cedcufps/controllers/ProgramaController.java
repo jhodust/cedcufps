@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.ufps.cedcufps.SpringSecurityConfig;
 import com.ufps.cedcufps.modelos.Departamento;
 import com.ufps.cedcufps.modelos.Facultad;
 import com.ufps.cedcufps.modelos.Programa;
@@ -53,6 +54,8 @@ public class ProgramaController {
 		}
 		model.put("facultades",facultadService.findAll());
 		model.put("docentes",personaService.findAllDocentes());
+		model.put("photoUser", SpringSecurityConfig.getInfoSession().getPhoto());
+		model.put("nameUser", SpringSecurityConfig.getInfoSession().getName());
 		return "programa/index";
 	}
 	

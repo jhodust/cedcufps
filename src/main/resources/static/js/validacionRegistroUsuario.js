@@ -18,6 +18,8 @@ $(document).ready(function(){
   
   $("#primNom").focusout(function(){
 	  validateInputTextRequerido('primNom','errorPrimerNombre');
+	  validateLengthTxt('primNom','errorPrimerNombre',20);
+		
 		
   });
   
@@ -33,6 +35,13 @@ $(document).ready(function(){
   
   $("#primApe").focusout(function(){
 	  validateInputTextRequerido('primApe','errorPrimerApellido');
+	  validateLengthTxt('primApe','errorPrimerApellido',20);
+	  
+		
+  });
+  
+  $("#segNom").focusout(function(){
+	  validateLengthTxt('segNom','errorSegundoNombre',20);
 		
   });
   
@@ -41,7 +50,9 @@ $(document).ready(function(){
 	});
   
   $("#segApe").focusout(function(){
-	  validateInputTextRequerido('segApe','errorSegundoApellido');
+	  //validateInputTextRequerido('segApe','errorSegundoApellido');
+	  validateLengthTxt('segApe','errorSegundoApellido',20);
+	  
 		
   });
   
@@ -56,7 +67,14 @@ $(document).ready(function(){
   });
   
   $("#email").focusout(function(){
+	  
 	  validateInputTextRequerido('email','errorEmail');
+	  validateEmail('email','errorEmail');
+		
+  });
+  
+  $("#direccion").focusout(function(){
+	  validateLengthTxt('direccion','errorDireccion',50);
 		
   });
   
@@ -68,19 +86,13 @@ $(document).ready(function(){
 	});
   
   $("#codigo").focusout(function(){
-    if($("#codigo").val() == ""){
-		document.getElementById('codigo').classList.add("is-invalid");
-	}else{
-		document.getElementById('codigo').classList.remove("is-invalid");
-	}
+	  validateInputTextRequerido('codigo','errorCodigoEstudiante');
+    
   });
   
   $("#codDocente").focusout(function(){
-    if($("#codDocente").val() == ""){
-		document.getElementById('codDocente').classList.add("is-invalid");
-	}else{
-		document.getElementById('codDocente').classList.remove("is-invalid");
-	}
+	  validateInputTextRequerido('codDocente','errorCodigoDocente');
+    
   });
   
   $("#codDocente").bind('keypress', function(event) {
@@ -88,35 +100,22 @@ $(document).ready(function(){
 	});
   
   $("#dependencia").focusout(function(){
-    if($("#dependencia").val() == ""){
-		document.getElementById('dependencia').classList.add("is-invalid");
-	}else{
-		document.getElementById('dependencia').classList.remove("is-invalid");
-	}
+	  validateInputTextRequerido('dependencia','errorDependenciaAdminvo');
+	  validateLengthTxt('dependencia','errorDependenciaAdminvo',50);
+		
+    
   });
   
   $("#cargo").focusout(function(){
-    if($("#cargo").val() == ""){
-		document.getElementById('cargo').classList.add("is-invalid");
-	}else{
-		document.getElementById('cargo').classList.remove("is-invalid");
-	}
+	  validateInputTextRequerido('cargo','errorCargoAdminvo');
+	  validateLengthTxt('cargo','errorCargoAdminvo',50);
   });
   
   
-  var date=new Date();
+  
   $('#anioGraduado').mask("0000", {placeholder: "AAAA"});
   $("#anioGraduado").focusout(function(){
-    if($("#anioGraduado").val() == ""){
-		document.getElementById('anioGraduado').classList.add("is-invalid");
-	}else{
-		if($("#anioGraduado").val()>date.getFullYear()){
-			document.getElementById('anioGraduado').classList.add("is-invalid");
-		}else{
-			document.getElementById('anioGraduado').classList.remove("is-invalid");
-		}
-		
-	}
+	  validateAnio('anioGraduado','errorAnioGraduado');
   });
   
   $("#anioGraduado").bind('keypress', function(event) {
@@ -124,21 +123,42 @@ $(document).ready(function(){
 	});
   
   $("#profesion").focusout(function(){
-    if($("#profesion").val() == ""){
-		document.getElementById('profesion').classList.add("is-invalid");
-	}else{
-		document.getElementById('profesion').classList.remove("is-invalid");
-	}
+	  validateInputTextRequerido('profesion','errorProfesionExterno');
+	  validateLengthTxt('profesion','errorProfesionExterno',50);
+    
   });
   
   $("#empresa").focusout(function(){
-    if($("#empresa").val() == ""){
-		document.getElementById('empresa').classList.add("is-invalid");
-	}else{
-		document.getElementById('empresa').classList.remove("is-invalid");
-	}
+	  validateInputTextRequerido('empresa','errorEmpresa');
+	  validateLengthTxt('empresa','errorEmpresa',50);
   });
 });
+
+function validateAnio(idInput,idError){
+	var date=new Date();
+	if(document.getElementById(idInput).value == ''){
+		validateInputTextRequerido(idInput,idError);
+		return false;
+	}else{
+		if( document.getElementById(idInput).value >date.getFullYear()){
+			document.getElementById(idInput).classList.add("is-invalid");
+			document.getElementById(idError).innerText='El año ingresado es superior al actual';
+			return false;
+		}else{
+			if(document.getElementById(idInput).value.length != 4){
+				document.getElementById(idInput).classList.add("is-invalid");
+				document.getElementById(idError).innerText='El año ingresado es inválido, debe tener 4 dígitos';
+				return false;
+			}else{
+				document.getElementById(idInput).classList.remove("is-invalid");
+				document.getElementById(idError).innerText='';
+				return true;
+			}
+			
+		}
+	}
+	
+}
 function numbers(event){
 	 var regex = new RegExp("^[0-9]+$");
 	  var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);

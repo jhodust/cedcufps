@@ -77,57 +77,27 @@ $(document).ready(function ()
 		validateSelect('selectTipoBeneficiarios','errTipoBenefEdc');
 	});
 	
+	 
 	 $('#duracion').keyup(function(event) {
 		 var horas = event.target.value;
-		 var tipoContinua= $('#selectTipoContinua').find('option:selected');
-		var inputDuracion=document.getElementById('duracion');
-		var errorDuracion=document.getElementById('errDuracionEdc');
-			var boton = document.getElementById('btnGuardarEdC');
-			console.log("horas");
-			console.log(horas);
-			if(tipoContinua.val()==1 || tipoContinua.val()==4){//curso talleres
-				console.log("entra por curso");
-				console.log(horas<16);
-				if(horas<16){
-					errorDuracion.innerText="El " + tipoContinua.text() + " debe tener mínimo 16 horas de duración";
-					inputDuracion.classList.add("is-invalid");
-					boton.disabled=true;
-				}else{
-					errorDuracion.innerText="";
-					inputDuracion.classList.remove("is-invalid");
-					boton.disabled=false;
-				}
-			}else if(tipoContinua.val()==2){//diplomados
-				console.log("horas en diplomados if");
-				console.log(horas);
-				if(horas<90){
-					errorDuracion.innerText="El " + tipoContinua.text() + " debe tener mínimo 90 horas de duración";
-					inputDuracion.classList.add("is-invalid");
-					boton.disabled=true;
-				}else{
-					errorDuracion.innerText="";
-					inputDuracion.classList.remove("is-invalid");
-					boton.disabled=false;
-				}
-			}else{
-				errorDuracion.innerText="";
-				inputDuracion.classList.remove("is-invalid");
-				boton.disabled=false;
-			}
+		 validDuracion(horas);
 		    
 	  });
-	
 console.log("preparando datepicker");
 	$("#fechaLimInscripcionEduCont").flatpickr({
    		enableTime: true,
    	    dateFormat: "d/m/Y H:i",
+   	    minDate: new Date(),
    	    defaultDate:fechaLimInscripcionEvento,
    	    maxDate: fechaFinEvento,
    	});
 	
+	console.log("fechaInicio");
+	console.log(fechaInicioEvento);
 	$("#fechaInicioEduCont").flatpickr({
 		enableTime: true,
 		dateFormat: "d/m/Y H:i",
+		minDate: new Date(),
 		defaultDate:fechaInicioEvento,
 	    plugins: [new rangePlugin({ 
 	    							input: "#fechaFinEduCont",
@@ -157,6 +127,7 @@ console.log("preparando datepicker");
 	       		enableTime: true,
 	       	    dateFormat: "d/m/Y H:i",
 	       	    defaultDate:fechaLimInscripcionEvento,
+	       	    minDate: new Date(),
 	       	    maxDate: selectedDates[1].toLocaleDateString(),
 	       	});
 		}
@@ -176,11 +147,59 @@ console.log("preparando datepicker");
 	})
 });
 
-var data = {
-	    id: 1,
-	    text: 'Barn owl'
-	};
-
+function validDuracion(horas){
+	
+	
+	var tipoContinua= $('#selectTipoContinua').find('option:selected');
+	var inputDuracion=document.getElementById('duracion');
+	var errorDuracion=document.getElementById('errDuracionEdc');
+		var boton = document.getElementById('btnGuardarEdC');
+		console.log("horas");
+		console.log(horas);
+		if(tipoContinua.val()==1 || tipoContinua.val()==4){//curso talleres
+			console.log("entra por curso");
+			console.log(horas<16);
+			if(horas.trim()<16){
+				errorDuracion.innerText="El " + tipoContinua.text() + " debe tener mínimo 16 horas de duración";
+				inputDuracion.classList.add("is-invalid");
+				boton.disabled=true;
+				return false;
+			}else{
+				errorDuracion.innerText="";
+				inputDuracion.classList.remove("is-invalid");
+				boton.disabled=false;
+				return true;
+			}
+		}else if(tipoContinua.val()==2){//diplomados
+			console.log("horas en diplomados if");
+			console.log(horas);
+			if(horas.trim()<90){
+				errorDuracion.innerText="El " + tipoContinua.text() + " debe tener mínimo 90 horas de duración";
+				inputDuracion.classList.add("is-invalid");
+				boton.disabled=true;
+				return false;
+			}else{
+				errorDuracion.innerText="";
+				inputDuracion.classList.remove("is-invalid");
+				boton.disabled=false;
+				return true;
+			}
+		}else{
+			if(horas.trim() == ''){
+				errorDuracion.innerText="El campo es requerido";
+				inputDuracion.classList.add("is-invalid");
+				boton.disabled=true;
+				return false;
+			}else{
+				errorDuracion.innerText="";
+				inputDuracion.classList.remove("is-invalid");
+				boton.disabled=false;
+				return true;
+			}
+			
+		}
+	
+}
 var idEduContinua=0;
 var nombre;
 var fechaInicio;
@@ -203,8 +222,36 @@ var idDocenteResponsable;
 var idClasificacionCine;
 var consecutivo;
 var idTipoBeneficiarios=[];
+function showLoader(){
+	try {
+		document.getElementById("divLoader").style.display='flex';
+		document.getElementById("formEducacionContinua").style.display='none';
+		document.getElementById("formEducacionContinuaBase").style.display='none';
+	} catch (error) {
+	  
+	}
+	
+}
+
+function hideLoader(){
+	try {
+		document.getElementById("divLoader").style.display='none';
+		document.getElementById("formEducacionContinua").style.display='inline';
+		document.getElementById("formEducacionContinuaBase").style.display='inline';
+	} catch (error) {
+	  
+	}
+	
+}
+
 function guardarEdc(){
-	  listTipoBen=[];
+	showLoader();
+	ajaxSaveEducacionContinua();
+	
+}
+
+function ajaxSaveEducacionContinua(){
+	 listTipoBen=[];
 	  
 	  $('#selectTipoBeneficiarios').val().forEach(element => {
 	  listTipoBen.push(element);
@@ -250,29 +297,50 @@ function guardarEdc(){
 	  console.log(idProgramaResponsable==0);
 	  console.log(idDocenteResponsable==0);
 	  console.log(idClasificacionCine==0);
-	  
-	  if(nombre=="" || fechaInicio=="" || fechaFin=="" || duracion<=0 || duracion=="" || fechaLimInscripcion=="" ||
-			  (cantMaxParticipantes<=0 && cantMaxParticipantes!="")|| (costoInscripcion<=0 && costoInscripcion!="")|| lugar=="" || costoEducacionContinua<=0 || costoEducacionContinua=="" ||
-			  porcentajeAsistencia <0 || porcentajeAsistencia>100 || porcentajeAsistencia=="" || idTipoEduContinua==0 || 
-			  idProgramaResponsable==0 || idDocenteResponsable==0 || idClasificacionCine==0){
-		  validateInputTextRequerido('nombreEdc','errNombreEdc');
-		  validateInputTextRequerido('fechaInicioEduCont','errFechaInicioEdc');
-		  validateInputTextRequerido('fechaFinEduCont','errFechaFinEdc');
-		  validateInputTextRequerido('fechaLimInscripcionEduCont','errFechaLimInscEdc');
-		  validateInputNumberRequerido('duracion','errDuracionEdc');
-		  validateInputNumberRequerido('costoTotalEdc','errCostoTotalEdc');
-		  validateInputNumberNotRequired('costoInscripcionEdc','errCostoInscripEdc');
-		  validateInputNumberNotRequired('cantMaxPartEdc','errCantPartEdc');
-		  validateInputPorcentaje('porcentajeAsistenciaEdc','errPorcAsisEdc');
-		  validateInputTextRequerido('lugarEdc','errLugarEdc');
-		  validateSelect('selectTipoContinua','errTipoEdc');
-		  validateSelect('selectTipoBeneficiarios','errTipoBenefEdc');
-		  validateSelect('selectClasificacionCINE','errClasificacionEdc');
-		  validateSelect('programaResponsable','errProgRespEdc');
-		  validateSelect('docenteResponsable','errDocRespEdc');
+	  var valid1 = validateInputTextRequerido('nombreEdc','errNombreEdc');
+	  var valid2=validateLengthTxt('nombreEdc','errNombreEdc',100);
+	  var valid3 = validateInputTextRequerido('fechaInicioEduCont','errFechaInicioEdc');
+	  var valid4 = validateInputTextRequerido('fechaFinEduCont','errFechaFinEdc');
+	  var valid5 = validateInputTextRequerido('fechaLimInscripcionEduCont','errFechaLimInscEdc');
+	  var valid6 = validateInputNumberRequerido('duracion','errDuracionEdc');
+	  var valid8 = validateInputNumberRequerido('costoTotalEdc','errCostoTotalEdc');
+	  var valid7 = validDuracion(duracion);
+	  var valid9 = validateInputNumberNotRequired('costoInscripcionEdc','errCostoInscripEdc');
+	  var valid10 = validateInputNumberNotRequired('cantMaxPartEdc','errCantPartEdc');
+	  var valid11 = validateInputPorcentaje('porcentajeAsistenciaEdc','errPorcAsisEdc');
+	  var valid12 = validateInputTextRequerido('lugarEdc','errLugarEdc');
+	  var valid13= validateLengthTxt('lugarEdc','errLugarEdc',40);
+	  var valid14 = validateSelect('selectTipoContinua','errTipoEdc');
+	  var valid15 = validateSelect('selectTipoBeneficiarios','errTipoBenefEdc');
+	  var valid16 = validateSelect('selectClasificacionCINE','errClasificacionEdc');
+	  var valid17 = validateSelect('programaResponsable','errProgRespEdc');
+	  var valid18 = validateSelect('docenteResponsable','errDocRespEdc');
+	  console.log("validaciones");
+	  console.log(valid1);
+	  console.log(valid2);
+	  console.log(valid3);
+	  console.log(valid4);
+	  console.log(valid5);
+	  console.log(valid6);
+	  console.log(valid7);
+	  console.log(valid8);
+	  console.log(valid9);
+	  console.log(valid10);
+	  console.log(valid11);
+	  console.log(valid12);
+	  console.log(valid13);
+	  console.log(valid14);
+	  console.log(valid15);
+	  console.log(valid16);
+	  console.log(valid17);
+	  console.log(valid18);
+	  if( !valid1 || !valid2 || !valid3 || !valid4 || !valid5 || !valid6 || !valid7 || !valid8 || !valid9
+			  || !valid10 || !valid11 || !valid12 || !valid13 || !valid14 || !valid15 || !valid16 || !valid17 || !valid18){
+		 
+		  hideLoader();
 		  toastr
 			.error(
-					'Debes ingresar todos los campos requeridos',
+					'Debes diligenciar el formulario correctamente',
 					'Error!');
 					return;
 	  }
@@ -287,8 +355,14 @@ function guardarEdc(){
 	  formData.append('fechaFin',fechaFin);
 	  formData.append('duracion',duracion);
 	  formData.append('fechaLimInscripcion',fechaLimInscripcion);
-	  formData.append('cantMaxParticipantes',cantMaxParticipantes);
-	  formData.append('costoInscripcion',costoInscripcion);
+	  if(cantMaxParticipantes.trim() != ''){
+		  formData.append('cantMaxParticipantes',cantMaxParticipantes);
+	  }
+	  if(costoInscripcion.trim() != ''){
+		  formData.append('costoInscripcion',costoInscripcion);
+	  }
+	  
+	  
 	  formData.append('lugar',lugar);
 	  formData.append('costoEducacionContinua',costoEducacionContinua);
 	  formData.append('requisitos',requisitos);
@@ -308,23 +382,28 @@ function guardarEdc(){
 	  
 	  
 	  console.log(formData);
-  $.ajax({
+ $.ajax({
 		headers: {"X-CSRF-TOKEN": token},
 		url: "/educacion-continua/save",
 		type: "POST",
-        data: formData,
-        enctype: 'multipart/form-data',
-        processData: false,
-        contentType: false,
-        cache: false,
+       data: formData,
+       enctype: 'multipart/form-data',
+       processData: false,
+       contentType: false,
+       cache: false,
 		success: function(result) {
 			console.log(result);
 			toastr.success('Se ha guardado la información', 'Excelente!');
-			window.setTimeout(function(){location.reload()},1000);
+			
 			idEduContinua=0;
+			window.setTimeout(function() {
+				window.location.href = "/educacion-continua";
+			}, 1000);
 		},
 		error: function(err) {
 			console.log(err);
+			boton.disabled=false;
+			hideLoader();
 			if(err.responseJSON.length >0){
 				toastr.error('No se pudo procesar la solicitud...', 'Error!');
 				err.responseJSON.forEach(function(error){
@@ -337,12 +416,12 @@ function guardarEdc(){
 				  });
 			  
 			}else{
+				
 				toastr.error(err.responseJSON.message, 'Error!');
 				
 			}
 		}
 	});
-	
 	
 }
 

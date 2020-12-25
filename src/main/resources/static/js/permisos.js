@@ -96,17 +96,22 @@ $( document ).ready(function() {
 		console.log(cbAdminvo.checked);
 		console.log(cbE.checked);
 		if(persona.docente){
-			if((switchP.checked && idsProgramasPerEst.length==0 && 
+			if((!switchEdC.checked && idsProgramasEdC.length>0 ) || (switchP.checked && idsProgramasPerEst.length==0 && 
 				idsDeptosDoc.length==0 && idsProgramasPerGra.length==0 && !cbAdminvo.checked && !cbE.checked) || 
-				(switchA.checked && idsEduAtt.length==0 )){
+				(switchA.checked && idsEduAtt.length==0 ) || (!switchP.checked && (idsProgramasPerEst.length>0 || 
+						idsDeptosDoc.length>0 || idsProgramasPerGra.length>0 || cbAdminvo.checked || cbE.checked)) || 
+						(!switchA.checked && idsEduAtt.length>0 )){
 					toastr.error('Por favor, diligencie el formulario correctamente', 'Error!');
 					return;
 				}
 		}else{
 			if((switchEdC.checked && idsProgramasEdC.length==0 ) || (switchP.checked && idsProgramasPerEst.length==0 && 
 			idsDeptosDoc.length==0 && idsProgramasPerGra.length==0 && !cbAdminvo.checked && !cbE.checked) || 
-			(switchA.checked && idsEduAtt.length==0 )){
-				toastr.error('Por favor, diligencie el formulario correctamente', 'Error!');
+			(switchA.checked && idsEduAtt.length==0 ) || (!switchEdC.checked && idsProgramasEdC.length>0 ) || 
+			(!switchP.checked && (idsProgramasPerEst.length>0 || 
+					idsDeptosDoc.length>0 || idsProgramasPerGra.length>0 || cbAdminvo.checked || cbE.checked)) || 
+					(!switchA.checked && idsEduAtt.length>0 )){
+				toastr.error('Debes diligenciar el formulario correctamente', 'Error!');
 				return;
 			}
 		}

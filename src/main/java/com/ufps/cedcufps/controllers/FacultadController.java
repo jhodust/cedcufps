@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
+import com.ufps.cedcufps.SpringSecurityConfig;
 import com.ufps.cedcufps.modelos.Facultad;
 import com.ufps.cedcufps.modelos.Programa;
 import com.ufps.cedcufps.services.IFacultadService;
@@ -37,7 +38,9 @@ public class FacultadController {
 		PageRender<Facultad> pageRender= new PageRender<Facultad>("/facultades", facultades);
 		model.put("facultades",facultades);	
 		model.put("facultadesTotales",facultadService.findAll());	
-		model.put("page",pageRender);	
+		model.put("page",pageRender);
+		model.put("photoUser", SpringSecurityConfig.getInfoSession().getPhoto());
+		model.put("nameUser", SpringSecurityConfig.getInfoSession().getName());
 		return "facultad/index";
 	}
 	

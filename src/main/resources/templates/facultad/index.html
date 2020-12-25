@@ -40,8 +40,8 @@
         </div>
         <hr/>
         
-        <div th:if="${#lists.size(facultades) == 0}">
-        	<center><span class="badge badge-red-ufps">No existen facultades registradas</span></center>
+        <div th:if="${facultades.getNumberOfElements() == 0}">
+        	<center><span class="badge badge-red-ufps" >No existen facultades registrados</span></center>
         </div>
         
 		<div class="row">
@@ -77,7 +77,10 @@
           </div>   	
         </div>
         
-        <nav th:if="${#lists.size(facultades) > 0}" th:replace="layouts/paginator :: paginator"></nav>
+        <div th:if="${facultades.getNumberOfElements() != 0}">
+		<nav  th:replace="layouts/paginator :: paginator"></nav>
+		</div>
+        
         
         
 		

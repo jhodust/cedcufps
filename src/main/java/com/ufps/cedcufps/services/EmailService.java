@@ -58,7 +58,7 @@ public class EmailService implements IEmailService {
 	    ctx.setVariable("logo", new File("img/geduco.png").getAbsolutePath());
 	   
 	    // generando plantilla con las variables
-	    final String htmlContent = this.templateEngine.process("email/plantilla.html", ctx);
+	    final String htmlContent = this.templateEngine.process("email/plantillaEducacionContinua.html", ctx);
 	    
 	    
 	    // Preparando email
@@ -79,6 +79,46 @@ public class EmailService implements IEmailService {
 	    	}
 	    	
 	    }
+	   
+	    
+	    // enviando  mail
+	    this.mailSender.send(mimeMessage);
+	    LOGGER.debug("enviando email");
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+    }
+    
+    @Async
+    @Override
+    public void sendEmailRegistro(String remitente, String asunto,  String contenido, String nombreUsuario) {
+    	
+    	LOGGER.debug("preparando email");
+		
+		try {
+		
+		Locale locale= new Locale("es");
+		
+		
+		// Preparando las variables para la plantilla
+	    final Context ctx = new Context(locale);
+	    ctx.setVariable("usuario", nombreUsuario);
+	    ctx.setVariable("contenido", contenido);
+	    
+	    // generando plantilla con las variables
+	    final String htmlContent = this.templateEngine.process("email/plantillaRegistro.html", ctx);
+	    
+	    
+	    // Preparando email
+	    final MimeMessage mimeMessage = this.mailSender.createMimeMessage();
+	    final MimeMessageHelper message =
+	        new MimeMessageHelper(mimeMessage, true, "UTF-8"); // true = multipart
+	    message.setSubject(asunto);
+	    message.setTo(remitente);
+	    
+	    message.setText(htmlContent, true); // true = isHtml
+
+	    
 	   
 	    
 	    // enviando  mail

@@ -228,28 +228,13 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 	}
 	
 	@Override
-	public EducacionContinua findOneByNombreAndFecha(String educacionContinua, String fechaInicio) {
+	public EducacionContinuaWebDto findOneByIdAcceso(String idAcceso) {
 		// TODO Auto-generated method stub
-		try {
-			return educacionContinuaDao.findByNombreAndFechaInicio(educacionContinua,new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(fechaInicio));
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
+		return educacionContinuaCustomDao.findEduContinuaWebDtoByIdAcceso(idAcceso);
+		
 	}
 	
-	@Override
-	public EducacionContinuaWebDto editarEducacionContinuaByNombre(String educacionContinua, String fechaInicio) {
-		// TODO Auto-generated method stub
-		try {
-			return educacionContinuaMapper.convertEducacionContinuaToEduContinuaWebDto( educacionContinuaDao.findByNombreAndFechaInicio(educacionContinua,new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(fechaInicio)));
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
-	}
+	
 
 	@Override
 	public Diploma generarDiploma(Long idEducacionContinua) {
@@ -319,16 +304,10 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 	}
 
 	@Override
-	public InfoEducacionContinuaDto detallesEducacionContinua(String nombreEducacionContinua, String fechaInicio) {
+	public InfoEducacionContinuaDto detallesEducacionContinua(String idAcceso) {
 		// TODO Auto-generated method stub
-		if(personaService.isSuperAdmin() || educacionContinuaCustomDao.docenteHasPermission(nombreEducacionContinua, personaService.findPersonaLogueada().getId())) {
-			EducacionContinua e=null;
-			try {
-				e = educacionContinuaDao.findByNombreAndFechaInicio(nombreEducacionContinua,new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(fechaInicio));
-			} catch (ParseException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+		if(personaService.isSuperAdmin() || educacionContinuaCustomDao.docenteHasPermission(idAcceso, personaService.findPersonaLogueada().getId())) {
+			EducacionContinua e= educacionContinuaDao.findByIdAcceso(idAcceso);
 			if(e!=null) {
 				return educacionContinuaMapper.convertEducacionContinuaToEducacionContinuaWeb(e, true);
 			}else {
@@ -566,7 +545,7 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 	}
 
 	@Override
-	public List<Object[]> tiposPersonaParaInscripcion(List<EducacionContinuaTipoBeneficiario> tipoBeneficiarios) {
+	public List<Object[]> tiposPersonaParaInscripcion(List<TipoBeneficiarioDto> tipoBeneficiarios) {
 		// TODO Auto-generated method stub
 		Persona p= personaService.findPersonaLogueada();
 		List<Object[]> list= new ArrayList<>();
@@ -574,14 +553,14 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 			String[] tiposPersona=p.getIdsTipoPersona().split(",");
 			System.out.println("metodo tipos persona para inscripcion");
 			System.out.println(tipoBeneficiarios.size());
-			for(EducacionContinuaTipoBeneficiario ectb: tipoBeneficiarios) {
-				System.out.println(ectb.getTipoBeneficiario().getTipoBeneficiario());
+			for(TipoBeneficiarioDto ectb: tipoBeneficiarios) {
+				System.out.println(ectb.getTipoBeneficiario());
 				for(String t: tiposPersona) {
 					System.out.println(t);
-					if(ectb.getTipoBeneficiario().getTipoPersona().getId()==Long.parseLong(t)) {
+					if(ectb.getIdTipoPersona()==Long.parseLong(t)) {
 						Object[] obj = new Object[2];
-						obj[0]=ectb.getTipoBeneficiario().getTipoPersona().getId();
-						obj[1]=ectb.getTipoBeneficiario().getTipoPersona().getTipoPersona();
+						obj[0]=ectb.getIdTipoPersona();
+						obj[1]=ectb.getTipoPersona();
 						list.add(obj);
 					}
 				}
@@ -591,14 +570,16 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 	}
 
 	@Override
-	public RequisitosInscripcionDto consultarRequisitosInscripcion(String nombreEduContinua, String fechaInicio) {
+	public RequisitosInscripcionDto consultarRequisitosInscripcion(String idAcceso) {
 		// TODO Auto-generated method stub
 		
-		EducacionContinua ec= this.findOneByNombreAndFecha(nombreEduContinua,fechaInicio);
+		EducacionContinuaWebDto ec= this.findOneByIdAcceso(idAcceso);
+		System.out.println("id edu continuaaaa");
+		System.out.println(ec.getId());
 		int totalInscritos=participanteDao.countTotalParticipantes(ec.getId());
 		RequisitosInscripcionDto dto = new RequisitosInscripcionDto();
 		dto.setTotalInscritos(totalInscritos);
-		if(ec.getCantMaxParticipantes() != null) {
+		if(ec.getCantMaxParticipantes() != null && !ec.getCantMaxParticipantes().equalsIgnoreCase("LIBRE")) {
 			dto.setCuposDisponibles(Integer.parseInt(ec.getCantMaxParticipantes())-totalInscritos);
 			dto.setHasCupos(dto.getCuposDisponibles()>0);
 		}else {
@@ -618,8 +599,9 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 		dto.setParticipante(participante);
 		
 		dto.setEstaInscrito(participante!=null);
-		dto.setEducacionContinua(educacionContinuaMapper.convertEducacionContinuaToEduContinuaWebDto(ec));
-		
+		dto.setEducacionContinua(ec);
+		System.out.println("beneficiariosssssssssssssssssssssssssss");
+		System.out.println(ec.getTipoBeneficiarios().size());
 		return dto;
 	}
 

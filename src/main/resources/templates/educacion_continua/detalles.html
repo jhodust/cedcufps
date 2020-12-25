@@ -95,6 +95,10 @@
 		    					<td class="text-sm" th:text="${ec.educacionContinua.duracion}"></td>
 		    				</tr>
 		    				<tr>
+		    					<td class="h6 text-sm"><strong>Costo</strong></td>
+		    					<td class="text-sm" th:text="${ec.educacionContinua.costoInscripcion != ''} ? ('$ '+${#numbers.formatDecimal(ec.educacionContinua.costoInscripcion, 0, 'COMMA', 0, 'POINT')}):'No Aplica'"></td>
+		    				</tr>
+		    				<tr>
 		    					<td class="h6 text-sm"><strong>Lugar</strong></td>
 		    					<td class="text-sm" th:text="${ec.educacionContinua.lugar}"></td>
 		    				</tr>
@@ -107,7 +111,7 @@
 		    					<td class="text-sm" th:text="${#strings.capitalizeWords(#dates.format(ec.educacionContinua.fechaLimInscripcion, 'dd MMMM yyyy HH:mm'))}"></td>
 		    				</tr>
 		    				<tr>
-		    					<td class="h6 text-sm"><strong>Costo</strong></td>
+		    					<td class="h6 text-sm"><strong>Costo Inscripción</strong></td>
 		    					<td class="text-sm" th:text="${ec.educacionContinua.costoInscripcion != ''} ? ('$ '+${#numbers.formatDecimal(ec.educacionContinua.costoInscripcion, 0, 'COMMA', 0, 'POINT')}):'No Aplica'"></td>
 		    				</tr>
 		    				<tr>
@@ -270,6 +274,7 @@
 		        </div>
 		  </div>
 		  <div class="tab-pane fade" id="pills-editar" role="tabpanel" aria-labelledby="pills-editar-tab">
+		  <div th:replace="loader :: loader"></div>
 		  	<div th:replace="educacion_continua/form :: form"></div>
 	  	  </div>	
 		  <div class="tab-pane fade" id="pills-ponentes" role="tabpanel" aria-labelledby="pills-ponentes-tab">
@@ -291,7 +296,7 @@
 						</div>
 						<div class="col-md-4">
 							<div class="form-group">
-								<label class="form-control-label">Campo </label><label class="requerido pl-2">*</label> <input
+								<label class="form-control-label">Valor </label><label class="requerido pl-2">*</label> <input
 									class="form-control" type="text" id="valueBusqueda"
 									placeholder="Ingrese el dato a buscar"/>
 							</div>
@@ -322,7 +327,7 @@
 					</div>
 		  		</div>
 		  		<div class="card-body">
-		  			<h5 class="h4 d-inline-block font-weight-400 mb-0 text-dark pb-3" ><strong>Ponentes Registrados</strong></h5>
+		  			<h5 class="h4 d-inline-block font-weight-400 mb-0 text-dark pb-3" th:if="${#lists.size(ec.educacionContinua.ponentes) > 0}" ><strong>Ponentes Registrados</strong></h5>
 		  			<div th:replace="educacion_continua/ponente/index :: indexPonentes"></div>
 		  			
 		  		</div>
@@ -336,7 +341,7 @@
 		              </a>
 		  		</div>
 		  		<div class="card-body">
-		  		<h5 class="h4 d-inline-block font-weight-400 mb-0 text-dark pb-3" ><strong>Jornadas Registradas</strong></h5>
+		  		<h5 class="h4 d-inline-block font-weight-400 mb-0 text-dark pb-3" th:if="${#lists.size(ec.educacionContinua.jornadas) > 0}" ><strong>Jornadas Registradas</strong></h5>
 		  			<div th:replace="educacion_continua/jornada/index :: indexJornadas"></div>
 		  			
 		  		</div>

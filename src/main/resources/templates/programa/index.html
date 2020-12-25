@@ -60,6 +60,9 @@
           </div>
         </div>
         <hr/>
+        <div th:if="${programas.getNumberOfElements() == 0}">
+        	<center><span class="badge badge-red-ufps" >No existen programas académicos registrados</span></center>
+        </div>
         
 		<div class="row">
           <div class="col-lg-4 hover-scale-110" th:each="p: ${programas}">
@@ -98,7 +101,9 @@
             </div>
           </div>
         </div>
-        <nav th:replace="layouts/paginator :: paginator"></nav>
+        <div th:if="${programas.getNumberOfElements() != 0}">
+		<nav  th:replace="layouts/paginator :: paginator"></nav>
+		</div>
 		</div>
 	  </div>
     

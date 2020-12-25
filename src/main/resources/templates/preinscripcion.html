@@ -95,7 +95,7 @@
 		            </div>
 		            <div class="col-md-6">
 		            	<table>
-		            		<thead><tr><td><span class="text-white badge badge-red-ufps">Imagen</span></td></tr></thead>
+		            		
 		            		<tbody>
 		            		<tr><td>
 				              <a th:href="@{'/'+${requisitosInscripcion.educacionContinua.imagen}}" data-fancybox data-caption="My caption">
@@ -121,8 +121,8 @@
 			    					<td class="text-sm" th:text="${#strings.capitalizeWords(#dates.format(requisitosInscripcion.educacionContinua.fechaLimInscripcion, 'dd MMMM yyyy'))}"></td>
 			    				</tr>
 			    				<tr>
-			    					<td class="h6 text-sm"><strong>Costo</strong></td>
-			    					<td class="text-sm" th:text="${requisitosInscripcion.educacionContinua.costoInscripcion}"></td>
+			    					<td class="h6 text-sm"><strong>Costo Inscripción</strong></td>
+			    					<td class="text-sm" th:text="${requisitosInscripcion.educacionContinua.costoInscripcion != '' and requisitosInscripcion.educacionContinua.costoInscripcion !='GRATUITO' } ? ('$ '+${#numbers.formatDecimal(requisitosInscripcion.educacionContinua.costoInscripcion, 0, 'COMMA', 0, 'POINT')}):'No Aplica'"></td>
 			    				</tr>
 			    				<tr>
 			    					<td class="h6 text-sm"><strong>Cantidad (Máx) Participantes</strong></td>
@@ -146,7 +146,11 @@
 						<div th:if="${not requisitosInscripcion.isHasCupos() and requisitosInscripcion.isHasCoincidenciasBeneficiario() }">
 							<span class="badge badge-info">No puedes inscribirte, el cupo esta completo</span>
 						</div>
-						
+						<button class="btn btn-primary btn-sm" type="button" id="btnSpinnerInscripcion" disabled>
+						  <div class="spinner-border text-white" role="status" id="divSpinnerInscripcion">
+						  <span class="sr-only">Loading...</span>
+						</div>
+						</button>
 						<div th:if="${requisitosInscripcion.isEstaInscrito() and requisitosInscripcion.participante.tipoParticipante == 'Asistente'}">
 							<a href="#" onclick="cancelarInscripcion()" 
 									class="btn btn-primary btn-sm" id="btn_inscripcion">CANCELAR INSCRIPCIÓN!
@@ -166,21 +170,22 @@
 		    				</tr>
 		    				</thead>
 		    				<tbody>
+		    					
 			    				<tr>
 			    					<td class="h6 text-sm"><strong>Requisitos</strong></td>
-			    					<td class="text-sm" th:text="${requisitosInscripcion.educacionContinua.requisitos}"></td>
+			    					<td class="text-sm" th:text="${requisitosInscripcion.educacionContinua.requisitos != '' AND requisitosInscripcion.educacionContinua.requisitos != null } ? ${requisitosInscripcion.educacionContinua.requisitos}:'No Registra'"></td>
 			    				</tr>
 			    				<tr>
 			    					<td class="h6 text-sm"><strong>Contenido General</strong></td>
-			    					<td class="text-sm" th:text="${requisitosInscripcion.educacionContinua.contenidoGral}"></td>
+			    					<td class="text-sm" th:text="${requisitosInscripcion.educacionContinua.contenidoGral != '' AND requisitosInscripcion.educacionContinua.requisitos != null } ? ${requisitosInscripcion.educacionContinua.contenidoGral}:'No Registra'"></td>
 			    				</tr>
 			    				<tr>
 			    					<td class="h6 text-sm"><strong>Objetivos</strong></td>
-			    					<td class="text-sm" th:text="${requisitosInscripcion.educacionContinua.objetivo}"></td>
+			    					<td class="text-sm" th:text="${requisitosInscripcion.educacionContinua.objetivo != '' AND requisitosInscripcion.educacionContinua.objetivo != null } ? ${requisitosInscripcion.educacionContinua.objetivo}:'No Registra'"></td>
 			    				</tr>
 			    				<tr>
 			    					<td class="h6 text-sm"><strong>Resumen</strong></td>
-			    					<td class="text-sm" th:text="${requisitosInscripcion.educacionContinua.resumen}"></td>
+			    					<td class="text-sm" th:text="${requisitosInscripcion.educacionContinua.resumen != '' AND requisitosInscripcion.educacionContinua.resumen != null } ? ${requisitosInscripcion.educacionContinua.resumen}:'No Registra'"></td>
 			    				</tr>
 			    			</tbody>
 		    			</table>

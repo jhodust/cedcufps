@@ -8,6 +8,7 @@ public class PersonaDto {
 	private String documento;
 	private String tipoDocumento;
 	private String perfiles;
+	private String idAcceso;
 	public Long getId() {
 		return id;
 	}
@@ -43,6 +44,12 @@ public class PersonaDto {
 	}
 	public void setTipoDocumento(String tipoDocumento) {
 		this.tipoDocumento = tipoDocumento;
+	}
+	public String getIdAcceso() {
+		return idAcceso;
+	}
+	public void setIdAcceso(String idAcceso) {
+		this.idAcceso = idAcceso;
 	}
 	
 	

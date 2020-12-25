@@ -58,13 +58,13 @@
 									<tr th:each="p: ${personas}">
 										<td><a
 											class="btn btn-sm btn-red-ufps rounded-circle btn-icon-only hover-scale-110"
-											th:href="@{/usuarios/registro/{id}(id=${p.id})}"
+											th:href="@{/usuarios/editar(id=${p.idAcceso})}"
 											data-toggle="tooltip" data-placement="left" title="Editar">
 												<span class="btn-inner--icon"><i
 													class="fas fa-user-edit"></i></span>
 										</a> <a th:if="${otorganPermisos}"
 											class="btn btn-sm btn-red-ufps rounded-circle btn-icon-only hover-scale-110"
-											th:href="@{/persona/{id}/permisos(id=${p.id})}"
+											th:href="@{/persona/permisos(id=${p.idAcceso})}"
 											data-toggle="tooltip" data-placement="right" title="Permisos">
 												<span class="btn-inner--icon"><i
 													class="fas fa-user-cog"></i></span>

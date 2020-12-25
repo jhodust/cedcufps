@@ -3,7 +3,7 @@
 <head th:replace="layouts/layout :: head">
 	<meta charset="UTF-8"/>
 </head>
-<body>
+<body style="display:inline">
   <!-- Application container -->
   <div class="container-fluid container-application">
     <!-- Content -->
@@ -60,8 +60,8 @@
           </div>
         </div>
         <hr/>
-        <div th:if="${#lists.size(departamentos) == 0}">
-        	<center><span class="badge badge-red-ufps">No existen departamentos registrados</span></center>
+        <div th:if="${departamentos.getNumberOfElements() == 0}">
+        	<center><span class="badge badge-red-ufps" >No existen departamentos registrados</span></center>
         </div>
 		<div class="row">
 			<div class="col-lg-3 col-sm-6 hover-scale-110"  th:each="d: ${departamentos}">
@@ -87,7 +87,11 @@
           </div>
 		
 		</div>
-		<nav th:if="${#lists.size(departamentos) > 0}" th:replace="layouts/paginator :: paginator"></nav>
+		
+		
+		<div th:if="${departamentos.getNumberOfElements() != 0}">
+		<nav  th:replace="layouts/paginator :: paginator"></nav>
+		</div>
 		</div>
 	  </div>
     

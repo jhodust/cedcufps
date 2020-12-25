@@ -23,7 +23,7 @@ public class Estudiante extends Persona{
 	private static final long serialVersionUID = 1L;
 
 	@NotEmpty(message = "El campo código es requerido")
-	@Size(max = 7, message = "El campo código debe tener máximo 7 dígitos")
+	//@Size(max = 7, message = "El campo código debe tener máximo 7 dígitos")
 	private String codigo;
 
 	@NotNull(message = "Seleccione el Programa Académico en el que se encuentra matriculado")

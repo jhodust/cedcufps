@@ -41,8 +41,9 @@ public class TestQRCode {
     	int residuo=total%30;
     	System.out.println("hojas: " + hojas);
     	System.out.println("residuo: " + residuo);
-
     	
+    	
+    	System.out.println(System.currentTimeMillis());
     	
     
 }

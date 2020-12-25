@@ -36,8 +36,8 @@ public class EducacionContinuaRestController {
 	@PostMapping(value = "/educacion-continua/save")
 	public ResponseEntity<?> save(@RequestParam(name="imagen", required=false) MultipartFile file, 
 			@RequestParam String id, @RequestParam String nombre, @RequestParam String fechaInicio, 
-			@RequestParam String fechaFin, @RequestParam String duracion, @RequestParam String cantMaxParticipantes,
-			@RequestParam String fechaLimInscripcion, @RequestParam String costoInscripcion, @RequestParam String lugar,
+			@RequestParam String fechaFin, @RequestParam String duracion, @RequestParam(required = false) String cantMaxParticipantes,
+			@RequestParam String fechaLimInscripcion, @RequestParam(required = false) String costoInscripcion, @RequestParam String lugar,
 			@RequestParam String costoEducacionContinua, @RequestParam String requisitos, @RequestParam String objetivo,
 			@RequestParam String porcentajeAsistencia, @RequestParam String resumen, @RequestParam String contenidoGeneral,
 			@RequestParam String idTipoEduContinua, @RequestParam String tipoEduContinua, @RequestParam String idProgramaResponsable,

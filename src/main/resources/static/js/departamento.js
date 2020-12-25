@@ -25,6 +25,11 @@ $(document).ready(function ()
 		}
 		
 	});
+	
+	$('#select_facultad_departamento').on("change", function (e) { 
+		e.preventDefault();
+		validateSelect('select_facultad_departamento','errorSelectFacultad');
+	});
 });
 
 
@@ -39,7 +44,9 @@ function guardarDepartamento(){
 		JSONdepartamento.facultad={};
 		JSONdepartamento.facultad.id=id_facultad;
 	}
-	if(departamento == "" || id_facultad==0){
+	validateInputTextRequerido('departamento','errorDepartamento');
+	validateSelect('select_facultad_departamento','errorSelectFacultad');
+	if(departamento.trim() == "" || id_facultad==0){
 		toastr
 			.error(
 					'Diligencie el formulario correctamente, los campos son requeridos',

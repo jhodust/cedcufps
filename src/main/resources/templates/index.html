@@ -21,12 +21,12 @@
 		    <div class="swiper-wrapper">
 		    
 		      <div class="card swiper-slide" th:each="edc:${educacionesRecientes}" style="overflow: hidden;">
-		      		 <center>
+		      		
 					    <div class="card-header">
-					        <div class="d-flex align-items-center">
+					        <div class="d-flex align-items-center" >
 					           
 						            <div class="icon-text pl-2">
-						                <h6 class="text-sm font-weight-bold mb-0"><strong><a class="red-ufps" th:href="@{/preinscripcion(educacionContinua=${edc.nombre},fecha=${edc.fechaInicio})}" th:text="${edc.nombre}"></a></strong></h6>
+						                <h6 class="text-sm font-weight-bold mb-0"><strong><a class="red-ufps" th:href="@{/preinscripcion(educacionContinua=${edc.nombre},fecha=${edc.fechaInicio},id=${edc.idAcceso})}" th:text="${edc.nombre}"></a></strong></h6>
 						                <i class="far fa-calendar-alt"></i><span class="badge badge-secondary" th:text="${#dates.format(edc.fechaInicio, 'dd/MM/yyyy') + ' - ' + #dates.format(edc.fechaFin, 'dd/MM/yyyy')}"></span>
 						                <br>
 						                <span class="badge badge-red-ufps" th:text="${edc.tipoEduContinua.tipoEduContinua}"></span>
@@ -35,12 +35,16 @@
 					            
 					        </div>
 					    </div>
-					    </center>
-					    <div class="col-md-12"  style="object-fit: cover; object-position: center center;">
+					    <div class="card-body" style="display: flex; align-items: center">
+					    <div class="col-md-12" >
 					    		 <a th:href="@{/preinscripcion(educacionContinua=${edc.nombre},fecha=${edc.fechaInicio})}">
-					    <img alt="Image placeholder" th:src="@{${edc.imagen}}" class="img-fluid rounded">
+					    <img  alt="Image placeholder" th:src="@{${edc.imagen}}" class="img-fluid rounded">
 						</a>
 					    	</div>
+					    </div>
+					    
+					   
+					    
 					    
 		      </div>
 		      
@@ -58,16 +62,18 @@
 		<h4 class="text-dark"><strong>PANEL DE EVENTOS</strong></h4>
 		</div>
 		<hr/>
+		<p class="text-dark">Para consultar información adicional y/o inscribirse, por favor dar click sobre el nombre de la educación continua</p>
+		
 <div class="row">
 		<div class="col-lg-10 center" th:each="ec:${educacionesContinuas}">
 			
-			<div class="card bg-gradient-card-ufps px-4 py-3 hover-scale-110">
+			<div class="card px-4 py-3 hover-scale-110">
 			    
 			    <div class="card-body">
 			    <div class="row">
 			    <div class="col-md-8">
 			    
-			        <h6 class="h6 text-dark"><strong style="font-family:'mv boli';"><a class="red-ufps" th:href="@{/preinscripcion(educacionContinua=${ec.nombre},fecha=${ec.fechaInicio})}" th:text="${ec.nombre}"></a></strong></h6>
+			        <h6 class="h6 text-dark" style="color:#bc0017"><strong><a class="red-ufps" th:href="@{/preinscripcion(educacionContinua=${ec.nombre},fecha=${ec.fechaInicio},id=${ec.idAcceso})}" th:text="${ec.nombre}"></a></strong></h6>
 			       	
 			       	<table>
 			       		<tr>
@@ -90,10 +96,22 @@
 			       			<td class="p text-dark text-sm"><strong>Estado: </strong></td>
 			       			<td class="p text-dark text-sm" th:text="${ec.estado}"></td>
 			       		</tr>
+			       		<tr>
+			       			<td class="p text-dark text-sm"><strong>Tipo: </strong></td>
+			       			<td class="p text-dark text-sm" th:text="${ec.tipoEduContinua.tipoEduContinua}"></td>
+			       		</tr>
+			       		<tr>
+			       			<td class="p text-dark text-sm"><strong>Programa a Cargo: </strong></td>
+			       			<td class="p text-dark text-sm" th:text="${ec.programaResponsable.programa}"></td>
+			       		</tr>
+			       		<tr>
+			       			<td class="p text-dark text-sm"><strong>Abierto a: </strong></td>
+			       			<td class="p text-dark text-sm"><span class="badge badge-dark mr-1" th:each="tb:${ec.tipoBeneficiarios}" th:text="${tb.tipoBeneficiario.homologacion}"></span></td>
+			       		</tr>
 			       	</table>
-			       	<span class="badge badge-dark" th:text="${ec.tipoEduContinua.tipoEduContinua}"></span>
-			       	<span class="badge badge-dark" th:text="${ec.programaResponsable.programa}"></span>
-			       	<span class="badge badge-dark mr-1" th:each="tb:${ec.tipoBeneficiarios}" th:text="${tb.tipoBeneficiario.homologacion}"></span>
+			       	
+			       	
+			       	
 			       </div>
 			       <div class="col-md-4 pt-3">
 			       		<a th:href="@{${ec.imagen}}" data-fancybox th:data-caption="${ec.nombre}">

@@ -83,12 +83,12 @@
 									<tr th:each="i : ${informesSnies}">
 										<td th:text="${i.fechaInicio}"></td>
 										<td th:text="${i.fechaFin}"></td>
-										<td><a class="btn btn-sm btn-red-ufps rounded-circle btn-icon-only hover-scale-110" th:href="@{'/'+${i.informeCursos}}" data-toggle="tooltip" data-placement="left" title="Reporte Cursos">
-		    								<span class="btn-inner--icon"><i class="fas fa-file-excel"></i></span></a></td>
-		    							<td><a class="btn btn-sm btn-red-ufps rounded-circle btn-icon-only hover-scale-110" th:href="@{'/'+${i.informeEduContinua}}" data-toggle="tooltip" data-placement="left" title="Reporte Educación Continua">
-		    								<span class="btn-inner--icon"><i class="fas fa-file-excel"></i></span></a></td>
-		    							<td><a class="btn btn-sm btn-red-ufps rounded-circle btn-icon-only hover-scale-110" th:href="@{'/'+${i.informeParticipantes}}" data-toggle="tooltip" data-placement="left" title="Reporte Educación Continua">
-		    								<span class="btn-inner--icon"><i class="fas fa-file-excel"></i></span></a></td>
+										<td><a class="btn btn-sm btn-red-ufps rounded-circle btn-icon-only hover-scale-110" th:href="@{'/'+${i.informeCursos}}" data-toggle="tooltip" data-placement="left" title="Descargar">
+		    								<span class="btn-inner--icon"><i class="fas fa-file-download"></i></span></a></td>
+		    							<td><a class="btn btn-sm btn-red-ufps rounded-circle btn-icon-only hover-scale-110" th:href="@{'/'+${i.informeEduContinua}}" data-toggle="tooltip" data-placement="left" title="Descargar">
+		    								<span class="btn-inner--icon"><i class="fas fa-file-download"></i></span></a></td>
+		    							<td><a class="btn btn-sm btn-red-ufps rounded-circle btn-icon-only hover-scale-110" th:href="@{'/'+${i.informeParticipantes}}" data-toggle="tooltip" data-placement="left" title="Descargar">
+		    								<span class="btn-inner--icon"><i class="fas fa-file-download"></i></span></a></td>
 									</tr>
 									
 								</tbody>

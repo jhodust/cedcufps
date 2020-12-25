@@ -63,7 +63,7 @@ function buildOptions(){
 		.then((value) => {
 			console.log(value);
 			if(value != null){
-				ajaxRealizarInscripcion(value);
+				prepararInscripcion(value);
 			}
 			
 			
@@ -72,23 +72,48 @@ function buildOptions(){
 
 function realizarInscripcion(){
 	var idTipoPersona;
-	
+	console.log("realizar inscripcionnnnnnnnn");
+	console.log(listTipoPersonaValidInscripcion);
+	console.log("posicion");
+	console.log(listTipoPersonaValidInscripcion[0][0]);
 	if(listTipoPersonaValidInscripcion.length > 1 ){
 		buildOptions();
 	}else{
-		ajaxRealizarInscripcion(idTipoPersona);
+		console.log("else");
+		console.log(idTipoPersona);
+		idTipoPersona=listTipoPersonaValidInscripcion[0][0];
+		prepararInscripcion(idTipoPersona);
 	}
 	
 		
 }
 
+function showSpinnerInscripcion(){
+	document.getElementById("btnSpinnerInscripcion").style.display='flex';
+	document.getElementById("btn_inscripcion").style.display='none';
+}
+
+function hideSpinnerInscripcion(){
+	document.getElementById("btnSpinnerInscripcion").style.display='none';
+	document.getElementById("btn_inscripcion").style.display='inline';
+}
+
+
+
+function prepararInscripcion(idTipoPersona){
+	showSpinnerInscripcion();
+	ajaxRealizarInscripcion(idTipoPersona);
+}
+
 function ajaxRealizarInscripcion(idTipoPersona){
+console.log(idTipoPersona);
+	
 	if(idTipoPersona==undefined){
 		var data={'idEduContinua':idEduContinua};
 	}else{
 		var data={'idEduContinua':idEduContinua, 'idTipoPersona':idTipoPersona};
 	}
-	
+	console.log(data);
 	$.ajax({
 		headers: {"X-CSRF-TOKEN": token},
 		type: "GET",
@@ -99,13 +124,14 @@ function ajaxRealizarInscripcion(idTipoPersona){
 		success: function(result) {
 			creacionTarjetaInscripcion(result);
 			console.log(result);
+			window.setTimeout(function(){location.reload()},1000);
+			hideSpinnerInscripcion();
 		},
 		error: function(err) {
-			$("#msg").html( "<span style='color: red'>Programa is required</span>" );
+			hideSpinnerInscripcion();
 		}
 	});
 }
-
 function creacionTarjetaInscripcion(p){
 	console.log(p);
 	
@@ -331,6 +357,11 @@ function dataURItoBlob(dataURI) {
 }
 
 function  cancelarInscripcion(){
+	showSpinnerInscripcion();
+	ajaxCancelarInscripcion();
+}
+
+function ajaxCancelarInscripcion(){
 	$.ajax({
 		headers: {"X-CSRF-TOKEN": token},
 		type: "GET",
@@ -342,9 +373,10 @@ function  cancelarInscripcion(){
             var enlace = document.getElementById("btn_inscripcion");
             enlace.innerHTML ="INSCRÍBETE!";
             enlace.setAttribute( "onclick","realizarInscripcion()");
+            hideSpinnerInscripcion();
 		},
 		error: function(err) {
-			$("#msg").html( "<span style='color: red'>Programa is required</span>" );
+			hideSpinnerInscripcion();
 		}
 	});
 }

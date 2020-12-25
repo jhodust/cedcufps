@@ -58,6 +58,7 @@ public class EducacionContinuaMapper implements IEducacionContinuaMapper {
 				dto.setDocenteResponsable(this.convertFieldsFullName(e.getDocenteResponsable()));
 
 				dto.setJornadas(jornadaMapper.convertJornadasToJornadaAppDto(e.getJornadas()));
+				dto.setIdAcceso(e.getIdAcceso());
 				ecadto.add(dto);
 			}
 		}
@@ -286,7 +287,7 @@ public class EducacionContinuaMapper implements IEducacionContinuaMapper {
 		dto.setFechaInicio(fechaInicio);
 		dto.setFechaFin(fechaFin);
 		dto.setFechaLimInscripcion(fechaLimInscripcion);
-		dto.setDuracion(Integer.parseInt(duracion));
+		dto.setDuracion(duracion);
 		dto.setCostoInscripcion(costoInscripcion);
 		dto.setLugar(lugar);
 		dto.setResumen(resumen);

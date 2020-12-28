@@ -5,7 +5,7 @@ $(document).ready(function ()
 			if(caso==0){
 				id=0;
 				url="/";
-			}else{
+			}else if(caso==1){
 			console.log("id persona en caso 1");
 			console.log(persona.id);
 				if(persona.id==null){
@@ -15,6 +15,9 @@ $(document).ready(function ()
 				}
 				
 				url="/usuarios";
+			}else{
+				id=persona.id;
+				url="/perfil";
 			}
 		/*ocultar('formEstudiante');
 		ocultar('formDocente');
@@ -254,7 +257,7 @@ $(document).ready(function ()
 		console.log();
 		var userJSON = {};
 		userJSON.id=id;
-		userJSON.tipoDocumento = $('#selectTipoDoc').val();
+		userJSON.idTipoDocumento = $('#selectTipoDoc').val();
 		userJSON.numeroDocumento = $('#numDoc').val();
 		var partsDateED =$('#fechaExp').val().split('/');
 		userJSON.fechaExpedicionDocumento = new Date(partsDateED[2], partsDateED[1] - 1, partsDateED[0]); 
@@ -262,9 +265,9 @@ $(document).ready(function ()
 		userJSON.segundoNombre = $('#segNom').val();
 		userJSON.primerApellido = $('#primApe').val();
 		userJSON.segundoApellido = $('#segApe').val();
-		userJSON.genero = $('input[name="genero"]:checked')
+		userJSON.idGenero = $('input[name="genero"]:checked')
 				.val();
-		userJSON.estadoCivil = $(
+		userJSON.idEstadoCivil = $(
 				'input[name="estadoCivil"]:checked').val();
 		var partsDateFN =$('#fechaNac').val().split('/');
 		userJSON.fechaNacimiento = new Date(partsDateFN[2], partsDateFN[1] - 1, partsDateFN[0]); 
@@ -277,28 +280,21 @@ $(document).ready(function ()
 		userJSON.email = $('#email').val();
 		userJSON.direccion = $('#direccion').val();
 		userJSON.telefono = $('#telefono').val();
-		userJSON.codigo = $('#codigo').val();
-		userJSON.programa = $('#programaAsociado').val();
+		userJSON.codigoProgramaEstudiante = $('#codigo').val();
+		userJSON.idProgramaEstudiante = $('#programaAsociado').val();
 		userJSON.profesion = $('#profesion').val();
 		userJSON.estudiante=document.getElementById("cbEst").checked;
 		userJSON.docente=document.getElementById("cbDoc").checked;
 		userJSON.administrativo=document.getElementById("cbAdminvo").checked;
 		userJSON.graduado=document.getElementById("cbGraduado").checked;
 		userJSON.externo=document.getElementById("cbExt").checked;
-		userJSON.programaGraduado=$('#selectProgramaGraduado').val();
+		userJSON.idProgramaGraduado=$('#selectProgramaGraduado').val();
 		userJSON.anioGraduado=$('#anioGraduado').val();
-		userJSON.deptoAdscrito=$('#selectDeptoAdscrito').val();
+		userJSON.idDeptoAdscrito=$('#selectDeptoAdscrito').val();
 		userJSON.codigoDocente=$('#codDocente').val();
 		userJSON.dependencia=$('#dependencia').val();
 		userJSON.cargo=$('#cargo').val();
 		userJSON.empresa=$('#empresa').val();
-		if(id!=0 && persona.docente){
-			userJSON.estadoDocente=document.getElementById("switchEstadoDocente").checked;
-		}else if(userJSON.docente){
-			userJSON.estadoDocente=true;
-		}else{
-			userJSON.estadoDocente=false;
-		}
 		
 		console.log(userJSON);
 		$

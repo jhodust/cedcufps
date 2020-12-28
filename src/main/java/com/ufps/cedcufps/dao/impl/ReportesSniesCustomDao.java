@@ -1,9 +1,12 @@
 package com.ufps.cedcufps.dao.impl;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -20,6 +23,7 @@ import com.ufps.cedcufps.dto.InformeEducacionContinuaDto;
 import com.ufps.cedcufps.dto.InformeParticipanteResponsableDto;
 import com.ufps.cedcufps.dto.InformePonenteDto;
 import com.ufps.cedcufps.dto.InformeSniesDto;
+import com.ufps.cedcufps.exception.CustomException;
 
 @Repository
 public class ReportesSniesCustomDao implements IReportesSniesCustomDao{
@@ -362,6 +366,261 @@ public class ReportesSniesCustomDao implements IReportesSniesCustomDao{
 	}
 	
 	
+	
+	@Override
+	public List<Object[]>  dashboardConteoGeneral(String fechaInicio, String fechaFin, String idPrograma) {
+		// TODO Auto-generated method stub
+		
+		
+		Date fechaI = null;
+		Date fechaF = null;
+		try {
+			String format="dd/MM/yyyy";
+			fechaI=new SimpleDateFormat(format).parse(fechaInicio);
+			fechaF=new SimpleDateFormat(format).parse(fechaFin);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			throw new CustomException("Fecha inválida");
+			//throw new CustomException("Se ha generado un error con las fechas seleccionadas");
+		}
+		
+		
+		
+		StringBuilder query = new StringBuilder();
+		System.out.println("########################################");
+		System.out.println(fechaInicio);
+		System.out.println(fechaFin);
+		query.append(" (select tec.tipo_educacion_continua, count(e.id)")
+			 .append(" FROM educacion_continua e")
+			 .append(" join tipos_educacion_continua tec on tec.id=e.id_tipo_educacion_continua")
+			 .append(" where (e.fecha_inicio between ?1 and ?2 ) and tec.estado_oficial");
+		if(idPrograma!=null) {
+			query.append(" and e.id_programa = ?3");
+		}
+		query.append(" GROUP BY tec.tipo_educacion_continua)")
+			 .append(" UNION")
+			 .append(" (select 'Otro', (select COALESCE(count(e.id),0) ")
+			 .append(" FROM educacion_continua e")
+			 .append(" join tipos_educacion_continua tec on tec.id=e.id_tipo_educacion_continua")
+			 .append(" where (e.fecha_inicio between ?1 and ?2 ) and  not tec.estado_oficial");
+		if(idPrograma!=null) {
+			query.append(" and e.id_programa = ?3");
+		}
+		query.append("))");
+		
+		
+			
+		System.out.println("*************************************** query******");
+		System.out.println(query.toString());
+		Query q=em.createNativeQuery(query.toString());
+		q.setParameter(1, fechaI)
+		 .setParameter(2, fechaF);
+		
+		if(idPrograma!=null) {
+			q.setParameter(3,idPrograma);
+		}
+		List<Object[]> result= q.getResultList();
+		
+			
+		return this.loadDataConteoGeneral(result);
+	}
+
+	public List<Object[]> initDataDashboardConteoGeneral(){
+		List<Object[]> result=new ArrayList<Object[]>();
+		Object[] data0= {"Educación Continua","Total"};
+		Object[] data1= {"Curso",0};
+		Object[] data2= {"Taller",0};
+		Object[] data3= {"Seminario",0};
+		Object[] data4= {"Congreso",0};
+		Object[] data5= {"Simposio",0};
+		Object[] data6= {"Diplomado",0};
+		Object[] data7= {"Otro",0};
+		result.add(data0);
+		result.add(data1);
+		result.add(data2);
+		result.add(data3);
+		result.add(data4);
+		result.add(data5);
+		result.add(data6);
+		result.add(data7);
+		return result;
+	}
+	
+	public List<Object[]> loadDataConteoGeneral(List<Object[]> resultQuery){
+		List<Object[]> data= this.initDataDashboardConteoGeneral();
+		
+		Map<String, Integer> mapEdC= new HashMap<String,Integer>();
+		 mapEdC.put("Curso", 1);
+		 mapEdC.put("Taller", 2);
+		 mapEdC.put("Seminario", 3);
+		 mapEdC.put("Congreso", 4);
+		 mapEdC.put("Simposio", 5);
+		 mapEdC.put("Diplomado", 6);
+		 mapEdC.put("Otro", 7);
+		 
+		for(Object[] o: resultQuery) {
+			int row = mapEdC.get(String.valueOf(o[0]));
+			data.get(row)[1]=Integer.parseInt(String.valueOf(o[1]));
+		}
+		
+		return data;
+	}
+	
+	@Override
+	public List<Object[]> dashboardConteoGeneralTipoPersonas(String fechaInicio, String fechaFin, String idPrograma) {
+		// TODO Auto-generated method stub
+
+		Date fechaI = null;
+		Date fechaF = null;
+		try {
+			String format="dd/MM/yyyy";
+			fechaI=new SimpleDateFormat(format).parse(fechaInicio);
+			fechaF=new SimpleDateFormat(format).parse(fechaFin);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			throw new CustomException("Fecha inválida");
+			//throw new CustomException("Se ha generado un error con las fechas seleccionadas");
+		}
+		
+		StringBuilder query = new StringBuilder();
+		
+		query.append(" SELECT tec.tipo_educacion_continua, tp.tipo_persona, COUNT(par.id) ")
+			 .append(" FROM participantes par")
+			 .append(" join tipos_persona tp on tp.id=par.id_tipo_persona")
+			 .append(" join educacion_continua e on e.id=par.educacion_continua_id")
+			 .append(" join tipos_educacion_continua tec on tec.id=e.id_tipo_educacion_continua")
+			 .append(" where e.fecha_inicio between ?1 and ?2 and tec.estado_oficial");
+		if(idPrograma!=null) {
+			query.append(" and e.id_programa = ?3");
+		}
+		query.append(" GROUP BY tec.tipo_educacion_continua, tp.tipo_persona")
+			 .append(" UNION")
+			 .append(" SELECT 'Otro', tp.tipo_persona, COUNT(par.id)  ")
+			 .append(" FROM participantes par")
+			 .append(" join tipos_persona tp on tp.id=par.id_tipo_persona")
+			 .append(" join educacion_continua e on e.id=par.educacion_continua_id")
+			 .append(" join tipos_educacion_continua tec on tec.id=e.id_tipo_educacion_continua")
+			 .append(" where e.fecha_inicio between ?1 and ?2 and  not tec.estado_oficial");
+		if(idPrograma!=null) {
+			query.append(" and e.id_programa = ?3");
+		}
+		query.append(" GROUP BY  tp.tipo_persona ");
+		
+		
+			
+		System.out.println("*************************************** query******");
+		System.out.println(query.toString());
+		Query q=em.createNativeQuery(query.toString());
+		q.setParameter(1, fechaI)
+		 .setParameter(2, fechaF);
+		
+		if(idPrograma!=null) {
+			q.setParameter(3,idPrograma);
+		}
+		List<Object[]> resultQuery= q.getResultList();
+		
+		 
+			
+		return this.loadDataConteoGeneralPersonas(resultQuery);
+	}
+	
+	public List<Object[]> initDataDashboardConteoPersonasEdC(){
+		
+		
+		List<Object[]> result=new ArrayList<Object[]>();
+		Object[] data0= {"Educación Continua","Estudiante", "Docente", "Administrativo", "Graduado", "Externo"};
+		Object[] data1= {"Curso",0,0,0,0,0};
+		Object[] data2= {"Taller",0,0,0,0,0};
+		Object[] data3= {"Seminario",0,0,0,0,0};
+		Object[] data4= {"Congreso",0,0,0,0,0};
+		Object[] data5= {"Simposio",0,0,0,0,0};
+		Object[] data6= {"Diplomado",0,0,0,0,0};
+		Object[] data7= {"Otro",0,0,0,0,0};
+		result.add(data0);
+		result.add(data1);
+		result.add(data2);
+		result.add(data3);
+		result.add(data4);
+		result.add(data5);
+		result.add(data6);
+		result.add(data7);
+		return result;
+	}
+
+	public List<Object[]> loadDataConteoGeneralPersonas(List<Object[]> resultQuery){
+		
+		Map<String, Integer> mapPersonas= new HashMap<String,Integer>();
+		 mapPersonas.put("Estudiante", 1);
+		 mapPersonas.put("Docente", 2);
+		 mapPersonas.put("Administrativo", 3);
+		 mapPersonas.put("Graduado", 4);
+		 mapPersonas.put("Externo", 5);
+		 
+		 Map<String, Integer> mapEdC= new HashMap<String,Integer>();
+		 mapEdC.put("Curso", 1);
+		 mapEdC.put("Taller", 2);
+		 mapEdC.put("Seminario", 3);
+		 mapEdC.put("Congreso", 4);
+		 mapEdC.put("Simposio", 5);
+		 mapEdC.put("Diplomado", 6);
+		 mapEdC.put("Otro", 7);
+		 
+		
+		List<Object[]>data=this.initDataDashboardConteoPersonasEdC();
+		for(Object[] o: resultQuery) {
+			int row = mapEdC.get(String.valueOf(o[0]));
+			int column = mapPersonas.get(String.valueOf(o[1]));
+			data.get(row)[column]=Integer.parseInt(String.valueOf(o[2]));
+		}
+		
+		return data;
+	}
+	
+	@Override
+	public List<Object[]> dashboardConteoGeneralGenero(String fechaInicio, String fechaFin, String idPrograma) {
+		// TODO Auto-generated method stub
+
+		Date fechaI = null;
+		Date fechaF = null;
+		try {
+			String format="dd/MM/yyyy";
+			fechaI=new SimpleDateFormat(format).parse(fechaInicio);
+			fechaF=new SimpleDateFormat(format).parse(fechaFin);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			throw new CustomException("Fecha inválida");
+			//throw new CustomException("Se ha generado un error con las fechas seleccionadas");
+		}
+		
+		StringBuilder query = new StringBuilder();
+		
+		query.append(" SELECT g.genero, COUNT(par.id) ")
+			 .append(" FROM participantes par")
+			 .append(" join personas per on per.id=par.id_persona")
+			 .append(" join generos g on g.id=per.id_genero")
+			 .append(" join educacion_continua e on e.id=par.educacion_continua_id")
+			 .append(" where e.fecha_inicio between ?1 and ?2 ");
+		if(idPrograma!=null) {
+			query.append(" and e.id_programa = ?3");
+		}
+		query.append(" GROUP BY g.genero");
+		
+		
+			
+		System.out.println("*************************************** query******");
+		System.out.println(query.toString());
+		Query q=em.createNativeQuery(query.toString());
+		q.setParameter(1, fechaI)
+		 .setParameter(2, fechaF);
+		if(idPrograma!=null) {
+			q.setParameter(3,idPrograma);
+		}
+		List<Object[]> result= q.getResultList();
+		Object[] encabezado= {"Género","Total"};
+		result.add(0,encabezado);
+			
+		return result;
+	}
 	
 	
 }

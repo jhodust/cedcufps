@@ -61,7 +61,30 @@ public interface IPersonaDao extends JpaRepository<Persona, Long>, DataTablesRep
 			"where CONCAT(p.primerNombre,' ', p.segundoNombre,' ',p.primerApellido,' ', p.segundoApellido) like ?1")	
 	public List<Persona> findPosiblePonenteByNombre(String nombre);
 	
+	@Transactional
+	@Modifying
+	@Query(value = "update estudiantes set estado = ?1 where id_persona = ?2 ", nativeQuery = true)
+	public void updateEstadoEstudiante(boolean estado, Long idPersona);
 	
+	@Transactional
+	@Modifying
+	@Query(value = "update docentes set estado = ?1 where id_persona = ?2 ", nativeQuery = true)
+	public void updateEstadoDocente(boolean estado, Long idPersona);
+	
+	@Transactional
+	@Modifying
+	@Query(value = "update administrativos set estado = ?1 where id_persona = ?2 ", nativeQuery = true)
+	public void updateEstadoAdministrativo(boolean estado, Long idPersona);
+	
+	@Transactional
+	@Modifying
+	@Query(value = "update graduados set estado = ?1 where id_persona = ?2 ", nativeQuery = true)
+	public void updateEstadoGraduado(boolean estado, Long idPersona);
+	
+	@Transactional
+	@Modifying
+	@Query(value = "update externos set estado = ?1 where id_persona = ?2 ", nativeQuery = true)
+	public void updateEstadoExterno(boolean estado, Long idPersona);
 	
 	@Query(value ="select p " + 
 			"from Persona p " + 

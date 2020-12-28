@@ -18,7 +18,7 @@ public interface IEstudianteDao extends JpaRepository<Estudiante, Long>{
 	
 	@Transactional
 	@Modifying
-	@Query(value = "INSERT INTO estudiantes (codigo, id_programa, id_persona) VALUES(?1,?2,?3) ON DUPLICATE KEY  UPDATE codigo=VALUES(codigo), id_programa=VALUES(id_programa)", nativeQuery = true)
+	@Query(value = "INSERT INTO estudiantes (codigo, id_programa, id_persona) VALUES(?1,?2,?3) ON DUPLICATE KEY  UPDATE codigo=VALUES(codigo), id_programa=VALUES(id_programa), estado= true", nativeQuery = true)
 	public void updateOnlyEstudiante(String codigo, Long idPrograma, Long idPersona);
 
 	

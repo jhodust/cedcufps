@@ -1,5 +1,6 @@
 package com.ufps.cedcufps.modelos;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
@@ -31,6 +32,9 @@ public class Estudiante extends Persona{
 	@JoinColumn(name="id_programa")
 	private Programa programa;
 	
+	@Column(columnDefinition = "boolean default true")
+	private boolean estado;
+	
 
 	public String getCodigo() {
 		return codigo;
@@ -47,6 +51,14 @@ public class Estudiante extends Persona{
 
 	public void setPrograma(Programa programa) {
 		this.programa = programa;
+	}
+
+	public boolean isEstado() {
+		return estado;
+	}
+
+	public void setEstado(boolean estado) {
+		this.estado = estado;
 	}
 	
 	

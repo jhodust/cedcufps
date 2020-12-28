@@ -156,7 +156,7 @@ public class PersonaCustomDaoImpl implements IPersonaCustomDao {
 	public Estudiante findOnlyEstudiante(Long idPersona) {
 		// TODO Auto-generated method stub
 		StringBuilder query = new StringBuilder();
-		query.append("select  e.id_persona,e.codigo, e.id_programa, p.programa from estudiantes e join programas p on e.id_programa=p.id where id_persona=?1");
+		query.append("select  e.id_persona,e.codigo, e.id_programa, p.programa from estudiantes e join programas p on e.id_programa=p.id where e.id_persona=?1 and e.estado");
 		Query q=em.createNativeQuery(query.toString());
 		q.setParameter(1, idPersona);
 		List<Object []> result=q.getResultList();
@@ -178,7 +178,7 @@ public class PersonaCustomDaoImpl implements IPersonaCustomDao {
 	public Docente findOnlyDocente(Long idPersona) {
 		// TODO Auto-generated method stub
 		StringBuilder query = new StringBuilder();
-		query.append("select  d.id_persona, d.codigo, d.id_departamento, depto.departamento, d.estado from docentes d join departamentos depto on d.id_departamento=depto.id where id_persona=?1");
+		query.append("select  d.id_persona, d.codigo, d.id_departamento, depto.departamento from docentes d join departamentos depto on d.id_departamento=depto.id where d.id_persona=?1 and d.estado");
 		Query q=em.createNativeQuery(query.toString());
 		q.setParameter(1, idPersona);
 		List<Object []> result=q.getResultList();
@@ -191,7 +191,6 @@ public class PersonaCustomDaoImpl implements IPersonaCustomDao {
 			depto.setId(Long.parseLong(String.valueOf(result.get(0)[2])));
 			depto.setDepartamento(String.valueOf(result.get(0)[3]));
 			d.setDepartamento(depto);
-			d.setEstado(Boolean.parseBoolean(String.valueOf(result.get(0)[4])));
 		}
 		return d;
 		
@@ -201,7 +200,7 @@ public class PersonaCustomDaoImpl implements IPersonaCustomDao {
 	public Graduado findOnlyGraduado(Long idPersona) {
 		// TODO Auto-generated method stub
 		StringBuilder query = new StringBuilder();
-		query.append("select  g.id_persona,g.anio, g.id_programa, p.programa from graduados g join programas p on g.id_programa=p.id where id_persona=?1");
+		query.append("select  g.id_persona,g.anio, g.id_programa, p.programa from graduados g join programas p on g.id_programa=p.id where g.id_persona=?1 and g.estado");
 		Query q=em.createNativeQuery(query.toString());
 		q.setParameter(1, idPersona);
 		List<Object []> result=q.getResultList();
@@ -223,7 +222,7 @@ public class PersonaCustomDaoImpl implements IPersonaCustomDao {
 	public Administrativo findOnlyAdministrativo(Long idPersona) {
 		// TODO Auto-generated method stub
 		StringBuilder query = new StringBuilder();
-		query.append("select id_persona, dependencia, cargo from administrativos where id_persona=?1");
+		query.append("select id_persona, dependencia, cargo from administrativos a where a.id_persona=?1 and a.estado");
 		Query q=em.createNativeQuery(query.toString());
 		q.setParameter(1, idPersona);
 		List<Object []> result=q.getResultList();
@@ -242,7 +241,7 @@ public class PersonaCustomDaoImpl implements IPersonaCustomDao {
 	public Externo findOnlyExterno(Long idPersona) {
 		// TODO Auto-generated method stub
 		StringBuilder query = new StringBuilder();
-		query.append("select  id_persona, profesion, empresa from externos where id_persona=?1");
+		query.append("select  id_persona, profesion, empresa from externos e where id_persona=?1 and e.estado");
 		Query q=em.createNativeQuery(query.toString());
 		q.setParameter(1, idPersona);
 		List<Object []> result=q.getResultList();

@@ -373,6 +373,14 @@ public class PersonaService implements IPersonaService, UserDetailsService {
 				p.getEstadoCivil().getId(), p.getFechaNacimiento(), p.getIdPaisNacimiento(), p.getIdDepartamentoNacimiento(),
 				p.getIdMunicipioNacimiento(), p.getEmail(), p.getDireccion(), p.getTelefono(), p.isEstudiante(), p.isDocente(), 
 				p.isAdministrativo(), p.isGraduado(), p.isExterno(), p.getIdsTipoPersona(), p.getId());
+		
+		//deshabilitar estados de los perfiles existentes para actualizar los nuevos
+		personaDao.updateEstadoEstudiante(false, p.getId());
+		personaDao.updateEstadoDocente(false, p.getId());
+		personaDao.updateEstadoAdministrativo(false, p.getId());
+		personaDao.updateEstadoGraduado(false, p.getId());
+		personaDao.updateEstadoExterno(false, p.getId());
+		
 		if(u.isExterno()) {
 			logger.info("Es externo");
 			Externo e=usuarioMapper.convertUsuarioToExterno(u,p.getId());
@@ -396,7 +404,7 @@ public class PersonaService implements IPersonaService, UserDetailsService {
 				logger.info(d.getId().toString());
 				logger.info(d.getDepartamento().getDepartamento());
 				logger.info(d.getCodigo());
-				docenteDao.updateOnlyDocente(d.getCodigo(),d.getDepartamento().getId(), d.isEstado(), p.getId());
+				docenteDao.updateOnlyDocente(d.getCodigo(),d.getDepartamento().getId(), p.getId());
 				//personaCustomDao.saveDocente(d);
 			}
 			if(u.isAdministrativo()) {
@@ -777,5 +785,12 @@ public class PersonaService implements IPersonaService, UserDetailsService {
 	public void notificarViaEmail(String email, String asunto, String contenido, String nombreUsuario) {
 		emailService.sendEmailRegistro(email, asunto, contenido, nombreUsuario);
 		
+	}
+
+	@Override
+	public UsuarioDto findMyInfo() {
+		// TODO Auto-generated method stub
+		Persona p= this.findPersonaLogueada();
+		return this.editarUsuario(p.getIdAcceso());
 	}
 }

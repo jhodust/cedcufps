@@ -16,4 +16,8 @@ public interface IReportesSniesCustomDao {
 	public List<InformeEducacionContinuaDto>  informeExcelEduContinuaHoja1(Date fechaInicio, Date fechaFin, Long idPrograma);
 	public List<InformeDetalleEducacionContinuaDto>  informeExcelEduContinuaHoja2(Date fechaInicio, Date fechaFin, Long idPrograma);
 	public List<InformeParticipanteResponsableDto>  informeExcelParticipantesResponsables(Date fechaInicio, Date fechaFin, Long idPrograma);
+	public List<Object[]>  dashboardConteoGeneral(String fechaInicio, String fechaFin, String idPrograma);
+	public List<Object[]>  dashboardConteoGeneralTipoPersonas(String fechaInicio, String fechaFin, String idPrograma);
+	public List<Object[]>  dashboardConteoGeneralGenero(String fechaInicio, String fechaFin, String idPrograma);
+
 }

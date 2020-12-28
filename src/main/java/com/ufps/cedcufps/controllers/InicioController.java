@@ -85,23 +85,10 @@ public class InicioController {
 		//educacionContinuaService.generarReporteSNIESEducacionContinua(new Date(), 0);
 		return "registrarse";
 	}
-	
-	@GetMapping(value = "/email")
-	public String plantillaEmailparainscripcion(Map<String, Object> model) {
-		 
-		model.put("participante","ccccccccccccc");
-		model.put("contenido", "La inscripción al Simposio Bienal3 se ha realizado con exitósamente. Recuerde que la educación continua inica 18/08/2020 12:00 a. m.. A continuación se adjunta su respectiva tarjeta de inscripción.");
-		model.put("logo", new File("img/geduco.png").getAbsolutePath());
-		//educacionContinuaService.generarReporteSNIESEducacionContinua(new Date(), 0);
-		return "email/plantilla";
-	}
+
 	
 	
-	@RequestMapping(value = "/dashboard")
-	public String listar(Model model) {
-		
-		return "reportes-snies/dashboard";
-	}
+	
 	
 	
 	

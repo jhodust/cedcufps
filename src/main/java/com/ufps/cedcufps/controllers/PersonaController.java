@@ -105,19 +105,6 @@ public class PersonaController {
 		model.put("departamentos",personaService.findAllDepartamentos());
 		model.put("persona", personaService.editarUsuario(idAcceso));
 		model.put("otorganPermisos",personaService.isSuperAdmin() || personaService.isDirPrograma() );
-		/*if(p.getTipoPersona().getTipoPersona().equalsIgnoreCase("Estudiante")) {
-			model.put("estudiante",(Estudiante)personaService.findOne(id).get());
-			return "redirect:/usuarios/estudiante/registro/"+p.getId();
-		}else if(p.getTipoPersona().getTipoPersona().equalsIgnoreCase("Docente")) {
-			model.put("docente",(Docente)personaService.findOne(id).get());
-			return "redirect:/usuarios/docente/registro/"+p.getId();
-		}else if(p.getTipoPersona().getTipoPersona().equalsIgnoreCase("Administrativo")) {
-			model.put("administrativo",(Administrativo)personaService.findOne(id).get());
-			return "redirect:/usuarios/administrativo/registro/"+p.getId();
-		}else{
-			model.put("externo",(Externo)personaService.findOne(id).get());
-			return "redirect:/usuarios/externo/registro/"+p.getId();
-		}*/
 		model.put("photoUser", SpringSecurityConfig.getInfoSession().getPhoto());
 		model.put("nameUser", SpringSecurityConfig.getInfoSession().getName());
 		return "persona/form";
@@ -165,5 +152,28 @@ public class PersonaController {
 		model.put("photoUser", SpringSecurityConfig.getInfoSession().getPhoto());
 		model.put("nameUser", SpringSecurityConfig.getInfoSession().getName());
 		return "persona/permisos";
+	}
+	
+	@RequestMapping(value = "/perfil")
+	public String perfil(Map<String, Object> model) {
+		model.put("persona", personaService.findMyInfo());
+		model.put("photoUser", SpringSecurityConfig.getInfoSession().getPhoto());
+		model.put("nameUser", SpringSecurityConfig.getInfoSession().getName());
+		return "persona/perfil";
+	}
+	
+	@RequestMapping(value = "/perfil/editar")
+	public String editar(Map<String, Object> model) {
+		model.put("titulo","FORMULARIO PERSONA");
+		model.put("tipos_documento",personaService.findAllTiposDocumento());
+		model.put("tipos_persona",personaService.findAllTiposPersona());
+		model.put("programas",personaService.findAllProgramas());
+		model.put("generos",personaService.findAllGeneros());
+		model.put("estados_civiles",personaService.findAllEstadosCiviles());
+		model.put("departamentos",personaService.findAllDepartamentos());
+		model.put("persona", personaService.findMyInfo());
+		model.put("photoUser", SpringSecurityConfig.getInfoSession().getPhoto());
+		model.put("nameUser", SpringSecurityConfig.getInfoSession().getName());
+		return "persona/updatePerfil";
 	}
 }

@@ -101,5 +101,8 @@ public interface IPersonaService {
 	public PersonaDtoLogueada findPersonaLogueadaDto(Persona p);
 	
 	public Persona findPersonaById(Long idPersona);
+	
+	
+	public UsuarioDto findMyInfo();
 
 }

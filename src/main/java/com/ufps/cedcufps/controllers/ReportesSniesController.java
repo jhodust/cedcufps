@@ -20,6 +20,7 @@ import com.ufps.cedcufps.modelos.Estudiante;
 import com.ufps.cedcufps.modelos.InformeSnies;
 import com.ufps.cedcufps.services.IEducacionContinuaService;
 import com.ufps.cedcufps.services.IInformeSniesService;
+import com.ufps.cedcufps.services.IProgramaService;
 import com.ufps.cedcufps.utils.ReportesExcel;
 
 @Controller
@@ -31,17 +32,24 @@ public class ReportesSniesController {
 	@Autowired
 	private IInformeSniesService informeSniesService;
 	
+	@Autowired
+	private IProgramaService programaService;
+	
 	
 	
 	@RequestMapping(value = "/reportes-SNIES")
-	public String listar(Map<String, Object> model) {
+	public String reportesSnies(Map<String, Object> model) {
 		model.put("informesSnies",informeSniesService.findAll());
 		model.put("photoUser", SpringSecurityConfig.getInfoSession().getPhoto());
 		model.put("nameUser", SpringSecurityConfig.getInfoSession().getName());
 		return "reportes-snies/index";
 	}
 	
-	
+	@RequestMapping(value = "/reportes-SNIES/dashboard")
+	public String dashboard(Map<String, Object> model) {
+		model.put("programas",programaService.findAll());
+		return "reportes-snies/dashboard";
+	}
 	
 	
 	

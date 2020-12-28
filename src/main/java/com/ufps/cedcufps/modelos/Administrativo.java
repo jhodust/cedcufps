@@ -1,5 +1,6 @@
 package com.ufps.cedcufps.modelos;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
@@ -21,6 +22,9 @@ public class Administrativo extends Persona{
 	@Size(max=50,message = "El campo cargo debe tener máximo 50 caracteres")
 	private String cargo;
 
+	@Column(columnDefinition = "boolean default true")
+	private boolean estado;
+	
 	public String getCargo() {
 		return cargo;
 	}
@@ -36,6 +40,15 @@ public class Administrativo extends Persona{
 	public void setDependencia(String dependencia) {
 		this.dependencia = dependencia;
 	}
+
+	public boolean isEstado() {
+		return estado;
+	}
+
+	public void setEstado(boolean estado) {
+		this.estado = estado;
+	}
+	
 	
 	
 }

@@ -157,11 +157,11 @@
 							<tr>
 								<th></th>
 								<th>Tipo</th>
-								<th>Programa Académico Organizador</th>
+								<th class="th2">Programa Académico Organizador</th>
 								<th>Nombre</th>
 								<th>Fecha Inicio</th>
 								<th>Fecha Fin</th>
-								<th>Fecha Limite Inscripción</th>
+								<th class="th2">Fecha Limite Inscripción</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -170,8 +170,8 @@
     								<span class="btn-inner--icon"><i class="fas fa-search-plus"></i></span></a>
     								</td>
 								<td th:text="${ec.tipoEduContinua}"></td>
-								<td th:text="${ec.programaResponsable}"></td>
-								<td th:text="${ec.nombre}"></td>
+								<td class="td2" th:text="${ec.programaResponsable}"></td>
+								<td class="td2" th:text="${ec.nombre}"></td>
 								<td th:text="${#dates.format(ec.fechaInicio, 'dd-MM-yyyy HH:mm')}"></td>
 								<td th:text="${#dates.format(ec.fechaFin, 'dd-MM-yyyy HH:mm')}"></td>
 								<td th:text="${#dates.format(ec.fechaLimInscripcion, 'dd-MM-yyyy HH:mm')}"></td>

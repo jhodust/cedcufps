@@ -55,7 +55,7 @@
 														id="selectTipoDoc">
 														<option value="0">Seleccione Tipo Documento...</option>
 														<option th:each="t: ${tipos_documento}" th:value="${t.id}"
-															th:text="${t.tipoDocumento + ' - ' +t.descripcion}" th:selected="${persona.tipoDocumento == t.id}"></option>
+															th:text="${t.tipoDocumento + ' - ' +t.descripcion}" th:selected="${persona.idTipoDocumento == t.id}"></option>
 													</select> <small class="form-text text-danger"><strong id="errorTipoDoc"></strong></small>
 												</div>
 											</div>
@@ -120,7 +120,7 @@
 														<div
 															class="custom-control custom-radio custom-control-inline"
 															th:each="g: ${generos}">
-															<input type="radio" th:id="${g.genero}" name="genero" th:checked="${persona.genero == g.id}"
+															<input type="radio" th:id="${g.genero}" name="genero" th:checked="${persona.idGenero == g.id}"
 																class="custom-control-input" th:value="${g.id}" /> <label
 																class="custom-control-label" th:for="${g.genero}"
 																th:text="${g.genero}"></label>
@@ -141,7 +141,7 @@
 														<div
 															class="custom-control custom-radio custom-control-inline"
 															th:each="e: ${estados_civiles}">
-															<input type="radio" th:id="${e.estadoCivil}" th:checked="${persona.estadoCivil == e.id}"
+															<input type="radio" th:id="${e.estadoCivil}" th:checked="${persona.idEstadoCivil == e.id}"
 																name="estadoCivil" class="custom-control-input"
 																th:value="${e.id}" /> <label
 																class="custom-control-label" th:for="${e.estadoCivil}"
@@ -214,7 +214,7 @@
 												</div>
 												<div class="custom-control custom-checkbox">
 													<input type="checkbox" class="custom-control-input"
-														id="cbDoc" onclick="docente()" th:checked="${persona.isDocente()}" th:disabled="${persona.isDocente()}"> <label
+														id="cbDoc" onclick="docente()" th:checked="${persona.isDocente()}"> <label
 														class="custom-control-label" for="cbDoc">Docente</label>
 												</div>
 												<div class="custom-control custom-checkbox">
@@ -298,14 +298,14 @@
 															data-toggle="select" id="programaAsociado">
 															<option value="0">Seleccione el programa...</option>
 															<option th:each="p: ${programas}" th:value="${p.id}"
-																th:text="${p.programa}" th:selected="${persona.programa == p.id}"></option>
+																th:text="${p.programa}" th:selected="${persona.idProgramaEstudiante == p.id}"></option>
 														</select> <small class="form-text text-danger"><strong id="errorProgramaEstudiante"></strong></small>
 													</div>
 												</div>
 												<div class="col-md-6">
 													<div class="form-group">
 														<label class="form-control-label">Código</label><label class="requerido pl-2">*</label><input
-															class="form-control" type="text" data-mask="0000000" th:value="${persona.codigo}"
+															class="form-control" type="text" data-mask="0000000" th:value="${persona.codigoProgramaEstudiante}"
 															placeholder="0000000" id="codigo" />
 													</div>
 													<small class="form-text text-danger"><strong id="errorCodigoEstudiante"></strong></small>
@@ -325,7 +325,7 @@
 															data-toggle="select" id="selectDeptoAdscrito">
 															<option value="0">Seleccione el departamento...</option>
 															<option th:each="d: ${departamentos}" th:value="${d.id}"
-																th:text="${d.departamento}" th:selected="${persona.deptoAdscrito == d.id}"></option>
+																th:text="${d.departamento}" th:selected="${persona.idDeptoAdscrito == d.id}"></option>
 														</select> <small class="form-text text-danger"><strong id="errorDeptoDocente"></strong></small>
 													</div>
 												</div>
@@ -337,15 +337,6 @@
 															class="form-text text-danger"><strong id="errorCodigoDocente"></strong></small>
 													</div>
 												</div>
-											</div>
-											<div class="row" th:if="${persona.id != null and persona.isDocente()}">
-												<div class="col-md-6">
-													<div class="custom-control custom-switch">
-													  <input type="checkbox" class="custom-control-input switch" id="switchEstadoDocente"  th:checked="${persona.isEstadoDocente()}">
-													  <label class="custom-control-label" for="switchEstadoDocente"><strong>Estado</strong></label>
-													</div>
-												</div>
-												
 											</div>
 										</div>
 										<div id="formAdministrativo" style="display:none">
@@ -385,7 +376,7 @@
 															data-toggle="select" id="selectProgramaGraduado">
 															<option value="0">Seleccione el programa...</option>
 															<option th:each="p: ${programas}" th:value="${p.id}"
-																th:text="${p.programa}" th:selected="${persona.programaGraduado == p.id}"></option>
+																th:text="${p.programa}" th:selected="${persona.idProgramaGraduado == p.id}"></option>
 																
 														</select> 
 														<small class="form-text text-danger"><strong id="errorProgramaGraduado"></strong></small>

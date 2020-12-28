@@ -35,7 +35,7 @@
                   </span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right dropdown-menu-arrow">
-                  <a th:href="@{/plantilla/application/user/profile.html}" class="dropdown-item">
+                  <a th:href="@{/perfil}" class="dropdown-item">
                     <i class="fas fa-user"></i>
                     <span>Perfil</span>
                   </a>
@@ -114,7 +114,7 @@
                   <div class="dropdown-menu"><a class="dropdown-item" sec:authorize="hasAnyRole('ROLE_SUPERADMIN','ROLE_SNIES')" th:href="@{/reportes-SNIES}">
                       SNIES
                     </a>
-                    <a class="dropdown-item" sec:authorize="hasAnyRole('ROLE_SUPERADMIN','ROLE_SNIES')" th:href="@{/dashboard}">
+                    <a class="dropdown-item" sec:authorize="hasAnyRole('ROLE_SUPERADMIN','ROLE_SNIES')" th:href="@{/reportes-SNIES/dashboard}">
                       Dashboard
                     </a>
                   </div>
@@ -143,7 +143,7 @@
                   </div>
                 </a>
                 <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right dropdown-menu-arrow">
-                 <a href="#!" class="dropdown-item">
+                 <a th:href="@{/perfil}" class="dropdown-item">
                     <i class="fas fa-user"></i>
                     <span>Perfil</span>
                   </a>

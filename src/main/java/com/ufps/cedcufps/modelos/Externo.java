@@ -1,5 +1,6 @@
 package com.ufps.cedcufps.modelos;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
@@ -21,7 +22,9 @@ public class Externo extends Persona{
 	@Size(max=50,message = "El campo empresa debe tener máximo 50 caracteres")
 	private String empresa;
 
-
+	@Column(columnDefinition = "boolean default true")
+	private boolean estado;
+	
 	public String getProfesion() {
 		return profesion;
 	}
@@ -39,6 +42,16 @@ public class Externo extends Persona{
 
 	public void setEmpresa(String empresa) {
 		this.empresa = empresa;
+	}
+
+
+	public boolean isEstado() {
+		return estado;
+	}
+
+
+	public void setEstado(boolean estado) {
+		this.estado = estado;
 	}
 	
 

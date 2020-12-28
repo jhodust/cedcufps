@@ -1,5 +1,9 @@
 package com.ufps.cedcufps.mapper;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -10,6 +14,9 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Optional;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -69,20 +76,22 @@ public class UsuarioMapper implements IUsuarioMapper {
 		TipoDocumento td=null;
 		Genero g=null;
 		EstadoCivil ec=null;
+		System.out.println("TIPOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO DOCUMENTOOOOOOOOOOOOOOOOOOOOOO");
+		System.out.println(u.getIdTipoDocumento());
 		try {
-			td = tipoDocumentoDao.findById(u.getTipoDocumento()).get();
+			td = tipoDocumentoDao.findById(u.getIdTipoDocumento()).get();
 		}catch(Exception ex) {
 			throw new CustomException("No se encontró el tipo de documento en la base de datos");
 		}
 		
 		try {
-			g= generoDao.findById(u.getGenero()).get();
+			g= generoDao.findById(u.getIdGenero()).get();
 		}catch(Exception ex) {
 			throw new CustomException("No se encontró el género en la base de datos");
 		}
 		
 		try {
-			ec= estadoCivilDao.findById(u.getEstadoCivil()).get();
+			ec= estadoCivilDao.findById(u.getIdEstadoCivil()).get();
 		}catch(Exception ex) {
 			throw new CustomException("No se encontró el estado civil en la base de datos");
 		}
@@ -181,14 +190,14 @@ public class UsuarioMapper implements IUsuarioMapper {
 		Programa p=null;
 		
 		try {
-			p= programaDao.findById(u.getPrograma()).get();
+			p= programaDao.findById(u.getIdProgramaEstudiante()).get();
 		}catch(Exception ex) {
 			throw new CustomException("No se encontró el programa en la base de datos");
 		}	
 		Estudiante e= new Estudiante();
 		e.setId(idPersona);
 		e.setPrograma(p);
-		e.setCodigo(u.getCodigo());
+		e.setCodigo(u.getCodigoProgramaEstudiante());
 		
 		return e;
 	}
@@ -212,7 +221,7 @@ public class UsuarioMapper implements IUsuarioMapper {
 		Departamento de=null;
 		
 		try {
-			de= departamentoDao.findById(u.getDeptoAdscrito()).get();
+			de= departamentoDao.findById(u.getIdDeptoAdscrito()).get();
 		}catch(Exception ex) {
 			throw new CustomException("No se encontró el departamento en la base de datos");
 		}	
@@ -220,7 +229,6 @@ public class UsuarioMapper implements IUsuarioMapper {
 		d.setId(idPersona);
 		d.setDepartamento(de);
 		d.setCodigo(u.getCodigoDocente());
-		d.setEstado(u.isEstadoDocente());
 		return d;
 	}
 
@@ -240,7 +248,7 @@ public class UsuarioMapper implements IUsuarioMapper {
 		Programa p=null;
 		
 		try {
-			p= programaDao.findById(u.getProgramaGraduado()).get();
+			p= programaDao.findById(u.getIdProgramaGraduado()).get();
 		}catch(Exception ex) {
 			throw new CustomException("No se encontró el programa del cuál se graduó en la base de datos");
 		}
@@ -361,15 +369,21 @@ public class UsuarioMapper implements IUsuarioMapper {
 		dto.setSegundoNombre(p.getSegundoNombre());
 		dto.setPrimerApellido(p.getPrimerApellido());
 		dto.setSegundoApellido(p.getSegundoApellido());
-		dto.setTipoDocumento(p.getTipoDocumento().getId());
+		dto.setIdTipoDocumento(p.getTipoDocumento().getId());
+		dto.setTipoDocumento(p.getTipoDocumento().getTipoDocumento() + " - " +p.getTipoDocumento().getDescripcion());
 		dto.setNumeroDocumento(p.getNumeroDocumento());
-		dto.setGenero(p.getGenero().getId());
-		dto.setEstadoCivil(p.getEstadoCivil().getId());
+		dto.setIdGenero(p.getGenero().getId());
+		dto.setGenero(p.getGenero().getGenero());
+		dto.setIdEstadoCivil(p.getEstadoCivil().getId());
+		dto.setEstadoCivil(p.getEstadoCivil().getEstadoCivil());
 		dto.setFechaNacimiento(p.getFechaNacimiento());
 		dto.setFechaExpedicionDocumento(p.getFechaExpedicionDocumento());
 		dto.setIdPaisNacimiento(p.getIdPaisNacimiento());
+		dto.setPaisNacimiento(this.findPaisNacimiento(dto.getIdPaisNacimiento()));
 		dto.setIdDepartamentoNacimiento(p.getIdDepartamentoNacimiento());
+		dto.setDeptoNacimiento(this.findDeptoNacimiento(dto.getIdDepartamentoNacimiento()));
 		dto.setIdMunicipioNacimiento(p.getIdMunicipioNacimiento());
+		dto.setMpioNacimiento(this.findMpioNacimiento(dto.getIdMunicipioNacimiento()));
 		dto.setEmail(p.getEmail());
 		dto.setDireccion(p.getDireccion());
 		dto.setTelefono(p.getTelefono());
@@ -386,14 +400,15 @@ public class UsuarioMapper implements IUsuarioMapper {
 		System.out.println(g!=null);
 		System.out.println(ex!=null);
 		if(e!=null) {
-			dto.setPrograma(e.getPrograma().getId());
-			dto.setCodigo(e.getCodigo());
+			dto.setIdProgramaEstudiante(e.getPrograma().getId());
+			dto.setCodigoProgramaEstudiante(e.getCodigo());
+			dto.setProgramaEstudiante(e.getPrograma().getPrograma());
 		}
 		
 		if(d!=null) {
-			dto.setDeptoAdscrito(d.getDepartamento().getId());
+			dto.setIdDeptoAdscrito(d.getDepartamento().getId());
 			dto.setCodigoDocente(d.getCodigo());
-			dto.setEstadoDocente(d.isEstado());
+			dto.setDeptoAdscrito(d.getDepartamento().getDepartamento());
 		}
 		
 		if(a!=null) {
@@ -402,8 +417,9 @@ public class UsuarioMapper implements IUsuarioMapper {
 		}
 		
 		if(g!=null) {
-			dto.setProgramaGraduado(g.getPrograma().getId());
+			dto.setIdProgramaGraduado(g.getPrograma().getId());
 			dto.setAnioGraduado(g.getAnio());
+			dto.setProgramaGraduado(g.getPrograma().getPrograma());
 		}
 		
 		if(ex!=null) {
@@ -414,6 +430,99 @@ public class UsuarioMapper implements IUsuarioMapper {
 		return dto;
 	}
 
+	private JSONArray readJsonPaises() {
+		
+		try {
+			 JSONParser parser= new JSONParser();
+	            File f= new File("src/main/resources/static/data/paises.json");
+	            Object object=parser.parse(new FileReader(f.getAbsolutePath()));
+	            JSONArray jsonRead= (JSONArray) object;
+	            return jsonRead;
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (org.json.simple.parser.ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+        
+	}
+	private String findPaisNacimiento(String idPaisNacimiento) {
+		JSONArray json= this.readJsonPaises();
+			 if(json!=null) {
+				Iterator<JSONObject> paises=json.iterator();
+	            while(paises.hasNext()){
+	                JSONObject p= paises.next();
+	                String idP=(String)p.get("id");
+	                if(idP.equalsIgnoreCase(idPaisNacimiento)){
+	                    return (String) p.get("pais");
+	                }
+	            }
+			 }
+		return "";
+	}
 	
+
+private JSONArray readJsonDivipola() {
+		
+		try {
+			 JSONParser parser= new JSONParser();
+	            File f= new File("src/main/resources/static/data/divipola.json");
+	            Object object=parser.parse(new FileReader(f.getAbsolutePath()));
+	            JSONArray jsonRead= (JSONArray) object;
+	            return jsonRead;
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (org.json.simple.parser.ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+        
+	}
+
+	private String findDeptoNacimiento(String idDeptoNacimiento) {
+		if(idDeptoNacimiento!=null) {
+			JSONArray json= this.readJsonDivipola();
+			 if(json!=null) {
+				Iterator<JSONObject> deptos=json.iterator();
+	            while(deptos.hasNext()){
+	                JSONObject d= deptos.next();
+	                String idDepto=(String)d.get("cod_depto");
+	                if(idDepto.equalsIgnoreCase(idDeptoNacimiento)){
+	                    return (String) d.get("dpto");
+	                }
+	            }
+			 }
+		}
+		
+		return "";
+	}
+	
+	private String findMpioNacimiento(String idMpioNacimiento) {
+		if(idMpioNacimiento!=null) {
+			JSONArray json= this.readJsonDivipola();
+			 if(json!=null) {
+				Iterator<JSONObject> municipios=json.iterator();
+	            while(municipios.hasNext()){
+	                JSONObject m= municipios.next();
+	                String idMpio=(String)m.get("cod_mpio");
+	                if(idMpio.equalsIgnoreCase(idMpioNacimiento)){
+	                    return (String) m.get("nom_mpio");
+	                }
+	            }
+			 }
+		}
+		
+		return "";
+	}
 	
 }

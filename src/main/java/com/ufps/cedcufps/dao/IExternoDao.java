@@ -18,6 +18,6 @@ public interface IExternoDao extends JpaRepository<Externo, Long>{
 	
 	@Transactional
 	@Modifying
-	@Query(value = "INSERT INTO externos (profesion, empresa, id_persona) VALUES(?1,?2,?3) ON DUPLICATE KEY UPDATE profesion=VALUES(profesion), empresa=VALUES(empresa)", nativeQuery = true)
+	@Query(value = "INSERT INTO externos (profesion, empresa, id_persona) VALUES(?1,?2,?3) ON DUPLICATE KEY UPDATE profesion=VALUES(profesion), empresa=VALUES(empresa), estado= true", nativeQuery = true)
 	public void updateOnlyExterno(String profesion, String empresa, Long idPersona);
 }

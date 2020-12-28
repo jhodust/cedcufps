@@ -17,7 +17,7 @@ public interface IGraduadoDao extends JpaRepository<Graduado, Long> {
 	
 	@Transactional
 	@Modifying
-	@Query(value = "INSERT INTO graduados (anio, id_programa, id_persona) VALUES(?1,?2,?3) ON DUPLICATE KEY  UPDATE anio=VALUES(anio), id_programa=VALUES(id_programa)", nativeQuery = true)
+	@Query(value = "INSERT INTO graduados (anio, id_programa, id_persona) VALUES(?1,?2,?3) ON DUPLICATE KEY  UPDATE anio=VALUES(anio), id_programa=VALUES(id_programa), estado= true", nativeQuery = true)
 	public void updateOnlyGraduado(String anio, Long idPrograma, Long idPersona);
 
 }

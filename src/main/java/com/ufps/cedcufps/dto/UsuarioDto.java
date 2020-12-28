@@ -6,24 +6,29 @@ import java.util.Date;
 public class UsuarioDto {
 	
 	private Long id;
-	private Long tipoDocumento;
+	private Long idTipoDocumento;
+	private String tipoDocumento;
 	private String numeroDocumento;
 	private Date fechaExpedicionDocumento;
 	private String primerNombre;
 	private String segundoNombre;
 	private String primerApellido;
 	private String segundoApellido;
-	private Long genero;
-	private Long estadoCivil;
+	private Long idGenero;
+	private String genero;
+	private Long idEstadoCivil;
+	private String estadoCivil;
 	private Date fechaNacimiento;
 	private String idPaisNacimiento;
+	private String paisNacimiento;
 	private String idDepartamentoNacimiento;
+	private String deptoNacimiento;
 	private String idMunicipioNacimiento;
+	private String mpioNacimiento;
 	private String email;
 	private String direccion;
 	private String telefono;
-	private String codigo;
-	private Long programa;
+	
 	private String profesion;
 	private String empresa;
 	private boolean estudiante;
@@ -31,19 +36,33 @@ public class UsuarioDto {
 	private boolean administrativo;
 	private boolean graduado;
 	private boolean externo;
-	private Long programaGraduado;
+	private String codigoProgramaEstudiante;
+	private Long idProgramaEstudiante;
+	private String programaEstudiante;
+	private Long idProgramaGraduado;
+	private String programaGraduado;
 	private String anioGraduado;
-	private Long deptoAdscrito;
-	private boolean estadoDocente;
+	private Long idDeptoAdscrito;
+	private String deptoAdscrito;
 	private String codigoDocente;
 	private String dependencia;
 	private String cargo;
-	
-	
-	public Long getTipoDocumento() {
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
+	public Long getIdTipoDocumento() {
+		return idTipoDocumento;
+	}
+	public void setIdTipoDocumento(Long idTipoDocumento) {
+		this.idTipoDocumento = idTipoDocumento;
+	}
+	public String getTipoDocumento() {
 		return tipoDocumento;
 	}
-	public void setTipoDocumento(Long tipoDocumento) {
+	public void setTipoDocumento(String tipoDocumento) {
 		this.tipoDocumento = tipoDocumento;
 	}
 	public String getNumeroDocumento() {
@@ -82,16 +101,28 @@ public class UsuarioDto {
 	public void setSegundoApellido(String segundoApellido) {
 		this.segundoApellido = segundoApellido;
 	}
-	public Long getGenero() {
+	public Long getIdGenero() {
+		return idGenero;
+	}
+	public void setIdGenero(Long idGenero) {
+		this.idGenero = idGenero;
+	}
+	public String getGenero() {
 		return genero;
 	}
-	public void setGenero(Long genero) {
+	public void setGenero(String genero) {
 		this.genero = genero;
 	}
-	public Long getEstadoCivil() {
+	public Long getIdEstadoCivil() {
+		return idEstadoCivil;
+	}
+	public void setIdEstadoCivil(Long idEstadoCivil) {
+		this.idEstadoCivil = idEstadoCivil;
+	}
+	public String getEstadoCivil() {
 		return estadoCivil;
 	}
-	public void setEstadoCivil(Long estadoCivil) {
+	public void setEstadoCivil(String estadoCivil) {
 		this.estadoCivil = estadoCivil;
 	}
 	public Date getFechaNacimiento() {
@@ -106,17 +137,35 @@ public class UsuarioDto {
 	public void setIdPaisNacimiento(String idPaisNacimiento) {
 		this.idPaisNacimiento = idPaisNacimiento;
 	}
+	public String getPaisNacimiento() {
+		return paisNacimiento;
+	}
+	public void setPaisNacimiento(String paisNacimiento) {
+		this.paisNacimiento = paisNacimiento;
+	}
 	public String getIdDepartamentoNacimiento() {
 		return idDepartamentoNacimiento;
 	}
 	public void setIdDepartamentoNacimiento(String idDepartamentoNacimiento) {
 		this.idDepartamentoNacimiento = idDepartamentoNacimiento;
 	}
+	public String getDeptoNacimiento() {
+		return deptoNacimiento;
+	}
+	public void setDeptoNacimiento(String deptoNacimiento) {
+		this.deptoNacimiento = deptoNacimiento;
+	}
 	public String getIdMunicipioNacimiento() {
 		return idMunicipioNacimiento;
 	}
 	public void setIdMunicipioNacimiento(String idMunicipioNacimiento) {
 		this.idMunicipioNacimiento = idMunicipioNacimiento;
+	}
+	public String getMpioNacimiento() {
+		return mpioNacimiento;
+	}
+	public void setMpioNacimiento(String mpioNacimiento) {
+		this.mpioNacimiento = mpioNacimiento;
 	}
 	public String getEmail() {
 		return email;
@@ -136,61 +185,11 @@ public class UsuarioDto {
 	public void setTelefono(String telefono) {
 		this.telefono = telefono;
 	}
-	
-	public String getCodigo() {
-		return codigo;
-	}
-	public void setCodigo(String codigo) {
-		this.codigo = codigo;
-	}
-	public Long getPrograma() {
-		return programa;
-	}
-	public void setPrograma(Long programa) {
-		this.programa = programa;
-	}
 	public String getProfesion() {
 		return profesion;
 	}
 	public void setProfesion(String profesion) {
 		this.profesion = profesion;
-	}
-	
-	public Long getProgramaGraduado() {
-		return programaGraduado;
-	}
-	public void setProgramaGraduado(Long programaGraduado) {
-		this.programaGraduado = programaGraduado;
-	}
-	public String getAnioGraduado() {
-		return anioGraduado;
-	}
-	public void setAnioGraduado(String anioGraduado) {
-		this.anioGraduado = anioGraduado;
-	}
-	public Long getDeptoAdscrito() {
-		return deptoAdscrito;
-	}
-	public void setDeptoAdscrito(Long deptoAdscrito) {
-		this.deptoAdscrito = deptoAdscrito;
-	}
-	public String getCodigoDocente() {
-		return codigoDocente;
-	}
-	public void setCodigoDocente(String codigoDocente) {
-		this.codigoDocente = codigoDocente;
-	}
-	public String getDependencia() {
-		return dependencia;
-	}
-	public void setDependencia(String dependencia) {
-		this.dependencia = dependencia;
-	}
-	public String getCargo() {
-		return cargo;
-	}
-	public void setCargo(String cargo) {
-		this.cargo = cargo;
 	}
 	public String getEmpresa() {
 		return empresa;
@@ -198,8 +197,6 @@ public class UsuarioDto {
 	public void setEmpresa(String empresa) {
 		this.empresa = empresa;
 	}
-	
-	
 	public boolean isEstudiante() {
 		return estudiante;
 	}
@@ -230,18 +227,74 @@ public class UsuarioDto {
 	public void setExterno(boolean externo) {
 		this.externo = externo;
 	}
-	public Long getId() {
-		return id;
+	public String getCodigoProgramaEstudiante() {
+		return codigoProgramaEstudiante;
 	}
-	public void setId(Long id) {
-		this.id = id;
+	public void setCodigoProgramaEstudiante(String codigoProgramaEstudiante) {
+		this.codigoProgramaEstudiante = codigoProgramaEstudiante;
 	}
-	public boolean isEstadoDocente() {
-		return estadoDocente;
+	public Long getIdProgramaEstudiante() {
+		return idProgramaEstudiante;
 	}
-	public void setEstadoDocente(boolean estadoDocente) {
-		this.estadoDocente = estadoDocente;
+	public void setIdProgramaEstudiante(Long idProgramaEstudiante) {
+		this.idProgramaEstudiante = idProgramaEstudiante;
 	}
+	public String getProgramaEstudiante() {
+		return programaEstudiante;
+	}
+	public void setProgramaEstudiante(String programaEstudiante) {
+		this.programaEstudiante = programaEstudiante;
+	}
+	public Long getIdProgramaGraduado() {
+		return idProgramaGraduado;
+	}
+	public void setIdProgramaGraduado(Long idProgramaGraduado) {
+		this.idProgramaGraduado = idProgramaGraduado;
+	}
+	public String getProgramaGraduado() {
+		return programaGraduado;
+	}
+	public void setProgramaGraduado(String programaGraduado) {
+		this.programaGraduado = programaGraduado;
+	}
+	public String getAnioGraduado() {
+		return anioGraduado;
+	}
+	public void setAnioGraduado(String anioGraduado) {
+		this.anioGraduado = anioGraduado;
+	}
+	public Long getIdDeptoAdscrito() {
+		return idDeptoAdscrito;
+	}
+	public void setIdDeptoAdscrito(Long idDeptoAdscrito) {
+		this.idDeptoAdscrito = idDeptoAdscrito;
+	}
+	public String getDeptoAdscrito() {
+		return deptoAdscrito;
+	}
+	public void setDeptoAdscrito(String deptoAdscrito) {
+		this.deptoAdscrito = deptoAdscrito;
+	}
+	public String getCodigoDocente() {
+		return codigoDocente;
+	}
+	public void setCodigoDocente(String codigoDocente) {
+		this.codigoDocente = codigoDocente;
+	}
+	public String getDependencia() {
+		return dependencia;
+	}
+	public void setDependencia(String dependencia) {
+		this.dependencia = dependencia;
+	}
+	public String getCargo() {
+		return cargo;
+	}
+	public void setCargo(String cargo) {
+		this.cargo = cargo;
+	}
+	
+	
 	
 	
 	

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.google.gson.Gson;
 import com.ufps.cedcufps.modelos.InformeSnies;
 import com.ufps.cedcufps.modelos.Ponente;
 import com.ufps.cedcufps.modelos.Programa;
@@ -45,6 +46,50 @@ public class ReportesSniesRestController {
 		//informeSniesService.save(i);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
+	
+	@GetMapping(value = "/reportes-SNIES/dashboard/totalGeneralEduContinua")
+	public ResponseEntity<?> estadisticasConteoGeneralEduContinua(@RequestParam(name="fechaInicio", required=true) String fechaInicio, 
+			@RequestParam(name="fechaFin", required=true) String fechaFin, @RequestParam(name="idPrograma", required=false) String idPrograma) {
+		System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+		System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$444");
+		System.out.println(fechaInicio);
+		System.out.println(fechaFin);
+		
+		//i.setInformeCurso(informeSniesService.generarReporteSNIESFormatoCurso(fechaInicio, fechaFin));
+		//i.setInformeEducacionContinua(informeSniesService.generarReporteSNIESFormatoEducacionContinua(fechaInicio, fechaFin));
+		//informeSniesService.save(i);
+		return new ResponseEntity<>(informeSniesService.generarStatisticsConteoGeneralEduContinua(fechaInicio, fechaFin,idPrograma),HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/reportes-SNIES/dashboard/totalGeneralEduContinuaPersonas")
+	public ResponseEntity<?> estadisticasConteoGeneralEduContinuaPersonas(@RequestParam(name="fechaInicio", required=true) String fechaInicio, 
+			@RequestParam(name="fechaFin", required=true) String fechaFin, @RequestParam(name="idPrograma", required=false) String idPrograma) {
+		System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+		System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$444");
+		System.out.println(fechaInicio);
+		System.out.println(fechaFin);
+		
+		//i.setInformeCurso(informeSniesService.generarReporteSNIESFormatoCurso(fechaInicio, fechaFin));
+		//i.setInformeEducacionContinua(informeSniesService.generarReporteSNIESFormatoEducacionContinua(fechaInicio, fechaFin));
+		//informeSniesService.save(i);
+		return new ResponseEntity<>(informeSniesService.generarStatisticsConteoGeneralPersonas(fechaInicio, fechaFin, idPrograma),HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/reportes-SNIES/dashboard/totalGeneralEduContinuaGenero")
+	public ResponseEntity<?> estadisticasConteoGeneralEduContinuaGeneros(@RequestParam(name="fechaInicio", required=true) String fechaInicio, 
+			@RequestParam(name="fechaFin", required=true) String fechaFin, @RequestParam(name="idPrograma", required=false) String idPrograma) {
+		System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+		System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$444");
+		System.out.println(fechaInicio);
+		System.out.println(fechaFin);
+		
+		//i.setInformeCurso(informeSniesService.generarReporteSNIESFormatoCurso(fechaInicio, fechaFin));
+		//i.setInformeEducacionContinua(informeSniesService.generarReporteSNIESFormatoEducacionContinua(fechaInicio, fechaFin));
+		//informeSniesService.save(i);
+		return new ResponseEntity<>(informeSniesService.generarStatisticsConteoGeneralGenero(fechaInicio, fechaFin, idPrograma),HttpStatus.OK);
+	}
+	
+	
 	/*CREATE EVENT test_event_02
 ON SCHEDULE AT CURRENT_TIMESTAMP + INTERVAL 1 MINUTE
 ON COMPLETION PRESERVE

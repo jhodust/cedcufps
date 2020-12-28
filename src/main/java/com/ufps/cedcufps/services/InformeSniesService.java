@@ -2,6 +2,7 @@ package com.ufps.cedcufps.services;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -107,6 +108,33 @@ public class InformeSniesService implements IInformeSniesService {
 		String rutaInformeParticipantes=this.generarReporteSNIESFormatoParticipantesResponsable(fechaI, fechaF,idPrograma, String.valueOf(marcaTiempo));
 	
 		informeSniesDao.saveInformeSnies(fechaI, fechaF, rutaInformeCurso, rutaInformeEduContinua, rutaInformeParticipantes,idPrograma);
+	}
+
+
+	@Override
+	public List<Object[]> generarStatisticsConteoGeneralEduContinua(String fechaInicio, String fechaFin,
+			String idPrograma) {
+		
+			return this.reporteSniesCustomDao.dashboardConteoGeneral(fechaInicio, fechaFin, idPrograma);
+	
+	}
+
+
+	@Override
+	public List<Object[]> generarStatisticsConteoGeneralPersonas(String fechaInicio, String fechaFin, String idPrograma) {
+		// TODO Auto-generated method stub
+		
+			return this.reporteSniesCustomDao.dashboardConteoGeneralTipoPersonas(fechaInicio, fechaFin, idPrograma);
+		
+	}
+
+
+	@Override
+	public List<Object[]> generarStatisticsConteoGeneralGenero(String fechaInicio, String fechaFin, String idPrograma) {
+		// TODO Auto-generated method stub
+			
+			return this.reporteSniesCustomDao.dashboardConteoGeneralGenero(fechaInicio, fechaFin, idPrograma);
+		
 	}
 	
 }

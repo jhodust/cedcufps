@@ -14,5 +14,9 @@ public interface IInformeSniesService {
 	
 	
 	public void generarReporteSNIES(String fechaInicio, String fechaFin);
+	public List<Object[]> generarStatisticsConteoGeneralEduContinua(String fechaInicio, String fechaFin, String idPrograma);
+	public List<Object[]> generarStatisticsConteoGeneralPersonas(String fechaInicio, String fechaFin, String idPrograma);
+	public List<Object[]> generarStatisticsConteoGeneralGenero(String fechaInicio, String fechaFin, String idPrograma);
+	
 	
 }

@@ -111,29 +111,29 @@ insert into programas(id,codigo,programa,id_facultad,id_director) values(8,'134'
 
 
 
-insert into estudiantes (codigo,id_persona,id_programa) values ('1151241',1,2);
-insert into estudiantes (codigo,id_persona,id_programa) values ('1151229',2,2);
-insert into estudiantes (codigo,id_persona,id_programa) values ('1644552',3,3);
-insert into estudiantes (codigo,id_persona,id_programa) values ('1501956',4,4);
-insert into estudiantes (codigo,id_persona,id_programa) values ('1268465',5,5);
-insert into estudiantes (codigo,id_persona,id_programa) values ('1222151',6,6);
-insert into estudiantes (codigo,id_persona,id_programa) values ('1801845',7,7);
-insert into estudiantes (codigo,id_persona,id_programa) values ('1344865',8,8);
-insert into estudiantes (codigo,id_persona,id_programa) values ('1648941',11,3);
-insert into estudiantes (codigo,id_persona,id_programa) values ('1506542',12,4);
-insert into estudiantes (codigo,id_persona,id_programa) values ('1268796',13,5);
-insert into estudiantes (codigo,id_persona,id_programa) values ('1223214',14,6);
-insert into estudiantes (codigo,id_persona,id_programa) values ('1348978',16,8);
-insert into estudiantes (codigo,id_persona,id_programa) values ('1111562',17,1);
-insert into estudiantes (codigo,id_persona,id_programa) values ('1643546',19,3);
-insert into estudiantes (codigo,id_persona,id_programa) values ('1508861',20,4);
+insert into estudiantes (codigo,id_persona,id_programa,estado) values ('1151241',1,2,1);
+insert into estudiantes (codigo,id_persona,id_programa,estado) values ('1151229',2,2,1);
+insert into estudiantes (codigo,id_persona,id_programa,estado) values ('1644552',3,3,1);
+insert into estudiantes (codigo,id_persona,id_programa,estado) values ('1501956',4,4,1);
+insert into estudiantes (codigo,id_persona,id_programa,estado) values ('1268465',5,5,1);
+insert into estudiantes (codigo,id_persona,id_programa,estado) values ('1222151',6,6,1);
+insert into estudiantes (codigo,id_persona,id_programa,estado) values ('1801845',7,7,1);
+insert into estudiantes (codigo,id_persona,id_programa,estado) values ('1344865',8,8,1);
+insert into estudiantes (codigo,id_persona,id_programa,estado) values ('1648941',11,3,1);
+insert into estudiantes (codigo,id_persona,id_programa,estado) values ('1506542',12,4,1);
+insert into estudiantes (codigo,id_persona,id_programa,estado) values ('1268796',13,5,1);
+insert into estudiantes (codigo,id_persona,id_programa,estado) values ('1223214',14,6,1);
+insert into estudiantes (codigo,id_persona,id_programa,estado) values ('1348978',16,8,1);
+insert into estudiantes (codigo,id_persona,id_programa,estado) values ('1111562',17,1,1);
+insert into estudiantes (codigo,id_persona,id_programa,estado) values ('1643546',19,3,1);
+insert into estudiantes (codigo,id_persona,id_programa,estado) values ('1508861',20,4,1);
 
-insert into graduados (anio,id_persona,id_programa) values ('2015',10,2);
+insert into graduados (anio,id_persona,id_programa,estado) values ('2015',10,2,1);
 
-insert into administrativos (id_persona,cargo) values (33,'secretaria');
-insert into administrativos (id_persona,cargo) values (34,'vicerector de extension');
+insert into administrativos (id_persona,cargo,estado) values (33,'secretaria',1);
+insert into administrativos (id_persona,cargo,estado) values (34,'vicerector de extension',1);
 
-insert into externos (id_persona,profesion) values (35,'ing de sistemas');
+insert into externos (id_persona,profesion,estado) values (35,'ing de sistemas',1);
 
 insert into roles (id, authority) values (1,'ROLE_SUPERADMIN');
 insert into roles (id, authority) values (2,'ROLE_MANAECCU');

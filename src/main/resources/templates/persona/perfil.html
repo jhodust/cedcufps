@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layouts/layout :: head">
+	<meta charset="UTF-8"/>
+</head>
+<body>
+  <!-- Application container -->
+  <div class="container-fluid container-application">
+    <!-- Content -->
+    <div class="main-content position-relative">
+      <!-- Main nav -->
+      <div th:replace="layouts/logosHead :: logosHead"></div>
+      <nav th:replace="layouts/navbar :: navbar"></nav>
+      
+      <!-- Page content -->
+      <div class="page-content col-lg-9 center">
+       <!-- Project cards -->
+       <nav aria-label="breadcrumb">
+		  <ol class="breadcrumb breadcrumb-links">
+		    <li class="breadcrumb-item"><a class="red-ufps-breadcrumb" th:href="@{/}">Inicio</a></li>
+		  </ol>
+		</nav>
+        <!-- Page title -->
+       	<div class="contenido ml-3 mr-3 pb-2" >
+        
+        <div class="page-title">
+        	<div class="row" style="position:relative">
+        		<div class="col-md-6 d-flex align-items-center justify-content-between justify-content-md-start mb-3 mb-md-0">
+        			<h5 class="h4 d-inline-block font-weight-400 mb-0 text-dark" ><strong>Mi Perfil </strong></h5>
+        		</div>
+        		<div style="position: absolute; right: 0px; ">
+        			<a  th:href="@{/perfil/editar}" class="btn btn-sm btn-primary"><i class="far fa-edit"></i> Editar Datos</a>
+        		</div>
+        	</div>
+        </div>
+        <hr/>
+        <div th:replace="loader :: loader"></div>
+        <div class="card">
+        	<div class="card-body">
+        		<div class="row col-md-12">
+        	<div class="col-md-7 table-responsive">
+        	<h5>Información Personal</h5>
+        		<table class="table align-items-center">
+        			<tbody>
+        				<tr>
+        					<td class="td2"><strong>Tipo de Documento</strong></td>
+        					<td class="td2" th:text="${persona.tipoDocumento}"></td>
+        				</tr>
+        				<tr>
+        					<td class="td2"><strong>Número de Documento</strong></td>
+        					<td class="td2" th:text="${persona.numeroDocumento}"></td>
+        				</tr>
+        				<tr>
+        					<td class="td2"><strong>Fecha Expedición Documento</strong></td>
+        					<td class="td2" th:text="${#dates.format(persona.fechaExpedicionDocumento, 'dd/MM/yyyy')}"></td>
+        				</tr>
+        				<tr>
+        					<td class="td2"><strong>Primer Nombre</strong></td>
+        					<td class="td2" th:text="${persona.primerNombre}"></td>
+        				</tr>
+        				<tr>
+        					<td class="td2"><strong>Segundo Nombre</strong></td>
+        					<td class="td2" th:text="${persona.segundoNombre}"></td>
+        				</tr>
+        				<tr>
+        					<td class="td2"><strong>Primer Apellido</strong></td>
+        					<td class="td2" th:text="${persona.primerApellido}"></td>
+        				</tr>
+        				<tr>
+        					<td class="td2"><strong>Segundo Apellido</strong></td>
+        					<td class="td2" th:text="${persona.segundoApellido}"></td>
+        				</tr>
+        				<tr>
+        					<td class="td2"><strong>Género</strong></td>
+        					<td class="td2" th:text="${persona.genero}"></td>
+        				</tr>
+        				<tr>
+        					<td class="td2"><strong>Estado Civil</strong></td>
+        					<td class="td2" th:text="${persona.estadoCivil}">Soltero(a)</td>
+        				</tr>
+        				<tr>
+        					<td class="td2"><strong>Fecha Nacimiento</strong></td>
+        					<td class="td2" th:text="${#dates.format(persona.fechaNacimiento, 'dd/MM/yyyy')}">03/01/1997</td>
+        				</tr>
+        				<tr>
+        					<td class="td2"><strong>Pais Nacimiento</strong></td>
+        					<td class="td2" th:text="${persona.paisNacimiento}"></td>
+        				</tr>
+        				<tr>
+        					<td class="td2"><strong>Departamento Nacimiento</strong></td>
+        					<td class="td2" th:text="${persona.deptoNacimiento}"></td>
+        				</tr>
+        				<tr>
+        					<td class="td2"><strong>Municipio Nacimiento</strong></td>
+        					<td class="td2" th:text="${persona.mpioNacimiento}"></td>
+        				</tr>
+        			</tbody>
+        		</table>
+        	</div>
+        	<div class="col-md-5" style="padding-bottom: 120px; position:relative; align-items: center; overflow:hidden; display:block;">
+        		<div class="mt-3 col-md-12" style="text-align:center;">
+        			<img alt="Image placeholder"  th:src="@{${photoUser}}" style="height:50%; width:50%"  >
+        		</div>
+        		<br>
+        		<div style="position: absolute; bottom: 0px; vertical-align:left; ">
+        		<h5>Información de Contacto</h5>
+        		<table class="table align-items-center col-md-12"  >
+        			<tbody>
+        				<tr>
+        					<td class="td2"><strong>Email</strong></td>
+        					<td class="td2" th:text="${persona.email}"></td>
+        				</tr>
+        				<tr>
+        					<td class="td2"><strong>Telefono</strong></td>
+        					<td class="td2" th:text="${persona.telefono}"></td>
+        				</tr>
+        				<tr>
+        					<td class="td2"><strong>Dirección</strong></td>
+        					<td class="td2" th:text="${persona.direccion}"></td>
+        				</tr>
+        			</tbody>
+        		</table>
+        		</div>
+        	</div>
+        </div>
+        <hr style="border-top:1px solid #c6c7cc">
+        <div class="row">
+        	<div class="card col-md-6" th:if="${persona.isEstudiante()}">
+        		<div class="card-body">
+        		<h5>Información Académica Estudiante</h5>
+        			<table class="table align-items-center col-md-12"  >
+        			<tbody>
+        				<tr>
+        					<td class="td2"><strong>Programa Académico</strong></td>
+        					<td class="td2" th:text="${persona.programaEstudiante}"></td>
+        				</tr>
+        				<tr>
+        					<td class="td2"><strong>Código</strong></td>
+        					<td class="td2" th:text="${persona.codigoProgramaEstudiante}"></td>
+        				</tr>
+        			</tbody>
+        		</table>
+        		</div>
+        	</div>
+        	<div class="card col-md-6" th:if="${persona.isDocente()}">
+        		<div class="card-body">
+        		<h5>Información Académica Docente</h5>
+        			<table class="table align-items-center col-md-12"  >
+        			<tbody>
+        				<tr>
+        					<td class="td2"><strong>Departamento Académico</strong></td>
+        					<td class="td2" th:text="${persona.deptoAdscrito}"></td>
+        				</tr>
+        				<tr>
+        					<td class="td2"><strong>Código</strong></td>
+        					<td class="td2" th:text="${persona.codigoDocente}"></td>
+        				</tr>
+        			</tbody>
+        		</table>
+        		</div>
+        	</div>
+        	<div class="card col-md-6" th:if="${persona.isAdministrativo()}">
+        		<div class="card-body">
+        		<h5>Información Laboral-Administrativa</h5>
+        			<table class="table align-items-center col-md-12"  >
+        			<tbody>
+        				<tr>
+        					<td class="td2"><strong>Dependencia</strong></td>
+        					<td class="td2" th:text="${persona.dependencia}"></td>
+        				</tr>
+        				<tr>
+        					<td class="td2"><strong>Cargo</strong></td>
+        					<td class="td2" th:text="${persona.cargo}"></td>
+        				</tr>
+        			</tbody>
+        		</table>
+        		</div>
+        	</div>
+        	<div class="card col-md-6" th:if="${persona.isGraduado()}">
+        		<div class="card-body">
+        		<h5>Información Académica Graduado</h5>
+        			<table class="table align-items-center col-md-12"  >
+        			<tbody>
+        				<tr>
+        					<td class="td2"><strong>Programa Académico</strong></td>
+        					<td class="td2" th:text="${persona.programaGraduado}"></td>
+        				</tr>
+        				<tr>
+        					<td class="td2"><strong>Año</strong></td>
+        					<td class="td2" th:text="${persona.anioGraduado}"></td>
+        				</tr>
+        			</tbody>
+        		</table>
+        		</div>
+        	</div>
+        	<div class="card col-md-6" th:if="${persona.isExterno()}">
+        		<div class="card-body">
+        		<h5>Información Laboral</h5>
+        			<table class="table align-items-center col-md-12"  >
+        			<tbody>
+        				<tr>
+        					<td class="td2"><strong>Profesión</strong></td>
+        					<td class="td2" th:text="${persona.profesion}"></td>
+        				</tr>
+        				<tr>
+        					<td class="td2"><strong>Empresa</strong></td>
+        					<td class="td2" th:text="${persona.empresa}"></td>
+        				</tr>
+        			</tbody>
+        		</table>
+        		</div>
+        	</div>
+        	
+        </div>
+        	</div>
+        
+        </div>
+						
+					
+		</div>
+	  </div>
+    
+    </div>
+    <div th:replace="layouts/footer :: footer"></div>
+    
+  </div>
+  <!-- Scripts -->
+  <!-- Core JS - includes jquery, bootstrap, popper, in-view and sticky-kit -->
+  <div th:replace="layouts/layout :: scripts"></div>
+</body>
+
+</html>

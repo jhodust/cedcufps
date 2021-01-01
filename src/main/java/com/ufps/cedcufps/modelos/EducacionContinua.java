@@ -78,17 +78,11 @@ public class EducacionContinua implements Serializable {
 	private String duracion;
 	
 	
-	private String requisitos;
-	
-	@Column(name = "contenido_general")
-	private String contenidoGeneral;
-	private String objetivo;
 	
 	
 	@Column(name = "cant_max_participantes")
 	private String cantMaxParticipantes;
 	
-	private String resumen;
 	
 	@Column(name = "costo_inscripcion")
 	private String costoInscripcion;
@@ -148,6 +142,9 @@ public class EducacionContinua implements Serializable {
 	@NotNull
 	@Column(name = "id_acceso")
 	private String idAcceso;
+	
+	@Column(columnDefinition = "LONGTEXT",name = "info_adicional")
+	private String infoAdicional;
 	
 	public EducacionContinua() {
 		this.jornadas=new ArrayList<Jornada>();
@@ -212,30 +209,6 @@ public class EducacionContinua implements Serializable {
 		this.tipoBeneficiarios = tipoBeneficiarios;
 	}
 
-	public String getRequisitos() {
-		return requisitos;
-	}
-
-	public void setRequisitos(String requisitos) {
-		this.requisitos = requisitos;
-	}
-
-	public String getContenidoGeneral() {
-		return contenidoGeneral;
-	}
-
-	public void setContenidoGeneral(String contenidoGeneral) {
-		this.contenidoGeneral = contenidoGeneral;
-	}
-
-	public String getObjetivo() {
-		return objetivo;
-	}
-
-	public void setObjetivo(String objetivo) {
-		this.objetivo = objetivo;
-	}
-
 	public String getCantMaxParticipantes() {
 		return cantMaxParticipantes;
 	}
@@ -243,16 +216,6 @@ public class EducacionContinua implements Serializable {
 	public void setCantMaxParticipantes(String cantMaxParticipantes) {
 		this.cantMaxParticipantes = cantMaxParticipantes;
 	}
-
-	public String getResumen() {
-		return resumen;
-	}
-
-	public void setResumen(String resumen) {
-		this.resumen = resumen;
-	}
-
-	
 
 	public String getCostoInscripcion() {
 		return costoInscripcion;
@@ -393,6 +356,14 @@ public class EducacionContinua implements Serializable {
 
 	public void setIdAcceso(String idAcceso) {
 		this.idAcceso = idAcceso;
+	}
+
+	public String getInfoAdicional() {
+		return infoAdicional;
+	}
+
+	public void setInfoAdicional(String infoAdicional) {
+		this.infoAdicional = infoAdicional;
 	}
 	
 	

@@ -79,8 +79,8 @@ public interface IEducacionContinuaService {
 	public void saveEducacionContinua(MultipartFile file,  String id,
 			 String nombre,  String fechaInicio,  String fechaFin,  String duracion, String cantMaxParticipantes,
 			 String fechaLimInscripcion,  String costoInscripcion,  String lugar,
-			 String costoEducacionContinua,  String requisitos,  String objetivo,
-			 String porcentajeAsistencia,  String resumen,  String contenidoGeneral,
+			 String costoEducacionContinua, 
+			 String porcentajeAsistencia,  String infoAdicional,
 			 String idTipoEduContinua,  String tipoEduContinua,  String idProgramaResponsable,
 			 String idDocenteResponsable,  String idClasificacionCine, String consecutivo, String idTipoBeneficiarios);
 	

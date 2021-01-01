@@ -17,11 +17,8 @@ public class EducacionContinuaWebDto {
 	private String imagen;
 	private String lugar;
 	private String duracion;
-	private String requisitos;
-	private String objetivo;
-	private String contenidoGral;
 	private String cantMaxParticipantes;
-	private String resumen;
+	private String infoAdicional;
 	private String costoInscripcion;
 	private Long idTipoEduContinua;
 	private String tipoEduContinua;
@@ -101,31 +98,19 @@ public class EducacionContinuaWebDto {
 	public void setDuracion(String duracion) {
 		this.duracion = duracion;
 	}
-	public String getRequisitos() {
-		return requisitos;
-	}
-	public void setRequisitos(String requisitos) {
-		this.requisitos = requisitos;
-	}
-	public String getObjetivo() {
-		return objetivo;
-	}
-	public void setObjetivo(String objetivo) {
-		this.objetivo = objetivo;
-	}
+	
 	public String getCantMaxParticipantes() {
 		return cantMaxParticipantes;
 	}
 	public void setCantMaxParticipantes(String cantMaxParticipantes) {
 		this.cantMaxParticipantes = cantMaxParticipantes;
 	}
-	public String getResumen() {
-		return resumen;
+	public String getInfoAdicional() {
+		return infoAdicional;
 	}
-	public void setResumen(String resumen) {
-		this.resumen = resumen;
+	public void setInfoAdicional(String infoAdicional) {
+		this.infoAdicional = infoAdicional;
 	}
-	
 	public String getCostoInscripcion() {
 		return costoInscripcion;
 	}
@@ -205,12 +190,6 @@ public class EducacionContinuaWebDto {
 	}
 	public void setCantidadInscritos(int cantidadInscritos) {
 		this.cantidadInscritos = cantidadInscritos;
-	}
-	public String getContenidoGral() {
-		return contenidoGral;
-	}
-	public void setContenidoGral(String contenidoGral) {
-		this.contenidoGral = contenidoGral;
 	}
 	public List<PonenteDto> getPonentes() {
 		return ponentes;

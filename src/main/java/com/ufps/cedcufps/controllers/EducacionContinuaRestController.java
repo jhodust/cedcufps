@@ -38,15 +38,15 @@ public class EducacionContinuaRestController {
 			@RequestParam String id, @RequestParam String nombre, @RequestParam String fechaInicio, 
 			@RequestParam String fechaFin, @RequestParam String duracion, @RequestParam(required = false) String cantMaxParticipantes,
 			@RequestParam String fechaLimInscripcion, @RequestParam(required = false) String costoInscripcion, @RequestParam String lugar,
-			@RequestParam String costoEducacionContinua, @RequestParam String requisitos, @RequestParam String objetivo,
-			@RequestParam String porcentajeAsistencia, @RequestParam String resumen, @RequestParam String contenidoGeneral,
+			@RequestParam String costoEducacionContinua, @RequestParam String porcentajeAsistencia, 
+			@RequestParam String infoAdicional,
 			@RequestParam String idTipoEduContinua, @RequestParam String tipoEduContinua, @RequestParam String idProgramaResponsable,
 			@RequestParam String idDocenteResponsable, @RequestParam String idClasificacionCine, @RequestParam(required = false) String consecutivo,
 			@RequestParam String idTipoBeneficiarios) {
 		
 		educacionContinuaService.saveEducacionContinua(file, id, nombre, fechaInicio, fechaFin, duracion, cantMaxParticipantes,
-				fechaLimInscripcion, costoInscripcion, lugar, costoEducacionContinua, requisitos, objetivo, 
-				porcentajeAsistencia, resumen, contenidoGeneral, idTipoEduContinua, tipoEduContinua, idProgramaResponsable, 
+				fechaLimInscripcion, costoInscripcion, lugar, costoEducacionContinua, 
+				porcentajeAsistencia, infoAdicional, idTipoEduContinua, tipoEduContinua, idProgramaResponsable, 
 				idDocenteResponsable, idClasificacionCine, consecutivo, idTipoBeneficiarios);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}

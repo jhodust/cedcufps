@@ -376,15 +376,15 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 	@Override
 	public void saveEducacionContinua(MultipartFile file, String id, String nombre, String fechaInicio, String fechaFin,
 			String duracion, String cantMaxParticipantes, String fechaLimInscripcion, String costoInscripcion, String lugar,
-			String costoEducacionContinua, String requisitos, String objetivo, String porcentajeAsistencia,
-			String resumen, String contenidoGeneral, String idTipoEduContinua, String tipoEduContinua,
+			String costoEducacionContinua, String porcentajeAsistencia,
+			String infoAdicional,  String idTipoEduContinua, String tipoEduContinua,
 			String idProgramaResponsable, String idDocenteResponsable, String idClasificacionCine, String consecutivo,
 			String idTipoBeneficiarios) {
 		System.out.println("tipos beneficiarios");
 		System.out.println(idTipoBeneficiarios);
 		EducacionContinuaWebDto dto = this.convertEducacionContinuaToDto(id, nombre, fechaInicio, fechaFin, 
 				duracion, cantMaxParticipantes, fechaLimInscripcion, costoInscripcion, lugar, costoEducacionContinua, 
-				requisitos, objetivo, porcentajeAsistencia, resumen, contenidoGeneral, idTipoEduContinua, tipoEduContinua,
+				 porcentajeAsistencia, infoAdicional, idTipoEduContinua, tipoEduContinua,
 				idProgramaResponsable, idDocenteResponsable, idClasificacionCine, consecutivo, idTipoBeneficiarios.split(","));
 		
 		if(this.validateAsociacionesEduContinua(dto)) {
@@ -466,8 +466,8 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 	
 	public EducacionContinuaWebDto convertEducacionContinuaToDto(String id, String nombre, String fechaInicio, String fechaFin,
 			String duracion, String cantMaxParticipantes, String fechaLimInscripcion, String costoInscripcion, String lugar,
-			String costoEducacionContinua, String requisitos, String objetivo, String porcentajeAsistencia,
-			String resumen, String contenidoGeneral, String idTipoEduContinua, String tipoEduContinua,
+			String costoEducacionContinua, String porcentajeAsistencia,
+			String infoAdicional,  String idTipoEduContinua, String tipoEduContinua,
 			String idProgramaResponsable, String idDocenteResponsable, String idClasificacionCine, String consecutivo,
 			String[] idTipoBeneficiarios) {
 		Date fechaInicioFormat = null;
@@ -497,8 +497,8 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 			System.out.println(idTipoEduContinua);
 		}
 		return educacionContinuaMapper.convertInfoToEduContinuaDto(id, nombre, fechaInicioFormat, 
-				fechaFinFormat, duracion, cantMaxParticipantes, fechaLimiteInscripcionFormat, costoInscripcion, lugar, costoEducacionContinua, requisitos, objetivo, 
-				porcentajeAsistencia, resumen, contenidoGeneral, idTipoEduContinua, tipoEduContinua, idProgramaResponsable,
+				fechaFinFormat, duracion, cantMaxParticipantes, fechaLimiteInscripcionFormat, costoInscripcion, lugar, costoEducacionContinua, 
+				porcentajeAsistencia, infoAdicional, idTipoEduContinua, tipoEduContinua, idProgramaResponsable,
 				idDocenteResponsable, idClasificacionCine, consecutivo, idTipoBeneficiarios);
 		
 		

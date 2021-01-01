@@ -24,7 +24,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.3.0/croppie.min.css" id="stylesheet">
   <link th:href="@{/plantilla/assets/css/toastr.min.css}" rel="stylesheet" />
   <link th:href="@{/css/custom.css}" rel="stylesheet" />
-  
+  <link th:href="@{/plantilla/summernote/summernote-lite.min.css}" rel="stylesheet" type="text/css" />
 <style>
 body{
 	background-color: #2a2a2a;
@@ -121,7 +121,10 @@ hr{
   <script th:src="@{/js/validateInput.js}" type="text/javascript"></script>
   
   <script type="text/javascript" th:src="@{/plantilla/assets/js/charts.js}"></script>
-  <script type="text/javascript">
+  
+  <script th:src="@{/plantilla/summernote/summernote-lite.min.js}"></script>
+  <script th:src="@{/plantilla/summernote/lang/summernote-es-ES.min.js}"></script>
+   <script type="text/javascript">
   $(document).ready( function () {
 	    $('#myTable').DataTable( {
 	        "scrollX": true,
@@ -135,6 +138,11 @@ hr{
 	            "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
 	        },
 	    } );
+	    
+	    $('#infoAdicionalEdC').summernote({
+	    	  height: 250,                 // set editor height
+	    	  lang: 'es-ES' // default: 'en-US'
+	    	});
 	    
 	   
 	} );

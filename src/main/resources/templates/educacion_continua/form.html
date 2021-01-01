@@ -341,49 +341,14 @@
 										<div class="row">
 											<div class="col-md-12">
 												<div class="form-group">
-													<label class="form-control-label">Requisitos</label> 
+													<label class="form-control-label">Detalles</label> 
 													<textarea class="form-control" data-toggle="autosize" 
-													placeholder="Ingrese los requisitos del evento..." rows="1"  id="requisitosEdc"
-													th:text="${educacionContinua.requisitos}"></textarea>
+													placeholder="Ingrese la información.." rows="50"  id="infoAdicionalEdC"
+													> [(${educacionContinua.infoAdicional})] </textarea>
 													<small class="form-text text-danger"><strong></strong></small>
 												</div>
 											</div>
 										</div>
-										<div class="row">
-											<div class="col-md-12">
-												<div class="form-group">
-													<label class="form-control-label">Objetivo</label> 
-													<textarea class="form-control" data-toggle="autosize" id="objetivoEdc"
-													placeholder="Ingrese el objetivo del evento..." rows="1" 
-													th:text="${educacionContinua.objetivo}"></textarea>
-													<small class="form-text text-danger"><strong></strong></small>
-												</div>
-											</div>
-										</div>
-										<div class="row">
-											<div class="col-md-12">
-												<div class="form-group">
-													<label class="form-control-label">Contenido General</label> 
-													<textarea class="form-control" data-toggle="autosize" 
-													placeholder="Ingrese el contenido general del evento" rows="1"  id="contenidoGeneralEdc"
-													th:text="${educacionContinua.contenidoGral}"></textarea>
-													<small class="form-text text-danger"><strong></strong></small>
-												</div>
-											</div>
-										</div>
-										
-										<div class="row">
-											<div class="col-md-12">
-												<div class="form-group">
-													<label class="form-control-label">Resumen</label> 
-													<textarea class="form-control" data-toggle="autosize" 
-													placeholder="Ingrese un resumen del evento..." rows="1" id="resumenEdc"
-													th:text="${educacionContinua.resumen}"></textarea>
-													<small class="form-text text-danger"><strong></strong></small>
-												</div>
-											</div>
-										</div>
-									
 										
 										<!-- Save changes buttons -->
 										<a th:href="@{/educacion-continua}" type="button" data-dismiss="modal" class="btn btn-sm btn-red-ufps"><i class="fas fa-times"></i> Cancelar</a>
@@ -409,6 +374,9 @@
   <div th:replace="layouts/layout :: scripts"></div>
   <script th:src="@{/js/educacionContinua.js}" type="text/javascript"></script>
   <script th:src="@{/js/validacionEducacionContinua.js}" type="text/javascript"></script>
+  <script>
+  var idEduContinua=0;
+  </script>
 </body>
 
 </html>

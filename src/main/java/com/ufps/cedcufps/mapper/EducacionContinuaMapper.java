@@ -275,9 +275,8 @@ public class EducacionContinuaMapper implements IEducacionContinuaMapper {
 
 	@Override
 	public EducacionContinuaWebDto convertInfoToEduContinuaDto(String id, String nombre, Date fechaInicio,
-			Date fechaFin, String duracion, String cantMaxParticipantes, Date fechaLimInscripcion, String costoInscripcion, String lugar,
-			String costoEducacionContinua, String requisitos, String objetivo, String porcentajeAsistencia,
-			String resumen, String contenidoGeneral, String idTipoEduContinua, String tipoEduContinua,
+			Date fechaFin, String duracion, String cantMaxParticipantes, Date fechaLimInscripcion, String costoInscripcion, 
+			String lugar, String costoEducacionContinua, String porcentajeAsistencia, String infoAdicional, String idTipoEduContinua, String tipoEduContinua,
 			String idProgramaResponsable, String idDocenteResponsable, String idClasificacionCine, String consecutivo,
 			String[] idTipoBeneficiarios) {
 		// TODO Auto-generated method stub
@@ -290,8 +289,6 @@ public class EducacionContinuaMapper implements IEducacionContinuaMapper {
 		dto.setDuracion(duracion);
 		dto.setCostoInscripcion(costoInscripcion);
 		dto.setLugar(lugar);
-		dto.setResumen(resumen);
-		dto.setContenidoGral(contenidoGeneral);
 		dto.setIdTipoEduContinua(Long.parseLong(idTipoEduContinua));
 		dto.setTipoEduContinua(tipoEduContinua);
 		dto.setIdProgramaResp(Long.parseLong(idProgramaResponsable));
@@ -300,8 +297,7 @@ public class EducacionContinuaMapper implements IEducacionContinuaMapper {
 		dto.setCantMaxParticipantes(cantMaxParticipantes);
 		dto.setPorcentajeAsistencia(porcentajeAsistencia);
 		dto.setCostoEducacionContinua(costoEducacionContinua);
-		dto.setObjetivo(objetivo);
-		dto.setRequisitos(requisitos);
+		dto.setInfoAdicional(infoAdicional);
 		dto.setConsecutivo(consecutivo);
 		List<TipoBeneficiarioDto> list = new ArrayList<TipoBeneficiarioDto>();
 		for(String a:idTipoBeneficiarios) {
@@ -330,10 +326,7 @@ public class EducacionContinuaMapper implements IEducacionContinuaMapper {
 		eduContinuaDto.setLugar(e.getLugar());
 		eduContinuaDto.setDuracion(e.getDuracion());
 		eduContinuaDto.setImagen(e.getImagen());
-		eduContinuaDto.setContenidoGral(e.getContenidoGeneral());
-		eduContinuaDto.setObjetivo(e.getObjetivo());
-		eduContinuaDto.setRequisitos(e.getRequisitos());
-		eduContinuaDto.setResumen(e.getResumen());
+		eduContinuaDto.setInfoAdicional(e.getInfoAdicional());
 		eduContinuaDto.setEstado(e.getEstado());
 		eduContinuaDto.setIdTipoEduContinua(e.getTipoEduContinua().getId());
 		eduContinuaDto.setTipoEduContinua(e.getTipoEduContinua().getTipoEduContinua());

@@ -200,7 +200,7 @@ function validDuracion(horas){
 		}
 	
 }
-var idEduContinua=0;
+
 var nombre;
 var fechaInicio;
 var fechaFin;
@@ -266,16 +266,13 @@ function ajaxSaveEducacionContinua(){
 	  var costoInscripcion=$('#costoInscripcionEdc').val();
 	  var lugar=$('#lugarEdc').val();
 	  var costoEducacionContinua=$('#costoTotalEdc').val();
-	  var requisitos=$('#requisitosEdc').val();
-	  var objetivo=$('#objetivoEdc').val();
 	  var porcentajeAsistencia=$('#porcentajeAsistenciaEdc').val();
-	  var resumen=$('#resumenEdc').val();
-	  var contenidoGeneral=$('#contenidoGeneralEdc').val();
 	  var idTipoEduContinua=$('#selectTipoContinua').select2('data')[0].id;
 	  var tipoEduContinua=$('#selectTipoContinua').select2('data')[0].text;
 	  var idProgramaResponsable=$('#programaResponsable').val();
 	  var idDocenteResponsable=$('#docenteResponsable').val();
 	  var idClasificacionCine=$('#selectClasificacionCINE').val();
+	  var infoAdicional=$('#infoAdicionalEdC').val();
 	  console.log(nombre=="" );
 	  console.log(fechaInicio=="");
 	  console.log( fechaFin=="");
@@ -348,6 +345,8 @@ function ajaxSaveEducacionContinua(){
 	  var imagen = $('#inputImagenEvento')[0].files;
 	  console.log(imagen[0]);
 	  var formData = new FormData();
+	  console.log("idddddddddddddddddddddd");
+	  console.log(idEduContinua);
 	  formData.append('imagen',imagen[0]);
 	  formData.append('id',idEduContinua);
 	  formData.append('nombre',nombre);
@@ -365,22 +364,19 @@ function ajaxSaveEducacionContinua(){
 	  
 	  formData.append('lugar',lugar);
 	  formData.append('costoEducacionContinua',costoEducacionContinua);
-	  formData.append('requisitos',requisitos);
-	  formData.append('objetivo',objetivo);
 	  formData.append('porcentajeAsistencia',porcentajeAsistencia);
-	  formData.append('resumen',resumen);
-	  formData.append('contenidoGeneral',contenidoGeneral);
 	  formData.append('idTipoEduContinua',idTipoEduContinua);
 	  formData.append('tipoEduContinua',tipoEduContinua);
 	  formData.append('idProgramaResponsable',idProgramaResponsable);
 	  formData.append('idDocenteResponsable',idDocenteResponsable);
 	  formData.append('idClasificacionCine',idClasificacionCine);
 	  formData.append('idTipoBeneficiarios',idTipoBeneficiarios);
+	  formData.append('infoAdicional',infoAdicional);
 	  if(consecutivo != undefined){
 		  formData.append('consecutivo',consecutivo);
 	  }
 	  
-	  
+	  console.log("analizando formData");
 	  console.log(formData);
  $.ajax({
 		headers: {"X-CSRF-TOKEN": token},
@@ -402,7 +398,6 @@ function ajaxSaveEducacionContinua(){
 		},
 		error: function(err) {
 			console.log(err);
-			boton.disabled=false;
 			hideLoader();
 			if(err.responseJSON.length >0){
 				toastr.error('No se pudo procesar la solicitud...', 'Error!');

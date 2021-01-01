@@ -28,9 +28,8 @@ public interface IEducacionContinuaMapper {
 	public EducacionContinuaWebDto convertEducacionContinuaToEduContinuaWebDto(EducacionContinua e);
 	public List<EducacionContinuaWebDto> convertListEducacionContinuaToListEduContinuaWebDto(List<EducacionContinua> educacionesContinuas);
 	public EducacionContinuaWebDto convertInfoToEduContinuaDto(String id, String nombre, Date fechaInicio,
-			Date fechaFin, String duracion, String cantMaxParticipantes, Date fechaLimInscripcion, String costoInscripcion, String lugar,
-			String costoEducacionContinua, String requisitos, String objetivo, String porcentajeAsistencia,
-			String resumen, String contenidoGeneral, String idTipoEduContinua, String tipoEduContinua,
+			Date fechaFin, String duracion, String cantMaxParticipantes, Date fechaLimInscripcion, String costoInscripcion, 
+			String lugar, String costoEducacionContinua, String porcentajeAsistencia, String infoAdicional, String idTipoEduContinua, String tipoEduContinua,
 			String idProgramaResponsable, String idDocenteResponsable, String idClasificacionCine, String consecutivo,
 			String[] idTipoBeneficiarios);
 	public String convertFieldsFullName(Persona p);

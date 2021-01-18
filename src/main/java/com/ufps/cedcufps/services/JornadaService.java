@@ -24,9 +24,9 @@ public class JornadaService implements IJornadaService{
 	private IJornadaMapper jornadaMapper;
 	
 	@Override
-	public List<Jornada> findAllByIdEducacionContinua(Long idEducacionContinua) {
+	public List<JornadaAppDto> findAllByIdEducacionContinua(Long idEducacionContinua) {
 		// TODO Auto-generated method stub
-		return jornadaDao.findByIdEducacionContinua(idEducacionContinua);
+		return jornadaMapper.convertJornadasToJornadaAppDto(jornadaDao.findByIdEducacionContinua(idEducacionContinua));
 	}
 
 	@Override

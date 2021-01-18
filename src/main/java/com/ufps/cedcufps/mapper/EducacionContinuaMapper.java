@@ -4,10 +4,12 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.ufps.cedcufps.dto.CertificacionDto;
 import com.ufps.cedcufps.dto.DiplomaDto;
 import com.ufps.cedcufps.dto.EducacionContinuaAppDto;
 import com.ufps.cedcufps.dto.EducacionContinuaWebDto;
@@ -30,6 +32,7 @@ import com.ufps.cedcufps.modelos.Participante;
 import com.ufps.cedcufps.modelos.Persona;
 import com.ufps.cedcufps.modelos.Ponente;
 import com.ufps.cedcufps.modelos.TextoDiploma;
+import com.ufps.cedcufps.utils.StatusEducacionContinua;
 import com.zaxxer.hikari.util.SuspendResumeLock;
 
 @Repository
@@ -78,7 +81,7 @@ public class EducacionContinuaMapper implements IEducacionContinuaMapper {
 			//eduContinuaDto.setIdTipoBeneficiario(e.getTipoBeneficiario().getId());
 			//eduContinuaDto.setTipoBeneficiario(e.getTipoBeneficiario().getTipoBeneficiario());
 			if(e.getDiploma()!=null) {
-				eduContinuaDto.setDiploma(this.convertDiplomaToDiplomaDto(e.getDiploma()));
+				eduContinuaDto.setDiploma(this.convertDiplomaToDiplomaDto(e.getDiploma(),e.getId()));
 			}else {
 				eduContinuaDto.setDiploma(null);
 			}
@@ -114,6 +117,7 @@ public class EducacionContinuaMapper implements IEducacionContinuaMapper {
 			eduContinuaDto.setCantidadInscritos(participantes.size());
 			eduContinuaDto.setPonentes(ponentes);
 			dto.setEducacionContinua(eduContinuaDto);
+			
 			
 		}else {
 			dto.setEducacionContinua(null);
@@ -168,6 +172,10 @@ public class EducacionContinuaMapper implements IEducacionContinuaMapper {
 		pdto.setPrimerApellido(p.getPersona().getPrimerApellido());
 		pdto.setSegundoApellido(p.getPersona().getSegundoApellido());
 		pdto.setTarjetaInscripcion(p.getTarjetaInscripcion());
+		pdto.setAprobado(p.isAprobado());
+		pdto.setDiplomaParticipacion(p.getDiplomaParticipacion());
+		pdto.setFechaGeneracionDiploma(p.getFechaGeneracionDiploma());
+		pdto.setToken(p.getToken());
 		return pdto;
 	}
 
@@ -204,17 +212,17 @@ public class EducacionContinuaMapper implements IEducacionContinuaMapper {
 		return dto;
 	}
 	
-	private DiplomaDto convertDiplomaToDiplomaDto(Diploma d) {
+	private DiplomaDto convertDiplomaToDiplomaDto(Diploma d, Long idEduContinua) {
 		DiplomaDto dto= new DiplomaDto();
 		dto.setId(d.getId());
-		dto.setFirmas(this.convertListFirmaToListFirmaDto(d.getFirmas()));
-		dto.setImagenes(this.convertListImagenesToListImagenesDto(d.getImagenes()));
-		dto.setTextos(this.convertListTextosToListTextoDto(d.getTextos()));
+		dto.setEstructuraDiploma(d.getEstructuraDiploma());
+		dto.setIdEduContinua(idEduContinua);
+		dto.setFechaActualizacionDiploma(d.getUpdatedAt());
 		return dto;
 		
 	}
 	
-	private TextosDiplomaDto convertTextoToTextoDto(TextoDiploma textoDiploma) {
+	/*private TextosDiplomaDto convertTextoToTextoDto(TextoDiploma textoDiploma) {
 		TextosDiplomaDto dto= new TextosDiplomaDto();
 		dto.setCategoria(textoDiploma.getCategoria());
 		dto.setTexto(textoDiploma.getTexto());
@@ -270,7 +278,7 @@ public class EducacionContinuaMapper implements IEducacionContinuaMapper {
 			dto.add(this.convertFirmaToFrimaDto(f));
 		}
 		return dto;
-	}
+	}*/
 
 
 	@Override
@@ -317,6 +325,7 @@ public class EducacionContinuaMapper implements IEducacionContinuaMapper {
 		System.out.println("mapperrrrrrrrrrrrrrrrrrrrrrrrrrr");
 		EducacionContinuaWebDto eduContinuaDto= new EducacionContinuaWebDto();
 		eduContinuaDto.setId(e.getId());
+		eduContinuaDto.setIdAcceso(e.getIdAcceso());
 		eduContinuaDto.setNombre(e.getNombre());
 		eduContinuaDto.setFechaInicio(e.getFechaInicio());
 		eduContinuaDto.setFechaFin(e.getFechaFin());
@@ -328,6 +337,7 @@ public class EducacionContinuaMapper implements IEducacionContinuaMapper {
 		eduContinuaDto.setImagen(e.getImagen());
 		eduContinuaDto.setInfoAdicional(e.getInfoAdicional());
 		eduContinuaDto.setEstado(e.getEstado());
+		eduContinuaDto.setEnableAsistencia(!e.getEstado().equalsIgnoreCase(StatusEducacionContinua.STATUS_ACTIVO));
 		eduContinuaDto.setIdTipoEduContinua(e.getTipoEduContinua().getId());
 		eduContinuaDto.setTipoEduContinua(e.getTipoEduContinua().getTipoEduContinua());
 		eduContinuaDto.setIdDocenteResp(e.getDocenteResponsable().getId());
@@ -370,6 +380,60 @@ public class EducacionContinuaMapper implements IEducacionContinuaMapper {
 			list.add(convertEducacionContinuaToEduContinuaWebDto(e));
 		}
 		return list;
+	}
+
+
+	@Override
+	public CertificacionDto convertToMisCertificaciones(Long idParticipante, Long idPersona, String nombrePersona, String tipoParticipante,
+			 String numeroDocumento, String tipoDocumento, String tipoEduContinua,
+			Long idEducacionContinua, String educacionContinua, Date fechaInicioEduContinua, Date fechaFinEduContinua, 
+			String diplomaParticipacion, boolean aprobado, Date fechaGeneracionDiploma, String token, Long idDiploma,
+			Map<String,Object> estructuraDiploma, Date fechaActualizacionDiploma) {
+		// TODO Auto-generated method stub
+		
+		ParticipanteDto participanteDto=new ParticipanteDto();
+		participanteDto.setId(idParticipante);
+		participanteDto.setIdPersona(idPersona);
+		participanteDto.setNombrePersona(nombrePersona);
+		participanteDto.setTipoParticipante(tipoParticipante);
+		participanteDto.setNumeroDocumento(numeroDocumento);
+		participanteDto.setTipoDocumento(tipoDocumento);
+		participanteDto.setTipoEduContinua(tipoEduContinua);
+		participanteDto.setIdEducacionContinua(idEducacionContinua);
+		participanteDto.setEducacionContinua(educacionContinua);
+		participanteDto.setFechaInicioEduContinua(fechaInicioEduContinua);
+		participanteDto.setFechaFinEduContinua(fechaFinEduContinua);
+		participanteDto.setDiplomaParticipacion(diplomaParticipacion);
+		participanteDto.setAprobado(aprobado);
+		participanteDto.setFechaGeneracionDiploma(fechaGeneracionDiploma);
+		participanteDto.setToken(token);
+		
+		DiplomaDto diplomaDto=new DiplomaDto();
+		diplomaDto.setId(idDiploma);
+		diplomaDto.setEstructuraDiploma((Map<String,Object>)estructuraDiploma);
+		diplomaDto.setFechaActualizacionDiploma(fechaActualizacionDiploma);
+		
+		CertificacionDto certDto=new CertificacionDto();
+		certDto.setDiplomaDto(diplomaDto);
+		certDto.setParticipanteDto(participanteDto);
+		if(diplomaDto.getFechaActualizacionDiploma() != null && participanteDto.getFechaGeneracionDiploma() != null) {
+			certDto.setUpdateDiploma(participanteDto.getFechaGeneracionDiploma().before(diplomaDto.getFechaActualizacionDiploma()));
+		}else {
+			certDto.setUpdateDiploma(diplomaDto.getFechaActualizacionDiploma() != null);
+		}
+		
+		return certDto;
+	}
+
+
+	@Override
+	public List<PonenteDto> convertListParticipantesToListPonentesDto(List<Participante> participantes) {
+		// TODO Auto-generated method stub
+		List<PonenteDto> ponentes = new ArrayList<PonenteDto>();
+		for(Participante p: participantes) {
+			ponentes.add(this.convertPonenteToPonenteDto((Ponente)p));
+		}
+		return ponentes;
 	}
 
 

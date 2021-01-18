@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.ufps.cedcufps.dto.DiplomaDto;
 import com.ufps.cedcufps.modelos.Diploma;
 import com.ufps.cedcufps.modelos.ElementoDiploma;
 import com.ufps.cedcufps.modelos.FirmaDiploma;
@@ -15,16 +16,6 @@ public interface IDiplomaService {
 	
 	public Diploma findOne(Long id);
 	
-	public List<ImagenDiploma> findImagenesDefault();
-	
-	public List<TextoDiploma> findTextoDefault();
-	
-	public List<ImagenDiploma> findImagenesByDiploma(Long idDiploma);
-	
-	public List<TextoDiploma> findTextoByDiploma(Long idDiploma);
-	
-	public List<FirmaDiploma> findFirmaByDiploma(Long idDiploma);
-	
-	public void save(Diploma d);
+	public Long save(DiplomaDto d);
 	
 }

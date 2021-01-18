@@ -203,16 +203,19 @@ public class PersonaService implements IPersonaService, UserDetailsService {
 		/*Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 	    UserDetails userDetail = (UserDetails) auth.getPrincipal();
 		return personaDao.findByUsername(userDetail.getUsername());*/
+		return this.findByEmail(this.findEmailPersonaLogueada());
+	}
+
+	@Override
+	public String findEmailPersonaLogueada() {
 		Authentication a = SecurityContextHolder.getContext().getAuthentication();
 		OAuth2AuthenticationToken client= (OAuth2AuthenticationToken )a;
 		String email=client.getPrincipal().getAttribute("email");
 		System.out.println("email del usuario logueadoen metodo findPersonaLogueada de personaService");
 		System.out.println(email);
-		
-		
-	    return this.findByEmail(email);
+		return email;
 	}
-
+	
 	@Override
 	public PersonaDto findOne(Long id) {
 		// TODO Auto-generated method stub
@@ -272,10 +275,14 @@ public class PersonaService implements IPersonaService, UserDetailsService {
 	@Transactional(rollbackFor = CustomException.class)
 	public Persona findByEmail(String email) {
 		// TODO Auto-generated method stub
-		Persona p=personaDao.findPersonaByEmail(email);
+		System.out.println("emaaaaaaaaaaaaaaaaaaaaaaiiiiiiiiiiiiiilllllllllllllllllllllll");
+		System.out.println(email);
 		try {
+			Persona p=personaDao.findPersonaByEmail(email);
 			return p;
 		}catch(Exception e) {
+			System.out.println("error capturado");
+			System.out.println(e.getMessage());
 			return null;
 		}
 		

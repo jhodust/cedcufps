@@ -3,6 +3,10 @@ package com.ufps.cedcufps.dao;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
+import com.ufps.cedcufps.dto.CertificacionDto;
 import com.ufps.cedcufps.dto.EducacionContinuaWebDto;
 import com.ufps.cedcufps.modelos.EducacionContinua;
 import com.ufps.cedcufps.modelos.Persona;
@@ -21,4 +25,12 @@ public interface IEducacionContinuaCustomDao {
 	public Long insertNewTipoEduContinua(String tipoEduContinua, Boolean status);
 	
 	public EducacionContinuaWebDto findEduContinuaWebDtoByIdAcceso(String idAcceso);
+	
+	public List<CertificacionDto> findCertificaciones(String numDocumento);
+	
+	public Long[] listAllPossibleEducacionContinuaFiltro(String estado, Long idTipoEdC, Long idPrograma,
+			Long idBeneficiarios);
+	
+	
+	
 }

@@ -19,3 +19,7 @@ function validateFechaInicioReporte(){
 function validateFechaFinReporte(){
 	validateInputTextRequerido('fechaFinReporte','errFechaFinReporte');
 }
+
+function validateDescripcionReporte(){
+	validateInputTextRequerido('descripcionReporte','errDescripcionReporte');
+}

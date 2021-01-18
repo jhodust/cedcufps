@@ -45,6 +45,8 @@ public class ReportesSniesController {
 		return "reportes-snies/index";
 	}
 	
+	
+	
 	@RequestMapping(value = "/reportes-SNIES/dashboard")
 	public String dashboard(Map<String, Object> model) {
 		model.put("programas",programaService.findAll());

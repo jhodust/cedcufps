@@ -13,7 +13,7 @@ public interface IInformeSniesService {
 	public List<InformeSniesDto> findAll();
 	
 	
-	public void generarReporteSNIES(String fechaInicio, String fechaFin);
+	public void generarReporteSNIES(String fechaInicio, String fechaFin, String descripcion);
 	public List<Object[]> generarStatisticsConteoGeneralEduContinua(String fechaInicio, String fechaFin, String idPrograma);
 	public List<Object[]> generarStatisticsConteoGeneralPersonas(String fechaInicio, String fechaFin, String idPrograma);
 	public List<Object[]> generarStatisticsConteoGeneralGenero(String fechaInicio, String fechaFin, String idPrograma);

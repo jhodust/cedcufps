@@ -139,11 +139,6 @@ function comportamientoSelectsNacimiento(){
 	cargarDepartamentosColombia();
 }
 
-function ocultar(id) {// oculta un elemento del formulario
-	document.getElementById(id).style.display = 'none';
-}
-function mostrar(id,style) {// muestra un elemento del formulario
-	document.getElementById(id).style.display = style;
-}
+
 
 

@@ -4,9 +4,11 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -30,6 +32,7 @@ import javax.validation.constraints.Size;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.ufps.cedcufps.mapper.HashMapConverter;
 
 @Entity
 @Table(name = "educacion_continua")
@@ -145,6 +148,9 @@ public class EducacionContinua implements Serializable {
 	
 	@Column(columnDefinition = "LONGTEXT",name = "info_adicional")
 	private String infoAdicional;
+	
+	
+		
 	
 	public EducacionContinua() {
 		this.jornadas=new ArrayList<Jornada>();
@@ -365,6 +371,9 @@ public class EducacionContinua implements Serializable {
 	public void setInfoAdicional(String infoAdicional) {
 		this.infoAdicional = infoAdicional;
 	}
+
+
+	
 	
 	
 	

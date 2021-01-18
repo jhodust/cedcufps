@@ -29,31 +29,46 @@ public class DepartamentoController {
 	private IFacultadService facultadService;
 	
 	@RequestMapping(value = "/departamentos-academicos")
-	public String listar(@RequestParam(name="page", defaultValue = "0") int page, @RequestParam(name="facultad", defaultValue = "") String facultad,Map<String, Object> model) {
+	public String listar(Map<String, Object> model) {
 		
-		Pageable pageRequest=PageRequest.of(page, 8);
-		
-		if(facultad.equalsIgnoreCase("")) {
-			Page<Departamento> departamentos=departamentoService.findAll(pageRequest);
-			PageRender<Departamento> pageRender= new PageRender<Departamento>("/departamentos-academicos", departamentos);
-			model.put("departamentos",departamentos);	
-			model.put("page",pageRender);
-			model.put("departamentosTotales",departamentoService.findAll());
-			model.put("facultad",new Facultad());//para cuando el filtro es todos
-		}else {
-			Page<Departamento> departamentos=departamentoService.findByFacultad(facultad, pageRequest);
-			PageRender<Departamento> pageRender= new PageRender<Departamento>("/departamentos-academicos", departamentos);
-			model.put("departamentos",departamentos);
-			model.put("page",pageRender);
-			model.put("departamentosTotales",departamentoService.findByFacultad(facultad));
-			model.put("facultad",facultadService.findByFacultad(facultad));
-		}
+		Pageable pageRequest=PageRequest.of(0, 8);
+		Page<Departamento> departamentos=departamentoService.findAll(pageRequest);
+		PageRender<Departamento> pageRender= new PageRender<Departamento>("/departamentos-academicos/reload", departamentos);
+		model.put("departamentos",departamentos);	
+		model.put("page",pageRender);
+		model.put("departamentosTotales",departamentoService.findAll());
+		model.put("facultad",new Facultad());//para cuando el filtro es todos
 		model.put("facultades",facultadService.findAll());
 		model.put("photoUser", SpringSecurityConfig.getInfoSession().getPhoto());
 		model.put("nameUser", SpringSecurityConfig.getInfoSession().getName());
 		return "departamento/index";
 	}
 	
+	
+	@RequestMapping(value = "/departamentos-academicos/reload")
+	public String reloadList(@RequestParam(name="page", defaultValue = "0") int page, 
+			@RequestParam(name="facultad", defaultValue = "") String facultad,Map<String, Object> model) {
+		Pageable pageRequest=PageRequest.of(page, 8);
+		
+		if(facultad.equalsIgnoreCase("")) {
+			Page<Departamento> departamentos=departamentoService.findAll(pageRequest);
+			PageRender<Departamento> pageRender= new PageRender<Departamento>("/departamentos-academicos/reload", departamentos);
+			model.put("departamentos",departamentos);	
+			model.put("page",pageRender);
+			model.put("departamentosTotales",departamentoService.findAll());
+		}else {
+			Page<Departamento> departamentos=departamentoService.findByFacultad(facultad, pageRequest);
+			PageRender<Departamento> pageRender= new PageRender<Departamento>("/departamentos-academicos/reload?facultad="+facultad.replaceAll("\\s", "%20"), departamentos);
+			model.put("departamentos",departamentos);
+			model.put("page",pageRender);
+			model.put("departamentosTotales",departamentoService.findByFacultad(facultad));
+		}
+		
+		return "departamento/index :: listDepartamentos";
+	}
+	
+
+
 	/*
 	@RequestMapping(value = "/departamentos-academicos/filter/{facultad}")
 	public String filtrarByFacultad(@PathVariable(value = "facultad") String facultad, Map<String, Object> model) {

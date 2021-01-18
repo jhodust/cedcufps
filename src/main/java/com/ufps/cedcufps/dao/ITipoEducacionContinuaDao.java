@@ -18,4 +18,7 @@ public interface ITipoEducacionContinuaDao extends JpaRepository<TipoEducacionCo
 	
 	@Query(value = "select distinct t from TipoEducacionContinua t where t.estadoOficial='1' or t.id = ?1")
 	public List<TipoEducacionContinua> findAllTipoEducacionContinua(Long id);
+	
+	@Query(value = "select distinct t from TipoEducacionContinua t ")
+	public List<TipoEducacionContinua> findAllTiposEducacionContinuaExisting();
 }

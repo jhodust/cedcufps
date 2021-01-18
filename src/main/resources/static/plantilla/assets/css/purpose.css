@@ -89,3 +89,16 @@ color:#ec0017;
 .table .td2, .table .th2{
 	white-space:normal;
 }
+
+.action-item-red-ufps{
+	color:#bc0017;
+}
+.action-item-red-ufps:hover{
+	color:#bc001f;
+}
+
+a.action-item-disabled{
+	pointer-events: none;
+	color:#818386;
+	border-color:#000;
+}

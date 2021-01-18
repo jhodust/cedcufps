@@ -12,29 +12,13 @@ $(document).ready(function ()
 		enableTime: true,
 	    dateFormat: "d/m/Y H:i",
 	    onChange: function(selectedDates, dateStr, instance) {
-	    	console.log(selectedDates);
-	    	console.log(selectedDates[0].toDateString());
-	    	console.log(dateStr);
-	    	console.log(selectedDates[0].getDate());
-	    	console.log("toString:" + selectedDates[0].toString());
-	    	console.log("dia: " + selectedDates[0].getDay());
-	    	console.log("mes: " + selectedDates[0].getMonth());
-	    	console.log("UTCMONTH " + selectedDates[0].getUTCMonth());
-	    	console.log("fullYear: " + selectedDates[0].getFullYear());
-	    	console.log("años: " + selectedDates[0].getYear());
-	    	console.log("horas: "+ selectedDates[0].getHours());
-	    	console.log("toLocaleString: "+selectedDates[0].toLocaleString());
-	    	console.log("toLocaleDateString: "+selectedDates[0].toLocaleDateString());
-	    	
-	    	
-	    	console.log("minDate: "+selectedDates[0].toDateString());
 	    	document.getElementById("horaFin").disabled = false;
            horaFinPick=$("#horaFin").flatpickr({
        		enableTime: true,
        	    dateFormat: "d/m/Y H:i",
        	    minDate: selectedDates[0].toLocaleString(),
        	    minTime: selectedDates[0].toTimeString(),
-       	    maxDate: selectedDates[0].toLocaleDateString(),
+       	    maxDate: fechaFEvento,
        	    defaultDate: selectedDates[0].toLocaleString(),
        	});
         },
@@ -85,8 +69,14 @@ function ajaxGuardarJornada(jsonJornada){
 		cache: false,
 		success: function(result) {
 			toastr.success('Se ha guardado la información', 'Excelente!')
-			window.setTimeout(function(){location.reload()},1000);
+			//window.setTimeout(function(){location.reload()},1000);
 			idJornada=null;
+			$('#modalRegistroJornada').modal('hide');
+			console.log("va a urlReload");
+			reloadListJornadas();
+
+
+	        console.log("despues de reload");
 		},
 		error: function(err) {
 			toastr.error('No se pudo procesar la solicitud...', 'Error!');
@@ -143,7 +133,8 @@ function eliminarJornada(elemento){
 		success: function(result) {
 			 console.log(result);
 			 toastr.success(result, 'Excelente!');
-			 window.setTimeout(function(){location.reload()},1000);
+			 reloadListJornadas();
+			 //window.setTimeout(function(){location.reload()},1000);
 		},
 		error: function(err) {
 			toastr.error(err.responseJSON.message, 'Error!');
@@ -161,4 +152,11 @@ function limpiarErrores(){
 	var errorHoraFin=document.getElementById('errorHoraFin');
 	errorHoraFin.innerText="";
 	inputHoraFin.classList.remove("is-invalid");
+}
+
+function reloadListJornadas(){
+	var urlReload = '/educacion-continua/'+idEducacionContinua+'/jornadas';
+	$('#div_list_jornadas').load(urlReload);
+	var urlReloadDetalles = '/educacion-continua/detalles/'+idEducacionContinua+'/jornadas';
+	$('#div_list_detalles_jornadas').load(urlReloadDetalles);
 }

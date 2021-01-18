@@ -41,6 +41,7 @@ import com.ufps.cedcufps.modelos.Participante;
 import com.ufps.cedcufps.modelos.SessionWebGoogle;
 import com.ufps.cedcufps.services.IEducacionContinuaService;
 import com.ufps.cedcufps.services.IPersonaService;
+import com.ufps.cedcufps.services.IProgramaService;
 import com.ufps.cedcufps.utils.ReportesExcel;
 import com.ufps.cedcufps.utils.paginator.PageRender;
 
@@ -53,24 +54,47 @@ public class InicioController {
 	@Autowired
 	private IPersonaService personaService;
 	
+	@Autowired
+	private IProgramaService programaService;
 	
 	
 	@RequestMapping(value = "/")
-	public String listar(@RequestParam(name="page", defaultValue = "0") int page,Model model) {
-		Pageable pageRequest=PageRequest.of(page, 3);
+	public String listar(Model model) {
+		Pageable pageRequest=PageRequest.of(0, 3);
 		Page<EducacionContinua> edc=educacionContinuaService.educacionContinuaNoTerminadas(pageRequest);
-		PageRender<EducacionContinua> pageRender= new PageRender<EducacionContinua>("/", edc);
+		PageRender<EducacionContinua> pageRender= new PageRender<EducacionContinua>("/reload", edc);
 		model.addAttribute("educacionesRecientes",educacionContinuaService.educacionContinuaRecientes());
 		model.addAttribute("educacionesContinuas",edc);
 		model.addAttribute("page",pageRender);
+		model.addAttribute("programas",programaService.findAll());
+		model.addAttribute("tipos_educacion_continua",educacionContinuaService.findAllTiposEducacionContinuaExisting());
+		model.addAttribute("tipo_beneficiarios",educacionContinuaService.findAllTipoBeneficiario());
 		SessionWebGoogle session=SpringSecurityConfig.getInfoSession();
 		if(session!=null) {
 			model.addAttribute("photoUser", session.getPhoto());
 			model.addAttribute("nameUser", session.getName());
 		}
 		
-		//educacionContinuaService.generarReporteSNIESEducacionContinua(new Date(), 0);
 		return "index";
+	}
+	
+	@RequestMapping(value = "/reload")
+	public String reloadPanelEventos(@RequestParam(name="page", defaultValue = "0") int page,
+			@RequestParam(name="idTipoEdC", defaultValue = "0") String idTipoEdC,
+			@RequestParam(name="idPrograma", defaultValue = "0") String idPrograma,
+			@RequestParam(name="idPublico", defaultValue = "0") String idPublico,
+			@RequestParam(name="baseUri", defaultValue = "/reload") String baseUri,Model model) {
+		Pageable pageRequest=PageRequest.of(page, 3);
+		Page<EducacionContinua> edc=educacionContinuaService.educacionContinuaFiltroPanel(Long.parseLong(idTipoEdC),
+				Long.parseLong(idPrograma), Long.parseLong(idPublico), pageRequest);
+		baseUri.concat("?idTipoEdC=").concat(idTipoEdC).
+		concat("?idPrograma=").concat(idPrograma).
+		concat("?idPublico=").concat(idPublico);
+		PageRender<EducacionContinua> pageRender= new PageRender<EducacionContinua>(baseUri, edc);
+		model.addAttribute("educacionesContinuas",edc);
+		model.addAttribute("page",pageRender);
+		
+		return "index :: listPanel";
 	}
 	
 	@GetMapping(value = "/registrarse")

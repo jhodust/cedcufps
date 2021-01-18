@@ -8,7 +8,7 @@ import com.ufps.cedcufps.modelos.Jornada;
 
 public interface IJornadaService {
 
-	public List<Jornada> findAllByIdEducacionContinua(Long idEducacionContinua);
+	public List<JornadaAppDto> findAllByIdEducacionContinua(Long idEducacionContinua);
 	
 	public void save(Jornada j);
 	

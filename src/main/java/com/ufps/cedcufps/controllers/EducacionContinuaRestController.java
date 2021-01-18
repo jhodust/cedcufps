@@ -62,7 +62,7 @@ public class EducacionContinuaRestController {
 	}
 	
 	
-	@PostMapping(value = "/educacion-continua/generar-plantilla-diploma" ,produces = "application/json")
+	/*@PostMapping(value = "/educacion-continua/generar-plantilla-diploma" ,produces = "application/json")
 	@ResponseBody // ImagenDiploma[] imagenes MultipartFile file @RequestBody  EducacionContinua edu
 	public ResponseEntity<?> guardarPlantillaDiploma(@RequestBody EducacionContinua eduContinua ){
 		//Diploma d=educacionContinuaService.generarDiploma(educacionContinua.getId());
@@ -98,5 +98,5 @@ public class EducacionContinuaRestController {
 		}*/
 		
 		
-	}
+	//}
 }

@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -36,16 +37,21 @@ public class JornadaController {
 	
 	
 	
-	/*@RequestMapping(value = "/educacion-continua/{id}/jornadas/registro")
-	public String agregar(@PathVariable(value = "id") Long id, Map<String, Object> model) {
-		EducacionContinua ec= educacionContinuaService.findOne(id).get();
-		Jornada j= new Jornada(); 
-		j.setEducacionContinua(ec);
-		model.put("titulo","FORMULARIO JORNADA");
-		model.put("jornada",j);
-		return "educacion_continua/jornada/form";
+	@RequestMapping(value = "/educacion-continua/{id}/jornadas")
+	public String reloadListJornadas(@PathVariable(value = "id") Long idEducacionContinua, Model model) {
+		
+		model.addAttribute("jornadas",jornadaService.findAllByIdEducacionContinua(idEducacionContinua));
+		return "educacion_continua/jornada/index :: indexJornadas";
 	}
 	
+	@RequestMapping(value = "/educacion-continua/detalles/{id}/jornadas")
+	public String reloadListJornadasDetallesEducacionContinua(@PathVariable(value = "id") Long idEducacionContinua, Model model) {
+		
+		model.addAttribute("jornadas",jornadaService.findAllByIdEducacionContinua(idEducacionContinua));
+		return "educacion_continua/detalles :: detallesEcJornadas";
+	}
+	
+	/*
 	@RequestMapping(value = "/educacion-continua/jornadas/registro", method = RequestMethod.POST)
 	public String save(Jornada j, SessionStatus status) {
 		jornadaService.save(j);

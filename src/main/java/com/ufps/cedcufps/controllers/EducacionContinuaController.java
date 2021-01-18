@@ -260,11 +260,13 @@ public class EducacionContinuaController {
 		InfoEducacionContinuaDto dto= educacionContinuaService.detallesEducacionContinua(idAcceso);
 		if(dto.isHasPermission()) {
 			model.put("ec",dto);
-			EducacionContinuaWebDto e= educacionContinuaService.findOneByIdAcceso(idAcceso);
+			//EducacionContinuaWebDto e= educacionContinuaService.findOneByIdAcceso(idAcceso);
 			Persona p= personaService.findPersonaLogueada();
 			PersonaDtoLogueada peopleLogin = personaService.findPersonaLogueadaDto(p);
 			model.put("educacionContinua", dto.getEducacionContinua());
-			model.put("tipos_educacion_continua",educacionContinuaService.findAllTiposEducacionContinua(e.getIdTipoEduContinua()));
+			model.put("jornadas",dto.getEducacionContinua().getJornadas());
+			model.put("ponentes",dto.getEducacionContinua().getPonentes());
+			model.put("tipos_educacion_continua",educacionContinuaService.findAllTiposEducacionContinua(dto.getEducacionContinua().getIdTipoEduContinua()));
 			model.put("clasificacion_cine",educacionContinuaService.findAllClasificacionCine());
 			model.put("tipo_beneficiarios",educacionContinuaService.findAllTipoBeneficiario());
 			model.put("docentes",personaService.findAllDocentes());
@@ -285,6 +287,15 @@ public class EducacionContinuaController {
 		model.put("photoUser", SpringSecurityConfig.getInfoSession().getPhoto());
 		model.put("nameUser", SpringSecurityConfig.getInfoSession().getName());
 		return "educacion_continua/detalles";
+	}
+	
+	
+	@RequestMapping(value = "/educacion-continua/detalles/reload/{id}")
+	public String reloadDetalles(@PathVariable(name = "id") String idAcceso, Map<String, Object> model) {
+		InfoEducacionContinuaDto dto= educacionContinuaService.detallesEducacionContinua(idAcceso);
+		model.put("ec",educacionContinuaService.detallesEducacionContinua(idAcceso));
+		
+		return "educacion_continua/detalles :: detallesEdc";
 	}
 	
 	@RequestMapping(value = "/preinscripcion")
@@ -349,13 +360,13 @@ public class EducacionContinuaController {
 	
 	@RequestMapping(value = "/participaciones-educacion-continua")
 	public String eventosActivosParticipante( Map<String, Object> model) {
-		model.put("participaciones",participanteService.findAllParticipacionesActivasByParticipante(personaService.findPersonaLogueada().getNumeroDocumento()));
+		model.put("participaciones",participanteService.findAllParticipacionesActivasByParticipante());
 		model.put("photoUser", SpringSecurityConfig.getInfoSession().getPhoto());
 		model.put("nameUser", SpringSecurityConfig.getInfoSession().getName());
 		return "educacion_continua/tarjetas_inscripcion/index";
 	}
 	
-	@RequestMapping(value = "/educacion-continua/{id}/personalizar-diploma")
+	/*@RequestMapping(value = "/educacion-continua/{id}/personalizar-diploma")
 	public String personalizarDiploma(@PathVariable(value = "id") Long id, Map<String, Object> model) {
 		EducacionContinua e=educacionContinuaService.findOne(id).get();
 		
@@ -369,7 +380,7 @@ public class EducacionContinuaController {
 		
 		return "educacion_continua/plantillaDiploma";
 		//return "croppie";
-	}
+	}*/
 	
 	
 	
@@ -410,5 +421,11 @@ public class EducacionContinuaController {
                 .body(new InputStreamResource(bis));
     }
 	
-	
+	@RequestMapping(value = "/certificaciones-educacion-continua")
+	public String certificacionesParticipante( Map<String, Object> model) {
+		model.put("participaciones",participanteService.findCertificaciones());
+		model.put("photoUser", SpringSecurityConfig.getInfoSession().getPhoto());
+		model.put("nameUser", SpringSecurityConfig.getInfoSession().getName());
+		return "educacion_continua/certificados_asistentes/mis_certificaciones";
+	}
 }

@@ -31,9 +31,6 @@
               <div class="d-inline-block">
                 <h5 class="h4 d-inline-block font-weight-400 mb-0 text-dark" ><strong>Departamentos Académicos</strong></h5>
               </div>
-              <div class="align-items-center ml-4 d-inline-flex">
-                <span class="h6 text-white counter badge-red-ufps badge-pill" data-from="0" th:data-to="${#lists.size(departamentosTotales)}" data-speed="1000" data-refresh-interval="100"></span>
-              </div>
             </div>
             <div class="col-md-6 d-flex align-items-center justify-content-between justify-content-md-end">
               <a href="#" data-toggle="modal" data-target="#modalRegistroDepartamento" class="btn btn-sm btn-white btn-icon-only rounded-circle ml-4">
@@ -60,15 +57,17 @@
           </div>
         </div>
         <hr/>
+        <div id="div_list_paginador" th:fragment="listDepartamentos">
+        
         <div th:if="${departamentos.getNumberOfElements() == 0}">
         	<center><span class="badge badge-red-ufps" >No existen departamentos registrados</span></center>
         </div>
-		<div class="row">
+		<div class="row" th:unless="${departamentos.getNumberOfElements() == 0}">
 			<div class="col-lg-3 col-sm-6 hover-scale-110"  th:each="d: ${departamentos}">
             <div class="card card-fluid">
             <div class="card-header">
               <div class="actions d-flex justify-content-between ">
-                <a href="#" onclick="editarDepartamento(this)" class="action-item editarPrograma red-ufps" th:data-id="${d.id}" data-toggle="tooltip" data-placement="bottom" title="Editar">
+                <a href="#" onclick="editarDepartamento(this)" class="action-item editarPrograma action-item-red-ufps" th:data-id="${d.id}" data-toggle="tooltip" data-placement="bottom" title="Editar">
                    <i class="far fa-edit"></i>
                   </a>
                   </div>
@@ -87,11 +86,13 @@
           </div>
 		
 		</div>
-		
-		
 		<div th:if="${departamentos.getNumberOfElements() != 0}">
 		<nav  th:replace="layouts/paginator :: paginator"></nav>
 		</div>
+			
+		</div>
+		
+		
 		</div>
 	  </div>
     

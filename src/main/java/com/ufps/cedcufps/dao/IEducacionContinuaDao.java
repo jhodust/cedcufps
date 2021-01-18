@@ -2,6 +2,7 @@ package com.ufps.cedcufps.dao;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.transaction.Transactional;
 
@@ -24,6 +25,9 @@ public interface IEducacionContinuaDao extends JpaRepository<EducacionContinua, 
 	
 	@Query(value= "SELECT ec from EducacionContinua ec where ec.estado!='Terminado' ORDER BY ec.fechaInicio DESC")
 	public Page<EducacionContinua> educacionesContinuasPanel(Pageable pageable);
+	
+	@Query(value= "SELECT * from educacion_continua ec where ec.id in ?1 ORDER BY ec.fecha_inicio DESC", nativeQuery=true)
+	public Page<EducacionContinua> educacionesContinuasPanelFiltroIds(Long[] ids,Pageable pageable);
 	
 	
 	@Query("select e from EducacionContinua e where e.tipoEduContinua.id = ?1 or e.programaResponsable.id = ?2 order by e.consecutivo ASC")
@@ -108,5 +112,10 @@ public interface IEducacionContinuaDao extends JpaRepository<EducacionContinua, 
 			+ " on sq.idEdC=ec.id"
 			+ " where ec.estado='En Desarrollo'", nativeQuery = true)
 	public List<EducacionContinua> findEducacionesContinuasForApp(Long idPersona);
+	
+	@Transactional
+	@Modifying
+	@Query(value = "update educacion_continua set id_diploma = ?1 where id = ?2", nativeQuery = true)
+	public int updateDiplomaEducacionContinua(Long idDiploma,Long idEduContinua);
 	
 }

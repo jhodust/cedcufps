@@ -31,36 +31,53 @@
           </div>
         </div>
         <hr/>
+        <div class="alert alert-danger alert-dismissible fade show" role="alert" id="divMsgGeneralSnies" style="display:none">
+		    <strong id="msgGeneralSnies"></strong>
+		    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
         <div class="row">
-          	<div class="col-sm-3">
+          	<div class="col-sm-12">
           		<div class="card" >
           		<div class="card-header">
           			 <h6 class="card-title mb-0">Generar Reporte</h6>
           		</div>
           		 <div class="card-body">
-                  <div class="col-md-12">
+          		 <div class="row">
+	          		 <div class="col-md-6">
 						<div class="form-group">
-							<label class="form-control-label">Fecha Inicio </label><label class="requerido pl-2">*</label> <input type="text"
-								class="form-control flatpickr-input" data-toggle="date"
-								placeholder="Seleccione la fecha de inicio..." id="fechaInicioReporte"/>
-								<small class="form-text text-danger"><strong id="errFechaInicioReporte"></strong></small>
+							<label class="form-control-label">Descripción </label><label class="requerido pl-2">*</label>
+							<input
+								class="form-control" type="text" id="descripcionReporte"
+								placeholder="Ingrese una breve descripción"/>
+								<small class="form-text text-danger"><strong id="errDescripcionReporte"></strong></small>
 						</div>
 					</div>
-					<div class="col-md-12">
-						<div class="form-group">
-							<label class="form-control-label">Fecha Fin </label><label class="requerido pl-2">*</label> <input type="text"
-								class="form-control flatpickr-input" data-toggle="date"
-								placeholder="Seleccione la fecha de finalización..." id="fechaFinReporte" />
-								<small class="form-text text-danger"><strong id="errFechaFinReporte"></strong></small>
+	                  <div class="col-md-3">
+							<div class="form-group">
+								<label class="form-control-label">Fecha Inicio </label><label class="requerido pl-2">*</label> <input type="text"
+									class="form-control flatpickr-input" data-toggle="date"
+									placeholder="Seleccione la fecha de inicio..." id="fechaInicioReporte"/>
+									<small class="form-text text-danger"><strong id="errFechaInicioReporte"></strong></small>
+							</div>
+						</div>
+						<div class="col-md-3">
+							<div class="form-group">
+								<label class="form-control-label">Fecha Fin </label><label class="requerido pl-2">*</label> <input type="text"
+									class="form-control flatpickr-input" data-toggle="date"
+									placeholder="Seleccione la fecha de finalización..." id="fechaFinReporte" />
+									<small class="form-text text-danger"><strong id="errFechaFinReporte"></strong></small>
+							</div>
 						</div>
 					</div>
                   <button type="button" onclick="generarReporteSnies()" class="btn btn-red-ufps btn-sm">
-				    	Generar
+				    	<i class="fas fa-save"></i> Generar
 					</button>
 					</div>
 					</div>
               </div>
-             <div class="col-sm-9">
+             <div class="col-sm-12">
              	<div class="card" >
 		          <!-- Card header -->
 		          <div class="card-header">
@@ -72,22 +89,24 @@
 		            <table id="myTable" style="width: 100%;" class="row-border table align-items-center">
 								<thead>
 									<tr>
+										<th>Descripción</th>
 										<th>Fecha Inicio</th>
 										<th>Fecha Fin</th>
-										<th>Informe Cursos</th>
-										<th>Informe Educación Continua</th>
-										<th>Informe Participantes</th>
+										<th class="th2">Informe Cursos</th>
+										<th class="th2">Informe Educación Continua</th>
+										<th class="th2">Informe Participantes</th>
 									</tr>
 								</thead>
 								<tbody>
 									<tr th:each="i : ${informesSnies}">
+										<td class="th2" th:text="${i.descripcion}"></td>
 										<td th:text="${i.fechaInicio}"></td>
 										<td th:text="${i.fechaFin}"></td>
-										<td><a class="btn btn-sm btn-red-ufps rounded-circle btn-icon-only hover-scale-110" th:href="@{'/'+${i.informeCursos}}" data-toggle="tooltip" data-placement="left" title="Descargar">
+										<td><a class="action-item action-item-red-ufps hover-scale-110" th:href="@{'/'+${i.informeCursos}}" data-toggle="tooltip" data-placement="left" title="Descargar">
 		    								<span class="btn-inner--icon"><i class="fas fa-file-download"></i></span></a></td>
-		    							<td><a class="btn btn-sm btn-red-ufps rounded-circle btn-icon-only hover-scale-110" th:href="@{'/'+${i.informeEduContinua}}" data-toggle="tooltip" data-placement="left" title="Descargar">
+		    							<td><a class="action-item action-item-red-ufps hover-scale-110" th:href="@{'/'+${i.informeEduContinua}}" data-toggle="tooltip" data-placement="left" title="Descargar">
 		    								<span class="btn-inner--icon"><i class="fas fa-file-download"></i></span></a></td>
-		    							<td><a class="btn btn-sm btn-red-ufps rounded-circle btn-icon-only hover-scale-110" th:href="@{'/'+${i.informeParticipantes}}" data-toggle="tooltip" data-placement="left" title="Descargar">
+		    							<td><a class="action-item action-item-red-ufps hover-scale-110" th:href="@{'/'+${i.informeParticipantes}}" data-toggle="tooltip" data-placement="left" title="Descargar">
 		    								<span class="btn-inner--icon"><i class="fas fa-file-download"></i></span></a></td>
 									</tr>
 									

@@ -29,6 +29,7 @@ public class Archivo {
 	}
 	
 	public static String saveImageAboutEducacionContinua(MultipartFile imagen, String imagenSinExtension) {
+		System.out.println("entra a metodo save Image about educontinua");
 		System.out.println("extension imagen: " + Files.getFileExtension(imagen.getOriginalFilename()));
 		String nombreImagen=rutaEducacionContinua+imagenSinExtension+"."+Files.getFileExtension(imagen.getOriginalFilename());
 		try {
@@ -114,5 +115,6 @@ public class Archivo {
 		Archivo.crearDirectorio(idEducacionContinua+"/qr-participantes");//directorio interno de los qr de participantes de la educacion continua
 		Archivo.crearDirectorio(idEducacionContinua+"/tarjetas-inscripcion");
 		Archivo.crearDirectorio(idEducacionContinua+"/plantilla-diploma");
+		Archivo.crearDirectorio(idEducacionContinua+"/diplomas-participantes");
 	}
 }

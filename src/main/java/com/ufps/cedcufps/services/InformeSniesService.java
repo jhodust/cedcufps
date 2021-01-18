@@ -7,6 +7,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -56,6 +58,9 @@ public class InformeSniesService implements IInformeSniesService {
 		System.out.println("******************************PREPARANDO INFORME EXCEL 2******************");
 		//ReportesExcel.reporteEducacionContinua("/formatos_reportes_excel/formato_educacion_continua.xlsx",educacionesContinuas,año);
 		List<InformeCursosDto> result = reporteSniesCustomDao.informeExcelCursos(fechaInicio, fechaFin, idPrograma);
+		if(result.size()==0) {
+			throw new CustomException("No se encontraron educaciones continuas en los criterios seleccionados");
+		}
 		return ReportesExcel.reporteCursos(result,nombreMarcaTiempo);
 		
 	}
@@ -79,8 +84,9 @@ public class InformeSniesService implements IInformeSniesService {
 		return ReportesExcel.reporteDocentesParticipantesResponsables(result, nombreMarcaTiempo);
 	}
 
+	@Transactional(rollbackOn = CustomException.class)
 	@Override
-	public void generarReporteSNIES(String fechaInicio, String fechaFin) {
+	public void generarReporteSNIES(String fechaInicio, String fechaFin, String descripcion) {
 		// TODO Auto-generated method stub
 		Date fechaI = null;
 		Date fechaF = null;
@@ -107,7 +113,7 @@ public class InformeSniesService implements IInformeSniesService {
 		String rutaInformeEduContinua=this.generarReporteSNIESFormatoEducacionContinua(fechaI, fechaF,idPrograma,String.valueOf(marcaTiempo));
 		String rutaInformeParticipantes=this.generarReporteSNIESFormatoParticipantesResponsable(fechaI, fechaF,idPrograma, String.valueOf(marcaTiempo));
 	
-		informeSniesDao.saveInformeSnies(fechaI, fechaF, rutaInformeCurso, rutaInformeEduContinua, rutaInformeParticipantes,idPrograma);
+		informeSniesDao.saveInformeSnies(fechaI, fechaF, rutaInformeCurso, rutaInformeEduContinua, rutaInformeParticipantes,idPrograma,descripcion);
 	}
 
 

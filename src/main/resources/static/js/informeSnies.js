@@ -4,6 +4,7 @@ $(document).ready(function ()
 
 $("#fechaInicioReporte").flatpickr({
 	dateFormat: "d/m/Y",
+	maxDate: new Date(),
 	onChange: function(selectedDates, dateStr, instance) {
 	    	console.log(selectedDates);
 	    	console.log(selectedDates[0].toDateString());
@@ -25,31 +26,40 @@ $("#fechaInicioReporte").flatpickr({
 	    	$("#fechaFinReporte").flatpickr({
        		dateFormat: "d/m/Y",
        	    minDate: selectedDates[0].toLocaleDateString(),
+       	    maxDate: new Date()
        	});
 	}
 });
 
 		})
 function generarReporteSnies(){
+	limpiarErrores();
 	var fechaInicio =$('#fechaInicioReporte').val();
 	console.log(fechaInicio);
 	var fechaFin =$('#fechaFinReporte').val();
 	console.log(fechaFin);
+	var descripcion =$('#descripcionReporte').val();
 	//var semestre = $('#select_semestre').val();
-	if(fechaInicio == "" || fechaFin == ""){
+	if(fechaInicio.trim() == "" || fechaFin.trim() == "" || descripcion.trim() == "" ){
 		validateFechaInicioReporte();
 		validateFechaFinReporte();
+		validateDescripcionReporte();
 		toastr
 		.error(
 				'Debes ingresar todos los campos requeridos',
 				'Error!');
 				return;
 	}
+	var JSONdata={};
+	JSONdata.fechaInicio=fechaInicio.trim();
+	JSONdata.fechaFin=fechaFin.trim();
+	JSONdata.descripcion=descripcion.trim();
 		$.ajax({
 			headers: {"X-CSRF-TOKEN": token},
-			type: "GET",
+			
+			type: "POST",
 			contentType: "application/json; charset=utf-8",
-			data: {'fechaInicio': fechaInicio, 'fechaFin':fechaFin},
+			data: JSON.stringify(JSONdata),
 			url: "/reportes-SNIES/generar",
 			cache: false,
 			success: function(result) {
@@ -61,14 +71,10 @@ function generarReporteSnies(){
 			error: function(err) {
 				toastr.error('No se pudo procesar la solicitud...', 'Error!');
 				console.log(err);
-				err.responseJSON.forEach(function(error){
-					if(error.field=="anio"){
-						var inputAnio=document.getElementById('anio_reporte');
-						var errorAnio=document.getElementById('errorAnio');
-						errorAnio.innerText=error.defaultMessage;
-						inputAnio.classList.add("is-invalid");
-					}
-				});
+				document.getElementById('divMsgGeneralSnies').style.display='block';
+				document.getElementById('msgGeneralSnies').innerText=err.responseJSON.message;
+				
+				
 			}
 		});
 	
@@ -80,7 +86,6 @@ function generarReporteSnies(){
 }
 
 function limpiarErrores(){
-	document.getElementById('anio_reporte').classList.remove("is-invalid");
-	var errorAnio=document.getElementById('errorAnio').innerText="";
-	
+	document.getElementById('divMsgGeneralSnies').style.display='none';
+	document.getElementById('msgGeneralSnies').innerText='';
 }

@@ -124,20 +124,15 @@ hr{
   
   <script th:src="@{/plantilla/summernote/summernote-lite.min.js}"></script>
   <script th:src="@{/plantilla/summernote/lang/summernote-es-ES.min.js}"></script>
+  <script th:src="@{/plantilla/fabric/fabric.min.js}"></script>
+  <script th:src="@{/plantilla/fabric/fontfaceobserver.js}"></script>
+  <script th:src="@{/plantilla/fabric/fontfaceobserver.standalone.js}"></script>
    <script type="text/javascript">
   $(document).ready( function () {
-	    $('#myTable').DataTable( {
-	        "scrollX": true,
-	        "language": {
-	            "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
-	        },
-	    } );
+	  initTableWithScroll();
+	  initTableWithoutScroll();
 	    
-	    $('#myTable2').DataTable( {
-	        "language": {
-	            "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
-	        },
-	    } );
+	    
 	    
 	    $('#infoAdicionalEdC').summernote({
 	    	  height: 250,                 // set editor height
@@ -146,6 +141,25 @@ hr{
 	    
 	   
 	} );
+  
+  function initTableWithoutScroll(){
+	  $('#myTable2').DataTable( {
+		  destroy: true,
+	        language: {
+	            url: "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+	        },
+	    } );
+  }
+  
+  function initTableWithScroll(){
+	  $('#myTable').DataTable( {
+		  	destroy: true,
+		  	scrollX: true,
+	        language: {
+	            url: "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+	        },
+	    } );
+  }
   </script>
    <script type="text/javascript" th:inline="javascript">
 	  var mensajeExitoso= [[${successMessage}]];

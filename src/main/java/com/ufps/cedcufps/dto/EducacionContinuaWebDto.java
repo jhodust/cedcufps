@@ -42,6 +42,8 @@ public class EducacionContinuaWebDto {
 	private String porcentajeAsistencia;
 	private String consecutivo;
 	private boolean estadoOficialTipoEducacionContinua;
+	private boolean enableAsistencia;
+	private String idAcceso;
 	
 	public String getCostoEducacionContinua() {
 		return costoEducacionContinua;
@@ -248,6 +250,18 @@ public class EducacionContinuaWebDto {
 	}
 	public void setCodigoDocenteResp(String codigoDocenteResp) {
 		this.codigoDocenteResp = codigoDocenteResp;
+	}
+	public boolean isEnableAsistencia() {
+		return enableAsistencia;
+	}
+	public void setEnableAsistencia(boolean enableAsistencia) {
+		this.enableAsistencia = enableAsistencia;
+	}
+	public String getIdAcceso() {
+		return idAcceso;
+	}
+	public void setIdAcceso(String idAcceso) {
+		this.idAcceso = idAcceso;
 	}
 	
 	

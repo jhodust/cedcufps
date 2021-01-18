@@ -18,10 +18,15 @@ $(document).ready(function ()
 		e.preventDefault();
 		var facultad= $(this).find('option:selected').text();
 		var id=$(this).find('option:selected').val();
+		
 		if(id == 0){
-			window.location="/departamentos-academicos";
+			paginadorLoadAjax("/departamentos-academicos/reload");
 		}else{
-			window.location="/departamentos-academicos?facultad="+facultad;
+			var base="/departamentos-academicos/reload?facultad=";
+			var regex = / /gi;
+			var url=base.concat(facultad.replace(regex,'%20'));
+			console.log(url);
+			paginadorLoadAjax(url);
 		}
 		
 	});

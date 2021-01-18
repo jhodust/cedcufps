@@ -14,6 +14,9 @@ import javax.persistence.Query;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
@@ -21,11 +24,14 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
+import com.google.common.primitives.Longs;
 import com.ufps.cedcufps.dao.IEducacionContinuaCustomDao;
+import com.ufps.cedcufps.dto.CertificacionDto;
 import com.ufps.cedcufps.dto.EducacionContinuaWebDto;
 import com.ufps.cedcufps.dto.JornadaAppDto;
 import com.ufps.cedcufps.dto.ParticipanteDto;
 import com.ufps.cedcufps.dto.TipoBeneficiarioDto;
+import com.ufps.cedcufps.mapper.IEducacionContinuaMapper;
 import com.ufps.cedcufps.modelos.EducacionContinua;
 import com.ufps.cedcufps.modelos.Persona;
 
@@ -37,6 +43,9 @@ public class EducacionContinuaCustomDaoImpl implements IEducacionContinuaCustomD
 	
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
+	
+	@Autowired
+	private IEducacionContinuaMapper educacionContinuaMapper;
 
 	@Override
 	public List<Long>  listAllPossibleEducacionContinua(Long idPersona) {
@@ -288,6 +297,134 @@ public class EducacionContinuaCustomDaoImpl implements IEducacionContinuaCustomD
 		}
 		return null;
 	}
+
+
+	@Override
+	public List<CertificacionDto> findCertificaciones(String numDocumento) {
+		// TODO Auto-generated method stub
+		StringBuilder certificacionesQuery = new StringBuilder();
+		certificacionesQuery.append("select p.id as id_participante, p.id_persona as id_persona,")
+		.append(" CONCAT(COALESCE(per.primer_nombre,''),' ', COALESCE(per.segundo_nombre,''),' ', COALESCE(per.primer_apellido,''),' ' ,COALESCE(per.segundo_apellido,'')),")
+		.append(" tpar.tipo_participante, per.numero_documento, td.tipo_documento, tec.tipo_educacion_continua, e.id as id_educacion_continua, e.nombre,")
+		.append(" e.fecha_inicio, e.fecha_fin, p.diploma_participacion, p.aprobado, p.fecha_generacion_diploma, p.token,")
+		.append(" d.id as id_diploma, d.structure_diploma, d.updated_at")
+		.append(" from participantes p")
+		.append(" join educacion_continua e on p.educacion_continua_id=e.id ")
+		.append(" left join diplomas d on e.id_diploma=d.id ")
+		.append(" join personas per on p.id_persona=per.id ")
+		.append(" join tipos_documento td on per.id_tipo_documento=td.id")
+		.append(" join tipos_educacion_continua tec on e.id_tipo_educacion_continua=tec.id")
+		.append(" join tipos_participante tpar on p.id_tipo_participante=tpar.id ")
+		.append(" where per.numero_documento = ?1");
+		System.out.println(numDocumento);
+		Query query=em.createNativeQuery(certificacionesQuery.toString())
+				 .setParameter(1, numDocumento);
+		
+		List<Object[]> result=query.getResultList();
+		
+		List<CertificacionDto> dto=new ArrayList<CertificacionDto>();
+		System.out.println("ENTRAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA ACCCCCCCCCCCCCCCCCCCCCCCCCAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+		for(Object[] data: result) {
+			dto.add(educacionContinuaMapper.convertToMisCertificaciones(
+					Long.parseLong(String.valueOf(data[0])),
+					Long.parseLong(String.valueOf(data[1])), 
+					String.valueOf(data[2]),
+					String.valueOf(data[3]),
+					String.valueOf(data[4]),
+					String.valueOf(data[5]),
+					String.valueOf(data[6]),
+					Long.parseLong(String.valueOf(data[7])),
+					String.valueOf(data[8]),
+					(Date) data[9],
+					(Date) data[10],
+					String.valueOf(data[11]),
+					Boolean.parseBoolean(String.valueOf(data[12])),
+					(Date) data[13],
+					String.valueOf(data[14]),
+					data[15] == null ? null : Long.parseLong(String.valueOf(data[15])),
+					null,
+					(Date) data[17]));
+		}
+		return dto;
+	}
+
+
+	@Override
+	public Long[] listAllPossibleEducacionContinuaFiltro(String estado, Long idTipoEdC, Long idPrograma,
+			Long idBeneficiarios) {
+		// TODO Auto-generated method stub
+		
+        
+		StringBuilder query = new StringBuilder();
+		
+		query.append("SELECT distinct ec.id from educacion_continua ec")
+		.append(" join educacion_continua_tipo_beneficiario tb on tb.id_educacion_continua=ec.id")
+		.append(" where ec.estado!= ? ");
+		if(idTipoEdC != 0L) {
+			query.append(" and ec.id_tipo_educacion_continua = ? ");
+		}
+		if(idPrograma != 0L) {
+			query.append(" and ec.id_programa = ? ");
+		}
+		if(idBeneficiarios != 0L) {
+			query.append(" and tb.id_tipo_beneficiario = ? ");
+		}
+		query.append(" ORDER BY ec.fecha_inicio DESC");
+		System.out.println("queryyyyyyyyyyy");
+		System.out.println(query.toString());
+		Query q=em.createNativeQuery(query.toString())
+				.setParameter(1, estado);
+		System.out.println("tipoedc: " + idTipoEdC );
+		System.out.println(idTipoEdC != 0L);
+		System.out.println("idPrograma: " + idPrograma );
+		System.out.println(idPrograma != 0L);
+		System.out.println("idBeneficiarios: " + idBeneficiarios );
+		System.out.println(idBeneficiarios != 0L);
+		if(idTipoEdC != 0L) {
+			q.setParameter(2, idTipoEdC);
+			System.out.println("entra a 1");
+		}
+		if(idPrograma != 0L && idTipoEdC != 0L ) {
+			q.setParameter(3, idPrograma);
+			System.out.println("entra a 2");
+		}else if(idPrograma != 0L && idTipoEdC == 0L) {
+			q.setParameter(2, idPrograma);
+			System.out.println("entra a 3");
+		}
+		if(idBeneficiarios != 0L && idPrograma != 0L && idTipoEdC != 0L ) {
+			q.setParameter(4, idBeneficiarios);
+			System.out.println("entra a 4");
+		}else if(idBeneficiarios != 0L && (idPrograma == 0L && idTipoEdC == 0L )) {
+			q.setParameter(2, idBeneficiarios);
+			System.out.println("entra a 5");
+		} else if(idBeneficiarios != 0L && (idPrograma == 0L || idTipoEdC == 0L )) {
+			q.setParameter(3, idBeneficiarios);
+			System.out.println("entra a 6");
+		}
+		
+		List<Object> result=q.getResultList();
+		
+		
+		return this.convertListObjetctToLong(result);
+		
+				
+	}
 	
+	
+	public Long[] convertListObjetctToLong(List<Object>list) {
+		Long[] array;
+		if(list.size()==0) {
+			array=new Long[1];
+			array[0]=0L;
+		}else {
+			array= new Long[list.size()];
+			int i=0;
+			for(Object o: list) {
+				array[i]=Long.parseLong(String.valueOf(o));
+				i++;
+			}
+		}
+		return array;
+	}
 
 }

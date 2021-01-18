@@ -391,10 +391,17 @@ function ajaxSaveEducacionContinua(){
 			console.log(result);
 			toastr.success('Se ha guardado la información', 'Excelente!');
 			
-			idEduContinua=0;
-			window.setTimeout(function() {
-				window.location.href = "/educacion-continua";
-			}, 1000);
+			if(idEduContinua==0){
+				window.setTimeout(function() {
+					window.location.href = "/educacion-continua";
+				}, 1000);
+			}else{
+				reloadDetalles();
+				hideLoader();
+				$('[href="#pills-detalles"]').tab('show');
+			}
+			
+			
 		},
 		error: function(err) {
 			console.log(err);
@@ -539,4 +546,9 @@ function clearErrors(){
 	cleanError('porcentajeAsistenciaEdc','errPorcAsisEdc');
 	cleanError('lugarEdc','errLugarEdc');
 	
+}
+
+function reloadDetalles(){
+	var urlReload = '/educacion-continua/detalles/reload/'+eduContinua.idAcceso;
+	$('#detallesEdC').load(urlReload);
 }

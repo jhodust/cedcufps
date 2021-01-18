@@ -65,6 +65,9 @@ public class InformeSnies implements Serializable{
 	@JoinColumn(name="id_programa", foreignKey=@ForeignKey(name = "FK_snies_programa"))
 	private Programa programa;
 
+	@Column(name = "descripcion")
+	private String descripción;
+	
 	public Long getId() {
 		return id;
 	}
@@ -129,6 +132,14 @@ public class InformeSnies implements Serializable{
 
 	public void setPrograma(Programa programa) {
 		this.programa = programa;
+	}
+
+	public String getDescripción() {
+		return descripción;
+	}
+
+	public void setDescripción(String descripción) {
+		this.descripción = descripción;
 	}
 	
 	

@@ -52,8 +52,10 @@ function guardarPonente(){
 				creacionTarjetaInscripcion(result);
 			}
 			toastr.success('Se ha guardado el ponente', 'Excelente!');
-			window.setTimeout(function(){location.reload()},1000);
+			$('#modalPonentes').modal('hide');
+			//window.setTimeout(function(){location.reload()},1000);
 			//actualizarConsultaPonentes();
+			//reloadListPonentes();
 			console.log("el metodo guardarPonente deja idEDuContinua en: " +idEducacionContinua);
 		},
 		error: function(err) {
@@ -123,7 +125,8 @@ function eliminarPonente(elemento){
 		success: function(result) {
 			 console.log(result);
 			 toastr.success(result, 'Excelente!');
-			 window.setTimeout(function(){location.reload()},1000);
+			 reloadListPonentes();
+			 //window.setTimeout(function(){location.reload()},1000);
 		},
 		error: function(err) {
 			toastr.error(err.responseJSON.message, 'Error!');
@@ -312,4 +315,11 @@ function searchPosiblePonente(){
 		errorTema.innerText="";
 		inputTema.classList.remove("is-invalid");
 		
+	}
+	
+	function reloadListPonentes(){
+		var urlReload = '/educacion-continua/'+idEducacionContinua+'/ponentes';
+		$('#div_list_ponentes').load(urlReload);
+		var urlReloadDetalles = '/educacion-continua/detalles/'+idEducacionContinua+'/ponentes';
+		$('#div_list_detalles_ponentes').load(urlReloadDetalles);
 	}

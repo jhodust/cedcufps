@@ -42,7 +42,7 @@
         
         <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist" sec:authorize="hasAnyRole('ROLE_SUPERADMIN','ROLE_MANAECCU')">
 		  <li class="nav-item">
-		    <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true"><i class="fas fa-search-plus"></i> Detalles</a>
+		    <a class="nav-link active" id="pills-detalles-tab" data-toggle="pill" href="#pills-detalles" role="tab" aria-controls="pills-detalles" aria-selected="true"><i class="fas fa-search-plus"></i> Detalles</a>
 		  </li>
 		  <li class="nav-item">
 		    <a class="nav-link" id="pills-editar-tab" data-toggle="pill" href="#pills-editar" role="tab" aria-controls="pills-editar" aria-selected="false"><i class="fas fa-edit"></i> Editar</a>
@@ -57,15 +57,17 @@
 		    <a class="nav-link" id="pills-participantes-tab" data-toggle="pill" href="#pills-participantes" role="tab" aria-controls="pills-participantes" aria-selected="false"><i class="fas fa-clipboard-list"></i> Asistentes</a>
 		  </li>
 		  <li class="nav-item">
-		    <a class="nav-link" id="pills-diploma-tab" data-toggle="pill" href="#pills-diploma" role="tab" aria-controls="pills-diploma" aria-selected="false"><i class="fas fa-money-check"></i> Plantilla Diploma</a>
+		    <a class="nav-link" id="pills-diploma-tab" data-toggle="pill" href="#pills-diploma" role="tab" aria-controls="pills-diploma" aria-selected="false"><i class="fas fa-money-check"></i> Personalizar Certificado</a>
 		  </li>
 		</ul>
 		<div class="tab-content" id="pills-tabContent">
-		  <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+		  <div class="tab-pane fade show active" id="pills-detalles" role="tabpanel" aria-labelledby="pills-detalles-tab">
 		  	<div class="card">
 		  	<div class="card-body">
 			<div class="row">
+			
 				<div class="col-md-12">
+				<div id="detallesEdC" th:fragment="detallesEdc">
 					<div class="row">
 		            <div class="col-12 col-md-6">
 		            <div class="alert alert-red-ufps shadow-lg text-center" role="alert">
@@ -187,16 +189,18 @@
 						
 		            </div>
 		          </div>
+		          </div>
 		          <br>
 		          <div class="row">
 		          	<div class="col-md-6">
+		          		<div id="div_list_detalles_ponentes" th:fragment="detallesEcPonentes">
 		          		<div class="alert alert-red-ufps shadow-lg text-center" role="alert">
 						    <strong>Ponentes</strong>
 						</div>
-						 <div th:if="${#lists.size(ec.educacionContinua.ponentes) == 0}">
+						 <div th:if="${#lists.size(ponentes) == 0}">
 				        	<center><span class="badge badge-white-red-ufps">No existen ponentes registrados(as)</span></center>
 				        </div>
-				        <div th:unless="${#lists.size(ec.educacionContinua.ponentes) == 0}">
+				        <div th:unless="${#lists.size(ponentes) == 0}">
 					        <div class="table-responsive">
 							<table class="table align-items-center">
 								<thead>
@@ -206,7 +210,7 @@
 									</tr>
 								</thead>
 								<tbody>
-									<tr th:each="p: ${ec.educacionContinua.ponentes}">
+									<tr th:each="p: ${ponentes}">
 										<td th:text="${p.participante.nombrePersona}">Nombre</td>
 										<td th:text="${p.tema}">tema</td>
 									</tr>
@@ -214,15 +218,17 @@
 							</table>
 							</div>
 						</div>
+						</div>
 		          	</div>
 		          	<div class="col-md-6">
+		          		<div id="div_list_detalles_jornadas" th:fragment="detallesEcJornadas">
 		          		<div class="alert alert-red-ufps shadow-lg text-center" role="alert">
 						    <strong>Jornadas</strong>
 						</div>
-						<div th:if="${#lists.size(ec.educacionContinua.jornadas) == 0}">
+						<div th:if="${#lists.size(jornadas) == 0}">
 				        	<center><span class="badge badge-white-red-ufps">No existen jornadas registradas</span></center>
 				        </div>
-				        <div th:unless="${#lists.size(ec.educacionContinua.jornadas) == 0}">
+				        <div th:unless="${#lists.size(jornadas) == 0}">
 					        <div class="table-responsive">
 							<table class="table align-items-center">
 								<thead>
@@ -231,12 +237,13 @@
 									</tr>
 								</thead>
 								<tbody>
-									<tr th:each="j: ${ec.educacionContinua.jornadas}">
+									<tr th:each="j: ${jornadas}">
 										<td th:text="${#dates.format(j.horaInicio, 'dd/MMM/yyyy HH:mm')} + ' - ' + ${#dates.format(j.horaFin, 'dd/MMM/yyyy HH:mm')} "></td>
 									</tr>
 								</tbody>
 							</table>
 							</div>
+						</div>
 						</div>
 		          	</div>
 		          </div>
@@ -338,7 +345,7 @@
 		              </a>	
 	  	 	</div>
 	  	 	<div class="card-body" >
-	  	 		<div th:replace="educacion_continua/listadoParticipantes :: listadoParticipantes"></div>
+	  	 		<div th:replace="educacion_continua/listado_asistentes/listadoParticipantes :: listadoParticipantes"></div>
 	  	 		
 	  	 	</div>
 	  	 	</div>
@@ -391,13 +398,21 @@
   var asistenciaGlobal= [[${asistenciaGlobal}]];
   console.log("asistenciaGlobal");
   console.log(asistenciaGlobal);
+  
+  var diploma=[[${ec.educacionContinua.diploma}]];
+	console.log("###################");
+	console.log("diploma");
+	console.log(diploma);
+	
+	
   </script>
   
  <script th:if="${educacionContinua.estado != 'Activo'}" th:src="@{/js/asistencia.js}" type="text/javascript"></script>
-
-
-  <script th:src="@{/js/customDiploma.js}" type="text/javascript"></script>
+<script th:src="@{/js/aprobarParticipante.js}" type="text/javascript"></script>
+	<script th:src="@{/js/utilsNumeros.js}"  type="text/javascript"></script>
+  <script th:src="@{/js/customDiploma.js}"  type="text/javascript"></script>
   <script th:src="@{/js/validacionEducacionContinua.js}" type="text/javascript"></script>
+  
 </body>
 
 </html>

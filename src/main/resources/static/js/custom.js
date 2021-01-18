@@ -1,4 +1,4 @@
-
+var months=["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
 toastr.options = {
 		  "closeButton": true,
 		  "debug": false,
@@ -17,7 +17,7 @@ toastr.options = {
 		  "hideMethod": "fadeOut"
 		}
 
-
+var token = $("meta[name='_csrf']").attr("content");
 
 $(document).ready(function ()
 {
@@ -61,6 +61,8 @@ $(document).ready(function ()
 	        },
 	    });
 		*/
+	
+	
 });
 
 
@@ -68,4 +70,63 @@ function logout(){
 	document.getElementById('formLogout').submit();
 }
 
+function ocultar(id) {// oculta un elemento del formulario
+	document.getElementById(id).style.display = 'none';
+}
+function mostrar(id,style) {// muestra un elemento del formulario
+	document.getElementById(id).style.display = style;
+}
+
+
+function dataURItoBlob(dataURI) {
+    // convert base64/URLEncoded data component to raw binary data held in a string
+    var byteString;
+    if (dataURI.split(',')[0].indexOf('base64') >= 0)
+        byteString = atob(dataURI.split(',')[1]);
+    else
+        byteString = unescape(dataURI.split(',')[1]);
+
+    // separate out the mime component
+    var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+    console.log("mimeString: " +  mimeString);
+    // write the bytes of the string to a typed array
+    var ia = new Uint8Array(byteString.length);
+    for (var i = 0; i < byteString.length; i++) {
+        ia[i] = byteString.charCodeAt(i);
+    }
+
+    return new Blob([ia], {type: mimeString});
+}
+
+
+function updateInfoDiploma(nombre, documento, tipoParticipante, canvasObject){
+	console.log("actualizando info diploma");
+	console.log(nombre);
+	console.log(documento);
+	console.log(tipoParticipante);
+	console.log(JSON.stringify(canvasObject));
+	console.log(canvasObject.getObjects());
+	canvasObject.getObjects().forEach(function(o){
+		console.log(o);
+		if(o.type=="textbox"){
+			  var regex = /%nombreAsistente%/gi;
+			  o.text=o.text.replace(regex, nombre);
+			  
+			  var regex = /%documentoAsistente%/gi;
+			  o.text=o.text.replace(regex, documento);
+			  
+			  var regex = /%tipoAsistente%/gi;
+			  o.text=o.text.replace(regex, tipoParticipante);
+			  canvasObject.renderAll();
+		  }
+	});
+}
+
+function paginadorLoad(element){
+	paginadorLoadAjax(element.dataset.url);
+}
+
+function paginadorLoadAjax(url){
+	$('#div_list_paginador').load(url);
+}
 

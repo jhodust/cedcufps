@@ -32,16 +32,28 @@ public class FacultadController {
 	private IFacultadService facultadService;
 	
 	@RequestMapping(value = "/facultades")
-	public String listar(@RequestParam(name="page", defaultValue = "0") int page, Map<String, Object> model) {
-		Pageable pageRequest=PageRequest.of(page, 9);
+	public String listar(Map<String, Object> model) {
+		Pageable pageRequest=PageRequest.of(0, 12);
 		Page<Facultad> facultades=facultadService.findAll(pageRequest);
-		PageRender<Facultad> pageRender= new PageRender<Facultad>("/facultades", facultades);
+		PageRender<Facultad> pageRender= new PageRender<Facultad>("/facultades/reload", facultades);
 		model.put("facultades",facultades);	
 		model.put("facultadesTotales",facultadService.findAll());	
 		model.put("page",pageRender);
 		model.put("photoUser", SpringSecurityConfig.getInfoSession().getPhoto());
 		model.put("nameUser", SpringSecurityConfig.getInfoSession().getName());
 		return "facultad/index";
+	}
+	
+	
+	@RequestMapping(value = "/facultades/reload")
+	public String reloadList(@RequestParam(name="page", defaultValue = "0") int page, Map<String, Object> model) {
+		Pageable pageRequest=PageRequest.of(page, 12);
+		Page<Facultad> facultades=facultadService.findAll(pageRequest);
+		PageRender<Facultad> pageRender= new PageRender<Facultad>("/facultades/reload", facultades);
+		model.put("facultades",facultades);	
+		model.put("facultadesTotales",facultadService.findAll());	
+		model.put("page",pageRender);
+		return "facultad/index :: listFacultades";
 	}
 	
 	

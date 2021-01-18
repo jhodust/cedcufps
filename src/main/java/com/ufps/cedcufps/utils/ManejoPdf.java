@@ -234,4 +234,39 @@ public class ManejoPdf {
 		}
 
 	}
+	
+	
+	public static ByteArrayInputStream generarPDFDiplomas(String imagenDiploma) {
+
+		Document document = new Document(PageSize.LETTER.rotate(), 40, 30, 30, 50);//creo el documento con margenes para la información (titulo, subtitulo, tabla)
+		ByteArrayOutputStream out = new ByteArrayOutputStream();
+		
+	
+		try {
+			PdfWriter writer=PdfWriter.getInstance(document, out);
+
+			document.open();
+
+			Path path = Paths.get(imagenDiploma);
+			Image img = Image.getInstance(path.toAbsolutePath().toString());
+			//if you would have a chapter indentation
+			/*int indentation = 0;
+			//whatever
+
+			float scaler = ((document.getPageSize().getWidth() - document.leftMargin()
+			               - document.rightMargin() - indentation) / img.getWidth()) * 100;
+
+			img.scalePercent(scaler);
+			*/
+			img.scaleToFit(document.getPageSize().getWidth()-document.rightMargin(),document.getPageSize().getHeight()-document.bottomMargin()); 
+			document.add(img);
+			
+			document.close();
+		} catch (Exception ex) {
+
+			logger.error("Error occurred: {0}", ex);
+		}
+		return new ByteArrayInputStream(out.toByteArray());
+
+	}
 }

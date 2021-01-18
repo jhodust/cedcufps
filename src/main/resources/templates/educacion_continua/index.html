@@ -166,7 +166,7 @@
 						</thead>
 						<tbody>
 							<tr th:each="ec : ${educacionesContinuas}">
-								<td><a class="btn btn-sm btn-rojoufps rounded-circle btn-icon-only hover-scale-110" th:href="@{/educacion-continua/detalles(educacionContinua=${ec.nombre},fecha=${ec.fechaInicio},id=${ec.idAcceso})}"  data-toggle="tooltip" data-placement="left" title="Ver Detalles">
+								<td><a class="action-item action-item-red-ufps hover-scale-110" th:href="@{/educacion-continua/detalles(educacionContinua=${ec.nombre},fecha=${ec.fechaInicio},id=${ec.idAcceso})}"  data-toggle="tooltip" data-placement="left" title="Ver Detalles">
     								<span class="btn-inner--icon"><i class="fas fa-search-plus"></i></span></a>
     								</td>
 								<td th:text="${ec.tipoEduContinua}"></td>

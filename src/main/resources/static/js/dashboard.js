@@ -41,8 +41,7 @@ $("#fechaInicioReporteDashboard").flatpickr({
 	}
 });
 
-		})
-		
+
 function validateGenerarStatistics(){
 	var fechaInicio=$("#fechaInicioReporteDashboard").val();
 	var fechaFin=$("#fechaFinReporteDashboard").val();
@@ -218,6 +217,8 @@ function drawChartGeneralGender() {
           dataType: "json",
           async: false
           }).responseText;
+	  console.log("%%%%%%%%%%%%%%");
+	  console.log(jsonData);
         var data = google.visualization.arrayToDataTable($.parseJSON(jsonData));
    
 
@@ -239,5 +240,8 @@ function showLoader(){
 
 function hideLoader(){
 	document.getElementById("divLoader").style.display='none';
-	document.getElementById("statistics").style.display='inline';
+	document.getElementById("statistics").style.display='block';
 }
+
+		})
+		

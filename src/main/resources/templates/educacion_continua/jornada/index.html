@@ -5,13 +5,13 @@
 </head>
 <body>
   
-  <div th:fragment="indexJornadas">
+  <div id="div_list_jornadas" th:fragment="indexJornadas">
   
-  	<div th:if="${#lists.size(ec.educacionContinua.jornadas) == 0}">
+  	<div th:if="${#lists.size(jornadas) == 0}">
         	<center><span class="badge badge-red-ufps">No existen jornadas registradas</span></center>
         </div>
 		<div class="row">
-			<div class="col-lg-4 hover-scale-110" th:each="j: ${ec.educacionContinua.jornadas}">
+			<div class="col-lg-4 hover-scale-110" th:each="j: ${jornadas}">
             <div class="card hover-shadow-sm-">
             
               <div class="card-body"> 

@@ -38,9 +38,13 @@ $(document).ready(function ()
 		var facultad= $(this).find('option:selected').text();
 		var id=$(this).find('option:selected').val();
 		if(id == 0){
-			window.location="/programas-academicos";
+			paginadorLoadAjax("/programas-academicos/reload");
 		}else{
-			window.location="/programas-academicos?facultad="+facultad;
+			var base="/programas-academicos/reload?facultad=";
+			var regex = / /gi;
+			var url=base.concat(facultad.replace(regex,'%20'));
+			console.log(url);
+			paginadorLoadAjax(url);
 		}
 		
 	});

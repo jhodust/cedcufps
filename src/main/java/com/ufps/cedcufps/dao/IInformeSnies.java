@@ -15,6 +15,6 @@ public interface IInformeSnies extends JpaRepository<InformeSnies, Long> {
 
 	@Transactional
 	@Modifying
-	@Query(value = "insert into informes_snies (fecha_inicio, fecha_fin, informe_cursos, informe_educacion_continua, informe_participante, id_programa) values (?1, ?2, ?3, ?4, ?5, ?6)", nativeQuery = true)
-	public void saveInformeSnies(Date fechaInicio, Date fechaFin, String informeCursos, String informeEduContinua, String informeParticipantes, Long idPrograma);
+	@Query(value = "insert into informes_snies (fecha_inicio, fecha_fin, informe_cursos, informe_educacion_continua, informe_participante, id_programa, descripcion) values (?1, ?2, ?3, ?4, ?5, ?6, ?7)", nativeQuery = true)
+	public void saveInformeSnies(Date fechaInicio, Date fechaFin, String informeCursos, String informeEduContinua, String informeParticipantes, Long idPrograma, String descripcion);
 }

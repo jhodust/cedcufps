@@ -41,87 +41,166 @@
         <hr/>
         
         <div class="card col-md-12" th:fragment="plantilla">
-        	<div class="card-body">
+        	
+       		<div class="card-body">
         		<div class="row">
-        			<button class="btn btn-sm btn-red-ufps" id="btnActualizar">Actualizar Cambios</button>
-			  	<button class="btn btn-sm btn-red-ufps" id="btnGuardar">Guardar Plantilla</button>
+        			<!-- <button class="btn btn-sm btn-red-ufps" id="btnActualizar">Actualizar Cambios</button> -->
+			  	
         		</div>
-			  	<div class="row mt-4">
-			  		<div class="col-md-4">
-						<div class="form-group">
-							<label class="form-control-label"><strong>Fondo</strong></label> 
-							<input class="form-control" type="file" id="inputFondo"/>
-						</div>
-					</div>
-			  		<div class="col-md-4">
-						<div class="form-group">
-							<label class="form-control-label"><strong>Texto #1 (Titulo)</strong></label> 
-							<input class="form-control" type="text" id="inputTexto1"/>
-						</div>
-					</div>
-					<div class="col-md-4">
-						<div class="form-group">
-							<label class="form-control-label"><strong>Texto #2 (Subtitulo)</strong></label> 
-							<input class="form-control" type="text" id="inputTexto2"/>
-						</div>
-					</div>
-			  	</div>
-			  	<div class="row">
-			  		<div class="col-md-6">
-			  			<div class="row">
-				  			<div class="col-md-6">
-								<div class="form-group">
-									<label class="form-control-label"><strong>Logo #1 (Lado izquierdo)</strong></label> 
-										<input class="form-control" type="file" id="inputLogo1" accept = "image/*"/>
-										<input type="checkbox" id="checkBoxLogo1">Visibilidad</input>
-										<div  id="croppieLogo1"></div>
-								</div>
-							</div>
-							<div class="col-md-6">
-								<div class="form-group">
-									<label class="form-control-label"><strong>Logo #2 (Lado derecho)</strong></label> 
-										<input class="form-control" type="file" id="inputLogo2" accept = "image/*"/>
-										<input type="checkbox" id="checkBoxLogo2">Visibilidad</input>
-										<div  id="croppieLogo2"></div>
-								</div>
-							</div>
-						</div>
-					</div>
-			  		<canvas class="col-md-6" id="canvas" width="970" height="750"></canvas>
-			  	</div>
-			  	<div class="row">
-			  		<div class="col-md-6">
-			  			<div class="form-group">
-							<h6><strong>Firma 1</strong></h6>
-							<label class="form-control-label">Nombre</label> 
-							<input class="form-control" type="text" id="inputNombreFirma1"></input>
-							<label class="form-control-label">Cargo</label> 
-							<input class="form-control" type="text" id="inputCargoFirma1"></input>
-							<label class="form-control-label">Firma Digital</label> 
-							<input class="form-control" type="file" id="inputFirmaDigital1"></input>
-							<input type="checkbox" id="checkBoxFirma1">Visibilidad</input>
-						</div>
-	  					<div class="col-md-12">
-							<div id="croppieFirma1"></div>
-						</div>
+			  	
+			  	<div class="card">
+			  		<div class="card-body">
+			  		<p>A continuación podrá personalizar el certificado de asistencia agregando los elementos 
+			  		(imagenes, textos, líneas) que desee. Las siguientes etiquetas se utilizarán para reemplazar 
+			  		datos del participante dentro de este.</p>
+			  		 <div class="col-md-12 table-responsive">
+			        	
+			        		<table class="table align-items-center">
+				        		<thead>
+				        			<th>Etiqueta</th>
+				        			<th>Definición</th>
+				        		</thead>
+				        			<tbody>
+				        				<tr>
+				        					<td class="td2"><strong>%tipoAsistente%</strong></td>
+				        					<td class="td2">Indicará si la persona fue asistente o ponente de la educación continua</td>
+				        				</tr>
+				        				<tr>
+				        					<td class="td2"><strong>%nombreParticipante%</strong></td>
+				        					<td class="td2">Indicará el nombre de la persona que participó en la educación continua</td>
+				        				</tr>
+				        				<tr>
+				        					<td class="td2"><strong>%documentoParticipante%</strong></td>
+				        					<td class="td2">Indicará el tipo de documento y número de documento 
+				        					de la persona que participó en la educación continua</td>
+				        				</tr>
+				        				
+				        			</tbody>
+				        		</table>
+				        	</div>
+			  			<ul>
+			  				
+			  			</ul>
 			  		</div>
-					<div class="col-md-6">
-						<div class="form-group">
-							<h6><strong>Firma 2</strong></h6>
-							<label class="form-control-label">Nombre</label> 
-							<input class="form-control" type="text" id="inputNombreFirma2"></input>
-							<label class="form-control-label">Cargo</label> 
-							<input class="form-control" type="text" id="inputCargoFirma2"></input>
-							<label class="form-control-label">Firma Digital</label> 
-							<input class="form-control" type="file" id="inputFirmaDigital2"></input>
-							<input type="checkbox" id="checkBoxFirma2">Visibilidad</input>
+			  	</div>
+			  	
+			  	<div class="card mt-4">
+			  	<div class="card-body pb-4">
+			  	<h6><strong>Agregar Elementos</strong></h6>
+			  		<div class="row" >
+			  			<div class="col-md-3" > 
+				  			
+							<div class="form-group">
+								<label class="form-control-label">Tipo Elemento</label><label class="requerido pl-2">*</label> <select class="form-control"
+									data-toggle="select" id="selectTipoElemento">
+									<option value="0">Seleccione...</option>
+									<option value="1">Imagen</option>
+									<option value="2">Texto</option>
+									<option value="3">Linea</option>
+								</select> 
+							</div>
+				  		</div>
+				  		<div class="col-md-9" style="position:relative;" id="divNewImagen">
+					  		
+					  		 	<div class="col-md-12">
+									<div class="form-group">
+										<label class="form-control-label">Imagen</label> 
+										<input type="file" class="custom-input-file" id="inputImagen" accept="image/*"/>
+									    <label for="inputImagen">
+									        <i class="fa fa-upload"></i>
+									        <span id="spnFile">Seleccionar un archivo…</span>
+									    </label>
+									    
+									</div>
+									<input type="checkbox" id="cbxImagenFondo"> Fondo Plantilla</input>
+									
+								</div>
+								
 						</div>
-						<div class="col-md-12">
-							<div id="croppieFirma2"></div>
+						<div class="col-md-9" style="position:relative;" id="divNewTexto">
+					  			<div class="row">
+						  			<div class="col-md-5">
+										<div class="form-group">
+											<label class="form-control-label">Estilo</label><label class="requerido pl-2">*</label> <select class="form-control"
+												data-toggle="select" id="selectFontFamily">
+												<option value="0">Seleccione...</option>
+											</select> 
+										</div>
+									</div>
+									<div class="col-md-3">
+										<div class="form-group">
+											<label class="form-control-label"><strong>Tamaño</strong></label> 
+											<input class="form-control" type="number" id="inputTamanio" value="20"/>
+										</div>
+										
+									</div>
+									<div class="col-md-2">
+										<div class="form-group">
+											<label class="form-control-label"><strong>Color Texto</strong></label> 
+											<input  type="color" id="inputColor"/>
+										</div>
+										
+									</div>
+									<div class="col-md-2">
+										<div class="form-group">
+											<label class="form-control-label"><strong>Color Borde</strong></label> 
+											<input  type="color" id="inputBorderColor"/>
+										</div>
+										
+									</div>
+								</div>
+								<div class="col-md-12">
+									<div class="form-group">
+										<label class="form-control-label"><strong>Texto</strong></label> 
+										<input class="form-control" type="text" id="inputTexto"/>
+									</div>
+									<div class="row">
+										<div class="col-md-2">
+											<input type="checkbox" id="cbxTxtBold"> Negrita</input>
+										</div>
+										<div class="col-md-2">
+											<input type="checkbox" id="cbxTxtCursive"> Cursiva</input>
+										</div>
+										<div class="col-md-2">
+											<input type="checkbox" id="cbxTxtUnderline"> Subrayado</input>
+										</div>
+										<div class="col-md-2">
+											<input type="checkbox" id="cbxTxtStroke"> Tachado</input>
+										</div>
+									</div>
+									
+									
+									
+									
+								</div>
+								
+						</div>
+						<div class="col-md-9" style="position:relative;" id="divNewLine">
+					  		
+					  		 	<div class="col-md-1">
+										<div class="form-group">
+											<label class="form-control-label"><strong>Color</strong></label> 
+											<input  type="color" id="inputColorLine"/>
+										</div>
+										
+									</div>
+								
 						</div>
 						
+			  		</div>
+			  		
+					<div class="col-md-12 d-flex align-items-center justify-content-between justify-content-md-end mt-2">
+	        			<button  class="btn btn-sm btn-red-ufps" id="btnCargar"><i class="fas fa-undo"></i> Cargar</button>
+	        		</div>
 					</div>
+			  	</div> 
+			  	
+			  	
+			  	<div class="row mt-5">
+			  	<button class="btn btn-sm btn-red-ufps" id="btnGuardar"><i class="fas fa-save"></i> Guardar</button>
+			  	<canvas class="col-md-12 mt-3" id="canvasDiploma" width="970" height="750" style="border:1px solid #000000;"></canvas>
 			  	</div>
+			  	
 			  	
 			  	
 			  	</div>

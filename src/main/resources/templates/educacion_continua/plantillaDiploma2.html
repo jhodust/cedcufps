@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="layouts/layout :: head">
+	<meta charset="UTF-8"/>
+</head>
+<body>
+  <!-- Application container -->
+  <div class="container-fluid container-application">
+    <!-- Content -->
+    <div class="main-content position-relative">
+      <!-- Main nav -->
+      <div th:replace="layouts/logosHead :: logosHead"></div>
+      <nav th:replace="layouts/navbar :: navbar"></nav>
+      
+      <!-- Page content -->
+      <div class="page-content col-lg-9 center">
+       <!-- Project cards -->
+       <nav aria-label="breadcrumb">
+		  <ol class="breadcrumb breadcrumb-links">
+		    <li class="breadcrumb-item"><a class="red-ufps-breadcrumb" th:href="@{/}">Inicio</a></li>
+		    <li class="breadcrumb-item"><a class="red-ufps-breadcrumb" th:href="@{/educacion-continua}">Educaciones Continuas</a></li>
+		    <li class="breadcrumb-item" th:if="${educacionContinua.id != null}"><a class="red-ufps-breadcrumb"  th:href="@{/educacion-continua/detalles?educacionContinua={educacionContinua}(educacionContinua=${educacionContinua.nombre})}">Detalles</a></li>
+		    <li class="breadcrumb-item active" aria-current="page">Diploma<li>
+		  </ol>
+		</nav>
+        <!-- Page title -->
+       	<div class="contenido ml-3 mr-3 pb-2" >
+        
+        <div class="page-title">
+          <div class="row justify-content-between align-items-center">
+            <div class="col-md-6 d-flex align-items-center justify-content-between justify-content-md-start mb-3 mb-md-0">
+              <!-- Page title + Go Back button -->
+              <div class="d-inline-block">
+                <h5 class="h4 d-inline-block font-weight-400 mb-0 text-dark" ><strong>Personalizar Diploma</strong></h5>
+	              
+              </div>
+            </div>
+            
+          </div>
+        </div>
+        <hr/>
+        
+        <div class="card col-md-12" th:fragment="plantilla">
+        	<div class="card-body">
+        		<div class="row">
+        			<button class="btn btn-sm btn-red-ufps" id="btnActualizar">Actualizar Cambios</button>
+			  	<button class="btn btn-sm btn-red-ufps" id="btnGuardar">Guardar Plantilla</button>
+        		</div>
+			  	<div class="row mt-4">
+			  		<div class="col-md-4">
+						<div class="form-group">
+							<label class="form-control-label"><strong>Fondo</strong></label> 
+							<input class="form-control" type="file" id="inputFondo"/>
+						</div>
+					</div>
+			  		<div class="col-md-4">
+						<div class="form-group">
+							<label class="form-control-label"><strong>Texto #1 (Titulo)</strong></label> 
+							<input class="form-control" type="text" id="inputTexto1"/>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<label class="form-control-label"><strong>Texto #2 (Subtitulo)</strong></label> 
+							<input class="form-control" type="text" id="inputTexto2"/>
+						</div>
+					</div>
+			  	</div>
+			  	<div class="row">
+			  		<div class="col-md-6">
+			  			<div class="row">
+				  			<div class="col-md-6">
+								<div class="form-group">
+									<label class="form-control-label"><strong>Logo #1 (Lado izquierdo)</strong></label> 
+										<input class="form-control" type="file" id="inputLogo1" accept = "image/*"/>
+										<input type="checkbox" id="checkBoxLogo1">Visibilidad</input>
+										<div  id="croppieLogo1"></div>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<label class="form-control-label"><strong>Logo #2 (Lado derecho)</strong></label> 
+										<input class="form-control" type="file" id="inputLogo2" accept = "image/*"/>
+										<input type="checkbox" id="checkBoxLogo2">Visibilidad</input>
+										<div  id="croppieLogo2"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+			  		<canvas class="col-md-6" id="canvas" width="970" height="750"></canvas>
+			  	</div>
+			  	<div class="row">
+			  		<div class="col-md-6">
+			  			<div class="form-group">
+							<h6><strong>Firma 1</strong></h6>
+							<label class="form-control-label">Nombre</label> 
+							<input class="form-control" type="text" id="inputNombreFirma1"></input>
+							<label class="form-control-label">Cargo</label> 
+							<input class="form-control" type="text" id="inputCargoFirma1"></input>
+							<label class="form-control-label">Firma Digital</label> 
+							<input class="form-control" type="file" id="inputFirmaDigital1"></input>
+							<input type="checkbox" id="checkBoxFirma1">Visibilidad</input>
+						</div>
+	  					<div class="col-md-12">
+							<div id="croppieFirma1"></div>
+						</div>
+			  		</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<h6><strong>Firma 2</strong></h6>
+							<label class="form-control-label">Nombre</label> 
+							<input class="form-control" type="text" id="inputNombreFirma2"></input>
+							<label class="form-control-label">Cargo</label> 
+							<input class="form-control" type="text" id="inputCargoFirma2"></input>
+							<label class="form-control-label">Firma Digital</label> 
+							<input class="form-control" type="file" id="inputFirmaDigital2"></input>
+							<input type="checkbox" id="checkBoxFirma2">Visibilidad</input>
+						</div>
+						<div class="col-md-12">
+							<div id="croppieFirma2"></div>
+						</div>
+						
+					</div>
+			  	</div>
+			  	
+			  	
+			  	</div>
+				
+			  </div>
+			  
+			</div>
+        </div>
+		
+		</div>
+	  </div>
+    
+    <div th:fragment="plantillaOculta">
+    <div class="modal fade"  tabindex="-1" role="dialog"  aria-hidden="true" >
+	    <div class="modal-dialog modal-dialog-centered" role="document">
+	       <div class="modal-content">
+	               
+	                <div class="modal-body">
+	                	
+	                    <canvas class="col-md-6" id="canvas2" width="970" height="750"></canvas>
+	                </div>
+	            </div>
+	    </div>
+	</div>
+	</div>
+	
+    <div th:replace="layouts/footer :: footer"></div>
+    
+  <!-- Scripts -->
+  <!-- Core JS - includes jquery, bootstrap, popper, in-view and sticky-kit -->
+  <div th:replace="layouts/layout :: scripts"></div>
+  
+ 
+  
+</body>
+
+</html>

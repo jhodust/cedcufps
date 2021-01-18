@@ -5,13 +5,13 @@
 </head>
 <body>
   <!-- Application container -->
-  <div th:fragment="indexPonentes">
+  <div id="div_list_ponentes" th:fragment="indexPonentes">
   
-  	<div th:if="${#lists.size(ec.educacionContinua.ponentes) == 0}">
+  	<div th:if="${#lists.size(ponentes) == 0}">
         	<center><span class="badge badge-red-ufps">No existen ponentes registrados(as)</span></center>
         </div>
 		<div class="row">
-			<div class="col-lg-6 hover-scale-110" th:each="p: ${ec.educacionContinua.ponentes}">
+			<div class="col-lg-6 hover-scale-110" th:each="p: ${ponentes}">
             <div class="card hover-shadow-sm-">
             
               <div class="card-header"> 

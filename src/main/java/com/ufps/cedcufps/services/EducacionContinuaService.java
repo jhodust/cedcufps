@@ -136,6 +136,12 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 		// TODO Auto-generated method stub
 		return  tipoEducacionContinuaDao.findAllTipoEducacionContinua(id);
 	}
+	
+	@Override
+	public List<TipoEducacionContinua> findAllTiposEducacionContinuaExisting() {
+		// TODO Auto-generated method stub
+		return  tipoEducacionContinuaDao.findAllTiposEducacionContinuaExisting();
+	}
 
 	
 	
@@ -152,6 +158,15 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 	public Page<EducacionContinua> educacionContinuaNoTerminadas(Pageable pageable) {
 		// TODO Auto-generated method stub
 		return educacionContinuaDao.educacionesContinuasPanel(pageable);
+	}
+	
+	@Override
+	public Page<EducacionContinua> educacionContinuaFiltroPanel(Long idTipoEdC, Long idPrograma, Long idBeneficiarios, Pageable pageable) {
+		// TODO Auto-generated method stub
+		Long[] ids= new Long[2];
+		ids[0]=8L;
+		ids[1]=18L;
+		return educacionContinuaDao.educacionesContinuasPanelFiltroIds(educacionContinuaCustomDao.listAllPossibleEducacionContinuaFiltro(StatusEducacionContinua.STATUS_TERMINADO, idTipoEdC, idPrograma, idBeneficiarios), pageable);
 	}
 
 	@Override
@@ -605,7 +620,7 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 		return dto;
 	}
 
-	@Override
+	/*@Override
 	public void saveDiploma(EducacionContinua ec) {
 		// TODO Auto-generated method stub
 		EducacionContinua e= this.findOne(ec.getId()).get();
@@ -613,7 +628,7 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 		/*if(e.getDiploma()==null) {
 			e.setDiploma(new Diploma());
 		}*/
-		final String rutaBase ="files/uploads/educacion-continua/"+e.getId();
+		/*final String rutaBase ="files/uploads/educacion-continua/"+e.getId();
 		Long idDiploma=null;
 		if(e.getDiploma()==null) {
 			idDiploma= diplomaCustomDao.createDiploma(Archivo.saveImagenBase64(rutaBase+"/diploma_base.jpg",ec.getDiploma().getImagenPlantilla()));
@@ -662,7 +677,7 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 			//e.getDiploma().setFirmas(ec.getDiploma().getFirmas());
 		}
 		diplomaCustomDao.updateDiplomaEduContinua(idDiploma, e.getId());
-	}
+	}*/
 
 	@Override
 	public ByteArrayInputStream generarPdfAsistentes(String nombreEducacionContinua, String fechaInicio) {

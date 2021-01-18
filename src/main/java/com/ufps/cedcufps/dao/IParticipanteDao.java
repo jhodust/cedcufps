@@ -1,5 +1,6 @@
 package com.ufps.cedcufps.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -76,6 +77,21 @@ public interface IParticipanteDao extends JpaRepository<Participante, Long>{
 	
 	@Query(value="select count(*) from participantes where educacion_continua_id = ?1 and id_tipo_participante = '1'", nativeQuery = true)
 	public int countTotalParticipantes(Long idEduContinua);
+	
+	
+	@Transactional
+	@Modifying
+	@Query(value="update participantes set aprobado = ?1, diploma_participacion = ?2, fecha_generacion_diploma = ?3 where token = ?4 ", nativeQuery = true)
+	public void createCertificacionParticipante(boolean aprobado, String imagenDiploma, Date fechaDiploma, String token);
+	
+	@Query(value="select p from Participante p where p.token = ?1 ")
+	public Participante findByToken(String token);
+	
+	@Transactional
+	@Modifying
+	@Query(value="update participantes set fecha_generacion_diploma = ?1 where token = ?2 ", nativeQuery = true)
+	public void updateCertificacionParticipante(Date fechaDiploma, String token);
+	
 	
 	
 }

@@ -37,7 +37,7 @@ public class ReportesSniesCustomDao implements IReportesSniesCustomDao{
 		// TODO Auto-generated method stub
 		
 		StringBuilder query = new StringBuilder();
-		query.append(" SELECT id, DATE_FORMAT(fecha_inicio, '%d/%m/%Y'), DATE_FORMAT(fecha_fin, '%d/%m/%Y'), informe_cursos, informe_educacion_continua, informe_participante ") 
+		query.append(" SELECT id, DATE_FORMAT(fecha_inicio, '%d/%m/%Y'), DATE_FORMAT(fecha_fin, '%d/%m/%Y'), informe_cursos, informe_educacion_continua, informe_participante, descripcion ") 
 			 .append(" from informes_snies e ");
 		
 		if(idPrograma==null) {
@@ -66,6 +66,7 @@ public class ReportesSniesCustomDao implements IReportesSniesCustomDao{
 			dto.setInformeCursos(String.valueOf(o[3]));
 			dto.setInformeEduContinua(String.valueOf(o[4]));
 			dto.setInformeParticipantes(String.valueOf(o[5]));
+			dto.setDescripcion(String.valueOf(o[6]));
 			list.add(dto);
 			
 		}

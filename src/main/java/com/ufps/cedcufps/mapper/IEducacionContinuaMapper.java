@@ -2,9 +2,11 @@ package com.ufps.cedcufps.mapper;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.ufps.cedcufps.dto.CertificacionDto;
 import com.ufps.cedcufps.dto.EducacionContinuaAppDto;
 import com.ufps.cedcufps.dto.EducacionContinuaWebDto;
 import com.ufps.cedcufps.dto.InfoEducacionContinuaDto;
@@ -24,6 +26,7 @@ public interface IEducacionContinuaMapper {
 	public ParticipanteDto convertParticipanteToParticipanteDto(Participante p);
 	public List<ParticipanteDto> convertParticipantesToParticipanteDto(List<Participante> p);
 	public PonenteDto convertPonenteToPonenteDto(Ponente p);
+	public List<PonenteDto> convertListParticipantesToListPonentesDto(List<Participante> participantes);
 	public List<PonenteDto> convertListPonentesToListPonentesDto(List<Ponente> p);
 	public EducacionContinuaWebDto convertEducacionContinuaToEduContinuaWebDto(EducacionContinua e);
 	public List<EducacionContinuaWebDto> convertListEducacionContinuaToListEduContinuaWebDto(List<EducacionContinua> educacionesContinuas);
@@ -33,5 +36,12 @@ public interface IEducacionContinuaMapper {
 			String idProgramaResponsable, String idDocenteResponsable, String idClasificacionCine, String consecutivo,
 			String[] idTipoBeneficiarios);
 	public String convertFieldsFullName(Persona p);
+	
+	
+	public CertificacionDto convertToMisCertificaciones(Long idParticipante, Long idPersona, String nombrePersona, String tipoParticipante,
+			 String numeroDocumento, String tipoDocumento, String tipoEduContinua,
+			Long idEducacionContinua, String educacionContinua, Date fechaInicioEduContinua, Date fechaFinEduContinua, 
+			String diplomaParticipacion, boolean aprobado, Date fechaGeneracionDiploma, String token, Long idDiploma,
+			Map<String,Object> estructuraDiploma,Date fechaActualizacionDiploma);
 	
 }

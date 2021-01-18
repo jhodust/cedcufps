@@ -8,6 +8,7 @@ public class InformeSniesDto {
 	private String informeCursos;
 	private String informeEduContinua;
 	private String informeParticipantes;
+	private String descripcion;
 	public Long getId() {
 		return id;
 	}
@@ -43,6 +44,12 @@ public class InformeSniesDto {
 	}
 	public void setInformeParticipantes(String informeParticipantes) {
 		this.informeParticipantes = informeParticipantes;
+	}
+	public String getDescripcion() {
+		return descripcion;
+	}
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
 	}
 	
 	

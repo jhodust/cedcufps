@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
+import com.ufps.cedcufps.dto.InformeSniesDto;
 import com.ufps.cedcufps.modelos.InformeSnies;
 import com.ufps.cedcufps.modelos.Ponente;
 import com.ufps.cedcufps.modelos.Programa;
@@ -33,14 +34,13 @@ public class ReportesSniesRestController {
 	
 	
 	
-	@GetMapping(value = "/reportes-SNIES/generar")
-	public ResponseEntity<?> informeExcel(@RequestParam(name="fechaInicio", required=true) String fechaInicio, 
-			@RequestParam(name="fechaFin", required=true) String fechaFin) {
+	@PostMapping(value = "/reportes-SNIES/generar")
+	public ResponseEntity<?> informeExcel(@RequestBody InformeSniesDto informeSniesDto) {
 		System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
 		System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$444");
-		System.out.println(fechaInicio);
-		System.out.println(fechaFin);
-		informeSniesService.generarReporteSNIES(fechaInicio, fechaFin);
+		System.out.println(informeSniesDto.getFechaInicio());
+		System.out.println(informeSniesDto.getFechaFin());
+		informeSniesService.generarReporteSNIES(informeSniesDto.getFechaInicio(), informeSniesDto.getFechaFin(), informeSniesDto.getDescripcion());
 		//i.setInformeCurso(informeSniesService.generarReporteSNIESFormatoCurso(fechaInicio, fechaFin));
 		//i.setInformeEducacionContinua(informeSniesService.generarReporteSNIESFormatoEducacionContinua(fechaInicio, fechaFin));
 		//informeSniesService.save(i);

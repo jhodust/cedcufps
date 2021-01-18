@@ -1,5 +1,7 @@
 package com.ufps.cedcufps.services;
 
+import java.io.ByteArrayInputStream;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -13,11 +15,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.ufps.cedcufps.dao.IEducacionContinuaCustomDao;
 import com.ufps.cedcufps.dao.IEducacionContinuaDao;
 import com.ufps.cedcufps.dao.IParticipanteCustomDao;
 import com.ufps.cedcufps.dao.IParticipanteDao;
 import com.ufps.cedcufps.dao.IPersonaDao;
 import com.ufps.cedcufps.dao.ITipoParticipanteDao;
+import com.ufps.cedcufps.dto.CertificacionDto;
 import com.ufps.cedcufps.dto.ParticipanteDto;
 import com.ufps.cedcufps.dto.PersonaDto;
 import com.ufps.cedcufps.dto.PonenteDto;
@@ -25,6 +29,7 @@ import com.ufps.cedcufps.exception.CustomException;
 import com.ufps.cedcufps.mapper.IEducacionContinuaMapper;
 import com.ufps.cedcufps.mapper.IUsuarioMapper;
 import com.ufps.cedcufps.modelos.Asistente;
+import com.ufps.cedcufps.modelos.Diploma;
 import com.ufps.cedcufps.modelos.EducacionContinua;
 import com.ufps.cedcufps.modelos.Participante;
 import com.ufps.cedcufps.modelos.Persona;
@@ -34,6 +39,7 @@ import com.ufps.cedcufps.modelos.TipoParticipante;
 import com.ufps.cedcufps.utils.Archivo;
 import com.ufps.cedcufps.utils.CodigoQR;
 import com.ufps.cedcufps.utils.Encrypt;
+import com.ufps.cedcufps.utils.ManejoPdf;
 
 @Service
 public class ParticipanteService implements IParticipanteService{
@@ -43,6 +49,9 @@ public class ParticipanteService implements IParticipanteService{
 	
 	@Autowired
 	private IEducacionContinuaDao educacionContinuaDao;
+	
+	@Autowired
+	private IEducacionContinuaCustomDao educacionContinuaCustomDao;
 	
 	@Autowired
 	private IParticipanteDao participanteDao;
@@ -141,6 +150,7 @@ public class ParticipanteService implements IParticipanteService{
 		}else {
 			dto.setIdTipoPersona(idTipoPersona);
 		}
+		dto.setToken(String.valueOf(System.currentTimeMillis()));
 		participanteCustomDao.saveParticipante(dto);
 		System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 		System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
@@ -238,9 +248,10 @@ public class ParticipanteService implements IParticipanteService{
 	}
 
 	@Override
-	public List<Participante> findAllParticipacionesActivasByParticipante(String numDocumento) {
+	public List<ParticipanteDto> findAllParticipacionesActivasByParticipante() {
 		// TODO Auto-generated method stub
-		return participanteDao.findAllParticipacionesActivasByParticipante(numDocumento);
+		return educacionContinuaMapper.convertParticipantesToParticipanteDto(participanteDao.findAllParticipacionesActivasByParticipante(personaService.findPersonaLogueada().getNumeroDocumento()));
+		
 	}
 
 	@Override
@@ -356,6 +367,79 @@ public class ParticipanteService implements IParticipanteService{
 	public void notificarViaEmail(String email, String asunto, String tarjetaInscripcion, String contenido, String nombreParticipante, boolean adjuntarImagen) {
 		emailService.sendEmailInscripcion(email, asunto, tarjetaInscripcion, contenido, nombreParticipante,adjuntarImagen);
 		
+	}
+
+	@Override
+	public void certificarParticipante(MultipartFile file, Long idEduContinua, String token, String documentoParticipante) {
+		// TODO Auto-generated method stub
+		System.out.println(token);
+		System.out.println(idEduContinua);
+		String diplomaImagen=Archivo.saveImageAboutEducacionContinua(file,idEduContinua+"/diplomas-participantes/"+documentoParticipante);
+		participanteDao.createCertificacionParticipante(true, diplomaImagen, new Date(), token);
+		//prepararEmailInscripcion(p.getEducacionContinua(), perDto, tarjetaInscripcion);
+		
+	}
+	
+	
+	@Override
+	public ByteArrayInputStream generarPdfDiplomas(String token) {
+		// TODO Auto-generated method stub
+		Participante p= participanteDao.findByToken(token);
+		return ManejoPdf.generarPDFDiplomas(p.getDiplomaParticipacion());
+	}
+
+	@Override
+	public void cancelarCertificacionParticipante(String token) {
+		// TODO Auto-generated method stub
+		Participante p= participanteDao.findByToken(token);
+		try {
+			Archivo.deleteImage(p.getDiplomaParticipacion());
+		}catch(Exception e) {
+			System.out.println("No se encontró la imagen de la certificación del participante con token: " + token);
+		}
+		
+		participanteDao.createCertificacionParticipante(false, null, null, token);
+	}
+
+	@Override
+	public List<CertificacionDto> findCertificaciones() {
+		// TODO Auto-generated method stub
+		return educacionContinuaCustomDao.findCertificaciones(personaService.findPersonaLogueada().getNumeroDocumento());
+	}
+
+	@Override
+	public CertificacionDto findCertificacionByToken(String token) {
+		// TODO Auto-generated method stub
+		
+		Participante p = participanteDao.findByToken(token);
+		Persona per=p.getPersona();
+		EducacionContinua e= p.getEducacionContinua();
+		Diploma d= e.getDiploma();
+		return educacionContinuaMapper.convertToMisCertificaciones(p.getId(), per.getId(),
+				educacionContinuaMapper.convertFieldsFullName(per), p.getTipoParticipante().getTipoParticipante(),
+				per.getNumeroDocumento(), per.getTipoDocumento().getTipoDocumento(), e.getTipoEduContinua().getTipoEduContinua(), 
+				e.getId(), e.getNombre(), e.getFechaInicio(), e.getFechaFin(), p.getDiplomaParticipacion(), p.isAprobado(),
+				p.getFechaGeneracionDiploma(),p.getToken(), d.getId(), d.getEstructuraDiploma(), d.getUpdatedAt());
+		
+	}
+
+	@Override
+	public void updateCertificado(MultipartFile file, String filename, String token, Long idEduContinua, String documentoParticipante) {
+		// TODO Auto-generated method stub
+		
+		try {
+			Archivo.deleteImage(filename);
+			Archivo.saveImageAboutEducacionContinua(file,idEduContinua+"/diplomas-participantes/"+documentoParticipante);
+			participanteDao.updateCertificacionParticipante(new Date(), token);
+		}catch(Exception e) {
+			System.out.println("No se encontró la imagen de la certificación del participante con token: " + token);
+		}
+	}
+
+	@Override
+	public List<PonenteDto> findPonentesByEduContinua(Long idEducacionContinua) {
+		// TODO Auto-generated method stub
+		return educacionContinuaMapper.convertListParticipantesToListPonentesDto(participanteDao.findAllPonentesOfOneEducacionContinuaById(idEducacionContinua));
 	}
 	
 

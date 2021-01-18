@@ -1,10 +1,12 @@
 package com.ufps.cedcufps.services;
 
+import java.io.ByteArrayInputStream;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.ufps.cedcufps.dto.CertificacionDto;
 import com.ufps.cedcufps.dto.ParticipanteDto;
 import com.ufps.cedcufps.dto.PonenteDto;
 import com.ufps.cedcufps.modelos.Participante;
@@ -42,11 +44,25 @@ public interface IParticipanteService {
 	
 	public void deleteParticipanteById(Long id);
 	
-	public List<Participante> findAllParticipacionesActivasByParticipante(String numDocumento);
+	public List<ParticipanteDto> findAllParticipacionesActivasByParticipante();
 	
 	public List<ParticipanteDto> findAllParticipantesByEducacionContinua(String idEduContinua);
 	
 	public TipoParticipante findTipoParticipanteById(Long id);
 	
 	public ParticipanteDto savePonente(Ponente p);
+	
+	public void certificarParticipante(MultipartFile file,Long idEduContinua, String token, String documentoParticipante);
+	
+	public void updateCertificado(MultipartFile file, String filename, String token, Long idEduContinua, String documentoParticipante);
+
+	public ByteArrayInputStream generarPdfDiplomas(String token);
+	
+	public void cancelarCertificacionParticipante(String token);
+	
+	public List<CertificacionDto> findCertificaciones();
+	
+	public CertificacionDto findCertificacionByToken(String token);
+	
+	public List<PonenteDto> findPonentesByEduContinua(Long idEducacionContinua);
 }

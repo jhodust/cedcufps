@@ -83,10 +83,21 @@ public class Participante implements Serializable{
 	@JoinColumn(name="id_tipo_persona", foreignKey=@ForeignKey(name = "FK_participante_type_people"))
 	private TipoPersona tipoPersona;
 	
+	@Column(name = "fecha_generacion_diploma")
+	private Date fechaGeneracionDiploma;
+	
+	@Column(name = "diploma_participacion")
+	private String diplomaParticipacion;
+	
+	@Column(columnDefinition = "boolean default false")
+	private boolean aprobado;
 	@PrePersist
 	public void generarFecha() {
 		this.fechaRegisto = new Date();
 	}
+	
+	@Column(name = "token")
+	private String token;
 	
 	public Long getId() {
 		return id;
@@ -169,6 +180,38 @@ public class Participante implements Serializable{
 
 	public void setTipoPersona(TipoPersona tipoPersona) {
 		this.tipoPersona = tipoPersona;
+	}
+
+	public Date getFechaGeneracionDiploma() {
+		return fechaGeneracionDiploma;
+	}
+
+	public void setFechaGeneracionDiploma(Date fechaGeneracionDiploma) {
+		this.fechaGeneracionDiploma = fechaGeneracionDiploma;
+	}
+
+	public String getDiplomaParticipacion() {
+		return diplomaParticipacion;
+	}
+
+	public void setDiplomaParticipacion(String diplomaParticipacion) {
+		this.diplomaParticipacion = diplomaParticipacion;
+	}
+
+	public boolean isAprobado() {
+		return aprobado;
+	}
+
+	public void setAprobado(boolean aprobado) {
+		this.aprobado = aprobado;
+	}
+
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
 	}
 
 	

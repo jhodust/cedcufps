@@ -7,9 +7,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ufps.cedcufps.dao.IDiplomaDao;
+import com.ufps.cedcufps.dao.IEducacionContinuaDao;
 import com.ufps.cedcufps.dao.IFirmaDiplomaDao;
 import com.ufps.cedcufps.dao.IImagenDiplomaDao;
 import com.ufps.cedcufps.dao.ITextoDiplomaDao;
+import com.ufps.cedcufps.dto.DiplomaDto;
 import com.ufps.cedcufps.modelos.Diploma;
 import com.ufps.cedcufps.modelos.EducacionContinua;
 import com.ufps.cedcufps.modelos.FirmaDiploma;
@@ -24,13 +26,9 @@ public class DiplomaService implements IDiplomaService {
 	private IDiplomaDao diplomaDao;
 	
 	@Autowired 
-	private IImagenDiplomaDao imagenDiplomaDao;
+	private IEducacionContinuaDao educacionContinuaDao;
 	
-	@Autowired 
-	private ITextoDiplomaDao textoDiplomaDao;
 	
-	@Autowired 
-	private IFirmaDiplomaDao firmaDiplomaDao;
 	
 	@Override
 	public Diploma findOne(Long id) {
@@ -38,40 +36,31 @@ public class DiplomaService implements IDiplomaService {
 		return diplomaDao.findById(id).get();
 	}
 	
-	@Override
-	public List<ImagenDiploma> findImagenesDefault() {
-		// TODO Auto-generated method stub
-		return imagenDiplomaDao.findAllDefault();
-	}
+	
 
 	@Override
-	public List<TextoDiploma> findTextoDefault() {
+	public Long save(DiplomaDto d) {
 		// TODO Auto-generated method stub
-		return textoDiplomaDao.findAllDefault();
-	}
-
-	@Override
-	public List<ImagenDiploma> findImagenesByDiploma(Long idDiploma) {
-		// TODO Auto-generated method stub
-		return imagenDiplomaDao.findByDiploma(idDiploma);
-	}
-
-	@Override
-	public List<TextoDiploma> findTextoByDiploma(Long idDiploma) {
-		// TODO Auto-generated method stub
-		return textoDiplomaDao.findByDiploma(idDiploma);
-	}
-
-	@Override
-	public List<FirmaDiploma> findFirmaByDiploma(Long idDiploma) {
-		// TODO Auto-generated method stub
-		return firmaDiplomaDao.findByDiploma(idDiploma);
-	}
-
-	@Override
-	public void save(Diploma d) {
-		// TODO Auto-generated method stub
-		diplomaDao.save(d);
+		
+		System.out.println("ACTUALIZANDOOOOOOOOOOOOOOO DIPLOMMMMMMMMMMMMMMMMMMMMMMAAAAAAAAAAAAAA");
+		Diploma diploma;
+		if(d.getId() !=null ) {
+			System.out.println("va a buscar diploma id");
+			diploma = diplomaDao.findDiplomaById(d.getId());
+			System.out.println("setea la estructura");
+			diploma.setEstructuraDiploma(d.getEstructuraDiploma());
+			System.out.println("va a guardar");
+		}else {
+			diploma= new Diploma();
+			diploma.setId(d.getId());
+			diploma.setEstructuraDiploma(d.getEstructuraDiploma());
+			
+			
+		}
+		diplomaDao.save(diploma);
+		System.out.println("id despues de guardar diploma: " + diploma.getId());
+		educacionContinuaDao.updateDiplomaEducacionContinua(diploma.getId(), d.getIdEduContinua());
+		return diploma.getId();
 	}
 
 	

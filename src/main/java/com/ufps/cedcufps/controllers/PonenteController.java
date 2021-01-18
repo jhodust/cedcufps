@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -30,6 +31,22 @@ public class PonenteController {
 	@Autowired
 	private IPersonaService personaService;
 
+	
+	@RequestMapping(value = "/educacion-continua/{id}/ponentes")
+	public String reloadListPonentes(@PathVariable(value = "id") Long idEducacionContinua, Model model) {
+		
+		model.addAttribute("ponentes",participanteService.findPonentesByEduContinua(idEducacionContinua));
+		return "educacion_continua/ponente/index :: indexPonentes";
+	}
+	
+	@RequestMapping(value = "/educacion-continua/detalles/{id}/ponentes")
+	public String reloadListJornadasDetallesPonente(@PathVariable(value = "id") Long idEducacionContinua, Model model) {
+		
+		model.addAttribute("ponentes",participanteService.findPonentesByEduContinua(idEducacionContinua));
+		return "educacion_continua/detalles :: detallesEcPonentes";
+	}
+	
+	
 	/*@RequestMapping(value = "/educacion-continua/{id}/ponentes")
 	public String listar(@PathVariable(value = "id") Long id, Map<String, Object> model) {
 		model.put("titulo","PONENTES");

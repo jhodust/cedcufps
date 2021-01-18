@@ -38,6 +38,8 @@ public interface IEducacionContinuaService {
 	
 	public Page<EducacionContinua> educacionContinuaNoTerminadas(Pageable pageable);
 	
+	public Page<EducacionContinua> educacionContinuaFiltroPanel(Long idTipoEdC, Long idPrograma, Long idBeneficiarios, Pageable pageable);
+	
 	public void save(EducacionContinua ec);
 	
 	public Optional<EducacionContinua> findOne(Long id);
@@ -48,6 +50,8 @@ public interface IEducacionContinuaService {
 	
 	
 	public List<TipoEducacionContinua> findAllTiposEducacionContinua(Long id);
+	
+	public List<TipoEducacionContinua> findAllTiposEducacionContinuaExisting();
 	
 	public List<ClasificacionCine> findAllClasificacionCine();
 	
@@ -96,7 +100,7 @@ public interface IEducacionContinuaService {
 	
 	public RequisitosInscripcionDto consultarRequisitosInscripcion(String idAcceso);
 	
-	public void saveDiploma(EducacionContinua ec);
+	//public void saveDiploma(EducacionContinua ec);
 	
 	public ByteArrayInputStream generarPdfAsistentes(String nombreEducacionContinua, String fechaInicio);
 	

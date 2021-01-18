@@ -1,47 +1,39 @@
 package com.ufps.cedcufps.dto;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 public class DiplomaDto {
 	
 	private Long id;
-	private List<ImagenesDiplomaDto> imagenes;
-	private List<TextosDiplomaDto> textos;
-	private List<FirmasDiplomaDto> firmas;
+	private Map<String, Object> estructuraDiploma;
+	private Long idEduContinua;
+	private Date fechaActualizacionDiploma;
+	
 	public Long getId() {
 		return id;
 	}
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public List<ImagenesDiplomaDto> getImagenes() {
-		return imagenes;
+	public Map<String, Object> getEstructuraDiploma() {
+		return estructuraDiploma;
 	}
-	public void setImagenes(List<ImagenesDiplomaDto> imagenes) {
-		this.imagenes = imagenes;
+	public void setEstructuraDiploma(Map<String, Object> estructuraDiploma) {
+		this.estructuraDiploma = estructuraDiploma;
 	}
-	public List<TextosDiplomaDto> getTextos() {
-		return textos;
+	public Long getIdEduContinua() {
+		return idEduContinua;
 	}
-	public void setTextos(List<TextosDiplomaDto> textos) {
-		this.textos = textos;
+	public void setIdEduContinua(Long idEduContinua) {
+		this.idEduContinua = idEduContinua;
 	}
-	public List<FirmasDiplomaDto> getFirmas() {
-		return firmas;
+	public Date getFechaActualizacionDiploma() {
+		return fechaActualizacionDiploma;
 	}
-	public void setFirmas(List<FirmasDiplomaDto> firmas) {
-		this.firmas = firmas;
-	}
-	
-	public void addTexto(TextosDiplomaDto textoDiplomaDto) {
-		this.textos.add(textoDiplomaDto);
+	public void setFechaActualizacionDiploma(Date fechaActualizacionDiploma) {
+		this.fechaActualizacionDiploma = fechaActualizacionDiploma;
 	}
 	
-	public void addFirmas(FirmasDiplomaDto firmasDiplomaDto) {
-		this.firmas.add(firmasDiplomaDto);
-	}
-	
-	public void addImagenes(ImagenesDiplomaDto imagenesDiplomaDto) {
-		this.imagenes.add(imagenesDiplomaDto);
-	}
 }

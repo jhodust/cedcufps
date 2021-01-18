@@ -34,29 +34,43 @@ public class ProgramaController {
 	private IPersonaService personaService;
 	
 	@RequestMapping(value = "/programas-academicos")
-	public String listar(@RequestParam(name="page", defaultValue = "0") int page, @RequestParam(name="facultad", defaultValue = "") String facultad,Map<String, Object> model) {
-		Pageable pageRequest=PageRequest.of(page, 9);
+	public String listar(Map<String, Object> model) {
+		Pageable pageRequest=PageRequest.of(0, 3);
 		
-		if(facultad.equalsIgnoreCase("")) {
-			Page<Programa> programas=programaService.findAll(pageRequest);
-			PageRender<Programa> pageRender= new PageRender<Programa>("/programas-academicos", programas);
-			model.put("programas",programas);	
-			model.put("page",pageRender);
-			model.put("programasTotales",programaService.findAll());
-			model.put("facultad",new Facultad());//para cuando el filtro es todos
-		}else {
-			Page<Programa> programas=programaService.findByFacultad(facultad, pageRequest);
-			PageRender<Programa> pageRender= new PageRender<Programa>("/programas-academicos", programas);
-			model.put("programas",programas);
-			model.put("page",pageRender);
-			model.put("programasTotales",programaService.findByFacultad(facultad));
-			model.put("facultad",facultadService.findByFacultad(facultad));
-		}
+		Page<Programa> programas=programaService.findAll(pageRequest);
+		PageRender<Programa> pageRender= new PageRender<Programa>("/programas-academicos/reload", programas);
+		model.put("programas",programas);	
+		model.put("page",pageRender);
+		model.put("programasTotales",programaService.findAll());
+		model.put("facultad",new Facultad());//para cuando el filtro es todos
+	
+		
 		model.put("facultades",facultadService.findAll());
 		model.put("docentes",personaService.findAllDocentes());
 		model.put("photoUser", SpringSecurityConfig.getInfoSession().getPhoto());
 		model.put("nameUser", SpringSecurityConfig.getInfoSession().getName());
 		return "programa/index";
+	}
+	
+	@RequestMapping(value = "/programas-academicos/reload")
+	public String reloadList(@RequestParam(name="page", defaultValue = "0") int page, @RequestParam(name="facultad", defaultValue = "") String facultad,Map<String, Object> model) {
+		Pageable pageRequest=PageRequest.of(page, 3);
+		
+		if(facultad.equalsIgnoreCase("")) {
+			Page<Programa> programas=programaService.findAll(pageRequest);
+			PageRender<Programa> pageRender= new PageRender<Programa>("/programas-academicos/reload", programas);
+			model.put("programas",programas);	
+			model.put("page",pageRender);
+			model.put("programasTotales",programaService.findAll());
+		}else {
+			Page<Programa> programas=programaService.findByFacultad(facultad, pageRequest);
+			PageRender<Programa> pageRender= new PageRender<Programa>("/programas-academicos/reload?facultad="+facultad.replaceAll("\\s", "%20"), programas);
+			model.put("programas",programas);
+			model.put("page",pageRender);
+			model.put("programasTotales",programaService.findByFacultad(facultad));
+		}
+		
+		return "programa/index :: listProgramas";
 	}
 	
 	/*@RequestMapping(value = "/programas-academicos/filter/{facultad}")

@@ -54,6 +54,8 @@ public interface IPersonaService {
 	
 	public Persona findPersonaLogueada();
 	
+	public String findEmailPersonaLogueada();
+	
 	public UsuarioAppDto convertPersonaLogueadaApp(Persona p);
 	
 	public PersonaDto findOne(Long id);

@@ -33,6 +33,10 @@ public class ParticipanteDto {
 	private String primerApellido;
 	private String segundoApellido;
 	private Long idTipoPersona;
+	private String diplomaParticipacion;
+	private boolean aprobado;
+	private Date fechaGeneracionDiploma;
+	private String token;
 	
 	public ParticipanteDto() {
 		this.jornadasAsistencias=new HashMap<>();
@@ -192,6 +196,30 @@ public class ParticipanteDto {
 	}
 	public void setIdTipoPersona(Long idTipoPersona) {
 		this.idTipoPersona = idTipoPersona;
+	}
+	public String getDiplomaParticipacion() {
+		return diplomaParticipacion;
+	}
+	public void setDiplomaParticipacion(String diplomaParticipacion) {
+		this.diplomaParticipacion = diplomaParticipacion;
+	}
+	public boolean isAprobado() {
+		return aprobado;
+	}
+	public void setAprobado(boolean aprobado) {
+		this.aprobado = aprobado;
+	}
+	public Date getFechaGeneracionDiploma() {
+		return fechaGeneracionDiploma;
+	}
+	public void setFechaGeneracionDiploma(Date fechaGeneracionDiploma) {
+		this.fechaGeneracionDiploma = fechaGeneracionDiploma;
+	}
+	public String getToken() {
+		return token;
+	}
+	public void setToken(String token) {
+		this.token = token;
 	}
 	
 	

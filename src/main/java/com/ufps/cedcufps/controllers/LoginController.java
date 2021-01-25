@@ -24,15 +24,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 public class LoginController {
 	
-	@GetMapping(value = "/login")
-	public String login(@RequestParam(value = "error", required = false) String error, Model model, Principal principal, RedirectAttributes flash) {
-		
-		if(error != null) {
-			model.addAttribute("error", "Nombre o pass incorrectos");
-		}
-		System.out.println("***************************valida login**********");
-		return "login";
-	}
 	
 	@Autowired
 	private OAuth2AuthorizedClientService authorizedClientService;
@@ -57,7 +48,7 @@ public class LoginController {
 	}
 	
 	
-	@RequestMapping(value="/logoutt", method = RequestMethod.GET)
+	@RequestMapping(value="/logout", method = RequestMethod.GET)
 	public String logoutPage (HttpServletRequest request, HttpServletResponse response) {
 	    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 	    if (auth != null){    

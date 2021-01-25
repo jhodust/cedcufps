@@ -43,17 +43,17 @@ import java.util.Map;
 
 public class ReportesExcel {
 	
-	public final static String rutaPlantillaEducacionContinua="files/formatos_reportes_excel/formato_educacion_continua.xlsx";
-	public final static String rutaPlantillaCursos="files/formatos_reportes_excel/formato_cursos.xlsx";
-	public final static String rutaPlantillaDocentesResponsables="files/formatos_reportes_excel/formato_participante.xlsx";
-	public final static String rutaReportes="files/reportes_snies/";
+	public final static String standardInformeCursos="informe_cursos_snies_%s.xlsx";
+	public final static String standardInformeEducacionContinua="informe_educacion_continua_snies_%s.xlsx";
+	public final static String standardInformeParticipantes="informe_participante_snies_%s.xlsx";
 	
-	public static String reporteCursos(List<InformeCursosDto> result, String nombre) {
-		String filename=rutaReportes+"informe_cursos_snies_"+nombre+".xlsx";
-		Path rutaArchivo = Paths.get(rutaPlantillaCursos);
+	public static String reporteCursos(List<InformeCursosDto> result, String nombre, Path plantilla, Path destino) {
+		String filename=destino.resolve(String.format(standardInformeCursos,nombre)).toString();
+		System.out.println("filename reporte cursos");
+		System.out.println(filename);
 		FileInputStream file;
 		try {
-			file = new FileInputStream(rutaArchivo.toFile());
+			file = new FileInputStream(plantilla.toFile());
 			Workbook workbook = new XSSFWorkbook(file);
 			Sheet sheet = workbook.getSheetAt(0);
 			int i = 1;
@@ -104,12 +104,14 @@ public class ReportesExcel {
 		return filename;
 	}
 	
-	public static String reporteEducacionContinua(List<InformeEducacionContinuaDto> resultEduContinua, List<InformeDetalleEducacionContinuaDto> resultParticipantes, String nombre) {
-		String filename=rutaReportes+"informe_educacion_continua_snies_"+nombre+".xlsx";
-		Path rutaArchivo = Paths.get(rutaPlantillaEducacionContinua);
+	public static String reporteEducacionContinua(List<InformeEducacionContinuaDto> resultEduContinua, 
+			List<InformeDetalleEducacionContinuaDto> resultParticipantes, String nombre, Path plantilla, Path destino) {
+		String filename=destino.resolve(String.format(standardInformeEducacionContinua,nombre)).toString();
+		System.out.println("filename reporte educacion continua");
+		System.out.println(filename);
 		FileInputStream file;
 		try {
-			file = new FileInputStream(rutaArchivo.toFile());
+			file = new FileInputStream(plantilla.toFile());
 			Workbook workbook = new XSSFWorkbook(file);
 
 			/* formato para separar numeros con puntos */
@@ -338,12 +340,15 @@ public class ReportesExcel {
 		return filename;
 	}
 	
-	public static String reporteDocentesParticipantesResponsables(List<InformeParticipanteResponsableDto> result, String nombre) {
-		String filename=rutaReportes+"informe_participante_snies_"+nombre+".xlsx";
-		Path rutaArchivo = Paths.get(rutaPlantillaDocentesResponsables);
+	public static String reporteDocentesParticipantesResponsables(List<InformeParticipanteResponsableDto> result, 
+			String nombre,Path plantilla, Path destino) {
+		String filename=destino.resolve(String.format(standardInformeParticipantes,nombre)).toString();
+		System.out.println("filename reporte participantes");
+		System.out.println(filename);
+		
 		FileInputStream file;
 		try {
-			file = new FileInputStream(rutaArchivo.toFile());
+			file = new FileInputStream(plantilla.toFile());
 			Workbook workbook = new XSSFWorkbook(file);
 			Sheet sheet = workbook.getSheetAt(0);
 			int i = 1;

@@ -1,6 +1,8 @@
 package com.ufps.cedcufps.services;
 
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -112,6 +114,9 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 	
 	@Autowired 
 	private IDiplomaCustomDao diplomaCustomDao;
+	
+	@Autowired 
+	private IFileStorageService fileStorageService;
 	
 	@Override
 	public List<EducacionContinua> findAll() {
@@ -411,7 +416,7 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 				if(dto.getConsecutivo()==null) {
 					this.updateCodigoEducacionContinua(dto.getId(),dto.getIdTipoEduContinua(),dto.getIdProgramaResp());
 				}
-				Archivo.generarDirectoriosPropiosEducacionContinua(dto.getId());
+				this.createDirEducacionContinua(dto.getId());
 				
 			}else {
 				educacionContinuaCustomDao.updateEducacionContinua(dto);
@@ -435,7 +440,7 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 			if(imagenActual!=null && !imagenActual.isEmpty()) {
 				Archivo.deleteImage(imagenActual);
 			}
-			String rutaImagen=Archivo.saveImageAboutEducacionContinua(imagen,idEducacionContinua+"/portada");
+			String rutaImagen=Archivo.saveImageAboutEducacionContinua(imagen,idEducacionContinua+"/portada",fileStorageService.dirEducacionContinua());
 			educacionContinuaDao.updateImagenPortada(rutaImagen,idEducacionContinua);
 			System.out.println("actualizando guardar imagen edu continua");
 		}
@@ -542,14 +547,14 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 	}
 	
 	@Override
-	public EducacionContinuaWebDto createEducacionContinua(Persona p, boolean isAdmin, boolean isDirPrograma, boolean isDocente) {
+	public EducacionContinuaWebDto createEducacionContinua(Persona p, boolean isAdmin, boolean isDirPrograma, boolean hasPermission) {
 		EducacionContinuaWebDto dto = new EducacionContinuaWebDto();
 		if(!isAdmin) {
 			if(isDirPrograma) {
 				Programa programa= programaDao.findByDirector(p.getId());
 				dto.setIdProgramaResp(programa.getId());
 				dto.setProgramaResp(programa.getPrograma());
-			}else if(isDocente) {
+			}else if(hasPermission) {
 				dto.setNombreDocenteResp(educacionContinuaMapper.convertFieldsFullName(p));
 				dto.setCodigoDocenteResp(((Docente)p).getCodigo());
 				dto.setIdDocenteResp(((Docente)p).getId());
@@ -680,19 +685,22 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 	}*/
 
 	@Override
-	public ByteArrayInputStream generarPdfAsistentes(String nombreEducacionContinua, String fechaInicio) {
+	public ByteArrayInputStream generarPdfAsistentes(String idAcceso) {
 		// TODO Auto-generated method stub
-		EducacionContinua e;
-		try {
-			e = educacionContinuaDao.findByNombreAndFechaInicio(nombreEducacionContinua,new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(fechaInicio));
-			return ManejoPdf.generarPDFParticipantes(educacionContinuaMapper.convertParticipantesToParticipanteDto(e.getParticipantes()),e);
-		} catch (ParseException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		return null;
-		
+		EducacionContinua e = educacionContinuaDao.findByIdAcceso(idAcceso);
+		return ManejoPdf.generarPDFParticipantes(educacionContinuaMapper.convertParticipantesToParticipanteDto(e.getParticipantes()),e,fileStorageService.dirImgPdfAsistentes());
 	}
 	
 
+	public void createDirEducacionContinua(Long idEducacionContinua) {
+		try {
+			Files.createDirectories(fileStorageService.dirEducacionContinua().resolve(String.valueOf(idEducacionContinua)).resolve(fileStorageService.dirQrParticipantes()));
+			Files.createDirectories(fileStorageService.dirEducacionContinua().resolve(String.valueOf(idEducacionContinua)).resolve(fileStorageService.dirTarjetasInscripcion()));
+			Files.createDirectories(fileStorageService.dirEducacionContinua().resolve(String.valueOf(idEducacionContinua)).resolve(fileStorageService.dirDiplomasParticipantes()));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
 }

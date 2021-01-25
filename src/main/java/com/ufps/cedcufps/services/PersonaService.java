@@ -740,6 +740,7 @@ public class PersonaService implements IPersonaService, UserDetailsService {
 	@Override
 	public PersonaDtoLogueada findPersonaLogueadaDto(Persona p) {
 		PersonaDtoLogueada dto = new PersonaDtoLogueada();
+		dto.setIdPersona(p.getId());
 		dto.setSuperAdmin(this.isSuperAdmin(p));
 		dto.setDirPrograma(this.isDirPrograma(p));
 		dto.setDocente(this.isDocente(p));

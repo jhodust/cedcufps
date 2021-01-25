@@ -16,12 +16,12 @@ $(document).ready(function ()
 
 
 function guardarFacultad(){
-	var boton = document.getElementById('btnGuardar');
-	boton.disabled=true;
+	/*var boton = document.getElementById('btnGuardar');
+	boton.disabled=true;*/
 	var facultad = $('#facultad').val();
 	var valid=validateInputTextRequerido('facultad','errorFacultad');
 	if(!valid){
-		boton.disabled=false;
+		//boton.disabled=false;
 		toastr
 			.error(
 					'Diligencie el formulario correctamente',
@@ -39,8 +39,10 @@ function guardarFacultad(){
 		success: function(result) {
 			console.log(result);
 			toastr.success('Se ha guardado la información', 'Excelente!');
-			window.setTimeout(function(){location.reload()},1000);
+			//window.setTimeout(function(){location.reload()},1000);
 			idFacultad=0;
+			paginadorLoadAjax('/facultades/reload');
+			$('#modalRegistroFacultad').modal('hide');
 		},
 		error: function(err) {
 			boton.disabled=false;

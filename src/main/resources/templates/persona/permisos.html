@@ -91,7 +91,7 @@
 													</div>
 													<select class="form-control"
 														data-toggle="select" id="programasEC" multiple="multiple">
-														<option value="0">Seleccione el programa...</option>
+														<option value="0" disabled>Seleccione...</option>
 														<option th:each="p: ${persona.selectProgramasForEduContinua}" th:value="${p.id}"
 														 
 															th:text="${p.programa}"></option>
@@ -145,7 +145,7 @@
 													</div>
 													<select class="form-control"
 														data-toggle="select" id="programasEstudiantes" multiple="multiple">
-														<option value="0">Seleccione los programas...</option>
+														<option value="0" disabled>Seleccione...</option>
 														<option th:each="p: ${persona.selectProgramasForEstudiantes}" th:value="${p.id}"
 															th:text="${p.programa}"></option>
 													</select>
@@ -158,7 +158,7 @@
 												<div class="form-group">
 													<label class="form-control-label">¿En cuáles Departamentos Académicos desea gestionar docentes?</label> <select class="form-control"
 														data-toggle="select" id="deptosDocentes" multiple="multiple">
-														<option value="0">Seleccione los departamentos...</option>
+														<option value="0" disabled>Seleccione...</option>
 														<option th:each="d: ${persona.selectDeptosForDocentes}" th:value="${d.id}"
 															th:text="${d.departamento}"></option>
 													</select>
@@ -188,7 +188,7 @@
 													</div>
 													<select class="form-control"
 														data-toggle="select" id="programasGraduados" multiple="multiple">
-														<option value="0">Seleccione los programas...</option>
+														<option value="0" disabled>Seleccione...</option>
 														<option th:each="p: ${persona.selectProgramasForGraduados}" th:value="${p.id}"
 															th:text="${p.programa}"></option>
 													</select>
@@ -243,7 +243,7 @@
 													
 													<select class="form-control"
 														data-toggle="select" id="educacionesContinuas" multiple="multiple">
-														<option value="0">Seleccione los programas...</option>
+														<option value="0" disabled>Seleccione...</option>
 														<option th:each="e: ${persona.selectEduContinuasForAttendance}" th:value="${e.id}"
 															th:text="${e.nombre}"></option>
 													</select>

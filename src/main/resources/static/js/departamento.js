@@ -69,8 +69,10 @@ function guardarDepartamento(){
 		cache: false,
 		success: function(result) {
 			toastr.success('Se ha guardado la información', 'Excelente!');
-			window.setTimeout(function(){location.reload()},1000);
+			//window.setTimeout(function(){location.reload()},1000);
 			idFacultad=null;
+			paginadorLoadAjax('/departamentos-academicos/reload');
+			$('#modalRegistroDepartamento').modal('hide');
 		},
 		error: function(err) {
 			  console.log(err);

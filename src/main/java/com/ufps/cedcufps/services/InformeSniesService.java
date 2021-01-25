@@ -39,6 +39,9 @@ public class InformeSniesService implements IInformeSniesService {
 	
 	@Autowired
 	private IProgramaService programaService;
+	
+	@Autowired
+	private IFileStorageService fileStorageService;
 
 	@Override
 	public List<InformeSniesDto> findAll() {
@@ -61,7 +64,8 @@ public class InformeSniesService implements IInformeSniesService {
 		if(result.size()==0) {
 			throw new CustomException("No se encontraron educaciones continuas en los criterios seleccionados");
 		}
-		return ReportesExcel.reporteCursos(result,nombreMarcaTiempo);
+		return ReportesExcel.reporteCursos(result,nombreMarcaTiempo,
+				fileStorageService.dirPlantillaCursos(), fileStorageService.dirReportesSnies());
 		
 	}
 	
@@ -72,7 +76,8 @@ public class InformeSniesService implements IInformeSniesService {
 		//ReportesExcel.reporteEducacionContinuaHoja1("/formatos_reportes_excel/nuevo.xlsx",educacionesContinuas);
 		List<InformeEducacionContinuaDto> resultEduContinua = reporteSniesCustomDao.informeExcelEduContinuaHoja1(fechaInicio, fechaFin, idPrograma);
 		List<InformeDetalleEducacionContinuaDto> resultParticipantesEduContinua = reporteSniesCustomDao.informeExcelEduContinuaHoja2(fechaInicio, fechaFin,idPrograma);
-		return ReportesExcel.reporteEducacionContinua(resultEduContinua, resultParticipantesEduContinua, nombreMarcaTiempo);
+		return ReportesExcel.reporteEducacionContinua(resultEduContinua, resultParticipantesEduContinua, nombreMarcaTiempo,
+				fileStorageService.dirPlantillaEducacionContinua(), fileStorageService.dirReportesSnies());
 	}
 	
 	public String generarReporteSNIESFormatoParticipantesResponsable(Date fechaInicio, Date fechaFin, Long idPrograma, String nombreMarcaTiempo) {
@@ -81,7 +86,8 @@ public class InformeSniesService implements IInformeSniesService {
 		//ReportesExcel.reporteCursos("/formatos_reportes_excel/formato_cursos.xlsx",educacionesContinuas,año);
 		//ReportesExcel.reporteEducacionContinuaHoja1("/formatos_reportes_excel/nuevo.xlsx",educacionesContinuas);
 		List<InformeParticipanteResponsableDto> result = reporteSniesCustomDao.informeExcelParticipantesResponsables(fechaInicio, fechaFin,idPrograma);
-		return ReportesExcel.reporteDocentesParticipantesResponsables(result, nombreMarcaTiempo);
+		return ReportesExcel.reporteDocentesParticipantesResponsables(result, nombreMarcaTiempo, 
+				fileStorageService.dirPlantillaParticipantesResponsables(), fileStorageService.dirReportesSnies());
 	}
 
 	@Transactional(rollbackOn = CustomException.class)

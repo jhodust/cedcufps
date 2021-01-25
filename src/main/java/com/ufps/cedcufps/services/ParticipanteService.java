@@ -74,6 +74,9 @@ public class ParticipanteService implements IParticipanteService{
 	@Autowired
 	private IEmailService emailService;
 	
+	@Autowired
+	private IFileStorageService fileStorageService;
+	
 	@Override
 	public List<TipoParticipante> findAllTiposParticipante() {
 		// TODO Auto-generated method stub
@@ -132,7 +135,7 @@ public class ParticipanteService implements IParticipanteService{
 			;
 			System.out.println("encriptado: " + texto);
 			System.out.println("desencriptado: " + Encrypt.desencriptar(texto));
-			dto.setImagenQr(CodigoQR.generateQR(e.getId()+"/qr-participantes/"+nombreArchivo, texto));
+			dto.setImagenQr(CodigoQR.generateQR(fileStorageService.dirEducacionContinua().resolve(String.valueOf(e.getId())).resolve(fileStorageService.dirQrParticipantes()),nombreArchivo, texto));
 			dto.setCodigoQR(texto);
 		} catch (Exception exc) {
 			// TODO Auto-generated catch block
@@ -331,7 +334,7 @@ public class ParticipanteService implements IParticipanteService{
 	public void saveTarjetaInscripcion(MultipartFile file, Long idParticipante) {
 		// TODO Auto-generated method stub
 		Participante p= participanteDao.findParticipanteById(idParticipante);
-		String tarjetaInscripcion=Archivo.saveImageAboutEducacionContinua(file,p.getEducacionContinua().getId()+"/tarjetas-inscripcion/inscripcion_"+p.getPersona().getNumeroDocumento());
+		String tarjetaInscripcion=Archivo.saveImageAboutEducacionContinua(file,"inscripcion_"+p.getPersona().getNumeroDocumento(),fileStorageService.dirEducacionContinua().resolve(String.valueOf(p.getEducacionContinua().getId())).resolve(fileStorageService.dirTarjetasInscripcion()));
 		participanteDao.updateTarjetaInscripcion(tarjetaInscripcion, idParticipante);
 		System.out.println("#############################################################################");
 		System.out.println("tarjeta inscripcion");
@@ -374,7 +377,7 @@ public class ParticipanteService implements IParticipanteService{
 		// TODO Auto-generated method stub
 		System.out.println(token);
 		System.out.println(idEduContinua);
-		String diplomaImagen=Archivo.saveImageAboutEducacionContinua(file,idEduContinua+"/diplomas-participantes/"+documentoParticipante);
+		String diplomaImagen=Archivo.saveImageAboutEducacionContinua(file,documentoParticipante,fileStorageService.dirEducacionContinua().resolve(String.valueOf(idEduContinua)).resolve(fileStorageService.dirDiplomasParticipantes()));
 		participanteDao.createCertificacionParticipante(true, diplomaImagen, new Date(), token);
 		//prepararEmailInscripcion(p.getEducacionContinua(), perDto, tarjetaInscripcion);
 		
@@ -429,7 +432,7 @@ public class ParticipanteService implements IParticipanteService{
 		
 		try {
 			Archivo.deleteImage(filename);
-			Archivo.saveImageAboutEducacionContinua(file,idEduContinua+"/diplomas-participantes/"+documentoParticipante);
+			Archivo.saveImageAboutEducacionContinua(file,documentoParticipante, fileStorageService.dirEducacionContinua().resolve(String.valueOf(idEduContinua)).resolve(fileStorageService.dirDiplomasParticipantes()));
 			participanteDao.updateCertificacionParticipante(new Date(), token);
 		}catch(Exception e) {
 			System.out.println("No se encontró la imagen de la certificación del participante con token: " + token);

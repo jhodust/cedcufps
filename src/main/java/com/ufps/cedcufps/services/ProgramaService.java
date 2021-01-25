@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import javax.sound.midi.Soundbank;
 import javax.validation.ConstraintViolationException;
 
 import org.hibernate.exception.DataException;
@@ -83,7 +84,6 @@ public class ProgramaService implements IProgramaService {
 	@Override
 	@Transactional(rollbackFor = CustomException.class) 
 	public void save(Programa p) {
-		//las siguientes validaciones son porque no sé porque no captura en todos los casos de duplicidad la excepcion DataIntegrityViolationException
 		boolean asignarPermisosDir=true;
 		if(programaDao.cantidadProgramaExistentes(p.getId(), p.getPrograma())>0) {
 			throw new CustomException("El nombre del programa ingresado ya se encuentra registrado", HttpStatus.BAD_REQUEST);
@@ -91,18 +91,31 @@ public class ProgramaService implements IProgramaService {
 		if(programaDao.cantidadCodigosExistentes(p.getId(), p.getCodigo())>0) {
 			throw new CustomException("El código ingresado ya está asignado a otro programa", HttpStatus.BAD_REQUEST);
 		}
+		
+		System.out.println("validar si existe ya el director de programas");
 		if(programaDao.cantidadDirProgramaExistentes(p.getId(),p.getDirectorPrograma().getId())>0) {
+			System.out.println("desvincular director");
 			programaDao.desvincularDirectorPrograma(p.getId(),p.getDirectorPrograma().getId());
+			System.out.println("delete roles");
 			personaRolCustomDao.deleteRolesDirPrograma(p.getDirectorPrograma().getId());
 		}
 		
 		if(p.getId()>0 ) {
 			Programa pr=programaDao.findById(p.getId()).orElseThrow(() -> new CustomException("El Programa Académico no fue encontrado en la base de datos"));
-			if(pr.getDirectorPrograma().getId().equals(p.getDirectorPrograma().getId())) {
+			if(pr.getDirectorPrograma() != null && pr.getDirectorPrograma().getId().equals(p.getDirectorPrograma().getId())) {
+				System.out.println("el director anterior es el mismo");
 				asignarPermisosDir=false;
 			}else {
-				personaRolCustomDao.deleteRolesDirPrograma(pr.getDirectorPrograma().getId());
+				System.out.println("antes de validar si el director del programa es null");
+				if(pr.getDirectorPrograma()!=null) {
+					System.out.println("director de programa no era null");
+					System.out.println("delete permisos");
+					personaRolCustomDao.deleteRolesDirPrograma(pr.getDirectorPrograma().getId());
+				}
+				
+				System.out.println("actualizar director");
 				pr.setDirectorPrograma(docenteDao.findById(p.getDirectorPrograma().getId()).orElseThrow(() -> new CustomException("El docente seleccionado no fue encontrado en la base de datos")));
+				
 			}
 			pr.setCodigo(p.getCodigo());
 			pr.setPrograma(p.getPrograma());
@@ -113,8 +126,7 @@ public class ProgramaService implements IProgramaService {
 		try {
 			programaDao.save(p);
 			if(asignarPermisosDir) {
-				System.out.println("*******************************************************************");
-				System.out.println("entra a asignar permisos");
+				System.out.println("asignar permisos");
 				this.asignarPermisosDirector(p.getDirectorPrograma().getId(), p.getCodigo());
 			}
 		}catch(Exception e) {
@@ -159,14 +171,16 @@ public class ProgramaService implements IProgramaService {
 		
 		
 		/*****************rol para administrar eventos del programa del cual es director*****************/
-		
+		System.out.println("asignar permisos manaeccu");
 		personaRolCustomDao.save("ROLE_MANAECCU",idDirPrograma);
+		
 		
 		personaRolCustomDao.savePermisoParaEducacionContinua("ROLE_MANAECCU",idDirPrograma,p.getId());
 		
 		/*
 		 * ****************************rol para administrar personas ***********************
 		 */
+		System.out.println("asignar permisos manpeople");
 		personaRolCustomDao.save("ROLE_MANPEOPLE",idDirPrograma);
 		personaRolCustomDao.savePermisoParaTipoPersonas("ROLE_MANPEOPLE", idDirPrograma, "Estudiante");
 		personaRolCustomDao.savePermisoParaTipoPersonas("ROLE_MANPEOPLE", idDirPrograma, "Graduado");
@@ -179,11 +193,13 @@ public class ProgramaService implements IProgramaService {
 		/*
 		 * ****************************rol para tomar asistencia app***********************
 		 */
+		System.out.println("asignar permisos attendance");
 		personaRolCustomDao.save("ROLE_ATTENDANCE",idDirPrograma);
 		
 		/*
 		 * ****************************rol para administrar informe snies***********************
 		 */
+		System.out.println("asignar permisos snies");
 		personaRolCustomDao.save("ROLE_SNIES",idDirPrograma);
 		
 		
@@ -197,20 +213,28 @@ public class ProgramaService implements IProgramaService {
 	}
 
 	@Override
-	public List<Programa> programasParaEduContinuaBase(){
-		Persona p= personaService.findPersonaLogueada();
+	public List<ProgramaDto> programasParaEduContinuaBase(Long idPersona, boolean isSuperAdmin, boolean hasPermission){
 		List<Programa> programas= new ArrayList<Programa>();
-		if(personaService.isSuperAdmin(p)) {
+		if(isSuperAdmin) {
 			System.out.println("es admin y lista todo");
-			return (List<Programa>)programaDao.findAll();
-		}else if (personaService.isDirPrograma(p)) {
+			programas= (List<Programa>)programaDao.findAll();
+		}else if (hasPermission) {
 			System.out.println("es director y lista programas director");
+			programas=programaDao.findProgramasEducacionContinuaBase(idPersona);
 			
-			programas.add(programaDao.findByDirector(p.getId()));
-			return programas;
-		}else {
-			System.out.println("es docente y lista null");
-			return null;
 		}
+		return programaMapper.convertListProgramaToProgramaDto(programas);
+	}
+
+	@Override
+	public List<ProgramaDto> findAllProgramasOfPermission(Long idPersona, boolean isSuperAdmin, boolean hasPermission) {
+		// TODO Auto-generated method stub
+		List<Programa> programas=new ArrayList<Programa>();
+		if(isSuperAdmin) {
+			programas=(List<Programa>)programaDao.findAll();
+		}else if(hasPermission) {
+			programas=programaDao.findProgramasOfPermissionEdCPersona(idPersona);
+		}
+		return programaMapper.convertListProgramaToProgramaDto(programas);
 	}
 }

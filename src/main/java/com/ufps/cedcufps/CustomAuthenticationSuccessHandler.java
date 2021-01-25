@@ -37,8 +37,23 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 			Authentication authentication) throws IOException, ServletException {
 		// TODO Auto-generated method stub
 		System.out.println("entra a sucess");
-		handle(request, response, authentication);
+		//handle(request, response, authentication);
         clearAuthenticationAttributes(request);
+        
+        HttpSession session = request.getSession();
+        if (session != null) {
+            String redirectUrl = (String) session.getAttribute("url_prior_login");
+            if (redirectUrl != null) {
+                // we do not forget to clean this attribute from session
+                session.removeAttribute("url_prior_login");
+                // then we redirect
+                redirectStrategy.sendRedirect(request, response, redirectUrl);
+            } else {
+            	handle(request, response, authentication);
+            }
+        } else {
+        	handle(request, response, authentication);
+        }
 	}
 	
 	protected void handle(
@@ -59,7 +74,7 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 	 	     
 	    	 new SecurityContextLogoutHandler().logout(request, response, auth);
 	    }else {
-	    	targetUrl = "/";
+	    	targetUrl = "/nn";
 	    }
 	    if (response.isCommitted()) {
 	        logger.debug(

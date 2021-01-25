@@ -12,37 +12,41 @@ import org.apache.commons.io.FileUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.google.common.io.Files;
+import com.ufps.cedcufps.exception.CustomException;
 import com.ufps.cedcufps.modelos.EducacionContinua;
 
 
 public class Archivo {
 
-	public final static String rutaEducacionContinua="files/uploads/educacion-continua/";
+	//public final static String rutaEducacionContinua="files/uploads/educacion-continua/";
 	
 	
-	public static void crearDirectorio(String rutaDir) {
-		
-		File folder=Paths.get(rutaEducacionContinua+rutaDir).toAbsolutePath().toFile();
-		if(!folder.exists() || !folder.isDirectory()) {
-			folder.mkdir();
-		}
-	}
 	
-	public static String saveImageAboutEducacionContinua(MultipartFile imagen, String imagenSinExtension) {
+	
+	public static String saveImageAboutEducacionContinua(MultipartFile imagen, String imagenSinExtension,Path path) {
 		System.out.println("entra a metodo save Image about educontinua");
 		System.out.println("extension imagen: " + Files.getFileExtension(imagen.getOriginalFilename()));
-		String nombreImagen=rutaEducacionContinua+imagenSinExtension+"."+Files.getFileExtension(imagen.getOriginalFilename());
+		String nombreImagen;
 		try {
+			
+			System.out.println("sout nombre imagen en save image about");
+			System.out.println(path.resolve(imagenSinExtension+"."+Files.getFileExtension(imagen.getOriginalFilename())).toFile().getCanonicalPath());
+			System.out.println(path.resolve(imagenSinExtension+"."+Files.getFileExtension(imagen.getOriginalFilename())).toString());
+			System.out.println(path.resolve(imagenSinExtension+"."+Files.getFileExtension(imagen.getOriginalFilename())).toAbsolutePath());
+			nombreImagen = path.resolve(imagenSinExtension+"."+Files.getFileExtension(imagen.getOriginalFilename())).toString();
+			System.out.println("nombre imagennnnnnnnnnnnnnnnnn en save image about educacion continua");
+			System.out.println(nombreImagen);
 			byte[] bytes = imagen.getBytes();
 			guardarImagen(bytes,nombreImagen);
-		} catch (IOException e) {
+			System.out.println("retorno nombre Imagen en saveImagenAboutEduContinua");
+			System.out.println(nombreImagen);
+			return nombreImagen;
+		} catch (IOException e1) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return null;
+			System.out.println("File Not FOund");
+			throw new CustomException("File Not Found");
 		}
-		System.out.println("retorno nombre Imagen en saveImagenAboutEduContinua");
-		System.out.println(nombreImagen);
-		return nombreImagen;
+		
 	}
 	
 	public static String saveImage(MultipartFile imagen, String imagenSinExtension) {
@@ -110,11 +114,12 @@ public class Archivo {
     	return cadena.toLowerCase();
 	}
 	
-	public static void generarDirectoriosPropiosEducacionContinua(Long idEducacionContinua) {
+	/*public static void generarDirectoriosPropiosEducacionContinua(Long idEducacionContinua, Path dirEducacionContinua) {
+		Files.createDirectories(dirEducacionContinua.);
 		Archivo.crearDirectorio(String.valueOf(idEducacionContinua));//directorio de la educacion continua
 		Archivo.crearDirectorio(idEducacionContinua+"/qr-participantes");//directorio interno de los qr de participantes de la educacion continua
 		Archivo.crearDirectorio(idEducacionContinua+"/tarjetas-inscripcion");
 		Archivo.crearDirectorio(idEducacionContinua+"/plantilla-diploma");
 		Archivo.crearDirectorio(idEducacionContinua+"/diplomas-participantes");
-	}
+	}*/
 }

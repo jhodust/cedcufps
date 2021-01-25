@@ -43,6 +43,7 @@ import com.ufps.cedcufps.dto.EducacionContinuaWebDto;
 import com.ufps.cedcufps.dto.InfoEducacionContinuaDto;
 import com.ufps.cedcufps.dto.JornadaAppDto;
 import com.ufps.cedcufps.dto.PersonaDtoLogueada;
+import com.ufps.cedcufps.dto.ProgramaDto;
 import com.ufps.cedcufps.modelos.Docente;
 import com.ufps.cedcufps.modelos.EducacionContinua;
 import com.ufps.cedcufps.modelos.Jornada;
@@ -107,9 +108,9 @@ public class EducacionContinuaController {
 		System.out.println("------------------------------------------------------------------------");
 		//System.out.println(ec.getIdClasificacion());
 		Persona p= personaService.findPersonaLogueada();
-		boolean isSuperAdmin= personaService.isSuperAdmin(p);
-		boolean isDirPrograma = personaService.isDirPrograma(p);
-		boolean isDocente=personaService.isDocente(p);
+		//boolean isSuperAdmin= personaService.isSuperAdmin(p);
+		//boolean isDirPrograma = personaService.isDirPrograma(p);
+		//boolean isDocente=personaService.isDocente(p);
 		
 		PersonaDtoLogueada peopleLogin = personaService.findPersonaLogueadaDto(p);
 		System.out.println("issuperadmin");
@@ -121,16 +122,15 @@ public class EducacionContinuaController {
 		System.out.println("has permisos");
 		System.out.println(peopleLogin.isHasPermisosEdC());
 		model.put("educacionContinua",educacionContinuaService.createEducacionContinua(p, peopleLogin.isSuperAdmin(), 
-				peopleLogin.isDirPrograma(), peopleLogin.isDocente()));
+				peopleLogin.isDirPrograma(), peopleLogin.isHasPermisosEdC()));
 		model.put("tipos_educacion_continua",educacionContinuaService.findAllTiposEducacionContinua(0L));//metodo que busca los tipos de educacion oficiales y el 'otro' si es de una educacion continua en especifico
 		model.put("clasificacion_cine",educacionContinuaService.findAllClasificacionCine());
 		model.put("tipo_beneficiarios",educacionContinuaService.findAllTipoBeneficiario());
 		model.put("docentes",personaService.findAllDocentes());
-		model.put("programas",programaService.findAll());
+		List<ProgramaDto> programas=programaService.findAllProgramasOfPermission(peopleLogin.getIdPersona(), peopleLogin.isSuperAdmin(), peopleLogin.isHasPermisosEdC());
+		model.put("programas",programas);
 		model.put("peopleLogin", peopleLogin);
-		List<Programa> programasBase=programaService.programasParaEduContinuaBase();
-		model.put("programasBase",programasBase);
-		model.put("educacionesContinuasBase",educacionContinuaService.findEducacionesContinuasBase(programasBase));
+		model.put("programasBase",programas);
 		
 		return "educacion_continua/form";
 	}
@@ -408,9 +408,9 @@ public class EducacionContinuaController {
 	@RequestMapping(value = "/educacion-continua/listado-participantes", method = RequestMethod.GET,
             produces = MediaType.APPLICATION_PDF_VALUE)
     public ResponseEntity<InputStreamResource> listadoInscritos(@RequestParam(name = "educacionContinua") String educacionContinua,
-    		@RequestParam(name = "fecha") String fechaEduContinua, Map<String, Object> model, RedirectAttributes redirectAttributes) {
+    		@RequestParam(name = "fecha") String fechaEduContinua, @RequestParam(name = "id") String idAcceso , Map<String, Object> model, RedirectAttributes redirectAttributes) {
 
-        ByteArrayInputStream bis = educacionContinuaService.generarPdfAsistentes(educacionContinua, fechaEduContinua);
+        ByteArrayInputStream bis = educacionContinuaService.generarPdfAsistentes(idAcceso);
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Disposition", "inline; filename=participantes.pdf");
         

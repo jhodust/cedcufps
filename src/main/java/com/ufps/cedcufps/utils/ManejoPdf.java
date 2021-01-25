@@ -40,7 +40,10 @@ import com.ufps.cedcufps.modelos.Participante;
 public class ManejoPdf {
 	private static final Logger logger = LoggerFactory.getLogger(ManejoPdf.class);
 
-	public static ByteArrayInputStream generarPDFParticipantes(List<ParticipanteDto> participantes, EducacionContinua e) {
+	private static final String header="header_pdf.png";
+	private static final String footer="footer_pdf.png";
+	
+	public static ByteArrayInputStream generarPDFParticipantes(List<ParticipanteDto> participantes, EducacionContinua e, Path dirFolderImgs) {
 
 		Document document = new Document(PageSize.LETTER, 50, 50, 100, 100);//creo el documento con margenes para la información (titulo, subtitulo, tabla)
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -155,7 +158,11 @@ public class ManejoPdf {
 				
 				/************************encabezado fijado***********************************/
 				/*cargo la imagen*/
-				Path path = Paths.get("src//main//resources//static//img//header_pdf.png");
+				
+				Path path = dirFolderImgs.resolve(header);
+				System.out.println("HEADERRRRR");
+				System.out.println(path.toString());
+				System.out.println(path.toAbsolutePath());
 				Image img = Image.getInstance(path.toAbsolutePath().toString());
 				
 				/*preparo la tabla*/
@@ -169,7 +176,11 @@ public class ManejoPdf {
 				
 				/**************************footer fijado**************************************/
 				/*cargo la imagen*/
-				path = Paths.get("src//main//resources//static//img//footer_pdf.png");
+				path = dirFolderImgs.resolve(footer);
+				System.out.println("foooooteeeeer");
+				System.out.println(path.toString());
+				System.out.println(path.toAbsolutePath());
+				
 				img = Image.getInstance(path.toAbsolutePath().toString());
 				
 				PdfPTable pie = new PdfPTable(1);//preparo la tabla

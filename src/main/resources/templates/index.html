@@ -29,8 +29,8 @@
 						                <h6 class="text-sm font-weight-bold mb-0"><strong><a class="red-ufps" th:href="@{/preinscripcion(educacionContinua=${edc.nombre},fecha=${edc.fechaInicio},id=${edc.idAcceso})}" th:text="${edc.nombre}"></a></strong></h6>
 						                <i class="far fa-calendar-alt"></i><span class="badge badge-secondary" th:text="${#dates.format(edc.fechaInicio, 'dd/MM/yyyy') + ' - ' + #dates.format(edc.fechaFin, 'dd/MM/yyyy')}"></span>
 						                <br>
-						                <span class="badge badge-red-ufps" th:text="${edc.tipoEduContinua.tipoEduContinua}"></span>
-						    			<span class="badge badge-red-ufps" th:text="${edc.programaResponsable.programa}"></span>
+						                <span class="badge badge-secondary" th:text="${edc.tipoEduContinua.tipoEduContinua}"></span>
+						    			<span class="badge badge-secondary" th:text="${edc.programaResponsable.programa}"></span>
 						           	</div>
 					            
 					        </div>
@@ -66,7 +66,7 @@
 		<hr/>
 		
 		
-			<h6>Filtro</h6>
+			<h6>Filtro <i class="fas fa-filter"></i></h6>
 				<div class="row">
 					<div class="col-md-4">
 						<div class="form-group">

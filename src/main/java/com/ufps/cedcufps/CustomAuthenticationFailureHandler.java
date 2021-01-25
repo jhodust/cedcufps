@@ -32,6 +32,6 @@ implements AuthenticationFailureHandler {
     throws IOException, ServletException {
 	 
 
-      response.sendRedirect("localhost:8080");
+      response.sendRedirect("/");
   }
 }

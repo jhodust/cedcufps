@@ -137,8 +137,10 @@ function guardarPrograma(){
 		cache: false,
 		success: function(result) {
 			toastr.success('Se ha guardado la información', 'Excelente!')
-			window.setTimeout(function(){location.reload()},1000);
+			//window.setTimeout(function(){location.reload()},1000);
 			idPrograma=0;
+			paginadorLoadAjax('/programas-academicos/reload');
+			$('#modalRegistroPrograma').modal('hide');
 		},
 		error: function(err) {
 			

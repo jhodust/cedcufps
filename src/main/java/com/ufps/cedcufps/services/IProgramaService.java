@@ -30,5 +30,7 @@ public interface IProgramaService {
 	
 	public ProgramaDto searchProgramaById(Long id);
 	
-	public List<Programa> programasParaEduContinuaBase();
+	public List<ProgramaDto> programasParaEduContinuaBase(Long idPersona, boolean isSuperAdmin, boolean hasPermission);
+	
+	public List<ProgramaDto> findAllProgramasOfPermission(Long idPersona, boolean isSuperAdmin, boolean hasPermission);
 }

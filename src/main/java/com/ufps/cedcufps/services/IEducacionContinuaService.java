@@ -92,7 +92,7 @@ public interface IEducacionContinuaService {
 	
 	public EducacionContinuaWebDto findEducacionContinuaBase(String nombreEdC);
 	
-	public EducacionContinuaWebDto createEducacionContinua(Persona p, boolean isAdmin, boolean isDirPrograma, boolean isDocente);
+	public EducacionContinuaWebDto createEducacionContinua(Persona p, boolean isAdmin, boolean isDirPrograma, boolean hasPermission);
 	
 	public List<String> findEducacionesContinuasBaseByIdPrograma(Long idPrograma);
 	
@@ -102,7 +102,7 @@ public interface IEducacionContinuaService {
 	
 	//public void saveDiploma(EducacionContinua ec);
 	
-	public ByteArrayInputStream generarPdfAsistentes(String nombreEducacionContinua, String fechaInicio);
+	public ByteArrayInputStream generarPdfAsistentes(String idAcceso);
 	
 	
 	

@@ -24,19 +24,6 @@
         <!-- Page title -->
        	<div class="contenido ml-3 mr-3 pb-2" >
         
-        <div class="page-title">
-          <div class="row justify-content-between align-items-center">
-            <div class="col-md-6 d-flex align-items-center justify-content-between justify-content-md-start mb-3 mb-md-0">
-              <!-- Page title + Go Back button -->
-              <div class="d-inline-block">
-                <h5 class="h4 d-inline-block font-weight-400 mb-0 text-dark" ><strong>INSCRIPCIÓN</strong></h5>
-	              
-              </div>
-            </div>
-            
-          </div>
-        </div>
-        <hr/>
 		<div class="row">
         
         <div class="col-md-12">
@@ -59,9 +46,22 @@
         
         <div class="card">
         	<div class="card-header">
-        		<center>
-        			<h6 class="card-title mb-0"><strong>INFORMACIÓN</strong></h6>
-        		</center>
+				<div class="row" style="position:relative">
+        		<div class="col-md-6 d-flex align-items-center justify-content-between justify-content-md-start mb-3 mb-md-0">
+        			<h6 class="h4 d-inline-block font-weight-400 mb-0 text-dark" ><strong>INFORMACIÓN  </strong></h6>
+        		</div>
+        		<div style="position: absolute; right: 0px; " th:if="${requisitosInscripcion.isHasCupos() and requisitosInscripcion.isHasCoincidenciasBeneficiario() and not requisitosInscripcion.isEstaInscrito() }">
+						<a href="#" onclick="realizarInscripcion()" 
+									class="btn btn-primary btn-sm" id="btn_inscripcion">INSCRIBETE!
+								</a>
+						
+						</div>
+						<div style="position: absolute; right: 0px; " th:if="${requisitosInscripcion.isEstaInscrito() and requisitosInscripcion.participante.tipoParticipante == 'Asistente'}">
+							<a href="#" onclick="cancelarInscripcion()" 
+									class="btn btn-primary btn-sm" id="btn_inscripcion">CANCELAR INSCRIPCIÓN!
+								</a>
+						</div>
+        	</div>
         	</div>
         	<div class="card-body">
         		<div class="row col-md-12">
@@ -133,12 +133,7 @@
 		              
         		</div>
         		<div class="mt-3">
-		            	<div th:if="${requisitosInscripcion.isHasCupos() and requisitosInscripcion.isHasCoincidenciasBeneficiario() and not requisitosInscripcion.isEstaInscrito() }">
-						<a href="#" onclick="realizarInscripcion()" 
-									class="btn btn-primary btn-sm" id="btn_inscripcion">INSCRIBETE!
-								</a>
-						
-						</div>
+		            	
 						<div th:if="${not requisitosInscripcion.isHasCoincidenciasBeneficiario()}">
 							<span class="badge badge-info">No puedes inscribirte, no perteneces al público al cual se ofertó</span>
 						</div>
@@ -150,11 +145,7 @@
 						  <span class="sr-only">Loading...</span>
 						</div>
 						</button>
-						<div th:if="${requisitosInscripcion.isEstaInscrito() and requisitosInscripcion.participante.tipoParticipante == 'Asistente'}">
-							<a href="#" onclick="cancelarInscripcion()" 
-									class="btn btn-primary btn-sm" id="btn_inscripcion">CANCELAR INSCRIPCIÓN!
-								</a>
-						</div>
+						
 						<div th:if="${requisitosInscripcion.isEstaInscrito() and requisitosInscripcion.participante.tipoParticipante == 'Ponente'}">
 							<span class="badge badge-dark">Te encuentras inscrito(a) como 'PONENTE'</span>
 						</div>

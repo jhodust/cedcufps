@@ -2,6 +2,7 @@ package com.ufps.cedcufps.dto;
 
 public class PersonaDtoLogueada {
 
+	private Long idPersona;
 	private boolean superAdmin;
 	private boolean dirPrograma;
 	private boolean docente;
@@ -36,6 +37,12 @@ public class PersonaDtoLogueada {
 	}
 	public void setHasPermisosEdC(boolean hasPermisosEdC) {
 		this.hasPermisosEdC = hasPermisosEdC;
+	}
+	public Long getIdPersona() {
+		return idPersona;
+	}
+	public void setIdPersona(Long idPersona) {
+		this.idPersona = idPersona;
 	}
 	
 	

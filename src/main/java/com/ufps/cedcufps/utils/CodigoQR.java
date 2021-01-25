@@ -5,6 +5,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import javax.imageio.ImageIO;
@@ -20,10 +21,12 @@ import com.google.zxing.qrcode.QRCodeWriter;
 
 public class CodigoQR {
 
-	public final static String rutaEducacionContinua="files/uploads/educacion-continua/";
+	//public final static String rutaEducacionContinua="files/uploads/educacion-continua/";
 	
-	public static String generateQR(String filename, String text) throws Exception {
-		String rutaTemp=rutaEducacionContinua+filename;
+	public static String generateQR(Path path, String filename, String text) throws Exception {
+		String rutaTemp=path.resolve(filename).toString();
+		System.out.println("ruta tempppppppp en generate qr");
+		System.out.println(rutaTemp);
 		File file=Paths.get(rutaTemp).toAbsolutePath().toFile();
 		System.out.println("filename para generador qr " + file.getAbsolutePath());
 		int h=300;

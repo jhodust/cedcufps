@@ -22,7 +22,7 @@ public interface IProgramaDao extends PagingAndSortingRepository<Programa, Long>
 	@Query("select p from Programa p where p.facultad.facultad = ?1")
 	public Page<Programa> findByFacultad(String facultad,Pageable pageable);
 	
-	@Query("select count(p) from Programa p where p.id != ?1 and p.programa = ?2")
+	@Query(value="select count(p.id) from programas p where p.id != ?1 and p.programa = ?2", nativeQuery=true)
 	public int cantidadProgramaExistentes(Long id, String programa);
 	
 	@Query("select p from Programa p where p.id = ?1")
@@ -31,14 +31,14 @@ public interface IProgramaDao extends PagingAndSortingRepository<Programa, Long>
 	@Query("select p from Programa p where p.directorPrograma.id = ?1")
 	public Programa findByDirector(Long idDir);
 	
-	@Query("select count(p) from Programa p where p.id != ?1 and p.codigo = ?2")
+	@Query(value="select count(p.id) from programas p where p.id != ?1 and p.codigo = ?2", nativeQuery=true)
 	public int cantidadCodigosExistentes(Long idPro, String codigo);
 	
-	@Query("select count(p) from Programa p where p.id != ?1 and p.directorPrograma.id = ?2")
+	@Query(value="select count(p.id) from programas p where p.id != ?1 and p.id_director = ?2", nativeQuery=true)
 	public int cantidadDirProgramaExistentes(Long idPro, Long idDir);
 	
 	@Modifying
-	@Query("update Programa p set p.directorPrograma.id=null where p.id != ?1 and p.directorPrograma.id = ?2")
+	@Query(value="update programas set id_director=null where id != ?1 and id_director = ?2", nativeQuery=true)
 	public void desvincularDirectorPrograma(Long idPro, Long idDir);
 	
 	@Query("select p from Programa p where p.id != ?1 and p.directorPrograma.id = ?2")
@@ -67,4 +67,10 @@ public interface IProgramaDao extends PagingAndSortingRepository<Programa, Long>
 	
 	@Query(value = "select p.* from rol_persona_programa_per rppp join programas p on rppp.id_programa=p.id join tipos_persona tp on tp.id=rppp.id_tipo_persona where rppp.id_persona = ?1 and tp.tipo_persona='Graduado'",nativeQuery = true)
 	public List<Programa> findProgramasPermisosGraduadosForDocEstAdminvo(Long idDirector);
+	
+	@Query(value = "select p.* from programas p where p.id in (select rpp.id_programa from  roles_personas_programas_ec rpp where id_persona = ?1)",nativeQuery = true)
+	public List<Programa> findProgramasOfPermissionEdCPersona(Long idPersona);
+	
+	@Query(value = "select p.* from programas p where p.id in (select rpp.id_programa from  roles_personas_programas_ec rpp where id_persona = ?1) or p.id in (select distinct e.id_programa from educacion_continua e where e.id_docente = ?1) ",nativeQuery = true)
+	public List<Programa> findProgramasEducacionContinuaBase(Long idPersona);
 }

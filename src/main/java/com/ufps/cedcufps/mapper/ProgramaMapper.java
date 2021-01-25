@@ -28,7 +28,10 @@ public class ProgramaMapper implements IProgramaMapper {
 		dto.setId(programa.getId());
 		dto.setPrograma(programa.getPrograma());
 		dto.setCodigo(programa.getCodigo());
-		dto.setIdDirector(programa.getDirectorPrograma().getId());
+		if(programa.getDirectorPrograma()!=null) {
+			dto.setIdDirector(programa.getDirectorPrograma().getId());
+		}
+		
 		dto.setIdFacultad(programa.getFacultad().getId());
 		return dto;
 	}

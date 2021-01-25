@@ -114,7 +114,7 @@ public class PersonaRolCustomDaoImpl implements IPersonaRolCustomDao {
 	public void deleteRolesDirPrograma(Long idPersona) {
 		// TODO Auto-generated method stub
 		//borrar todos los permisos menos el de tomar asistencia y el de user (default)
-		em.createNativeQuery("delete from personas_x_roles where id_persona=?1 and id_rol NOT IN (select id from roles where authority='ROLE_ATTENDANCE' or authority='ROLE_USER')")
+		em.createNativeQuery("delete from personas_x_roles where id_persona=?1 and id_rol NOT IN (select id from roles where authority='ROLE_SUPERADMIN' or authority='ROLE_USER')")
 		.setParameter(1, idPersona)
 		.executeUpdate();
 	}

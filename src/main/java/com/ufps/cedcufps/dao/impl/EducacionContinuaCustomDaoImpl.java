@@ -77,7 +77,7 @@ public class EducacionContinuaCustomDaoImpl implements IEducacionContinuaCustomD
 		query.append("select count(e.id) from educacion_continua e");
 		query.append(" where (e.id_programa IN (select rppp.id_programa from roles_personas_programas_ec rppp");
 		query.append(" where rppp.id_persona=?1 and rppp.id_rol=(select ro.id from roles ro where ro.authority='ROLE_MANAECCU'))" );
-		query.append(" or e.id_docente=?1) and e.idAcceso=?2 " );
+		query.append(" or e.id_docente=?1) and e.id_acceso=?2 " );
 			
 		System.out.println("*************************************** query******");
 		System.out.println(query.toString());

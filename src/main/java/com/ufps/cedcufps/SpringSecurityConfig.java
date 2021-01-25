@@ -131,6 +131,9 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 		.oauth2Login()
 			.failureHandler(customAuthenticationFailureHandler())
 			.successHandler(customSuccessHandler())
+			.authorizationEndpoint()
+			 .baseUri("/login/oauth2/code/google")
+			 .and()
 			/*.authorizationEndpoint()
 				.baseUri(this.authorizationRequestBaseUri())
 				.authorizationRequestRepository(this.cookieAuthorizationRequestRepository())
@@ -148,7 +151,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 				//.and()
 				
 		.and()
-		.and().logout().logoutSuccessUrl("/logoutt").logoutSuccessHandler(this.oidcLogoutSuccessHandler()).clearAuthentication(true).deleteCookies("oauth2_auth_request","JSESSIONID").permitAll();
+		.and().logout().logoutSuccessUrl("/logout").logoutSuccessHandler(this.oidcLogoutSuccessHandler()).clearAuthentication(true).deleteCookies("oauth2_auth_request","JSESSIONID").permitAll();
 		
 		
 				//.userAuthoritiesMapper(this.userAuthoritiesMapper());
@@ -234,9 +237,9 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
         return successHandler;
 		
     }
-	private AuthorizationRequestRepository<OAuth2AuthorizationRequest> cookieAuthorizationRequestRepository() {
+	/*private AuthorizationRequestRepository<OAuth2AuthorizationRequest> cookieAuthorizationRequestRepository() {
 		return new HttpCookieOAuth2AuthorizationRequestRepository();
-	}
+	}*/
 	private OAuth2UserService<OidcUserRequest, OidcUser> oidcUserService() {
 		final OidcUserService delegate = new OidcUserService();
 

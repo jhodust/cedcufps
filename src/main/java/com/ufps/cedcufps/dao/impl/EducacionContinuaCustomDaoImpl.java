@@ -26,14 +26,18 @@ import org.springframework.stereotype.Repository;
 
 import com.google.common.primitives.Longs;
 import com.ufps.cedcufps.dao.IEducacionContinuaCustomDao;
+import com.ufps.cedcufps.dao.IJornadaDao;
 import com.ufps.cedcufps.dto.CertificacionDto;
+import com.ufps.cedcufps.dto.EducacionContinuaAppDto;
 import com.ufps.cedcufps.dto.EducacionContinuaWebDto;
 import com.ufps.cedcufps.dto.JornadaAppDto;
 import com.ufps.cedcufps.dto.ParticipanteDto;
 import com.ufps.cedcufps.dto.TipoBeneficiarioDto;
 import com.ufps.cedcufps.mapper.IEducacionContinuaMapper;
+import com.ufps.cedcufps.mapper.IJornadaMapper;
 import com.ufps.cedcufps.modelos.EducacionContinua;
 import com.ufps.cedcufps.modelos.Persona;
+import com.ufps.cedcufps.utils.StatusEducacionContinua;
 
 @Repository
 public class EducacionContinuaCustomDaoImpl implements IEducacionContinuaCustomDao{
@@ -46,8 +50,14 @@ public class EducacionContinuaCustomDaoImpl implements IEducacionContinuaCustomD
 	
 	@Autowired
 	private IEducacionContinuaMapper educacionContinuaMapper;
+	
+	@Autowired
+	private IJornadaMapper jornadaMapper;
+	
+	@Autowired
+	private IJornadaDao jornadaDao;
 
-	@Override
+	/*@Override
 	public List<Long>  listAllPossibleEducacionContinua(Long idPersona) {
 		// TODO Auto-generated method stub
 		
@@ -66,7 +76,7 @@ public class EducacionContinuaCustomDaoImpl implements IEducacionContinuaCustomD
 		for(Object o: q.getResultList() )
 			list.add(Long.parseLong(String.valueOf(o)));
 		return list;
-	}
+	}*/
 	
 	
 	@Override
@@ -358,8 +368,12 @@ public class EducacionContinuaCustomDaoImpl implements IEducacionContinuaCustomD
 		StringBuilder query = new StringBuilder();
 		
 		query.append("SELECT distinct ec.id from educacion_continua ec")
-		.append(" join educacion_continua_tipo_beneficiario tb on tb.id_educacion_continua=ec.id")
-		.append(" where ec.estado!= ? ");
+		.append(" left join educacion_continua_tipo_beneficiario tb on tb.id_educacion_continua=ec.id")
+		.append(" where ec.estado != ? ");
+	
+		System.out.println("idTipoEdc: " + idTipoEdC);
+		System.out.println("idPrograma: " + idPrograma);
+		System.out.println("idBeneficiarios: " + idBeneficiarios);
 		if(idTipoEdC != 0L) {
 			query.append(" and ec.id_tipo_educacion_continua = ? ");
 		}
@@ -413,7 +427,9 @@ public class EducacionContinuaCustomDaoImpl implements IEducacionContinuaCustomD
 	
 	public Long[] convertListObjetctToLong(List<Object>list) {
 		Long[] array;
-		if(list.size()==0) {
+		System.out.println("list is empty?: " + list.size());
+		
+		if(list.isEmpty()) {
 			array=new Long[1];
 			array[0]=0L;
 		}else {
@@ -424,7 +440,218 @@ public class EducacionContinuaCustomDaoImpl implements IEducacionContinuaCustomD
 				i++;
 			}
 		}
+		System.out.println("termina array con : " + array.length);
 		return array;
+	}
+
+
+	@Override
+	public List<EducacionContinuaAppDto> findEducacionesContinuasAGestionar(Long idPersona, boolean isSuperAdmin, boolean hasPermission) {
+		// TODO Auto-generated method stub
+		StringBuilder query = new StringBuilder();
+		query.append(" select e.id, e.nombre, e.fecha_inicio, e.fecha_fin, e.fecha_lim_inscripcion, pro.programa,");
+		query.append(" tec.tipo_educacion_continua, e.id_acceso, p.primer_nombre, p.segundo_nombre, p.primer_apellido,");
+		query.append(" p.segundo_apellido, (select count(par.id) from participantes par where par.educacion_continua_id=e.id) as cantidad_participantes");
+		query.append(" from educacion_continua e");
+		query.append(" join docentes d on d.id_persona=e.id_docente");
+		query.append(" join personas p on d.id_persona=p.id");
+		query.append(" join programas pro on pro.id=e.id_programa");
+		query.append(" join tipos_educacion_continua tec on tec.id=e.id_tipo_educacion_continua");
+		query.append(" where e.is_deleted = false");
+		
+		if(!isSuperAdmin && hasPermission) {
+			query.append(" and e.id_programa IN (select rppp.id_programa from roles_personas_programas_ec rppp");
+			query.append(" where rppp.id_persona=?1 and rppp.id_rol=(select ro.id from roles ro where ro.authority='ROLE_MANAECCU'))" );
+			query.append(" or e.id_docente=?1" );
+		}
+		query.append(" order by e.fecha_inicio desc");
+		
+		
+		
+		Query q=em.createNativeQuery(query.toString());
+		if(!isSuperAdmin && hasPermission) {
+			q.setParameter(1, idPersona);
+		}
+			
+		List<Object[]> result= q.getResultList();
+		List<EducacionContinuaAppDto> list = new ArrayList<EducacionContinuaAppDto>();
+		for(Object[] o: result) {
+			EducacionContinuaAppDto dto=new EducacionContinuaAppDto();
+			dto.setId(Long.parseLong(String.valueOf(o[0])));
+			dto.setNombre(String.valueOf(o[1]));
+			dto.setFechaInicio((Date) o[2]);
+			dto.setFechaFin((Date) o[3]);
+			dto.setFechaLimInscripcion((Date) o[4]);
+			dto.setProgramaResponsable(String.valueOf(o[5]));
+			dto.setTipoEduContinua(String.valueOf(o[6]));
+			dto.setIdAcceso(String.valueOf(o[7]));
+			String nombre=String.valueOf(o[8]);
+			if(o[9] != null) {
+				nombre = nombre + " " + String.valueOf(o[9]);
+			}
+			nombre = nombre + " " + String.valueOf(o[10]);
+			if(o[11] != null) {
+				nombre = nombre + " " + String.valueOf(o[11]);
+			}
+			
+			dto.setDocenteResponsable(nombre);
+			dto.setCantidadParticipantes(Integer.parseInt(String.valueOf(o[12])));
+			dto.setJornadas(jornadaMapper.convertJornadasToJornadaAppDto(jornadaDao.findByIdEducacionContinua(dto.getId())));
+			list.add(dto);
+		}
+		return list;
+	}
+	
+	@Override
+	public List<EducacionContinuaAppDto> findEducacionesContinuasForApp(Long idPersona, boolean isSuperAdmin) {
+		// TODO Auto-generated method stub
+		
+		StringBuilder query = new StringBuilder();
+		query.append(" select e.id, e.nombre, e.fecha_inicio, e.fecha_fin, e.fecha_lim_inscripcion, pro.programa,")
+			 .append(" tec.tipo_educacion_continua, e.id_acceso, p.primer_nombre, p.segundo_nombre, p.primer_apellido,")
+			 .append(" p.segundo_apellido, (select count(par.id) from participantes par where par.educacion_continua_id=e.id) as cantidad_participantes")
+			 .append(" from educacion_continua e")
+			 .append(" join docentes d on d.id_persona=e.id_docente")
+			 .append(" join personas p on d.id_persona=p.id")
+			 .append(" join programas pro on pro.id=e.id_programa")
+			 .append(" join tipos_educacion_continua tec on tec.id=e.id_tipo_educacion_continua");
+		
+		
+		
+		
+		if(!isSuperAdmin) {
+			query.append(" join (select ec.id as idEdC from educacion_continua ec where ec.id_programa in")
+			     .append(" (select rpec.id_programa from roles_personas_programas_ec rpec where rpec.id_persona =?1 )")
+			     .append(" UNION")
+			     .append(" select ec.id from educacion_continua ec where ec.id_docente=?1")
+			     .append(" UNION")
+			     .append(" select rpa.id_edu_continua from rol_persona_asistencia rpa where rpa.id_persona =?1) sq")
+			     .append(" on sq.idEdC=e.id");
+		}
+		query.append(" where e.estado='"+StatusEducacionContinua.STATUS_EN_DESARROLLO+"' and e.is_deleted=false")
+			 .append(" order by e.fecha_inicio asc");
+		
+		
+		
+		Query q=em.createNativeQuery(query.toString());
+		if(!isSuperAdmin) {
+			q.setParameter(1, idPersona);
+		}
+			
+		List<Object[]> result= q.getResultList();
+		List<EducacionContinuaAppDto> list = new ArrayList<EducacionContinuaAppDto>();
+		for(Object[] o: result) {
+			EducacionContinuaAppDto dto=new EducacionContinuaAppDto();
+			dto.setId(Long.parseLong(String.valueOf(o[0])));
+			dto.setNombre(String.valueOf(o[1]));
+			dto.setFechaInicio((Date) o[2]);
+			dto.setFechaFin((Date) o[3]);
+			dto.setFechaLimInscripcion((Date) o[4]);
+			dto.setProgramaResponsable(String.valueOf(o[5]));
+			dto.setTipoEduContinua(String.valueOf(o[6]));
+			dto.setIdAcceso(String.valueOf(o[7]));
+			String nombre=String.valueOf(o[8]);
+			if(o[9] != null) {
+				nombre = nombre + " " + String.valueOf(o[9]);
+			}
+			nombre = nombre + " " + String.valueOf(o[10]);
+			if(o[11] != null) {
+				nombre = nombre + " " + String.valueOf(o[11]);
+			}
+			
+			dto.setDocenteResponsable(nombre);
+			dto.setCantidadParticipantes(Integer.parseInt(String.valueOf(o[12])));
+			list.add(dto);
+		}
+		return list;
+	}
+	
+	
+	@Override
+	public List<EducacionContinuaAppDto> findEduContinuasPermissionForAttendance(Long idPersona, boolean isAdmin, boolean isDirPrograma) {
+		// TODO Auto-generated method stub
+		
+		StringBuilder query = new StringBuilder();
+		query.append(" select e.id, e.nombre")
+			 .append(" from educacion_continua e");
+			 
+		if(isDirPrograma) {//es director de programa
+			query.append(" where e.id_programa = (select p.id from programas p where p.id_director = ?1 )");
+		}
+		   query.append(" order by e.fecha_inicio asc");
+		
+		
+		
+		Query q=em.createNativeQuery(query.toString());
+		if(isDirPrograma) {
+			q.setParameter(1, idPersona);
+		}
+			
+		List<Object[]> result= q.getResultList();
+		System.out.println("es director de programa en custom dato: " + isDirPrograma);
+		System.out.println("result tamaño: " + result.size());
+		List<EducacionContinuaAppDto> list = new ArrayList<EducacionContinuaAppDto>();
+		for(Object[] o: result) {
+			EducacionContinuaAppDto dto=new EducacionContinuaAppDto();
+			dto.setId(Long.parseLong(String.valueOf(o[0])));
+			dto.setNombre(String.valueOf(o[1]));
+			list.add(dto);
+		}
+		return list;
+	}
+	
+	
+	@Override
+	public List<EducacionContinuaAppDto> findEduContinuasPermissionForAttendance(Long idPersona) {
+		// TODO Auto-generated method stub
+		StringBuilder query = new StringBuilder();
+		query.append(" select e.id, e.nombre")
+			 .append(" from educacion_continua e")
+			 .append(" join rol_persona_asistencia rpa on rpa.id_edu_continua=e.id" )
+			 .append(" where rpa.id_persona= ?1")
+		     .append(" order by e.fecha_inicio asc");
+		
+		Query q=em.createNativeQuery(query.toString());
+		q.setParameter(1, idPersona);
+		
+			
+		List<Object[]> result= q.getResultList();
+		List<EducacionContinuaAppDto> list = new ArrayList<EducacionContinuaAppDto>();
+		for(Object[] o: result) {
+			EducacionContinuaAppDto dto=new EducacionContinuaAppDto();
+			dto.setId(Long.parseLong(String.valueOf(o[0])));
+			dto.setNombre(String.valueOf(o[1]));
+			list.add(dto);
+		}
+		return list;
+	}
+	
+	
+	@Override
+	public List<EducacionContinuaAppDto> findEduContinuasPermissionForAttendanceExceptDirectorPrograma(Long idPersona, Long idPrograma) {
+		// TODO Auto-generated method stub
+		StringBuilder query = new StringBuilder();
+		query.append(" select e.id, e.nombre")
+			 .append(" from educacion_continua e")
+			 .append(" join rol_persona_asistencia rpa on rpa.id_edu_continua=e.id" )
+			 .append(" where rpa.id_persona= ?1  and e.id_programa != ?2")
+		     .append(" order by e.fecha_inicio asc");
+		
+		Query q=em.createNativeQuery(query.toString());
+		q.setParameter(1, idPersona)
+		 .setParameter(2, idPrograma);
+		
+		
+			
+		List<Object[]> result= q.getResultList();
+		List<EducacionContinuaAppDto> list = new ArrayList<EducacionContinuaAppDto>();
+		for(Object[] o: result) {
+			EducacionContinuaAppDto dto=new EducacionContinuaAppDto();
+			dto.setId(Long.parseLong(String.valueOf(o[0])));
+			dto.setNombre(String.valueOf(o[1]));
+			list.add(dto);
+		}
+		return list;
 	}
 
 }

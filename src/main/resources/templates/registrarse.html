@@ -425,10 +425,8 @@
 								
 							</div>
 						</div>
-						<a th:href="@{/}" type="button" sec:authorize="!isAuthenticated()"
-											class="btn btn-sm btn-red-ufps"><i class="fas fa-times"></i> Cancelar</a>
-						<a th:href="@{/usuarios}" type="button" sec:authorize="isAuthenticated()"
-											class="btn btn-sm btn-red-ufps"><i class="fas fa-times"></i> Cancelar</a>
+						<button type="button"
+											class="btn btn-sm btn-red-ufps cancel"><i class="fas fa-times"></i> Cancelar</button>
 											
 	
 										<button type="submit"

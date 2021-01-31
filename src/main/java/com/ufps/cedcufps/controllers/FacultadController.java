@@ -26,12 +26,13 @@ import com.ufps.cedcufps.utils.paginator.PageRender;
 
 @Controller
 @SessionAttributes("facultad")
+@RequestMapping(value = "/facultades")
 public class FacultadController {
 
 	@Autowired
 	private IFacultadService facultadService;
 	
-	@RequestMapping(value = "/facultades")
+	@RequestMapping
 	public String listar(Map<String, Object> model) {
 		Pageable pageRequest=PageRequest.of(0, 12);
 		Page<Facultad> facultades=facultadService.findAll(pageRequest);
@@ -45,7 +46,7 @@ public class FacultadController {
 	}
 	
 	
-	@RequestMapping(value = "/facultades/reload")
+	@RequestMapping(value = "/reload")
 	public String reloadList(@RequestParam(name="page", defaultValue = "0") int page, Map<String, Object> model) {
 		Pageable pageRequest=PageRequest.of(page, 12);
 		Page<Facultad> facultades=facultadService.findAll(pageRequest);

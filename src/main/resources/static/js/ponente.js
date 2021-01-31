@@ -39,7 +39,7 @@ function guardarPonente(){
 		type: "POST",
 		contentType: "application/json; charset=utf-8",
 		data: JSON.stringify(JSONponente),
-		url: "/educacion-continua/ponente/save",
+		url: "/educacion-continua/ponentes/save",
 		cache: false,
 		success: function(result) {
 			console.log("result ponente");
@@ -93,7 +93,7 @@ function editarPonente(elemento){
 		headers: {"X-CSRF-TOKEN": token},
 		type: "GET",
 		contentType: "application/json; charset=utf-8",
-		url: "/educacion-continua/ponente/search/"+elemento.dataset.id,
+		url: "/educacion-continua/ponentes/search/"+elemento.dataset.id,
 		cache: false,
 		success: function(result) {
 			console.log(result);
@@ -120,7 +120,7 @@ function eliminarPonente(elemento){
 		type: "GET",
 		contentType: "application/json; charset=utf-8",
 		data: {id:elemento.dataset.id},
-		url: "/educacion-continua/ponente/delete",
+		url: "/educacion-continua/ponentes/delete",
 		cache: false,
 		success: function(result) {
 			 console.log(result);
@@ -154,7 +154,7 @@ function searchPosiblePonente(){
 		ajax: {
 	    	headers: {"X-CSRF-TOKEN": token},
 	    	contentType: "application/json; charset=utf-8",
-	    	url: "/ponente/posible",
+	    	url: "/educacion-continua/ponentes/filtro",
 	    	type: "GET",
 	    	data: {tipo_busqueda:tipoBusqueda,value:value}
 	    	
@@ -287,7 +287,7 @@ function searchPosiblePonente(){
 			headers: {"X-CSRF-TOKEN": token},
 			type: "GET",
 			contentType: "application/json; charset=utf-8",
-			url: "/ponente/findPersona",
+			url: "/educacion-continua/ponentes/search/persona",
 			data: {id:element.dataset.id},
 			cache: false,
 			success: function(result) {
@@ -318,8 +318,8 @@ function searchPosiblePonente(){
 	}
 	
 	function reloadListPonentes(){
-		var urlReload = '/educacion-continua/'+idEducacionContinua+'/ponentes';
+		var urlReload = '/educacion-continua/ponentes/'+idEducacionContinua;
 		$('#div_list_ponentes').load(urlReload);
-		var urlReloadDetalles = '/educacion-continua/detalles/'+idEducacionContinua+'/ponentes';
+		var urlReloadDetalles = '/educacion-continua/ponentes/detalles/'+idEducacionContinua;
 		$('#div_list_detalles_ponentes').load(urlReloadDetalles);
 	}

@@ -65,7 +65,7 @@ function guardarDepartamento(){
 		type: "POST",
 		contentType: "application/json; charset=utf-8",
 		data: JSON.stringify(JSONdepartamento),
-		url: "/departamento/save",
+		url: "/departamentos-academicos/save",
 		cache: false,
 		success: function(result) {
 			toastr.success('Se ha guardado la información', 'Excelente!');
@@ -108,7 +108,7 @@ function editarDepartamento(elemento){
 		headers: {"X-CSRF-TOKEN": token},
 		type: "GET",
 		contentType: "application/json; charset=utf-8",
-		url: "/departamento/search/"+elemento.dataset.id,
+		url: "/departamentos-academicos/search/"+elemento.dataset.id,
 		cache: false,
 		success: function(result) {
 			$('#modalRegistroDepartamento').modal();

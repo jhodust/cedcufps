@@ -85,6 +85,15 @@ $(document).ready(function ()
 				validateCheckboxPerfiles('cbEst','cbDoc','cbAdminvo','cbGraduado','cbExt','errorPerfiles');
 			});
 			
+			$('.cancel')
+			.on(
+					'click',
+					function(e) {
+						e.preventDefault();
+			window.setTimeout(function() {
+				window.location.href = url;
+			}, 1000);
+					});
 		$('.save')
 				.on(
 						'click',

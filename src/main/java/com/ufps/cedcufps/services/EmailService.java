@@ -44,8 +44,10 @@ public class EmailService implements IEmailService {
     @Override
     public void sendEmailInscripcion(String remitente, String asunto,  String file, String contenido, String nombreParticipante, boolean adjuntarImagen) {
     	
-    	LOGGER.debug("preparando email");
-		
+    	LOGGER.debug("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
+    	LOGGER.debug("preparando email INSCRIPCIONNNNNNNNNNN");
+    	LOGGER.debug("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
+    	LOGGER.debug("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
 		try {
 		
 		Locale locale= new Locale("es");

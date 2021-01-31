@@ -20,6 +20,7 @@ import com.ufps.cedcufps.services.IPersonaService;
 
 @Controller
 @SessionAttributes("ponente")
+@RequestMapping(value ="/educacion-continua/ponentes")
 public class PonenteController {
 	
 	@Autowired
@@ -32,14 +33,14 @@ public class PonenteController {
 	private IPersonaService personaService;
 
 	
-	@RequestMapping(value = "/educacion-continua/{id}/ponentes")
+	@RequestMapping(value = "/{id}")
 	public String reloadListPonentes(@PathVariable(value = "id") Long idEducacionContinua, Model model) {
 		
 		model.addAttribute("ponentes",participanteService.findPonentesByEduContinua(idEducacionContinua));
 		return "educacion_continua/ponente/index :: indexPonentes";
 	}
 	
-	@RequestMapping(value = "/educacion-continua/detalles/{id}/ponentes")
+	@RequestMapping(value = "/detalles/{id}")
 	public String reloadListJornadasDetallesPonente(@PathVariable(value = "id") Long idEducacionContinua, Model model) {
 		
 		model.addAttribute("ponentes",participanteService.findPonentesByEduContinua(idEducacionContinua));

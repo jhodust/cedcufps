@@ -43,7 +43,7 @@
 			            <p class="lead" th:text="${p.tipoEduContinua}"></p>
 			            <a  href="#!" class="link link-underline-white font-weight-bold p" th:if="${#strings.length(p.educacionContinua)<25}" th:text="${p.educacionContinua}"></a>
 			            <a  href="#!" class="link link-underline-white font-weight-bold p" th:if="${#strings.length(p.educacionContinua)>=25 and #strings.length(p.educacionContinua)<=50}" th:text="${p.educacionContinua}" style="font-size:small"></a>
-			            <a  href="#!" class="link link-underline-white font-weight-bold p" th:if="${#strings.length(p.educacionContinua)>50 and #strings.length(p.ducacionContinua)<100}" th:text="${p.educacionContinua}" style="font-size:x-small"></a>
+			            <a  href="#!" class="link link-underline-white font-weight-bold p" th:if="${#strings.length(p.educacionContinua)>50 and #strings.length(p.educacionContinua)<100}" th:text="${p.educacionContinua}" style="font-size:x-small"></a>
 			        </div>
 			        <div class="overlay-actions w-100 card-footer mt-auto d-flex justify-content-between align-items-center">
 			            <div>

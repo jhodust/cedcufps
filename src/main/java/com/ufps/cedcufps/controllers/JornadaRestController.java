@@ -9,6 +9,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,13 +29,14 @@ import com.ufps.cedcufps.services.IEducacionContinuaService;
 import com.ufps.cedcufps.services.IJornadaService;
 
 @RestController
+@RequestMapping(value ="/educacion-continua/jornadas")
 public class JornadaRestController {
 
 	@Autowired
 	private IJornadaService jornadaService;
 	
 	
-	@PostMapping(value ="/educacion-continua/jornada/save")
+	@PostMapping(value ="/save")
 	public ResponseEntity<?> guardarProgramaRest(@RequestBody @Valid Jornada jornada, BindingResult result) {
 		if(result.hasErrors()) {
 			return new ResponseEntity<>(result.getAllErrors(),HttpStatus.BAD_REQUEST);
@@ -43,16 +45,18 @@ public class JornadaRestController {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
-	@GetMapping(value="/educacion-continua/jornada/search/{id}", produces = "application/json")
+	@GetMapping(value="/search/{id}", produces = "application/json")
     public ResponseEntity<?> buscarJornada(@PathVariable Long id) {
 		
         return  new ResponseEntity<>(jornadaService.findOne(id),HttpStatus.OK);
     }
 	
-	@GetMapping(value="/educacion-continua/jornada/delete")
+	@GetMapping(value="/delete")
     public ResponseEntity<?> deleteJornada(@RequestParam(value = "id",required = true) String idJornada) {
 		jornadaService.deleteJornada(Long.parseLong(idJornada));
 		return new ResponseEntity<>("Se ha eliminado la jornada exitosamente",HttpStatus.OK);
 		
     }
+	
+	
 }

@@ -10,6 +10,7 @@ import com.ufps.cedcufps.dto.CertificacionDto;
 import com.ufps.cedcufps.dto.EducacionContinuaAppDto;
 import com.ufps.cedcufps.dto.EducacionContinuaWebDto;
 import com.ufps.cedcufps.dto.InfoEducacionContinuaDto;
+import com.ufps.cedcufps.dto.JornadaAppDto;
 import com.ufps.cedcufps.dto.ParticipanteDto;
 import com.ufps.cedcufps.dto.PonenteDto;
 import com.ufps.cedcufps.dto.EducacionContinuaAppDto;
@@ -21,7 +22,7 @@ import com.ufps.cedcufps.modelos.Ponente;
 public interface IEducacionContinuaMapper {
 
 	
-	public List<EducacionContinuaAppDto> convertEducacionContinuaToApp(List<EducacionContinua> edc);
+	//public List<EducacionContinuaAppDto> convertEducacionContinuaToApp(List<EducacionContinuaAppDto> edC, Map<Long,List<JornadaAppDto>> jornadasMap);
 	public InfoEducacionContinuaDto convertEducacionContinuaToEducacionContinuaWeb(EducacionContinua e, boolean hasPermission);
 	public ParticipanteDto convertParticipanteToParticipanteDto(Participante p);
 	public List<ParticipanteDto> convertParticipantesToParticipanteDto(List<Participante> p);
@@ -43,5 +44,7 @@ public interface IEducacionContinuaMapper {
 			Long idEducacionContinua, String educacionContinua, Date fechaInicioEduContinua, Date fechaFinEduContinua, 
 			String diplomaParticipacion, boolean aprobado, Date fechaGeneracionDiploma, String token, Long idDiploma,
 			Map<String,Object> estructuraDiploma,Date fechaActualizacionDiploma);
+	
+	
 	
 }

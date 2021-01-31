@@ -25,19 +25,20 @@ import com.ufps.cedcufps.modelos.Programa;
 import com.ufps.cedcufps.services.IProgramaService;
 
 @RestController
+@RequestMapping("/programas-academicos")
 public class ProgramaRestController {
 
 	@Autowired
 	private IProgramaService programaService;
 	
-	@RequestMapping(value = "/programas-academicos/listar")
+	@RequestMapping(value = "/listar")
 	public List<Programa> listar(Map<String, Object> model) {
 		return programaService.findAll();
 	}
 	
 	
 	
-	@GetMapping(value="/search/programa/{id}", produces = "application/json")
+	@GetMapping(value="/search/{id}", produces = "application/json")
     public ResponseEntity<?> buscarPorPrograma(@PathVariable Long id) {
 		
 		return  new ResponseEntity<>(programaService.searchProgramaById(id),HttpStatus.OK);
@@ -45,7 +46,7 @@ public class ProgramaRestController {
 	
 	
 
-	@PostMapping(value = "/programa/save")
+	@PostMapping(value = "/save")
 	public ResponseEntity<?> guardarProgramaRest(@RequestBody @Valid Programa programa,BindingResult result) {
 		if(result.hasErrors()) {
 			
@@ -55,7 +56,7 @@ public class ProgramaRestController {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
-	@GetMapping(value="/programa/search-director", produces = "application/json")
+	@GetMapping(value="/search-director", produces = "application/json")
     public ResponseEntity<?> buscarDirectorPrograma(@RequestParam(name = "id", required = true) Long idDir, @RequestParam(name = "idP", required = true) Long idPrograma) {
 		
 		return  new ResponseEntity<>(programaService.findProgramaByDirector(idDir,idPrograma),HttpStatus.OK);

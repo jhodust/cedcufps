@@ -39,7 +39,6 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 		System.out.println("entra a sucess");
 		//handle(request, response, authentication);
         clearAuthenticationAttributes(request);
-        
         HttpSession session = request.getSession();
         if (session != null) {
             String redirectUrl = (String) session.getAttribute("url_prior_login");
@@ -74,7 +73,7 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 	 	     
 	    	 new SecurityContextLogoutHandler().logout(request, response, auth);
 	    }else {
-	    	targetUrl = "/nn";
+	    	targetUrl = "/";
 	    }
 	    if (response.isCommitted()) {
 	        logger.debug(

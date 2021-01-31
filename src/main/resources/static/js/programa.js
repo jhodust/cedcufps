@@ -61,7 +61,7 @@ $(document).ready(function ()
         $.ajax({
 			headers: {"X-CSRF-TOKEN": token},
             type: "GET",
-            url: "/programa/search-director?" + $.param(docente),
+            url: "/programas-academicos/search-director?" + $.param(docente),
             dataType : 'json',
             contentType: "application/json; charset=utf-8",
 			cache: false,
@@ -133,7 +133,7 @@ function guardarPrograma(){
 		type: "POST",
 		contentType: "application/json; charset=utf-8",
 		data: JSON.stringify(JSONprograma),
-		url: "/programa/save",
+		url: "/programas-academicos/save",
 		cache: false,
 		success: function(result) {
 			toastr.success('Se ha guardado la información', 'Excelente!')
@@ -189,7 +189,7 @@ function editarPrograma(elemento){
 		headers: {"X-CSRF-TOKEN": token},
 		type: "GET",
 		contentType: "application/json; charset=utf-8",
-		url: "/search/programa/"+elemento.dataset.id,
+		url: "/programas-academicos/search/"+elemento.dataset.id,
 		cache: false,
 		success: function(result) {
 			console.log(result);

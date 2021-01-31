@@ -27,6 +27,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.ufps.cedcufps.dao.IAdministrativoDao;
 import com.ufps.cedcufps.dao.IDepartamentoDao;
 import com.ufps.cedcufps.dao.IDocenteDao;
+import com.ufps.cedcufps.dao.IEducacionContinuaCustomDao;
 import com.ufps.cedcufps.dao.IEducacionContinuaDao;
 import com.ufps.cedcufps.dao.IEstadoCivilDao;
 import com.ufps.cedcufps.dao.IEstudianteDao;
@@ -39,6 +40,7 @@ import com.ufps.cedcufps.dao.IPersonaRolCustomDao;
 import com.ufps.cedcufps.dao.IProgramaDao;
 import com.ufps.cedcufps.dao.ITipoDocumentoDao;
 import com.ufps.cedcufps.dao.ITipoPersonaDao;
+import com.ufps.cedcufps.dao.impl.EducacionContinuaCustomDaoImpl;
 import com.ufps.cedcufps.dto.DocenteDto;
 import com.ufps.cedcufps.dto.PerfilRolUsuarioDto;
 import com.ufps.cedcufps.dto.PersonaDto;
@@ -134,6 +136,9 @@ public class PersonaService implements IPersonaService, UserDetailsService {
 	
 	@Autowired
 	private IEmailService emailService;
+	
+	@Autowired
+	private IEducacionContinuaCustomDao educacionContinuaCustomDao;
 	
 	private Logger logger= LoggerFactory.getLogger(PersonaService.class);
 	
@@ -579,7 +584,7 @@ public class PersonaService implements IPersonaService, UserDetailsService {
 			dto.setGraduado(usuario.isGraduado());
 			dto.setExterno(usuario.isExterno());
 			dto.setSuperadmin(autoridad.getId().equals(usuario.getId()));
-			if(this.isSuperAdmin()) {//quien asigna permisos es superadmin
+			if(this.isSuperAdmin(autoridad)) {//quien asigna permisos es superadmin
 				Programa p=programaDao.findByDirector(usuario.getId());
 				System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
 				System.out.println(dto.isDirPrograma());
@@ -605,8 +610,8 @@ public class PersonaService implements IPersonaService, UserDetailsService {
 					List<Programa> programasPosiblesSelectGra=(List<Programa>)this.programaDao.findAll();
 					programasPosiblesSelectGra.remove(p);
 					dto.setSelectProgramasForGraduados(programaMapper.convertListProgramaToProgramaDto(programasPosiblesSelectGra));
-					dto.setSelectEduContinuasForAttendance(educacionContinuaMapper.convertEducacionContinuaToApp((List<EducacionContinua>)educacionContinuaDao.findAll()));
-					dto.setEduContinuasForAttendance(educacionContinuaMapper.convertEducacionContinuaToApp(educacionContinuaDao.findEduContinuasPermissionForAttendance(usuario.getId())));
+					dto.setSelectEduContinuasForAttendance(educacionContinuaCustomDao.findEduContinuasPermissionForAttendance(autoridad.getId(), true, false));
+					dto.setEduContinuasForAttendance(educacionContinuaCustomDao.findEduContinuasPermissionForAttendance(usuario.getId()));
 					dto.setHasPermissionForAdminvos(this.personaDao.hasPermissionForAdminvos(usuario.getId())>0);
 					dto.setHasPermissionForExternos(this.personaDao.hasPermissionForExternos(usuario.getId())>0);
 					List<ProgramaDto> programaEdCIntocable= new ArrayList<ProgramaDto>();
@@ -633,8 +638,8 @@ public class PersonaService implements IPersonaService, UserDetailsService {
 					dto.setSelectDeptosForDocentes(departamentoMapper.convertListDepartamentoToDepartamentosDto((List<Departamento>)this.departamentoDao.findAll()));
 					dto.setSelectProgramasForEstudiantes(programaMapper.convertListProgramaToProgramaDto((List<Programa>)this.programaDao.findAll()));
 					dto.setSelectProgramasForGraduados(programaMapper.convertListProgramaToProgramaDto((List<Programa>)this.programaDao.findAll()));
-					dto.setSelectEduContinuasForAttendance(educacionContinuaMapper.convertEducacionContinuaToApp((List<EducacionContinua>)educacionContinuaDao.findAll()));
-					dto.setEduContinuasForAttendance(educacionContinuaMapper.convertEducacionContinuaToApp(educacionContinuaDao.findEduContinuasPermissionForAttendance(usuario.getId())));
+					dto.setSelectEduContinuasForAttendance(educacionContinuaCustomDao.findEduContinuasPermissionForAttendance(autoridad.getId(), true, false));
+					dto.setEduContinuasForAttendance(educacionContinuaCustomDao.findEduContinuasPermissionForAttendance(usuario.getId()));
 					dto.setHasPermissionForAdminvos(this.personaDao.hasPermissionForAdminvos(usuario.getId())>0);
 					dto.setHasPermissionForExternos(this.personaDao.hasPermissionForExternos(usuario.getId())>0);
 					return dto;
@@ -656,14 +661,14 @@ public class PersonaService implements IPersonaService, UserDetailsService {
 				dto.setSelectDeptosForDocentes(departamentoMapper.convertListDepartamentoToDepartamentosDto((List<Departamento>)this.departamentoDao.findAll()));
 				dto.setSelectProgramasForEstudiantes(selectProgramasDir);
 				dto.setSelectProgramasForGraduados(selectProgramasDir);
-				dto.setSelectEduContinuasForAttendance(educacionContinuaMapper.convertEducacionContinuaToApp(this.educacionContinuaDao.findEduContinuasPermissionForAttendanceByPrograma(pDirector.getId())));
-				dto.setEduContinuasForAttendance(educacionContinuaMapper.convertEducacionContinuaToApp(educacionContinuaDao.findEduContinuasPermissionForAttendance(usuario.getId())));
+				dto.setSelectEduContinuasForAttendance(educacionContinuaCustomDao.findEduContinuasPermissionForAttendance(autoridad.getId(), false, true));
+				dto.setEduContinuasForAttendance(educacionContinuaCustomDao.findEduContinuasPermissionForAttendance(usuario.getId()));
 				dto.setHasPermissionForAdminvos(this.personaDao.hasPermissionForAdminvos(usuario.getId())>0);
 				dto.setHasPermissionForExternos(this.personaDao.hasPermissionForExternos(usuario.getId())>0);
 				dto.setProgramasForEduContinuaIntocables(programaMapper.convertListProgramaToProgramaDto(this.programaDao.findProgramasPermisosEduContinuaForDirProgramaExceptOwn(usuario.getId(), pDirector.getId())));
 				dto.setProgramasForEstudiantesIntocables(programaMapper.convertListProgramaToProgramaDto(this.programaDao.findProgramasPermisosEstudiantesForDirProgramaExceptOwn(usuario.getId(), pDirector.getId())));
 				dto.setProgramasForGraduadosIntocables(programaMapper.convertListProgramaToProgramaDto(this.programaDao.findProgramasPermisosGraduadosForDirProgramaExceptOwn(usuario.getId(), pDirector.getId())));
-				dto.setEduContinuasForAttendanceIntocables(educacionContinuaMapper.convertEducacionContinuaToApp(this.educacionContinuaDao.findEduContinuasPermissionForAttendanceExceptDirectorPrograma(usuario.getId(),pDirector.getId())));
+				dto.setEduContinuasForAttendanceIntocables(educacionContinuaCustomDao.findEduContinuasPermissionForAttendanceExceptDirectorPrograma(usuario.getId(),pDirector.getId()));
 				return dto;
 			}
 		}

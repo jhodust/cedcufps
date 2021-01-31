@@ -23,6 +23,7 @@ import com.ufps.cedcufps.services.IFacultadService;
 
 
 @RestController
+@RequestMapping(value = "/departamentos-academicos")
 public class DepartamentoRestController {
 
 	@Autowired
@@ -31,21 +32,18 @@ public class DepartamentoRestController {
 	@Autowired
 	private IFacultadService facultadService;
 	
-	@RequestMapping(value = "/departamentos/listar")
+	@RequestMapping(value = "/listar")
 	public List<Departamento> listar(Map<String, Object> model) {
 		return departamentoService.findAll();
 	}
 	
-	@GetMapping(value="/departamento/search/{id}", produces = "application/json")
+	@GetMapping(value="/search/{id}", produces = "application/json")
     public ResponseEntity<?> buscarPorFacultad(@PathVariable Long id) {
         
         return  new ResponseEntity<>(departamentoService.findOne(id),HttpStatus.OK);
     }
 	
-	
-	
-
-	@PostMapping(value = "/departamento/save")
+	@PostMapping(value = "/save")
 	public ResponseEntity<?> guardarDepartamentoRest(@RequestBody @Valid Departamento departamento, BindingResult result) {
 		if(result.hasErrors()) {
 			return new ResponseEntity<>(result.getAllErrors(),HttpStatus.BAD_REQUEST);

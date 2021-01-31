@@ -26,7 +26,7 @@ import com.ufps.cedcufps.services.IPersonaService;
 @SessionAttributes("estudiante")
 public class EstudianteController {
 
-	@Autowired
+	/*@Autowired
 	private IPersonaService personaService;
 	
 	
@@ -42,7 +42,7 @@ public class EstudianteController {
 		model.put("estados_civiles",personaService.findAllEstadosCiviles());
 		return "persona/formRegistroEstudiante";
 	}
-	
+	*/
 	/*@RequestMapping(value = "/usuarios/estudiante/registro/{id}")
 	public String editar(@PathVariable(value = "id") Long id, Map<String, Object> model) {
 		Estudiante e= (Estudiante)personaService.findOne(id).get();
@@ -56,7 +56,7 @@ public class EstudianteController {
 		return "persona/formRegistroEstudiante";
 	}*/
 	
-	
+	/*
 	@RequestMapping(value = "/usuarios/estudiante/registro", method = RequestMethod.POST)
 	public String save(@Valid Estudiante e, BindingResult result,Map<String, Object> model, SessionStatus status,RedirectAttributes redirectAttributes) {
 		//e.setTipoPersona(personaService.findByTipoPersona("Estudiante"));
@@ -88,5 +88,5 @@ public class EstudianteController {
 		status.setComplete();
 		redirectAttributes.addFlashAttribute("successMessage", "Se ha guardado la información correctamente...");
 		return "redirect:/usuarios";
-	}
+	}*/
 }

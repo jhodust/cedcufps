@@ -25,7 +25,7 @@ import com.ufps.cedcufps.services.IPersonaService;
 @SessionAttributes("docente")
 public class DocenteController {
 
-	@Autowired
+	/*@Autowired
 	private IPersonaService personaService;
 	
 	@RequestMapping(value = "/usuarios/docente/registro")
@@ -39,7 +39,7 @@ public class DocenteController {
 		model.put("generos",personaService.findAllGeneros());
 		model.put("estados_civiles",personaService.findAllEstadosCiviles());
 		return "persona/formRegistroDocente";
-	}
+	}*/
 	
 	/*@RequestMapping(value = "/usuarios/docente/registro/{id}")
 	public String editar(@PathVariable(value = "id") Long id, Map<String, Object> model) {
@@ -54,7 +54,7 @@ public class DocenteController {
 		return "persona/formRegistroDocente";
 	}*/
 	
-	@RequestMapping(value = "/usuarios/docente/registro", method = RequestMethod.POST)
+	/*@RequestMapping(value = "/usuarios/docente/registro", method = RequestMethod.POST)
 	public String save(@Valid Docente d, BindingResult result,Map<String, Object> model, SessionStatus status,RedirectAttributes redirectAttributes) {
 		//d.setTipoPersona(personaService.findByTipoPersona("Docente"));
 		System.out.println("*******************************************************************");
@@ -88,5 +88,5 @@ public class DocenteController {
 		status.setComplete();
 		redirectAttributes.addFlashAttribute("successMessage", "Se ha guardado la información correctamente...");
 		return "redirect:/usuarios";
-	}
+	}*/
 }

@@ -26,7 +26,7 @@ if(eduContinua.jornadas.length>0){
 			   		headers: {"X-CSRF-TOKEN": token},
 			   		type: "GET",
 			   		contentType: "application/json; charset=utf-8",
-			   		url: "/asistencia-general-marcar",
+			   		url: "/educacion-continua/attendance/general/check",
 			   		data:{'id_jornada':idJornada},
 			   		cache: false,
 			   		success: function(result) {
@@ -47,7 +47,7 @@ if(eduContinua.jornadas.length>0){
 			   		headers: {"X-CSRF-TOKEN": token},
 			   		type: "GET",
 			   		contentType: "application/json; charset=utf-8",
-			   		url: "/asistencia-general-desmarcar",
+			   		url: "/educacion-continua/attendance/general/uncheck",
 			   		data:{'id_jornada':idJornada},
 			   		cache: false,
 			   		success: function(result) {
@@ -77,7 +77,7 @@ if(eduContinua.jornadas.length>0){
 			   		headers: {"X-CSRF-TOKEN": token},
 			   		type: "GET",
 			   		contentType: "application/json; charset=utf-8",
-			   		url: "/asistencia-marcar",
+			   		url: "/educacion-continua/attendance/check",
 			   		data:{'id_jornada':idJornada, 'id_participante':idParticipante, 'cant_participantes':eduContinua.participantes.length},
 			   		cache: false,
 			   		success: function(result) {
@@ -96,7 +96,7 @@ if(eduContinua.jornadas.length>0){
 			   		headers: {"X-CSRF-TOKEN": token},
 			   		type: "GET",
 			   		contentType: "application/json; charset=utf-8",
-			   		url: "/asistencia-desmarcar",
+			   		url: "/educacion-continua/attendance/uncheck",
 			   		data:{'id_jornada':idJornada, 'id_participante':idParticipante},
 			   		cache: false,
 			   		success: function(result) {

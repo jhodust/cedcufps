@@ -25,6 +25,7 @@ import com.ufps.cedcufps.services.IEducacionContinuaService;
 import com.ufps.cedcufps.services.IInformeSniesService;
 
 @RestController
+@RequestMapping(value = "/reportes-SNIES")
 public class ReportesSniesRestController {
 
 	
@@ -34,7 +35,7 @@ public class ReportesSniesRestController {
 	
 	
 	
-	@PostMapping(value = "/reportes-SNIES/generar")
+	@PostMapping(value = "/generar")
 	public ResponseEntity<?> informeExcel(@RequestBody InformeSniesDto informeSniesDto) {
 		System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
 		System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$444");
@@ -47,7 +48,7 @@ public class ReportesSniesRestController {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
-	@GetMapping(value = "/reportes-SNIES/dashboard/totalGeneralEduContinua")
+	@GetMapping(value = "/dashboard/totalGeneralEduContinua")
 	public ResponseEntity<?> estadisticasConteoGeneralEduContinua(@RequestParam(name="fechaInicio", required=true) String fechaInicio, 
 			@RequestParam(name="fechaFin", required=true) String fechaFin, @RequestParam(name="idPrograma", required=false) String idPrograma) {
 		System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
@@ -61,7 +62,7 @@ public class ReportesSniesRestController {
 		return new ResponseEntity<>(informeSniesService.generarStatisticsConteoGeneralEduContinua(fechaInicio, fechaFin,idPrograma),HttpStatus.OK);
 	}
 	
-	@GetMapping(value = "/reportes-SNIES/dashboard/totalGeneralEduContinuaPersonas")
+	@GetMapping(value = "/dashboard/totalGeneralEduContinuaPersonas")
 	public ResponseEntity<?> estadisticasConteoGeneralEduContinuaPersonas(@RequestParam(name="fechaInicio", required=true) String fechaInicio, 
 			@RequestParam(name="fechaFin", required=true) String fechaFin, @RequestParam(name="idPrograma", required=false) String idPrograma) {
 		System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
@@ -75,7 +76,7 @@ public class ReportesSniesRestController {
 		return new ResponseEntity<>(informeSniesService.generarStatisticsConteoGeneralPersonas(fechaInicio, fechaFin, idPrograma),HttpStatus.OK);
 	}
 	
-	@GetMapping(value = "/reportes-SNIES/dashboard/totalGeneralEduContinuaGenero")
+	@GetMapping(value = "/dashboard/totalGeneralEduContinuaGenero")
 	public ResponseEntity<?> estadisticasConteoGeneralEduContinuaGeneros(@RequestParam(name="fechaInicio", required=true) String fechaInicio, 
 			@RequestParam(name="fechaFin", required=true) String fechaFin, @RequestParam(name="idPrograma", required=false) String idPrograma) {
 		System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");

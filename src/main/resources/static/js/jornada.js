@@ -65,7 +65,7 @@ function ajaxGuardarJornada(jsonJornada){
 		type: "POST",
 		contentType: "application/json; charset=utf-8",
 		data: JSON.stringify(jsonJornada),//variable idEducacionContinua la recibo de un script al final del index de jornadas
-		url: "/educacion-continua/jornada/save",
+		url: "/educacion-continua/jornadas/save",
 		cache: false,
 		success: function(result) {
 			toastr.success('Se ha guardado la información', 'Excelente!')
@@ -104,7 +104,7 @@ function editarJornada(elemento){
 		headers: {"X-CSRF-TOKEN": token},
 		type: "GET",
 		contentType: "application/json; charset=utf-8",
-		url: "/educacion-continua/jornada/search/"+elemento.dataset.id,
+		url: "/educacion-continua/jornadas/search/"+elemento.dataset.id,
 		cache: false,
 		success: function(result) {
 			console.log(result);
@@ -128,7 +128,7 @@ function eliminarJornada(elemento){
 		type: "GET",
 		contentType: "application/json; charset=utf-8",
 		data: {id:elemento.dataset.id},
-		url: "/educacion-continua/jornada/delete",
+		url: "/educacion-continua/jornadas/delete",
 		cache: false,
 		success: function(result) {
 			 console.log(result);
@@ -155,8 +155,8 @@ function limpiarErrores(){
 }
 
 function reloadListJornadas(){
-	var urlReload = '/educacion-continua/'+idEducacionContinua+'/jornadas';
+	var urlReload = '/educacion-continua/jornadas/'+idEducacionContinua;
 	$('#div_list_jornadas').load(urlReload);
-	var urlReloadDetalles = '/educacion-continua/detalles/'+idEducacionContinua+'/jornadas';
+	var urlReloadDetalles = '/educacion-continua/jornadas/detalles/'+idEducacionContinua;
 	$('#div_list_detalles_jornadas').load(urlReloadDetalles);
 }

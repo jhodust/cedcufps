@@ -43,6 +43,7 @@ import org.springframework.security.oauth2.client.registration.InMemoryClientReg
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
 import org.springframework.security.oauth2.client.web.AuthorizationRequestRepository;
+import org.springframework.security.oauth2.client.web.HttpSessionOAuth2AuthorizationRequestRepository;
 import org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestRedirectFilter;
 import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequest;
@@ -118,31 +119,40 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		// TODO Auto-generated method stub
-		http.authorizeRequests().antMatchers("/","/reload**","/email","/registrarse","/search/programa/**","/files/**","/pdfreport","/home","/plantilla/**", "/logos/**","/data/**","/js/**","/css/**","/programa/save", "/uploads/**","/app/**","/upload_image/**").permitAll()
-		.antMatchers("/persona/**").hasAnyRole("SUPERADMIN", "MANPEOPLE")
-		.antMatchers("/programa/**").hasAnyRole("SUPERADMIN")
-		.antMatchers("/tipo-documento/**").hasAnyRole("SUPERADMIN")
+		http.authorizeRequests().antMatchers("/","/reload**","/registrarse","/files/**","/js/**","/css/**","/app/**").permitAll()
+		.antMatchers("/preinscripcion/**", "/participaciones-educacion-continua**", "/certificaciones-educacion-continua**", "/perfil/**").hasRole("USER")
+		.antMatchers("/facultades/**","/departamentos-academicos/**","/programas-academicos/**").hasRole("SUPERADMIN")
 		.antMatchers("/educacion-continua/**").hasAnyRole("SUPERADMIN","MANAECCU")
-		.antMatchers("/participaciones-educacion-continua","/preinscripcion/**", "/realizar-inscripcion/**","/cancelar-inscripcion/**").hasRole("USER")
-		.antMatchers("/educacion-continua-a-cargo").hasRole("MANAECCU")
+		.antMatchers("/reportes-SNIES/**").hasAnyRole("SUPERADMIN","SNIES")
+		.antMatchers("/usuarios/**").hasAnyRole("SUPERADMIN", "MANPEOPLE")
 		.anyRequest().authenticated()
+		.and()
+		.logout().logoutSuccessUrl("/logout").logoutSuccessHandler(this.oidcLogoutSuccessHandler()).clearAuthentication(true).deleteCookies("oauth2_auth_request","JSESSIONID")
 		//.and().cors().configurationSource(corsConfigurationSource())
 		.and()
-		.oauth2Login()
+		.oauth2Login(oauthLogin -> oauthLogin
+	            
+			.authorizedClientService(this.authorizedClientService())
+
 			.failureHandler(customAuthenticationFailureHandler())
 			.successHandler(customSuccessHandler())
 			.authorizationEndpoint()
-			 .baseUri("/login/oauth2/code/google")
-			 .and()
+			.authorizationRequestRepository(authorizationRequestRepository()).and()/*
+			.authorizationEndpoint()
+			 	.baseUri("/login/oauth2/authorization")
+			 	.and()
 			/*.authorizationEndpoint()
-				.baseUri(this.authorizationRequestBaseUri())
+			 .baseUri("/oauth2/code/google")
+			 .and()*/
+			/*.authorizationEndpoint()
+				//.baseUri(this.authorizationRequestBaseUri())
 				.authorizationRequestRepository(this.cookieAuthorizationRequestRepository())
 				.and()
-			.tokenEndpoint()
+			/*.tokenEndpoint()
 				.accessTokenResponseClient(this.accessTokenResponseClient())
 				.and()*/
 			.userInfoEndpoint()
-				.oidcUserService(this.oidcUserService())
+				.oidcUserService(this.oidcUserService()));
 		//.authorizedClientService(authorizedClientService())
 			//.clientRegistrationRepository(this.clientRegistrationRepository())
 			//.authorizationEndpoint()
@@ -150,9 +160,6 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 				//.authorizationRequestRepository(this.cookieAuthorizationRequestRepository())
 				//.and()
 				
-		.and()
-		.and().logout().logoutSuccessUrl("/logout").logoutSuccessHandler(this.oidcLogoutSuccessHandler()).clearAuthentication(true).deleteCookies("oauth2_auth_request","JSESSIONID").permitAll();
-		
 		
 				//.userAuthoritiesMapper(this.userAuthoritiesMapper());
 		/*.and()
@@ -185,12 +192,26 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
         return new CustomAuthenticationSuccessHandler();
     }
 	 
+	
 	public OAuth2AuthorizedClientService authorizedClientService() {
 	 
 	    return new InMemoryOAuth2AuthorizedClientService(
 	      clientRegistrationRepository());
 	}
 	
+	
+	public ClientRegistrationRepository clientRegistrationRepository() {
+	 return new InMemoryClientRegistrationRepository(this.googleClientRegistration());
+	 }
+
+	
+	private ClientRegistration googleClientRegistration() {
+		 return CommonOAuth2Provider.GOOGLE.getBuilder("google")
+		 .clientId("226613155821-ri427lmire8qq5icol9s20srnuvh2vqg.apps.googleusercontent.com")
+		 .clientSecret("bTJqrfgRmLIwmGFvV_BnFTFd")
+		 .build();
+		 }
+
 	
 	private String authorizationRequestBaseUri() {
 		// TODO Auto-generated method stub
@@ -200,46 +221,19 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 
 	 
-	    public ClientRegistrationRepository clientRegistrationRepository() {
-	        List<ClientRegistration> registrations = clients.stream()
-	          .map(c -> getRegistration(c))
-	          .filter(registration -> registration != null)
-	          .collect(Collectors.toList());
-	        
-	        return new InMemoryClientRegistrationRepository(registrations);
-	    }
-	 
-	 private static String CLIENT_PROPERTY_KEY 
-	  = "spring.security.oauth2.client.registration.";
-	 
+	   
 	
-	private ClientRegistration getRegistration(String client) {
-	    String clientId = env.getProperty(
-	      CLIENT_PROPERTY_KEY + client + ".client-id");
-	 
-	    if (clientId == null) {
-	        return null;
-	    }
-	 
-	    String clientSecret = env.getProperty(
-	      CLIENT_PROPERTY_KEY + client + ".client-secret");
-	 
-	    if (client.equals("google")) {
-	        return CommonOAuth2Provider.GOOGLE.getBuilder(client)
-	          .clientId(clientId).clientSecret(clientSecret).build();
-	    }
-	    return null;
-	}
+	
 	 
 	OidcClientInitiatedLogoutSuccessHandler oidcLogoutSuccessHandler() { 
-		OidcClientInitiatedLogoutSuccessHandler successHandler = new OidcClientInitiatedLogoutSuccessHandler(clientRegistrationRepository);
+		OidcClientInitiatedLogoutSuccessHandler successHandler = new OidcClientInitiatedLogoutSuccessHandler(clientRegistrationRepository());
         successHandler.setPostLogoutRedirectUri(URI.create("http://localhost:8080/"));
         return successHandler;
 		
     }
-	/*private AuthorizationRequestRepository<OAuth2AuthorizationRequest> cookieAuthorizationRequestRepository() {
+	private AuthorizationRequestRepository<OAuth2AuthorizationRequest> cookieAuthorizationRequestRepository() {
 		return new HttpCookieOAuth2AuthorizationRequestRepository();
-	}*/
+	}
 	private OAuth2UserService<OidcUserRequest, OidcUser> oidcUserService() {
 		final OidcUserService delegate = new OidcUserService();
 
@@ -359,4 +353,14 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
         return source;
     }
 	
+	@Bean
+	public AuthorizationRequestRepository<OAuth2AuthorizationRequest> 
+	  authorizationRequestRepository() {
+	 
+		System.out.println("NUEVASESIONNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN");
+	    return new HttpSessionOAuth2AuthorizationRequestRepository();
+	}
+	
+	
+
 }

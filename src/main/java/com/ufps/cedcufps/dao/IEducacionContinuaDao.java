@@ -16,6 +16,7 @@ import org.springframework.data.repository.CrudRepository;
 import com.ufps.cedcufps.modelos.Departamento;
 import com.ufps.cedcufps.modelos.EducacionContinua;
 import com.ufps.cedcufps.modelos.Participante;
+import com.ufps.cedcufps.utils.StatusEducacionContinua;
 
 public interface IEducacionContinuaDao extends JpaRepository<EducacionContinua, Long> {
 
@@ -63,12 +64,8 @@ public interface IEducacionContinuaDao extends JpaRepository<EducacionContinua, 
 	@Query("select e from EducacionContinua e where e.id IN (?1)")
 	public List<EducacionContinua> findByManyIds(List<Long> idsEduContinua);
 	
-	@Query(value = "select e.* from rol_persona_asistencia rpa join educacion_continua e on rpa.id_edu_continua=e.id where rpa.id_persona= ?1", nativeQuery = true)
-	public List<EducacionContinua> findEduContinuasPermissionForAttendance(Long idPersona);
 	
 	
-	@Query(value = "select e.* from educacion_continua e  where e.id_programa=?1", nativeQuery = true)
-	public List<EducacionContinua> findEduContinuasPermissionForAttendanceByPrograma(Long idPrograma);
 	
 	
 	@Query(value = "select e.* from rol_persona_asistencia rpa join educacion_continua e on rpa.id_edu_continua=e.id where rpa.id_persona = ?1 and e.id_programa != ?2", nativeQuery = true)
@@ -101,21 +98,25 @@ public interface IEducacionContinuaDao extends JpaRepository<EducacionContinua, 
 	@Query("select distinct e.nombre from EducacionContinua e where e.programaResponsable.id = ?1 ")
 	public List<String> findEducacionContinuaBaseByIdPrograma(Long idPrograma);
 	
-	@Query(value="select ec.* from educacion_continua ec " 
-			+ " join" 
-			+ " (select ec.id as idEdC from educacion_continua ec where ec.id_programa in "
-			+ " (select rpec.id_programa from roles_personas_programas_ec rpec where rpec.id_persona =?1 )"
-			+ " UNION"
-			+ " select ec.id from educacion_continua ec where ec.id_docente=?1"
-			+ " UNION"
-			+ " select rpa.id_edu_continua from rol_persona_asistencia rpa where rpa.id_persona =?1) sq "
-			+ " on sq.idEdC=ec.id"
-			+ " where ec.estado='En Desarrollo'", nativeQuery = true)
-	public List<EducacionContinua> findEducacionesContinuasForApp(Long idPersona);
+	
 	
 	@Transactional
 	@Modifying
 	@Query(value = "update educacion_continua set id_diploma = ?1 where id = ?2", nativeQuery = true)
 	public int updateDiplomaEducacionContinua(Long idDiploma,Long idEduContinua);
+	
+	@Transactional
+	@Modifying
+	@Query(value = "update educacion_continua set estado = "
+			+ "(case when fecha_inicio > NOW() THEN '" + StatusEducacionContinua.STATUS_ACTIVO
+			+ "' when fecha_inicio <= NOW() and fecha_fin > NOW() THEN '" + StatusEducacionContinua.STATUS_EN_DESARROLLO
+			+ "'else '" + StatusEducacionContinua.STATUS_TERMINADO + "'  end)", nativeQuery = true)
+	public int updateEstadoEduContinua();
+	
+	
+	@Transactional
+	@Modifying
+	@Query(value = "update educacion_continua set is_deleted = true where id_acceso = ?1", nativeQuery = true)
+	public void deleteEducacionContinua(String idAcceso);
 	
 }

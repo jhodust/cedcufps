@@ -22,25 +22,24 @@ import com.ufps.cedcufps.modelos.Programa;
 import com.ufps.cedcufps.services.IFacultadService;
 
 @RestController
+@RequestMapping(value = "/facultades")
 public class FacultadRestController {
 
 	@Autowired
 	private IFacultadService facultadService;
 	
-	@RequestMapping(value = "/facultades/listar")
+	@RequestMapping(value = "/listar")
 	public List<Facultad> listar(Map<String, Object> model) {
 		return facultadService.findAll();
 	}
 	
-	@GetMapping(value="/facultad/search/{id}", produces = "application/json")
+	@GetMapping(value="/search/{id}", produces = "application/json")
     public ResponseEntity<?> buscarPorFacultad(@PathVariable Long id) {
 		
 		return  new ResponseEntity<>(facultadService.findOne(id),HttpStatus.OK); 
     }
 	
-	
-	
-	@PostMapping(value = "/facultad/save")
+	@PostMapping(value = "/save")
 	public ResponseEntity<?> guardarFacultadRest(@RequestBody @Valid Facultad facultad, BindingResult result) {
 		if(result.hasErrors()) {
 			return new ResponseEntity<>(result.getAllErrors(),HttpStatus.BAD_REQUEST);

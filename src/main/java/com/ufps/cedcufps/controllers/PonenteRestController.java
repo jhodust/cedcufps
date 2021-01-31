@@ -42,6 +42,7 @@ import com.ufps.cedcufps.utils.CodigoQR;
 import com.ufps.cedcufps.utils.Encrypt;
 
 @RestController
+@RequestMapping(value ="/educacion-continua/ponentes")
 public class PonenteRestController {
 
 	@Autowired
@@ -53,12 +54,12 @@ public class PonenteRestController {
 	@Autowired
 	private IPersonaService personaService;
 	
-	@GetMapping(value = "/educacion-continua/{id}/ponentes", produces = "application/json")
+	/*@GetMapping(value = "/educacion-continua/{id}/ponentes", produces = "application/json")
 	public List<Participante> listarPonentes(@PathVariable Long id) {
 		return participanteService.findAllPonentesOfOneEducacionContinuaById(id);
-	}
+	}*/
 	
-	@GetMapping(value="/educacion-continua/ponente/search/{id}", produces = "application/json")
+	@GetMapping(value="/search/{id}", produces = "application/json")
     public PonenteDto buscarPonente(@PathVariable Long id) {
 		return  participanteService.findPonente(id);
     }
@@ -66,7 +67,7 @@ public class PonenteRestController {
 	
 	
 	
-	@PostMapping(value = "/educacion-continua/ponente/save")
+	@PostMapping(value = "/save")
 	public ResponseEntity<?> guardarPonenteRest(@RequestBody @Valid Ponente ponente, BindingResult result) {
 		if(result.hasErrors()) {
 			return new ResponseEntity<>(result.getAllErrors(),HttpStatus.BAD_REQUEST);
@@ -78,21 +79,21 @@ public class PonenteRestController {
 		return new ResponseEntity<>(dto,HttpStatus.OK);
 	}
 	
-	@GetMapping(value="/educacion-continua/ponente/delete")
+	@GetMapping(value="/delete")
     public ResponseEntity<?> deletePonente(@RequestParam(value = "id",required = true) String idParticipante) {
 		participanteService.deleteParticipante(Long.parseLong(idParticipante));
 		return new ResponseEntity<>("Se ha eliminado el ponente exitosamente",HttpStatus.OK);
 		
     }
 	
-	@GetMapping(value = "/ponente/posible", produces = "application/json")
+	@GetMapping(value = "/filtro", produces = "application/json")
 	public ResponseEntity<?> findPossiblePonentes(@RequestParam(value = "tipo_busqueda",required = false) String tipoBusqueda, 
 			@RequestParam(value = "value",required = false) String valor) {
 		
 		return new ResponseEntity<>(personaService.findPossiblePonente(Integer.parseInt(tipoBusqueda), valor),HttpStatus.OK);
 	}
 	
-	@GetMapping(value = "/ponente/findPersona", produces = "application/json")
+	@GetMapping(value = "/search/persona", produces = "application/json")
 	public ResponseEntity<?> findPersona(@RequestParam(value = "id",required = true) String id) {
 		return new ResponseEntity<>(personaService.findOne(Long.parseLong(id)),HttpStatus.OK);
 	}

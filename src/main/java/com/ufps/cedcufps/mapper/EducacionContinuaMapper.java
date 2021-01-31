@@ -41,11 +41,14 @@ public class EducacionContinuaMapper implements IEducacionContinuaMapper {
 	@Autowired
 	private IJornadaMapper jornadaMapper;
 	
-	@Override
-	public List<EducacionContinuaAppDto> convertEducacionContinuaToApp(List<EducacionContinua> edc) {
+	/*@Override
+	public List<EducacionContinuaAppDto> convertEducacionContinuaToApp(List<EducacionContinuaAppDto> edC, Map<Long,List<JornadaAppDto>> jornadasMap) {
 		// TODO Auto-generated method stub
 		List<EducacionContinuaAppDto> ecadto=new ArrayList<>();
 		
+		for(EducacionContinuaAppDto e: edC) {
+			e.setJornadas(jornadasMap.get(e.getId()));
+		}
 		if(!edc.isEmpty()) {
 			for(EducacionContinua e:edc) {
 				EducacionContinuaAppDto dto= new EducacionContinuaAppDto();
@@ -68,7 +71,7 @@ public class EducacionContinuaMapper implements IEducacionContinuaMapper {
 		
 		return ecadto;
 	}
-
+*/
 	
 	@Override
 	public InfoEducacionContinuaDto convertEducacionContinuaToEducacionContinuaWeb(EducacionContinua e,
@@ -435,6 +438,8 @@ public class EducacionContinuaMapper implements IEducacionContinuaMapper {
 		}
 		return ponentes;
 	}
+
+
 
 
 	

@@ -20,6 +20,7 @@ import com.ufps.cedcufps.utils.paginator.PageRender;
 
 @Controller
 @SessionAttributes("departamento")
+@RequestMapping(value = "/departamentos-academicos")
 public class DepartamentoController {
 
 	@Autowired
@@ -28,7 +29,7 @@ public class DepartamentoController {
 	@Autowired
 	private IFacultadService facultadService;
 	
-	@RequestMapping(value = "/departamentos-academicos")
+	@RequestMapping
 	public String listar(Map<String, Object> model) {
 		
 		Pageable pageRequest=PageRequest.of(0, 8);
@@ -45,7 +46,7 @@ public class DepartamentoController {
 	}
 	
 	
-	@RequestMapping(value = "/departamentos-academicos/reload")
+	@RequestMapping(value = "/reload")
 	public String reloadList(@RequestParam(name="page", defaultValue = "0") int page, 
 			@RequestParam(name="facultad", defaultValue = "") String facultad,Map<String, Object> model) {
 		Pageable pageRequest=PageRequest.of(page, 8);
@@ -69,18 +70,6 @@ public class DepartamentoController {
 	
 
 
-	/*
-	@RequestMapping(value = "/departamentos-academicos/filter/{facultad}")
-	public String filtrarByFacultad(@PathVariable(value = "facultad") String facultad, Map<String, Object> model) {
-		model.put("titulo","PROGRAMAS");
-		model.put("departamentos",departamentoService.findByFacultad(facultad));
-		model.put("facultad",facultadService.findByFacultad(facultad));
-		model.put("facultades",facultadService.findAll());
-		System.out.println("-------------------------------------------------------------------------------------------");
-		System.out.println("facultad " + facultadService.findByFacultad(facultad).getFacultad());
-		return "departamento/index";
-	}*/
-	
 	
 
 }

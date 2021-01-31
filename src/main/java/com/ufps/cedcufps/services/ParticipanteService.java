@@ -7,6 +7,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -43,6 +45,8 @@ import com.ufps.cedcufps.utils.ManejoPdf;
 
 @Service
 public class ParticipanteService implements IParticipanteService{
+	
+	private static final Logger LOGGER = LoggerFactory.getLogger(ParticipanteService.class);
 	
 	@Autowired
 	private IPersonaDao personaDao;
@@ -341,19 +345,23 @@ public class ParticipanteService implements IParticipanteService{
 		
 		PersonaDto perDto=usuarioMapper.convertPersonaToPersonaDto(p.getPersona());
 		
-		
+		LOGGER.debug("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
+		LOGGER.debug("GUARDANDO TARJETA DE INSCRIPCION");
 		prepararEmailInscripcion(p.getEducacionContinua(), perDto, tarjetaInscripcion);
 		
 		
 	}
 
 	public void prepararEmailInscripcion(EducacionContinua e, PersonaDto persona, String tarjetaInscripcion) {
-		String strDateFormat = "dd/MM/yyyy hh:mm a"; // El formato de fecha está especificado  
+		String strDateFormat = "dd/MM/yyyy"; 
 	     SimpleDateFormat objSDF = new SimpleDateFormat(strDateFormat);
 	     
+	     String strTimeFormat = "hh:mm a";   
+	     SimpleDateFormat objSTF = new SimpleDateFormat(strTimeFormat);
+	     
 		String contenido=String.format("La inscripción al %s %s se ha realizado exitosamente. "
-				+ "Recuerde que la educación continua inica %s A continuación se adjunta su respectiva tarjeta de inscripción.",
-				e.getTipoEduContinua().getTipoEduContinua(),e.getNombre(), objSDF.format(e.getFechaInicio())); 
+				+ "Recuerde que la actividad inicia el %s a las %s A continuación se adjunta su respectiva tarjeta de inscripción.",
+				e.getTipoEduContinua().getTipoEduContinua(),e.getNombre(), objSDF.format(e.getFechaInicio()),objSTF.format(e.getFechaInicio())); 
 		
 		notificarViaEmail(persona.getEmail(), "Inscripción Realizada " + e.getNombre(), tarjetaInscripcion, contenido, persona.getNombre(),true);
 	}

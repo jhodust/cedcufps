@@ -43,6 +43,7 @@ import com.ufps.cedcufps.utils.CodigoQR;
 import com.ufps.cedcufps.utils.Encrypt;
 
 @RestController
+@RequestMapping("/preinscripcion")
 public class AsistenteRestController {
 
 	@Autowired
@@ -62,7 +63,7 @@ public class AsistenteRestController {
 		return ResponseEntity.ok(participanteService.saveAsistente(Long.parseLong(idEduContinua),Long.parseLong(idTipoPersona)));
 	}
 	
-	@PostMapping(value = "/realizar-inscripcion/generar-tarjeta-inscripcion" ,produces = "application/json")
+	@PostMapping(value = "/generar-tarjeta-inscripcion" ,produces = "application/json")
 	@ResponseBody
 	public ResponseEntity<?> guardarTarjetaInscripcion(MultipartFile file, String idParticipante){
 		System.out.println("imagen: " + file.getName());
@@ -79,56 +80,11 @@ public class AsistenteRestController {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
-	@PostMapping(value = "/educacion-continua/certificarParticipacion")
-	@ResponseBody
-	public ResponseEntity<?> certificarParticipante(MultipartFile file, String tokenParticipante, String idEduContinua, String documentoParticipante) {
-		System.out.println("imagen filename: " + file.getName());
-		System.out.println(tokenParticipante);
-		System.out.println(idEduContinua);
-		System.out.println(documentoParticipante);
-		participanteService.certificarParticipante(file, Long.parseLong(idEduContinua), tokenParticipante, documentoParticipante);
-		return new ResponseEntity<>(HttpStatus.OK);
-	}
 	
-	@RequestMapping(value = {"/educacion-continua/visualizar-diploma","/certificaciones-educacion-continua/visualizar"}, method = RequestMethod.GET,
-            produces = MediaType.APPLICATION_PDF_VALUE)
-    public ResponseEntity<InputStreamResource> verDiplomaParticipante(@RequestParam(name = "token") String token,
-    		 Map<String, Object> model, RedirectAttributes redirectAttributes) {
-
-        ByteArrayInputStream bis = participanteService.generarPdfDiplomas(token);
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Disposition", "inline; filename=certificado-asistencia.pdf");
-        
-        return ResponseEntity
-                .ok()
-                .headers(headers)
-                .contentType(MediaType.APPLICATION_PDF)
-                .body(new InputStreamResource(bis));
-    }
 	
-	@PostMapping(value = "/educacion-continua/cancelarCertificacionParticipacion")
-	@ResponseBody
-	public ResponseEntity<?> cancelarCertificacionParticipante(String tokenParticipante) {
-		System.out.println(tokenParticipante);
-		participanteService.cancelarCertificacionParticipante(tokenParticipante);
-		return new ResponseEntity<>(HttpStatus.OK);
-	}
 	
-	@GetMapping(value = "/educacion-continua/search-certificacion",produces = "application/json")
-	public ResponseEntity<CertificacionDto> searchCertificacion(@RequestParam(value = "token") String tokenParticipante) {
-		return new ResponseEntity<>(participanteService.findCertificacionByToken(tokenParticipante),HttpStatus.OK);
-	}
 	
-	@PostMapping(value = "/educacion-continua/actualizarCertificado")
-	@ResponseBody
-	public ResponseEntity<?> updateCertificacionParticipante(MultipartFile file, String filename, String tokenParticipante, 
-			String idEduContinua, String documentoParticipante) {
-		System.out.println("UPDATTTTTTTTTTTTEEEEEEEEEEEEEEEEEE CERRRRRRRRRRTTTTTTTTTTTTTIIIIIIIIIIFFFFFFFFFFIIIIIIIICAAAAACCCCCIIIIONNNNNNN");
-		System.out.println("imagen filename: " + file.getName());
-		System.out.println(tokenParticipante);
-		System.out.println(idEduContinua);
-		System.out.println(documentoParticipante);
-		participanteService.updateCertificado(file, filename, tokenParticipante, Long.parseLong(idEduContinua), documentoParticipante);
-		return new ResponseEntity<>(HttpStatus.OK);
-	}
+	
+	
+	
 }

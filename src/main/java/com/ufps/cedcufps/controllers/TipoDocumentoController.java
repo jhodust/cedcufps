@@ -19,7 +19,7 @@ import com.ufps.cedcufps.services.ITipoDocumentoService;
 @SessionAttributes("tipoDocumento")
 public class TipoDocumentoController {
 
-	@Autowired
+	/*@Autowired
 	private ITipoDocumentoService tipoDocumentoService;
 	
 	@RequestMapping(value = "/tipo-documento/listar")
@@ -50,5 +50,5 @@ public class TipoDocumentoController {
 		model.put("titulo","FORMULARIO TIPOS DOCUMENTOS");
 		model.put("tipoDocumento",t.get());
 		return "tipo_documento/form";
-	}
+	}*/
 }

@@ -65,6 +65,9 @@ public class InicioController {
 		PageRender<EducacionContinua> pageRender= new PageRender<EducacionContinua>("/reload", edc);
 		model.addAttribute("educacionesRecientes",educacionContinuaService.educacionContinuaRecientes());
 		model.addAttribute("educacionesContinuas",edc);
+		System.out.println("TOTAL PAGINAS");
+		System.out.println(pageRender.getTotalPaginas());
+		System.out.println("total edc: " + edc.getNumberOfElements());
 		model.addAttribute("page",pageRender);
 		model.addAttribute("programas",programaService.findAll());
 		model.addAttribute("tipos_educacion_continua",educacionContinuaService.findAllTiposEducacionContinuaExisting());
@@ -109,6 +112,9 @@ public class InicioController {
 		//educacionContinuaService.generarReporteSNIESEducacionContinua(new Date(), 0);
 		return "registrarse";
 	}
+	
+	
+	
 
 	
 	

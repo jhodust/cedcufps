@@ -34,7 +34,7 @@ function guardarFacultad(){
 		type: "POST",
 		contentType: "application/json; charset=utf-8",
 		data: JSON.stringify({'id':idFacultad,'facultad': facultad}),
-		url: "/facultad/save",
+		url: "/facultades/save",
 		cache: false,
 		success: function(result) {
 			console.log(result);
@@ -73,7 +73,7 @@ function editarFacultad(elemento){
 		headers: {"X-CSRF-TOKEN": token},
 		type: "GET",
 		contentType: "application/json; charset=utf-8",
-		url: "/facultad/search/"+elemento.dataset.id,
+		url: "/facultades/search/"+elemento.dataset.id,
 		cache: false,
 		success: function(result) {
 			console.log(result.facultad);

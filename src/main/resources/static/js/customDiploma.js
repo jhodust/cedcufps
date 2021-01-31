@@ -10,13 +10,13 @@ var canvas = new fabric.Canvas('canvasDiploma',{
     canvasHeight: 600,
 });
 
-var canvasParticipante = new fabric.Canvas('canvasDiplomaParticipante',{
+/*var canvasParticipante = new fabric.Canvas('canvasDiplomaParticipante',{
 	renderOnAddRemove:true,
 	canvasOriginalWidth: 800,
     canvasOriginalHeight: 600,
     canvasWidth: 800,
     canvasHeight: 600,
-});
+});*/
 
 
 $(document).ready(function ()

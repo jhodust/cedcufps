@@ -47,7 +47,8 @@ import com.ufps.cedcufps.utils.Archivo;
 
 @RestController
 public class ElementoDiplomaRestController {
-
+	
+	/*
 	@Autowired
 	private IDiplomaService diplomaService;
 	
@@ -66,26 +67,7 @@ public class ElementoDiplomaRestController {
 	@Autowired
 	private IEducacionContinuaDao educacionContinuaDao;
 	
-	@PostMapping(value = "/educacion-continua/generar-estructura-diploma")
-	public ResponseEntity<?> guardarDiplomaRest(@RequestBody DiplomaDto diploma) {
-		
-		
-		System.out.println(diploma.getId());
-		//Iterator<Map.Entry<String, JsonNode>> fields = diploma.getDetails().fields();
-		System.out.println("sale de mappear");
-		
-		/*while(fields.hasNext()) {
-		    Map.Entry<String, JsonNode> field = fields.next();
-		    String   fieldName  = field.getKey();
-		    JsonNode fieldValue = field.getValue();
-
-		    System.out.println(fieldName + " = " + fieldValue.asText());
-		    //processNode(fieldValue);
-		    System.out.println("bucle");
-		}*/
-		System.out.println("termina esto");
-		return new ResponseEntity<>(diplomaService.save(diploma), HttpStatus.OK);
-	}
+	
 	
 	
 	
@@ -188,7 +170,7 @@ public class ElementoDiplomaRestController {
 	    	System.out.println("else");
 	        System.out.println(prefix + ": " + currentNode.toString());
 	    }
-	}
+	}*/
 }
 
 //escribir texto en una imagen

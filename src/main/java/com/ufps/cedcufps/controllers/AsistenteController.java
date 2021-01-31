@@ -26,7 +26,7 @@ import com.ufps.cedcufps.utils.Encrypt;
 @Controller
 public class AsistenteController {
 
-	@Autowired
+	/*@Autowired
 	private IParticipanteService participanteService;
 	
 	@Autowired
@@ -34,7 +34,7 @@ public class AsistenteController {
 	
 	@Autowired
 	private IPersonaService personaService;
-	/*
+	*//*
 	@RequestMapping(value = "/realizar-inscripcion/{id_evento}")
 	public String realizarInscripcion2(@PathVariable(value = "id_evento") Long id, Map<String, Object> model) {
 		

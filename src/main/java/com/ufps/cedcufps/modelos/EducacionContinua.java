@@ -29,6 +29,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 import javax.validation.constraints.Size;
 
+import org.hibernate.annotations.Type;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -149,7 +150,9 @@ public class EducacionContinua implements Serializable {
 	@Column(columnDefinition = "LONGTEXT",name = "info_adicional")
 	private String infoAdicional;
 	
-	
+	@Column(name="is_deleted",  columnDefinition = "TINYINT default 0")
+	@Type(type = "org.hibernate.type.NumericBooleanType")
+	private boolean isDeleted;
 		
 	
 	public EducacionContinua() {
@@ -370,6 +373,14 @@ public class EducacionContinua implements Serializable {
 
 	public void setInfoAdicional(String infoAdicional) {
 		this.infoAdicional = infoAdicional;
+	}
+
+	public boolean isDeleted() {
+		return isDeleted;
+	}
+
+	public void setDeleted(boolean isDeleted) {
+		this.isDeleted = isDeleted;
 	}
 
 

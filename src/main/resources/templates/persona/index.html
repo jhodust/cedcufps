@@ -40,7 +40,7 @@
           </div>
         </div>
         <hr/>
-        
+        <p class="text-dark">El siguiente listado son los usuarios a los cuales usted tiene permisos de gestionar</p>
 				<div class="card">
 					<div class="card-body">
 					<!-- Table -->
@@ -64,7 +64,7 @@
 													class="fas fa-user-edit"></i></span>
 										</a> <a th:if="${otorganPermisos}"
 											class="action-item action-item-red-ufps hover-scale-110"
-											th:href="@{/persona/permisos(id=${p.idAcceso})}"
+											th:href="@{/usuarios/permisos(id=${p.idAcceso})}"
 											data-toggle="tooltip" data-placement="right" title="Permisos">
 												<span class="btn-inner--icon"><i
 													class="fas fa-user-cog"></i></span>

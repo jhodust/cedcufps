@@ -23,17 +23,27 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.ufps.cedcufps.dto.DiplomaDto;
 import com.ufps.cedcufps.modelos.EducacionContinua;
 import com.ufps.cedcufps.modelos.Facultad;
+import com.ufps.cedcufps.services.IDiplomaService;
 import com.ufps.cedcufps.services.IEducacionContinuaService;
+import com.ufps.cedcufps.services.IParticipanteService;
 
 @RestController
+@RequestMapping(value = "/educacion-continua")
 public class EducacionContinuaRestController {
 
 	@Autowired
 	private IEducacionContinuaService educacionContinuaService;
 	
-	@PostMapping(value = "/educacion-continua/save")
+	@Autowired
+	private IDiplomaService diplomaService;
+	
+	@Autowired
+	private IParticipanteService participanteService;
+	
+	@PostMapping(value = "/save")
 	public ResponseEntity<?> save(@RequestParam(name="imagen", required=false) MultipartFile file, 
 			@RequestParam String id, @RequestParam String nombre, @RequestParam String fechaInicio, 
 			@RequestParam String fechaFin, @RequestParam String duracion, @RequestParam(required = false) String cantMaxParticipantes,
@@ -51,17 +61,47 @@ public class EducacionContinuaRestController {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
-	@GetMapping(value = "/educacion-continua/search-base")
+	@GetMapping(value = "/search-base")
 	public ResponseEntity<?> searchEducacionContinuaBase(@RequestParam(name="nombreEdC", required=true)  String nombreEducacionContinua) {
 		return new ResponseEntity<>(educacionContinuaService.findEducacionContinuaBase(nombreEducacionContinua),HttpStatus.OK);
 	}
 	
-	@GetMapping(value = "/educacion-continua/search-educaciones-continuas-base")
+	@GetMapping(value = "/search-educaciones-continuas-base")
 	public ResponseEntity<?> searchListEducacionesContinuasByPrograma(@RequestParam(name="idPrograma", required=true)  String id) {
 		return new ResponseEntity<>(educacionContinuaService.findEducacionesContinuasBaseByIdPrograma(Long.parseLong(id)),HttpStatus.OK);
 	}
 	
+	@PostMapping(value = "/delete")
+	public ResponseEntity<?> delete(@RequestParam(name="idAcceso") String idAcceso) {
+		
+		educacionContinuaService.deleteEducacionContinua(idAcceso);
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
 	
+	@PostMapping(value = "/generar-estructura-diploma")
+	public ResponseEntity<?> guardarDiplomaRest(@RequestBody DiplomaDto diploma) {
+		
+		return new ResponseEntity<>(diplomaService.save(diploma), HttpStatus.OK);
+	}
+	
+	@PostMapping(value = "/certificarParticipacion")
+	@ResponseBody
+	public ResponseEntity<?> certificarParticipante(MultipartFile file, String tokenParticipante, String idEduContinua, String documentoParticipante) {
+		System.out.println("imagen filename: " + file.getName());
+		System.out.println(tokenParticipante);
+		System.out.println(idEduContinua);
+		System.out.println(documentoParticipante);
+		participanteService.certificarParticipante(file, Long.parseLong(idEduContinua), tokenParticipante, documentoParticipante);
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+	
+	@PostMapping(value = "/cancelarCertificacionParticipacion")
+	@ResponseBody
+	public ResponseEntity<?> cancelarCertificacionParticipante(String tokenParticipante) {
+		System.out.println(tokenParticipante);
+		participanteService.cancelarCertificacionParticipante(tokenParticipante);
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
 	/*@PostMapping(value = "/educacion-continua/generar-plantilla-diploma" ,produces = "application/json")
 	@ResponseBody // ImagenDiploma[] imagenes MultipartFile file @RequestBody  EducacionContinua edu
 	public ResponseEntity<?> guardarPlantillaDiploma(@RequestBody EducacionContinua eduContinua ){

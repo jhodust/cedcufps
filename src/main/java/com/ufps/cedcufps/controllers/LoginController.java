@@ -53,7 +53,8 @@ public class LoginController {
 	    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 	    if (auth != null){    
 	    	System.out.println("SISAS TERMINA");
-	        new SecurityContextLogoutHandler().logout(request, response, auth);
+	        new SecurityContextLogoutHandler().logout(request, null, null);
+	        //new SecurityContextLogoutHandler().logout(request, response, auth);
 	    }
 	    
 	    SecurityContextHolder.clearContext();

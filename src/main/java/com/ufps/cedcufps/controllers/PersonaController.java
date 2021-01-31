@@ -26,6 +26,7 @@ import com.ufps.cedcufps.services.IPersonaService;
 import com.ufps.cedcufps.services.IProgramaService;
 
 @Controller
+@RequestMapping(value = "/usuarios")
 public class PersonaController {
 
 	@Autowired
@@ -37,7 +38,7 @@ public class PersonaController {
 	@Autowired
 	private IDepartamentoService departamentoService;
 	
-	@RequestMapping(value = "/usuarios")
+	@RequestMapping
 	public String listar(Model model) {
 		model.addAttribute("titulo","PROGRAMAS");
 		model.addAttribute("personas",personaService.findAllPersonasPosibles());
@@ -47,26 +48,8 @@ public class PersonaController {
 		return "persona/index";
 	}
 	
-	/*@RequestMapping(value = "/usuarios/registro")
-	public String agregar(Map<String, Object> model) {
-		Estudiante e= new Estudiante();
-		Docente d= new Docente();
-		Administrativo a= new Administrativo();
-		Externo ex= new Externo();
-		model.put("titulo","FORMULARIO PERSONA");
-		model.put("estudiante",e);
-		model.put("docente",d);
-		model.put("administrativo",a);
-		model.put("externo",ex);
-		model.put("tipos_documento",personaService.findAllTiposDocumento());
-		model.put("tipos_persona",personaService.findAllTiposPersona());
-		model.put("programas",personaService.findAllProgramas());
-		model.put("generos",personaService.findAllGeneros());
-		model.put("estados_civiles",personaService.findAllEstadosCiviles());
-		return "persona/form";
-	}*/
 	
-	@RequestMapping(value = "/usuarios/registro")
+	@RequestMapping(value = "/registro")
 	public String crear(Map<String, Object> model) {
 		model.put("persona",new UsuarioDto());
 		model.put("titulo","FORMULARIO PERSONA");
@@ -94,7 +77,7 @@ public class PersonaController {
 		return "persona/form";
 	}
 	
-	@RequestMapping(value = "/usuarios/editar")
+	@RequestMapping(value = "/editar")
 	public String editar(@RequestParam(name = "id") String idAcceso, Map<String, Object> model) {
 		model.put("titulo","FORMULARIO PERSONA");
 		model.put("tipos_documento",personaService.findAllTiposDocumento());
@@ -110,7 +93,7 @@ public class PersonaController {
 		return "persona/form";
 	}
 	
-	@RequestMapping(value = "/persona/permisos")
+	@RequestMapping(value = "/permisos")
 	public String permisos( @RequestParam(name = "id") String idAcceso, Map<String, Object> model,RedirectAttributes redirectAttributes) {
 		PerfilRolUsuarioDto dto=personaService.findPermisos(idAcceso);
 		if(dto==null) {
@@ -154,26 +137,5 @@ public class PersonaController {
 		return "persona/permisos";
 	}
 	
-	@RequestMapping(value = "/perfil")
-	public String perfil(Map<String, Object> model) {
-		model.put("persona", personaService.findMyInfo());
-		model.put("photoUser", SpringSecurityConfig.getInfoSession().getPhoto());
-		model.put("nameUser", SpringSecurityConfig.getInfoSession().getName());
-		return "persona/perfil";
-	}
 	
-	@RequestMapping(value = "/perfil/editar")
-	public String editar(Map<String, Object> model) {
-		model.put("titulo","FORMULARIO PERSONA");
-		model.put("tipos_documento",personaService.findAllTiposDocumento());
-		model.put("tipos_persona",personaService.findAllTiposPersona());
-		model.put("programas",personaService.findAllProgramas());
-		model.put("generos",personaService.findAllGeneros());
-		model.put("estados_civiles",personaService.findAllEstadosCiviles());
-		model.put("departamentos",personaService.findAllDepartamentos());
-		model.put("persona", personaService.findMyInfo());
-		model.put("photoUser", SpringSecurityConfig.getInfoSession().getPhoto());
-		model.put("nameUser", SpringSecurityConfig.getInfoSession().getName());
-		return "persona/updatePerfil";
-	}
 }

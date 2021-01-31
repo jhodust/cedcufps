@@ -10,9 +10,9 @@ import org.springframework.web.multipart.MultipartFile;
 @RestController
 public class FileFroallaRestController {
 
-	@PostMapping(value = "/xxxxx")
+	/*@PostMapping(value = "/xxxxx")
 	public @ResponseBody ResponseEntity<?> saveImage(@RequestParam( required=false) MultipartFile file) {
 		
 		return new ResponseEntity<>(HttpStatus.OK);
-	}
+	}*/
 }

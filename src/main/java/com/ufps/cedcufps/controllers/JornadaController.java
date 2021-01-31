@@ -24,6 +24,7 @@ import com.ufps.cedcufps.services.IPersonaService;
 
 @Controller
 @SessionAttributes("jornada")
+@RequestMapping(value ="/educacion-continua/jornadas")
 public class JornadaController {
 
 	@Autowired
@@ -37,14 +38,14 @@ public class JornadaController {
 	
 	
 	
-	@RequestMapping(value = "/educacion-continua/{id}/jornadas")
+	@RequestMapping(value = "/{id}")
 	public String reloadListJornadas(@PathVariable(value = "id") Long idEducacionContinua, Model model) {
 		
 		model.addAttribute("jornadas",jornadaService.findAllByIdEducacionContinua(idEducacionContinua));
 		return "educacion_continua/jornada/index :: indexJornadas";
 	}
 	
-	@RequestMapping(value = "/educacion-continua/detalles/{id}/jornadas")
+	@RequestMapping(value = "/detalles/{id}")
 	public String reloadListJornadasDetallesEducacionContinua(@PathVariable(value = "id") Long idEducacionContinua, Model model) {
 		
 		model.addAttribute("jornadas",jornadaService.findAllByIdEducacionContinua(idEducacionContinua));

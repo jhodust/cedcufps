@@ -22,6 +22,7 @@ import com.ufps.cedcufps.utils.paginator.PageRender;
 
 @Controller
 @SessionAttributes("programa")
+@RequestMapping("/programas-academicos")
 public class ProgramaController {
 
 	@Autowired
@@ -33,7 +34,7 @@ public class ProgramaController {
 	@Autowired
 	private IPersonaService personaService;
 	
-	@RequestMapping(value = "/programas-academicos")
+	@RequestMapping
 	public String listar(Map<String, Object> model) {
 		Pageable pageRequest=PageRequest.of(0, 3);
 		
@@ -52,7 +53,7 @@ public class ProgramaController {
 		return "programa/index";
 	}
 	
-	@RequestMapping(value = "/programas-academicos/reload")
+	@RequestMapping(value = "/reload")
 	public String reloadList(@RequestParam(name="page", defaultValue = "0") int page, @RequestParam(name="facultad", defaultValue = "") String facultad,Map<String, Object> model) {
 		Pageable pageRequest=PageRequest.of(page, 3);
 		
@@ -73,37 +74,4 @@ public class ProgramaController {
 		return "programa/index :: listProgramas";
 	}
 	
-	/*@RequestMapping(value = "/programas-academicos/filter/{facultad}")
-	public String filtrarByFacultad(@PathVariable(value = "facultad") String facultad, Map<String, Object> model) {
-		model.put("titulo","PROGRAMAS");
-		model.put("programas",programaService.findByFacultad(facultad));
-		model.put("facultad",facultadService.findByFacultad(facultad));
-		model.put("facultades",facultadService.findAll());
-		return "programa/index";
-	}*/
-	
-	/*@RequestMapping(value = "/programas-academicos/registro")
-	public String agregar(Map<String, Object> model) {
-		Programa t= new Programa(); 
-		model.put("titulo","FORMULARIO PROGRAMAS");
-		model.put("programa",t);
-		return "programa/form";
-	}
-	
-	@RequestMapping(value = "/programas-academicos/registro", method = RequestMethod.POST)
-	public String save(Programa p, SessionStatus status) {
-		programaService.save(p);
-		status.setComplete();
-		return "redirect:/programas-academicos";
-	}
-	
-	@RequestMapping(value = "/programas-academicos/registro/{id}")
-	public String editar(@PathVariable(value = "id") Long id, Map<String, Object> model) {
-		Optional<Programa> p= programaService.findOne(id); 
-		model.put("titulo","FORMULARIO PROGRAMAS");
-		model.put("programa",p.get());
-		return "programa/form";
-	}
-	
-*/
 }

@@ -64,6 +64,7 @@ import org.springframework.context.ApplicationContext;
 
 @Controller
 @SessionAttributes("educacionContinua")
+@RequestMapping(value = "/educacion-continua")
 public class EducacionContinuaController {
 
 	@Autowired
@@ -85,7 +86,7 @@ public class EducacionContinuaController {
 	private IAsistenciaService asistenciaService;
 	
 	
-	@RequestMapping(value = "/educacion-continua")
+	@RequestMapping
 	public String listar(HttpServletRequest request,Map<String, Object> model, Authentication auth) {
 		model.put("titulo","EDUCACIÓN CONTINUA");
 		model.put("photoUser", SpringSecurityConfig.getInfoSession().getPhoto());
@@ -96,7 +97,7 @@ public class EducacionContinuaController {
 	
 	
 	
-	@RequestMapping(value = "/educacion-continua/registro")
+	@RequestMapping(value = "/registro")
 	public String agregar(Map<String, Object> model, Authentication auth) {
 		//EducacionContinuaWebDto ec= new EducacionContinuaWebDto(); 
 		model.put("titulo","FORMULARIO EDUCACIÓN CONTINUA");
@@ -135,7 +136,67 @@ public class EducacionContinuaController {
 		return "educacion_continua/form";
 	}
 	
+	@RequestMapping(value = "/detalles")
+	public String mostrar(@RequestParam(name = "educacionContinua") String educacionContinua,
+			@RequestParam(name = "fecha") String fechaEduContinua, @RequestParam(name = "id") String idAcceso,
+			Map<String, Object> model,RedirectAttributes redirectAttributes) {
+		model.put("titulo","DETALLES EDUCACIÓN CONTINUA");
+		InfoEducacionContinuaDto dto= educacionContinuaService.detallesEducacionContinua(idAcceso);
+		if(dto.isHasPermission()) {
+			model.put("ec",dto);
+			//EducacionContinuaWebDto e= educacionContinuaService.findOneByIdAcceso(idAcceso);
+			Persona p= personaService.findPersonaLogueada();
+			PersonaDtoLogueada peopleLogin = personaService.findPersonaLogueadaDto(p);
+			model.put("educacionContinua", dto.getEducacionContinua());
+			model.put("jornadas",dto.getEducacionContinua().getJornadas());
+			model.put("ponentes",dto.getEducacionContinua().getPonentes());
+			model.put("tipos_educacion_continua",educacionContinuaService.findAllTiposEducacionContinua(dto.getEducacionContinua().getIdTipoEduContinua()));
+			model.put("clasificacion_cine",educacionContinuaService.findAllClasificacionCine());
+			model.put("tipo_beneficiarios",educacionContinuaService.findAllTipoBeneficiario());
+			model.put("docentes",personaService.findAllDocentes());
+			model.put("programas",programaService.findAll());
+			model.put("asistenciaGlobal",asistenciaService.countAsistenciasByJornadas(educacionContinua,fechaEduContinua));
+			model.put("peopleLogin", peopleLogin);
+			
+			//model.put("participantes",participanteService.findAllParticipantesByEducacionContinua(educacionContinua));
+			//if(dto.getEducacionContinua().getJornadas().size()>0) {
+				//model.put("asistencias",asistenciaService.findAsistenciasByJornadas(dto.getEducacionContinua().getJornadas()));
+				//model.put("asistenciaGlobal",asistenciaService.countAsistenciasByJornadas(educacionContinua));
+				
+			//}
+		}else {
+			redirectAttributes.addFlashAttribute("errorMessage", "No tiene permisos para administrar la Educación Continua indicada...");
+			return "redirect:/educacion-continua";
+		}
+		model.put("photoUser", SpringSecurityConfig.getInfoSession().getPhoto());
+		model.put("nameUser", SpringSecurityConfig.getInfoSession().getName());
+		return "educacion_continua/detalles";
+	}
 	
+	
+	@RequestMapping(value = "/detalles/reload/{id}")
+	public String reloadDetalles(@PathVariable(name = "id") String idAcceso, Map<String, Object> model) {
+		InfoEducacionContinuaDto dto= educacionContinuaService.detallesEducacionContinua(idAcceso);
+		model.put("ec",educacionContinuaService.detallesEducacionContinua(idAcceso));
+		
+		return "educacion_continua/detalles :: detallesEdc";
+	}
+	
+	@RequestMapping(value = "/listado-participantes", method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_PDF_VALUE)
+    public ResponseEntity<InputStreamResource> listadoInscritos(@RequestParam(name = "educacionContinua") String educacionContinua,
+    		@RequestParam(name = "fecha") String fechaEduContinua, @RequestParam(name = "id") String idAcceso , Map<String, Object> model, RedirectAttributes redirectAttributes) {
+
+        ByteArrayInputStream bis = educacionContinuaService.generarPdfAsistentes(idAcceso);
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Disposition", "inline; filename=participantes.pdf");
+        
+        return ResponseEntity
+                .ok()
+                .headers(headers)
+                .contentType(MediaType.APPLICATION_PDF)
+                .body(new InputStreamResource(bis));
+    }
 	
 	/*@RequestMapping(value = "/educacion-continua/registro", method = RequestMethod.POST)
 	public String save(@Valid EducacionContinua ec, BindingResult result, SessionStatus status, @RequestParam("file") MultipartFile imagen,Map<String, Object> model, RedirectAttributes redirectAttributes) {
@@ -252,75 +313,8 @@ public class EducacionContinuaController {
 		return "educacion_continua/ponente/index";
 	}*/
 	
-	@RequestMapping(value = "/educacion-continua/detalles")
-	public String mostrar(@RequestParam(name = "educacionContinua") String educacionContinua,
-			@RequestParam(name = "fecha") String fechaEduContinua, @RequestParam(name = "id") String idAcceso,
-			Map<String, Object> model,RedirectAttributes redirectAttributes) {
-		model.put("titulo","DETALLES EDUCACIÓN CONTINUA");
-		InfoEducacionContinuaDto dto= educacionContinuaService.detallesEducacionContinua(idAcceso);
-		if(dto.isHasPermission()) {
-			model.put("ec",dto);
-			//EducacionContinuaWebDto e= educacionContinuaService.findOneByIdAcceso(idAcceso);
-			Persona p= personaService.findPersonaLogueada();
-			PersonaDtoLogueada peopleLogin = personaService.findPersonaLogueadaDto(p);
-			model.put("educacionContinua", dto.getEducacionContinua());
-			model.put("jornadas",dto.getEducacionContinua().getJornadas());
-			model.put("ponentes",dto.getEducacionContinua().getPonentes());
-			model.put("tipos_educacion_continua",educacionContinuaService.findAllTiposEducacionContinua(dto.getEducacionContinua().getIdTipoEduContinua()));
-			model.put("clasificacion_cine",educacionContinuaService.findAllClasificacionCine());
-			model.put("tipo_beneficiarios",educacionContinuaService.findAllTipoBeneficiario());
-			model.put("docentes",personaService.findAllDocentes());
-			model.put("programas",programaService.findAll());
-			model.put("asistenciaGlobal",asistenciaService.countAsistenciasByJornadas(educacionContinua,fechaEduContinua));
-			model.put("peopleLogin", peopleLogin);
-			
-			//model.put("participantes",participanteService.findAllParticipantesByEducacionContinua(educacionContinua));
-			//if(dto.getEducacionContinua().getJornadas().size()>0) {
-				//model.put("asistencias",asistenciaService.findAsistenciasByJornadas(dto.getEducacionContinua().getJornadas()));
-				//model.put("asistenciaGlobal",asistenciaService.countAsistenciasByJornadas(educacionContinua));
-				
-			//}
-		}else {
-			redirectAttributes.addFlashAttribute("errorMessage", "No tiene permisos para administrar la Educación Continua indicada...");
-			return "redirect:/educacion-continua";
-		}
-		model.put("photoUser", SpringSecurityConfig.getInfoSession().getPhoto());
-		model.put("nameUser", SpringSecurityConfig.getInfoSession().getName());
-		return "educacion_continua/detalles";
-	}
 	
 	
-	@RequestMapping(value = "/educacion-continua/detalles/reload/{id}")
-	public String reloadDetalles(@PathVariable(name = "id") String idAcceso, Map<String, Object> model) {
-		InfoEducacionContinuaDto dto= educacionContinuaService.detallesEducacionContinua(idAcceso);
-		model.put("ec",educacionContinuaService.detallesEducacionContinua(idAcceso));
-		
-		return "educacion_continua/detalles :: detallesEdc";
-	}
-	
-	@RequestMapping(value = "/preinscripcion")
-	public String preinscripcionEducacionContinua(@RequestParam(name = "educacionContinua") String nombreEvento,
-			@RequestParam(name = "fecha") String fechaEvento, @RequestParam(name = "id") String idAcceso,
-			Map<String, Object> model) {
-		//EducacionContinua ec= educacionContinuaService.findOneByNombreAndFecha(nombreEvento,fechaEvento);
-		System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-		System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-		System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-		System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-		System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-		model.put("titulo","DETALLES EDUCACIÓN CONTINUA");
-		model.put("requisitosInscripcion",educacionContinuaService.consultarRequisitosInscripcion(idAcceso));
-		//System.out.println(ec.getId());
-		//model.put("listTipoPersonaValidInscripcion",educacionContinuaService.tiposPersonaParaInscripcion(ec.getTipoBeneficiarios()));
-		//try {
-		//model.put("participante",participanteService.findByIdEducacionContinuaAndIdPersona(ec.getId(),personaService.findPersonaLogueada().getId()));
-		//}catch(Exception e) {
-		//	model.put("participante",null);
-		//}
-		model.put("photoUser", SpringSecurityConfig.getInfoSession().getPhoto());
-		model.put("nameUser", SpringSecurityConfig.getInfoSession().getName());
-		return "preinscripcion";
-	}
 	/*
 	@RequestMapping(value = "/educacion-continua/listado-participantes")
 	public String listadoParticipantes(@RequestParam(name="educacionContinua") String educacionContinua, Map<String, Object> model, Authentication auth, RedirectAttributes redirectAttributes) {
@@ -358,13 +352,7 @@ public class EducacionContinuaController {
 	*/
 	
 	
-	@RequestMapping(value = "/participaciones-educacion-continua")
-	public String eventosActivosParticipante( Map<String, Object> model) {
-		model.put("participaciones",participanteService.findAllParticipacionesActivasByParticipante());
-		model.put("photoUser", SpringSecurityConfig.getInfoSession().getPhoto());
-		model.put("nameUser", SpringSecurityConfig.getInfoSession().getName());
-		return "educacion_continua/tarjetas_inscripcion/index";
-	}
+	
 	
 	/*@RequestMapping(value = "/educacion-continua/{id}/personalizar-diploma")
 	public String personalizarDiploma(@PathVariable(value = "id") Long id, Map<String, Object> model) {
@@ -405,27 +393,7 @@ public class EducacionContinuaController {
 		return "redirect:/educacion-continua-a-cargo";
 	}*/
 	
-	@RequestMapping(value = "/educacion-continua/listado-participantes", method = RequestMethod.GET,
-            produces = MediaType.APPLICATION_PDF_VALUE)
-    public ResponseEntity<InputStreamResource> listadoInscritos(@RequestParam(name = "educacionContinua") String educacionContinua,
-    		@RequestParam(name = "fecha") String fechaEduContinua, @RequestParam(name = "id") String idAcceso , Map<String, Object> model, RedirectAttributes redirectAttributes) {
-
-        ByteArrayInputStream bis = educacionContinuaService.generarPdfAsistentes(idAcceso);
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Disposition", "inline; filename=participantes.pdf");
-        
-        return ResponseEntity
-                .ok()
-                .headers(headers)
-                .contentType(MediaType.APPLICATION_PDF)
-                .body(new InputStreamResource(bis));
-    }
 	
-	@RequestMapping(value = "/certificaciones-educacion-continua")
-	public String certificacionesParticipante( Map<String, Object> model) {
-		model.put("participaciones",participanteService.findCertificaciones());
-		model.put("photoUser", SpringSecurityConfig.getInfoSession().getPhoto());
-		model.put("nameUser", SpringSecurityConfig.getInfoSession().getName());
-		return "educacion_continua/certificados_asistentes/mis_certificaciones";
-	}
+	
+	
 }

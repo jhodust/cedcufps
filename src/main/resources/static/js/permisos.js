@@ -124,7 +124,7 @@ $( document ).ready(function() {
 				"permisosAttendance":switchA.checked,"idsPEdC":idsProgramasEdC,"idsPEs":idsProgramasPerEst,
 				"idsDD":idsDeptosDoc,"idsPG":idsProgramasPerGra,"permisoAdminvo":cbAdminvo.checked,
 				"permisoExterno":cbE.checked,"idsEdCA":idsEduAtt,"isDirPrograma":persona.dirPrograma,"isDoc":persona.docente,"idProgramaDirector":persona.idProgramaDirector},
-			url: "/update-roles",
+			url: "/usuarios/update-roles",
 			cache: false,
 			success: function(result) {
 				

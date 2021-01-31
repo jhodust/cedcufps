@@ -25,7 +25,7 @@ import com.ufps.cedcufps.services.IPersonaService;
 @SessionAttributes("externo")
 public class ExternoController {
 
-	@Autowired
+	/*@Autowired
 	private IPersonaService personaService;
 	
 	@RequestMapping(value = "/usuarios/externo/registro")
@@ -40,7 +40,7 @@ public class ExternoController {
 		model.put("estados_civiles",personaService.findAllEstadosCiviles());
 		return "persona/formRegistroExterno";
 	}
-	
+	*/
 	/*@RequestMapping(value = "/usuarios/externo/registro/{id}")
 	public String editar(@PathVariable(value = "id") Long id, Map<String, Object> model) {
 		Externo e= (Externo)personaService.findOne(id).get();
@@ -53,7 +53,7 @@ public class ExternoController {
 		model.put("estados_civiles",personaService.findAllEstadosCiviles());
 		return "persona/formRegistroExterno";
 	}*/
-	
+	/*
 	@RequestMapping(value = "/usuarios/externo/registro", method = RequestMethod.POST)
 	public String save(@Valid Externo e, BindingResult result,Map<String, Object> model, SessionStatus status,RedirectAttributes redirectAttributes) {
 		//e.setTipoPersona(personaService.findByTipoPersona("Externo"));
@@ -85,5 +85,5 @@ public class ExternoController {
 		status.setComplete();
 		redirectAttributes.addFlashAttribute("successMessage", "Se ha guardado la información correctamente...");
 		return "redirect:/usuarios";
-	}
+	}*/
 }

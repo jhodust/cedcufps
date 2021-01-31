@@ -11,7 +11,7 @@ import com.ufps.cedcufps.dto.UsuarioDto;
 import com.ufps.cedcufps.services.IPersonaService;
 
 @RestController
-public class InicioRestController {
+public class PersonaRestController {
 
 	@Autowired
 	private IPersonaService personaService;

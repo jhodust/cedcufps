@@ -39,7 +39,7 @@
           </div>
         </div>
         <hr/>
-        
+        <p class="text-dark">El siguiente listado son las educaciones continuas a los cuales usted tiene permisos de gestionar</p>
         <div class="row">
         	<!-- <div class="col-md-3">
         		<div class="row" sec:authorize="hasRole('ROLE_SUPERADMIN')">
@@ -168,7 +168,10 @@
 							<tr th:each="ec : ${educacionesContinuas}">
 								<td><a class="action-item action-item-red-ufps hover-scale-110" th:href="@{/educacion-continua/detalles(educacionContinua=${ec.nombre},fecha=${ec.fechaInicio},id=${ec.idAcceso})}"  data-toggle="tooltip" data-placement="left" title="Ver Detalles">
     								<span class="btn-inner--icon"><i class="fas fa-search-plus"></i></span></a>
+    								<button class="action-item action-item-red-ufps hover-scale-110 btn-delete-educacionContinua"  th:data-id="${ec.idAcceso}" data-toggle="tooltip" data-placement="left" title="Eliminar">
+    								<span class="btn-inner--icon"><i class="fas fa-times"></i></span></button>
     								</td>
+    								
 								<td th:text="${ec.tipoEduContinua}"></td>
 								<td class="td2" th:text="${ec.programaResponsable}"></td>
 								<td class="td2" th:text="${ec.nombre}"></td>
@@ -217,7 +220,7 @@
   <!-- Scripts -->
   <!-- Core JS - includes jquery, bootstrap, popper, in-view and sticky-kit -->
   <div th:replace="layouts/layout :: scripts"></div>
-  
+  <script th:src="@{/js/customEducacionContinua.js}" type="text/javascript"></script>
 </body>
 
 </html>

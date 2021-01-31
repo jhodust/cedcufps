@@ -28,7 +28,7 @@ public class AdministrativoController {
 	@Autowired
 	private IPersonaService personaService;
 	
-	@RequestMapping(value = "/usuarios/administrativo/registro")
+	/*@RequestMapping(value = "/usuarios/administrativo/registro")
 	public String agregar(Map<String, Object> model) {
 		Administrativo a= new Administrativo();
 		model.put("titulo","FORMULARIO PERSONA");
@@ -39,7 +39,7 @@ public class AdministrativoController {
 		model.put("generos",personaService.findAllGeneros());
 		model.put("estados_civiles",personaService.findAllEstadosCiviles());
 		return "persona/formRegistroAdministrativo";
-	}
+	}*/
 	
 	/*@RequestMapping(value = "/usuarios/administrativo/registro/{id}")
 	public String editar(@PathVariable(value = "id") Long id, Map<String, Object> model) {
@@ -54,7 +54,7 @@ public class AdministrativoController {
 		return "persona/formRegistroAdministrativo";
 	}*/
 	
-	@RequestMapping(value = "/usuarios/administrativo/registro", method = RequestMethod.POST)
+	/*@RequestMapping(value = "/usuarios/administrativo/registro", method = RequestMethod.POST)
 	public String save(@Valid Administrativo a, BindingResult result,Map<String, Object> model, SessionStatus status,RedirectAttributes redirectAttributes) {
 		//a.setTipoPersona(personaService.findByTipoPersona("Administrativo"));
 		System.out.println("*******************************************************************");
@@ -86,5 +86,5 @@ public class AdministrativoController {
 		redirectAttributes.addFlashAttribute("successMessage", "Se ha guardado la información correctamente...");
 		return "redirect:/usuarios";
 
-	}
+	}*/
 }

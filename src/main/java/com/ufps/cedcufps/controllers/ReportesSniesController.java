@@ -25,6 +25,7 @@ import com.ufps.cedcufps.utils.ReportesExcel;
 
 @Controller
 @SessionAttributes("informeSnies")
+@RequestMapping(value = "/reportes-SNIES")
 public class ReportesSniesController {
 
 	
@@ -37,7 +38,7 @@ public class ReportesSniesController {
 	
 	
 	
-	@RequestMapping(value = "/reportes-SNIES")
+	@RequestMapping
 	public String reportesSnies(Map<String, Object> model) {
 		model.put("informesSnies",informeSniesService.findAll());
 		model.put("photoUser", SpringSecurityConfig.getInfoSession().getPhoto());
@@ -47,9 +48,11 @@ public class ReportesSniesController {
 	
 	
 	
-	@RequestMapping(value = "/reportes-SNIES/dashboard")
+	@RequestMapping(value = "/dashboard")
 	public String dashboard(Map<String, Object> model) {
 		model.put("programas",programaService.findAll());
+		model.put("photoUser", SpringSecurityConfig.getInfoSession().getPhoto());
+		model.put("nameUser", SpringSecurityConfig.getInfoSession().getName());
 		return "reportes-snies/dashboard";
 	}
 	

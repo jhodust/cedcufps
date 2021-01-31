@@ -70,11 +70,8 @@
 				<div id="detallesEdC" th:fragment="detallesEdc">
 					<div class="row">
 		            <div class="col-12 col-md-6">
-		            <div class="alert alert-red-ufps shadow-lg text-center" role="alert">
-						    <strong>Información Básica y Participantes</strong>
-						</div>
-		           
-	    			<table>
+		            <h5 class="pb-3"><strong>Información Básica y Participantes</strong></h5>
+		            <table>
 	    				<tbody>
 		    				<tr>
 		    					<td class="h6 text-sm"><strong>Tipo</strong></td>
@@ -165,18 +162,13 @@
 		          <div class="row">
 		            
 		            <div class="col-12 col-md-12">
-		             	<div class="alert alert-red-ufps shadow-lg text-center" role="alert">
-						    <strong>Información Adicional</strong>
-						</div>
-		            	<br>
+		            <h5 class="pb-3"><strong>Información Adicional</strong></h5>
+		             	
 		            
 		            	<div class="row">
 		            		<div class="col-md-6">
 				            	<table>
 				    				<tbody>
-					    				<tr>
-					    					<td class="h6 text-sm"><strong>Detalles</strong></td>
-					    				</tr>
 					    				<tr>
 					    					<td class="text-sm">[(${ec.educacionContinua.infoAdicional})]</td>
 					    				</tr>
@@ -194,9 +186,8 @@
 		          <div class="row">
 		          	<div class="col-md-6">
 		          		<div id="div_list_detalles_ponentes" th:fragment="detallesEcPonentes">
-		          		<div class="alert alert-red-ufps shadow-lg text-center" role="alert">
-						    <strong>Ponentes</strong>
-						</div>
+		          		<h5 class="pb-3"><strong>Ponentes</strong></h5>
+		          		
 						 <div th:if="${#lists.size(ponentes) == 0}">
 				        	<center><span class="badge badge-white-red-ufps">No existen ponentes registrados(as)</span></center>
 				        </div>
@@ -222,9 +213,7 @@
 		          	</div>
 		          	<div class="col-md-6">
 		          		<div id="div_list_detalles_jornadas" th:fragment="detallesEcJornadas">
-		          		<div class="alert alert-red-ufps shadow-lg text-center" role="alert">
-						    <strong>Jornadas</strong>
-						</div>
+		          		<h5 class="pb-3"><strong>Jornadas</strong></h5>
 						<div th:if="${#lists.size(jornadas) == 0}">
 				        	<center><span class="badge badge-white-red-ufps">No existen jornadas registradas</span></center>
 				        </div>
@@ -263,6 +252,8 @@
 		  <div class="tab-pane fade" id="pills-ponentes" role="tabpanel" aria-labelledby="pills-ponentes-tab">
 		  	<div class="card">
 		  		<div class="card-header">
+		  		<h6><strong>Agregar Ponente</strong></h6>
+		  		<p class="text-dark">A continuación podrá filtrar entre los usuarios registrados el ponente a registrar</p>
 		  			<div class="row">
 						<div class="col-md-4">
 							<div class="form-group">
@@ -360,6 +351,8 @@
 	  </div>
     
     </div>
+    
+    
     <div th:replace="layouts/footer :: footer"></div>
     <div th:replace="educacion_continua/tarjetas_inscripcion/canvas_modal :: canvas"></div>
     <div th:replace="educacion_continua/jornada/formModal :: modalRegistro"></div>

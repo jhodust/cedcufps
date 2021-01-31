@@ -50,7 +50,7 @@
         		<div class="col-md-6 d-flex align-items-center justify-content-between justify-content-md-start mb-3 mb-md-0">
         			<h6 class="h4 d-inline-block font-weight-400 mb-0 text-dark" ><strong>INFORMACIÓN  </strong></h6>
         		</div>
-        		<div style="position: absolute; right: 0px; " th:if="${requisitosInscripcion.isHasCupos() and requisitosInscripcion.isHasCoincidenciasBeneficiario() and not requisitosInscripcion.isEstaInscrito() }">
+        		<div style="position: absolute; right: 0px; " th:if="${requisitosInscripcion.isAbleToInscription() and not requisitosInscripcion.isEstaInscrito() }">
 						<a href="#" onclick="realizarInscripcion()" 
 									class="btn btn-primary btn-sm" id="btn_inscripcion">INSCRIBETE!
 								</a>
@@ -60,6 +60,13 @@
 							<a href="#" onclick="cancelarInscripcion()" 
 									class="btn btn-primary btn-sm" id="btn_inscripcion">CANCELAR INSCRIPCIÓN!
 								</a>
+						</div>
+					<div style="position: absolute; right: 0px; font-size:20px " th:if="${not requisitosInscripcion.isAbleToInscription()}">
+							<span class="badge badge-warning" th:text="${requisitosInscripcion.mensajeNoInscripcion}"></span>
+						</div>
+						
+						<div style="position: absolute; right: 0px; font-size:20px" th:if="${requisitosInscripcion.isEstaInscrito() and requisitosInscripcion.participante.tipoParticipante == 'Ponente'}">
+							<span class="badge badge-dark">Te encuentras inscrito(a) como 'PONENTE'</span>
 						</div>
         	</div>
         	</div>
@@ -134,21 +141,12 @@
         		</div>
         		<div class="mt-3">
 		            	
-						<div th:if="${not requisitosInscripcion.isHasCoincidenciasBeneficiario()}">
-							<span class="badge badge-info">No puedes inscribirte, no perteneces al público al cual se ofertó</span>
-						</div>
-						<div th:if="${not requisitosInscripcion.isHasCupos() and requisitosInscripcion.isHasCoincidenciasBeneficiario() }">
-							<span class="badge badge-info">No puedes inscribirte, el cupo esta completo</span>
-						</div>
 						<button class="btn btn-primary btn-sm" type="button" id="btnSpinnerInscripcion" disabled>
 						  <div class="spinner-border text-white" role="status" id="divSpinnerInscripcion">
 						  <span class="sr-only">Loading...</span>
 						</div>
 						</button>
 						
-						<div th:if="${requisitosInscripcion.isEstaInscrito() and requisitosInscripcion.participante.tipoParticipante == 'Ponente'}">
-							<span class="badge badge-dark">Te encuentras inscrito(a) como 'PONENTE'</span>
-						</div>
 						</div>
         	</div>
         </div>
@@ -187,6 +185,7 @@
 	  </div>
     
     </div>
+    
     <div th:replace="layouts/footer :: footer"></div>
     <div th:replace="educacion_continua/tarjetas_inscripcion/canvas_modal :: canvas"></div>
     

@@ -104,6 +104,7 @@ public interface IEducacionContinuaService {
 	
 	public ByteArrayInputStream generarPdfAsistentes(String idAcceso);
 	
+	public void deleteEducacionContinua(String idAcceso);
 	
 	
 }

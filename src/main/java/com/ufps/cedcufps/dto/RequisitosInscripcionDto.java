@@ -6,19 +6,21 @@ import com.ufps.cedcufps.modelos.Participante;
 
 public class RequisitosInscripcionDto {
 
-	private boolean hasCupos;
 	private int cuposDisponibles;
 	private int totalInscritos;
-	private boolean hasCoincidenciasBeneficiario;
 	private List<Object[]> listTipoPersonaValidInscripcion;
 	private boolean estaInscrito;
 	private ParticipanteDto participante;
 	private EducacionContinuaWebDto educacionContinua;
-	public boolean isHasCupos() {
-		return hasCupos;
+	private boolean ableToInscription;
+	private String mensajeNoInscripcion;
+	
+	
+	public boolean isAbleToInscription() {
+		return ableToInscription;
 	}
-	public void setHasCupos(boolean hasCupos) {
-		this.hasCupos = hasCupos;
+	public void setAbleToInscription(boolean ableToInscription) {
+		this.ableToInscription = ableToInscription;
 	}
 	public int getCuposDisponibles() {
 		return cuposDisponibles;
@@ -26,12 +28,7 @@ public class RequisitosInscripcionDto {
 	public void setCuposDisponibles(int cuposDisponibles) {
 		this.cuposDisponibles = cuposDisponibles;
 	}
-	public boolean isHasCoincidenciasBeneficiario() {
-		return hasCoincidenciasBeneficiario;
-	}
-	public void setHasCoincidenciasBeneficiario(boolean hasCoincidenciasBeneficiario) {
-		this.hasCoincidenciasBeneficiario = hasCoincidenciasBeneficiario;
-	}
+	
 	public List<Object[]> getListTipoPersonaValidInscripcion() {
 		return listTipoPersonaValidInscripcion;
 	}
@@ -61,6 +58,12 @@ public class RequisitosInscripcionDto {
 	}
 	public void setTotalInscritos(int totalInscritos) {
 		this.totalInscritos = totalInscritos;
+	}
+	public String getMensajeNoInscripcion() {
+		return mensajeNoInscripcion;
+	}
+	public void setMensajeNoInscripcion(String mensajeNoInscripcion) {
+		this.mensajeNoInscripcion = mensajeNoInscripcion;
 	}
 	
 	

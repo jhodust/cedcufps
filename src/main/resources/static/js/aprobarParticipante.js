@@ -6,7 +6,7 @@ $(document).ready(function ()
 	
 	
 	if(diploma != null && diploma.estructuraDiploma.objects.length > 0 ){
-		canvasParticipante.loadFromJSON(diploma.estructuraDiploma);
+		canvas.loadFromJSON(diploma.estructuraDiploma);
 	}
 });
 
@@ -29,9 +29,9 @@ $('.swAprobarAsistente').on('click',function(e){
 
 
 function generarDiploma(dataParticipante, boolean,elemento){
-	updateInfoDiploma(dataParticipante.participante, dataParticipante.tipodocumento + ' ' + dataParticipante.documento, dataParticipante.tipoparticipante, canvasParticipante);
+	updateInfoDiploma(dataParticipante.participante, dataParticipante.tipodocumento + ' ' + dataParticipante.documento, dataParticipante.tipoparticipante, canvas);
 	var formData = new FormData();
-	var imagen=canvasParticipante.toDataURL({
+	var imagen=canvas.toDataURL({
         format: 'jpg',
         quality: 0.8
     });
@@ -134,7 +134,7 @@ function showCellsTableAsistentes(){
 function loadDiplomaStructureParticipantes(json){
 	console.log("LOADDDDDDDDDDD JSOSNNNNNNNNNNN PARTICIPANTE");
 	console.log(json);
-	canvasParticipante.loadFromJSON(json);
+	canvas.loadFromJSON(json);
 }
 
 

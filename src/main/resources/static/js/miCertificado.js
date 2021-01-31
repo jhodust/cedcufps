@@ -19,7 +19,7 @@ $(document).ready(function ()
 	   		headers: {"X-CSRF-TOKEN": token},
 	   		type: "GET",
 	   		contentType: "application/json; charset=utf-8",
-	   		url: "/educacion-continua/search-certificacion",
+	   		url: "/certificaciones-educacion-continua/search-certificacion",
 	   		data: {'token':tokenParticipante },
 	   		cache: false,
 	   		success: function(result) {
@@ -71,7 +71,7 @@ function ajaxGenerarDiploma(tokenParticipante, idEduContinua, documentoParticipa
    		headers: {"X-CSRF-TOKEN": token},
    		type: "POST",
    		contentType: "application/json; charset=utf-8",
-   		url: "/educacion-continua/actualizarCertificado",
+   		url: "/certificaciones-educacion-continua/actualizarCertificado",
    		data:formData,
    		enctype: 'multipart/form-data',
         processData: false,
@@ -89,7 +89,7 @@ function ajaxGenerarDiploma(tokenParticipante, idEduContinua, documentoParticipa
 
 function verDiploma(tokenParticipante){
 	var a = document.createElement('a');
-		a.href = "/educacion-continua/visualizar-diploma?token="+tokenParticipante;
-		a.click();
+		a.href = "/certificaciones-educacion-continua/visualizar-diploma?token="+tokenParticipante;
+		window.open(a.href,"_blank");
 }
 

@@ -168,9 +168,7 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 	@Override
 	public Page<EducacionContinua> educacionContinuaFiltroPanel(Long idTipoEdC, Long idPrograma, Long idBeneficiarios, Pageable pageable) {
 		// TODO Auto-generated method stub
-		Long[] ids= new Long[2];
-		ids[0]=8L;
-		ids[1]=18L;
+		
 		return educacionContinuaDao.educacionesContinuasPanelFiltroIds(educacionContinuaCustomDao.listAllPossibleEducacionContinuaFiltro(StatusEducacionContinua.STATUS_TERMINADO, idTipoEdC, idPrograma, idBeneficiarios), pageable);
 	}
 
@@ -292,11 +290,8 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 		Persona p= personaService.findPersonaById(idPersona);
 		List<EducacionContinuaAppDto> list = new ArrayList<EducacionContinuaAppDto>();
 		if(p!=null) {
-			if(personaService.isSuperAdmin(p)){
-				list= educacionContinuaMapper.convertEducacionContinuaToApp(this.findAll());
-			}else {
-				list=educacionContinuaMapper.convertEducacionContinuaToApp(educacionContinuaDao.findEducacionesContinuasForApp(idPersona));
-			}
+			return educacionContinuaCustomDao.findEducacionesContinuasForApp(p.getId(), personaService.isSuperAdmin(p));
+			
 		}
 		return list;
 		
@@ -306,7 +301,7 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 	public List<JornadaAppDto> findAllJornadasByEduContinuaApp(Long idEduContinua) {
 		// TODO Auto-generated method stub
 		
-		return jornadaMapper.convertJornadasToJornadaAppDto(this.findOne(idEduContinua).get().getJornadas());
+		return jornadaMapper.convertJornadasToJornadaAppDto(jornadaDao.findByIdEducacionContinua(idEduContinua));
 		
 	}
 
@@ -314,13 +309,7 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 	public List<EducacionContinuaAppDto> findPosiblesEduContinuaGestionar() {
 		// TODO Auto-generated method stub
 		Persona p=personaService.findPersonaLogueada();
-		if(personaService.isSuperAdmin()) {
-			return educacionContinuaMapper.convertEducacionContinuaToApp((List<EducacionContinua>) educacionContinuaDao.findAll());
-		}else if(personaService.hasPermissionForEduContinua(p.getId())){
-			//mejorar metodo
-			return educacionContinuaMapper.convertEducacionContinuaToApp(educacionContinuaDao.findByManyIds(educacionContinuaCustomDao.listAllPossibleEducacionContinua(p.getId())));
-		}
-		return null;
+		return educacionContinuaCustomDao.findEducacionesContinuasAGestionar(p.getId(), personaService.isSuperAdmin(), personaService.hasPermissionForEduContinua(p.getId()) );
 	}
 
 	@Override
@@ -601,14 +590,25 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 		dto.setTotalInscritos(totalInscritos);
 		if(ec.getCantMaxParticipantes() != null && !ec.getCantMaxParticipantes().equalsIgnoreCase("LIBRE")) {
 			dto.setCuposDisponibles(Integer.parseInt(ec.getCantMaxParticipantes())-totalInscritos);
-			dto.setHasCupos(dto.getCuposDisponibles()>0);
+			//dto.setHasCupos(dto.getCuposDisponibles()>0);
 		}else {
 			dto.setCuposDisponibles(-1);
-			dto.setHasCupos(true);
+			//dto.setHasCupos(true);
 		}
 		List<Object[]> opcionesInscripcion=this.tiposPersonaParaInscripcion(ec.getTipoBeneficiarios());
 		dto.setListTipoPersonaValidInscripcion(opcionesInscripcion);
-		dto.setHasCoincidenciasBeneficiario(!opcionesInscripcion.isEmpty());
+		//dto.setHasCoincidenciasBeneficiario(!opcionesInscripcion.isEmpty());
+		dto.setAbleToInscription((dto.getCuposDisponibles()>0 || dto.getCuposDisponibles()==-1) 
+				&& !opcionesInscripcion.isEmpty() && ec.getFechaLimInscripcion().after(new Date()));
+		String mensaje=null;
+		if(opcionesInscripcion.isEmpty()) {
+			mensaje="Su perfil no cumple los requisitos de inscripción";
+		}else if(ec.getFechaLimInscripcion().before(new Date())) {
+			mensaje="La fecha límite de inscripción expiró";
+		}else if(dto.getCuposDisponibles()==0) {
+			mensaje="No existen cupos disponibles";
+		}
+		dto.setMensajeNoInscripcion(mensaje);
 		ParticipanteDto participante=null;
 		try {
 			participante= participanteService.findByIdEducacionContinuaAndIdPersona(ec.getId(),personaService.findPersonaLogueada().getId());
@@ -702,5 +702,11 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 			e.printStackTrace();
 		}
 		
+	}
+
+	@Override
+	public void deleteEducacionContinua(String idAcceso) {
+		// TODO Auto-generated method stub
+		educacionContinuaDao.deleteEducacionContinua(idAcceso);
 	}
 }

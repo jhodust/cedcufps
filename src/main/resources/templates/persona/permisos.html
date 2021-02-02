@@ -49,9 +49,7 @@
 							<center>
 							<h5>Roles</h5>
 							</center>
-							<form th:action="@{/persona/permisos}"
-										 method="post"
-										enctype="multipart/form-data">
+							
 							<div id="accordion-1" class="accordion accordion-stacked">
     
 						    <!-- Accordion card 1 -->
@@ -258,17 +256,28 @@
 						    
 						</div>
 							</div>
-							<div class="mt-3">
-								<a th:href="@{/usuarios}" type="button"
-												class="btn btn-sm btn-red-ufps"><i class="fas fa-times"></i> Cancelar</a>
-								<button type="button" class="btn btn-red-ufps btn-sm" id="guardarPermisos">
-								    <i class="fas fa-save"></i> GUARDAR
-								</button>
-							</div>
-							</form>
+							
 						</div>
 					</div>
 					
+				</div>
+				<div class="modal-footer">
+					<div class="row">
+						<a th:href="@{/usuarios}" type="button"
+												class="btn btn-sm btn-red-ufps"><i class="fas fa-times"></i> Cancelar</a>
+								<button type="button" class="btn btn-red-ufps btn-sm" id="btnActualizarPermisos">
+								    <i class="fas fa-save"></i> GUARDAR
+								</button>
+						
+							
+						<div>
+			         		<button class="btn btn-primary btn-sm btnSpinner" type="button" id="btnSpinnerPermisos" disabled>
+								  <div class="spinner-border text-white mr-2 divSpinnerBtn" role="status">
+								  <span class="sr-only">Loading...</span>
+								</div> Procesando
+							</button>
+						</div>
+					</div>
 				</div>
 			</div>
 				</div>

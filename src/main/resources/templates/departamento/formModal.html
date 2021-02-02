@@ -56,7 +56,15 @@
                  <div class="modal-footer">
 			      	<div class="row">
 			      			<button type="button" data-dismiss="modal" class="btn btn-sm btn-red-ufps"><i class="fas fa-times"></i> Cancelar</button>
-			               	<button type="button" onclick="guardarDepartamento()" class="btn btn-sm btn-red-ufps"><i class="fas fa-save"></i> Guardar</button>
+			               	<button type="button" onclick="guardarDepartamento()" class="btn btn-sm btn-red-ufps" id="btnSaveAreas"><i class="fas fa-save"></i> Guardar</button>
+			         		<div>
+				         		<button class="btn btn-primary btn-sm btnSpinner" type="button" id="btnSpinnerAreas" disabled>
+									  <div class="spinner-border text-white mr-2 divSpinnerBtn" role="status">
+									  <span class="sr-only">Loading...</span>
+									</div> Procesando
+								</button>
+							</div>
+			         	
 			         </div>
 			      </div>
                 

@@ -130,3 +130,12 @@ function paginadorLoadAjax(url){
 	$('#div_list_paginador').load(url);
 }
 
+function showSpinnerModal(idBtnClick, idSpinner){
+	document.getElementById(idSpinner).style.display='flex';
+	document.getElementById(idBtnClick).style.display='none';
+}
+
+function hideSpinnerModal(idBtnClick, idSpinner){
+	document.getElementById(idSpinner).style.display='none';
+	document.getElementById(idBtnClick).style.display='inline';
+}

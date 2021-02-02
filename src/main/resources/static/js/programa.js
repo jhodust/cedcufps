@@ -128,6 +128,7 @@ function guardarPrograma(){
 	}
 	console.log("json enviado: ");
 	console.log(JSONprograma);
+	showSpinnerModal("btnSaveAreas","btnSpinnerAreas");
 	$.ajax({
 		headers: {"X-CSRF-TOKEN": token},
 		type: "POST",
@@ -141,9 +142,10 @@ function guardarPrograma(){
 			idPrograma=0;
 			paginadorLoadAjax('/programas-academicos/reload');
 			$('#modalRegistroPrograma').modal('hide');
+			hideSpinnerModal("btnSaveAreas","btnSpinnerAreas");
 		},
 		error: function(err) {
-			
+			hideSpinnerModal("btnSaveAreas","btnSpinnerAreas");
 			console.log(err);
 			if(err.responseJSON.length >0){
 				toastr.error('No se pudo procesar la solicitud...', 'Error!');

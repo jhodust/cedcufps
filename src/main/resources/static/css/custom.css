@@ -33,3 +33,15 @@
 	z-index: 1;position: absolute;
 }
 
+.btnSpinner{
+	display:none;
+}
+
+.divSpinnerBtn{
+	
+	margin:0px auto;
+	width: 1rem;
+    height: 1rem;
+    color:#fff
+}
+

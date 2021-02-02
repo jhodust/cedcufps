@@ -100,7 +100,7 @@ $(document).ready(function ()
 						function(e) {
 							e.preventDefault();
 							
-							showLoader();
+							//showLoader();
 							ajaxSaveUsuario(id,url);
 			});
 			});
@@ -306,6 +306,7 @@ $(document).ready(function ()
 		userJSON.empresa=$('#empresa').val();
 		
 		console.log(userJSON);
+		showSpinnerModal("btnGuardarUsuario","btnSpinnerUsuarios");
 		$
 				.ajax({
 					headers : {
@@ -336,7 +337,8 @@ $(document).ready(function ()
 							}, 1000);
 					},
 					error : function(err) {
-						hideLoader();
+						//hideLoader();
+						hideSpinnerModal("btnGuardarUsuario","btnSpinnerUsuarios");
 						toastr
 								.error(
 										err.responseJSON.message,

@@ -54,6 +54,7 @@ function generarReporteSnies(){
 	JSONdata.fechaInicio=fechaInicio.trim();
 	JSONdata.fechaFin=fechaFin.trim();
 	JSONdata.descripcion=descripcion.trim();
+	showSpinnerModal("btnGenerarReportesSnies","btnSpinnerSNIES");
 		$.ajax({
 			headers: {"X-CSRF-TOKEN": token},
 			
@@ -69,6 +70,7 @@ function generarReporteSnies(){
 				
 			},
 			error: function(err) {
+				hideSpinnerModal("btnGenerarReportesSnies","btnSpinnerSNIES");
 				toastr.error('No se pudo procesar la solicitud...', 'Error!');
 				console.log(err);
 				document.getElementById('divMsgGeneralSnies').style.display='block';

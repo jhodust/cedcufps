@@ -60,6 +60,7 @@ function guardarJornada(){
 }
 
 function ajaxGuardarJornada(jsonJornada){
+	showSpinnerModal("btnSaveJornada","btnSpinnerJornada");
 	$.ajax({
 		headers: {"X-CSRF-TOKEN": token},
 		type: "POST",
@@ -77,8 +78,10 @@ function ajaxGuardarJornada(jsonJornada){
 
 
 	        console.log("despues de reload");
+	        hideSpinnerModal("btnSaveJornada","btnSpinnerJornada");
 		},
 		error: function(err) {
+			hideSpinnerModal("btnSaveJornada","btnSpinnerJornada")
 			toastr.error('No se pudo procesar la solicitud...', 'Error!');
 			console.log(err);
 			err.responseJSON.forEach(function(error){

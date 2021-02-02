@@ -44,7 +44,7 @@ $( document ).ready(function() {
 	  
 	validadorErroresPermisos();
 	  
-	  $('#guardarPermisos').click(function(){
+	  $('#btnActualizarPermisos').click(function(){
 	  	actualizarPermisos()
 	  });
 	});
@@ -116,6 +116,7 @@ $( document ).ready(function() {
 				return;
 			}
 		}
+		showSpinnerModal("btnActualizarPermisos","btnSpinnerPermisos");
 			$.ajax({
 			headers: {"X-CSRF-TOKEN": token},
 			type: "GET",
@@ -129,10 +130,11 @@ $( document ).ready(function() {
 			success: function(result) {
 				
 				toastr.success('Se han actualizado los roles a la persona', 'Excelente!');
-				 
+				hideSpinnerModal("btnActualizarPermisos","btnSpinnerPermisos");
 				
 			},
 			error: function(err) {
+				hideSpinnerModal("btnActualizarPermisos","btnSpinnerPermisos");
 				console.log(err);
 				toastr.error(err.responseJSON.message, 'Error!');
 			}

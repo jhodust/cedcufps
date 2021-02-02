@@ -36,7 +36,10 @@
 					</div>
 					<hr />
 					<div th:replace="loader :: loader"></div>
-					<div th:fragment="formRegistroNuevaPersona" id="formUsuario">
+					<div class="card" th:fragment="formRegistroNuevaPersona" id="formUsuario">
+					<div class="card-body" >
+					
+					
 					<label class="reglasForms">Los campos marcados con</label> <label class="requerido pl-2">*</label> <label class="reglasForms">son obligatorios</label>
 						
 							<div id="infoBasica">
@@ -425,14 +428,26 @@
 								
 							</div>
 						</div>
-						<button type="button"
+						
+								
+								</div>
+								<div class="modal-footer">
+									<div class="row">
+										<button type="button"
 											class="btn btn-sm btn-red-ufps cancel"><i class="fas fa-times"></i> Cancelar</button>
 											
 	
 										<button type="submit"
-											class="btn btn-sm btn-red-ufps save"><i class="fas fa-save"></i> Guardar</button>
-								
-								
+											class="btn btn-sm btn-red-ufps save" id="btnGuardarUsuario"><i class="fas fa-save"></i> Guardar</button>
+										<div>
+							         		<button class="btn btn-primary btn-sm btnSpinner" type="button" id="btnSpinnerUsuarios" disabled>
+												  <div class="spinner-border text-white mr-2 divSpinnerBtn" role="status">
+												  <span class="sr-only">Loading...</span>
+												</div> Procesando
+											</button>
+										</div>
+									</div>
+								</div>
 								</div>
 					
 				</div>

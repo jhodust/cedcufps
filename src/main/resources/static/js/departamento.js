@@ -59,7 +59,7 @@ function guardarDepartamento(){
 					return;
 	
 	}
-	
+	showSpinnerModal("btnSaveAreas","btnSpinnerAreas");
 	$.ajax({
 		headers: {"X-CSRF-TOKEN": token},
 		type: "POST",
@@ -73,8 +73,10 @@ function guardarDepartamento(){
 			idFacultad=null;
 			paginadorLoadAjax('/departamentos-academicos/reload');
 			$('#modalRegistroDepartamento').modal('hide');
+			hideSpinnerModal("btnSaveAreas","btnSpinnerAreas");
 		},
 		error: function(err) {
+			hideSpinnerModal("btnSaveAreas","btnSpinnerAreas");
 			  console.log(err);
 			if(err.responseJSON.length >0){
 				toastr.error('No se pudo procesar la solicitud...', 'Error!');

@@ -245,7 +245,7 @@ function hideLoader(){
 }
 
 function guardarEdc(){
-	showLoader();
+	//showLoader();
 	ajaxSaveEducacionContinua();
 	
 }
@@ -334,7 +334,7 @@ function ajaxSaveEducacionContinua(){
 	  if( !valid1 || !valid2 || !valid3 || !valid4 || !valid5 || !valid6 || !valid7 || !valid8 || !valid9
 			  || !valid10 || !valid11 || !valid12 || !valid13 || !valid14 || !valid15 || !valid16 || !valid17 || !valid18){
 		 
-		  hideLoader();
+		  //hideLoader();
 		  toastr
 			.error(
 					'Debes diligenciar el formulario correctamente',
@@ -378,6 +378,7 @@ function ajaxSaveEducacionContinua(){
 	  
 	  console.log("analizando formData");
 	  console.log(formData);
+	  showSpinnerModal("btnGuardarEdC","btnSpinnerEdC");
  $.ajax({
 		headers: {"X-CSRF-TOKEN": token},
 		url: "/educacion-continua/save",
@@ -397,15 +398,17 @@ function ajaxSaveEducacionContinua(){
 				}, 1000);
 			}else{
 				reloadDetalles();
-				hideLoader();
+				//hideLoader();
+				hideSpinnerModal("btnGuardarEdC","btnSpinnerEdC");
 				$('[href="#pills-detalles"]').tab('show');
 			}
 			
 			
 		},
 		error: function(err) {
+			hideSpinnerModal("btnGuardarEdC","btnSpinnerEdC");
 			console.log(err);
-			hideLoader();
+			//hideLoader();
 			if(err.responseJSON.length >0){
 				toastr.error('No se pudo procesar la solicitud...', 'Error!');
 				err.responseJSON.forEach(function(error){

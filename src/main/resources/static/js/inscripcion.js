@@ -56,7 +56,7 @@ $(document).ready(function () {
 });
 
 function createTemplateCanvasInscripcion(){
-	fabric.Image.fromURL("/img/tarjeta_inscripcion.png", function(img) {
+	fabric.Image.fromURL("/img/tarjeta_inscripcion.jpg", function(img) {
 		  canvasInscripcion.setBackgroundImage(img, canvasInscripcion.renderAll.bind(canvasInscripcion), {
 	            scaleX: canvasInscripcion.width / img.width,
 	            scaleY: canvasInscripcion.height / img.height
@@ -127,8 +127,13 @@ function showSpinnerInscripcion(){
 }
 
 function hideSpinnerInscripcion(){
-	document.getElementById("btnSpinnerInscripcion").style.display='none';
-	document.getElementById("btn_inscripcion").style.display='inline';
+	try{
+		document.getElementById("btnSpinnerInscripcion").style.display='none';
+		document.getElementById("btn_inscripcion").style.display='inline';
+	}catch(error){
+		
+	}
+	
 }
 
 
@@ -158,7 +163,7 @@ console.log(idTipoPersona);
 			creacionTarjetaInscripcion(result);
 			console.log(result);
 			//window.setTimeout(function(){location.reload()},1000);
-			hideSpinnerInscripcion();
+			
 		},
 		error: function(err) {
 			hideSpinnerInscripcion();
@@ -544,6 +549,7 @@ function guardarTarjeta(imagen,idParticipante){
                 
                 enlace.innerHTML ="CANCELAR INSCRIPCIÓN!";
                 enlace.setAttribute( "onclick","cancelarInscripcion()");
+                hideSpinnerInscripcion();
         	}else{//esta en ponentes
         		reloadListPonentes();
         	}

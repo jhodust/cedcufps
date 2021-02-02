@@ -34,6 +34,7 @@ function guardarPonente(){
 		JSONponente.persona.id=id_persona;
 	}
 	console.log(JSONponente);
+	showSpinnerModal("btnSavePonente","btnSpinnerPonente");
 	$.ajax({
 		headers: {"X-CSRF-TOKEN": token},
 		type: "POST",
@@ -57,8 +58,11 @@ function guardarPonente(){
 			//actualizarConsultaPonentes();
 			//reloadListPonentes();
 			console.log("el metodo guardarPonente deja idEDuContinua en: " +idEducacionContinua);
+			console.log("ocultar spinner ponente");
+			hideSpinnerModal("btnSavePonente","btnSpinnerPonente");
 		},
 		error: function(err) {
+			hideSpinnerModal("btnSavePonente","btnSpinnerPonente");
 			console.log(err);
 			if(err.responseJSON.length >0){
 				toastr.error('No se pudo procesar la solicitud...', 'Error!');
@@ -298,7 +302,7 @@ function searchPosiblePonente(){
 				$('#nombrePonente').val(result.nombre);
 				id_persona=result.id;
 				idPonente=0;
-				 
+				
 			},
 			error: function(err) {
 				$("#msg").html( "<span style='color: red'>Programa is required</span>" );

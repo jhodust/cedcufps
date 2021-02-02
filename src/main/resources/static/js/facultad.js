@@ -29,6 +29,7 @@ function guardarFacultad(){
 					return;
 	
 	}
+	showSpinnerModal("btnSaveAreas","btnSpinnerAreas");
 	$.ajax({
 		headers: {"X-CSRF-TOKEN": token},
 		type: "POST",
@@ -43,8 +44,10 @@ function guardarFacultad(){
 			idFacultad=0;
 			paginadorLoadAjax('/facultades/reload');
 			$('#modalRegistroFacultad').modal('hide');
+			hideSpinnerModal("btnSaveAreas","btnSpinnerAreas");
 		},
 		error: function(err) {
+			hideSpinnerModal("btnSaveAreas","btnSpinnerAreas");
 			boton.disabled=false;
 			console.log(err);
 			if(err.responseJSON.length >0){

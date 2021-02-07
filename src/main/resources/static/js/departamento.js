@@ -49,9 +49,11 @@ function guardarDepartamento(){
 		JSONdepartamento.facultad={};
 		JSONdepartamento.facultad.id=id_facultad;
 	}
-	validateInputTextRequerido('departamento','errorDepartamento');
-	validateSelect('select_facultad_departamento','errorSelectFacultad');
-	if(departamento.trim() == "" || id_facultad==0){
+	var valid1=validateInputTextRequerido('departamento','errorDepartamento');
+	var valid2=validateLengthTxt('departamento','errorDepartamento',100);
+	var valid3 =validateSelect('select_facultad_departamento','errorSelectFacultad');
+	
+	if(!valid1 ||  !valid2 || !valid3 || id_facultad==0){
 		toastr
 			.error(
 					'Diligencie el formulario correctamente, los campos son requeridos',

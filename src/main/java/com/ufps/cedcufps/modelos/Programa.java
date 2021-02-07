@@ -26,6 +26,17 @@ import javax.validation.constraints.Size;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Builder
+@Setter
+@Getter
+@AllArgsConstructor
+
 @Entity
 @Table(name="programas", uniqueConstraints={
 		   @UniqueConstraint(columnNames={"codigo"},name = "UK_code_programa"),
@@ -75,72 +86,17 @@ public class Programa implements Serializable {//1
 		estudiantes= new ArrayList<Estudiante>();
 		educacionesContinuas= new ArrayList<EducacionContinua>();
 	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getCodigo() {
-		return codigo;
-	}
-
-	public void setCodigo(String codigo) {
-		this.codigo = codigo;
-	}
-
-	public String getPrograma() {
-		return programa;
-	}
-
-	public void setPrograma(String programa) {
-		this.programa = programa;
-	}
 	
-
-	public void addEstudiante(Estudiante e) {
-		this.estudiantes.add(e);
-	}
-
-	public List<Estudiante> getEstudiantes() {
-		return estudiantes;
-	}
-
-	public void setEstudiantes(List<Estudiante> estudiantes) {
-		this.estudiantes = estudiantes;
-	}
-
-	public Facultad getFacultad() {
-		return facultad;
-	}
-
-	public void setFacultad(Facultad facultad) {
-		this.facultad = facultad;
+	public Programa(Long id, String programa, Facultad facultad, Docente director) {
+		this.id=id;
+		this.programa=programa;
+		this.facultad=facultad;
+		this.directorPrograma=director;
+		estudiantes= new ArrayList<Estudiante>();
+		educacionesContinuas= new ArrayList<EducacionContinua>();
 	}
 
 	
-	public void addEducacionContinua(EducacionContinua ec) {
-		educacionesContinuas.add(ec);
-	}
-
-	public List<EducacionContinua> getEducacionesContinuas() {
-		return educacionesContinuas;
-	}
-
-	public void setEducacionesContinuas(List<EducacionContinua> educacionesContinuas) {
-		this.educacionesContinuas = educacionesContinuas;
-	}
-
-	public Docente getDirectorPrograma() {
-		return directorPrograma;
-	}
-
-	public void setDirectorPrograma(Docente directorPrograma) {
-		this.directorPrograma = directorPrograma;
-	}
 
 	
 	

@@ -68,8 +68,8 @@ $(document).ready(function ()
 			success: function(result) {
 				console.log(result);
 				var element=document.getElementById("alertDirector");
-				if(result.length > 0){
-					element.innerText="El/La docente ya es director del programa " + result[0].programa + " y sería desvinculado.";
+				if(result.programa != null){
+					element.innerText="El/La docente ya es director del programa " + result.programa + " y sería desvinculado.";
 					element.style.display = 'inline';
 				}else{
 					element.innerText="";
@@ -114,11 +114,13 @@ function guardarPrograma(){
 		JSONprograma.directorPrograma.id=id_director;
 	}
 	
-	validateSelect('select_facultad_programa','errorSelectFacultad');
-	validateSelect('select_director_programa','errorSelectDirectorPrograma');
-	validateInputTextRequerido('programa','errorPrograma');
-	validateInputTextRequerido('codigo','errorCodigo');
-	if(codigo.trim() == "" || programa.trim() == "" || id_facultad==0 || id_director==0){
+	var valid1= validateSelect('select_facultad_programa','errorSelectFacultad');
+	var valid2=validateSelect('select_director_programa','errorSelectDirectorPrograma');
+	var valid3=validateInputTextRequerido('programa','errorPrograma');
+	var valid4=validateInputTextRequerido('codigo','errorCodigo');
+	var valid5=validateLengthTxt('programa','errorPrograma',80);
+	var valid6=validateLengthTxt('codigo','errorCodigo',3);
+	if(!valid1 ||  !valid2 || !valid3 || !valid4 ||  !valid5 || !valid6 || id_facultad==0 || id_director==0){
 		toastr
 			.error(
 					'Diligencie el formulario correctamente, los campos son requeridos',

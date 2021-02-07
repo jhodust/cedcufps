@@ -244,7 +244,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 			Set<GrantedAuthority> mappedAuthorities = new HashSet<>();
 			Persona p=personaService.findByEmail(oidcUser.getEmail());
 			if(p!=null) {
-				for(PersonaRol r:p.getRoles()) {
+				for(PersonaRol r:p.getPersonaXRoles()) {
 					System.out.println("imprimiendo informacion");
 					System.out.println(r.getPersona().getPrimerNombre());
 					System.out.println(r.getRol().getAuthority());

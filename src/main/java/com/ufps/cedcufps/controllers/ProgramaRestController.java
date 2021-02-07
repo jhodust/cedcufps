@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ufps.cedcufps.dto.ProgramaDto;
 import com.ufps.cedcufps.modelos.Departamento;
 import com.ufps.cedcufps.modelos.Programa;
 import com.ufps.cedcufps.services.IProgramaService;
@@ -32,32 +33,26 @@ public class ProgramaRestController {
 	private IProgramaService programaService;
 	
 	@RequestMapping(value = "/listar")
-	public List<Programa> listar(Map<String, Object> model) {
+	public List<Programa> listar() {
 		return programaService.findAll();
 	}
 	
 	
-	
 	@GetMapping(value="/search/{id}", produces = "application/json")
-    public ResponseEntity<?> buscarPorPrograma(@PathVariable Long id) {
+    public ResponseEntity<ProgramaDto> buscarPorPrograma(@PathVariable Long id) {
 		
 		return  new ResponseEntity<>(programaService.searchProgramaById(id),HttpStatus.OK);
     }
 	
 	
-
 	@PostMapping(value = "/save")
-	public ResponseEntity<?> guardarProgramaRest(@RequestBody @Valid Programa programa,BindingResult result) {
-		if(result.hasErrors()) {
-			
-			return new ResponseEntity<>(result.getAllErrors(),HttpStatus.BAD_REQUEST);
-		}
+	public ResponseEntity<?> guardarProgramaRest(@RequestBody Programa programa) {
 		programaService.save(programa);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
 	@GetMapping(value="/search-director", produces = "application/json")
-    public ResponseEntity<?> buscarDirectorPrograma(@RequestParam(name = "id", required = true) Long idDir, @RequestParam(name = "idP", required = true) Long idPrograma) {
+    public ResponseEntity<ProgramaDto> buscarDirectorPrograma(@RequestParam(name = "id", required = true) Long idDir, @RequestParam(name = "idP", required = true) Long idPrograma) {
 		
 		return  new ResponseEntity<>(programaService.findProgramaByDirector(idDir,idPrograma),HttpStatus.OK);
     }

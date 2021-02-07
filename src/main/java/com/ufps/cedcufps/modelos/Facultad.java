@@ -11,6 +11,18 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Builder
+@Setter
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
+
 @Entity
 @Table(name="facultades",uniqueConstraints={@UniqueConstraint(columnNames={"facultad"},name = "UK_facultad")})
 public class Facultad implements Serializable {//1
@@ -30,24 +42,6 @@ public class Facultad implements Serializable {//1
 	private String facultad;
 
 
-	public Long getId() {
-		return id;
-	}
-
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-
-	public String getFacultad() {
-		return facultad;
-	}
-
-
-	public void setFacultad(String facultad) {
-		this.facultad = facultad;
-	}
 	
 	
 	

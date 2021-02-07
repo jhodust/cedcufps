@@ -29,25 +29,21 @@ public class DepartamentoRestController {
 	@Autowired
 	private IDepartamentoService departamentoService;
 	
-	@Autowired
-	private IFacultadService facultadService;
 	
 	@RequestMapping(value = "/listar")
-	public List<Departamento> listar(Map<String, Object> model) {
+	public List<Departamento> listar() {
 		return departamentoService.findAll();
 	}
 	
 	@GetMapping(value="/search/{id}", produces = "application/json")
-    public ResponseEntity<?> buscarPorFacultad(@PathVariable Long id) {
+    public ResponseEntity<Departamento> buscarPorFacultad(@PathVariable Long id) {
         
         return  new ResponseEntity<>(departamentoService.findOne(id),HttpStatus.OK);
     }
 	
 	@PostMapping(value = "/save")
-	public ResponseEntity<?> guardarDepartamentoRest(@RequestBody @Valid Departamento departamento, BindingResult result) {
-		if(result.hasErrors()) {
-			return new ResponseEntity<>(result.getAllErrors(),HttpStatus.BAD_REQUEST);
-		}
+	public ResponseEntity<?> guardarDepartamentoRest(@RequestBody Departamento departamento) {
+		
 		departamentoService.save(departamento);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}

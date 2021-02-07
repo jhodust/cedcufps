@@ -155,9 +155,9 @@ public class ProgramaService implements IProgramaService {
 	}
 
 	@Override
-	public List<ProgramaDto> findProgramaByDirector(Long idDir, Long idPrograma) {
+	public ProgramaDto findProgramaByDirector(Long idDir, Long idPrograma) {
 		// TODO Auto-generated method stub
-		return programaMapper.convertListProgramaToProgramaDto(programaDao.findOthersProgramasByDirector(idPrograma,idDir));
+		return programaMapper.convertProgramaToProgramaDto(programaDao.findOthersProgramasByDirector(idPrograma,idDir));
 
 	}
 	

@@ -1,5 +1,23 @@
 package com.ufps.cedcufps.dto;
 
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.ufps.cedcufps.modelos.Departamento;
+import com.ufps.cedcufps.modelos.Docente;
+import com.ufps.cedcufps.modelos.Facultad;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Setter
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
+
 public class ProgramaDto {
 
 	private Long id;
@@ -7,36 +25,8 @@ public class ProgramaDto {
 	private String codigo;
 	private Long idDirector;
 	private Long idFacultad;
-	public Long getId() {
-		return id;
-	}
-	public void setId(Long id) {
-		this.id = id;
-	}
-	public String getPrograma() {
-		return programa;
-	}
-	public void setPrograma(String programa) {
-		this.programa = programa;
-	}
-	public String getCodigo() {
-		return codigo;
-	}
-	public void setCodigo(String codigo) {
-		this.codigo = codigo;
-	}
-	public Long getIdDirector() {
-		return idDirector;
-	}
-	public void setIdDirector(Long idDirector) {
-		this.idDirector = idDirector;
-	}
-	public Long getIdFacultad() {
-		return idFacultad;
-	}
-	public void setIdFacultad(Long idFacultad) {
-		this.idFacultad = idFacultad;
-	}
+	
+	
 	
 	
 }

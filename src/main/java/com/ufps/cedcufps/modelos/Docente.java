@@ -20,6 +20,15 @@ import org.hibernate.annotations.Type;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
+
+@Setter
+@Getter
+@AllArgsConstructor
+
 @Entity
 @Table(name="docentes")
 @PrimaryKeyJoinColumn(name="id_persona")
@@ -54,51 +63,6 @@ public class Docente extends Persona{
 	public Docente() {
 		educacionesContinuas=new ArrayList<EducacionContinua>();
 	}
-	
-	public String getCodigo() {
-		return codigo;
-	}
-
-	public void setCodigo(String codigo) {
-		this.codigo = codigo;
-	}
-
-	public Departamento getDepartamento() {
-		return departamento;
-	}
-
-	public void setDepartamento(Departamento departamento) {
-		this.departamento = departamento;
-	}
-	
-	public void addEducacionContinua(EducacionContinua ec) {
-		educacionesContinuas.add(ec);
-	}
-
-	public List<EducacionContinua> getEducacionesContinuas() {
-		return educacionesContinuas;
-	}
-
-	public void setEducacionesContinuas(List<EducacionContinua> educacionesContinuas) {
-		this.educacionesContinuas = educacionesContinuas;
-	}
-
-	public Programa getProgramaACargoDirector() {
-		return programaACargoDirector;
-	}
-
-	public void setProgramaACargoDirector(Programa programaACargoDirector) {
-		this.programaACargoDirector = programaACargoDirector;
-	}
-
-	public boolean isEstado() {
-		return estado;
-	}
-
-	public void setEstado(boolean estado) {
-		this.estado = estado;
-	}
-
 	
 	
 	

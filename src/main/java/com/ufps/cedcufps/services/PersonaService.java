@@ -189,7 +189,7 @@ public class PersonaService implements IPersonaService, UserDetailsService {
 			throw new UsernameNotFoundException("usuario "+ username +" no existe");
 		}
 		List<GrantedAuthority> authorities= new ArrayList<GrantedAuthority>();
-		/*for(Rol r:p.getRoles()) {
+		/*for(Rol r:p.getPersonaXRoles()) {
 			logger.info("Role:".concat(r.getAuthority()));
 			authorities.add(new SimpleGrantedAuthority(r.getAuthority()));
 		}*/
@@ -470,7 +470,7 @@ public class PersonaService implements IPersonaService, UserDetailsService {
 	public boolean isSuperAdmin() {
 		Persona p=this.findPersonaLogueada();
 		
-		for(PersonaRol pr: p.getRoles()) {
+		for(PersonaRol pr: p.getPersonaXRoles()) {
 			if(pr.getRol().getAuthority().equalsIgnoreCase("ROLE_SUPERADMIN")) {
 				return true;
 			}
@@ -481,7 +481,7 @@ public class PersonaService implements IPersonaService, UserDetailsService {
 	@Override
 	public boolean isSuperAdmin(Persona p) {
 		
-		for(PersonaRol pr: p.getRoles()) {
+		for(PersonaRol pr: p.getPersonaXRoles()) {
 			if(pr.getRol().getAuthority().equalsIgnoreCase("ROLE_SUPERADMIN")) {
 				return true;
 			}
@@ -520,7 +520,7 @@ public class PersonaService implements IPersonaService, UserDetailsService {
 	public boolean hasPermissionForPeople(Long idPersona) {
 		Persona p=personaDao.findPersonaById(idPersona);
 		if(p!=null) {
-			for(PersonaRol pr: p.getRoles()) {
+			for(PersonaRol pr: p.getPersonaXRoles()) {
 				if(pr.getRol().getAuthority().equalsIgnoreCase("ROLE_MANPEOPLE")) {
 					return true;
 				}
@@ -535,7 +535,7 @@ public class PersonaService implements IPersonaService, UserDetailsService {
 	public boolean hasPermissionForEduContinua(Long idPersona) {
 		Persona p=personaDao.findPersonaById(idPersona);
 		if(p!=null) {
-			for(PersonaRol pr: p.getRoles()) {
+			for(PersonaRol pr: p.getPersonaXRoles()) {
 				if(pr.getRol().getAuthority().equalsIgnoreCase("ROLE_MANAECCU")) {
 					return true;
 				}
@@ -548,7 +548,7 @@ public class PersonaService implements IPersonaService, UserDetailsService {
 	public boolean hasPermissionForAttendance(Long idPersona) {
 		Persona p=personaDao.findPersonaById(idPersona);
 		if(p!=null) {
-			for(PersonaRol pr: p.getRoles()) {
+			for(PersonaRol pr: p.getPersonaXRoles()) {
 				if(pr.getRol().getAuthority().equalsIgnoreCase("ROLE_ATTENDANCE")) {
 					return true;
 				}
@@ -561,7 +561,7 @@ public class PersonaService implements IPersonaService, UserDetailsService {
 	public boolean hasPermissionForAttendance(Persona p) {
 		// TODO Auto-generated method stub
 		if(p!=null) {
-			for(PersonaRol pr: p.getRoles()) {
+			for(PersonaRol pr: p.getPersonaXRoles()) {
 				if(pr.getRol().getAuthority().equalsIgnoreCase("ROLE_ATTENDANCE")) {
 					return true;
 				}

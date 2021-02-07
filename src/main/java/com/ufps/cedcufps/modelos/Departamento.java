@@ -26,6 +26,17 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Builder
+@Setter
+@Getter
+@AllArgsConstructor
+
 @Entity
 @Table(name="departamentos", uniqueConstraints={
 		   @UniqueConstraint(columnNames={"departamento"},name = "UK_departamento")})
@@ -60,52 +71,16 @@ public class Departamento implements Serializable {//1
 	private Facultad facultad;
 
 	
+	public Departamento(Long id, String departamento, Facultad facultad) {
+		this.id=id;
+		this.departamento=departamento;
+		this.facultad=facultad;
+		docentes= new ArrayList<Docente>();
+	}	
+	
 	public Departamento() {
 		docentes= new ArrayList<Docente>();
-	}
-
-
-	public Long getId() {
-		return id;
-	}
-
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-
-	public String getDepartamento() {
-		return departamento;
-	}
-
-
-	public void setDepartamento(String departamento) {
-		this.departamento = departamento;
-	}
-
-
-	public List<Docente> getDocentes() {
-		return docentes;
-	}
-
-
-	public void setDocentes(List<Docente> docentes) {
-		this.docentes = docentes;
-	}
-
-
-	public Facultad getFacultad() {
-		return facultad;
-	}
-
-
-	public void setFacultad(Facultad facultad) {
-		this.facultad = facultad;
-	}
-
-	
-	
+	}	
 
 }
 

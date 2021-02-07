@@ -29,21 +29,19 @@ public class FacultadRestController {
 	private IFacultadService facultadService;
 	
 	@RequestMapping(value = "/listar")
-	public List<Facultad> listar(Map<String, Object> model) {
+	public List<Facultad> listar() {
 		return facultadService.findAll();
 	}
 	
 	@GetMapping(value="/search/{id}", produces = "application/json")
-    public ResponseEntity<?> buscarPorFacultad(@PathVariable Long id) {
+    public ResponseEntity<Facultad> buscarPorFacultad(@PathVariable Long id) {
 		
 		return  new ResponseEntity<>(facultadService.findOne(id),HttpStatus.OK); 
     }
 	
 	@PostMapping(value = "/save")
-	public ResponseEntity<?> guardarFacultadRest(@RequestBody @Valid Facultad facultad, BindingResult result) {
-		if(result.hasErrors()) {
-			return new ResponseEntity<>(result.getAllErrors(),HttpStatus.BAD_REQUEST);
-		}
+	public ResponseEntity<?> guardarFacultadRest(@RequestBody Facultad facultad) {
+		
 		facultadService.save(facultad);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}

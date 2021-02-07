@@ -24,7 +24,7 @@ public interface IProgramaService {
 	
 	public Page<Programa> findByFacultad(String facultad,Pageable pageable);
 	
-	public List<ProgramaDto> findProgramaByDirector(Long idDir,Long idPrograma);
+	public ProgramaDto findProgramaByDirector(Long idDir,Long idPrograma);
 	
 	public Programa findProgramaByDirector(Long idDir);
 	

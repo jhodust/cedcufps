@@ -35,6 +35,16 @@ import org.springframework.format.annotation.DateTimeFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ufps.cedcufps.mapper.HashMapConverter;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
+
+@Builder
+@Setter
+@Getter
+@AllArgsConstructor
+
 @Entity
 @Table(name = "educacion_continua")
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -160,230 +170,7 @@ public class EducacionContinua implements Serializable {
 		this.participantes=new ArrayList<Participante>();
 	}
 	
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
 	
-	
-
-
-	public String getNombre() {
-		return nombre;
-	}
-
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
-
-	public Date getFechaInicio() {
-		return fechaInicio;
-	}
-
-	public void setFechaInicio(Date fechaInicio) {
-		this.fechaInicio = fechaInicio;
-	}
-
-	public Date getFechaFin() {
-		return fechaFin;
-	}
-
-	public void setFechaFin(Date fechaFin) {
-		this.fechaFin = fechaFin;
-	}
-
-	public Date getFechaLimInscripcion() {
-		return fechaLimInscripcion;
-	}
-
-	public void setFechaLimInscripcion(Date fechaLimInscripcion) {
-		this.fechaLimInscripcion = fechaLimInscripcion;
-	}
-
-	
-
-	public String getDuracion() {
-		return duracion;
-	}
-
-	public void setDuracion(String duracion) {
-		this.duracion = duracion;
-	}
-
-	public void setTipoBeneficiarios(List<EducacionContinuaTipoBeneficiario> tipoBeneficiarios) {
-		this.tipoBeneficiarios = tipoBeneficiarios;
-	}
-
-	public String getCantMaxParticipantes() {
-		return cantMaxParticipantes;
-	}
-
-	public void setCantMaxParticipantes(String cantMaxParticipantes) {
-		this.cantMaxParticipantes = cantMaxParticipantes;
-	}
-
-	public String getCostoInscripcion() {
-		return costoInscripcion;
-	}
-
-	public void setCostoInscripcion(String costoInscripcion) {
-		this.costoInscripcion = costoInscripcion;
-	}
-
-	public TipoEducacionContinua getTipoEduContinua() {
-		return tipoEduContinua;
-	}
-	
-
-	public void setTipoEduContinua(TipoEducacionContinua tipoEduContinua) {
-		this.tipoEduContinua = tipoEduContinua;
-	}
-	
-	public List<Jornada> getJornadas() {
-		return jornadas;
-	}
-
-	public void setJornadas(List<Jornada> jornadas) {
-		this.jornadas = jornadas;
-	}
-	
-	public void addJornada(Jornada j) {
-		this.jornadas.add(j);
-	}
-
-	public List<Participante> getParticipantes() {
-		return participantes;
-	}
-
-	public void setParticipantes(List<Participante> participantes) {
-		this.participantes = participantes;
-	}
-	
-	public void addParticipante(Participante p) {
-		this.participantes.add(p);
-	}
-
-	public String getImagen() {
-		return imagen;
-	}
-
-	public void setImagen(String imagen) {
-		this.imagen = imagen;
-	}
-
-	public Programa getProgramaResponsable() {
-		return programaResponsable;
-	}
-
-	public void setProgramaResponsable(Programa programaResponsable) {
-		this.programaResponsable = programaResponsable;
-	}
-
-	public Docente getDocenteResponsable() {
-		return docenteResponsable;
-	}
-
-	public void setDocenteResponsable(Docente docenteResponsable) {
-		this.docenteResponsable = docenteResponsable;
-	}
-
-	public String getConsecutivo() {
-		return consecutivo;
-	}
-
-	public void setConsecutivo(String consecutivo) {
-		this.consecutivo = consecutivo;
-	}
-
-	public ClasificacionCine getClasificacionCine() {
-		return clasificacionCine;
-	}
-
-	public void setClasificacionCine(ClasificacionCine clasificacionCine) {
-		this.clasificacionCine = clasificacionCine;
-	}
-
-	public List<EducacionContinuaTipoBeneficiario> getTipoBeneficiarios() {
-		return this.tipoBeneficiarios;
-	}
-
-	public void setBeneficiarios(List<EducacionContinuaTipoBeneficiario> beneficiarios) {
-		this.tipoBeneficiarios = beneficiarios;
-	}
-	
-	public void addTipoBeneficiario(EducacionContinuaTipoBeneficiario tb) {
-		this.tipoBeneficiarios.add(tb);
-	}
-
-	public String getLugar() {
-		return lugar;
-	}
-
-	public void setLugar(String lugar) {
-		this.lugar = lugar;
-	}
-
-	public Diploma getDiploma() {
-		return diploma;
-	}
-
-	public void setDiploma(Diploma diploma) {
-		this.diploma = diploma;
-	}
-
-	public String getEstado() {
-		return estado;
-	}
-
-	public void setEstado(String estado) {
-		this.estado = estado;
-	}
-
-	public String getPorcentajeAsistencia() {
-		return porcentajeAsistencia;
-	}
-
-	public void setPorcentajeAsistencia(String porcentajeAsistencia) {
-		this.porcentajeAsistencia = porcentajeAsistencia;
-	}
-
-	public String getCostoEducacionContinua() {
-		return costoEducacionContinua;
-	}
-
-	public void setCostoEducacionContinua(String costoEducacionContinua) {
-		this.costoEducacionContinua = costoEducacionContinua;
-	}
-
-	public String getIdAcceso() {
-		return idAcceso;
-	}
-
-	public void setIdAcceso(String idAcceso) {
-		this.idAcceso = idAcceso;
-	}
-
-	public String getInfoAdicional() {
-		return infoAdicional;
-	}
-
-	public void setInfoAdicional(String infoAdicional) {
-		this.infoAdicional = infoAdicional;
-	}
-
-	public boolean isDeleted() {
-		return isDeleted;
-	}
-
-	public void setDeleted(boolean isDeleted) {
-		this.isDeleted = isDeleted;
-	}
-
-
 	
 	
 	

@@ -19,8 +19,9 @@ function guardarFacultad(){
 	/*var boton = document.getElementById('btnGuardar');
 	boton.disabled=true;*/
 	var facultad = $('#facultad').val();
-	var valid=validateInputTextRequerido('facultad','errorFacultad');
-	if(!valid){
+	var valid1=validateInputTextRequerido('facultad','errorFacultad');
+	var valid2=validateLengthTxt('facultad','errorFacultad',60);
+	if(!valid1 || !valid2){
 		//boton.disabled=false;
 		toastr
 			.error(

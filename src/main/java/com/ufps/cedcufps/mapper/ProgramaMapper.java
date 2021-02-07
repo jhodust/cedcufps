@@ -25,14 +25,17 @@ public class ProgramaMapper implements IProgramaMapper {
 	public ProgramaDto convertProgramaToProgramaDto(Programa programa) {
 		// TODO Auto-generated method stub
 		ProgramaDto dto= new ProgramaDto();
-		dto.setId(programa.getId());
-		dto.setPrograma(programa.getPrograma());
-		dto.setCodigo(programa.getCodigo());
-		if(programa.getDirectorPrograma()!=null) {
-			dto.setIdDirector(programa.getDirectorPrograma().getId());
+		if(programa != null ) {
+			dto.setId(programa.getId());
+			dto.setPrograma(programa.getPrograma());
+			dto.setCodigo(programa.getCodigo());
+			if(programa.getDirectorPrograma()!=null) {
+				dto.setIdDirector(programa.getDirectorPrograma().getId());
+			}
+			
+			dto.setIdFacultad(programa.getFacultad().getId());
 		}
 		
-		dto.setIdFacultad(programa.getFacultad().getId());
 		return dto;
 	}
 

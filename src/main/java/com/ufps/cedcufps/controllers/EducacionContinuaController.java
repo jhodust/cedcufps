@@ -9,6 +9,8 @@ import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
@@ -58,6 +60,7 @@ import com.ufps.cedcufps.services.IEducacionContinuaService;
 import com.ufps.cedcufps.services.IParticipanteService;
 import com.ufps.cedcufps.services.IPersonaService;
 import com.ufps.cedcufps.services.IProgramaService;
+import com.ufps.cedcufps.services.PersonaService;
 import com.ufps.cedcufps.utils.Archivo;
 import com.ufps.cedcufps.utils.ManejoPdf;
 import org.springframework.context.ApplicationContext;
@@ -85,12 +88,15 @@ public class EducacionContinuaController {
 	@Autowired
 	private IAsistenciaService asistenciaService;
 	
+	private Logger logger= LoggerFactory.getLogger(EducacionContinuaController.class);
 	
 	@RequestMapping
 	public String listar(HttpServletRequest request,Map<String, Object> model, Authentication auth) {
 		model.put("titulo","EDUCACIÓN CONTINUA");
+		
 		model.put("photoUser", SpringSecurityConfig.getInfoSession().getPhoto());
 		model.put("nameUser", SpringSecurityConfig.getInfoSession().getName());
+		logger.debug("va a listar educaciones continuas");
 		model.put("educacionesContinuas",educacionContinuaService.findPosiblesEduContinuaGestionar());
 		return "educacion_continua/index";
 	}
@@ -197,6 +203,14 @@ public class EducacionContinuaController {
                 .contentType(MediaType.APPLICATION_PDF)
                 .body(new InputStreamResource(bis));
     }
+	
+	
+	@RequestMapping(value = "/detalles/asistentes/{id}")
+	public String reloadListParticipantes(@PathVariable(value = "id") String idAcceso, Map<String, Object> model) {
+		System.out.println("entra a reload list participantes");
+		model.put("ec",educacionContinuaService.detallesEducacionContinua(idAcceso));
+		return "educacion_continua/listado_asistentes/listadoParticipantes :: divTableAsistentes";
+	}
 	
 	/*@RequestMapping(value = "/educacion-continua/registro", method = RequestMethod.POST)
 	public String save(@Valid EducacionContinua ec, BindingResult result, SessionStatus status, @RequestParam("file") MultipartFile imagen,Map<String, Object> model, RedirectAttributes redirectAttributes) {

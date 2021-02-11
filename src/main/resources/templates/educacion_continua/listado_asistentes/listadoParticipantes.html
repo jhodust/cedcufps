@@ -67,7 +67,7 @@
 				</div>
 				</div>			
           <div class="table-responsive">
-          <div class="col-lg-12">
+          <div class="col-lg-12" id="div_table_asistentes" th:fragment="divTableAsistentes">
             <table id="myTable2" style="width: 100%;"class="row-border table align-items-center" >
 						<thead>
 							<tr>
@@ -102,6 +102,23 @@
 							
 						</tbody>
 					</table>
+					<script type="text/javascript">
+					try{
+						$(document).ready( function () {
+							  $('#myTable2').DataTable( {
+								  destroy: true,
+							        language: {
+							            url: "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+							        },
+							    } );
+							   
+							} );
+					}catch(err){
+						
+					}
+					  
+					  
+					  </script>
 					</div>
           </div>
           <div th:replace="educacion_continua/listado_asistentes/canvas_modal :: canvas"></div>

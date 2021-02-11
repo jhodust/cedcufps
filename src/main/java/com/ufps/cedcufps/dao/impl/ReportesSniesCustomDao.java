@@ -428,22 +428,14 @@ public class ReportesSniesCustomDao implements IReportesSniesCustomDao{
 
 	public List<Object[]> initDataDashboardConteoGeneral(){
 		List<Object[]> result=new ArrayList<Object[]>();
-		Object[] data0= {"Educación Continua","Total"};
-		Object[] data1= {"Curso",0};
-		Object[] data2= {"Taller",0};
-		Object[] data3= {"Seminario",0};
-		Object[] data4= {"Congreso",0};
-		Object[] data5= {"Simposio",0};
-		Object[] data6= {"Diplomado",0};
-		Object[] data7= {"Otro",0};
-		result.add(data0);
-		result.add(data1);
-		result.add(data2);
-		result.add(data3);
-		result.add(data4);
-		result.add(data5);
-		result.add(data6);
-		result.add(data7);
+		result.add(new Object[] {"Educación Continua","Total"});
+		result.add(new Object[] {"Curso",0});
+		result.add(new Object[] {"Taller",0});
+		result.add(new Object[] {"Seminario",0});
+		result.add(new Object[] {"Congreso",0});
+		result.add(new Object[] {"Simposio",0});
+		result.add(new Object[] {"Diplomado",0});
+		result.add(new Object[] {"Otro",0});
 		return result;
 	}
 	
@@ -526,25 +518,15 @@ public class ReportesSniesCustomDao implements IReportesSniesCustomDao{
 	}
 	
 	public List<Object[]> initDataDashboardConteoPersonasEdC(){
-		
-		
 		List<Object[]> result=new ArrayList<Object[]>();
-		Object[] data0= {"Educación Continua","Estudiante", "Docente", "Administrativo", "Graduado", "Externo"};
-		Object[] data1= {"Curso",0,0,0,0,0};
-		Object[] data2= {"Taller",0,0,0,0,0};
-		Object[] data3= {"Seminario",0,0,0,0,0};
-		Object[] data4= {"Congreso",0,0,0,0,0};
-		Object[] data5= {"Simposio",0,0,0,0,0};
-		Object[] data6= {"Diplomado",0,0,0,0,0};
-		Object[] data7= {"Otro",0,0,0,0,0};
-		result.add(data0);
-		result.add(data1);
-		result.add(data2);
-		result.add(data3);
-		result.add(data4);
-		result.add(data5);
-		result.add(data6);
-		result.add(data7);
+		result.add(new Object[] {"Educación Continua","Estudiante", "Docente", "Administrativo", "Graduado", "Externo"});
+		result.add(new Object[] {"Curso",0,0,0,0,0});
+		result.add(new Object[] {"Taller",0,0,0,0,0});
+		result.add(new Object[] {"Seminario",0,0,0,0,0});
+		result.add(new Object[] {"Congreso",0,0,0,0,0});
+		result.add(new Object[] {"Simposio",0,0,0,0,0});
+		result.add(new Object[] {"Diplomado",0,0,0,0,0});
+		result.add(new Object[] {"Otro",0,0,0,0,0});
 		return result;
 	}
 
@@ -617,8 +599,7 @@ public class ReportesSniesCustomDao implements IReportesSniesCustomDao{
 			q.setParameter(3,idPrograma);
 		}
 		List<Object[]> result= q.getResultList();
-		Object[] encabezado= {"Género","Total"};
-		result.add(0,encabezado);
+		result.add(0,new Object [] {"Género","Total"} );
 			
 		return result;
 	}

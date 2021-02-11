@@ -208,14 +208,19 @@ public class PersonaService implements IPersonaService, UserDetailsService {
 		/*Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 	    UserDetails userDetail = (UserDetails) auth.getPrincipal();
 		return personaDao.findByUsername(userDetail.getUsername());*/
+		logger.debug("metodo find persona logueada");
 		return this.findByEmail(this.findEmailPersonaLogueada());
 	}
 
 	@Override
 	public String findEmailPersonaLogueada() {
+		logger.debug("antes de obtener autenticacion");
 		Authentication a = SecurityContextHolder.getContext().getAuthentication();
+		logger.debug("antes de token");
 		OAuth2AuthenticationToken client= (OAuth2AuthenticationToken )a;
+		logger.debug("antes de obtener email");
 		String email=client.getPrincipal().getAttribute("email");
+		logger.debug("el email es: " + email);
 		System.out.println("email del usuario logueadoen metodo findPersonaLogueada de personaService");
 		System.out.println(email);
 		return email;
@@ -511,6 +516,8 @@ public class PersonaService implements IPersonaService, UserDetailsService {
 	
 	@Override
 	public boolean isDocente(Persona p) {
+		logger.debug("id persona en is docente: " + p.getId());
+		logger.info("id persona en is docente: " + p.getId());
 		return (this.docenteDao.findOnlyDocente(p.getId()) != null );
 		
 	}
@@ -748,7 +755,7 @@ public class PersonaService implements IPersonaService, UserDetailsService {
 		dto.setIdPersona(p.getId());
 		dto.setSuperAdmin(this.isSuperAdmin(p));
 		dto.setDirPrograma(this.isDirPrograma(p));
-		dto.setDocente(this.isDocente(p));
+		dto.setDocente(p.isDocente());
 		dto.setHasPermisosEdC(this.hasPermissionForEduContinua(p.getId()));
 		dto.setHasPermisosOnlyMyEdC(this.hasPermisosOnlyMyEdC(p.getId()));
 		return dto;

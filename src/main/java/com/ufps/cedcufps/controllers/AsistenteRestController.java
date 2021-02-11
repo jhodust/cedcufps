@@ -58,7 +58,7 @@ public class AsistenteRestController {
 	
 	@GetMapping(value = "/realizar-inscripcion",produces = "application/json")
 	public ResponseEntity<ParticipanteDto> realizarInscripcion(@RequestParam(name = "idEduContinua") String idEduContinua, 
-			@RequestParam(name = "idTipoPersona",required = false,defaultValue = "0") String idTipoPersona, Map<String, Object> model) {
+			@RequestParam(name = "idTipoPersona",required = false,defaultValue = "0") String idTipoPersona) {
 		
 		return ResponseEntity.ok(participanteService.saveAsistente(Long.parseLong(idEduContinua),Long.parseLong(idTipoPersona)));
 	}
@@ -72,7 +72,7 @@ public class AsistenteRestController {
 	}
 	
 	@GetMapping(value = "/cancelar-inscripcion/{id_evento}",produces = "application/json")
-	public ResponseEntity<Participante> cancelarInscripcion(@PathVariable(value = "id_evento") Long id, Map<String, Object> model) {
+	public ResponseEntity<Participante> cancelarInscripcion(@PathVariable(value = "id_evento") Long id) {
 		
 		//Archivo.deleteImage(p.getImagenQr());
 		//Archivo.deleteImage(p.getTarjetaInscripcion());

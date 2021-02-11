@@ -19,8 +19,8 @@ public interface IDocenteDao extends JpaRepository<Docente, Long> {
 	@Query("SELECT d FROM Docente d WHERE d.isDocente=1")
 	public List<Docente> findDocentes();
 	
-	@Query(value = "select d from Docente d where d.id = ?1 ")
-	public Docente findOnlyDocente(Long id);
+	@Query(value = "select p.* from personas p where p.id_persona = ?1 and p.isDocente=1 ", nativeQuery = true)
+	public Persona findOnlyDocente(Long id);
 	
 	@Transactional
 	@Modifying

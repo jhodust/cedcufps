@@ -114,7 +114,12 @@ public class InicioController {
 	}
 	
 	
-	
+	@RequestMapping(value = "/reload/scriptTables")
+	public String reloadTables() {
+		
+		
+		return "layouts/layout :: scriptTables";
+	}
 
 	
 	

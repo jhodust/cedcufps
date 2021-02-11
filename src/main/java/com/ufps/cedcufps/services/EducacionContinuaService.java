@@ -308,7 +308,12 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 	@Override
 	public List<EducacionContinuaAppDto> findPosiblesEduContinuaGestionar() {
 		// TODO Auto-generated method stub
+		logger.debug("va a buscar persona logueada");
 		Persona p=personaService.findPersonaLogueada();
+		logger.debug("persona encontrada " + p!=null);
+		logger.debug("id persona " + p.getId());
+		logger.debug("buscar educaciones continuas");
+		logger.info("********************************************** find posibles edu continuas gestionar***************************");
 		return educacionContinuaCustomDao.findEducacionesContinuasAGestionar(p.getId(), personaService.isSuperAdmin(), personaService.hasPermissionForEduContinua(p.getId()) );
 	}
 

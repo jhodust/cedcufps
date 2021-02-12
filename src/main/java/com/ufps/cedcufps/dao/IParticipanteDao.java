@@ -5,6 +5,9 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.springframework.data.jpa.datatables.mapping.DataTablesInput;
+import org.springframework.data.jpa.datatables.mapping.DataTablesOutput;
+import org.springframework.data.jpa.datatables.repository.DataTablesRepository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -92,6 +95,10 @@ public interface IParticipanteDao extends JpaRepository<Participante, Long>{
 	@Query(value="update participantes set fecha_generacion_diploma = ?1 where token = ?2 ", nativeQuery = true)
 	public void updateCertificacionParticipante(Date fechaDiploma, String token);
 	
+	
+	@Query("select p from Participante p where p.educacionContinua.idAcceso = ?1")
+	public List<Participante> findAllParticipantesByEducacionContinuaToken(String token);
+
 	
 	
 }

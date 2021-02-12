@@ -94,6 +94,8 @@ $(document).ready(function ()
 		/*console.log(
 		numeroALetras(128));*/
 		//probarCargue();
+		
+		
 	});
 	
 	if(diploma != null && diploma.estructuraDiploma.objects.length > 0 ){
@@ -102,7 +104,7 @@ $(document).ready(function ()
 		loadDiplomaBase();
 		
 	}
-	
+	listParticipantes();
 });
 
 
@@ -580,3 +582,32 @@ $("#btnGuardarEstructuraCertificado").on("click",function(e){
 });
 
 
+
+function listParticipantes(){
+	console.log("*********************************");
+	
+	console.log("*********************************");
+	console.log("*********************************");
+	console.log("list participantes function");
+	
+	 $('#myTable3').DataTable( {
+	        "processing": true,
+	        "serverSide": true,
+	        "ajax": {
+	            "url": "/listparticipantes",
+	            "data": function ( d ) {
+	            	d.token='1608778117221';
+	                // d.custom = $('#myInput').val();
+	                // etc
+	            }
+	        },
+	        "columns": [
+	            { "data": "numeroDocumento" },
+	            { "data": "nombrePersona" },
+	            { "data": "tipoParticipante" },
+	            { "data": "id" },
+	            { "data": "id" },
+	            { "data": "id" }
+	        ]
+	    } );
+}

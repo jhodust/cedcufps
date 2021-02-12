@@ -68,7 +68,16 @@
 				</div>			
           <div class="table-responsive">
           <div class="col-lg-12" id="div_table_asistentes" th:fragment="divTableAsistentes">
-            <table id="myTable2" style="width: 100%;"class="row-border table align-items-center" >
+           <table id="myTable4" style="width: 100%;"class="row-border table align-items-center" >
+						<thead>
+							<tr>
+								<th class="th2">Certificado Participación</th>
+								
+							</tr>
+						</thead>
+						
+					</table>
+            <table id="myTable3" style="width: 100%;"class="row-border table align-items-center" >
 						<thead>
 							<tr>
 								<th class="th2" id="headerImgCertificado">Certificado Participación</th>
@@ -81,26 +90,7 @@
 								<th id="headerAprobado">Aprobado</th>
 							</tr>
 						</thead>
-						<tbody>
-							<tr th:each="p : ${ec.educacionContinua.participantes}" >
-								<td class="tdImgCertificados">
-								<a class="action-item" th:class="${p.isAprobado()} ? 'action-item action-item-red-ufps hover-scale-110' : 'action-item action-item-red-ufps action-item-disabled' " th:id="${'aCertificado_'+p.token}" th:href="@{/educacion-continua/visualizar-diploma (token=${p.token})}" target="_blank"   data-toggle="tooltip" data-placement="left" title="Ver Certificado" >
-   									<span class="btn-inner--icon"><i class="fas fa-money-check"></i></span></a>
-   								</td>
-								<td th:text="${p.tipoDocumento + ' ' + p.numeroDocumento}"></td>
-								<td class="th2" th:text="${p.nombrePersona}"></td>
-								<td th:text="${p.tipoParticipante}"></td>
-								<td th:if="${ec.educacionContinua.isEnableAsistencia()}">
-									<input type="checkbox" th:each="j : ${ec.educacionContinua.jornadas}" th:checked="${p.jornadasAsistencias.get(j.id)}" th:class="'checkAsistencia j_'+${j.id}" th:id="${j.id}+'_'+${p.id}" th:data-jornada="${j.id}" th:data-participante="${p.id}" data-toggle="tooltip" data-placement="top" th:title="${#strings.capitalizeWords(#dates.format(j.horaInicio, 'dd MMMM yyyy HH:mm'))}"/>
-								</td><!--  and ec.educacionContinua.diploma != null -->
-    							<td class="swAprobado"><div class="custom-control custom-switch">
-									  <input type="checkbox" class="custom-control-input swAprobarAsistente" th:id="${'swAprobar_'+p.id}"  th:data-token="${p.token}" th:data-participante="${p.nombrePersona}" th:data-tipoParticipante="${p.tipoParticipante}" th:data-tipoDocumento="${p.tipoDocumento}"  th:data-documento="${p.numeroDocumento}" th:checked="${p.isAprobado()}">
-									  <label class="custom-control-label" th:for="${'swAprobar_'+p.id}"></label>
-									</div>
-								</td>
-							</tr>
-							
-						</tbody>
+						
 					</table>
 					<script type="text/javascript">
 					try{

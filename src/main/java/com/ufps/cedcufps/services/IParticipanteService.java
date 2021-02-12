@@ -4,6 +4,8 @@ import java.io.ByteArrayInputStream;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.jpa.datatables.mapping.DataTablesInput;
+import org.springframework.data.jpa.datatables.mapping.DataTablesOutput;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ufps.cedcufps.dto.CertificacionDto;
@@ -65,4 +67,6 @@ public interface IParticipanteService {
 	public CertificacionDto findCertificacionByToken(String token);
 	
 	public List<PonenteDto> findPonentesByEduContinua(Long idEducacionContinua);
+	
+	public DataTablesOutput<ParticipanteDto> findParticipantesByEducacionContinua(String idAcceso, DataTablesInput input);
 }

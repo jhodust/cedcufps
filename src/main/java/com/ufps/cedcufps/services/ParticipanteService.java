@@ -11,6 +11,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.jpa.datatables.mapping.DataTablesInput;
+import org.springframework.data.jpa.datatables.mapping.DataTablesOutput;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -451,6 +453,17 @@ public class ParticipanteService implements IParticipanteService{
 	public List<PonenteDto> findPonentesByEduContinua(Long idEducacionContinua) {
 		// TODO Auto-generated method stub
 		return educacionContinuaMapper.convertListParticipantesToListPonentesDto(participanteDao.findAllPonentesOfOneEducacionContinuaById(idEducacionContinua));
+	}
+
+	@Override
+	public DataTablesOutput<ParticipanteDto> findParticipantesByEducacionContinua(String idAcceso, DataTablesInput input) {
+		// TODO Auto-generated method stub
+		DataTablesOutput<ParticipanteDto> result = new DataTablesOutput<>();
+		result.setData(educacionContinuaMapper.convertParticipantesToParticipanteDto(participanteDao.findAllParticipantesByEducacionContinuaToken(idAcceso)));
+		result.setRecordsTotal(result.getData().size());
+		result.setDraw(input.getDraw());
+		result.setRecordsFiltered(input.getLength());
+		return result;
 	}
 	
 

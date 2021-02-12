@@ -7,10 +7,13 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.time.Instant;
+import java.util.List;
 
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.datatables.mapping.DataTablesInput;
+import org.springframework.data.jpa.datatables.mapping.DataTablesOutput;
 import org.springframework.data.repository.NoRepositoryBean;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
@@ -20,6 +23,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import com.ufps.cedcufps.dto.ParticipanteDto;
+import com.ufps.cedcufps.mapper.EducacionContinuaMapper;
 import com.ufps.cedcufps.modelos.Participante;
 
 @Repository
@@ -27,6 +31,9 @@ public class ParticipanteCustomDao implements IParticipanteCustomDao {
 
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
+	
+	@Autowired
+	private EducacionContinuaMapper educacionContinuaMapper;
 
 	@Transactional
 	@Override
@@ -61,6 +68,8 @@ public class ParticipanteCustomDao implements IParticipanteCustomDao {
 		System.out.println(  keyHolder.getKeys().get("id"));
 
 	}
+
+	
 	
 	
 	

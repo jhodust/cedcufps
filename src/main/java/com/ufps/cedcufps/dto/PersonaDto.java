@@ -9,6 +9,11 @@ public class PersonaDto {
 	private String tipoDocumento;
 	private String perfiles;
 	private String idAcceso;
+	private boolean isEstudiante;
+	private boolean isDocente;
+	private boolean isAdministrativo;
+	private boolean isGraduado;
+	private boolean isExterno;
 	public Long getId() {
 		return id;
 	}
@@ -50,6 +55,36 @@ public class PersonaDto {
 	}
 	public void setIdAcceso(String idAcceso) {
 		this.idAcceso = idAcceso;
+	}
+	public boolean isEstudiante() {
+		return isEstudiante;
+	}
+	public void setEstudiante(boolean isEstudiante) {
+		this.isEstudiante = isEstudiante;
+	}
+	public boolean isDocente() {
+		return isDocente;
+	}
+	public void setDocente(boolean isDocente) {
+		this.isDocente = isDocente;
+	}
+	public boolean isAdministrativo() {
+		return isAdministrativo;
+	}
+	public void setAdministrativo(boolean isAdministrativo) {
+		this.isAdministrativo = isAdministrativo;
+	}
+	public boolean isGraduado() {
+		return isGraduado;
+	}
+	public void setGraduado(boolean isGraduado) {
+		this.isGraduado = isGraduado;
+	}
+	public boolean isExterno() {
+		return isExterno;
+	}
+	public void setExterno(boolean isExterno) {
+		this.isExterno = isExterno;
 	}
 	
 	

@@ -44,6 +44,7 @@ import com.ufps.cedcufps.dto.TipoBeneficiarioDto;
 import com.ufps.cedcufps.exception.CustomException;
 import com.ufps.cedcufps.mapper.IEducacionContinuaMapper;
 import com.ufps.cedcufps.mapper.IJornadaMapper;
+import com.ufps.cedcufps.mapper.IUsuarioMapper;
 import com.ufps.cedcufps.modelos.ClasificacionCine;
 import com.ufps.cedcufps.modelos.Departamento;
 import com.ufps.cedcufps.modelos.Diploma;
@@ -117,6 +118,9 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 	
 	@Autowired 
 	private IFileStorageService fileStorageService;
+	
+	@Autowired
+	private IUsuarioMapper usuarioMapper;
 	
 	@Override
 	public List<EducacionContinua> findAll() {
@@ -549,7 +553,7 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 				dto.setIdProgramaResp(programa.getId());
 				dto.setProgramaResp(programa.getPrograma());
 			}else if(hasPermission) {
-				dto.setNombreDocenteResp(educacionContinuaMapper.convertFieldsFullName(p));
+				dto.setNombreDocenteResp(usuarioMapper.convertFieldsFullName(p));
 				dto.setCodigoDocenteResp(((Docente)p).getCodigo());
 				dto.setIdDocenteResp(((Docente)p).getId());
 			}

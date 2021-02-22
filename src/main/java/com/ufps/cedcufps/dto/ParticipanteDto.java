@@ -52,6 +52,7 @@ public class ParticipanteDto {
 	private boolean aprobado;
 	private Date fechaGeneracionDiploma;
 	private String token;
+	private boolean enableToCertificate;
 	
 	public ParticipanteDto() {
 		this.jornadasAsistencias=new HashMap<>();

@@ -31,7 +31,7 @@
               <!-- Page title + Go Back button -->
               <div class="d-inline-block">
               <div class="row">
-              	 <h5 class="h4 d-inline-block font-weight-400 mb-0 text-dark" ><strong>Educación Continua</strong></h5>
+              	 <h5 class="h5 d-inline-block font-weight-400 mb-0 text-dark" ><strong>FORMULARIO REGISTRO</strong></h5>
 	              	
               </div>
                
@@ -40,22 +40,27 @@
             
           </div>
         </div>
-        <hr/>
+        <br>
         <div th:replace="loader :: loader"></div>
         
         <div id="formEducacionContinuaBase">
         <div class="card">
-			<div class="col-md-12">
-				<div class="custom-control custom-checkbox">
-				    <input type="checkbox" class="custom-control-input" id="cbEdCExistente">
-				    <label class="custom-control-label" for="cbEdCExistente">Tomar Registro Educación Continua Existente</label>
+	        <div class="card-body">
+	        	<p class="text-dark">Seleccione esta opción solo sí desea registrar una edición de una educación continua ya existente. 
+	        	Tenga en cuenta	que el código de registro interno para el reporte de SNIES será el mismo.</p>
+				<div class="col-md-12">
+					<div class="custom-control custom-checkbox">
+					    <input type="checkbox" class="custom-control-input" id="cbEdCExistente">
+					    <label class="custom-control-label" for="cbEdCExistente">Tomar Registro Educación Continua Existente</label>
+					</div>
+	
 				</div>
-
-			</div>
-		</div>
-		<div class="row" id="divEdCBase" style="display:none">
+				
+				<div class="row" id="divEdCBase" style="display:none">
+				<br>
 						<div class="col-md-12 card">
 							<div class="card-body">
+								
 								<div class="row">
 									<span class="badge badge-red-ufps">Modo Registro Base</span>
 								</div>
@@ -92,10 +97,14 @@
 							</div>
 						</div>
 					</div>
+			</div>
+		</div>
+		
 		</div>
         <div th:fragment="form" id="formEducacionContinua">
         <div class="card">
         <div class="card-body">
+        <label class="reglasForms">Los campos marcados con</label> <label class="requerido pl-2">*</label> <label class="reglasForms">son obligatorios</label>
 		<form enctype="multipart/form-data">
 					
 					<div class="row">
@@ -107,6 +116,7 @@
 										<span class="badge badge-red-ufps">Información Evento</span>
 									</div>
 									<div class="row">
+									
 										<div class="col-md-6">
 											<div class="form-group">
 												<label class="form-control-label">Tipo Educación Continua </label><label class="requerido pl-2">*</label> <select
@@ -116,6 +126,8 @@
 															th:text="${tec.tipoEduContinua}" th:selected="${educacionContinua.idTipoEduContinua == tec.id}"></option>
 													
 												</select>
+												 <i class="far fa-question-circle"> Si desea crear otro tipo acorde a su evento, solo ingrese este en el cuadro de texto
+												  del buscador de las opciones y posteriormente da enter</i>
 												<small class="form-text text-danger"><strong id="errTipoEdc"></strong></small>
 											</div>
 										</div>
@@ -267,7 +279,7 @@
 												<div class="form-group">
 													<label class="form-control-label">Tipo Beneficiarios </label><label class="requerido pl-2">*</label><select
 														class="form-control" data-toggle="select" multiple="multiple" id="selectTipoBeneficiarios">
-														<option value="0">Seleccione...</option>
+														<option value="0" disabled>Seleccione...</option>
 														<option th:each="tb: ${tipo_beneficiarios}"
 															th:value="${tb.id}" th:text="${tb.tipoBeneficiario}"></option>
 														

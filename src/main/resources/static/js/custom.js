@@ -21,6 +21,10 @@ var token = $("meta[name='_csrf']").attr("content");
 
 $(document).ready(function ()
 {
+	$('[data-toggle="tooltip"]').tooltip();
+	
+	$('[data-toggle="popover"]').popover();
+	
 	var swiper = new Swiper('.swiper-container', {
 	      effect: 'coverflow',
 	      grabCursor: true,

@@ -325,7 +325,8 @@ public class EducacionContinuaCustomDaoImpl implements IEducacionContinuaCustomD
 		.append(" join tipos_documento td on per.id_tipo_documento=td.id")
 		.append(" join tipos_educacion_continua tec on e.id_tipo_educacion_continua=tec.id")
 		.append(" join tipos_participante tpar on p.id_tipo_participante=tpar.id ")
-		.append(" where per.numero_documento = ?1");
+		.append(" where per.numero_documento = ?1")
+		.append(" order by e.fecha_inicio desc");
 		System.out.println(numDocumento);
 		Query query=em.createNativeQuery(certificacionesQuery.toString())
 				 .setParameter(1, numDocumento);
@@ -451,7 +452,7 @@ public class EducacionContinuaCustomDaoImpl implements IEducacionContinuaCustomD
 		StringBuilder query = new StringBuilder();
 		query.append(" select e.id, e.nombre, e.fecha_inicio, e.fecha_fin, e.fecha_lim_inscripcion, pro.programa,");
 		query.append(" tec.tipo_educacion_continua, e.id_acceso, p.primer_nombre, p.segundo_nombre, p.primer_apellido,");
-		query.append(" p.segundo_apellido, (select count(par.id) from participantes par where par.educacion_continua_id=e.id) as cantidad_participantes");
+		query.append(" p.segundo_apellido, (select count(par.id) from participantes par where par.educacion_continua_id=e.id) as cantidad_participantes, e.estado");
 		query.append(" from educacion_continua e");
 		query.append(" join docentes d on d.id_persona=e.id_docente");
 		query.append(" join personas p on d.id_persona=p.id");
@@ -496,6 +497,7 @@ public class EducacionContinuaCustomDaoImpl implements IEducacionContinuaCustomD
 			
 			dto.setDocenteResponsable(nombre);
 			dto.setCantidadParticipantes(Integer.parseInt(String.valueOf(o[12])));
+			dto.setEstado(String.valueOf(o[13]));
 			dto.setJornadas(jornadaMapper.convertJornadasToJornadaAppDto(jornadaDao.findByIdEducacionContinua(dto.getId())));
 			list.add(dto);
 		}

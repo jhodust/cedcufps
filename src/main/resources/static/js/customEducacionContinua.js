@@ -8,7 +8,7 @@ $(document).ready(function ()
 			  title: "¿Está seguro de eliminar la educación continua?",
 			  text: "Una vez eliminada no se podrá gestionar ni será tenida en cuenta en los reportes SNIES",
 			  icon: "warning",
-			  buttons: true,
+			  buttons: ["Cancelar", "Aceptar"],
 			  dangerMode: true,
 			})
 			.then((willDelete) => {

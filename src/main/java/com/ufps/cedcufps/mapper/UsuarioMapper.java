@@ -143,37 +143,7 @@ public class UsuarioMapper implements IUsuarioMapper {
 		System.out.println(u.isAdministrativo());
 		System.out.println(u.isGraduado());
 		System.out.println(u.isExterno());
-		String tiposPersona="";
-		if(u.isEstudiante()) {
-			if(tiposPersona.isEmpty()) {
-				tiposPersona="1";
-			}
-		}
-		if(u.isDocente()) {
-			if(tiposPersona.isEmpty()) {
-				tiposPersona="2";
-			}else {
-				tiposPersona=tiposPersona+",2";
-			}
-		}
-		if(u.isAdministrativo()) {
-			if(tiposPersona.isEmpty()) {
-				tiposPersona="3";
-			}else {
-				tiposPersona=tiposPersona+",3";
-			}
-		}
-		if(u.isGraduado()) {
-			if(tiposPersona.isEmpty()) {
-				tiposPersona="4";
-			}else {
-				tiposPersona=tiposPersona+",4";
-			}
-		}
-		if(u.isExterno()) {
-			tiposPersona="5";
-		}
-		pe.setIdsTipoPersona(tiposPersona);
+		pe.setIdsTipoPersona(this.convertIdsTiposPersona(u));
 		
 		/*List<Rol> r= new ArrayList<>();
 		Rol rol= new Rol();
@@ -263,19 +233,24 @@ public class UsuarioMapper implements IUsuarioMapper {
 	@Override
 	public UsuarioAppDto convertPersonaToUsuarioAppDto(Persona p) {
 		// TODO Auto-generated method stub
-		UsuarioAppDto dto=new UsuarioAppDto();
-		dto.setId(p.getId());
-		dto.setPrimerNombre(p.getPrimerNombre());
-		dto.setSegundoNombre(p.getSegundoNombre());
-		dto.setPrimerApellido(p.getPrimerApellido());
-		dto.setSegundoApellido(p.getSegundoApellido());
-		dto.setEmail(p.getEmail());
-		dto.setTelefono(p.getEmail());
-		dto.setEstudiante(p.isEstudiante());
-		dto.setDocente(p.isDocente());
-		dto.setAdministrativo(p.isAdministrativo());
-		dto.setGraduado(p.isGraduado());
-		dto.setExterno(p.isExterno());
+		
+		UsuarioAppDto dto=null;
+		if(p!=null) {
+			dto=new UsuarioAppDto();
+			dto.setId(p.getId());
+			dto.setPrimerNombre(p.getPrimerNombre());
+			dto.setSegundoNombre(p.getSegundoNombre());
+			dto.setPrimerApellido(p.getPrimerApellido());
+			dto.setSegundoApellido(p.getSegundoApellido());
+			dto.setEmail(p.getEmail());
+			dto.setDocumento(p.getNumeroDocumento());
+			dto.setTelefono(p.getTelefono());
+			dto.setEstudiante(p.isEstudiante());
+			dto.setDocente(p.isDocente());
+			dto.setAdministrativo(p.isAdministrativo());
+			dto.setGraduado(p.isGraduado());
+			dto.setExterno(p.isExterno());
+		}
 		return dto;
 	}
 
@@ -297,65 +272,14 @@ public class UsuarioMapper implements IUsuarioMapper {
 		dto.setTipoDocumento(persona.getTipoDocumento().getTipoDocumento());
 		dto.setDocumento(persona.getNumeroDocumento());
 		dto.setEmail(persona.getEmail());
-		String nombre="";
-		if( persona.getPrimerNombre()!=null) {
-			nombre=persona.getPrimerNombre();
-		}
-		
-		if( persona.getSegundoNombre()!=null) {
-			nombre=nombre + " " + persona.getSegundoNombre();
-		}
-		
-		if(persona.getPrimerApellido()!=null ) {
-			nombre=nombre + " " + persona.getPrimerApellido();
-		}
-		
-		if( persona.getSegundoApellido()!=null) {
-			nombre=nombre + " " + persona.getSegundoApellido();
-		}
-		
-		dto.setNombre(nombre);
-		
-		String perfiles="";
-		if(persona.isEstudiante()) {
-			if(perfiles.isEmpty()) {
-				perfiles="estudiante";
-			}
-		}
-		
-		if(persona.isDocente()) {
-			if(perfiles.isEmpty()) {
-				perfiles="docente";
-			}else {
-				perfiles=perfiles+"-docente";
-			}
-		}
-		
-		if(persona.isAdministrativo()) {
-			if(perfiles.isEmpty()) {
-				perfiles="administrativo";
-			}else {
-				perfiles=perfiles+"-administrativo";
-			}
-		}
-		
-		if(persona.isGraduado()) {
-			if(perfiles.isEmpty()) {
-				perfiles="graduado";
-			}else {
-				perfiles=perfiles+"-graduado";
-			}
-		}
-		
-		if(persona.isExterno()) {
-			if(perfiles.isEmpty()) {
-				perfiles="externo";
-			}else {
-				perfiles=perfiles+"-externo";
-			}
-		}
-		dto.setPerfiles(perfiles);
+		dto.setNombre(this.convertFieldsFullName(persona));
+		dto.setPerfiles(this.convertPerfiles(persona));
 		dto.setIdAcceso(persona.getIdAcceso());
+		dto.setDocente(persona.isDocente());
+		dto.setEstudiante(persona.isEstudiante());
+		dto.setAdministrativo(persona.isAdministrativo());
+		dto.setGraduado(persona.isGraduado());
+		dto.setExterno(persona.isExterno());
 		return dto;
 	}
 
@@ -525,4 +449,97 @@ private JSONArray readJsonDivipola() {
 		return "";
 	}
 	
+	@Override
+	public String convertFieldsFullName(Persona p) {
+		String nombreResponsable=null;
+		if(p.getPrimerNombre()!="") {
+			nombreResponsable=p.getPrimerNombre();
+		}
+		if(p.getSegundoNombre() != null && p.getSegundoNombre()!="") {
+			nombreResponsable=nombreResponsable + " " +p.getSegundoNombre();
+		}
+		if(p.getPrimerApellido()!="") {
+			nombreResponsable=nombreResponsable + " " +p.getPrimerApellido();
+		}
+		if(p.getSegundoApellido()!="") {
+			nombreResponsable=nombreResponsable + " " +p.getSegundoApellido();
+		}
+		return nombreResponsable;
+	}
+	
+	public String convertPerfiles(Persona persona) {
+		String perfiles="";
+		if(persona.isEstudiante()) {
+			if(perfiles.isEmpty()) {
+				perfiles="estudiante";
+			}
+		}
+		
+		if(persona.isDocente()) {
+			if(perfiles.isEmpty()) {
+				perfiles="docente";
+			}else {
+				perfiles=perfiles+"-docente";
+			}
+		}
+		
+		if(persona.isAdministrativo()) {
+			if(perfiles.isEmpty()) {
+				perfiles="administrativo";
+			}else {
+				perfiles=perfiles+"-administrativo";
+			}
+		}
+		
+		if(persona.isGraduado()) {
+			if(perfiles.isEmpty()) {
+				perfiles="graduado";
+			}else {
+				perfiles=perfiles+"-graduado";
+			}
+		}
+		
+		if(persona.isExterno()) {
+			if(perfiles.isEmpty()) {
+				perfiles="externo";
+			}else {
+				perfiles=perfiles+"-externo";
+			}
+		}
+		return perfiles;
+	}
+	
+	public String convertIdsTiposPersona(UsuarioDto u) {
+		String tiposPersona="";
+		if(u.isEstudiante()) {
+			if(tiposPersona.isEmpty()) {
+				tiposPersona="1";
+			}
+		}
+		if(u.isDocente()) {
+			if(tiposPersona.isEmpty()) {
+				tiposPersona="2";
+			}else {
+				tiposPersona=tiposPersona+",2";
+			}
+		}
+		if(u.isAdministrativo()) {
+			if(tiposPersona.isEmpty()) {
+				tiposPersona="3";
+			}else {
+				tiposPersona=tiposPersona+",3";
+			}
+		}
+		if(u.isGraduado()) {
+			if(tiposPersona.isEmpty()) {
+				tiposPersona="4";
+			}else {
+				tiposPersona=tiposPersona+",4";
+			}
+		}
+		if(u.isExterno()) {
+			tiposPersona="5";
+		}
+		return tiposPersona;
+	}
 }

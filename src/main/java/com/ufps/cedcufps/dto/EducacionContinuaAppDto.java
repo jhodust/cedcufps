@@ -15,6 +15,7 @@ public class EducacionContinuaAppDto {
 	private String programaResponsable;
 	private String docenteResponsable;
 	private String idAcceso;
+	private String estado;
 	private List<JornadaAppDto> jornadas;
 	public Long getId() {
 		return id;
@@ -81,6 +82,12 @@ public class EducacionContinuaAppDto {
 	}
 	public void setIdAcceso(String idAcceso) {
 		this.idAcceso = idAcceso;
+	}
+	public String getEstado() {
+		return estado;
+	}
+	public void setEstado(String estado) {
+		this.estado = estado;
 	}
 	
 	

@@ -75,12 +75,12 @@
 							</button>
 						</div>
 						
-						<div style="font-size:1rem " th:if="${not requisitosInscripcion.isAbleToInscription()}">
-							<span class="badge badge-warning" th:text="${requisitosInscripcion.mensajeNoInscripcion}"></span>
+						<div style="font-size:1rem " th:if="${not requisitosInscripcion.isEstaInscrito() and not requisitosInscripcion.isAbleToInscription()}" class="alert alert-danger" role="alert">
+							<label th:text="${requisitosInscripcion.mensajeNoInscripcion}"></label>
 						</div>
 						
-						<div style="font-size:1rem" th:if="${requisitosInscripcion.isEstaInscrito() and requisitosInscripcion.participante.tipoParticipante == 'Ponente'}">
-							<span class="badge badge-dark">Te encuentras inscrito(a) como 'PONENTE'</span>
+						<div style="font-size:1rem" th:if="${requisitosInscripcion.isEstaInscrito() and requisitosInscripcion.participante.tipoParticipante == 'Ponente'}" class="alert alert-info" role="alert">
+							<label> Te encuentras inscrito(a) como 'PONENTE'</label>
 						</div>
 						
               

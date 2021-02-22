@@ -209,7 +209,7 @@ public class EducacionContinuaController {
 	public String reloadListParticipantes(@PathVariable(value = "id") String idAcceso, Map<String, Object> model) {
 		System.out.println("entra a reload list participantes");
 		model.put("ec",educacionContinuaService.detallesEducacionContinua(idAcceso));
-		return "educacion_continua/listado_asistentes/listadoParticipantes :: divTableAsistentes";
+		return "educacion_continua/listado_asistentes/listadoParticipantes :: listadoParticipantes";
 	}
 	
 	/*@RequestMapping(value = "/educacion-continua/registro", method = RequestMethod.POST)

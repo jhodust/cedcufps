@@ -49,27 +49,27 @@ public class PersonaControllerTest {
 				"Carla", "Valentina", "Perez", "Quintero", 2L, "Femenino",	1L, "Soltero(a)", new Date(),
 				"57", "Colombia", "54", "Norte de Santander", "001", "Cucuta", "carlavalentina@gmail.com", null, 
 				"464484", null, null, true, false,false, false, false, "1548779", 1L, "Ingeniería de Sistemas", 
-				null, null, null, null, null,null, null, null);
+				null, null, null, null, null,null, null, null,false,false);
 		USUARIO_DOCENTE= new UsuarioDto(1L, 1L, "CC", "515194", new Date(), "Carla", "Valentina", "Perez",
 				"Quintero", 2L, "Femenino",	1L, "Soltero(a)", new Date(), "57", "Colombia", "54", 
 				"Norte de Santander", "001", "Cucuta", "carlavalentina@gmail.com", null, "464484", 
 				null, null, false, true,false, false, false, null, null, null, null, null, null, 1L, 
-				"Sistemas e Informática","016158", null, null);
+				"Sistemas e Informática","016158", null, null,false,false);
 		USUARIO_ADMINISTRATIVO= new UsuarioDto(1L, 1L, "CC", "515194", new Date(), "Carla", "Valentina", "Perez",
 				"Quintero", 2L, "Femenino",	1L, "Soltero(a)", new Date(), "57", "Colombia", "54", 
 				"Norte de Santander", "001", "Cucuta", "carlavalentina@gmail.com", null, "464484", null, null, 
 				false, false,true, false, false, null,null,null, null, null, null, null, null,null, "Secretaria", 
-				"Registro y Control");
+				"Registro y Control",false,false);
 		USUARIO_GRADUADO= new UsuarioDto(1L, 1L, "CC", "515194", new Date(), "Carla", "Valentina", "Perez",
 				"Quintero", 2L, "Femenino",	1L, "Soltero(a)", new Date(), "57", "Colombia", "54", 
 				"Norte de Santander", "001", "Cucuta", "carlavalentina@gmail.com", null, "464484", null, 
 				null, false, false,false, true, false,null,null,null, 2L, "Ingeniería Civil", "2013", 
-				null, null,null, null, null);
+				null, null,null, null, null,false,false);
 		USUARIO_EXTERNO= new UsuarioDto(1L, 1L, "CC", "515194", new Date(), "Carla", "Valentina", "Perez",
 				"Quintero", 2L, "Femenino",	1L, "Soltero(a)", new Date(), "57", "Colombia", "54", 
 				"Norte de Santander","001", "Cucuta", "carlavalentina@gmail.com", null, "464484", "CENS", 
 				"Ingeniero Eléctrico", false, false,false, false, true,	null, null, null, null, 
-				null, null, null, null,null, null, null);
+				null, null, null, null,null, null, null,false,false);
 		
 	}
 	

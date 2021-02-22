@@ -2,33 +2,21 @@ $(document).ready(function ()
 		{
 	console.log("EDUUUUUUUUUUUUU CONTINUAAAAAAAAAAAAAAAAA EN ASISTENTES");
 	console.log(eduContinua);
-	hideCellsTableAsistentes();
-	
 	
 	if(diploma != null && diploma.estructuraDiploma.objects.length > 0 ){
 		canvas.loadFromJSON(diploma.estructuraDiploma);
 	}
 });
 
-$('.swAprobarAsistente').on('click',function(e){
-	e.preventDefault();
-	console.log("click en aprobar asistente");
-	console.log(e);
-	var habilitar;
-	if(e.target.checked){
-		console.log("se habilita");
-		habilitar=true;
-		generarDiploma(e.target.dataset,habilitar,e);
+function aprobarAsistente(element){
+	if(element.checked){
+		generarDiploma(element.dataset,element);
 	}else{
-		console.log("se deshabilita");
-		habilitar=false;
-		deshacerDiploma(e.target.dataset,habilitar,e);
+		deshacerDiploma(element.dataset,element);
 	}
-});
+}
 
-
-
-function generarDiploma(dataParticipante, boolean,elemento){
+function generarDiploma(dataParticipante,elemento){
 	updateInfoDiploma(dataParticipante.participante, dataParticipante.tipodocumento + ' ' + dataParticipante.documento, dataParticipante.tipoparticipante, canvas);
 	var formData = new FormData();
 	var imagen=canvas.toDataURL({
@@ -57,9 +45,8 @@ function generarDiploma(dataParticipante, boolean,elemento){
    		success: function(result) {
    			toastr.success('Se ha aprobado la participación exitosamente', 'Excelente!',{"positionClass": "toast-top-right", "preventDuplicates": true});
    			loadDiplomaStructureParticipantes(JSON.stringify(eduContinua.diploma.estructuraDiploma));  
-   			console.log(elemento);
-   			elemento.target.checked=boolean; 
    			document.getElementById('aCertificado_'+dataParticipante.token).classList.remove("action-item-disabled");
+   			refreshTableAsistentes();
    		},
    		error: function(err) {
    			
@@ -68,7 +55,7 @@ function generarDiploma(dataParticipante, boolean,elemento){
    
 }
 
-function deshacerDiploma(dataParticipante, boolean,elemento){
+function deshacerDiploma(dataParticipante,elemento){
 	var formData=new FormData();
 	formData.append('tokenParticipante',dataParticipante.token)
 	$.ajax({
@@ -83,9 +70,8 @@ function deshacerDiploma(dataParticipante, boolean,elemento){
    		cache: false,
    		success: function(result) {
    			toastr.success('Se ha retirado la certificación exitosamente', 'Excelente!',{"positionClass": "toast-top-right","preventDuplicates": true});
-   			console.log(elemento);
-   			elemento.target.checked=boolean; 
    			document.getElementById('aCertificado_'+dataParticipante.token).classList.add("action-item-disabled");
+   			refreshTableAsistentes();
    		},
    		error: function(err) {
    			
@@ -100,34 +86,11 @@ function updateStyleCells(classId,style){
 	});
 }
 
-function hideCellsTableAsistentes(){
-	console.log("hide cells table asistentes");
-	console.log(eduContinua.enableAsistencia);
-	if(!eduContinua.enableAsistencia || eduContinua.diploma==null){
-		ocultar('headerAprobado');
-		ocultar('headerImgCertificado');
-		updateStyleCells('swAprobado','none');
-		updateStyleCells('tdImgCertificados','none');
-	}
-	
-}
 
-function showCellsTableAsistentes(){
-	console.log("DIPLOMMMMMMMMMMMAAAAAAAAAA EN SHOW CELLS");
-	console.log(eduContinua.diploma);
-	console.log(eduContinua.enableAsistencia);
-	if(eduContinua.enableAsistencia && eduContinua.diploma!=null){
-		mostrar('headerAprobado','');
-		mostrar('headerImgCertificado','');
-		updateStyleCells('swAprobado','');
-		updateStyleCells('tdImgCertificados','');
-		
-	}
-	try{
-		document.getElementById("msgCertificado").remove();
-	}catch(error){
-		
-	}
+
+function refreshTableAsistentes(){
+	var urlListado = '/educacion-continua/detalles/asistentes/'+eduContinua.idAcceso;
+	$('#div_table_asistentes').load(urlListado);
 	
 }
 

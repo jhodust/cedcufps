@@ -4,10 +4,13 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.ufps.cedcufps.SpringSecurityConfig;
+import com.ufps.cedcufps.dto.UsuarioDto;
 import com.ufps.cedcufps.services.IPersonaService;
+import com.ufps.cedcufps.services.IProgramaService;
 
 @Controller
 @RequestMapping(value = "/perfil")
@@ -16,10 +19,17 @@ public class PerfilController {
 	@Autowired
 	private IPersonaService personaService;
 	
+	@Autowired
+	private IProgramaService programaService;
+	
 	
 	@RequestMapping
 	public String perfil(Map<String, Object> model) {
-		model.put("persona", personaService.findMyInfo());
+		UsuarioDto dto= personaService.findMyInfo();
+		model.put("persona", dto);
+		model.put("programa", programaService.findProgramaByDirector(dto.getId()));
+		model.put("newSuperAdmin", null);
+		model.put("newDirPrograma", null);
 		model.put("photoUser", SpringSecurityConfig.getInfoSession().getPhoto());
 		model.put("nameUser", SpringSecurityConfig.getInfoSession().getName());
 		return "persona/perfil";
@@ -38,5 +48,17 @@ public class PerfilController {
 		model.put("photoUser", SpringSecurityConfig.getInfoSession().getPhoto());
 		model.put("nameUser", SpringSecurityConfig.getInfoSession().getName());
 		return "persona/updatePerfil";
+	}
+	
+	@RequestMapping(value = "/search-new-superadmin/{documento}")
+	public String buscarPosibleSuperAdmin(@PathVariable(value = "documento") String documento, Map<String, Object> model) {
+		model.put("newSuperAdmin",personaService.findUsuarioAppByDocumento(documento));
+		return "persona/perfil :: divDatosNewAdmin";
+	}
+	
+	@RequestMapping(value = "/search-new-dirprograma/{documento}")
+	public String buscarPosibleDirPrograma(@PathVariable(value = "documento") String documento, Map<String, Object> model) {
+		model.put("newDirPrograma",personaService.findUsuarioAppByDocumento(documento));
+		return "persona/perfil :: divDatosNewDirPrograma";
 	}
 }

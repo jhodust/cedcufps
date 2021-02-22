@@ -17,11 +17,13 @@ public interface IPersonaRolCustomDao {
 	public void savePermisoParaPersonaPrograma(String authority, Long idPersona, String tipoPersona, Long idPrograma);
 	public void savePermisoParaPersonaDepartamento(String authority, Long idPersona, String tipoPersona, Long idDepartamento);
 	
+	public void asignarPermisosDirector(Long idDirPrograma, Long idPrograma);
 	public void deleteRolesDirPrograma(Long idPersona);
-	
+	public void deleteRol(String authority, Long idPersona);
 	public boolean updateRolesPersona(Long idPersona, boolean hasPermisosEduC, boolean hasPermisosPer, boolean hasPermisosAtt,
 			List<Long> idsProEduContinua, List<Long> idsProEst, List<Long> idsDeptoDoc, 
 			List<Long> idsProGrad, List<Long> idsEduAtt, boolean hasPermisosAdminvo, boolean hasPermisosExter, boolean isDirPrograma, 
 			boolean isDocente,Long idProgramaDirector);
+	
 	
 }

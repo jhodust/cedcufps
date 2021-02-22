@@ -41,6 +41,9 @@ public class EducacionContinuaMapper implements IEducacionContinuaMapper {
 	@Autowired
 	private IJornadaMapper jornadaMapper;
 	
+	@Autowired
+	private IUsuarioMapper usuarioMapper;
+	
 	/*@Override
 	public List<EducacionContinuaAppDto> convertEducacionContinuaToApp(List<EducacionContinuaAppDto> edC, Map<Long,List<JornadaAppDto>> jornadasMap) {
 		// TODO Auto-generated method stub
@@ -109,7 +112,16 @@ public class EducacionContinuaMapper implements IEducacionContinuaMapper {
 					
 					participanteDto.addAsistencia(a.getJornada().getId(), true);
 				}
-				System.out.println(participanteDto.getJornadasAsistencias().size());
+				System.out.println("tamaño asistencias " + participanteDto.getJornadasAsistencias().size());
+				System.out.println("porcentaje asistencias: " + (e.getJornadas().size() * Integer.parseInt(e.getPorcentajeAsistencia()) / 100 ));
+				System.out.println("cantidad jornadas: " + e.getJornadas().size());
+				System.out.println((double)(e.getJornadas().size()) * (double)(Integer.parseInt(e.getPorcentajeAsistencia())) / (double)(100) );
+				System.out.println("redondeado " + Math.round((double)(e.getJornadas().size()) * (double)(Integer.parseInt(e.getPorcentajeAsistencia())) / (double)(100) ));
+				System.out.println("redondeado ceil " + Math.ceil((double)(e.getJornadas().size()) * (double)(Integer.parseInt(e.getPorcentajeAsistencia())) / (double)(100) ));
+				participanteDto.setEnableToCertificate(participanteDto.getJornadasAsistencias().size() >= Math.ceil((double)(e.getJornadas().size()) * (double)(Integer.parseInt(e.getPorcentajeAsistencia())) / (double)(100) ) || participanteDto.getDiplomaParticipacion() != null);
+				System.out.println(participanteDto.isEnableToCertificate());
+				System.out.println("---------------------");
+				//System.out.println(participanteDto.getJornadasAsistencias().size());
 				
 				participantes.add(participanteDto);
 			}
@@ -129,24 +141,7 @@ public class EducacionContinuaMapper implements IEducacionContinuaMapper {
 		
 	}
 	
-	@Override
-	public String convertFieldsFullName(Persona p) {
-		String nombreResponsable=null;
-		if(p.getPrimerNombre()!="") {
-			nombreResponsable=p.getPrimerNombre();
-		}
-		if(p.getSegundoNombre() != null && p.getSegundoNombre()!="") {
-			nombreResponsable=nombreResponsable + " " +p.getSegundoNombre();
-		}
-		if(p.getPrimerApellido()!="") {
-			nombreResponsable=nombreResponsable + " " +p.getPrimerApellido();
-		}
-		if(p.getSegundoApellido()!="") {
-			nombreResponsable=nombreResponsable + " " +p.getSegundoApellido();
-		}
-		return nombreResponsable;
-	}
-
+	
 
 	@Override
 	public ParticipanteDto convertParticipanteToParticipanteDto(Participante p) {
@@ -155,7 +150,7 @@ public class EducacionContinuaMapper implements IEducacionContinuaMapper {
 		
 		pdto.setId(p.getId());
 		pdto.setIdPersona(p.getPersona().getId());
-		pdto.setNombrePersona(this.convertFieldsFullName(p.getPersona()));
+		pdto.setNombrePersona(usuarioMapper.convertFieldsFullName(p.getPersona()));
 		System.out.println("dentro de convert");
 		System.out.println(pdto.getNombrePersona());
 		System.out.println(p.getTarjetaInscripcion());
@@ -344,7 +339,7 @@ public class EducacionContinuaMapper implements IEducacionContinuaMapper {
 		eduContinuaDto.setIdTipoEduContinua(e.getTipoEduContinua().getId());
 		eduContinuaDto.setTipoEduContinua(e.getTipoEduContinua().getTipoEduContinua());
 		eduContinuaDto.setIdDocenteResp(e.getDocenteResponsable().getId());
-		eduContinuaDto.setNombreDocenteResp(this.convertFieldsFullName(e.getDocenteResponsable()));
+		eduContinuaDto.setNombreDocenteResp(usuarioMapper.convertFieldsFullName(e.getDocenteResponsable()));
 		eduContinuaDto.setCodigoDocenteResp(e.getDocenteResponsable().getCodigo());
 		eduContinuaDto.setIdProgramaResp(e.getProgramaResponsable().getId());
 		eduContinuaDto.setProgramaResp(e.getProgramaResponsable().getPrograma());

@@ -54,11 +54,5 @@ public class InscripcionController {
 		return "educacion_continua/tarjetas_inscripcion/index";
 	}
 	
-	@RequestMapping(value = "/certificaciones-educacion-continua")
-	public String certificacionesParticipante( Map<String, Object> model) {
-		model.put("participaciones",participanteService.findCertificaciones());
-		model.put("photoUser", SpringSecurityConfig.getInfoSession().getPhoto());
-		model.put("nameUser", SpringSecurityConfig.getInfoSession().getName());
-		return "educacion_continua/certificados_asistentes/mis_certificaciones";
-	}
+	
 }

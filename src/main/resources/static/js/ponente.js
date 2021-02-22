@@ -60,6 +60,7 @@ function guardarPonente(){
 			console.log("el metodo guardarPonente deja idEDuContinua en: " +idEducacionContinua);
 			console.log("ocultar spinner ponente");
 			hideSpinnerModal("btnSavePonente","btnSpinnerPonente");
+			refreshTableAsistentes();
 		},
 		error: function(err) {
 			hideSpinnerModal("btnSavePonente","btnSpinnerPonente");

@@ -32,6 +32,9 @@ public interface IPersonaDao extends JpaRepository<Persona, Long>, DataTablesRep
 	
 	public Persona findByUsername(String username);
 	
+	@Query(value="select p from Persona p where p.numeroDocumento = ?1")
+	public Persona findPersonaByNumeroDocumento(String documento);
+	
 	@Query(value="select p from Persona p where p.email = ?1")
 	public Persona findPersonaByEmail(String email);
 	
@@ -89,12 +92,12 @@ public interface IPersonaDao extends JpaRepository<Persona, Long>, DataTablesRep
 	@Query(value ="select p " + 
 			"from Persona p " + 
 			"where p.numeroDocumento = ?1")	
-	public List<Persona> findPosiblePonenteByNumeroDocumento(String numeroDocumento);
+	public List<Persona> findPersonasByNumeroDocumento(String numeroDocumento);
 	
 	@Query(value ="select p " + 
 			"from Persona p " + 
 			"where p.email = ?1")	
-	public List<Persona> findPosiblePonenteByEmail(String email);
+	public List<Persona> findPersonasByEmail(String email);
 	
 	
 	

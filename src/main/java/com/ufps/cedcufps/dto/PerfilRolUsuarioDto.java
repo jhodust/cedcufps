@@ -5,6 +5,8 @@ import java.util.List;
 public class PerfilRolUsuarioDto {
 
 	private Long idPersona;
+	private String nombre;
+	private String documento;
 	private boolean isEstudiante;
 	private boolean isDocente;
 	private boolean isAdministrativo;
@@ -277,7 +279,19 @@ public class PerfilRolUsuarioDto {
 	public void addEduContinuaForAtendanceIntocable(EducacionContinuaAppDto e) {
 		this.eduContinuasForAttendanceIntocables.add(e);
 	}
+	public String getNombre() {
+		return nombre;
+	}
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+	public String getDocumento() {
+		return documento;
+	}
+	public void setDocumento(String documento) {
+		this.documento = documento;
+	}
 	
-
+	
 	
 }

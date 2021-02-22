@@ -17,47 +17,50 @@
        <!-- Project cards -->
         <!-- Page title -->
        	<div class="contenido ml-3 mr-3 pb-2" >
+        
         <br>
-        <div class="page-title">
-          <div class="row justify-content-between align-items-center">
-            <div class="col-md-6 d-flex align-items-center justify-content-between justify-content-md-start mb-3 mb-md-0">
-              <!-- Page title + Go Back button -->
-              <div class="d-inline-block">
-                <h5 class="h4 d-inline-block font-weight-400 mb-0 text-dark" ><strong>Mis inscripciones</strong></h5>
-	             
-              </div>
-            </div>
-            
-          </div>
-        </div>
-        <hr/>
         <div th:if="${#lists.size(participaciones) == 0}">
         	<center><span class="badge badge-danger">No se encuentra inscrito a cursos o eventos de educación continua próximos</span></center>
         </div>
        
         <div class="row" th:unless="${#lists.size(participaciones) == 0}">
-        	<div class="card card-overlay hover-shadow-lg hover-translate-y-n10 col-md-4" th:each="p : ${participaciones}">
-			    <img th:src="${p.tarjetaInscripcion}" class="img-fluid rounded card-img">
-			<span class="mask bg-dark opacity-8"></span><div class="card-img-overlay d-flex flex-column align-items-center p-0">
-			        <div class="overlay-text w-75 mt-auto">
-			            <p class="lead" th:text="${p.tipoEduContinua}"></p>
-			            <a  href="#!" class="link link-underline-white font-weight-bold p" th:if="${#strings.length(p.educacionContinua)<25}" th:text="${p.educacionContinua}"></a>
-			            <a  href="#!" class="link link-underline-white font-weight-bold p" th:if="${#strings.length(p.educacionContinua)>=25 and #strings.length(p.educacionContinua)<=50}" th:text="${p.educacionContinua}" style="font-size:small"></a>
-			            <a  href="#!" class="link link-underline-white font-weight-bold p" th:if="${#strings.length(p.educacionContinua)>50 and #strings.length(p.educacionContinua)<100}" th:text="${p.educacionContinua}" style="font-size:x-small"></a>
-			        </div>
-			        <div class="overlay-actions w-100 card-footer mt-auto d-flex justify-content-between align-items-center">
-			            <div>
-			                <a href="#!" class="h6 mb-0">Tarjeta Inscripción</a>
-			            </div>
-			            <div>
-			                <div class="actions">
-			                    <a th:href="@{${p.tarjetaInscripcion}}" data-fancybox="group" th:data-caption="'Tarjeta Inscripción ' + ${p.educacionContinua}" class="action-item action-item-lg mr-4"><i class="far fa-eye"></i></a>
-			                </div>
-			            </div>
-			        </div>
-			    </div>
-			</div>
+        
+        <div class="card col-md-12">
+        	<div class="card-header">
+          			 <h5 class="card-title mb-0"><strong>MIS INSCRIPCIONES</strong></h5>
+          		</div>
+          	<div class="card-body">
+          		<p class="text-dark">A continuación podrá visualizar las tarjetas de inscripción de las educaciones continuas activas
+          		a las cuales se ha inscrito dando click en  <i class="far fa-eye"></i>.  
+	         	<br>
+          		<div class="row">
+          	       
+	        	<div class="card card-overlay hover-shadow-lg hover-translate-y-n10 col-md-4" th:each="p : ${participaciones}">
+				    <img th:src="${p.tarjetaInscripcion}" class="img-fluid rounded card-img">
+				<span class="mask bg-dark opacity-8"></span><div class="card-img-overlay d-flex flex-column align-items-center p-0">
+				        <div class="overlay-text w-75 mt-auto">
+				            <p class="lead" th:text="${p.tipoEduContinua}"></p>
+				            <a  href="#!" class="link link-underline-white font-weight-bold p" th:if="${#strings.length(p.educacionContinua)<25}" th:text="${p.educacionContinua}"></a>
+				            <a  href="#!" class="link link-underline-white font-weight-bold p" th:if="${#strings.length(p.educacionContinua)>=25 and #strings.length(p.educacionContinua)<=50}" th:text="${p.educacionContinua}" style="font-size:small"></a>
+				            <a  href="#!" class="link link-underline-white font-weight-bold p" th:if="${#strings.length(p.educacionContinua)>50 and #strings.length(p.educacionContinua)<100}" th:text="${p.educacionContinua}" style="font-size:x-small"></a>
+				        </div>
+				        <div class="overlay-actions w-100 card-footer mt-auto d-flex justify-content-between align-items-center">
+				            <div>
+				                <a href="#!" class="h6 mb-0">Tarjeta Inscripción</a>
+				            </div>
+				            <div>
+				                <div class="actions">
+				                    <a th:href="@{${p.tarjetaInscripcion}}" data-fancybox="group" th:data-caption="'Tarjeta Inscripción ' + ${p.educacionContinua}" class="action-item action-item-lg mr-4"><i class="far fa-eye"></i></a>
+				                </div>
+				            </div>
+				        </div>
+				    </div>
+				</div>
 
+			</div>
+			</div>
+        </div>
+			
 	       <!--  <div class="card-group col-md-4" th:each="p : ${participaciones}">
 				<div class="card bg-gradient-dark mb-3">
 				    <div class="card-body">

@@ -2,6 +2,8 @@ package com.ufps.cedcufps.dao;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Modifying;
@@ -40,6 +42,11 @@ public interface IProgramaDao extends PagingAndSortingRepository<Programa, Long>
 	@Modifying
 	@Query(value="update programas set id_director=null where id != ?1 and id_director = ?2", nativeQuery=true)
 	public void desvincularDirectorPrograma(Long idPro, Long idDir);
+	
+	@Transactional
+	@Modifying
+	@Query(value="update programas set id_director= ?1  where id = ?2 ", nativeQuery=true)
+	public void vincularDirectorPrograma(Long idDir, Long idPro);
 	
 	@Query("select p from Programa p where p.id != ?1 and p.directorPrograma.id = ?2")
 	public Programa findOthersProgramasByDirector(Long idPro, Long idDir);

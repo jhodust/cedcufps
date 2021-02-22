@@ -56,4 +56,7 @@ public class UsuarioDto {
 	private String dependencia;
 	private String cargo;
 	
+	private boolean isSuperAdmin;
+	private boolean isDirPrograma;
+	
 }

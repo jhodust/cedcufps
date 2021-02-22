@@ -3,6 +3,7 @@ package com.ufps.cedcufps.dto;
 public class UsuarioAppDto {
 
 	private Long id;
+	private String documento;
 	private String primerNombre;
 	private String segundoNombre;
 	private String primerApellido;
@@ -85,6 +86,12 @@ public class UsuarioAppDto {
 	}
 	public void setExterno(boolean isExterno) {
 		this.isExterno = isExterno;
+	}
+	public String getDocumento() {
+		return documento;
+	}
+	public void setDocumento(String documento) {
+		this.documento = documento;
 	}
 	
 	

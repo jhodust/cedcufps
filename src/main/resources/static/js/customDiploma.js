@@ -555,9 +555,10 @@ $("#btnGuardarEstructuraCertificado").on("click",function(e){
 			//carga la estructura en el canvas del participante en listado Asistentes
 			loadDiplomaStructureParticipantes(JSON.stringify(JSONdiploma.estructuraDiploma));
 			//mostrar datos tabla asistentes para aprobarlos
-			showCellsTableAsistentes();
+			
 			toastr.success('Se ha guardado la estructura de la certificación exitosamente', 'Excelente!',{"positionClass": "toast-top-right","preventDuplicates": true});
 			hideSpinnerModal("btnGuardarEstructuraCertificado","btnSpinnerEstructuraCertificado");
+			refreshTableAsistentes();
 		},
 		error: function(err) {
 			hideSpinnerModal("btnGuardarEstructuraCertificado","btnSpinnerEstructuraCertificado");

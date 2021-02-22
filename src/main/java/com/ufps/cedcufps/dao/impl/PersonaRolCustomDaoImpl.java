@@ -20,11 +20,13 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import com.ufps.cedcufps.dao.IPersonaRolCustomDao;
+import com.ufps.cedcufps.dao.IProgramaDao;
 import com.ufps.cedcufps.dto.EducacionContinuaWebDto;
 import com.ufps.cedcufps.dto.PersonaRolDto;
 import com.ufps.cedcufps.dto.PersonaRolEducacionContinuaDto;
 import com.ufps.cedcufps.exception.CustomException;
 import com.ufps.cedcufps.modelos.PersonaRol;
+import com.ufps.cedcufps.modelos.Programa;
 
 @Repository
 public class PersonaRolCustomDaoImpl implements IPersonaRolCustomDao {
@@ -35,11 +37,14 @@ public class PersonaRolCustomDaoImpl implements IPersonaRolCustomDao {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 	
+	@Autowired
+	private IProgramaDao programaDao;
+	
 	@Transactional
 	@Override
 	public void save(String authority, Long idPersona) {
 		// TODO Auto-generated method stub
-		em.createNativeQuery("insert into personas_x_roles (id_rol,id_persona) values ((select id from roles where authority = ?1), ?2)")
+		em.createNativeQuery("insert IGNORE into personas_x_roles (id_rol,id_persona) values ((select id from roles where authority = ?1), ?2)")
 		.setParameter(1, authority)
 		.setParameter(2, idPersona)
 		.executeUpdate();
@@ -63,7 +68,7 @@ public class PersonaRolCustomDaoImpl implements IPersonaRolCustomDao {
 	public void savePermisoParaEducacionContinua(String authority, Long idPersona, Long idPrograma) {
 		// TODO Auto-generated method stub
 		//borrar todos los permisos menos el de tomar asistencia y el de user (default)
-		em.createNativeQuery("insert into roles_personas_programas_ec (id_rol,id_persona,id_programa) values ((select id from roles where authority = ?1), ?2, ?3)")
+		em.createNativeQuery("insert IGNORE into roles_personas_programas_ec (id_rol,id_persona,id_programa) values ((select id from roles where authority = ?1), ?2, ?3)")
 		.setParameter(1, authority)
 		.setParameter(2, idPersona)
 		.setParameter(3, idPrograma)
@@ -75,7 +80,7 @@ public class PersonaRolCustomDaoImpl implements IPersonaRolCustomDao {
 	public void savePermisoParaTipoPersonas(String authority, Long idPersona, String tipoPersona) {
 		// TODO Auto-generated method stub
 		//borrar todos los permisos menos el de tomar asistencia y el de user (default)
-		em.createNativeQuery("insert into rol_persona_tip_pers (id_rol,id_persona,id_tipo_persona) values ((select id from roles where authority = ?1), ?2, (select id from tipos_persona where tipo_persona = ?3))")
+		em.createNativeQuery("insert IGNORE into rol_persona_tip_pers (id_rol,id_persona,id_tipo_persona) values ((select id from roles where authority = ?1), ?2, (select id from tipos_persona where tipo_persona = ?3))")
 		.setParameter(1, authority)
 		.setParameter(2, idPersona)
 		.setParameter(3, tipoPersona)
@@ -87,7 +92,7 @@ public class PersonaRolCustomDaoImpl implements IPersonaRolCustomDao {
 	public void savePermisoParaPersonaPrograma(String authority, Long idPersona, String tipoPersona, Long idPrograma) {
 		// TODO Auto-generated method stub
 		//borrar todos los permisos menos el de tomar asistencia y el de user (default)
-		em.createNativeQuery("insert into rol_persona_programa_per (id_rol,id_persona,id_tipo_persona,id_programa) values ((select id from roles where authority = ?1), ?2, (select id from tipos_persona where tipo_persona = ?3), ?4)")
+		em.createNativeQuery("insert IGNORE into rol_persona_programa_per (id_rol,id_persona,id_tipo_persona,id_programa) values ((select id from roles where authority = ?1), ?2, (select id from tipos_persona where tipo_persona = ?3), ?4)")
 		.setParameter(1, authority)
 		.setParameter(2, idPersona)
 		.setParameter(3, tipoPersona)
@@ -100,7 +105,7 @@ public class PersonaRolCustomDaoImpl implements IPersonaRolCustomDao {
 	public void savePermisoParaPersonaDepartamento(String authority, Long idPersona, String tipoPersona, Long idDepartamento) {
 		// TODO Auto-generated method stub
 		//borrar todos los permisos menos el de tomar asistencia y el de user (default)
-		em.createNativeQuery("insert into rol_persona_depto_per (id_rol,id_persona,id_tipo_persona,id_depto) values ((select id from roles where authority = ?1), ?2, (select id from tipos_persona where tipo_persona = ?3), ?4)")
+		em.createNativeQuery("insert IGNORE into rol_persona_depto_per (id_rol,id_persona,id_tipo_persona,id_depto) values ((select id from roles where authority = ?1), ?2, (select id from tipos_persona where tipo_persona = ?3), ?4)")
 		.setParameter(1, authority)
 		.setParameter(2, idPersona)
 		.setParameter(3, tipoPersona)
@@ -114,7 +119,7 @@ public class PersonaRolCustomDaoImpl implements IPersonaRolCustomDao {
 	public void deleteRolesDirPrograma(Long idPersona) {
 		// TODO Auto-generated method stub
 		//borrar todos los permisos menos el de tomar asistencia y el de user (default)
-		em.createNativeQuery("delete from personas_x_roles where id_persona=?1 and id_rol NOT IN (select id from roles where authority='ROLE_SUPERADMIN' or authority='ROLE_USER')")
+		em.createNativeQuery("delete from personas_x_roles where id_persona=?1 and id_rol = (select id from roles where authority='ROLE_SNIES')")
 		.setParameter(1, idPersona)
 		.executeUpdate();
 	}
@@ -357,4 +362,58 @@ public class PersonaRolCustomDaoImpl implements IPersonaRolCustomDao {
 		}
 		return true;
 	}
+	
+	@Transactional
+	@Modifying
+	@Override
+	public void asignarPermisosDirector(Long idDirPrograma, Long idPrograma) {
+		
+		
+		/*****************rol para administrar eventos del programa del cual es director*****************/
+		System.out.println("asignar permisos manaeccu");
+		this.save("ROLE_MANAECCU",idDirPrograma);
+		
+		
+		this.savePermisoParaEducacionContinua("ROLE_MANAECCU",idDirPrograma,idPrograma);
+		
+		/*
+		 * ****************************rol para administrar personas ***********************
+		 */
+		System.out.println("asignar permisos manpeople");
+		this.save("ROLE_MANPEOPLE",idDirPrograma);
+		this.savePermisoParaTipoPersonas("ROLE_MANPEOPLE", idDirPrograma, "Estudiante");
+		this.savePermisoParaTipoPersonas("ROLE_MANPEOPLE", idDirPrograma, "Graduado");
+		this.savePermisoParaTipoPersonas("ROLE_MANPEOPLE", idDirPrograma, "Administrativo");
+		this.savePermisoParaTipoPersonas("ROLE_MANPEOPLE", idDirPrograma, "Externo");
+		
+		this.savePermisoParaPersonaPrograma("ROLE_MANPEOPLE", idDirPrograma, "Estudiante", idPrograma);
+		this.savePermisoParaPersonaPrograma("ROLE_MANPEOPLE", idDirPrograma, "Graduado", idPrograma);
+		
+		/*
+		 * ****************************rol para tomar asistencia app***********************
+		 */
+		System.out.println("asignar permisos attendance");
+		this.save("ROLE_ATTENDANCE",idDirPrograma);
+		
+		/*
+		 * ****************************rol para administrar informe snies***********************
+		 */
+		System.out.println("asignar permisos snies");
+		this.save("ROLE_SNIES",idDirPrograma);
+		
+		
+	}
+
+	@Transactional
+	@Modifying
+	@Override
+	public void deleteRol(String authority, Long idPersona) {
+		// TODO Auto-generated method stub
+		em.createNativeQuery("delete from personas_x_roles where id_rol = (select id from roles where authority = ?1) and id_persona = ?2")
+		.setParameter(1, authority)
+		.setParameter(2, idPersona)
+		.executeUpdate();
+	}
+	
+	
 }

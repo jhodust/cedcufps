@@ -35,4 +35,6 @@ public interface IUsuarioMapper {
 	
 	public UsuarioDto convertPersonaToUsuarioDto(Persona p, Estudiante e, Docente d, 
 			Administrativo a, Graduado g, Externo ex);
+	
+	public String convertFieldsFullName(Persona p);
 }

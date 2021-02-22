@@ -22,20 +22,21 @@
 		  </ol>
 		</nav>
         <!-- Page title -->
-       	<div class="contenido ml-3 mr-3" >
+       	<div class="contenido ml-3 mr-3 pb-2" >
         
         <div class="page-title">
           <div class="row justify-content-between align-items-center">
             <div class="col-md-6 d-flex align-items-center justify-content-between justify-content-md-start mb-3 mb-md-0">
               <!-- Page title + Go Back button -->
               <div class="d-inline-block">
-                <h5 class="h4 d-inline-block font-weight-400 mb-0 text-dark" ><strong>Programas Académicos</strong></h5>
+                <h5 class="h4 d-inline-block font-weight-400 mb-0 text-dark" ><strong>PROGRAMAS ACADÉMICOS</strong></h5>
+              	<a href="#" data-toggle="modal" data-target="#modalRegistroPrograma" class="btn btn-sm btn-white btn-icon-only rounded-circle ml-4">
+	                <span class="btn-inner--icon"><i class="fas fa-plus"></i></span>
+	              </a>
               </div>
             </div>
             <div class="col-md-6 d-flex align-items-center justify-content-between justify-content-md-end">
-              <a href="#" data-toggle="modal" data-target="#modalRegistroPrograma" class="btn btn-sm btn-white btn-icon-only rounded-circle ml-4">
-                <span class="btn-inner--icon"><i class="fas fa-plus"></i></span>
-              </a>
+              
               <!-- Filter input -->
               <form class="bg-neutral rounded-pill d-inline-block">
                 <div class="input-group input-group-sm input-group-merge input-group-flush">
@@ -56,7 +57,7 @@
             </div>
           </div>
         </div>
-        <hr/>
+        <br>
         <div id="div_list_paginador" th:fragment="listProgramas">
         <div th:if="${programas.getNumberOfElements() == 0}">
         	<center><span class="badge badge-red-ufps" >No existen programas académicos registrados</span></center>

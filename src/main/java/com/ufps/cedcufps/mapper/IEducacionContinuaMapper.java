@@ -36,7 +36,6 @@ public interface IEducacionContinuaMapper {
 			String lugar, String costoEducacionContinua, String porcentajeAsistencia, String infoAdicional, String idTipoEduContinua, String tipoEduContinua,
 			String idProgramaResponsable, String idDocenteResponsable, String idClasificacionCine, String consecutivo,
 			String[] idTipoBeneficiarios);
-	public String convertFieldsFullName(Persona p);
 	
 	
 	public CertificacionDto convertToMisCertificaciones(Long idParticipante, Long idPersona, String nombrePersona, String tipoParticipante,

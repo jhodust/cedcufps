@@ -125,9 +125,10 @@ public class ProgramaService implements IProgramaService {
 		}
 		try {
 			programaDao.save(p);
+			System.out.println("idddd programaaaaaaaaaaaaaaa: " + p.getId());
 			if(asignarPermisosDir) {
 				System.out.println("asignar permisos");
-				this.asignarPermisosDirector(p.getDirectorPrograma().getId(), p.getCodigo());
+				personaRolCustomDao.asignarPermisosDirector(p.getDirectorPrograma().getId(), p.getId());
 			}
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -166,44 +167,7 @@ public class ProgramaService implements IProgramaService {
 		return programaDao.findByDirector(idDir);
 	}
 	
-	public void asignarPermisosDirector(Long idDirPrograma, String codigo) {
-		Programa p=programaDao.findByCodigo(codigo);
-		
-		
-		/*****************rol para administrar eventos del programa del cual es director*****************/
-		System.out.println("asignar permisos manaeccu");
-		personaRolCustomDao.save("ROLE_MANAECCU",idDirPrograma);
-		
-		
-		personaRolCustomDao.savePermisoParaEducacionContinua("ROLE_MANAECCU",idDirPrograma,p.getId());
-		
-		/*
-		 * ****************************rol para administrar personas ***********************
-		 */
-		System.out.println("asignar permisos manpeople");
-		personaRolCustomDao.save("ROLE_MANPEOPLE",idDirPrograma);
-		personaRolCustomDao.savePermisoParaTipoPersonas("ROLE_MANPEOPLE", idDirPrograma, "Estudiante");
-		personaRolCustomDao.savePermisoParaTipoPersonas("ROLE_MANPEOPLE", idDirPrograma, "Graduado");
-		personaRolCustomDao.savePermisoParaTipoPersonas("ROLE_MANPEOPLE", idDirPrograma, "Administrativo");
-		personaRolCustomDao.savePermisoParaTipoPersonas("ROLE_MANPEOPLE", idDirPrograma, "Externo");
-		
-		personaRolCustomDao.savePermisoParaPersonaPrograma("ROLE_MANPEOPLE", idDirPrograma, "Estudiante", p.getId());
-		personaRolCustomDao.savePermisoParaPersonaPrograma("ROLE_MANPEOPLE", idDirPrograma, "Graduado", p.getId());
-		
-		/*
-		 * ****************************rol para tomar asistencia app***********************
-		 */
-		System.out.println("asignar permisos attendance");
-		personaRolCustomDao.save("ROLE_ATTENDANCE",idDirPrograma);
-		
-		/*
-		 * ****************************rol para administrar informe snies***********************
-		 */
-		System.out.println("asignar permisos snies");
-		personaRolCustomDao.save("ROLE_SNIES",idDirPrograma);
-		
-		
-	}
+	
 
 	@Override
 	public ProgramaDto searchProgramaById(Long id) {

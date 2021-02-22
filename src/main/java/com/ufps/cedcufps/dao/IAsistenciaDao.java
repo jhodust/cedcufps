@@ -32,7 +32,10 @@ public interface IAsistenciaDao extends JpaRepository<Asistencia, Long> {
 	
 	@Transactional
 	@Modifying
-	@Query("delete from Asistencia a where a.jornada.id=?1")
+	@Query(value="delete a from asistencias a "
+			     + "join jornadas j on a.id_jornada=j.id "
+			     + "join participantes p on a.id_participante=p.id "
+			     + "where a.id_jornada=?1 and p.aprobado = 0", nativeQuery=true)
 	public void deleteAsistenciasByJornada(Long idJornada);
 	
 	@Transactional

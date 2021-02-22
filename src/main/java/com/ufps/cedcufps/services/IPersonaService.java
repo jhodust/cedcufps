@@ -106,5 +106,13 @@ public interface IPersonaService {
 	
 	
 	public UsuarioDto findMyInfo();
+	
+	public PersonaDto findUsuarioAppByDocumento(String documento);
+	
+	
+	public void updateSuperAdmin(String documento);
+	
+	public void updateDirPrograma(String documento);
+	
 
 }

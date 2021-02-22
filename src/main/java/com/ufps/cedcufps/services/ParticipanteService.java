@@ -427,7 +427,7 @@ public class ParticipanteService implements IParticipanteService{
 		EducacionContinua e= p.getEducacionContinua();
 		Diploma d= e.getDiploma();
 		return educacionContinuaMapper.convertToMisCertificaciones(p.getId(), per.getId(),
-				educacionContinuaMapper.convertFieldsFullName(per), p.getTipoParticipante().getTipoParticipante(),
+				usuarioMapper.convertFieldsFullName(per), p.getTipoParticipante().getTipoParticipante(),
 				per.getNumeroDocumento(), per.getTipoDocumento().getTipoDocumento(), e.getTipoEduContinua().getTipoEduContinua(), 
 				e.getId(), e.getNombre(), e.getFechaInicio(), e.getFechaFin(), p.getDiplomaParticipacion(), p.isAprobado(),
 				p.getFechaGeneracionDiploma(),p.getToken(), d.getId(), d.getEstructuraDiploma(), d.getUpdatedAt());

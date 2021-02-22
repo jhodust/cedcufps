@@ -158,14 +158,12 @@ function limpiarErrores(){
 }
 
 function reloadListJornadas(){
-	alert(eduContinua.idAcceso);
 	var urlReload = '/educacion-continua/jornadas/'+idEducacionContinua;
 	$('#div_list_jornadas').load(urlReload);
 	var urlReloadDetalles = '/educacion-continua/jornadas/detalles/'+idEducacionContinua;
 	$('#div_list_detalles_jornadas').load(urlReloadDetalles);
 	
-	var urlListado = '/educacion-continua/detalles/asistentes/'+eduContinua.idAcceso;
-	$('#div_table_asistentes').load(urlListado);
+	refreshTableAsistentes();
 	
 	
 }

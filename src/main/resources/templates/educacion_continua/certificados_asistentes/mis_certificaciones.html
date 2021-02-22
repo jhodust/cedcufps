@@ -17,20 +17,9 @@
        <!-- Project cards -->
         <!-- Page title -->
        	<div class="contenido ml-3 mr-3 pb-2" >
+       
+        
         <br>
-        <div class="page-title">
-          <div class="row justify-content-between align-items-center">
-            <div class="col-md-6 d-flex align-items-center justify-content-between justify-content-md-start mb-3 mb-md-0">
-              <!-- Page title + Go Back button -->
-              <div class="d-inline-block">
-                <h5 class="h4 d-inline-block font-weight-400 mb-0 text-dark" ><strong>Mis certificaciones</strong></h5>
-	             
-              </div>
-            </div>
-            
-          </div>
-        </div>
-        <hr/>
         <div th:if="${#lists.size(participaciones) == 0}">
         	<center><span class="badge badge-danger">No se encuentran datos de participaciones de educación continua</span></center>
         </div>
@@ -38,10 +27,16 @@
         <div class="row" th:unless="${#lists.size(participaciones) == 0}">
         	<div class="col-md-12">
         		<div class="card">
+        		<div class="card-header">
+          			 <h5 class="card-title mb-0"><strong>MIS CERTIFICACIONES</strong></h5>
+          		</div>
           <!-- Card header -->
           
           <!-- Table -->
           <div class="card-body">
+         	<p class="text-dark">A continuación se listarán las educaciones continuas a las cuales se ha inscrito. 
+         	El certificado de participación se podrá descargar una vez haya sido aprobada su participación.</p>
+         	<br>
           	<div class="table-responsive">
           <div class="col-lg-12">
             <table id="myTable" style="width: 100%;" class="row-border table align-items-center">
@@ -51,7 +46,7 @@
 								<th>Tipo</th>
 								<th class="th2">Educación Continua</th>
 								<th>Fecha Inicio</th>
-								<th>Fecha Fin</th>
+								<th>Tipo Participante</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -63,7 +58,7 @@
 								<td th:text="${p.participanteDto.tipoEduContinua}"></td>
 								<td class="td2" th:text="${p.participanteDto.educacionContinua}"></td>
 								<td th:text="${#dates.format(p.participanteDto.fechaInicioEduContinua, 'dd-MM-yyyy HH:mm')}"></td>
-								<td th:text="${#dates.format(p.participanteDto.fechaFinEduContinua, 'dd-MM-yyyy HH:mm')}"></td>
+								<td th:text="${p.participanteDto.tipoParticipante}"></td>
 							</tr>
 							
 						</tbody>

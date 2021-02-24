@@ -60,18 +60,18 @@ public class PonenteRestController {
 	}*/
 	
 	@GetMapping(value="/search/{id}", produces = "application/json")
-    public PonenteDto buscarPonente(@PathVariable Long id) {
-		return  participanteService.findPonente(id);
+    public ResponseEntity<PonenteDto> buscarPonente(@PathVariable Long id) {
+		 return new ResponseEntity<>(participanteService.findPonente(id),HttpStatus.OK);
     }
 	
 	
 	
 	
 	@PostMapping(value = "/save")
-	public ResponseEntity<?> guardarPonenteRest(@RequestBody @Valid Ponente ponente, BindingResult result) {
-		if(result.hasErrors()) {
+	public ResponseEntity<?> guardarPonenteRest(@RequestBody  Ponente ponente) {
+		/*if(result.hasErrors()) {
 			return new ResponseEntity<>(result.getAllErrors(),HttpStatus.BAD_REQUEST);
-		}
+		}*/
 		System.out.println("va a guardar ponente");
 		ParticipanteDto dto = participanteService.savePonente(ponente);
 		System.out.println("dtooooooooooooooo");
@@ -94,7 +94,7 @@ public class PonenteRestController {
 	}
 	
 	@GetMapping(value = "/search/persona", produces = "application/json")
-	public ResponseEntity<?> findPersona(@RequestParam(value = "id",required = true) String id) {
+	public ResponseEntity<PersonaDto> findPersona(@RequestParam(value = "id",required = true) String id) {
 		return new ResponseEntity<>(personaService.findOne(Long.parseLong(id)),HttpStatus.OK);
 	}
 

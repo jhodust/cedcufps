@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
+import com.ufps.cedcufps.dto.EducacionContinuaAppDto;
+import com.ufps.cedcufps.dto.JornadaAppDto;
 import com.ufps.cedcufps.dto.ParticipanteDto;
 import com.ufps.cedcufps.modelos.Jornada;
 import com.ufps.cedcufps.modelos.Participante;
@@ -46,8 +48,6 @@ public class AppRestController {
 	@Autowired
 	private IPersonaService personaService;
 	
-	@Autowired
-	private IJornadaService jornadaService;
 	
 	@GetMapping(value="/validateLogin/{token}", produces = "application/json")
     public ResponseEntity<?> validarLogin(@PathVariable String token) {
@@ -116,13 +116,13 @@ public class AppRestController {
 	
 	
 	@GetMapping(value="/misCursosYEduContinua/{idPersona}", produces = "application/json")
-    public ResponseEntity<?> searchCursosYEventos(@PathVariable Long idPersona) {
+    public ResponseEntity<List<EducacionContinuaAppDto>> searchCursosYEventos(@PathVariable Long idPersona) {
         
         return  new ResponseEntity<>(educacionContinuaService.findAllEducacionesApp(idPersona),HttpStatus.OK);
     }
 	
 	@GetMapping(value="/jornadasEducacionContinua/{idEducacionContinua}", produces = "application/json")
-    public ResponseEntity<?> searchJornadasCursosYEventos(@PathVariable Long idEducacionContinua) {
+    public ResponseEntity<List<JornadaAppDto>> searchJornadasCursosYEventos(@PathVariable Long idEducacionContinua) {
         
         return  new ResponseEntity<>(educacionContinuaService.findAllJornadasByEduContinuaApp(idEducacionContinua),HttpStatus.OK);
     }

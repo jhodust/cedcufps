@@ -25,35 +25,33 @@ import com.ufps.cedcufps.utils.Archivo;
 public class AsistenciaRestController {
 	
 	@Autowired
-	private IJornadaService jornadaService;
-	
-	@Autowired
 	private IAsistenciaService asistenciaService;
 	
-	@Autowired
-	private IParticipanteService participanteService;
 	
 	@GetMapping(value = "/general/check",produces = "application/json")
-	public ResponseEntity<?> marcarAsistenciaGeneral(@RequestParam(value = "id_jornada",required = true) Long id, Map<String, Object> model) {
+	public ResponseEntity<?> marcarAsistenciaGeneral(@RequestParam(value = "id_jornada",required = true) Long id) {
 		asistenciaService.saveAsistencias(id);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/general/uncheck",produces = "application/json")
-	public ResponseEntity<?> desmarcarAsistenciaGeneral(@RequestParam(value = "id_jornada",required = true) Long id, Map<String, Object> model) {
+	public ResponseEntity<?> desmarcarAsistenciaGeneral(@RequestParam(value = "id_jornada",required = true) Long id) {
 		
 			asistenciaService.deleteAsistenciasByJornada(id);
 			return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/check",produces = "application/json")
-	public ResponseEntity<?> marcarAsistencia(@RequestParam(value = "id_jornada",required = true) Long idJornada,@RequestParam(value = "id_participante",required = true) Long idParticipante,@RequestParam(value = "cant_participantes",required = true) String cantParticipantes , Map<String, Object> model) {
+	public ResponseEntity<?> marcarAsistencia(@RequestParam(value = "id_jornada",required = true) Long idJornada,
+			@RequestParam(value = "id_participante",required = true) Long idParticipante,
+			@RequestParam(value = "cant_participantes",required = true) String cantParticipantes) {
 		
 			return new ResponseEntity<>(asistenciaService.marcarAsistencia(idJornada, idParticipante,Integer.parseInt(cantParticipantes)),HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/uncheck",produces = "application/json")
-	public ResponseEntity<?> desmarcarAsistencia(@RequestParam(value = "id_jornada",required = true) Long idJornada,@RequestParam(value = "id_participante",required = true) Long idParticipante, Map<String, Object> model) {
+	public ResponseEntity<?> desmarcarAsistencia(@RequestParam(value = "id_jornada",required = true) Long idJornada,
+			@RequestParam(value = "id_participante",required = true) Long idParticipante) {
 		asistenciaService.deleteAsistencia(idJornada, idParticipante);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}

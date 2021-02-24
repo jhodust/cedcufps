@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.support.SessionStatus;
 
+import com.ufps.cedcufps.dto.JornadaAppDto;
 import com.ufps.cedcufps.modelos.Departamento;
 import com.ufps.cedcufps.modelos.EducacionContinua;
 import com.ufps.cedcufps.modelos.Jornada;
@@ -37,16 +38,14 @@ public class JornadaRestController {
 	
 	
 	@PostMapping(value ="/save")
-	public ResponseEntity<?> guardarProgramaRest(@RequestBody @Valid Jornada jornada, BindingResult result) {
-		if(result.hasErrors()) {
-			return new ResponseEntity<>(result.getAllErrors(),HttpStatus.BAD_REQUEST);
-		}
+	public ResponseEntity<?> guardarJornada(@RequestBody  Jornada jornada) {
+		
 		jornadaService.save(jornada);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
 	@GetMapping(value="/search/{id}", produces = "application/json")
-    public ResponseEntity<?> buscarJornada(@PathVariable Long id) {
+    public ResponseEntity<JornadaAppDto> buscarJornada(@PathVariable Long id) {
 		
         return  new ResponseEntity<>(jornadaService.findOne(id),HttpStatus.OK);
     }

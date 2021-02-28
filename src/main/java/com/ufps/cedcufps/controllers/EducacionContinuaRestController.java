@@ -24,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ufps.cedcufps.dto.DiplomaDto;
+import com.ufps.cedcufps.dto.EducacionContinuaWebDto;
 import com.ufps.cedcufps.modelos.EducacionContinua;
 import com.ufps.cedcufps.modelos.Facultad;
 import com.ufps.cedcufps.services.IDiplomaService;
@@ -62,12 +63,12 @@ public class EducacionContinuaRestController {
 	}
 	
 	@GetMapping(value = "/search-base")
-	public ResponseEntity<?> searchEducacionContinuaBase(@RequestParam(name="nombreEdC", required=true)  String nombreEducacionContinua) {
+	public ResponseEntity<EducacionContinuaWebDto> searchEducacionContinuaBase(@RequestParam(name="nombreEdC", required=true)  String nombreEducacionContinua) {
 		return new ResponseEntity<>(educacionContinuaService.findEducacionContinuaBase(nombreEducacionContinua),HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/search-educaciones-continuas-base")
-	public ResponseEntity<?> searchListEducacionesContinuasByPrograma(@RequestParam(name="idPrograma", required=true)  String id) {
+	public ResponseEntity<List<String>> searchListEducacionesContinuasByPrograma(@RequestParam(name="idPrograma", required=true)  String id) {
 		return new ResponseEntity<>(educacionContinuaService.findEducacionesContinuasBaseByIdPrograma(Long.parseLong(id)),HttpStatus.OK);
 	}
 	
@@ -79,7 +80,7 @@ public class EducacionContinuaRestController {
 	}
 	
 	@PostMapping(value = "/generar-estructura-diploma")
-	public ResponseEntity<?> guardarDiplomaRest(@RequestBody DiplomaDto diploma) {
+	public ResponseEntity<Long> guardarDiplomaRest(@RequestBody DiplomaDto diploma) {
 		
 		return new ResponseEntity<>(diplomaService.save(diploma), HttpStatus.OK);
 	}

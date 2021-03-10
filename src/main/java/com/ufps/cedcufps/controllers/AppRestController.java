@@ -15,6 +15,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
@@ -48,13 +49,21 @@ public class AppRestController {
 	@Autowired
 	private IPersonaService personaService;
 	
+	@GetMapping(value="/validateLoginOutlook", produces = "application/json")
+    public ResponseEntity<?> validarLoginOutlook(@RequestParam(name = "email", required = true) String email) {
+		System.out.println("***********************************");
+		System.out.println("***********************************");
+		System.out.println("entra a login outlook");
+		System.out.println("email: " + email);
+		return  new ResponseEntity<>(HttpStatus.OK);
+	}
 	
 	@GetMapping(value="/validateLogin/{token}", produces = "application/json")
     public ResponseEntity<?> validarLogin(@PathVariable String token) {
 		
 		GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(new NetHttpTransport(),  new JacksonFactory())
 			    // Specify the CLIENT_ID of the app that accesses the backend:
-			   .setAudience(Collections.singletonList(idPro))
+			   .setAudience(Collections.singletonList(idDebug))
 			    // Or, if multiple clients access the backend:
 			    //.setAudience(Arrays.asList(idDebug, idPro))
 			    .build();

@@ -35,13 +35,16 @@ public class AsistenciaControllerTest {
 	@InjectMocks
 	private AsistenciaRestController asistenciaRestController;
 	
+	@Before
+	public void init() {
+		MockitoAnnotations.initMocks(this);
+	}
 	
 	@Test
 	public void marcarAsistenciaGeneralTest() {
 		final ResponseEntity<?> response = asistenciaRestController.marcarAsistenciaGeneral(1L);
 		assertEquals(response.getStatusCode(), HttpStatus.OK);
 	}
-	
 	
 	@Test
 	public void desmarcarAsistenciaGeneralTest() {

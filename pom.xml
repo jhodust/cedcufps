@@ -250,7 +250,11 @@
 			<artifactId>lombok</artifactId>
 			<optional>true</optional>
 		</dependency>
-		
+		<dependency>
+		    <groupId>com.microsoft.azure</groupId>
+		    <artifactId>msal4j</artifactId>
+		    <version>1.9.1</version>
+		</dependency>
 		
 		
 		

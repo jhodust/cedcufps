@@ -106,7 +106,6 @@
         <div class="card-body">
         <label class="reglasForms">Los campos marcados con</label> <label class="requerido pl-2">*</label> <label class="reglasForms">son obligatorios</label>
 		<form enctype="multipart/form-data">
-					
 					<div class="row">
 
 							<div class="col-md-12 card">
@@ -156,7 +155,7 @@
 										<div class="col-md-4">
 											<div class="form-group">
 												<label class="form-control-label">Fecha Inicio </label><label class="requerido pl-2">*</label> <input type="text"
-													class="form-control flatpickr-input" 
+													class="form-control flatpickr-input"  data-toggle="date" 
 													placeholder="Seleccione la fecha de inicio..." id="fechaInicioEduCont" th:value="${#dates.format(educacionContinua.fechaInicio, 'dd/MM/yyyy HH:mm')}"/>
 													<small class="form-text text-danger"><strong id="errFechaInicioEdc"></strong></small>
 											</div>
@@ -164,7 +163,7 @@
 										<div class="col-md-4">
 											<div class="form-group">
 												<label class="form-control-label">Fecha Fin </label><label class="requerido pl-2">*</label> <input type="text"
-													class="form-control flatpickr-input" 
+													class="form-control flatpickr-input"  data-toggle="date"
 													placeholder="Seleccione la fecha de finalización..." id="fechaFinEduCont" th:value="${#dates.format(educacionContinua.fechaFin, 'dd/MM/yyyy HH:mm')}"/>
 													<small class="form-text text-danger"><strong id="errFechaFinEdc"></strong></small>
 											</div>
@@ -173,7 +172,9 @@
 									
 									<script th:inline="javascript">
 										console.log("fechas evento");
-										
+										var fIni= [[${educacionContinua.fechaInicio}]];
+										var fFin=[[${educacionContinua.fechaFin}]];
+										var fLim=[[${educacionContinua.fechaLimInscripcion}]];
 									    var fechaInicioEvento = [[${#dates.format(educacionContinua.fechaInicio, 'dd/MM/yyyy HH:mm')}]];
 									    var fechaFinEvento = [[${#dates.format(educacionContinua.fechaFin, 'dd/MM/yyyy HH:mm')}]];
 									    var fechaLimInscripcionEvento = [[${#dates.format(educacionContinua.fechaLimInscripcion, 'dd/MM/yyyy HH:mm')}]];

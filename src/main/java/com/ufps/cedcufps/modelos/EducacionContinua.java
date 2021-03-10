@@ -34,6 +34,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ufps.cedcufps.mapper.HashMapConverter;
+import com.ufps.cedcufps.utils.Auditable;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -48,7 +49,7 @@ import lombok.Setter;
 @Entity
 @Table(name = "educacion_continua")
 @Inheritance(strategy = InheritanceType.JOINED)
-public class EducacionContinua implements Serializable {
+public class EducacionContinua extends Auditable<String> implements Serializable {
 
 	/**
 	 * 
@@ -65,7 +66,7 @@ public class EducacionContinua implements Serializable {
 	private String imagen;
 	
 	@NotEmpty(message="El campo nombre es requerido")
-	@Size(max = 100, message="El campo nombre debe tener máximo 100 caracteres")
+	@Size(max = 150, message="El campo nombre debe tener máximo 150 caracteres")
 	private String nombre;
 	
 	@NotNull(message="Ingrese la fecha y hora de inicio del evento")
@@ -164,10 +165,13 @@ public class EducacionContinua implements Serializable {
 	@Type(type = "org.hibernate.type.NumericBooleanType")
 	private boolean isDeleted;
 		
-	
+	@JsonIgnore
+	@OneToMany(mappedBy = "educacionContinua",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<Anexos> anexos;
 	public EducacionContinua() {
 		this.jornadas=new ArrayList<Jornada>();
 		this.participantes=new ArrayList<Participante>();
+		this.anexos=new ArrayList<Anexos>();
 	}
 	
 	

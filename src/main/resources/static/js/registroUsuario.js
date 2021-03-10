@@ -135,7 +135,7 @@ $(document).ready(function ()
 		var valid51=validateLengthTxt('segNom','errorSegundoNombre',20);
 		var valid52=validateLengthTxt('primApe','errorPrimerApellido',20);
 		var valid53=validateLengthTxt('segApe','errorSegundoApellido',20);
-		var valid54=validateLengthTxt('direccion','errorDireccion',50);
+		var valid54=validateLengthTxt('direccion','errorDireccion',100);
 			
 		console.log("imprimiendo validaciones");
 		console.log(valid1);

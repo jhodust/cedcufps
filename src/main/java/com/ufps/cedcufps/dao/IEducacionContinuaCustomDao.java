@@ -19,9 +19,9 @@ public interface IEducacionContinuaCustomDao {
 	
 	public int registrarAsistencia(Long idJornada,Long idParticipante);
 	
-	public void saveEducacionContinua(EducacionContinuaWebDto dto);
+	public void saveEducacionContinua(EducacionContinuaWebDto dto, String createdBy);
 	
-	public void updateEducacionContinua(EducacionContinuaWebDto dto);
+	public void updateEducacionContinua(EducacionContinuaWebDto dto, String updatedBy);
 	
 	public Long insertNewTipoEduContinua(String tipoEduContinua, Boolean status);
 	

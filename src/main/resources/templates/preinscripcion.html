@@ -107,7 +107,9 @@
 							  </div>
         	</div>
         	<br>
-        	<div class="col-md-7" >
+        	
+        	<div class="col-md-7"  >
+        	<div th:fragment="infoEducacionContinua" id="div_info_educacionContinua">
         		<div class="mt-3 col-md-12 table-responsive" >
         			<table class="table align-items-center col-md-12">
 	    				<tbody>
@@ -167,6 +169,7 @@
         		</div>
         		
         	</div>
+        	</div>
         </div>
         <div class="row">
 		            		<div class="col-md-12">
@@ -213,11 +216,14 @@
   <div th:replace="layouts/layout :: scripts"></div>
   <script th:inline="javascript">
   var idEduContinua= [[${requisitosInscripcion.educacionContinua.id}]];
+  var idAccesoEduContinua= [[${requisitosInscripcion.educacionContinua.idAcceso}]];
   var listTipoPersonaValidInscripcion= [[${requisitosInscripcion.listTipoPersonaValidInscripcion}]];
   console.log("idEduContinua");
   console.log(idEduContinua);
   console.log("tipos persona para inscripcion");
   console.log(listTipoPersonaValidInscripcion);
+  console.log("idEduContinuaAcceso");
+  console.log(idAccesoEduContinua);
   </script>
   <script th:src="@{/js/inscripcion.js}" type="text/javascript"></script>
 </body>

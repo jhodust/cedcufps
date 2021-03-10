@@ -21,7 +21,7 @@ import com.ufps.cedcufps.utils.StatusEducacionContinua;
 public interface IEducacionContinuaDao extends JpaRepository<EducacionContinua, Long> {
 
 	
-	@Query(value= "SELECT * FROM educacion_continua ec where ec.estado='Activo' ORDER BY ec.fecha_inicio DESC LIMIT 5",nativeQuery = true)
+	@Query(value= "SELECT * FROM educacion_continua ec where ec.estado='Activo' and ec.imagen is not null ORDER BY ec.created_at DESC LIMIT 5",nativeQuery = true)
 	public List<EducacionContinua> educacionesContinuasRecientes();
 	
 	@Query(value= "SELECT ec from EducacionContinua ec where ec.estado!='Terminado' ORDER BY ec.fechaInicio DESC")

@@ -30,7 +30,7 @@ $(document).ready(function(){
   
   $("#nombreEdc").focusout(function(){
 	  validateInputTextRequerido('nombreEdc','errNombreEdc');
-	  validateLengthTxt('nombreEdc','errNombreEdc',100);
+	  validateLengthTxt('nombreEdc','errNombreEdc',150);
   });
   
   $("#fechaInicioEduCont").focusout(function(){

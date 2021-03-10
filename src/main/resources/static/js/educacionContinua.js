@@ -87,17 +87,20 @@ console.log("preparando datepicker");
 	$("#fechaLimInscripcionEduCont").flatpickr({
    		enableTime: true,
    	    dateFormat: "d/m/Y H:i",
-   	    minDate: new Date(),
+   	    minDate: (fLim != null && new Date(fLim)<new Date()) ? new Date(fLim) : new Date(),
    	    defaultDate:fechaLimInscripcionEvento,
    	    maxDate: fechaFinEvento,
    	});
 	
-	console.log("fechaInicio");
-	console.log(fechaInicioEvento);
+	var dates=[];
+	dates.push(new Date());
+	dates.push(fIni);
+	
+	
 	$("#fechaInicioEduCont").flatpickr({
 		enableTime: true,
 		dateFormat: "d/m/Y H:i",
-		minDate: new Date(),
+		minDate: (fIni != null && new Date(fIni)<new Date()) ? new Date(fIni) : new Date(),
 		defaultDate:fechaInicioEvento,
 	    plugins: [new rangePlugin({ 
 	    							input: "#fechaFinEduCont",
@@ -127,7 +130,7 @@ console.log("preparando datepicker");
 	       		enableTime: true,
 	       	    dateFormat: "d/m/Y H:i",
 	       	    defaultDate:fechaLimInscripcionEvento,
-	       	    minDate: new Date(),
+	       	    minDate: (fLim != null && new Date(fLim)<new Date()) ? new Date(fLim) : new Date(),
 	       	    maxDate: selectedDates[1].toLocaleDateString(),
 	       	});
 		}
@@ -295,7 +298,7 @@ function ajaxSaveEducacionContinua(){
 	  console.log(idDocenteResponsable==0);
 	  console.log(idClasificacionCine==0);
 	  var valid1 = validateInputTextRequerido('nombreEdc','errNombreEdc');
-	  var valid2=validateLengthTxt('nombreEdc','errNombreEdc',100);
+	  var valid2=validateLengthTxt('nombreEdc','errNombreEdc',150);
 	  var valid3 = validateInputTextRequerido('fechaInicioEduCont','errFechaInicioEdc');
 	  var valid4 = validateInputTextRequerido('fechaFinEduCont','errFechaFinEdc');
 	  var valid5 = validateInputTextRequerido('fechaLimInscripcionEduCont','errFechaLimInscEdc');

@@ -429,7 +429,7 @@ function loadAttrEduContinua(object){
 	fixSize(object);
 	
 	var regex = /%educacionContinua%/gi;
-	object.text=object.text.replace(regex, "Arquitectura de Microservicio con Spring Cloud Netflix y React JS como medio para consumir servicio REST");
+	object.text=object.text.replace(regex, eduContinua.nombre);
 	fixSize(object);
 	
 	var regex = /%intensidadHoraria%/gi;

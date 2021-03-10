@@ -73,7 +73,7 @@ import com.ufps.cedcufps.modelos.TipoDocumento;
 import com.ufps.cedcufps.modelos.TipoPersona;
 
 @Service
-public class PersonaService implements IPersonaService, UserDetailsService {
+public class PersonaService implements IPersonaService {
 
 	@Autowired
 	private IPersonaDao personaDao;
@@ -178,29 +178,7 @@ public class PersonaService implements IPersonaService, UserDetailsService {
 		personaDao.save(p);
 	}
 
-	@Override
-	@Transactional(readOnly = true)
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		// TODO Auto-generated method stub
-		Persona p=personaDao.findByUsername(username);
-		
-		if(p==null) {
-			logger.error("Error login: no existe el usuario '"+username+"'");
-			throw new UsernameNotFoundException("usuario "+ username +" no existe");
-		}
-		List<GrantedAuthority> authorities= new ArrayList<GrantedAuthority>();
-		/*for(Rol r:p.getPersonaXRoles()) {
-			logger.info("Role:".concat(r.getAuthority()));
-			authorities.add(new SimpleGrantedAuthority(r.getAuthority()));
-		}*/
-		
-		if(authorities.isEmpty()) {
-			logger.error("Error login: no tiene roles el usuario '"+username+"'");
-			throw new UsernameNotFoundException("usuario "+ username +" no tiene roles");
-		}
-		logger.info("Entra al metodo loadUserByUsername de personaService");
-		return new User(p.getUsername(), p.getPassword(), p.isEnabled(), true, true, true, authorities);
-	}
+	
 
 	@Override
 	public Persona findPersonaLogueada() {
@@ -275,11 +253,7 @@ public class PersonaService implements IPersonaService, UserDetailsService {
 		return (List<Externo>)externoDao.findAll();
 	}
 
-	@Override
-	public Persona findByUsername(String username) {
-		// TODO Auto-generated method stub
-		return personaDao.findByUsername(username);
-	}
+	
 	
 	@Override
 	@Transactional(rollbackFor = CustomException.class)
@@ -510,7 +484,7 @@ public class PersonaService implements IPersonaService, UserDetailsService {
 	@Override
 	public boolean isDocente() {
 		Persona p=this.findPersonaLogueada();
-		return (this.docenteDao.findOnlyDocente(p.getId()) != null );
+		return (this.docenteDao.findOnlyDocente(p.getId()) > 0 );
 		
 	}
 	
@@ -518,7 +492,7 @@ public class PersonaService implements IPersonaService, UserDetailsService {
 	public boolean isDocente(Persona p) {
 		logger.debug("id persona en is docente: " + p.getId());
 		logger.info("id persona en is docente: " + p.getId());
-		return (this.docenteDao.findOnlyDocente(p.getId()) != null );
+		return this.docenteDao.findOnlyDocente(p.getId()) > 0  ;
 		
 	}
 	

@@ -60,7 +60,6 @@ public interface IPersonaService {
 	
 	public PersonaDto findOne(Long id);
 	
-	public Persona findByUsername(String username);
 
 	public Persona findByEmail(String email);
 	

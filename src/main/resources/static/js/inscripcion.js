@@ -553,6 +553,7 @@ function guardarTarjeta(imagen,idParticipante){
         	}else{//esta en ponentes
         		reloadListPonentes();
         	}
+        	loadCantidadInscritos();
             
         },
         error: function (err) {
@@ -583,6 +584,7 @@ function ajaxCancelarInscripcion(){
             enlace.innerHTML ="INSCRÍBETE!";
             enlace.setAttribute( "onclick","realizarInscripcion()");
             hideSpinnerInscripcion();
+            loadCantidadInscritos();
 		},
 		error: function(err) {
 			hideSpinnerInscripcion();
@@ -593,4 +595,9 @@ function ajaxCancelarInscripcion(){
 function clearCanvas(){
 	canvasInscripcion.clear();
 	createTemplateCanvasInscripcion();
+}
+
+function loadCantidadInscritos(){
+	var url = '/preinscripcion/reload/'+idAccesoEduContinua;
+	$('#div_info_educacionContinua').load(url);
 }

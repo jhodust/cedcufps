@@ -11,10 +11,12 @@ $(document).ready(function ()
 	horaInicioPick=$("#horaInicio").flatpickr({
 		enableTime: true,
 	    dateFormat: "d/m/Y H:i",
+	    disableMobile: "true",
 	    onChange: function(selectedDates, dateStr, instance) {
 	    	document.getElementById("horaFin").disabled = false;
            horaFinPick=$("#horaFin").flatpickr({
        		enableTime: true,
+       		disableMobile: "true",
        	    dateFormat: "d/m/Y H:i",
        	    minDate: selectedDates[0].toLocaleString(),
        	    minTime: selectedDates[0].toTimeString(),

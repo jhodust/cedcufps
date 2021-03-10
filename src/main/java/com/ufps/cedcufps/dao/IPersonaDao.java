@@ -30,7 +30,7 @@ public interface IPersonaDao extends JpaRepository<Persona, Long>, DataTablesRep
 	@Query(value="select p from Persona p where p.idAcceso = ?1")
 	public Persona findPersonaByIdAcceso(String idAcceso);
 	
-	public Persona findByUsername(String username);
+	
 	
 	@Query(value="select p from Persona p where p.numeroDocumento = ?1")
 	public Persona findPersonaByNumeroDocumento(String documento);

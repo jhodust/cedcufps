@@ -74,7 +74,7 @@ $(document).ready(function(){
   });
   
   $("#direccion").focusout(function(){
-	  validateLengthTxt('direccion','errorDireccion',50);
+	  validateLengthTxt('direccion','errorDireccion',100);
 		
   });
   

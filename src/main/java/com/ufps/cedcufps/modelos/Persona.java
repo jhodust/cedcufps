@@ -130,17 +130,12 @@ public class Persona implements Serializable {//*
 	@Pattern(regexp = "^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$", message = "El email ingresado no es válido")
 	private String email;
 	
-	@Size(max = 50, message = "El campo dirección maximo debe tener 50 caracteres")
+	@Size(max = 100, message = "El campo dirección maximo debe tener 50 caracteres")
 	private String direccion;
 	
 	@Pattern(regexp = "^([0-9])*$", message = "El campo telefono debe contener solo dígitos")
 	private String telefono;
 	
-	private String password;
-
-	private String username;
-	
-	private boolean enabled;
 	
 	
 	

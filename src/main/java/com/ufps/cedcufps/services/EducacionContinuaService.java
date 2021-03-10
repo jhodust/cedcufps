@@ -408,7 +408,7 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 		if(this.validateAsociacionesEduContinua(dto)) {
 			if(dto.getId() == 0L) {
 				dto.setEstado(StatusEducacionContinua.STATUS_ACTIVO);
-				educacionContinuaCustomDao.saveEducacionContinua(dto);
+				educacionContinuaCustomDao.saveEducacionContinua(dto, personaService.findEmailPersonaLogueada());
 				System.out.println("dto registrado edu continua");
 				System.out.println(dto.getId());
 				if(dto.getConsecutivo()==null) {
@@ -417,7 +417,7 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 				this.createDirEducacionContinua(dto.getId());
 				
 			}else {
-				educacionContinuaCustomDao.updateEducacionContinua(dto);
+				educacionContinuaCustomDao.updateEducacionContinua(dto,personaService.findEmailPersonaLogueada());
 			}
 			
 			EducacionContinua ec= educacionContinuaDao.findOneEducacionContinua(dto.getId());
@@ -471,7 +471,7 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 		}
 		System.out.println("id a buscar docente: " + dto.getIdDocenteResp());
 		
-		if( docenteDao.findOnlyDocente(dto.getIdDocenteResp()) == null) {
+		if( docenteDao.findOnlyDocente(dto.getIdDocenteResp()) == 0) {
 			return false;
 		}
 		if(programaDao.findProgramaById(dto.getIdProgramaResp()) == null) {

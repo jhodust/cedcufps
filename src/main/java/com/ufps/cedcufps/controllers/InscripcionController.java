@@ -4,6 +4,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -44,6 +45,13 @@ public class InscripcionController {
 		model.put("photoUser", SpringSecurityConfig.getInfoSession().getPhoto());
 		model.put("nameUser", SpringSecurityConfig.getInfoSession().getName());
 		return "preinscripcion";
+	}
+	
+	@RequestMapping(value = "/preinscripcion/reload/{id}")
+	public String reloadCantidadParticipantesInscripción(@PathVariable(value = "id") String idAcceso, Map<String, Object> model) {
+		System.out.println("entra a reload list cantidad participantes");
+		model.put("requisitosInscripcion",educacionContinuaService.consultarRequisitosInscripcion(idAcceso));
+		return "preinscripcion :: infoEducacionContinua";
 	}
 	
 	@RequestMapping(value = "/participaciones-educacion-continua")

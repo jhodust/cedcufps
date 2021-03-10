@@ -116,14 +116,14 @@ public class EducacionContinuaCustomDaoImpl implements IEducacionContinuaCustomD
 	
 	@Transactional
 	@Override
-	public void saveEducacionContinua(EducacionContinuaWebDto dto) {
+	public void saveEducacionContinua(EducacionContinuaWebDto dto, String createdBy) {
 		// TODO Auto-generated method stub
 		StringBuilder query = new StringBuilder().append("insert into educacion_continua (nombre,fecha_inicio,")
 				.append("fecha_fin,fecha_lim_inscripcion,cant_max_participantes,")
 				.append("costo_inscripcion,duracion,id_tipo_educacion_continua,id_docente,id_programa,")
 				.append("id_clasificacion_cine,lugar,estado,costo_educacion_continua, porcentaje_asistencia, ")
-				.append("consecutivo, id_acceso, info_adicional)")
-				.append(" VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+				.append("consecutivo, id_acceso, info_adicional, created_at, created_by, updated_at, updated_by)")
+				.append(" VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 		jdbcTemplate.update(new PreparedStatementCreator() {
 
@@ -148,6 +148,10 @@ public class EducacionContinuaCustomDaoImpl implements IEducacionContinuaCustomD
 				ps.setString(16, dto.getConsecutivo());
 				ps.setString(17, String.valueOf(System.currentTimeMillis()));
 				ps.setString(18, dto.getInfoAdicional());
+				ps.setObject(19, new Date());
+				ps.setString(20, createdBy);
+				ps.setObject(21, new Date());
+				ps.setString(22, createdBy);
 				
 				return ps;
 			}
@@ -166,13 +170,14 @@ public class EducacionContinuaCustomDaoImpl implements IEducacionContinuaCustomD
 	@Transactional
 	@Modifying
 	@Override
-	public void updateEducacionContinua(EducacionContinuaWebDto dto) {
+	public void updateEducacionContinua(EducacionContinuaWebDto dto, String updatedBy) {
 		// TODO Auto-generated method stub
 		StringBuilder query = new StringBuilder();
 		query.append("update educacion_continua set nombre = ?, fecha_inicio = ?, fecha_fin = ?, fecha_lim_inscripcion = ?,")
 			 .append(" cant_max_participantes = ?, costo_inscripcion = ?,")
 			 .append(" duracion = ?, id_tipo_educacion_continua = ?, id_docente = ?, id_programa = ?,")
-			 .append(" id_clasificacion_cine = ?, lugar = ?, costo_educacion_continua = ?, porcentaje_asistencia = ?, info_adicional = ?")
+			 .append(" id_clasificacion_cine = ?, lugar = ?, costo_educacion_continua = ?, porcentaje_asistencia = ?, info_adicional = ?,")
+			 .append(" updated_at = ?,  updated_by = ?")
 			 .append(" where id = ?");
 		 em.createNativeQuery(query.toString())
 				 .setParameter(1, dto.getNombre())
@@ -190,7 +195,9 @@ public class EducacionContinuaCustomDaoImpl implements IEducacionContinuaCustomD
 				 .setParameter(13, dto.getCostoEducacionContinua())
 				 .setParameter(14, dto.getPorcentajeAsistencia())
 				 .setParameter(15, dto.getInfoAdicional())
-				 .setParameter(16, dto.getId())
+				 .setParameter(16, new Date())
+				 .setParameter(17, updatedBy)
+				 .setParameter(18, dto.getId())
 				 .executeUpdate();
 	}
 	
@@ -276,7 +283,7 @@ public class EducacionContinuaCustomDaoImpl implements IEducacionContinuaCustomD
 			eduContinuaDto.setFacultad(String.valueOf(edc[24]));
 			eduContinuaDto.setIdClasificacion(Long.parseLong(String.valueOf(edc[25])));
 			eduContinuaDto.setClasificacion(String.valueOf(edc[26]));
-			
+			eduContinuaDto.setIdAcceso(idAcceso);
 			
 			StringBuilder edcTipoBeneficiarios = new StringBuilder();
 			edcTipoBeneficiarios.append("select tb.id as id_tipo_beneficiario, tb.tipo_beneficiario,")

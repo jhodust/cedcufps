@@ -128,7 +128,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 		.anyRequest().authenticated()
 		.and()
 		.logout().logoutSuccessUrl("/logout").logoutSuccessHandler(this.oidcLogoutSuccessHandler()).clearAuthentication(true).deleteCookies("oauth2_auth_request","JSESSIONID")
-		//.and().cors().configurationSource(corsConfigurationSource())
+		.and().cors().configurationSource(corsConfigurationSource())
 		.and()
 		.oauth2Login(oauthLogin -> oauthLogin
 	            
@@ -332,19 +332,19 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 	
 	
-	@Autowired
+	/*@Autowired
 	public void configurerGlobal(AuthenticationManagerBuilder builder) throws Exception {
 		builder.userDetailsService(personaService)
 		.passwordEncoder(passwordEncoder);
-	}
+	}*/
 
 
 	
 	@Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:8080"));
-        configuration.setAllowedMethods(Arrays.asList("GET","POST","PUT","DELETE","OPTIONS"));
+        configuration.setAllowedOrigins(Arrays.asList("http://localhost:8080", "https://cedcufps.tk"));
+        configuration.setAllowedMethods(Arrays.asList("GET","POST"));
         configuration.setAllowCredentials(true);
         configuration.setAllowedHeaders(Arrays.asList("Content-Type","Authorization"));
         

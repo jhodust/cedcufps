@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.ufps.cedcufps.dto.AnexosDto;
 import com.ufps.cedcufps.dto.CertificacionDto;
 import com.ufps.cedcufps.dto.EducacionContinuaAppDto;
 import com.ufps.cedcufps.dto.EducacionContinuaWebDto;
@@ -14,6 +15,7 @@ import com.ufps.cedcufps.dto.JornadaAppDto;
 import com.ufps.cedcufps.dto.ParticipanteDto;
 import com.ufps.cedcufps.dto.PonenteDto;
 import com.ufps.cedcufps.dto.EducacionContinuaAppDto;
+import com.ufps.cedcufps.modelos.Anexos;
 import com.ufps.cedcufps.modelos.EducacionContinua;
 import com.ufps.cedcufps.modelos.Participante;
 import com.ufps.cedcufps.modelos.Persona;
@@ -30,6 +32,8 @@ public interface IEducacionContinuaMapper {
 	public List<PonenteDto> convertListParticipantesToListPonentesDto(List<Participante> participantes);
 	public List<PonenteDto> convertListPonentesToListPonentesDto(List<Ponente> p);
 	public EducacionContinuaWebDto convertEducacionContinuaToEduContinuaWebDto(EducacionContinua e);
+	public AnexosDto convertAnexoToAnexoDto(Anexos a);
+	public List<AnexosDto> convertListAnexoToListAnexoDto(List<Anexos> anexos);
 	public List<EducacionContinuaWebDto> convertListEducacionContinuaToListEduContinuaWebDto(List<EducacionContinua> educacionesContinuas);
 	public EducacionContinuaWebDto convertInfoToEduContinuaDto(String id, String nombre, Date fechaInicio,
 			Date fechaFin, String duracion, String cantMaxParticipantes, Date fechaLimInscripcion, String costoInscripcion, 

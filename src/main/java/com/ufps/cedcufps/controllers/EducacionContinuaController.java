@@ -146,6 +146,7 @@ public class EducacionContinuaController {
 	public String mostrar(@RequestParam(name = "educacionContinua") String educacionContinua,
 			@RequestParam(name = "fecha") String fechaEduContinua, @RequestParam(name = "id") String idAcceso,
 			Map<String, Object> model,RedirectAttributes redirectAttributes) {
+		System.out.println("?????????????????????????????");
 		model.put("titulo","DETALLES EDUCACIÓN CONTINUA");
 		InfoEducacionContinuaDto dto= educacionContinuaService.detallesEducacionContinua(idAcceso);
 		if(dto.isHasPermission()) {
@@ -156,6 +157,7 @@ public class EducacionContinuaController {
 			model.put("educacionContinua", dto.getEducacionContinua());
 			model.put("jornadas",dto.getEducacionContinua().getJornadas());
 			model.put("ponentes",dto.getEducacionContinua().getPonentes());
+			model.put("anexos",dto.getEducacionContinua().getAnexos());
 			model.put("tipos_educacion_continua",educacionContinuaService.findAllTiposEducacionContinua(dto.getEducacionContinua().getIdTipoEduContinua()));
 			model.put("clasificacion_cine",educacionContinuaService.findAllClasificacionCine());
 			model.put("tipo_beneficiarios",educacionContinuaService.findAllTipoBeneficiario());
@@ -211,201 +213,6 @@ public class EducacionContinuaController {
 		model.put("ec",educacionContinuaService.detallesEducacionContinua(idAcceso));
 		return "educacion_continua/listado_asistentes/listadoParticipantes :: listadoParticipantes";
 	}
-	
-	/*@RequestMapping(value = "/educacion-continua/registro", method = RequestMethod.POST)
-	public String save(@Valid EducacionContinua ec, BindingResult result, SessionStatus status, @RequestParam("file") MultipartFile imagen,Map<String, Object> model, RedirectAttributes redirectAttributes) {
-		if(result.hasErrors()) {
-			model.put("tipos_educacion_continua",educacionContinuaService.findAllTiposEducacionContinua());
-			model.put("clasificacion_cine",educacionContinuaService.findAllClasificacionCine());
-			model.put("tipo_beneficiarios",educacionContinuaService.findAllTipoBeneficiario());
-			model.put("docentes",personaService.findAllDocentes());
-			model.put("programas",programaService.findAll());
-			model.put("errorMessage", "Debes diligenciar los campos correctamente...");
-			return "educacion_continua/form";
-			//return "redirect:/educacion-continua/registro";
-		}
-		educacionContinuaService.save(ec);
-		educacionContinuaService.updateCodigoEducacionContinua(ec);
-		System.out.println("id ec: " + ec.getId());
-		//generarDirectoriosPropios(ec);
-		/*if(imagen!=null) {
-			guardarImagenPortada(ec,imagen);
-		}*/
-		/*System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!estado!!!!!!!!!!!!!!!!!!!!!!!!");
-		/*System.out.println(ec.getEstado());
-		/*status.setComplete();
-		/*redirectAttributes.addFlashAttribute("successMessage", "Se ha guardado la información correctamente...");
-		return "redirect:/educacion-continua";
-	}*/
-	
-	/*@RequestMapping(value = "/educacion-continua/{id}/registro")
-/*	public String editar(@PathVariable(value = "id") Long id, Map<String, Object> model, Authentication auth,RedirectAttributes redirectAttributes) {
-		EducacionContinua e= educacionContinuaService.findOne(id).get();*/
-		/*if(buscarAuthority(auth, "ROLE_DIRPROGRAMA")) {
-			Docente p= (Docente)personaService.findPersonaLogueada();
-			if(e.getProgramaResponsable().getId() != p.getProgramaACargoDirector().getId() && e.getDocenteResponsable().getId()!=p.getId() ) {
-				redirectAttributes.addFlashAttribute("errorMessage", "No tiene permisos para administrar la Educación Continua...");
-				return "redirect:/educacion-continua";
-			}
-		}else if(buscarAuthority(auth, "ROLE_DOCENTE")) {
-			
-			Persona p= personaService.findPersonaLogueada();
-			if(e.getDocenteResponsable().getId()!=p.getId()) {
-				redirectAttributes.addFlashAttribute("errorMessage", "No tiene permisos para administrar la Educación Continua...");
-				return "redirect:/educacion-continua";
-			}
-			
-		}*/
-		
-		/*if(e.getEstado().equalsIgnoreCase("Terminado")) {
-			redirectAttributes.addFlashAttribute("errorMessage", "El estado de la Educación Continua es " + e.getEstado());
-			return "redirect:/educacion-continua/"+e.getId()+"/detalles";
-		}
-		
-		model.put("titulo","FORMULARIO EDUCACIÓN CONTINUA");
-		model.put("educacionContinua",e);
-		model.put("tipos_educacion_continua",educacionContinuaService.findAllTiposEducacionContinua());
-		model.put("clasificacion_cine",educacionContinuaService.findAllClasificacionCine());
-		model.put("tipo_beneficiarios",educacionContinuaService.findAllTipoBeneficiario());
-		model.put("docentes",personaService.findAllDocentes());
-		model.put("programas",programaService.findAll());
-		return "educacion_continua/form";
-	}*/
-	
-	/*@RequestMapping(value = "/educacion-continua/jornadas")
-	public String mostrarJornadas(@RequestParam(name="educacionContinua") String educacionContinua, Map<String, Object> model, Authentication auth, RedirectAttributes redirectAttributes) {
-		//EducacionContinua e=educacionContinuaService.findOne(id).get();
-		/*if(buscarAuthority(auth, "ROLE_DIRPROGRAMA")) {
-			Docente p= (Docente)personaService.findPersonaLogueada();
-			if(e.getProgramaResponsable().getId() != p.getProgramaACargoDirector().getId() && e.getDocenteResponsable().getId()!=p.getId() ) {
-				redirectAttributes.addFlashAttribute("errorMessage", "No tiene permisos para administrar la Educación Continua...");
-				return "redirect:/educacion-continua";
-			}
-		}else if(buscarAuthority(auth, "ROLE_DOCENTE")) {
-			
-			Persona p= personaService.findPersonaLogueada();
-			if(e.getDocenteResponsable().getId()!=p.getId()) {
-				redirectAttributes.addFlashAttribute("errorMessage", "No tiene permisos para administrar la Educación Continua...");
-				return "redirect:/educacion-continua";
-			}
-			
-		}*/
-		/*if(e.getEstado().equalsIgnoreCase("Terminado")) {
-			redirectAttributes.addFlashAttribute("errorMessage", "El estado de la Educación Continua es " + e.getEstado());
-			return "redirect:/educacion-continua/"+e.getId()+"/detalles";
-		}*/
-		/*model.put("titulo","JORNADAS");
-		model.put("educacionContinua",educacionContinuaService.detallesEducacionContinua(educacionContinua).getEducacionContinua());
-		return "educacion_continua/jornada/index";
-	}*/
-	
-	/*@RequestMapping(value = "/educacion-continua/ponentes")
-	public String mostrarPonentes(@RequestParam(name="educacionContinua") String educacionContinua, Map<String, Object> model, Authentication auth, RedirectAttributes redirectAttributes) {
-		/*if(buscarAuthority(auth, "ROLE_DIRPROGRAMA")) {
-			Docente p= (Docente)personaService.findPersonaLogueada();
-			if(e.getProgramaResponsable().getId() != p.getProgramaACargoDirector().getId() && e.getDocenteResponsable().getId()!=p.getId() ) {
-				redirectAttributes.addFlashAttribute("errorMessage", "No tiene permisos para administrar la Educación Continua...");
-				return "redirect:/educacion-continua";
-			}
-		}else if(buscarAuthority(auth, "ROLE_DOCENTE")) {
-			
-			Persona p= personaService.findPersonaLogueada();
-			if(e.getDocenteResponsable().getId()!=p.getId()) {
-				redirectAttributes.addFlashAttribute("errorMessage", "No tiene permisos para administrar la Educación Continua...");
-				return "redirect:/educacion-continua";
-			}
-			
-		}*/
-		/*if(e.getEstado().equalsIgnoreCase("Terminado")) {
-			redirectAttributes.addFlashAttribute("errorMessage", "El estado de la Educación Continua es " + e.getEstado());
-			return "redirect:/educacion-continua/"+e.getId()+"/detalles";
-		}*/
-		/*model.put("titulo","JORNADAS");
-		model.put("educacionContinua",educacionContinuaService.detallesEducacionContinua(educacionContinua).getEducacionContinua());
-		model.put("ponentes",participanteService.findAllPonentesOfOneEducacionContinua(educacionContinua));
-		model.put("posiblesPonentes",personaService.findAllPersonas());
-		return "educacion_continua/ponente/index";
-	}*/
-	
-	
-	
-	/*
-	@RequestMapping(value = "/educacion-continua/listado-participantes")
-	public String listadoParticipantes(@RequestParam(name="educacionContinua") String educacionContinua, Map<String, Object> model, Authentication auth, RedirectAttributes redirectAttributes) {
-		//EducacionContinua e=educacionContinuaService.findOne(id).get();
-		/*if(buscarAuthority(auth, "ROLE_DIRPROGRAMA")) {
-			Docente p= (Docente)personaService.findPersonaLogueada();
-			if(e.getProgramaResponsable().getId() != p.getProgramaACargoDirector().getId() && e.getDocenteResponsable().getId()!=p.getId() ) {
-				redirectAttributes.addFlashAttribute("errorMessage", "No tiene permisos para acceder al listado de participantes...");
-				return "redirect:/educacion-continua";
-			}
-		}else if(buscarAuthority(auth, "ROLE_DOCENTE")) {
-			
-			Persona p= personaService.findPersonaLogueada();
-			if(e.getDocenteResponsable().getId()!=p.getId()) {
-				redirectAttributes.addFlashAttribute("errorMessage", "No tiene permisos para acceder al listado de participantes...");
-				return "redirect:/educacion-continua";
-			}
-			
-		}*/
-	/*	InfoEducacionContinuaDto dto= educacionContinuaService.detallesEducacionContinua(educacionContinua);
-		List<JornadaAppDto> jornadas=educacionContinuaService.findJornadasByEducacionContinua(educacionContinua);
-		System.out.println("jornadas");
-		System.out.println(jornadas.size());
-		model.put("educacionContinua",dto.getEducacionContinua());
-		model.put("jornadas",jornadas);
-		model.put("participantes",participanteService.findAllParticipantesByEducacionContinua(educacionContinua));
-		if(jornadas.size()>0) {
-			model.put("asistencias",asistenciaService.findAsistenciasByJornadas(jornadas));
-			model.put("asistenciaGlobal",asistenciaService.countAsistenciasByJornadas(educacionContinua));
-			
-		}
-		
-		return "educacion_continua/listadoParticipantes";
-	}
-	*/
-	
-	
-	
-	
-	/*@RequestMapping(value = "/educacion-continua/{id}/personalizar-diploma")
-	public String personalizarDiploma(@PathVariable(value = "id") Long id, Map<String, Object> model) {
-		EducacionContinua e=educacionContinuaService.findOne(id).get();
-		
-		if(e.getDiploma()!=null) {
-			model.put("imagenes", diplomaService.findImagenesByDiploma(e.getDiploma().getId()));
-			model.put("textos", diplomaService.findTextoByDiploma(e.getDiploma().getId()));
-			model.put("firmas", diplomaService.findFirmaByDiploma(e.getDiploma().getId()));
-		}
-		model.put("educacionContinua",e);
-		//https://www.youtube.com/watch?v=C4vQ-nSNAgA
-		
-		return "educacion_continua/plantillaDiploma";
-		//return "croppie";
-	}*/
-	
-	
-	
-	
-	
-	
-	/*@GetMapping(value = "/educacion-continua-a-cargo/{id}/registro",produces = "application/json")
-	public String  editarEducacionContinuaACargoDocente(@PathVariable(value = "id") Long idEduContinua, Map<String, Object> model, RedirectAttributes redirectAttributes){
-		Persona p= personaService.findPersonaLogueada();
-		EducacionContinua e= educacionContinuaService.findOne(idEduContinua).get();
-		if(e.getDocenteResponsable().getId()==p.getId()) {
-			model.put("educacionContinua",e);
-			model.put("tipos_educacion_continua",educacionContinuaService.findAllTiposEducacionContinua());
-			model.put("clasificacion_cine",educacionContinuaService.findAllClasificacionCine());
-			model.put("tipo_beneficiarios",educacionContinuaService.findAllTipoBeneficiario());
-			model.put("docentes",personaService.findAllDocentes());
-			model.put("programas",programaService.findAll());
-			model.put("tipoAdminEduCon", 2);// 0 superadmin, 1 director programa, 2 docente
-			return "educacion_continua/form";
-		}
-		redirectAttributes.addFlashAttribute("errorMessage", "No tiene permisos para administrar la Educación Continua...");
-		return "redirect:/educacion-continua-a-cargo";
-	}*/
 	
 	
 	

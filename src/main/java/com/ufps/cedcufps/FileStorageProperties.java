@@ -17,6 +17,7 @@ public class FileStorageProperties {
 	private String dirPlantillaEducacionContinua;
 	private String dirPlantillaParticipantesResponsables;
 	private String dirImgPdfAsistentes;
+	private String dirAnexos;
 			
 	public String getDirFormatoReportes() {
 		return dirFormatoReportes;
@@ -78,6 +79,12 @@ public class FileStorageProperties {
 	}
 	public void setDirImgPdfAsistentes(String dirImgPdfAsistentes) {
 		this.dirImgPdfAsistentes = dirImgPdfAsistentes;
+	}
+	public String getDirAnexos() {
+		return dirAnexos;
+	}
+	public void setDirAnexos(String dirAnexos) {
+		this.dirAnexos = dirAnexos;
 	}
 	
 	

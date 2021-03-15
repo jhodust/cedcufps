@@ -706,6 +706,7 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 			Files.createDirectories(fileStorageService.dirEducacionContinua().resolve(String.valueOf(idEducacionContinua)).resolve(fileStorageService.dirQrParticipantes()));
 			Files.createDirectories(fileStorageService.dirEducacionContinua().resolve(String.valueOf(idEducacionContinua)).resolve(fileStorageService.dirTarjetasInscripcion()));
 			Files.createDirectories(fileStorageService.dirEducacionContinua().resolve(String.valueOf(idEducacionContinua)).resolve(fileStorageService.dirDiplomasParticipantes()));
+			Files.createDirectories(fileStorageService.dirEducacionContinua().resolve(String.valueOf(idEducacionContinua)).resolve(fileStorageService.dirAnexos()));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

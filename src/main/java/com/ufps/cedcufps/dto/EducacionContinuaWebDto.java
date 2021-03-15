@@ -44,6 +44,7 @@ public class EducacionContinuaWebDto {
 	private boolean estadoOficialTipoEducacionContinua;
 	private boolean enableAsistencia;
 	private String idAcceso;
+	private List<AnexosDto> anexos;
 	
 	public String getCostoEducacionContinua() {
 		return costoEducacionContinua;
@@ -262,6 +263,12 @@ public class EducacionContinuaWebDto {
 	}
 	public void setIdAcceso(String idAcceso) {
 		this.idAcceso = idAcceso;
+	}
+	public List<AnexosDto> getAnexos() {
+		return anexos;
+	}
+	public void setAnexos(List<AnexosDto> anexos) {
+		this.anexos = anexos;
 	}
 	
 	

@@ -114,12 +114,8 @@ public class Archivo {
     	return cadena.toLowerCase();
 	}
 	
-	/*public static void generarDirectoriosPropiosEducacionContinua(Long idEducacionContinua, Path dirEducacionContinua) {
-		Files.createDirectories(dirEducacionContinua.);
-		Archivo.crearDirectorio(String.valueOf(idEducacionContinua));//directorio de la educacion continua
-		Archivo.crearDirectorio(idEducacionContinua+"/qr-participantes");//directorio interno de los qr de participantes de la educacion continua
-		Archivo.crearDirectorio(idEducacionContinua+"/tarjetas-inscripcion");
-		Archivo.crearDirectorio(idEducacionContinua+"/plantilla-diploma");
-		Archivo.crearDirectorio(idEducacionContinua+"/diplomas-participantes");
-	}*/
+	public static String getNameWithoutExtension(String fileName) {
+		   int dotIndex = fileName.lastIndexOf('.');
+		   return (dotIndex == -1) ? fileName : fileName.substring(0, dotIndex);
+	}
 }

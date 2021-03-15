@@ -9,6 +9,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.ufps.cedcufps.dto.AnexosDto;
 import com.ufps.cedcufps.dto.CertificacionDto;
 import com.ufps.cedcufps.dto.DiplomaDto;
 import com.ufps.cedcufps.dto.EducacionContinuaAppDto;
@@ -21,6 +22,7 @@ import com.ufps.cedcufps.dto.ParticipanteDto;
 import com.ufps.cedcufps.dto.PonenteDto;
 import com.ufps.cedcufps.dto.TextosDiplomaDto;
 import com.ufps.cedcufps.dto.TipoBeneficiarioDto;
+import com.ufps.cedcufps.modelos.Anexos;
 import com.ufps.cedcufps.modelos.Asistencia;
 import com.ufps.cedcufps.modelos.Diploma;
 import com.ufps.cedcufps.modelos.EducacionContinua;
@@ -131,8 +133,16 @@ public class EducacionContinuaMapper implements IEducacionContinuaMapper {
 			eduContinuaDto.setJornadas(jornadaMapper.convertJornadasToJornadaAppDto(e.getJornadas()));
 			eduContinuaDto.setCantidadInscritos(participantes.size());
 			eduContinuaDto.setPonentes(ponentes);
+			System.out.println("**************************************************");
+			System.out.println("**************************************************");
+			System.out.println("**************************************************");
+			System.out.println("**************************************************");
+			System.out.println("e.getanexos: " + e.getAnexos().size());
+			System.out.println("**************************************************");
+			System.out.println("**************************************************");
+			System.out.println("**************************************************");
+			eduContinuaDto.setAnexos(this.convertListAnexoToListAnexoDto(e.getAnexos()));
 			dto.setEducacionContinua(eduContinuaDto);
-			
 			
 		}else {
 			dto.setEducacionContinua(null);
@@ -432,6 +442,31 @@ public class EducacionContinuaMapper implements IEducacionContinuaMapper {
 			ponentes.add(this.convertPonenteToPonenteDto((Ponente)p));
 		}
 		return ponentes;
+	}
+
+
+
+	@Override
+	public AnexosDto convertAnexoToAnexoDto(Anexos a) {
+		// TODO Auto-generated method stub
+		AnexosDto dto=new AnexosDto();
+		dto.setId(a.getId());
+		dto.setNombre(a.getNombre());
+		dto.setFile(a.getFile());
+		dto.setFechaSubida(a.getFechaRegisto());
+		return dto;
+	}
+
+
+
+	@Override
+	public List<AnexosDto> convertListAnexoToListAnexoDto(List<Anexos> anexos) {
+		// TODO Auto-generated method stub
+		List<AnexosDto> list= new ArrayList<AnexosDto>();
+		for(Anexos a: anexos) {
+			list.add(this.convertAnexoToAnexoDto(a));
+		}
+		return list;
 	}
 
 

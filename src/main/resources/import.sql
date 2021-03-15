@@ -603,3 +603,5 @@ insert into elementos_diploma(id,x,y) value(1,80,150); /*imagen logo1*/
 //insert into firmas_diploma (x,y,cargo,imagen_firma_digital,nombre,x_cargo,x_nombre,y_cargo,y_nombre,id_diploma) value (530,600,'Docente Departamento Sistemas e InformÁtica','files/educacion_continua/5/plantilla-diploma/xxhcsflkjclmycsivzlt.png','PhD. Marco Antonio Adarme Jaimes',665,665,627,615,1);
 
 //update educacion_continua set id_diploma='1' where id='5';
+
+insert into anexos (id, file, nombre, educacion_continua_id) values ('1','files/educacion_continua/20/anexos/gratis-png-portatil-de-dibujo-proyeccion-isometrica-laptops.png','gratis-png-portatil-de-dibujo-proyeccion-isometrica-laptops','20'); 

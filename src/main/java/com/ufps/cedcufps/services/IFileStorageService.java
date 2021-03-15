@@ -10,6 +10,7 @@ public interface IFileStorageService {
 	public String dirQrParticipantes();
 	public String dirTarjetasInscripcion();
 	public String dirDiplomasParticipantes();
+	public String dirAnexos();
 	public Path dirPlantillaCursos();
 	public Path dirPlantillaEducacionContinua();
 	public Path dirPlantillaParticipantesResponsables();

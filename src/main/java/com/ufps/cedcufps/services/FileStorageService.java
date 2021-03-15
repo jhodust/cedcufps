@@ -121,4 +121,11 @@ public class FileStorageService implements IFileStorageService {
 			// TODO Auto-generated method stub
 			return this.dirImgPdfAsistentes;
 		}
+
+
+		@Override
+		public String dirAnexos() {
+			// TODO Auto-generated method stub
+			return env.getDirAnexos();
+		}
 }

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="layouts/layout :: head">
+	<meta charset="UTF-8"/>
+	
+</head>
+<style>
+		
+	</style>
+<body>
+  <!-- Application container -->
+  		
+		<div th:fragment="listadoAnexos" id="div_table_anexos">
+				
+			<h5><strong>Anexos</strong></h5>
+				<p class="text-dark">A continuación se listarán los anexos que se han registrado a la educación continua</p>		
+          <div class="table-responsive">
+          <div class="col-lg-12">
+            <table  style="width: 100%;" class="row-border table align-items-center myTable2">
+						<thead>
+							<tr>
+								<th></th>
+								<th class="th2">Nombre</th>
+								<th>Fecha de subida</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="anex : ${anexos}">
+								<td>
+    								<button class="action-item action-item-red-ufps hover-scale-110" onclick="deleteAnexo(this)" th:data-id="${anex.id}" data-toggle="tooltip" data-placement="left" title="Eliminar">
+    								<span class="btn-inner--icon"><i class="fas fa-times"></i></span></button>
+    								<a class="action-item action-item-red-ufps hover-scale-110" th:href="@{'/'+${anex.file}}"  target="_blank"  data-toggle="tooltip" data-placement="left" title="Descargar">
+    								<span class="btn-inner--icon"><i class="fas fa-file-download"></i></span></a>
+    								</td>
+								<td class="td2" th:text="${anex.nombre}"></td>
+								<td th:text="${#dates.format(anex.fechaSubida, 'dd-MM-yyyy HH:mm')}"></td>
+								
+							</tr>
+						</tbody>
+					</table>
+					<script type="text/javascript">
+					try{
+						$(document).ready( function () {
+							
+							  $('.myTable2').DataTable( {
+								  destroy: true,
+							        language: {
+							            url: "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+							        },
+							    } );
+							   
+							} );
+						
+						$('[data-toggle="tooltip"]').tooltip(); 
+					}catch(err){
+						
+					}
+					  
+					  
+					  </script>
+					</div>
+          </div>
+        </div>
+  
+</body>
+
+</html>

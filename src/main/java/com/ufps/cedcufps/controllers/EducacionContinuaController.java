@@ -101,7 +101,11 @@ public class EducacionContinuaController {
 		return "educacion_continua/index";
 	}
 	
-	
+	@RequestMapping(value = "/reload")
+	public String listar(Map<String, Object> model) {
+		model.put("educacionesContinuas",educacionContinuaService.findPosiblesEduContinuaGestionar());
+		return "educacion_continua/index :: tableEducacionesContinuas";
+	}
 	
 	@RequestMapping(value = "/registro")
 	public String agregar(Map<String, Object> model, Authentication auth) {

@@ -1,8 +1,9 @@
 package com.ufps.cedcufps.dto;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
-
+import java.util.Map;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -45,7 +46,19 @@ public class EducacionContinuaWebDto {
 	private boolean enableAsistencia;
 	private String idAcceso;
 	private List<AnexosDto> anexos;
+	private Map<Long,Boolean> asistenciasGenerales;
 	
+	
+	
+	public EducacionContinuaWebDto() {
+		this.asistenciasGenerales=new HashMap<Long, Boolean>();
+	}
+	public Map<Long, Boolean> getAsistenciasGenerales() {
+		return asistenciasGenerales;
+	}
+	public void setAsistenciasGenerales(Map<Long, Boolean> asistenciasGenerales) {
+		this.asistenciasGenerales = asistenciasGenerales;
+	}
 	public String getCostoEducacionContinua() {
 		return costoEducacionContinua;
 	}

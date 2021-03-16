@@ -29,7 +29,8 @@
 								<td>
     								<button class="action-item action-item-red-ufps hover-scale-110" onclick="deleteAnexo(this)" th:data-id="${anex.id}" data-toggle="tooltip" data-placement="left" title="Eliminar">
     								<span class="btn-inner--icon"><i class="fas fa-times"></i></span></button>
-    								<a class="action-item action-item-red-ufps hover-scale-110" th:href="@{'/'+${anex.file}}"  target="_blank"  data-toggle="tooltip" data-placement="left" title="Descargar">
+    								<a th:if="${anex.isImage()}" th:href="@{'/'+${anex.file}}" data-fancybox="group" th:data-caption="${anex.nombre}" class="action-item action-item-red-ufps hover-scale-110"><i class="fas fa-file-download"></i></a>
+    								<a th:unless="${anex.isImage()}" class="action-item action-item-red-ufps hover-scale-110" th:href="@{'/'+${anex.file}}"  target="_blank"  data-toggle="tooltip" data-placement="left" title="Descargar">
     								<span class="btn-inner--icon"><i class="fas fa-file-download"></i></span></a>
     								</td>
 								<td class="td2" th:text="${anex.nombre}"></td>

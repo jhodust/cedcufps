@@ -152,7 +152,7 @@
           <div class="card-body">
           <p class="text-dark">El siguiente listado son las educaciones continuas a los cuales usted tiene permisos de gestionar</p>
           	<div class="table-responsive">
-          <div class="col-lg-12">
+          <div class="col-lg-12" th:fragment="tableEducacionesContinuas" id="div_table_educaciones_continuas">
             <table id="myTable" style="width: 100%;" class="row-border table align-items-center">
 						<thead>
 							<tr>
@@ -169,7 +169,7 @@
 							<tr th:each="ec : ${educacionesContinuas}">
 								<td><a class="action-item action-item-red-ufps hover-scale-110" th:href="@{/educacion-continua/detalles(educacionContinua=${ec.nombre},fecha=${ec.fechaInicio},id=${ec.idAcceso})}"  data-toggle="tooltip" data-placement="left" title="Ver Detalles">
     								<span class="btn-inner--icon"><i class="fas fa-search-plus"></i></span></a>
-    								<button class="action-item action-item-red-ufps hover-scale-110 btn-delete-educacionContinua"  th:data-id="${ec.idAcceso}" data-toggle="tooltip" data-placement="left" title="Eliminar">
+    								<button class="action-item action-item-red-ufps hover-scale-110 " onclick="deleteEduContinua(this)"  th:data-id="${ec.idAcceso}" data-toggle="tooltip" data-placement="left" title="Eliminar">
     								<span class="btn-inner--icon"><i class="fas fa-times"></i></span></button>
     								</td>
     							<td th:switch="${ec.estado}">
@@ -184,29 +184,30 @@
 								<td th:text="${#dates.format(ec.fechaInicio, 'dd-MM-yyyy HH:mm')}"></td>
 								<td th:text="${#dates.format(ec.fechaLimInscripcion, 'dd-MM-yyyy HH:mm')}"></td>
 								
-    							<!--  <td sec:authorize="hasRole('ROLE_DIRPROGRAMA')">Dir Programa<a class="btn btn-rojoufps rounded-circle btn-icon-only hover-scale-110" th:href="@{/educacion-continua/{id}/detalles(id=${ec.id})}" data-toggle="tooltip" data-placement="top" title="Ver Detalles">
-    								<span class="btn-inner--icon"><i class="fas fa-search-plus"></i></span></a>
-    								<a class="btn btn-rojoufps rounded-circle btn-icon-only hover-scale-110" th:href="@{/educacion-continua/registro/} + ${ec.id}" data-toggle="tooltip" data-placement="top" title="Editar">
-    								<span class="btn-inner--icon"><i class="fas fa-edit"></i></span></a>
-    								<a class="btn btn-rojoufps rounded-circle btn-icon-only hover-scale-110" th:href="@{/educacion-continua/{id}/jornadas(id=${ec.id})}" data-toggle="tooltip" data-placement="top" title="Jornadas">
-    								<span class="btn-inner--icon"><i class="far fa-calendar-alt"></i></span></a>
-    								<a class="btn btn-rojoufps rounded-circle btn-icon-only hover-scale-110"  href="#" onclick="ponentes(this)" th:data-id="${ec.id}" data-toggle="tooltip" data-placement="top" title="Ponentes">
-    								<span class="btn-inner--icon"><i class="fas fa-user-circle"></i></span></a>
-    								</td>	
-    							 <td sec:authorize="hasRole('ROLE_DOCENTE')">Docente<a class="btn btn-rojoufps rounded-circle btn-icon-only hover-scale-110" th:href="@{/educacion-continua/{id}/detalles(id=${ec.id})}" data-toggle="tooltip" data-placement="top" title="Ver Detalles">
-    								<span class="btn-inner--icon"><i class="fas fa-search-plus"></i></span></a>
-    								<a class="btn btn-rojoufps rounded-circle btn-icon-only hover-scale-110" th:href="@{/educacion-continua-a-cargo/{id}/registro(id=${ec.id})}" data-toggle="tooltip" data-placement="top" title="Editar">
-    								<span class="btn-inner--icon"><i class="fas fa-edit"></i></span></a>
-    								<a class="btn btn-rojoufps rounded-circle btn-icon-only hover-scale-110" th:href="@{/educacion-continua-a-cargo/{id}/jornadas(id=${ec.id})}" data-toggle="tooltip" data-placement="top" title="Jornadas">
-    								<span class="btn-inner--icon"><i class="far fa-calendar-alt"></i></span></a>
-    								<a class="btn btn-rojoufps rounded-circle btn-icon-only hover-scale-110"  href="#" onclick="ponentes(this)" th:data-id="${ec.id}" data-toggle="tooltip" data-placement="top" title="Ponentes">
-    								<span class="btn-inner--icon"><i class="fas fa-user-circle"></i></span></a>
-    								</td>	
-    							-->
 							</tr>
 							
 						</tbody>
 					</table>
+					<script type="text/javascript">
+					try{
+						$(document).ready( function () {
+							
+							$('#myTable').DataTable( {
+							  	destroy: true,
+							  	scrollX: true,
+						        language: {
+						            url: "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+						        },
+						    } );
+							$('[data-toggle="tooltip"]').tooltip(); 
+						} );
+						
+					}catch(err){
+						
+					}
+					  
+					  
+					  </script>
 					</div>
           </div>
           </div>

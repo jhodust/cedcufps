@@ -8,6 +8,7 @@ public class AnexosDto {
 	private String nombre;
 	private Date fechaSubida;
 	private String file;
+	private boolean isImage;
 	
 	public Long getId() {
 		return id;
@@ -32,6 +33,12 @@ public class AnexosDto {
 	}
 	public void setFile(String file) {
 		this.file = file;
+	}
+	public boolean isImage() {
+		return isImage;
+	}
+	public void setImage(boolean isImage) {
+		this.isImage = isImage;
 	}
 	
 	

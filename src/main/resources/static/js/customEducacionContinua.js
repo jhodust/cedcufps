@@ -1,26 +1,29 @@
 $(document).ready(function ()
 {
-	$('.btn-delete-educacionContinua').on('click',function(e){
-		console.log($(this));
-		console.log(e);
-		console.log(e.currentTarget.dataset.id);
-		swal({
-			  title: "¿Está seguro de eliminar la educación continua?",
-			  text: "Una vez eliminada no se podrá gestionar ni será tenida en cuenta en los reportes SNIES",
-			  icon: "warning",
-			  buttons: ["Cancelar", "Aceptar"],
-			  dangerMode: true,
-			})
-			.then((willDelete) => {
-			  if (willDelete) {
-			   deleteEduContinua(e.currentTarget.dataset.id);
-			  }
-			});
-	});
+	
 });
 
 
-function deleteEduContinua(idAcceso){
+function deleteEduContinua(element){
+	
+	
+	
+	swal({
+		  title: "¿Está seguro de eliminar la educación continua?",
+		  text: "Una vez eliminada no se podrá gestionar ni será tenida en cuenta en los reportes SNIES",
+		  icon: "warning",
+		  buttons: ["Cancelar", "Aceptar"],
+		  dangerMode: true,
+		})
+		.then((willDelete) => {
+		  if (willDelete) {
+		   deleteEduContinuaAjax(element.dataset.id);
+		  }
+		});
+};
+
+
+function deleteEduContinuaAjax(idAcceso){
 	var formData = new FormData();
 	  formData.append('idAcceso',idAcceso);
 	$.ajax({
@@ -35,9 +38,15 @@ function deleteEduContinua(idAcceso){
 	       cache: false,
 		success: function(result) {//retornar el diploma
 			toastr.success('Se ha eliminado la educación continua exitosamente', 'Excelente!',{"positionClass": "toast-bottom-right","preventDuplicates": true});
+			reloadEducacionesContinuas();
 		},
 		error: function(err) {
 			
 		}
 	});
+}
+
+function reloadEducacionesContinuas(){
+	var urlListado = '/educacion-continua/reload';
+	$('#div_table_educaciones_continuas').load(urlListado);
 }

@@ -3,6 +3,8 @@ package com.ufps.cedcufps.mapper;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -93,7 +95,10 @@ public class EducacionContinuaMapper implements IEducacionContinuaMapper {
 			}else {
 				eduContinuaDto.setDiploma(null);
 			}
-			
+			Map<Long, Integer> asistenciasGeneralesMap=new HashMap<Long, Integer>();
+			for(Jornada j: e.getJornadas()) {
+				asistenciasGeneralesMap.put(j.getId(), e.getParticipantes().size());
+			}
 			
 			List<ParticipanteDto> participantes = new ArrayList<ParticipanteDto>();
 			List<PonenteDto> ponentes = new ArrayList<PonenteDto>();
@@ -113,6 +118,7 @@ public class EducacionContinuaMapper implements IEducacionContinuaMapper {
 					
 					
 					participanteDto.addAsistencia(a.getJornada().getId(), true);
+					asistenciasGeneralesMap.put(a.getJornada().getId(), asistenciasGeneralesMap.get(a.getJornada().getId()) - 1);
 				}
 				System.out.println("tamaño asistencias " + participanteDto.getJornadasAsistencias().size());
 				System.out.println("porcentaje asistencias: " + (e.getJornadas().size() * Integer.parseInt(e.getPorcentajeAsistencia()) / 100 ));
@@ -142,6 +148,7 @@ public class EducacionContinuaMapper implements IEducacionContinuaMapper {
 			System.out.println("**************************************************");
 			System.out.println("**************************************************");
 			eduContinuaDto.setAnexos(this.convertListAnexoToListAnexoDto(e.getAnexos()));
+			eduContinuaDto.setAsistenciasGenerales(this.validateAsistenciasGenerales(asistenciasGeneralesMap));
 			dto.setEducacionContinua(eduContinuaDto);
 			
 		}else {
@@ -151,7 +158,19 @@ public class EducacionContinuaMapper implements IEducacionContinuaMapper {
 		
 	}
 	
-	
+	public Map<Long, Boolean> validateAsistenciasGenerales(Map<Long,Integer> asistenciasGenerales){
+		Map<Long, Boolean> map=new HashMap<Long, Boolean>();
+		Iterator<Map.Entry<Long, Integer>> itr = asistenciasGenerales.entrySet().iterator(); 
+		while(itr.hasNext()) 
+        { 
+			Map.Entry<Long, Integer> entry = itr.next(); 
+			System.out.println("key: " + entry.getKey());
+			System.out.println("value: " + entry.getValue());
+			map.put(entry.getKey(),
+					entry.getValue() == 0); 
+        } 
+		return map;
+	}
 
 	@Override
 	public ParticipanteDto convertParticipanteToParticipanteDto(Participante p) {
@@ -454,6 +473,7 @@ public class EducacionContinuaMapper implements IEducacionContinuaMapper {
 		dto.setNombre(a.getNombre());
 		dto.setFile(a.getFile());
 		dto.setFechaSubida(a.getFechaRegisto());
+		dto.setImage(a.getFile().contains(".jpeg") || a.getFile().contains(".jpg") || a.getFile().contains(".png"));
 		return dto;
 	}
 

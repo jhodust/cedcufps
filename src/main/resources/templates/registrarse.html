@@ -254,7 +254,10 @@
 												<div class="form-group">
 													<label class="form-control-label">Email</label><label class="requerido pl-2">*</label> <input
 														class="form-control" type="email" th:value="${persona.email}"
-														placeholder="Ingrese su email..." id="email" /> <small
+														placeholder="Ingrese su email..." id="email" /> 
+														<i class="fas fa-question-circle"> El email ingresado debe estar asociado a una
+														cuenta Google para realizar el login posteriormente</i>
+												  <small
 														class="form-text text-danger"><strong id="errorEmail"></strong></small>
 												</div>
 											</div>

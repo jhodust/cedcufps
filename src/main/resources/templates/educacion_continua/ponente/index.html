@@ -8,7 +8,9 @@
   <div id="div_list_ponentes" th:fragment="indexPonentes">
   
   	<div th:if="${#lists.size(ponentes) == 0}">
-        	<center><span class="badge badge-red-ufps">No existen ponentes registrados(as)</span></center>
+  	<div class="alert alert-danger" role="alert" >
+		    <strong> <i class="fas fa-info-circle"></i> No existen ponentes registrados</strong>
+		</div>
         </div>
 		<div class="row">
 			<div class="col-lg-6 hover-scale-110" th:each="p: ${ponentes}">

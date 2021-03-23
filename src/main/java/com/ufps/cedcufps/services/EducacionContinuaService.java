@@ -552,7 +552,7 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 				Programa programa= programaDao.findByDirector(p.getId());
 				dto.setIdProgramaResp(programa.getId());
 				dto.setProgramaResp(programa.getPrograma());
-			}else if(hasPermission) {
+			}else if(hasPermission && personaService.isDocente(p)) {
 				dto.setNombreDocenteResp(usuarioMapper.convertFieldsFullName(p));
 				dto.setCodigoDocenteResp(((Docente)p).getCodigo());
 				dto.setIdDocenteResp(((Docente)p).getId());

@@ -45,3 +45,39 @@
     color:#fff
 }
 
+body{
+	background-color: #2a2a2a;
+}
+.jumbotron{
+	background-color: #E8E8E8;
+	border-radius:0em;
+	/*background: linear-gradient(to bottom,#BC0017,#FFF,#FFF,#FFF,#FFF,#FFF,#BC0017);*/
+	 
+}
+
+.logou{
+	width: 100%;
+	height: 100%;
+}
+.imagenes{
+	background-color: #FFF;
+}
+
+.foooter{
+	color:#FFF;
+	position: relative;
+	bottom: 0;
+	width: 100%;
+}
+
+
+hr{
+	border-top: 1px solid #000;
+}
+
+.page-content{
+	background-color: #E8E8E8;
+}
+.contenido{
+	min-height:60vh
+}

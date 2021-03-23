@@ -13,7 +13,7 @@
       <nav th:replace="layouts/navbar :: navbar"></nav>
       
       <!-- Page content -->
-      <div class="page-content col-lg-9 center">
+      <div class="page-content col-lg-11 center">
        <!-- Project cards -->
        <nav aria-label="breadcrumb">
 		  <ol class="breadcrumb breadcrumb-links">
@@ -125,7 +125,7 @@
 															th:text="${tec.tipoEduContinua}" th:selected="${educacionContinua.idTipoEduContinua == tec.id}"></option>
 													
 												</select>
-												 <i class="far fa-question-circle"> Si desea crear otro tipo acorde a su evento, solo ingrese este en el cuadro de texto
+												 <i class="fas fa-question-circle"> Si desea crear otro tipo acorde a su evento, solo ingrese este en el cuadro de texto
 												  del buscador de las opciones y posteriormente da enter</i>
 												<small class="form-text text-danger"><strong id="errTipoEdc"></strong></small>
 											</div>
@@ -301,28 +301,24 @@
 										<div class="row">
 											<div class="col-md-4">
 												<div class="form-group">
-													<label class="form-control-label">Costo Inscripción </label><label class="requerido pl-2">*</label>
+													<label class="form-control-label">Costo Inscripción </label>
 													<input
 														class="form-control" type="text" id="costoInscripcionEdc"
 														placeholder="Ingrese el costo que tendrá la inscripción del participante" th:value="${educacionContinua.costoInscripcion}"/>
+														<i class="fas fa-info-circle"> No ingrese información si la inscripción es gratuita</i>
 														<small class="form-text text-danger"><strong id="errCostoInscripEdc"></strong></small>
 												</div>
-												<div class="alert alert-info" role="alert">
-													    Deje el campo vacío si la inscripción es gratuita
-													</div>
 											</div>
 											<div class="col-md-4">
 												<div class="form-group">
-													<label class="form-control-label">Cantidad Participantes(Max) </label><label class="requerido pl-2">*</label>
+													<label class="form-control-label">Cantidad Participantes (Max) </label>
 													
 													<input
 														class="form-control" type="number" id="cantMaxPartEdc"
 														placeholder="Ingrese la cantidad máxima de participantes" th:value="${educacionContinua.cantMaxParticipantes}"/>
+														<i class="fas fa-info-circle"> No ingrese información si no existe límite de participantes</i>
 														<small class="form-text text-danger"><strong id="errCantPartEdc"></strong></small>
 												</div>
-												<div class="alert alert-info" role="alert">
-													    Deje el campo vacío si la educación continua no tiene límite de participantes
-													</div>
 											</div>
 											<div class="col-md-4">
 												<div class="form-group">

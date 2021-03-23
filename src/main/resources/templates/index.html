@@ -13,8 +13,9 @@
       <nav th:replace="layouts/navbar :: navbar"></nav>
       
       <!-- Page content -->
-      <div class="page-content col-lg-9 center">
+      <div class="page-content col-lg-11 center">
        <!-- Project cards -->
+       
         <div class="row">
 		<!-- Swiper -->
 		  <div class="swiper-container">
@@ -57,7 +58,7 @@
 		
 		</div>
 		<div class="row">
-		<div class="jumbotron" >
+		<div class="jumbotron col-md-12" >
 		<div class="title">
 		<h4 class="text-dark"><strong>PANEL DE EVENTOS</strong></h4>
 		</div>
@@ -100,12 +101,13 @@
 						</div>
 					</div>
 				</div>
-		<p class="text-dark">Para consultar información adicional y/o inscribirse, por favor dar click sobre la educación continua</p>
+		
 		<div id="div_list_paginador" th:fragment="listPanel">
 		 <div th:if="${educacionesContinuas.getNumberOfElements() == 0}">
         	<center><span class="badge badge-red-ufps" >No existen educaciones continuas activas</span></center>
         </div>
 		<div class="row" th:unless="${educacionesContinuas.getNumberOfElements() == 0}">
+		<p class="text-dark">Para consultar información adicional y/o inscribirse, por favor dar click sobre la educación continua</p>
 		<div class="col-lg-12 center" th:each="ec:${educacionesContinuas}">
 			<a class="red-ufps" th:href="@{/preinscripcion(educacionContinua=${ec.nombre},fecha=${ec.fechaInicio},id=${ec.idAcceso})}">
 			<div class="card px-4 py-3 hover-scale-110">
@@ -178,9 +180,10 @@
 	  </div>
     
     </div>
-    <div th:replace="layouts/footer :: footer"></div>
+    
     
   </div>
+  <div th:replace="layouts/footer :: footer"></div>
   <!-- Scripts -->
   <!-- Core JS - includes jquery, bootstrap, popper, in-view and sticky-kit -->
   <div th:replace="layouts/layout :: scripts"></div>

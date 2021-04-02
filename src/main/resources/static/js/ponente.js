@@ -142,7 +142,7 @@ function eliminarPonente(elemento){
 
 
 function searchPosiblePonente(){
-	
+	alert("buscando ponentes");
 	var value=$('#valueBusqueda').val();
 	var tipoBusqueda=$('#selectTipoBusqueda').val();
 	if(value=="" || tipoBusqueda==0){
@@ -157,7 +157,6 @@ function searchPosiblePonente(){
             "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
         },
 		ajax: {
-	    	headers: {"X-CSRF-TOKEN": token},
 	    	contentType: "application/json; charset=utf-8",
 	    	url: "/educacion-continua/ponentes/filtro",
 	    	type: "GET",

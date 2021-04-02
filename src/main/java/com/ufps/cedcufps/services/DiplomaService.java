@@ -8,15 +8,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.ufps.cedcufps.dao.IDiplomaDao;
 import com.ufps.cedcufps.dao.IEducacionContinuaDao;
-import com.ufps.cedcufps.dao.IFirmaDiplomaDao;
-import com.ufps.cedcufps.dao.IImagenDiplomaDao;
-import com.ufps.cedcufps.dao.ITextoDiplomaDao;
 import com.ufps.cedcufps.dto.DiplomaDto;
 import com.ufps.cedcufps.modelos.Diploma;
 import com.ufps.cedcufps.modelos.EducacionContinua;
-import com.ufps.cedcufps.modelos.FirmaDiploma;
-import com.ufps.cedcufps.modelos.ImagenDiploma;
-import com.ufps.cedcufps.modelos.TextoDiploma;
 import com.ufps.cedcufps.utils.Archivo;
 
 @Service

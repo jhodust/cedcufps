@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinColumns;
@@ -27,14 +28,14 @@ public class RolPersonaAsistencia implements Serializable{
 	
 	@Id
 	@ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumns({@JoinColumn(name="id_persona", referencedColumnName="id_persona"),
-    			  @JoinColumn(name="id_rol", referencedColumnName="id_rol")})
+    @JoinColumns({@JoinColumn(name="id_persona", referencedColumnName="id_persona", foreignKey=@ForeignKey(name = "FK_persona_rolpersonaasistencia")),
+    			  @JoinColumn(name="id_rol", referencedColumnName="id_rol", foreignKey=@ForeignKey(name = "FK_rol_rolpersonaasistencia"))})
     @MapsId
     private PersonaRol rolPersona;
 	
 	@Id
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="id_edu_continua")
+	@JoinColumn(name="id_edu_continua", foreignKey=@ForeignKey(name = "FK_educontinua_rolpersonaasistencia"))
 	private EducacionContinua eduContinua;
 
 	public PersonaRol getRolPersona() {

@@ -29,13 +29,10 @@ import com.ufps.cedcufps.modelos.Asistencia;
 import com.ufps.cedcufps.modelos.Diploma;
 import com.ufps.cedcufps.modelos.EducacionContinua;
 import com.ufps.cedcufps.modelos.EducacionContinuaTipoBeneficiario;
-import com.ufps.cedcufps.modelos.FirmaDiploma;
-import com.ufps.cedcufps.modelos.ImagenDiploma;
 import com.ufps.cedcufps.modelos.Jornada;
 import com.ufps.cedcufps.modelos.Participante;
 import com.ufps.cedcufps.modelos.Persona;
 import com.ufps.cedcufps.modelos.Ponente;
-import com.ufps.cedcufps.modelos.TextoDiploma;
 import com.ufps.cedcufps.utils.StatusEducacionContinua;
 import com.zaxxer.hikari.util.SuspendResumeLock;
 

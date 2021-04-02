@@ -102,31 +102,14 @@ $(document).ready(function ()
 		loadDiplomaBase();
 		
 	}
+	//probarCargue();
 	
 });
 
 
 function probarCargue(){
 	console.log("entra al cargue");
-	var text="Identificado con %documentoParticipante%, participó en el %tipoEducacionContinua% %educacionContinua% con una intensidad horaria de %intensidadHoraria% horas.";
-	var width=canvas.width/2;
-	console.log("Texto: " + text.length)
-	if(text.length>100){
-		width=canvas.width*3/5
-	}
-	var text = new fabric.Textbox(text, { 
-		fontSize: '24',
-		fontFamily: 'Gabriola',
-		textAlign: 'center',
-		width: width,
-		fixedWidth: width,
-		stroke: '#000',
-		fill: '#000',
-		fontWeight: 'normal'
-		
-	});
-	console.log("agregando nuevo");
-	canvas.add(text);
+	
 	
 	
 	var text="Universidad Francisco de Paula Santander";
@@ -140,7 +123,9 @@ function probarCargue(){
 		fixedWidth: width,
 		stroke: '#000',
 		fill: '#000',
-		fontWeight: 'normal'
+		fontWeight: 'normal',
+		top: 50,
+		left: width/2
 		
 	});
 	console.log("agregando nuevo");
@@ -161,8 +146,9 @@ function probarCargue(){
 		fixedWidth: width,
 		stroke: '#000',
 		fill: '#000',
-		fontWeight: 'normal'
-		
+		fontWeight: 'normal',
+		top: 100,
+		left: width/2
 	});
 	console.log("agregando nuevo");
 	canvas.add(text);
@@ -181,7 +167,9 @@ function probarCargue(){
 		fixedWidth: width,
 		stroke: '#000',
 		fill: '#000',
-		fontWeight: 'normal'
+		fontWeight: 'normal',
+		top: 180,
+		left: width/2
 		
 	});
 	console.log("agregando nuevo");
@@ -201,7 +189,9 @@ function probarCargue(){
 		fixedWidth: width,
 		stroke: '#000',
 		fill: '#000',
-		fontWeight: 'normal'
+		fontWeight: 'normal',
+		top: 260,
+		left: width/2
 		
 	});
 	console.log("agregando nuevo");
@@ -220,11 +210,35 @@ function probarCargue(){
 		fontStyle: 'italic',
 		stroke: '#000',
 		fill: '#000',
-		fontWeight: 'normal'
+		fontWeight: 'normal',
+		top: 340,
 		
 	});
 	console.log("agregando nuevo");
 	canvas.add(text);
+	
+	var text="Identificado con %documentoParticipante%, participó en el %tipoEducacionContinua% %educacionContinua% con una intensidad horaria de %intensidadHoraria% horas.";
+	var width=canvas.width/2;
+	console.log("Texto: " + text.length)
+	if(text.length>100){
+		width=canvas.width*3/5
+	}
+	var text = new fabric.Textbox(text, { 
+		fontSize: '24',
+		fontFamily: 'Gabriola',
+		textAlign: 'center',
+		width: width,
+		fixedWidth: width,
+		stroke: '#000',
+		fill: '#000',
+		fontWeight: 'normal',
+		top: 420,
+		left: width/2
+		
+	});
+	console.log("agregando nuevo");
+	canvas.add(text);
+	
 	
 	var text="San José de Cúcuta, %fecha%";
 	var width=canvas.width/2;
@@ -237,11 +251,13 @@ function probarCargue(){
 		fixedWidth: width,
 		stroke: '#000',
 		fill: '#000',
-		fontWeight: 'normal'
-		
+		fontWeight: 'normal',
+		top: 710
 	});
 	console.log("agregando nuevo");
 	canvas.add(text);
+	
+	
 }
 
 
@@ -401,6 +417,7 @@ function loadDiplomaBase(){
 
 function loadAttrEduContinua(object){
 	heightInicial=object.height;
+	console.log("HEIGHTTTT INICIALLLLL: " + heightInicial);
 	console.log("metodo load");
 	console.log(object);
 	var regex = /%facultad%/gi;
@@ -411,7 +428,7 @@ function loadAttrEduContinua(object){
 		cad="Facultad de " + eduContinua.facultad
 	}
 	object.text=object.text.replace(regex, cad);
-	fixSize(object);
+	//fixSize(object);
 	
 	var cad;
 	if(eduContinua.programaResp.includes('Programa')){
@@ -422,25 +439,26 @@ function loadAttrEduContinua(object){
 	
 	var regex = /%programa%/gi;
 	object.text=object.text.replace(regex, cad);
-	fixSize(object);
+	//fixSize(object);
 	
 	var regex = /%tipoEducacionContinua%/gi;
 	object.text=object.text.replace(regex, eduContinua.tipoEduContinua);
-	fixSize(object);
+	//fixSize(object);
 	
 	var regex = /%educacionContinua%/gi;
 	object.text=object.text.replace(regex, eduContinua.nombre);
-	fixSize(object);
+	//fixSize(object);
 	
 	var regex = /%intensidadHoraria%/gi;
 	var cad=numeroALetras(eduContinua.duracion) + " ("+eduContinua.duracion+") ";
 	object.text=object.text.replace(regex, cad);
-	fixSize(object);
+	//fixSize(object);
 	
 	var regex = /%fecha%/gi;
 	var d = new Date(eduContinua.fechaFin);
 	var cad= d.getDate() + " de " + months[d.getMonth()] + " de " + d.getFullYear();
 	object.text=object.text.replace(regex, cad);
+	console.log("HEIGHTTTT FINAL: " + object.height);
 	fixSize(object);
 	
 	return object;
@@ -448,12 +466,13 @@ function loadAttrEduContinua(object){
 
 function fixSize(obj){
 	
-	
 	while (obj.width > obj.fixedWidth) {
+		alert("entra al while de width");
 		obj.set({fontSize: obj.fontSize-1});
     }
-	    
-	    while (obj.height >  heightInicial) {
+
+     while (obj.height >  heightInicial) {
+	    	alert("entra al while de height");
 	    	obj.set({fontSize: obj.fontSize-1});
 	    }
 }

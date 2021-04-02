@@ -30,12 +30,12 @@ public class PersonaRol implements Serializable{
 	
 	@Id
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinColumn(name="id_persona")
+	@JoinColumn(name="id_persona", foreignKey=@ForeignKey(name = "FK_persona_rolpersona"))
 	private Persona persona;
 	
 	@Id
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinColumn(name="id_rol")
+	@JoinColumn(name="id_rol", foreignKey=@ForeignKey(name = "FK_rol_rolpersona"))
 	private Rol rol;
 	
 	

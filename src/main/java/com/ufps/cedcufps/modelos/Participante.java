@@ -33,7 +33,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "participantes", uniqueConstraints={
-		   @UniqueConstraint(columnNames={"id_persona", "educacion_continua_id"})})
+		   @UniqueConstraint(columnNames={"id_persona", "educacion_continua_id"}, name = "UK_persona_educontinua_participante")})
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Participante implements Serializable{
 
@@ -48,6 +48,7 @@ public class Participante implements Serializable{
 	
 	
 	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="educacion_continua_id", foreignKey=@ForeignKey(name = "FK_participante_educontinua"))
 	private EducacionContinua educacionContinua;
 	
 	//*****************************************revisar asociacion**************
@@ -59,7 +60,7 @@ public class Participante implements Serializable{
 	
 	
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="id_tipo_participante")
+	@JoinColumn(name="id_tipo_participante", foreignKey=@ForeignKey(name = "FK_tipoparticipante_participante"))
 	private TipoParticipante tipoParticipante;
 	
 

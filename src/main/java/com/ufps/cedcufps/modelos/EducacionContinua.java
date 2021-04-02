@@ -11,6 +11,7 @@ import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -114,7 +115,7 @@ public class EducacionContinua extends Auditable<String> implements Serializable
 	
 	@NotNull(message="Seleccione el tipo de Educación Continua")
 	@ManyToOne(fetch = FetchType.EAGER)//cambié lazy por eager
-	@JoinColumn(name="id_tipo_educacion_continua")
+	@JoinColumn(name="id_tipo_educacion_continua", foreignKey=@ForeignKey(name = "FK_tipo_educontinua"))
 	private TipoEducacionContinua tipoEduContinua;
 	
 	@JsonIgnore
@@ -127,19 +128,19 @@ public class EducacionContinua extends Auditable<String> implements Serializable
 
 	@NotNull(message="El campo Programa Académico responsable es responsable")
 	@ManyToOne(fetch = FetchType.EAGER)//cambié lazy por eager
-	@JoinColumn(name="id_programa")
+	@JoinColumn(name="id_programa", foreignKey=@ForeignKey(name = "FK_programa_educontinua"))
 	private Programa programaResponsable;
 	
 	@JsonIgnore
 	@NotNull(message="El campo docente responsable es requerido")
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="id_docente")
+	@JoinColumn(name="id_docente", foreignKey=@ForeignKey(name = "FK_docente_educontinua"))
 	private Docente docenteResponsable;
 	
 	@JsonIgnore
 	@NotNull(message="El campo Clasificación CINE es requerido")
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="id_clasificacion_cine")
+	@JoinColumn(name="id_clasificacion_cine", foreignKey=@ForeignKey(name = "FK_clasificacion_educontinua"))
 	private ClasificacionCine clasificacionCine;
 	
 	@JsonIgnore
@@ -149,7 +150,7 @@ public class EducacionContinua extends Auditable<String> implements Serializable
 	
 	
 	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinColumn(name="id_diploma")
+	@JoinColumn(name="id_diploma", foreignKey=@ForeignKey(name = "FK_diploma_educontinua"))
 	private Diploma diploma;
 
 	private String estado="Activo";//activo, en curso, finalizado

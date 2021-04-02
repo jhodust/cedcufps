@@ -3,6 +3,7 @@ package com.ufps.cedcufps.modelos;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
@@ -29,7 +30,7 @@ public class Estudiante extends Persona{
 
 	@NotNull(message = "Seleccione el Programa Académico en el que se encuentra matriculado")
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="id_programa")
+	@JoinColumn(name="id_programa", foreignKey=@ForeignKey(name = "FK_estudiante_programa"))
 	private Programa programa;
 	
 	@Column(columnDefinition = "boolean default true")

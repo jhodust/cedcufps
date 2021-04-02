@@ -5,6 +5,7 @@ import java.io.Serializable;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinColumns;
@@ -33,7 +34,7 @@ public class RolPersonaPerDepto implements Serializable{
 	
 	@Id
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="id_depto")
+	@JoinColumn(name="id_depto", foreignKey=@ForeignKey(name = "FK_departamento_rolperdeptoper"))
 	private Departamento departamento;
 
 	public RolPersonaTipoPersona getRolPersonaTipPer() {

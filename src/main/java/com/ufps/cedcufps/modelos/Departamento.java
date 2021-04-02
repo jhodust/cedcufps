@@ -67,7 +67,7 @@ public class Departamento implements Serializable {//1
 	
 	@NotNull(message =  "Seleccione la facultad")
 	@ManyToOne(fetch = FetchType.EAGER)//eager para que sirva el ajax
-	@JoinColumn(name="id_facultad",nullable = false, foreignKey=@ForeignKey(name = "FK_facultad_department"))
+	@JoinColumn(name="id_facultad",nullable = false, foreignKey=@ForeignKey(name = "FK_facultad_departamento"))
 	private Facultad facultad;
 
 	

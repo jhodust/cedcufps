@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -29,12 +30,12 @@ public class EducacionContinuaTipoBeneficiario implements Serializable {
 	
 	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="id_educacion_continua")
+	@JoinColumn(name="id_educacion_continua", foreignKey=@ForeignKey(name = "FK_beneficiario_educontinua"))
 	private EducacionContinua educacionContinua;
 	
 	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="id_tipo_beneficiario")
+	@JoinColumn(name="id_tipo_beneficiario", foreignKey=@ForeignKey(name = "FK_tipo_beneficiario_educontinua"))
 	private TipoBeneficiario tipoBeneficiario;
 
 	public Long getId() {

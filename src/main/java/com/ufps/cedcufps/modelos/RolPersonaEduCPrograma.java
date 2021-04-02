@@ -32,15 +32,15 @@ public class RolPersonaEduCPrograma implements Serializable{
 	
 	@Id
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumns({@JoinColumn(name="id_persona", referencedColumnName="id_persona"),
-    			  @JoinColumn(name="id_rol", referencedColumnName="id_rol")})
+    @JoinColumns({@JoinColumn(name="id_persona", referencedColumnName="id_persona", foreignKey=@ForeignKey(name = "FK_persona_rolperproec")),
+    			  @JoinColumn(name="id_rol", referencedColumnName="id_rol", foreignKey=@ForeignKey(name = "FK_rol_rolperproec"))})
 	@OnDelete(action = OnDeleteAction.CASCADE)
     @MapsId
     private PersonaRol rolPersona;
 	
 	@Id
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="id_programa")
+	@JoinColumn(name="id_programa", foreignKey=@ForeignKey(name = "FK_programa_rolperproec"))
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	private Programa programa;
 	

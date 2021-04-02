@@ -7,6 +7,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -19,7 +20,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "asistencias", uniqueConstraints={
-		   @UniqueConstraint(columnNames={"id_jornada", "id_participante"})})
+		   @UniqueConstraint(columnNames={"id_jornada", "id_participante"}, name = "UK_jornada_participante")})
 public class Asistencia implements Serializable {
 
 	/**
@@ -32,12 +33,12 @@ public class Asistencia implements Serializable {
 	private Long id;
 	
 	@ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-	@JoinColumn(name = "id_jornada")
+	@JoinColumn(name="id_jornada", foreignKey=@ForeignKey(name = "FK_jornada_asistencia"))
 	private Jornada jornada;
 	
 	
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="id_participante")
+	@JoinColumn(name="id_participante", foreignKey=@ForeignKey(name = "FK_participante_asistencia"))
 	private Participante participante;
 	
 	@Column(name = "fecha_asistencia")

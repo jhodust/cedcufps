@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -45,7 +46,7 @@ public class Docente extends Persona{
 	
 	@NotNull(message = "Seleccione el Departamento Académico en el que se encuentra adscrito")
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="id_departamento")
+	@JoinColumn(name="id_departamento", foreignKey=@ForeignKey(name = "FK_docente_departamento"))
 	private Departamento departamento;
 	
 	@JsonIgnore //ignora esta referencia cuando se hace mediante ajax(json) 

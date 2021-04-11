@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -21,12 +22,17 @@ import org.springframework.stereotype.Repository;
 
 import com.ufps.cedcufps.dao.IPersonaRolCustomDao;
 import com.ufps.cedcufps.dao.IProgramaDao;
+import com.ufps.cedcufps.dto.DepartamentoDto;
+import com.ufps.cedcufps.dto.DocenteDto;
 import com.ufps.cedcufps.dto.EducacionContinuaWebDto;
 import com.ufps.cedcufps.dto.PersonaRolDto;
 import com.ufps.cedcufps.dto.PersonaRolEducacionContinuaDto;
+import com.ufps.cedcufps.dto.ProgramaDto;
 import com.ufps.cedcufps.exception.CustomException;
 import com.ufps.cedcufps.modelos.PersonaRol;
 import com.ufps.cedcufps.modelos.Programa;
+import com.ufps.cedcufps.utils.RolUtil;
+import com.ufps.cedcufps.utils.TipoPersonaUtil;
 
 @Repository
 public class PersonaRolCustomDaoImpl implements IPersonaRolCustomDao {
@@ -415,5 +421,103 @@ public class PersonaRolCustomDaoImpl implements IPersonaRolCustomDao {
 		.executeUpdate();
 	}
 	
+	
+	@Override
+	public boolean findPermisosTipoPersona(Long idPersona, Long idTipoPersona) {
+		// TODO Auto-generated method stub
+		StringBuilder query = new StringBuilder();
+		query.append("select count(*)=1")
+				.append(" from rol_persona_tip_pers")
+				.append(" where id_rol= ?1 and id_persona = ?2 and id_tipo_persona= ?3");
+				
+		Query q=em.createNativeQuery(query.toString())
+				.setParameter(1, RolUtil.ROLE_MANPEOPLE)
+				.setParameter(2, idPersona)
+				.setParameter(3, idTipoPersona);
+		List<Object > result=q.getResultList();
+		
+		return Integer.parseInt(String.valueOf(result.get(0)))==1;
+		
+	}
+
+	@Override
+	public List<ProgramaDto> findProgramasPermissionEstudiante(Long idPersonaGestionante, Long idPersonaGestionada){
+		StringBuilder query = new StringBuilder();
+		query.append("select p.id, p.programa, p.codigo")
+				.append(" from rol_persona_programa_per rppp join programas p on rppp.id_programa=p.id ")
+				.append(" where rppp.id_rol= ?1 and rppp.id_persona = ?2 and rppp.id_tipo_persona= ?3")
+				.append(" UNION ")
+				.append(" select p.id, p.programa, p.codigo from estudiantes e join programas p on e.id_programa = p.id")
+				.append(" where e.id_persona= ?4 and e.estado = 1");
+				
+		Query q=em.createNativeQuery(query.toString())
+				.setParameter(1, RolUtil.ROLE_MANPEOPLE)
+				.setParameter(2, idPersonaGestionante)
+				.setParameter(3, TipoPersonaUtil.ESTUDIANTE)
+				.setParameter(4, idPersonaGestionada);
+		List<Object[] > result=q.getResultList();
+		List<ProgramaDto> list= new ArrayList<ProgramaDto>();
+		for(Object[] o : result) {
+			ProgramaDto dto= new ProgramaDto();
+			dto.setId(Long.parseLong(String.valueOf(o[0])));
+			dto.setPrograma(String.valueOf(o[1]));
+			dto.setCodigo(String.valueOf(o[2]));
+			list.add(dto);
+		}
+		return list;
+	}
+	
+	@Override
+	public List<ProgramaDto> findProgramasPermissionGraduados(Long idPersonaGestionante, Long idPersonaGestionada){
+		StringBuilder query = new StringBuilder();
+		query.append("select p.id, p.programa, p.codigo")
+				.append(" from rol_persona_programa_per rppp join programas p on rppp.id_programa=p.id ")
+				.append(" where rppp.id_rol= ?1 and rppp.id_persona = ?2 and rppp.id_tipo_persona= ?3")
+				.append(" UNION ")
+				.append(" select p.id, p.programa, p.codigo from graduados g join programas p on g.id_programa = p.id")
+				.append(" where g.id_persona= ?4 and g.estado = 1");
+				
+		Query q=em.createNativeQuery(query.toString())
+				.setParameter(1, RolUtil.ROLE_MANPEOPLE)
+				.setParameter(2, idPersonaGestionante)
+				.setParameter(3, TipoPersonaUtil.GRADUADO)
+				.setParameter(4, idPersonaGestionada);
+		List<Object[] > result=q.getResultList();
+		List<ProgramaDto> list= new ArrayList<ProgramaDto>();
+		for(Object[] o : result) {
+			ProgramaDto dto= new ProgramaDto();
+			dto.setId(Long.parseLong(String.valueOf(o[0])));
+			dto.setPrograma(String.valueOf(o[1]));
+			dto.setCodigo(String.valueOf(o[2]));
+			list.add(dto);
+		}
+		return list;
+	}
+	
+	@Override
+	public List<DepartamentoDto> findDeptosPermissionDocentes(Long idPersonaGestionante, Long idPersonaGestionada){
+		StringBuilder query = new StringBuilder();
+		query.append("select d.id, d.departamento")
+				.append(" from rol_persona_depto_per rpdp join departamentos d on rpdp.id_depto=d.id ")
+				.append(" where rpdp.id_rol= ?1 and rpdp.id_persona = ?2 and rpdp.id_tipo_persona= ?3")
+				.append(" UNION ")
+				.append(" select d.id, d.departamento from docentes doc join departamentos d on doc.id_departamento=d.id")
+				.append(" where doc.id_persona= ?4 and doc.estado = 1");
+				
+		Query q=em.createNativeQuery(query.toString())
+				.setParameter(1, RolUtil.ROLE_MANPEOPLE)
+				.setParameter(2, idPersonaGestionante)
+				.setParameter(3, TipoPersonaUtil.DOCENTE)
+				.setParameter(4, idPersonaGestionada);
+		List<Object[] > result=q.getResultList();
+		List<DepartamentoDto> list= new ArrayList<DepartamentoDto>();
+		for(Object[] o : result) {
+			DepartamentoDto dto= new DepartamentoDto();
+			dto.setId(Long.parseLong(String.valueOf(o[0])));
+			dto.setDepartamento(String.valueOf(o[1]));
+			list.add(dto);
+		}
+		return list;
+	}
 	
 }

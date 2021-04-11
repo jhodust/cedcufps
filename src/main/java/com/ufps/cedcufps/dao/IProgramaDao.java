@@ -80,4 +80,7 @@ public interface IProgramaDao extends PagingAndSortingRepository<Programa, Long>
 	
 	@Query(value = "select p.* from programas p where p.id in (select rpp.id_programa from  roles_personas_programas_ec rpp where id_persona = ?1) or p.id in (select distinct e.id_programa from educacion_continua e where e.id_docente = ?1) ",nativeQuery = true)
 	public List<Programa> findProgramasEducacionContinuaBase(Long idPersona);
+	
+	@Query(value = "select p.* from programas p where p.id_director=?1 ",nativeQuery = true)
+	public List<Programa> findProgramasDashboard(Long idPersona);
 }

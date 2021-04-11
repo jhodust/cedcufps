@@ -74,6 +74,7 @@ function guardarDepartamento(){
 			//window.setTimeout(function(){location.reload()},1000);
 			idFacultad=null;
 			paginadorLoadAjax('/departamentos-academicos/reload');
+			$('#select_facultad_filtro_departamento').val(0);
 			$('#modalRegistroDepartamento').modal('hide');
 			hideSpinnerModal("btnSaveAreas","btnSpinnerAreas");
 		},

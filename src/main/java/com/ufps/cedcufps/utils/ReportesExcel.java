@@ -212,7 +212,10 @@ public class ReportesExcel {
 			int cantidadPonentes=0;
 			String idEduContinuaOld="";
 			for (InformeDetalleEducacionContinuaDto dto : resultParticipantes) {
-				cantidadPonentes=dto.getPonentes().size();
+				if(dto.getPonentes() != null) {
+					cantidadPonentes=dto.getPonentes().size();
+				}
+				
 				if(!idEduContinuaOld.equalsIgnoreCase(dto.getIdCurso()) ) {
 					idEduContinuaOld=dto.getIdCurso();
 					k=0;
@@ -294,26 +297,28 @@ public class ReportesExcel {
 				
 				
 				
-				
-				if(k<cantidadPonentes  && dto.getIdCurso().equalsIgnoreCase(dto.getPonentes().get(k).getIdCurso())) {
-					
-					// docente impartió curso
-					cell = row.createCell(11);
-					cell.setCellValue(dto.getPonentes().get(k).getNombrePonente());
-					//cell.setCellStyle(style1);
-					
-					// tipo documento docente impartió
-					cell = row.createCell(12);
-					cell.setCellValue(dto.getPonentes().get(k).getTipoDocumentoPonente());
-					//cell.setCellStyle(style1);
-					
-					// numero documento docente impartió
-					cell = row.createCell(13);
-					cell.setCellValue(dto.getPonentes().get(k).getNumDocumentoPonente());
-					//cell.setCellStyle(styleNumero2);
-					
-					
+				if(dto.getPonentes() != null) {
+					if(k<cantidadPonentes  && dto.getIdCurso().equalsIgnoreCase(dto.getPonentes().get(k).getIdCurso())) {
+						
+						// docente impartió curso
+						cell = row.createCell(11);
+						cell.setCellValue(dto.getPonentes().get(k).getNombrePonente());
+						//cell.setCellStyle(style1);
+						
+						// tipo documento docente impartió
+						cell = row.createCell(12);
+						cell.setCellValue(dto.getPonentes().get(k).getTipoDocumentoPonente());
+						//cell.setCellStyle(style1);
+						
+						// numero documento docente impartió
+						cell = row.createCell(13);
+						cell.setCellValue(dto.getPonentes().get(k).getNumDocumentoPonente());
+						//cell.setCellStyle(styleNumero2);
+						
+						
+					}
 				}
+				
 				
 				
 				i++;

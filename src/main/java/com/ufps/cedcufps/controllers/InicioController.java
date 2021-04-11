@@ -81,6 +81,14 @@ public class InicioController {
 		return "index";
 	}
 	
+	@RequestMapping(value = "/bienvenida")
+	public String bienvenida(RedirectAttributes redirectAttributes, @RequestParam(name = "email") String email) {
+		
+		redirectAttributes.addFlashAttribute("successMessage", "Has iniciado sesión mediante " + email);
+		return "redirect:/";
+	}
+	
+	
 	@RequestMapping(value = "/reload")
 	public String reloadPanelEventos(@RequestParam(name="page", defaultValue = "0") int page,
 			@RequestParam(name="idTipoEdC", defaultValue = "0") String idTipoEdC,

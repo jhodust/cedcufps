@@ -19,7 +19,14 @@
         <div class="row">
 		<!-- Swiper -->
 		  <div class="swiper-container">
-		    <div class="swiper-wrapper">
+		    <div class="swiper-wrapper" th:if="${#lists.size(educacionesRecientes) == 0}" >
+		    
+		    <div class="swiper-slide" style="overflow: hidden; background-image: url('/img/ufps1.jpg')"></div>
+		    <div class="swiper-slide" style="overflow: hidden; background-image: url('/img/ufps2.jpg')"></div>
+		    <div class="swiper-slide" style="overflow: hidden; background-image: url('/img/ufps3.jpg')"></div>
+		    <div class="swiper-slide" style="overflow: hidden; background-image: url('/img/ufps4.jpg')"></div>
+		      </div>
+		      <div class="swiper-wrapper" th:unless="${#lists.size(educacionesRecientes) == 0}" >
 		    
 		      <div class="card swiper-slide" th:each="edc:${educacionesRecientes}" style="overflow: hidden;">
 		      		

@@ -36,4 +36,6 @@ public interface IPersonaCustomDao {
 	public Externo findOnlyExterno(Long idPersona);
 	
 	public List<DocenteDto> findAllDocentesActivos();
+	
+	
 }

@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 
 import com.ufps.cedcufps.dto.ProgramaDto;
 import com.ufps.cedcufps.modelos.Departamento;
+import com.ufps.cedcufps.modelos.Persona;
 import com.ufps.cedcufps.modelos.Programa;
 
 public interface IProgramaService {
@@ -33,4 +34,6 @@ public interface IProgramaService {
 	public List<ProgramaDto> programasParaEduContinuaBase(Long idPersona, boolean isSuperAdmin, boolean hasPermission);
 	
 	public List<ProgramaDto> findAllProgramasOfPermission(Long idPersona, boolean isSuperAdmin, boolean hasPermission);
+	
+	public List<Programa> findAllProgramasDashboard(Persona p);
 }

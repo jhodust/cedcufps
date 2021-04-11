@@ -496,10 +496,7 @@ function loadEduContinuaBase(e){
 	$('#cantMaxPartEdc').val(e.cantMaxParticipantes);
 	$('#porcentajeAsistenciaEdc').val(e.porcentajeAsistencia);
 	$('#lugarEdc').val(e.lugar);
-	$('#requisitosEdc').val(e.requisitos);
-	$('#objetivoEdc').val(e.objetivo);
-	$('#contenidoGeneralEdc').val(e.contenidoGral);
-	$('#resumenEdc').val(e.resumen);
+	$('#infoAdicionalEdC').summernote('code', e.infoAdicional);
 	$('#selectTipoContinua').val(e.idTipoEduContinua).trigger('change');
 	$('#selectClasificacionCINE').val(e.idClasificacion).trigger('change');
 	$('#programaResponsable').val(e.idProgramaResp).trigger('change');

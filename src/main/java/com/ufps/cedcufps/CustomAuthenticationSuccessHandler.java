@@ -73,7 +73,8 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 	 	     
 	    	 new SecurityContextLogoutHandler().logout(request, response, auth);
 	    }else {
-	    	targetUrl = "/";
+	    	System.out.println("entraaaaaaaaaaaaaaaaaaaaaa aca target url");
+	    	targetUrl = "/bienvenida?email="+p.getEmail();
 	    }
 	    if (response.isCommitted()) {
 	        logger.debug(

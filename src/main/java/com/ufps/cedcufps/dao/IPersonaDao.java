@@ -14,6 +14,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 import com.ufps.cedcufps.modelos.Persona;
+import com.ufps.cedcufps.utils.TipoPersonaUtil;
 
 
 public interface IPersonaDao extends JpaRepository<Persona, Long>, DataTablesRepository<Persona, Long> {

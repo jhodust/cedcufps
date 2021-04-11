@@ -7,6 +7,7 @@ import org.springframework.data.jpa.datatables.mapping.DataTablesOutput;
 
 import com.ufps.cedcufps.dto.DocenteDto;
 import com.ufps.cedcufps.dto.PerfilRolUsuarioDto;
+import com.ufps.cedcufps.dto.PermisosRegistroPersonaDto;
 import com.ufps.cedcufps.dto.PersonaDto;
 import com.ufps.cedcufps.dto.PersonaDtoLogueada;
 import com.ufps.cedcufps.dto.UsuarioAppDto;
@@ -79,7 +80,7 @@ public interface IPersonaService {
 	
 	public boolean isDocente(Persona p);
 	
-	public boolean hasPermissionForPeople(Long idPersona);
+	public boolean hasPermissionForPeople(Persona p);
 	
 	public boolean hasPermissionForEduContinua(Long idPersona);
 	
@@ -113,5 +114,8 @@ public interface IPersonaService {
 	
 	public void updateDirPrograma(String documento);
 	
+	
+	
+	public PermisosRegistroPersonaDto findPermisosRegistrarPersonas(Long idPersonaEdit);
 
 }

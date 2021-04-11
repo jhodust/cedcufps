@@ -201,4 +201,20 @@ public class ProgramaService implements IProgramaService {
 		}
 		return programaMapper.convertListProgramaToProgramaDto(programas);
 	}
+
+	@Override
+	public List<Programa> findAllProgramasDashboard(Persona p) {
+		// TODO Auto-generated method stub
+		List<Programa> programas=new ArrayList<Programa>();
+		if(this.personaService.isSuperAdmin(p)) {
+			System.out.println("is super admin");
+			programas=(List<Programa>)programaDao.findAll();
+		}else {
+			if(this.personaService.isDirPrograma(p)) {
+				System.out.println("is dir programa");
+				programas = programaDao.findProgramasDashboard(p.getId());
+			}
+		}
+		return programas;
+	}
 }

@@ -144,6 +144,7 @@ function guardarPrograma(){
 			idPrograma=0;
 			paginadorLoadAjax('/programas-academicos/reload');
 			$('#modalRegistroPrograma').modal('hide');
+			$('#select_facultad_filtro_programa').val(0);
 			hideSpinnerModal("btnSaveAreas","btnSpinnerAreas");
 		},
 		error: function(err) {

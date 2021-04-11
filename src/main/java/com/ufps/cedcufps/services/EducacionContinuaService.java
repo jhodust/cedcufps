@@ -25,6 +25,7 @@ import com.itextpdf.text.log.SysoLogger;
 import com.ufps.cedcufps.dao.IClasificacionCineDao;
 import com.ufps.cedcufps.dao.IDiplomaCustomDao;
 import com.ufps.cedcufps.dao.IDiplomaDao;
+import com.ufps.cedcufps.dao.IDocenteCustomDao;
 import com.ufps.cedcufps.dao.IDocenteDao;
 import com.ufps.cedcufps.dao.IEducacionContinuaCustomDao;
 import com.ufps.cedcufps.dao.IEducacionContinuaDao;
@@ -33,6 +34,7 @@ import com.ufps.cedcufps.dao.IParticipanteDao;
 import com.ufps.cedcufps.dao.IProgramaDao;
 import com.ufps.cedcufps.dao.ITipoBeneficiarioDao;
 import com.ufps.cedcufps.dao.ITipoEducacionContinuaDao;
+import com.ufps.cedcufps.dto.DocenteDto;
 import com.ufps.cedcufps.dto.EducacionContinuaAppDto;
 import com.ufps.cedcufps.dto.EducacionContinuaWebDto;
 import com.ufps.cedcufps.dto.InfoEducacionContinuaDto;
@@ -105,6 +107,9 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 	private IDocenteDao docenteDao;
 	
 	@Autowired
+	private IDocenteCustomDao docenteCustomDao;
+	
+	@Autowired
 	private IProgramaDao programaDao;
 	
 	@Autowired
@@ -154,9 +159,7 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 	@Override
 	public List<EducacionContinua> educacionContinuaRecientes() {
 		// TODO Auto-generated method stub
-		for(EducacionContinua e: educacionContinuaDao.educacionesContinuasRecientes()) {
-			System.out.println(e.getNombre());
-		}
+		
 		return educacionContinuaDao.educacionesContinuasRecientes();
 	}
 	
@@ -549,10 +552,14 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 				Programa programa= programaDao.findByDirector(p.getId());
 				dto.setIdProgramaResp(programa.getId());
 				dto.setProgramaResp(programa.getPrograma());
-			}else if(hasPermission && personaService.isDocente(p)) {
-				dto.setNombreDocenteResp(usuarioMapper.convertFieldsFullName(p));
-				dto.setCodigoDocenteResp(((Docente)p).getCodigo());
-				dto.setIdDocenteResp(((Docente)p).getId());
+			}else if(hasPermission ) {
+				DocenteDto d=docenteCustomDao.findDocenteByIdPersona(p.getId());
+				if(d != null ) {//persona is docente
+					dto.setNombreDocenteResp(usuarioMapper.convertFieldsFullName(p));
+					dto.setCodigoDocenteResp(d.getCodigo());
+					dto.setIdDocenteResp(d.getId());
+				}
+				
 			}
 		}
 			

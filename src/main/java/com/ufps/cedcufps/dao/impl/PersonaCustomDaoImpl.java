@@ -24,6 +24,8 @@ import com.ufps.cedcufps.modelos.Externo;
 import com.ufps.cedcufps.modelos.Graduado;
 import com.ufps.cedcufps.modelos.Persona;
 import com.ufps.cedcufps.modelos.Programa;
+import com.ufps.cedcufps.utils.RolUtil;
+import com.ufps.cedcufps.utils.TipoPersonaUtil;
 
 @Repository
 public class PersonaCustomDaoImpl implements IPersonaCustomDao {
@@ -280,6 +282,8 @@ public class PersonaCustomDaoImpl implements IPersonaCustomDao {
 		
 	}
 	
-
+	
+	
+	
 
 }

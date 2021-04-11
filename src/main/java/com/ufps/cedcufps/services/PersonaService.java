@@ -43,6 +43,7 @@ import com.ufps.cedcufps.dao.ITipoPersonaDao;
 import com.ufps.cedcufps.dao.impl.EducacionContinuaCustomDaoImpl;
 import com.ufps.cedcufps.dto.DocenteDto;
 import com.ufps.cedcufps.dto.PerfilRolUsuarioDto;
+import com.ufps.cedcufps.dto.PermisosRegistroPersonaDto;
 import com.ufps.cedcufps.dto.PersonaDto;
 import com.ufps.cedcufps.dto.PersonaDtoLogueada;
 import com.ufps.cedcufps.dto.ProgramaDto;
@@ -71,6 +72,8 @@ import com.ufps.cedcufps.modelos.RolPersonaPerPrograma;
 import com.ufps.cedcufps.modelos.RolPersonaTipoPersona;
 import com.ufps.cedcufps.modelos.TipoDocumento;
 import com.ufps.cedcufps.modelos.TipoPersona;
+import com.ufps.cedcufps.utils.RolUtil;
+import com.ufps.cedcufps.utils.TipoPersonaUtil;
 
 @Service
 public class PersonaService implements IPersonaService {
@@ -434,7 +437,7 @@ public class PersonaService implements IPersonaService {
 			return usuarioMapper.convertListPersonasToPersonaDto(personas);
 		}else {
 			
-			if(this.hasPermissionForPeople(p.getId())) {
+			if(this.hasPermissionForPeople(p)) {
 				List<Persona> personas=personaDao.findManyPeople(this.personaCustomDao.listAllPossiblePeople(p.getId()));
 				personas.remove(p);
 				return usuarioMapper.convertListPersonasToPersonaDto(personas);
@@ -459,12 +462,14 @@ public class PersonaService implements IPersonaService {
 	
 	@Override
 	public boolean isSuperAdmin(Persona p) {
-		
-		for(PersonaRol pr: p.getPersonaXRoles()) {
-			if(pr.getRol().getAuthority().equalsIgnoreCase("ROLE_SUPERADMIN")) {
-				return true;
+		if(p!=null) {
+			for(PersonaRol pr: p.getPersonaXRoles()) {
+				if(pr.getRol().getAuthority().equalsIgnoreCase("ROLE_SUPERADMIN")) {
+					return true;
+				}
 			}
 		}
+		
 		return false;
 	}
 	
@@ -497,9 +502,10 @@ public class PersonaService implements IPersonaService {
 	}
 	
 	
+	
+	
 	@Override
-	public boolean hasPermissionForPeople(Long idPersona) {
-		Persona p=personaDao.findPersonaById(idPersona);
+	public boolean hasPermissionForPeople(Persona p) {
 		if(p!=null) {
 			for(PersonaRol pr: p.getPersonaXRoles()) {
 				if(pr.getRol().getAuthority().equalsIgnoreCase("ROLE_MANPEOPLE")) {
@@ -576,7 +582,7 @@ public class PersonaService implements IPersonaService {
 					dto.setIdProgramaDirector(p.getId());
 					dto.setProgramaDirector(p.getPrograma());
 					dto.setHasPermissionForEduContinua(this.hasPermissionForEduContinua(usuario.getId()));
-					dto.setHasPermissionForUsuarios(this.hasPermissionForPeople(usuario.getId()));
+					dto.setHasPermissionForUsuarios(this.hasPermissionForPeople(usuario));
 					dto.setHasPermissionForAttendance(this.hasPermissionForAttendance(usuario.getId()));
 					dto.setProgramasForEduContinua(programaMapper.convertListProgramaToProgramaDto(this.programaDao.findProgramasPermisosEduContinuaForDirProgramaExceptOwn(usuario.getId(), p.getId())));
 					List<Programa> programasPosiblesSelectEduC=(List<Programa>)this.programaDao.findAll();
@@ -611,7 +617,7 @@ public class PersonaService implements IPersonaService {
 					dto.setIdProgramaDirector(null);
 					dto.setProgramaDirector(null);
 					dto.setHasPermissionForEduContinua(this.hasPermissionForEduContinua(usuario.getId()));
-					dto.setHasPermissionForUsuarios(this.hasPermissionForPeople(usuario.getId()));
+					dto.setHasPermissionForUsuarios(this.hasPermissionForPeople(usuario));
 					dto.setHasPermissionForAttendance(this.hasPermissionForAttendance(usuario.getId()));
 					dto.setProgramasForEduContinua(programaMapper.convertListProgramaToProgramaDto(this.programaDao.findProgramasPermisosEduContinuaForDocEstAdminvo(usuario.getId())));
 					dto.setSelectProgramasForEduContinua(programaMapper.convertListProgramaToProgramaDto((List<Programa>)this.programaDao.findAll()));
@@ -632,7 +638,7 @@ public class PersonaService implements IPersonaService {
 				dto.setIdProgramaDirector(null);
 				dto.setProgramaDirector(null);
 				dto.setHasPermissionForEduContinua(this.hasPermissionForEduContinua(usuario.getId()));
-				dto.setHasPermissionForUsuarios(this.hasPermissionForPeople(usuario.getId()));
+				dto.setHasPermissionForUsuarios(this.hasPermissionForPeople(usuario));
 				dto.setHasPermissionForAttendance(this.hasPermissionForAttendance(usuario.getId()));
 				dto.setProgramasForEduContinua(programaMapper.convertListProgramaToProgramaDto(this.programaDao.findProgramasPermisosEduContinuaForDocEstAdminvo(usuario.getId())));
 				List<ProgramaDto> selectProgramasDir= new ArrayList<ProgramaDto>();
@@ -841,5 +847,36 @@ public class PersonaService implements IPersonaService {
 		}else {
 			throw new CustomException("No se encontró el usuario al cuál se le va a otorgar el rol de super admin");
 		}
+	}
+
+	
+
+	@Override
+	public PermisosRegistroPersonaDto findPermisosRegistrarPersonas(Long idPersonaEdit) {
+		// TODO Auto-generated method stub
+		Persona p = this.findPersonaLogueada();
+		PermisosRegistroPersonaDto dto=new PermisosRegistroPersonaDto();
+		if(p == null || this.isSuperAdmin(p)) {
+			dto.setAbleEditEstudiantes(true);
+			dto.setAbleEditDocentes(true);
+			dto.setAbleEditAdministrativos(true);
+			dto.setAbleEditGraduados(true);
+			dto.setAbleEditExternos(true);
+			dto.setProgramasEstudiantes(programaMapper.convertListProgramaToProgramaDto((List<Programa>)programaDao.findAll()));
+			dto.setProgramasGraduados(programaMapper.convertListProgramaToProgramaDto((List<Programa>)programaDao.findAll()));
+			dto.setDepartamentosDocentes(departamentoMapper.convertListDepartamentoToDepartamentosDto((List<Departamento>)departamentoDao.findAll()));
+			return dto;
+		}else if(this.hasPermissionForPeople(p)) {
+			dto.setAbleEditEstudiantes(personaRolCustomDao.findPermisosTipoPersona(p.getId(), TipoPersonaUtil.ESTUDIANTE));
+			dto.setAbleEditDocentes(personaRolCustomDao.findPermisosTipoPersona(p.getId(), TipoPersonaUtil.DOCENTE));
+			dto.setAbleEditAdministrativos(personaRolCustomDao.findPermisosTipoPersona(p.getId(), TipoPersonaUtil.ADMINISTRATIVO));
+			dto.setAbleEditGraduados(personaRolCustomDao.findPermisosTipoPersona(p.getId(), TipoPersonaUtil.GRADUADO));
+			dto.setAbleEditExternos(personaRolCustomDao.findPermisosTipoPersona(p.getId(), TipoPersonaUtil.EXTERNO));
+			dto.setProgramasEstudiantes(personaRolCustomDao.findProgramasPermissionEstudiante(p.getId(), idPersonaEdit));
+			dto.setProgramasGraduados(personaRolCustomDao.findProgramasPermissionGraduados(p.getId(), idPersonaEdit));
+			dto.setDepartamentosDocentes(personaRolCustomDao.findDeptosPermissionDocentes(p.getId(), idPersonaEdit));
+			return dto;
+		}
+		return null;
 	}
 }

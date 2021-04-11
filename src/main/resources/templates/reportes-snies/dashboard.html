@@ -66,7 +66,7 @@
 						<div class="form-group">
 							<label class="form-control-label">Programa Académico </label><select
 								class="form-control" data-toggle="select" id="selectProgramaStatistics">
-								<option value="0">Todos</option>
+								<option value="0" th:if="${isSuperAdmin}">Todos</option>
 								<option th:each="p: ${programas}"
 									th:value="${p.id}" th:text="${p.programa}"></option>
 								

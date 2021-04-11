@@ -24,7 +24,7 @@ public interface IEducacionContinuaDao extends JpaRepository<EducacionContinua, 
 	@Query(value= "SELECT * FROM educacion_continua ec where ec.estado='Activo' and ec.imagen is not null ORDER BY ec.created_at DESC LIMIT 5",nativeQuery = true)
 	public List<EducacionContinua> educacionesContinuasRecientes();
 	
-	@Query(value= "SELECT ec from EducacionContinua ec where ec.estado!='Terminado' ORDER BY ec.fechaInicio DESC")
+	@Query(value= "SELECT ec from EducacionContinua ec where ec.estado!='Terminado' ORDER BY ec.fechaInicio ASC")
 	public Page<EducacionContinua> educacionesContinuasPanel(Pageable pageable);
 	
 	@Query(value= "SELECT * from educacion_continua ec where ec.id in ?1 ORDER BY ec.fecha_inicio DESC", nativeQuery=true)

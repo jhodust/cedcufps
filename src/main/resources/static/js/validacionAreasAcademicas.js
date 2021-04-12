@@ -1,5 +1,4 @@
 $(document).ready(function(){
-	console.log("documento listo");
 	$("#facultad").focusout(function(){
 		validateInputTextRequerido('facultad','errorFacultad');
     

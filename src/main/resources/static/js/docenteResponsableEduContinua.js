@@ -1,16 +1,6 @@
 var token = $("meta[name='_csrf']").attr("content");
 var idDepartamento;
-$(document).ready(function ()
-		{
-				
-			/*$.getJSON('http://localhost:8080/programas-academicos/listar', function(json) {
-				console.log(json)
-			});*/
-			
-	
-	
-	
-});
+
 
 
 function guardarDepartamento(){

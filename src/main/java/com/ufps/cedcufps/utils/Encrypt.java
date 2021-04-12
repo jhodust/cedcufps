@@ -13,8 +13,6 @@ public class Encrypt {
 	    SimpleDateFormat formateador = new SimpleDateFormat("dd-MM-yyyy HH:mm");
 	    s=s+"_"+formateador.format(fechaInscripcion);
         try {
-        	System.out.println("s final");
-        	System.out.println(s);
 			return Base64.getEncoder().encodeToString(s.getBytes("utf-8"));
 		} catch (UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block

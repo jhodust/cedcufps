@@ -92,28 +92,19 @@ public class ProgramaService implements IProgramaService {
 			throw new CustomException("El código ingresado ya está asignado a otro programa", HttpStatus.BAD_REQUEST);
 		}
 		
-		System.out.println("validar si existe ya el director de programas");
 		if(programaDao.cantidadDirProgramaExistentes(p.getId(),p.getDirectorPrograma().getId())>0) {
-			System.out.println("desvincular director");
 			programaDao.desvincularDirectorPrograma(p.getId(),p.getDirectorPrograma().getId());
-			System.out.println("delete roles");
 			personaRolCustomDao.deleteRolesDirPrograma(p.getDirectorPrograma().getId());
 		}
 		
 		if(p.getId()>0 ) {
 			Programa pr=programaDao.findById(p.getId()).orElseThrow(() -> new CustomException("El Programa Académico no fue encontrado en la base de datos"));
 			if(pr.getDirectorPrograma() != null && pr.getDirectorPrograma().getId().equals(p.getDirectorPrograma().getId())) {
-				System.out.println("el director anterior es el mismo");
 				asignarPermisosDir=false;
 			}else {
-				System.out.println("antes de validar si el director del programa es null");
 				if(pr.getDirectorPrograma()!=null) {
-					System.out.println("director de programa no era null");
-					System.out.println("delete permisos");
 					personaRolCustomDao.deleteRolesDirPrograma(pr.getDirectorPrograma().getId());
 				}
-				
-				System.out.println("actualizar director");
 				pr.setDirectorPrograma(docenteDao.findById(p.getDirectorPrograma().getId()).orElseThrow(() -> new CustomException("El docente seleccionado no fue encontrado en la base de datos")));
 				
 			}
@@ -125,9 +116,7 @@ public class ProgramaService implements IProgramaService {
 		}
 		try {
 			programaDao.save(p);
-			System.out.println("idddd programaaaaaaaaaaaaaaa: " + p.getId());
 			if(asignarPermisosDir) {
-				System.out.println("asignar permisos");
 				personaRolCustomDao.asignarPermisosDirector(p.getDirectorPrograma().getId(), p.getId());
 			}
 		}catch(Exception e) {
@@ -180,10 +169,8 @@ public class ProgramaService implements IProgramaService {
 	public List<ProgramaDto> programasParaEduContinuaBase(Long idPersona, boolean isSuperAdmin, boolean hasPermission){
 		List<Programa> programas= new ArrayList<Programa>();
 		if(isSuperAdmin) {
-			System.out.println("es admin y lista todo");
 			programas= (List<Programa>)programaDao.findAll();
 		}else if (hasPermission) {
-			System.out.println("es director y lista programas director");
 			programas=programaDao.findProgramasEducacionContinuaBase(idPersona);
 			
 		}
@@ -207,11 +194,9 @@ public class ProgramaService implements IProgramaService {
 		// TODO Auto-generated method stub
 		List<Programa> programas=new ArrayList<Programa>();
 		if(this.personaService.isSuperAdmin(p)) {
-			System.out.println("is super admin");
 			programas=(List<Programa>)programaDao.findAll();
 		}else {
 			if(this.personaService.isDirPrograma(p)) {
-				System.out.println("is dir programa");
 				programas = programaDao.findProgramasDashboard(p.getId());
 			}
 		}

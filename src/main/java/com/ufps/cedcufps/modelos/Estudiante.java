@@ -16,7 +16,7 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name="estudiantes", uniqueConstraints={
 		   @UniqueConstraint(columnNames={"codigo", "id_programa"},name = "UK_code_program_student")})
-@PrimaryKeyJoinColumn(name="id_persona")
+@PrimaryKeyJoinColumn(name="id_persona", foreignKey=@ForeignKey(name = "FK_estudiante_persona"))
 public class Estudiante extends Persona{
 
 	/**

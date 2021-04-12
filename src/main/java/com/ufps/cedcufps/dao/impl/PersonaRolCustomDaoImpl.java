@@ -376,7 +376,6 @@ public class PersonaRolCustomDaoImpl implements IPersonaRolCustomDao {
 		
 		
 		/*****************rol para administrar eventos del programa del cual es director*****************/
-		System.out.println("asignar permisos manaeccu");
 		this.save("ROLE_MANAECCU",idDirPrograma);
 		
 		
@@ -385,7 +384,6 @@ public class PersonaRolCustomDaoImpl implements IPersonaRolCustomDao {
 		/*
 		 * ****************************rol para administrar personas ***********************
 		 */
-		System.out.println("asignar permisos manpeople");
 		this.save("ROLE_MANPEOPLE",idDirPrograma);
 		this.savePermisoParaTipoPersonas("ROLE_MANPEOPLE", idDirPrograma, "Estudiante");
 		this.savePermisoParaTipoPersonas("ROLE_MANPEOPLE", idDirPrograma, "Graduado");
@@ -398,13 +396,11 @@ public class PersonaRolCustomDaoImpl implements IPersonaRolCustomDao {
 		/*
 		 * ****************************rol para tomar asistencia app***********************
 		 */
-		System.out.println("asignar permisos attendance");
 		this.save("ROLE_ATTENDANCE",idDirPrograma);
 		
 		/*
 		 * ****************************rol para administrar informe snies***********************
 		 */
-		System.out.println("asignar permisos snies");
 		this.save("ROLE_SNIES",idDirPrograma);
 		
 		

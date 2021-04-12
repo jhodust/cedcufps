@@ -392,35 +392,24 @@
   <script th:src="@{/js/inscripcion.js}" type="text/javascript"></script>
   <script th:inline="javascript">
     var eduContinua=[[${ec.educacionContinua}]];
-    console.log("#############################");
-    console.log(eduContinua);
     var fechaIEvento = [[${#dates.format(ec.educacionContinua.fechaInicio, 'dd/MM/yyyy HH:mm')}]];
 	var fechaFEvento = [[${#dates.format(ec.educacionContinua.fechaFin, 'dd/MM/yyyy HH:mm')}]];
-    console.log("fechas formateadas");
-    console.log(fechaInicioEvento);
-    console.log(fechaFinEvento);
+    
     var idsTB= [];
     eduContinua.tipoBeneficiarios.forEach(element => idsTB.push(element.id));
     $('#selectTipoBeneficiarios').val(idsTB).trigger('change');
     </script>
   <script th:src="@{/js/jornada.js}" type="text/javascript"></script>
   <script th:inline="javascript">
-  console.log("educontinuaaaaaaaaaaaa");
     var idEduContinua = eduContinua.id;
-    console.log(idEduContinua);
     </script>
   <script th:src="@{/js/ponente.js}" type="text/javascript"></script>
   <script th:src="@{/js/inscripcion.js}" type="text/javascript"></script>
   <script type="text/javascript" th:inline="javascript">
 	  
   var asistenciaGlobal= [[${asistenciaGlobal}]];
-  console.log("asistenciaGlobal");
-  console.log(asistenciaGlobal);
   
   var diploma=[[${ec.educacionContinua.diploma}]];
-	console.log("###################");
-	console.log("diploma");
-	console.log(diploma);
 	
 	
   </script>

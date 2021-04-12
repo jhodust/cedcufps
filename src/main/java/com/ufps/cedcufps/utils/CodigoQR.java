@@ -25,10 +25,7 @@ public class CodigoQR {
 	
 	public static String generateQR(Path path, String filename, String text) throws Exception {
 		String rutaTemp=path.resolve(filename).toString();
-		System.out.println("ruta tempppppppp en generate qr");
-		System.out.println(rutaTemp);
 		File file=Paths.get(rutaTemp).toAbsolutePath().toFile();
-		System.out.println("filename para generador qr " + file.getAbsolutePath());
 		int h=300;
 		int w=300;
         QRCodeWriter writer = new QRCodeWriter();

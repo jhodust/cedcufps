@@ -49,8 +49,7 @@ public class ReportesExcel {
 	
 	public static String reporteCursos(List<InformeCursosDto> result, String nombre, Path plantilla, Path destino) {
 		String filename=destino.resolve(String.format(standardInformeCursos,nombre)).toString();
-		System.out.println("filename reporte cursos");
-		System.out.println(filename);
+		
 		FileInputStream file;
 		try {
 			file = new FileInputStream(plantilla.toFile());
@@ -59,7 +58,6 @@ public class ReportesExcel {
 			int i = 1;
 			for (InformeCursosDto dto : result) {
 				Row row = sheet.getRow(i);
-				System.out.println("i: " + i);
 				if (row == null) {
 					row = sheet.createRow(i);
 				}
@@ -93,8 +91,7 @@ public class ReportesExcel {
 			
 			File nuevoArchivo=Paths.get(filename).toAbsolutePath().toFile();
 			FileOutputStream outputStream = new FileOutputStream(nuevoArchivo.getAbsolutePath());
-			System.out.println("rutaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa educacion continua");
-			System.out.println(nuevoArchivo.getAbsolutePath());
+			
 			workbook.write(outputStream);
 			workbook.close();
 		} catch (Exception e) {
@@ -107,8 +104,7 @@ public class ReportesExcel {
 	public static String reporteEducacionContinua(List<InformeEducacionContinuaDto> resultEduContinua, 
 			List<InformeDetalleEducacionContinuaDto> resultParticipantes, String nombre, Path plantilla, Path destino) {
 		String filename=destino.resolve(String.format(standardInformeEducacionContinua,nombre)).toString();
-		System.out.println("filename reporte educacion continua");
-		System.out.println(filename);
+		
 		FileInputStream file;
 		try {
 			file = new FileInputStream(plantilla.toFile());
@@ -124,7 +120,6 @@ public class ReportesExcel {
 			int i = 1;
 			for (InformeEducacionContinuaDto dto : resultEduContinua) {
 				Row row = sheet.getRow(i);
-				System.out.println("i: " + i);
 				if (row == null) {
 					row = sheet.createRow(i);
 				}
@@ -173,35 +168,7 @@ public class ReportesExcel {
 				i++;
 			}
 			
-			/*List<IndexedColors> colores= new ArrayList<IndexedColors>();
-			colores.add(IndexedColors.AQUA);
-			colores.add(IndexedColors.BRIGHT_GREEN1);
-			colores.add(IndexedColors.CORAL);
-			colores.add(IndexedColors.CORNFLOWER_BLUE);
-			colores.add(IndexedColors.DARK_YELLOW);
-			colores.add(IndexedColors.GOLD);
-			colores.add(IndexedColors.GREEN);
-			colores.add(IndexedColors.GREY_25_PERCENT);
-			colores.add(IndexedColors.LAVENDER);
-			colores.add(IndexedColors.LEMON_CHIFFON);
-			colores.add(IndexedColors.LIGHT_BLUE);
-			colores.add(IndexedColors.LIGHT_GREEN);
-			colores.add(IndexedColors.LIGHT_ORANGE);
-			colores.add(IndexedColors.LIGHT_TURQUOISE1);
-			colores.add(IndexedColors.LIME);
-			colores.add(IndexedColors.GREY_50_PERCENT);
-			colores.add(IndexedColors.ORANGE);
-			colores.add(IndexedColors.PALE_BLUE);
-			colores.add(IndexedColors.PINK1);
-			colores.add(IndexedColors.RED1);
-			colores.add(IndexedColors.ROSE);
-			colores.add(IndexedColors.ROYAL_BLUE);
-			colores.add(IndexedColors.SEA_GREEN);
-			colores.add(IndexedColors.SKY_BLUE);
-			colores.add(IndexedColors.TAN);
-			colores.add(IndexedColors.TURQUOISE);
-			colores.add(IndexedColors.WHITE);
-			colores.add(IndexedColors.YELLOW);*/
+			
 			
 			sheet = workbook.getSheet("DETALLE");
 			
@@ -220,20 +187,10 @@ public class ReportesExcel {
 					idEduContinuaOld=dto.getIdCurso();
 					k=0;
 				}
-				//CellStyle style1 = workbook.createCellStyle();
-				//style1.setFillForegroundColor(colores.get(numColor).getIndex());
-				//style1.setFillPattern(FillPatternType.SOLID_FOREGROUND);
-				//CellStyle styleNumero2 = workbook.createCellStyle();
-				//styleNumero2.setDataFormat(format.getFormat("#,###"));
-				//styleNumero2.setFillForegroundColor(style1.getFillForegroundColor());
-				//styleNumero2.setFillPattern(style1.getFillPattern());
-				//if(numColor==colores.size()-1) {
-				//	numColor=0;
-				//}
+				
 				
 				Row row = sheet.getRow(i);
 				
-				System.out.println("i: " + i);
 				if (row == null) {
 					row = sheet.createRow(i);
 				}
@@ -245,8 +202,6 @@ public class ReportesExcel {
 				
 				// id tipo beneficio extension
 				cell = row.createCell(1);
-				System.out.println("imprime el beneficiario");
-				System.out.println(dto.getIdTipoBeneficiario());
 				cell.setCellValue(dto.getIdTipoBeneficiario());
 				//cell.setCellStyle(style1);
 				
@@ -332,8 +287,7 @@ public class ReportesExcel {
 			
 			File nuevoArchivo=Paths.get(filename).toAbsolutePath().toFile();
 			FileOutputStream outputStream = new FileOutputStream(nuevoArchivo.getAbsolutePath());
-			System.out.println("rutaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa reporte educacion continua ");
-			System.out.println(nuevoArchivo.getAbsolutePath());
+			
 			workbook.write(outputStream);
 			workbook.close();
 		} catch (Exception e) {
@@ -348,8 +302,7 @@ public class ReportesExcel {
 	public static String reporteDocentesParticipantesResponsables(List<InformeParticipanteResponsableDto> result, 
 			String nombre,Path plantilla, Path destino) {
 		String filename=destino.resolve(String.format(standardInformeParticipantes,nombre)).toString();
-		System.out.println("filename reporte participantes");
-		System.out.println(filename);
+		
 		
 		FileInputStream file;
 		try {
@@ -359,7 +312,6 @@ public class ReportesExcel {
 			int i = 1;
 			for (InformeParticipanteResponsableDto dto : result) {
 				Row row = sheet.getRow(i);
-				System.out.println("i: " + i);
 				if (row == null) {
 					row = sheet.createRow(i);
 				}
@@ -437,8 +389,6 @@ public class ReportesExcel {
 			File nuevoArchivo=Paths.get(filename).toAbsolutePath().toFile();
 			FileOutputStream outputStream = new FileOutputStream(nuevoArchivo.getAbsolutePath());
 			
-			System.out.println("rutaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa participantes responsables");
-			System.out.println(nuevoArchivo.getAbsolutePath());
 			workbook.write(outputStream);
 			workbook.close();
 		} catch (Exception e) {

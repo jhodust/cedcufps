@@ -3,19 +3,16 @@ $(document).ready(function ()
 {
 	
 	$('#selectEdCBase').on('select2:select', function (e) { 
-		console.log(e);
 		findEducacionContinuaBase(e.params.data.id);
 	});
 	
 	$('#selectProgramaBase').on('select2:select', function (e) { 
-		console.log(e.params.data);
 		loadListEduContinuaBase(e.params.data.id);
 	});
 	
 	$("#selectTipoContinua").select2({
 		  tags: true,
 		  createTag: function (params) {
-			    console.log(params);
 			    return {
 			      id: -1,
 			      text: params.term,
@@ -31,13 +28,7 @@ $(document).ready(function ()
 		var inputDuracion=document.getElementById('duracion');
 		var errorDuracion=document.getElementById('errDuracionEdc');
 		var boton = document.getElementById('btnGuardarEdC');
-		console.log("error");
-		console.log(errorDuracion);
-		console.log(inputDuracion);
-		console.log(inputDuracion.value);
-		console.log(tipoContinua.val());
 		if(tipoContinua.val()=="1" || tipoContinua.val()=="4"){//curso talleres
-			console.log("entra por curso");
 			if(inputDuracion.value<16){
 				errorDuracion.innerText="El " + tipoContinua.text() + " debe tener mínimo 16 horas de duración";
 				inputDuracion.classList.add("is-invalid");
@@ -83,7 +74,6 @@ $(document).ready(function ()
 		 validDuracion(horas);
 		    
 	  });
-console.log("preparando datepicker");
 	$("#fechaLimInscripcionEduCont").flatpickr({
    		enableTime: true,
    	    dateFormat: "d/m/Y H:i",
@@ -109,22 +99,7 @@ console.log("preparando datepicker");
 	    							defaultDate:fechaFinEvento,
 	    							})],
 		onChange: function(selectedDates, dateStr, instance) {
-		    	console.log(selectedDates);
-		    	console.log(selectedDates[0].toDateString());
-		    	console.log(dateStr);
-		    	console.log(selectedDates[0].getDate());
-		    	console.log("toString:" + selectedDates[0].toString());
-		    	console.log("dia: " + selectedDates[0].getDay());
-		    	console.log("mes: " + selectedDates[0].getMonth());
-		    	console.log("UTCMONTH " + selectedDates[0].getUTCMonth());
-		    	console.log("fullYear: " + selectedDates[0].getFullYear());
-		    	console.log("años: " + selectedDates[0].getYear());
-		    	console.log("horas: "+ selectedDates[0].getHours());
-		    	console.log("toLocaleString: "+selectedDates[0].toLocaleString());
-		    	console.log("toLocaleDateString: "+selectedDates[0].toLocaleDateString());
 		    	
-		    	
-		    	console.log("minDate: "+selectedDates[0].toDateString());
 	           
 		    	$("#fechaLimInscripcionEduCont").flatpickr({
 	       		enableTime: true,
@@ -157,11 +132,9 @@ function validDuracion(horas){
 	var inputDuracion=document.getElementById('duracion');
 	var errorDuracion=document.getElementById('errDuracionEdc');
 		var boton = document.getElementById('btnGuardarEdC');
-		console.log("horas");
-		console.log(horas);
+		
 		if(tipoContinua.val()==1 || tipoContinua.val()==4){//curso talleres
-			console.log("entra por curso");
-			console.log(horas<16);
+			
 			if(horas.trim()<16){
 				errorDuracion.innerText="El " + tipoContinua.text() + " debe tener mínimo 16 horas de duración";
 				inputDuracion.classList.add("is-invalid");
@@ -174,8 +147,7 @@ function validDuracion(horas){
 				return true;
 			}
 		}else if(tipoContinua.val()==2){//diplomados
-			console.log("horas en diplomados if");
-			console.log(horas);
+			
 			if(horas.trim()<90){
 				errorDuracion.innerText="El " + tipoContinua.text() + " debe tener mínimo 90 horas de duración";
 				inputDuracion.classList.add("is-invalid");
@@ -276,27 +248,7 @@ function ajaxSaveEducacionContinua(){
 	  var idDocenteResponsable=$('#docenteResponsable').val();
 	  var idClasificacionCine=$('#selectClasificacionCINE').val();
 	  var infoAdicional=$('#infoAdicionalEdC').val();
-	  console.log(nombre=="" );
-	  console.log(fechaInicio=="");
-	  console.log( fechaFin=="");
-	  console.log(duracion<=0 );
-	  console.log(duracion=="");
-	  console.log(fechaLimInscripcion=="" );
-	  console.log(cantMaxParticipantes);
-	  console.log(cantMaxParticipantes<=0 && cantMaxParticipantes!="");
-	  console.log(costoInscripcion);
-	  console.log(costoInscripcion<=0 && costoInscripcion!="");
 	  
-	  console.log(lugar=="");
-	  console.log(costoEducacionContinua<=0);
-	  console.log(costoEducacionContinua=="" );
-	  console.log(porcentajeAsistencia <0);
-	  console.log(porcentajeAsistencia>100);
-	  console.log(porcentajeAsistencia=="");
-	  console.log(idTipoEduContinua==0);
-	  console.log(idProgramaResponsable==0);
-	  console.log(idDocenteResponsable==0);
-	  console.log(idClasificacionCine==0);
 	  var valid1 = validateInputTextRequerido('nombreEdc','errNombreEdc');
 	  var valid2=validateLengthTxt('nombreEdc','errNombreEdc',150);
 	  var valid3 = validateInputTextRequerido('fechaInicioEduCont','errFechaInicioEdc');
@@ -315,25 +267,7 @@ function ajaxSaveEducacionContinua(){
 	  var valid16 = validateSelect('selectClasificacionCINE','errClasificacionEdc');
 	  var valid17 = validateSelect('programaResponsable','errProgRespEdc');
 	  var valid18 = validateSelect('docenteResponsable','errDocRespEdc');
-	  console.log("validaciones");
-	  console.log(valid1);
-	  console.log(valid2);
-	  console.log(valid3);
-	  console.log(valid4);
-	  console.log(valid5);
-	  console.log(valid6);
-	  console.log(valid7);
-	  console.log(valid8);
-	  console.log(valid9);
-	  console.log(valid10);
-	  console.log(valid11);
-	  console.log(valid12);
-	  console.log(valid13);
-	  console.log(valid14);
-	  console.log(valid15);
-	  console.log(valid16);
-	  console.log(valid17);
-	  console.log(valid18);
+	  
 	  if( !valid1 || !valid2 || !valid3 || !valid4 || !valid5 || !valid6 || !valid7 || !valid8 || !valid9
 			  || !valid10 || !valid11 || !valid12 || !valid13 || !valid14 || !valid15 || !valid16 || !valid17 || !valid18){
 		 
@@ -346,10 +280,7 @@ function ajaxSaveEducacionContinua(){
 	  }
 	  
 	  var imagen = $('#inputImagenEvento')[0].files;
-	  console.log(imagen[0]);
 	  var formData = new FormData();
-	  console.log("idddddddddddddddddddddd");
-	  console.log(idEduContinua);
 	  formData.append('imagen',imagen[0]);
 	  formData.append('id',idEduContinua);
 	  formData.append('nombre',nombre);
@@ -379,8 +310,6 @@ function ajaxSaveEducacionContinua(){
 		  formData.append('consecutivo',consecutivo);
 	  }
 	  
-	  console.log("analizando formData");
-	  console.log(formData);
 	  showSpinnerModal("btnGuardarEdC","btnSpinnerEdC");
  $.ajax({
 		headers: {"X-CSRF-TOKEN": token},
@@ -392,7 +321,6 @@ function ajaxSaveEducacionContinua(){
        contentType: false,
        cache: false,
 		success: function(result) {
-			console.log(result);
 			toastr.success('Se ha guardado la información', 'Excelente!');
 			
 			if(idEduContinua==0){
@@ -410,7 +338,6 @@ function ajaxSaveEducacionContinua(){
 		},
 		error: function(err) {
 			hideSpinnerModal("btnGuardarEdC","btnSpinnerEdC");
-			console.log(err);
 			//hideLoader();
 			if(err.responseJSON.length >0){
 				toastr.error('No se pudo procesar la solicitud...', 'Error!');
@@ -434,8 +361,6 @@ function ajaxSaveEducacionContinua(){
 }
 
 function findEducacionContinuaBase(nombre){
-	console.log("id base");
-	console.log(nombre);
 	$.ajax({
 		headers: {"X-CSRF-TOKEN": token},
 		url: "/educacion-continua/search-base",
@@ -444,20 +369,16 @@ function findEducacionContinuaBase(nombre){
         contentType: "application/json; charset=utf-8",
         cache: false,
 		success: function(result) {
-			console.log("resultado find base");
-			console.log(result);
 			loadEduContinuaBase(result);
 			
 		},
 		error: function(err) {
-			console.log(err);
 			
 		}
 	});
 }
 
 function loadListEduContinuaBase(idPrograma){
-	console.log("cargando");
 	clearSelectEduContinuaBase()
 	$.ajax({
 		headers: {"X-CSRF-TOKEN": token},
@@ -467,15 +388,12 @@ function loadListEduContinuaBase(idPrograma){
         contentType: "application/json; charset=utf-8",
         cache: false,
 		success: function(result) {
-			console.log(result);
 			result.forEach(function(element){
-				console.log(element);
 				var newOption = new Option(element, element, false, false);
 				$('#selectEdCBase').append(newOption);
 			});
 		},
 		error: function(err) {
-			console.log(err);
 			
 		}
 	});
@@ -501,13 +419,8 @@ function loadEduContinuaBase(e){
 	$('#selectClasificacionCINE').val(e.idClasificacion).trigger('change');
 	$('#programaResponsable').val(e.idProgramaResp).trigger('change');
 	$('#docenteResponsable').val(e.idDocenteResp).trigger('change');
-	console.log("idProgramaResp");
-	console.log(e.idProgramaResp);
-	console.log("idDocenteResp");
-	console.log(e.idDocenteResp)
+	
 	var idsTB= [];
-	console.log("tipo beneficiarios");
-	console.log(e.tipoBeneficiarios);
     e.tipoBeneficiarios.forEach(element => idsTB.push(element.id));
     $('#selectTipoBeneficiarios').val(idsTB).trigger('change');
     consecutivo=e.consecutivo;

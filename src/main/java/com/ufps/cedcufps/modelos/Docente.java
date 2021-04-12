@@ -32,7 +32,7 @@ import lombok.Setter;
 
 @Entity
 @Table(name="docentes")
-@PrimaryKeyJoinColumn(name="id_persona")
+@PrimaryKeyJoinColumn(name="id_persona", foreignKey=@ForeignKey(name = "FK_docente_persona"))
 public class Docente extends Persona{
 
 	/**

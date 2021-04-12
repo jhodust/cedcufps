@@ -160,9 +160,6 @@ public class ManejoPdf {
 				/*cargo la imagen*/
 				
 				Path path = dirFolderImgs.resolve(header);
-				System.out.println("HEADERRRRR");
-				System.out.println(path.toString());
-				System.out.println(path.toAbsolutePath());
 				Image img = Image.getInstance(path.toAbsolutePath().toString());
 				
 				/*preparo la tabla*/
@@ -177,9 +174,6 @@ public class ManejoPdf {
 				/**************************footer fijado**************************************/
 				/*cargo la imagen*/
 				path = dirFolderImgs.resolve(footer);
-				System.out.println("foooooteeeeer");
-				System.out.println(path.toString());
-				System.out.println(path.toAbsolutePath());
 				
 				img = Image.getInstance(path.toAbsolutePath().toString());
 				

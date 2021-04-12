@@ -24,6 +24,7 @@ import com.ufps.cedcufps.modelos.Externo;
 import com.ufps.cedcufps.modelos.Graduado;
 import com.ufps.cedcufps.modelos.Persona;
 import com.ufps.cedcufps.modelos.Programa;
+import com.ufps.cedcufps.modelos.TipoDocumento;
 import com.ufps.cedcufps.utils.RolUtil;
 import com.ufps.cedcufps.utils.TipoPersonaUtil;
 
@@ -101,8 +102,6 @@ public class PersonaCustomDaoImpl implements IPersonaCustomDao {
 		Query q=em.createNativeQuery(query.toString());
 		q.setParameter(1, idPersona);
 		List<Object> result=q.getResultList();
-		System.out.println("///////////////////////////////////////////////////////////////////////////");
-		System.out.println("tamaño resultado tipos: " +result.size());
 		query = new StringBuilder();
 		
 		int n=1;
@@ -142,8 +141,6 @@ public class PersonaCustomDaoImpl implements IPersonaCustomDao {
 			n++;
 		}
 		
-		System.out.println("*************************************** query******");
-		System.out.println(query.toString());
 		q=em.createNativeQuery(query.toString());
 		q.setParameter(1, idPersona);
 		
@@ -280,6 +277,69 @@ public class PersonaCustomDaoImpl implements IPersonaCustomDao {
 		
 		return list;
 		
+	}
+
+	@Override
+	public Docente findDocenteResponsable(Long idPersona) {
+		// TODO Auto-generated method stub
+		StringBuilder query = new StringBuilder();
+		query.append("SELECT p.id, p.primer_nombre, p.segundo_nombre, p.primer_apellido, p.segundo_apellido, d.codigo")
+				.append(" from docentes as d")
+				.append(" join personas as p on d.id_persona=p.id")
+				.append(" where p.id = ?1");
+		
+		Query q= em.createNativeQuery(query.toString()).setParameter(1, idPersona);
+		List<Object[]> result= q.getResultList();
+		if(result.size()==1) {
+			Docente d= new Docente();
+			d.setId(Long.parseLong(String.valueOf(result.get(0)[0])));
+			d.setPrimerNombre(String.valueOf(result.get(0)[1]));
+			d.setSegundoNombre(String.valueOf(result.get(0)[2]));
+			d.setPrimerApellido(String.valueOf(result.get(0)[3]));
+			d.setSegundoApellido(String.valueOf(result.get(0)[4]));
+			d.setCodigo(String.valueOf(result.get(0)[5]));
+			return d;
+		}
+		
+		return null;
+	}
+
+	@Override
+	public List<Persona> findPersonasList(List<Long> ids) {
+		// TODO Auto-generated method 
+		StringBuilder query = new StringBuilder();
+		query.append("SELECT p.id as id_persona, p.primer_nombre, p.segundo_nombre, p.primer_apellido, p.segundo_apellido,")
+			 .append(" p.id_acceso, p.is_estudiante, p.is_docente, p.is_administrativo, p.is_graduado, p.is_externo,")
+			 .append(" p.email, tp.id as id_tipo_documento, tp.tipo_documento")
+				.append(" from personas as p")
+				.append(" join tipos_documento tp on p.id_tipo_documento=tp.id")
+				.append(" where p.id in ( ?1 )");
+		
+		Query q= em.createNativeQuery(query.toString()).setParameter(1, ids);
+		List<Object[]> result= q.getResultList();
+		List<Persona> personas=new ArrayList<Persona>();
+		for(Object[] object:result) {
+			Persona per=new Persona();
+			per.setId(Long.parseLong(String.valueOf(object[0])));
+			per.setPrimerNombre(String.valueOf(object[1]));
+			per.setPrimerApellido(String.valueOf(object[2]));
+			per.setSegundoNombre(String.valueOf(object[3]));
+			per.setSegundoApellido(String.valueOf(object[4]));
+			per.setIdAcceso(String.valueOf(object[5]));
+			per.setEstudiante(Integer.parseInt(String.valueOf(object[6]))==1);
+			per.setDocente(Integer.parseInt(String.valueOf(object[7]))==1);
+			per.setAdministrativo(Integer.parseInt(String.valueOf(object[8]))==1);
+			per.setGraduado(Integer.parseInt(String.valueOf(object[9]))==1);
+			per.setExterno(Integer.parseInt(String.valueOf(object[10]))==1);
+			per.setEmail(String.valueOf(object[11]));
+			TipoDocumento td= new TipoDocumento();
+			td.setId(Long.parseLong(String.valueOf(object[12])));
+			td.setTipoDocumento(String.valueOf(object[13]));
+			per.setTipoDocumento(td);
+			personas.add(per);
+		}
+		
+		return personas;
 	}
 	
 	

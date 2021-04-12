@@ -171,17 +171,13 @@
 									</div>
 									
 									<script th:inline="javascript">
-										console.log("fechas evento");
 										var fIni= [[${educacionContinua.fechaInicio}]];
 										var fFin=[[${educacionContinua.fechaFin}]];
 										var fLim=[[${educacionContinua.fechaLimInscripcion}]];
 									    var fechaInicioEvento = [[${#dates.format(educacionContinua.fechaInicio, 'dd/MM/yyyy HH:mm')}]];
 									    var fechaFinEvento = [[${#dates.format(educacionContinua.fechaFin, 'dd/MM/yyyy HH:mm')}]];
 									    var fechaLimInscripcionEvento = [[${#dates.format(educacionContinua.fechaLimInscripcion, 'dd/MM/yyyy HH:mm')}]];
-								 		console.log("formatos");
-								 		console.log(fechaInicioEvento);
-								 		console.log(fechaFinEvento);
-								 		console.log(fechaLimInscripcionEvento);
+								 		
 								 </script>
 									<div class="row">
 										<div class="col-md-4">

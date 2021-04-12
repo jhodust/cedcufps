@@ -25,8 +25,15 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import com.google.common.primitives.Longs;
+import com.ufps.cedcufps.dao.IClasificacionCineDao;
+import com.ufps.cedcufps.dao.IDiplomaDao;
+import com.ufps.cedcufps.dao.IDocenteDao;
 import com.ufps.cedcufps.dao.IEducacionContinuaCustomDao;
 import com.ufps.cedcufps.dao.IJornadaDao;
+import com.ufps.cedcufps.dao.IPersonaCustomDao;
+import com.ufps.cedcufps.dao.IProgramaDao;
+import com.ufps.cedcufps.dao.ITipoBeneficiarioEducacionContinua;
+import com.ufps.cedcufps.dao.ITipoEducacionContinuaDao;
 import com.ufps.cedcufps.dto.CertificacionDto;
 import com.ufps.cedcufps.dto.EducacionContinuaAppDto;
 import com.ufps.cedcufps.dto.EducacionContinuaWebDto;
@@ -35,6 +42,7 @@ import com.ufps.cedcufps.dto.ParticipanteDto;
 import com.ufps.cedcufps.dto.TipoBeneficiarioDto;
 import com.ufps.cedcufps.mapper.IEducacionContinuaMapper;
 import com.ufps.cedcufps.mapper.IJornadaMapper;
+import com.ufps.cedcufps.modelos.Docente;
 import com.ufps.cedcufps.modelos.EducacionContinua;
 import com.ufps.cedcufps.modelos.Persona;
 import com.ufps.cedcufps.utils.StatusEducacionContinua;
@@ -56,28 +64,27 @@ public class EducacionContinuaCustomDaoImpl implements IEducacionContinuaCustomD
 	
 	@Autowired
 	private IJornadaDao jornadaDao;
-
-	/*@Override
-	public List<Long>  listAllPossibleEducacionContinua(Long idPersona) {
-		// TODO Auto-generated method stub
-		
-		StringBuilder query = new StringBuilder();
-		query.append("select e.id from educacion_continua e");
-		query.append(" where e.id_programa IN (select rppp.id_programa from roles_personas_programas_ec rppp");
-		query.append(" where rppp.id_persona=?1 and rppp.id_rol=(select ro.id from roles ro where ro.authority='ROLE_MANAECCU'))" );
-		query.append(" or e.id_docente=?1" );
-			
-		System.out.println("*************************************** query******");
-		System.out.println(query.toString());
-		Query q=em.createNativeQuery(query.toString());
-		q.setParameter(1, idPersona);
-		
-		List<Long> list= new ArrayList<Long>();
-		for(Object o: q.getResultList() )
-			list.add(Long.parseLong(String.valueOf(o)));
-		return list;
-	}*/
 	
+	@Autowired
+	private IClasificacionCineDao clasificacionCineDao;
+	
+	@Autowired
+	private ITipoEducacionContinuaDao tipoEducacionContinuaDao;
+	
+	@Autowired
+	private IProgramaDao programaDao;
+	
+	@Autowired
+	private IDocenteDao docenteDao;
+	
+	@Autowired
+	private IDiplomaDao diplomaDao;
+
+	@Autowired
+	private ITipoBeneficiarioEducacionContinua tiposBeneficiariosEduContinuaDao;
+	
+	@Autowired
+	private IPersonaCustomDao personaCustomDao;
 	
 	@Override
 	public boolean  docenteHasPermission(String idAcceso, Long idPersona) {
@@ -89,8 +96,7 @@ public class EducacionContinuaCustomDaoImpl implements IEducacionContinuaCustomD
 		query.append(" where rppp.id_persona=?1 and rppp.id_rol=(select ro.id from roles ro where ro.authority='ROLE_MANAECCU'))" );
 		query.append(" or e.id_docente=?1) and e.id_acceso=?2 " );
 			
-		System.out.println("*************************************** query******");
-		System.out.println(query.toString());
+		
 		Query q=em.createNativeQuery(query.toString());
 		q.setParameter(1, idPersona);
 		q.setParameter(2, idAcceso);
@@ -159,10 +165,6 @@ public class EducacionContinuaCustomDaoImpl implements IEducacionContinuaCustomD
 		}, keyHolder);
 		
 		dto.setId(Long.parseLong(String.valueOf(keyHolder.getKey())));
-		System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
-		System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
-		System.out.println(dto.getId() );
-		System.out.println(  keyHolder.getKeys().get("id"));
 
 	}
 	
@@ -298,8 +300,6 @@ public class EducacionContinuaCustomDaoImpl implements IEducacionContinuaCustomD
 					 .setParameter(1, eduContinuaDto.getId());
 			List<Object[]> resultBeneficiarios= q2.getResultList();
 			List<TipoBeneficiarioDto> list= new ArrayList<TipoBeneficiarioDto>();
-			System.out.println("result tipo beneficiariossssssssssssssss");
-			System.out.println(resultBeneficiarios.size());
 			for(Object[] o : resultBeneficiarios) {
 				TipoBeneficiarioDto dto= new TipoBeneficiarioDto();
 				dto.setId(Long.parseLong(String.valueOf(o[0])));
@@ -334,14 +334,12 @@ public class EducacionContinuaCustomDaoImpl implements IEducacionContinuaCustomD
 		.append(" join tipos_participante tpar on p.id_tipo_participante=tpar.id ")
 		.append(" where per.numero_documento = ?1")
 		.append(" order by e.fecha_inicio desc");
-		System.out.println(numDocumento);
 		Query query=em.createNativeQuery(certificacionesQuery.toString())
 				 .setParameter(1, numDocumento);
 		
 		List<Object[]> result=query.getResultList();
 		
 		List<CertificacionDto> dto=new ArrayList<CertificacionDto>();
-		System.out.println("ENTRAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA ACCCCCCCCCCCCCCCCCCCCCCCCCAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
 		for(Object[] data: result) {
 			dto.add(educacionContinuaMapper.convertToMisCertificaciones(
 					Long.parseLong(String.valueOf(data[0])),
@@ -379,9 +377,7 @@ public class EducacionContinuaCustomDaoImpl implements IEducacionContinuaCustomD
 		.append(" left join educacion_continua_tipo_beneficiario tb on tb.id_educacion_continua=ec.id")
 		.append(" where ec.estado != ? ");
 	
-		System.out.println("idTipoEdc: " + idTipoEdC);
-		System.out.println("idPrograma: " + idPrograma);
-		System.out.println("idBeneficiarios: " + idBeneficiarios);
+		
 		if(idTipoEdC != 0L) {
 			query.append(" and ec.id_tipo_educacion_continua = ? ");
 		}
@@ -392,36 +388,22 @@ public class EducacionContinuaCustomDaoImpl implements IEducacionContinuaCustomD
 			query.append(" and tb.id_tipo_beneficiario = ? ");
 		}
 		query.append(" ORDER BY ec.fecha_inicio DESC");
-		System.out.println("queryyyyyyyyyyy");
-		System.out.println(query.toString());
 		Query q=em.createNativeQuery(query.toString())
 				.setParameter(1, estado);
-		System.out.println("tipoedc: " + idTipoEdC );
-		System.out.println(idTipoEdC != 0L);
-		System.out.println("idPrograma: " + idPrograma );
-		System.out.println(idPrograma != 0L);
-		System.out.println("idBeneficiarios: " + idBeneficiarios );
-		System.out.println(idBeneficiarios != 0L);
 		if(idTipoEdC != 0L) {
 			q.setParameter(2, idTipoEdC);
-			System.out.println("entra a 1");
 		}
 		if(idPrograma != 0L && idTipoEdC != 0L ) {
 			q.setParameter(3, idPrograma);
-			System.out.println("entra a 2");
 		}else if(idPrograma != 0L && idTipoEdC == 0L) {
 			q.setParameter(2, idPrograma);
-			System.out.println("entra a 3");
 		}
 		if(idBeneficiarios != 0L && idPrograma != 0L && idTipoEdC != 0L ) {
 			q.setParameter(4, idBeneficiarios);
-			System.out.println("entra a 4");
 		}else if(idBeneficiarios != 0L && (idPrograma == 0L && idTipoEdC == 0L )) {
 			q.setParameter(2, idBeneficiarios);
-			System.out.println("entra a 5");
 		} else if(idBeneficiarios != 0L && (idPrograma == 0L || idTipoEdC == 0L )) {
 			q.setParameter(3, idBeneficiarios);
-			System.out.println("entra a 6");
 		}
 		
 		List<Object> result=q.getResultList();
@@ -435,7 +417,6 @@ public class EducacionContinuaCustomDaoImpl implements IEducacionContinuaCustomD
 	
 	public Long[] convertListObjetctToLong(List<Object>list) {
 		Long[] array;
-		System.out.println("list is empty?: " + list.size());
 		
 		if(list.isEmpty()) {
 			array=new Long[1];
@@ -448,7 +429,6 @@ public class EducacionContinuaCustomDaoImpl implements IEducacionContinuaCustomD
 				i++;
 			}
 		}
-		System.out.println("termina array con : " + array.length);
 		return array;
 	}
 
@@ -597,8 +577,6 @@ public class EducacionContinuaCustomDaoImpl implements IEducacionContinuaCustomD
 		}
 			
 		List<Object[]> result= q.getResultList();
-		System.out.println("es director de programa en custom dato: " + isDirPrograma);
-		System.out.println("result tamaño: " + result.size());
 		List<EducacionContinuaAppDto> list = new ArrayList<EducacionContinuaAppDto>();
 		for(Object[] o: result) {
 			EducacionContinuaAppDto dto=new EducacionContinuaAppDto();
@@ -661,6 +639,55 @@ public class EducacionContinuaCustomDaoImpl implements IEducacionContinuaCustomD
 			list.add(dto);
 		}
 		return list;
+	}
+
+
+	@Override
+	public EducacionContinua findEducacionContinuaByIdAcceso(String idAcceso) {
+		// TODO Auto-generated method stub
+		StringBuilder query = new StringBuilder();
+		query.append(" select e.id, e.nombre, COALESCE(e.cant_max_participantes,''), e.consecutivo, e.costo_educacion_continua,")
+			 .append(" COALESCE(e.costo_inscripcion,''), e.duracion, e.estado, e.fecha_inicio, e.fecha_fin, e.fecha_lim_inscripcion,")
+			 .append(" e.id_acceso, e.imagen, e.info_adicional, e.is_deleted, e.lugar, e.porcentaje_asistencia, ")
+			 .append(" e.id_clasificacion_cine, e.id_diploma, e.id_docente, e.id_programa, e.id_tipo_educacion_continua")
+			 .append(" from educacion_continua e")
+			 .append(" where e.id_acceso = ?1");
+		
+		Query q=em.createNativeQuery(query.toString());
+		q.setParameter(1, idAcceso);
+		
+		
+			
+		List<Object[]> result= q.getResultList();
+		if(result.size()==1) {
+			EducacionContinua e = new EducacionContinua();
+			e.setId(Long.parseLong(String.valueOf(result.get(0)[0])));
+			e.setNombre(String.valueOf(result.get(0)[1]));
+			e.setCantMaxParticipantes(String.valueOf(result.get(0)[2]));
+			e.setConsecutivo(String.valueOf(result.get(0)[3]));
+			e.setCostoEducacionContinua(String.valueOf(result.get(0)[4]));
+			e.setCostoInscripcion(String.valueOf(result.get(0)[5]));
+			e.setDuracion(String.valueOf(result.get(0)[6]));
+			e.setEstado(String.valueOf(result.get(0)[7]));
+			e.setFechaInicio((Date)(result.get(0)[8]));
+			e.setFechaFin((Date)(result.get(0)[9]));
+			e.setFechaLimInscripcion((Date)(result.get(0)[10]));
+			e.setIdAcceso(String.valueOf(result.get(0)[11]));
+			e.setImagen(String.valueOf(result.get(0)[12]));
+			e.setInfoAdicional(String.valueOf(result.get(0)[13]));
+			e.setDeleted(Integer.parseInt(String.valueOf(result.get(0)[14]))==1);
+			e.setLugar(String.valueOf(result.get(0)[15]));
+			e.setPorcentajeAsistencia(String.valueOf(result.get(0)[16]));
+			e.setClasificacionCine(clasificacionCineDao.findClasificacionById(Long.parseLong(String.valueOf(result.get(0)[17]))));
+			e.setDiploma( (result.get(0)[18] != null) ? diplomaDao.findDiplomaById( Long.parseLong(String.valueOf(result.get(0)[18]))): null);
+			e.setDocenteResponsable(personaCustomDao.findDocenteResponsable(Long.parseLong(String.valueOf(result.get(0)[19]))));
+			e.setProgramaResponsable(programaDao.findProgramaById(Long.parseLong(String.valueOf(result.get(0)[20]))));
+			e.setTipoEduContinua(tipoEducacionContinuaDao.findTipoEducacionContinuaById(Long.parseLong(String.valueOf(result.get(0)[21]))));
+			e.setTipoBeneficiarios(tiposBeneficiariosEduContinuaDao.findTiposBeneficiariosByIdEduContinua(e.getId()));
+			return e;
+		}
+		
+		return null;
 	}
 
 }

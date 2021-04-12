@@ -55,10 +55,6 @@ public class ParticipanteCustomDao implements IParticipanteCustomDao {
 		}, keyHolder);
 		
 		p.setId(Long.parseLong(String.valueOf(keyHolder.getKey())));
-		System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
-		System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
-		System.out.println(p.getId() );
-		System.out.println(  keyHolder.getKeys().get("id"));
 
 	}
 	

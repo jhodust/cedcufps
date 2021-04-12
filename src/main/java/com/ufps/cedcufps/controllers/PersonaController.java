@@ -59,7 +59,7 @@ public class PersonaController {
 		//model.put("departamentos",personaService.findAllDepartamentos());
 		model.put("generos",personaService.findAllGeneros());
 		model.put("estados_civiles",personaService.findAllEstadosCiviles());
-		model.put("propiedadesPerfiles",personaService.findPermisosRegistrarPersonas(0L));
+		model.put("propiedadesPerfiles",personaService.findPermisosRegistrarPersonas(0L,true));
 		/*if(p.getTipoPersona().getTipoPersona().equalsIgnoreCase("Estudiante")) {
 			model.put("estudiante",(Estudiante)personaService.findOne(id).get());
 			return "redirect:/usuarios/estudiante/registro/"+p.getId();
@@ -93,7 +93,7 @@ public class PersonaController {
 		model.put("otorganPermisos",personaService.isSuperAdmin() || personaService.isDirPrograma() );
 		model.put("photoUser", SpringSecurityConfig.getInfoSession().getPhoto());
 		model.put("nameUser", SpringSecurityConfig.getInfoSession().getName());
-		model.put("propiedadesPerfiles",personaService.findPermisosRegistrarPersonas(p.getId()));
+		model.put("propiedadesPerfiles",personaService.findPermisosRegistrarPersonas(p.getId(),true));
 		return "persona/form";
 	}
 	
@@ -105,37 +105,6 @@ public class PersonaController {
 			return "redirect:/usuarios";
 		}
 		model.put("persona",dto);
-		System.out.println("is director: " + dto.isDirPrograma());
-		System.out.println("****************************************************************************************");
-		System.out.println("va a entrar a programas para edu continua");
-		System.out.println(dto.getProgramasForEduContinua().size());
-		for(ProgramaDto p: dto.getProgramasForEduContinua()) {
-			System.out.println(p.getId());
-		}
-		
-		System.out.println("va a entrar a programas para estudiantes");
-		System.out.println(dto.getProgramasForEstudiantes().size());
-		for(ProgramaDto p: dto.getProgramasForEstudiantes()) {
-			System.out.println(p.getId());
-		}
-		
-		System.out.println("va a entrar a deptos para docentes");
-		System.out.println(dto.getDeptosForDocentes().size());
-		for(DepartamentoDto p: dto.getDeptosForDocentes()) {
-			System.out.println(p.getId());
-		}
-		
-		System.out.println("va a entrar a programas para graduados");
-		System.out.println(dto.getProgramasForGraduados().size());
-		for(ProgramaDto p: dto.getProgramasForGraduados()) {
-			System.out.println(p.getId());
-		}
-		
-		System.out.println("va a entrar a educ  para asistencia");
-		System.out.println(dto.getEduContinuasForAttendance().size());
-		for(EducacionContinuaAppDto p: dto.getEduContinuasForAttendance()) {
-			System.out.println(p.getId());
-		}
 		model.put("photoUser", SpringSecurityConfig.getInfoSession().getPhoto());
 		model.put("nameUser", SpringSecurityConfig.getInfoSession().getName());
 		return "persona/permisos";

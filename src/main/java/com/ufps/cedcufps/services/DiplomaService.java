@@ -36,14 +36,10 @@ public class DiplomaService implements IDiplomaService {
 	public Long save(DiplomaDto d) {
 		// TODO Auto-generated method stub
 		
-		System.out.println("ACTUALIZANDOOOOOOOOOOOOOOO DIPLOMMMMMMMMMMMMMMMMMMMMMMAAAAAAAAAAAAAA");
 		Diploma diploma;
 		if(d.getId() !=null ) {
-			System.out.println("va a buscar diploma id");
 			diploma = diplomaDao.findDiplomaById(d.getId());
-			System.out.println("setea la estructura");
 			diploma.setEstructuraDiploma(d.getEstructuraDiploma());
-			System.out.println("va a guardar");
 		}else {
 			diploma= new Diploma();
 			diploma.setId(d.getId());
@@ -52,7 +48,6 @@ public class DiplomaService implements IDiplomaService {
 			
 		}
 		diplomaDao.save(diploma);
-		System.out.println("id despues de guardar diploma: " + diploma.getId());
 		educacionContinuaDao.updateDiplomaEducacionContinua(diploma.getId(), d.getIdEduContinua());
 		return diploma.getId();
 	}

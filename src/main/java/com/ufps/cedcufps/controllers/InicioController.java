@@ -65,9 +65,7 @@ public class InicioController {
 		PageRender<EducacionContinua> pageRender= new PageRender<EducacionContinua>("/reload", edc);
 		model.addAttribute("educacionesRecientes",educacionContinuaService.educacionContinuaRecientes());
 		model.addAttribute("educacionesContinuas",edc);
-		System.out.println("TOTAL PAGINAS");
-		System.out.println(pageRender.getTotalPaginas());
-		System.out.println("total edc: " + edc.getNumberOfElements());
+		
 		model.addAttribute("page",pageRender);
 		model.addAttribute("programas",programaService.findAll());
 		model.addAttribute("tipos_educacion_continua",educacionContinuaService.findAllTiposEducacionContinuaExisting());
@@ -112,11 +110,12 @@ public class InicioController {
 	public String nuevoUsuario(Map<String, Object> model) {
 		model.put("tipos_documento",personaService.findAllTiposDocumento());
 		model.put("tipos_persona",personaService.findAllTiposPersona());
-		model.put("programas",personaService.findAllProgramas());
-		model.put("departamentos",personaService.findAllDepartamentos());
+		//model.put("programas",personaService.findAllProgramas());
+		//model.put("departamentos",personaService.findAllDepartamentos());
 		model.put("generos",personaService.findAllGeneros());
 		model.put("estados_civiles",personaService.findAllEstadosCiviles());
 		model.put("persona",new UsuarioDto());
+		model.put("propiedadesPerfiles",personaService.findPermisosRegistrarPersonas(0L,false));
 		//educacionContinuaService.generarReporteSNIESEducacionContinua(new Date(), 0);
 		return "registrarse";
 	}

@@ -40,13 +40,15 @@ public class PerfilController {
 		model.put("titulo","FORMULARIO PERSONA");
 		model.put("tipos_documento",personaService.findAllTiposDocumento());
 		model.put("tipos_persona",personaService.findAllTiposPersona());
-		model.put("programas",personaService.findAllProgramas());
+		//model.put("programas",personaService.findAllProgramas());
 		model.put("generos",personaService.findAllGeneros());
 		model.put("estados_civiles",personaService.findAllEstadosCiviles());
-		model.put("departamentos",personaService.findAllDepartamentos());
-		model.put("persona", personaService.findMyInfo());
+		//model.put("departamentos",personaService.findAllDepartamentos());
+		UsuarioDto dto = personaService.findMyInfo();
+		model.put("persona", dto);
 		model.put("photoUser", SpringSecurityConfig.getInfoSession().getPhoto());
 		model.put("nameUser", SpringSecurityConfig.getInfoSession().getName());
+		model.put("propiedadesPerfiles",personaService.findPermisosRegistrarPersonas(dto.getId(),false));
 		return "persona/updatePerfil";
 	}
 	

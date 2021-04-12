@@ -43,7 +43,7 @@ $(document).ready(function ()
 				},
 				eventResize : function(info) {// cambiar hora
 												// terminación
-					console.log(info);
+					
 					var buttons = '<button type="button" class="btn btn-sm btn-info btn-icon-only" onclick="actualizarJornada()"><span class="btn-inner--icon"><i class="fas fa-check"></i></span></button><button type="button" class="btn btn-sm btn-info btn-icon-only" onclick="cancelarActualizarJornada()"><span class="btn-inner--icon"><i class="fas fa-times"></i></span></button>';
 					toastr
 							.info(
@@ -87,7 +87,6 @@ function actualizarJornada() {
 	ajaxGuardarJornada(jornadaJSON);
 }
 function cancelarActualizarJornada() {
-	console.log(eventoActualizar);
 	eventoActualizar.revert();
 	toastr.remove();
 }

@@ -157,7 +157,6 @@
 	  toastr.success(mensajeExitoso, 'Excelente!',{timeOut:2000});
   }
   var mensajeError= [[${errorMessage}]];
-  console.log(mensajeError);
   if(mensajeError!=null){
 	  toastr.error(mensajeError, 'Error!',{timeOut:2000});
   }
@@ -171,13 +170,7 @@
 	  
 	  var asistencias= [[${asistencias}]];
 	  var asistenciaGlobal= [[${asistenciaGlobal}]];
-	  console.log(participantes.length);
-	  console.log("asistencias");
 	  
-	  console.log(asistencias);
-	  console.log("asistenciaGlobal");
-	  console.log(asistenciaGlobal);  
-  }
   
   if(eduContinua.estado=="Activo"){
 	  document.getElementById('cardListado').style.display='flex';

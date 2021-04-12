@@ -49,8 +49,6 @@ public class ReportesSniesCustomDao implements IReportesSniesCustomDao{
 		query.append(" order by fecha_inicio");
 			 
 			
-		System.out.println("*************************************** query******");
-		System.out.println(query.toString());
 		Query q=em.createNativeQuery(query.toString());
 		if(idPrograma!=null) {
 			q.setParameter(1,idPrograma);
@@ -92,9 +90,7 @@ public class ReportesSniesCustomDao implements IReportesSniesCustomDao{
 		
 		query.append(" order by p.codigo, tp.tipo_educacion_continua, e.consecutivo");
 			 
-			
-		System.out.println("*************************************** query******");
-		System.out.println(query.toString());
+		
 		Query q=em.createNativeQuery(query.toString());
 		q.setParameter(1, fechaInicio)
 		 .setParameter(2, fechaFin);
@@ -151,9 +147,7 @@ public class ReportesSniesCustomDao implements IReportesSniesCustomDao{
 		
 		query.append(" order by e.id, e.fecha_inicio");
 			 
-			
-		System.out.println("*************************************** query******");
-		System.out.println(query.toString());
+		
 		Query q=em.createNativeQuery(query.toString());
 		q.setParameter(1, fechaInicio)
 		 .setParameter(2, fechaFin);
@@ -211,8 +205,6 @@ public class ReportesSniesCustomDao implements IReportesSniesCustomDao{
 		}
 			query.append(" order by e.id, e.fecha_inicio");
 		
-		System.out.println("*************************************** query******");
-		System.out.println(query.toString());
 		Query q=em.createNativeQuery(query.toString());
 		q.setParameter(1, fechaInicio)
 		 .setParameter(2, fechaFin);
@@ -258,8 +250,7 @@ public class ReportesSniesCustomDao implements IReportesSniesCustomDao{
 		}
 		query.append(" order by e.id, e.fecha_inicio");
 		
-		System.out.println("*************************************** query******");
-		System.out.println(query.toString());
+		
 		q=em.createNativeQuery(query.toString());
 		q.setParameter(1, fechaInicio)
 		 .setParameter(2, fechaFin);
@@ -328,9 +319,7 @@ public class ReportesSniesCustomDao implements IReportesSniesCustomDao{
 		}
 		query.append(" where e.fecha_inicio between ?1 and ?2 and e.is_deleted=false");
 			 
-			
-		System.out.println("*************************************** query******");
-		System.out.println(query.toString());
+		
 		Query q=em.createNativeQuery(query.toString());
 		q.setParameter(1, fechaInicio)
 		 .setParameter(2, fechaFin);
@@ -388,9 +377,7 @@ public class ReportesSniesCustomDao implements IReportesSniesCustomDao{
 		
 		
 		StringBuilder query = new StringBuilder();
-		System.out.println("########################################");
-		System.out.println(fechaInicio);
-		System.out.println(fechaFin);
+		
 		query.append(" (select tec.tipo_educacion_continua, count(e.id)")
 			 .append(" FROM educacion_continua e")
 			 .append(" join tipos_educacion_continua tec on tec.id=e.id_tipo_educacion_continua")
@@ -410,9 +397,7 @@ public class ReportesSniesCustomDao implements IReportesSniesCustomDao{
 		query.append("))");
 		
 		
-			
-		System.out.println("*************************************** query******");
-		System.out.println(query.toString());
+		
 		Query q=em.createNativeQuery(query.toString());
 		q.setParameter(1, fechaI)
 		 .setParameter(2, fechaF);
@@ -500,9 +485,7 @@ public class ReportesSniesCustomDao implements IReportesSniesCustomDao{
 		query.append(" GROUP BY  tp.tipo_persona ");
 		
 		
-			
-		System.out.println("*************************************** query******");
-		System.out.println(query.toString());
+		
 		Query q=em.createNativeQuery(query.toString());
 		q.setParameter(1, fechaI)
 		 .setParameter(2, fechaF);
@@ -589,9 +572,7 @@ public class ReportesSniesCustomDao implements IReportesSniesCustomDao{
 		query.append(" GROUP BY g.genero");
 		
 		
-			
-		System.out.println("*************************************** query******");
-		System.out.println(query.toString());
+		
 		Query q=em.createNativeQuery(query.toString());
 		q.setParameter(1, fechaI)
 		 .setParameter(2, fechaF);

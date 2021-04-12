@@ -36,7 +36,6 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 			Authentication authentication) throws IOException, ServletException {
 		// TODO Auto-generated method stub
-		System.out.println("entra a sucess");
 		//handle(request, response, authentication);
         clearAuthenticationAttributes(request);
         HttpSession session = request.getSession();
@@ -62,18 +61,13 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 	) throws IOException {
 		OAuth2AuthenticationToken auth=(OAuth2AuthenticationToken) authentication;
 		String targetUrl =null;
-	    System.out.println("authentication");
-	    System.out.println(auth.getPrincipal().getAttribute("email").toString());
 	    Persona p=personaService.findPersonaLogueada();
 	    if(p==null) {
 	    	 targetUrl = "/registrarse";
 	    	 HttpSession session = request.getSession();
-	 	     System.out.println("session");
-	 	     System.out.println(session.getAttribute("email"));
 	 	     
 	    	 new SecurityContextLogoutHandler().logout(request, response, auth);
 	    }else {
-	    	System.out.println("entraaaaaaaaaaaaaaaaaaaaaa aca target url");
 	    	targetUrl = "/bienvenida?email="+p.getEmail();
 	    }
 	    if (response.isCommitted()) {

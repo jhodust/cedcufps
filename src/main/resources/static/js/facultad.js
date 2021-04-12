@@ -3,9 +3,7 @@ var idFacultad;
 $(document).ready(function ()
 		{
 				
-			/*$.getJSON('http://localhost:8080/programas-academicos/listar', function(json) {
-				console.log(json)
-			});*/
+			
 			
 	$('#modalRegistroFacultad').on('show.bs.modal', function (event) {
 		$('#facultad').val("");
@@ -39,7 +37,6 @@ function guardarFacultad(){
 		url: "/facultades/save",
 		cache: false,
 		success: function(result) {
-			console.log(result);
 			toastr.success('Se ha guardado la información', 'Excelente!');
 			//window.setTimeout(function(){location.reload()},1000);
 			idFacultad=0;
@@ -50,7 +47,6 @@ function guardarFacultad(){
 		error: function(err) {
 			hideSpinnerModal("btnSaveAreas","btnSpinnerAreas");
 			boton.disabled=false;
-			console.log(err);
 			if(err.responseJSON.length >0){
 				toastr.error('No se pudo procesar la solicitud...', 'Error!');
 				err.responseJSON.forEach(function(error){
@@ -80,14 +76,12 @@ function editarFacultad(elemento){
 		url: "/facultades/search/"+elemento.dataset.id,
 		cache: false,
 		success: function(result) {
-			console.log(result.facultad);
 			$('#modalRegistroFacultad').modal();
 			$('#facultad').val(result.facultad);
 			idFacultad=result.id;
 			
 		},
 		error: function(err) {
-			console.log(err);
 			toastr.error(err.responseJSON.message, 'Error!');
 		}
 	});

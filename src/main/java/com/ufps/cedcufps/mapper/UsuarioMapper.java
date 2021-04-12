@@ -76,8 +76,6 @@ public class UsuarioMapper implements IUsuarioMapper {
 		TipoDocumento td=null;
 		Genero g=null;
 		EstadoCivil ec=null;
-		System.out.println("TIPOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO DOCUMENTOOOOOOOOOOOOOOOOOOOOOO");
-		System.out.println(u.getIdTipoDocumento());
 		try {
 			td = tipoDocumentoDao.findById(u.getIdTipoDocumento()).get();
 		}catch(Exception ex) {
@@ -136,13 +134,6 @@ public class UsuarioMapper implements IUsuarioMapper {
 		pe.setGraduado(u.isGraduado());
 		pe.setExterno(u.isExterno());
 		pe.setIdAcceso(String.valueOf(System.currentTimeMillis()));
-		System.out.println("**********************************************************");
-		System.out.println("**********************************************************");
-		System.out.println(u.isEstudiante());
-		System.out.println(u.isDocente());
-		System.out.println(u.isAdministrativo());
-		System.out.println(u.isGraduado());
-		System.out.println(u.isExterno());
 		pe.setIdsTipoPersona(this.convertIdsTiposPersona(u));
 		
 		/*List<Rol> r= new ArrayList<>();
@@ -317,12 +308,6 @@ public class UsuarioMapper implements IUsuarioMapper {
 		dto.setGraduado(p.isGraduado());
 		dto.setExterno(p.isExterno());
 		
-		System.out.println("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
-		System.out.println(e!=null);
-		System.out.println(d!=null);
-		System.out.println(a!=null);
-		System.out.println(g!=null);
-		System.out.println(ex!=null);
 		if(e!=null) {
 			dto.setIdProgramaEstudiante(e.getPrograma().getId());
 			dto.setCodigoProgramaEstudiante(e.getCodigo());

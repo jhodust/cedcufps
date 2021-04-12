@@ -91,7 +91,6 @@ function dataURItoBlob(dataURI) {
 
     // separate out the mime component
     var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
-    console.log("mimeString: " +  mimeString);
     // write the bytes of the string to a typed array
     var ia = new Uint8Array(byteString.length);
     for (var i = 0; i < byteString.length; i++) {
@@ -103,14 +102,7 @@ function dataURItoBlob(dataURI) {
 
 
 function updateInfoDiploma(nombre, documento, tipoParticipante, canvasObject){
-	console.log("actualizando info diploma");
-	console.log(nombre);
-	console.log(documento);
-	console.log(tipoParticipante);
-	console.log(JSON.stringify(canvasObject));
-	console.log(canvasObject.getObjects());
 	canvasObject.getObjects().forEach(function(o){
-		console.log(o);
 		if(o.type=="textbox"){
 			  var regex = /%nombreAsistente%/gi;
 			  o.text=o.text.replace(regex, nombre);

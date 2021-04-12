@@ -35,21 +35,7 @@ $(document).ready(function ()
 		$('#codigo').val("");
 		if(e.params.data.id!="0"){
 			$('#codigo').mask("0000000", {placeholder: "0000000"});
-			/*$.ajax({
-				headers: {"X-CSRF-TOKEN": token},
-				type: "GET",
-				contentType: "application/json; charset=utf-8",
-				url: "/search/programa/"+e.params.data.id,
-				cache: false,
-				success: function(result) {
-					console.log(result);
-					$('#codigo').mask(result.codigo+"-0000", {placeholder: result.codigo+"-0000"});
-				},
-				error: function(err) {
-					console.log(err);
-					$('#codigo').mask("000-0000", {placeholder: "000-0000"});
-				}
-			});*/
+			
 		}
 		
 		});
@@ -91,7 +77,6 @@ function cargarDepartamentosColombia(){
 	var deptoTemp=null;
 	$.getJSON( "/data/divipola.json", function( json )
 	{       
-		//console.log(json);
 				datos_colombia=json;
 			    datos_colombia.forEach(function(elemento){
 			    	if(deptoTemp == null || deptoTemp!=elemento.dpto){

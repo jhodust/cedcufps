@@ -213,31 +213,31 @@
 												<div class="custom-control custom-checkbox">
 													<input type="checkbox" class="custom-control-input"
 														id="cbEst" onclick="estudiante()" th:checked="${persona.isEstudiante()}" 
-														th:disabled="${not propiedadesPerfiles.isAbleEditEstudiantes()}"> <label
+														th:disabled="${ not propiedadesPerfiles.isAbleEditEstudiantes()}"> <label
 														class="custom-control-label" for="cbEst">Estudiante</label>
 												</div>
 												<div class="custom-control custom-checkbox">
 													<input type="checkbox" class="custom-control-input"
 														id="cbDoc" onclick="docente()" th:checked="${persona.isDocente()}"
-														th:disabled="${not propiedadesPerfiles.isAbleEditDocentes()}"> <label
+														th:disabled="${ not propiedadesPerfiles.isAbleEditDocentes()}"> <label
 														class="custom-control-label" for="cbDoc">Docente</label>
 												</div>
 												<div class="custom-control custom-checkbox">
 													<input type="checkbox" class="custom-control-input"
 														id="cbAdminvo" onclick="adminvo()" th:checked="${persona.isAdministrativo()}"
-														th:disabled="${not propiedadesPerfiles.isAbleEditAdministrativos()}"> <label
+														th:disabled="${ not propiedadesPerfiles.isAbleEditAdministrativos()}"> <label
 														class="custom-control-label" for="cbAdminvo">Administrativo</label>
 												</div>
 												<div class="custom-control custom-checkbox">
 													<input type="checkbox" class="custom-control-input"
 														id="cbGraduado" onclick="graduado()" th:checked="${persona.isGraduado()}" 
-														th:disabled="${not propiedadesPerfiles.isAbleEditGraduados()}"> <label
+														th:disabled="${ not propiedadesPerfiles.isAbleEditGraduados()}"> <label
 														class="custom-control-label" for="cbGraduado">Graduado</label>
 												</div>
 												<div class="custom-control custom-checkbox">
 													<input type="checkbox" class="custom-control-input"
 														id="cbExt" onclick="externo()" th:checked="${persona.isExterno()}"
-														th:disabled="${not propiedadesPerfiles.isAbleEditExternos()}"> <label
+														th:disabled="${ not propiedadesPerfiles.isAbleEditExternos()}"> <label
 														class="custom-control-label" for="cbExt">Externo
 														(No vinculado)</label>
 												</div>
@@ -306,7 +306,7 @@
 													<div class="form-group">
 														<label class="form-control-label">Programa
 															Académico</label><label class="requerido pl-2">*</label> <select class="form-control"
-															data-toggle="select" id="programaAsociado" th:disabled="${not propiedadesPerfiles.isAbleEditEstudiantes()}">
+															data-toggle="select" id="programaAsociado" th:disabled="${ not propiedadesPerfiles.isAbleEditEstudiantes()}">
 															<option value="0">Seleccione el programa...</option>
 															<option th:each="p: ${propiedadesPerfiles.programasEstudiantes}" th:value="${p.id}"
 																th:text="${p.programa}" th:selected="${persona.idProgramaEstudiante == p.id}"></option>
@@ -316,7 +316,7 @@
 												<div class="col-md-6">
 													<div class="form-group">
 														<label class="form-control-label">Código</label><label class="requerido pl-2">*</label><input
-															class="form-control" type="text" data-mask="0000000" th:value="${persona.codigoProgramaEstudiante}"
+															class="form-control" type="text" data-mask="0000000" th:value="${ persona.codigoProgramaEstudiante}"
 															placeholder="0000000" id="codigo" th:disabled="${not propiedadesPerfiles.isAbleEditEstudiantes()}"/>
 													</div>
 													<small class="form-text text-danger"><strong id="errorCodigoEstudiante"></strong></small>
@@ -333,7 +333,7 @@
 													<div class="form-group">
 														<label class="form-control-label">Departamento
 															Académico Adscrito(a)</label><label class="requerido pl-2">*</label> <select class="form-control"
-															data-toggle="select" id="selectDeptoAdscrito" th:disabled="${not propiedadesPerfiles.isAbleEditDocentes()}">
+															data-toggle="select" id="selectDeptoAdscrito" th:disabled="${ not propiedadesPerfiles.isAbleEditDocentes()}">
 															<option value="0">Seleccione el departamento...</option>
 															<option th:each="d: ${propiedadesPerfiles.departamentosDocentes}" th:value="${d.id}"
 																th:text="${d.departamento}" th:selected="${persona.idDeptoAdscrito == d.id}"></option>
@@ -345,7 +345,7 @@
 														<label class="form-control-label">Código</label><label class="requerido pl-2">*</label> <input
 															class="form-control" type="text" th:value="${persona.codigoDocente}"
 															placeholder="Ingrese su código de docente" id="codDocente" 
-															th:disabled="${not propiedadesPerfiles.isAbleEditDocentes()}" /> <small
+															th:disabled="${ not propiedadesPerfiles.isAbleEditDocentes()}" /> <small
 															class="form-text text-danger"><strong id="errorCodigoDocente"></strong></small>
 													</div>
 												</div>
@@ -362,7 +362,7 @@
 														<label class="form-control-label">Dependencia
 															Adscrito(a)</label><label class="requerido pl-2">*</label> <input class="form-control" type="text"
 															placeholder="Ingrese la dependencia..." id="dependencia" th:value="${persona.dependencia}" 
-															th:disabled="${not propiedadesPerfiles.isAbleEditAdministrativos()}"/> <small
+															th:disabled="${ not propiedadesPerfiles.isAbleEditAdministrativos()}"/> <small
 															class="form-text text-danger"><strong id="errorDependenciaAdminvo"></strong></small>
 													</div>
 												</div>
@@ -371,7 +371,7 @@
 														<label class="form-control-label">Cargo</label><label class="requerido pl-2">*</label> <input
 															class="form-control" type="text" th:value="${persona.cargo}"
 															placeholder="Ingrese su cargo..." id="cargo"
-															th:disabled="${not propiedadesPerfiles.isAbleEditAdministrativos()}"/> <small
+															th:disabled="${ not propiedadesPerfiles.isAbleEditAdministrativos()}"/> <small
 															class="form-text text-danger"><strong id="errorCargoAdminvo"></strong></small>
 													</div>
 												</div>
@@ -387,7 +387,7 @@
 													<div class="form-group">
 														<label class="form-control-label">Programa
 															del cuál se graduó</label><label class="requerido pl-2">*</label> <select class="form-control"
-															data-toggle="select" id="selectProgramaGraduado" th:disabled="${not propiedadesPerfiles.isAbleEditGraduados()}">
+															data-toggle="select" id="selectProgramaGraduado" th:disabled="${ not propiedadesPerfiles.isAbleEditGraduados()}">
 															<option value="0">Seleccione el programa...</option>
 															<option th:each="p: ${propiedadesPerfiles.programasGraduados}" th:value="${p.id}"
 																th:text="${p.programa}" th:selected="${persona.idProgramaGraduado == p.id}"></option>
@@ -401,7 +401,7 @@
 														<label class="form-control-label">Año</label><label class="requerido pl-2">*</label> <input
 															class="form-control" type="text" th:value="${persona.anioGraduado}"
 															placeholder="Ingrese el año en el que se graduó cargo..." id="anioGraduado"
-															th:disabled="${not propiedadesPerfiles.isAbleEditGraduados()}"/> <small
+															th:disabled="${ not propiedadesPerfiles.isAbleEditGraduados()}"/> <small
 															class="form-text text-danger"><strong id="errorAnioGraduado"></strong></small>
 													</div>
 												</div>
@@ -418,7 +418,7 @@
 														<label class="form-control-label">Profesión</label><label class="requerido pl-2">*</label> <input
 															class="form-control" type="text"
 															placeholder="Ingrese su profesión..." id="profesion" th:value="${persona.profesion}"
-															th:disabled="${not propiedadesPerfiles.isAbleEditExternos()}"/> <small
+															th:disabled="${ not propiedadesPerfiles.isAbleEditExternos()}"/> <small
 															class="form-text text-danger"><strong id="errorProfesionExterno"></strong></small>
 													</div>
 												</div>
@@ -427,7 +427,7 @@
 														<label class="form-control-label">Empresa en la que labora</label><label class="requerido pl-2">*</label> <input
 															class="form-control" type="text" th:value="${persona.empresa}"
 															placeholder="Ingrese la empresa..." id="empresa" 
-															th:disabled="${not propiedadesPerfiles.isAbleEditExternos()}"/> <small
+															th:disabled="${ not propiedadesPerfiles.isAbleEditExternos()}"/> <small
 															class="form-text text-danger"><strong id="errorEmpresa"></strong></small>
 													</div>
 												</div>

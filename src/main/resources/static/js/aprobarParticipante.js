@@ -1,7 +1,6 @@
 $(document).ready(function ()
 		{
-	console.log("EDUUUUUUUUUUUUU CONTINUAAAAAAAAAAAAAAAAA EN ASISTENTES");
-	console.log(eduContinua);
+	
 	
 	if(diploma != null && diploma.estructuraDiploma.objects.length > 0 ){
 		canvas.loadFromJSON(diploma.estructuraDiploma);
@@ -23,10 +22,8 @@ function generarDiploma(dataParticipante,elemento){
         format: 'jpg',
         quality: 0.8
     });
-	console.log(imagen);
+	
 	var blob = dataURItoBlob(imagen);
-	console.log("blobbbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
-	console.log(blob);
 	var file = new File([blob], 'certificado.jpg', {type: 'image/jpg'});
 	formData.append('file',file);
 	formData.append('tokenParticipante',dataParticipante.token);
@@ -95,8 +92,7 @@ function refreshTableAsistentes(){
 }
 
 function loadDiplomaStructureParticipantes(json){
-	console.log("LOADDDDDDDDDDD JSOSNNNNNNNNNNN PARTICIPANTE");
-	console.log(json);
+	
 	canvas.loadFromJSON(json);
 }
 

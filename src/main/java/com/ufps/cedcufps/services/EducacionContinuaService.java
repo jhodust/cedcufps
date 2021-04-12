@@ -31,6 +31,7 @@ import com.ufps.cedcufps.dao.IEducacionContinuaCustomDao;
 import com.ufps.cedcufps.dao.IEducacionContinuaDao;
 import com.ufps.cedcufps.dao.IJornadaDao;
 import com.ufps.cedcufps.dao.IParticipanteDao;
+import com.ufps.cedcufps.dao.IProgramaCustomDao;
 import com.ufps.cedcufps.dao.IProgramaDao;
 import com.ufps.cedcufps.dao.ITipoBeneficiarioDao;
 import com.ufps.cedcufps.dao.ITipoEducacionContinuaDao;
@@ -41,6 +42,7 @@ import com.ufps.cedcufps.dto.InfoEducacionContinuaDto;
 import com.ufps.cedcufps.dto.EducacionContinuaAppDto;
 import com.ufps.cedcufps.dto.JornadaAppDto;
 import com.ufps.cedcufps.dto.ParticipanteDto;
+import com.ufps.cedcufps.dto.ProgramaDto;
 import com.ufps.cedcufps.dto.RequisitosInscripcionDto;
 import com.ufps.cedcufps.dto.TipoBeneficiarioDto;
 import com.ufps.cedcufps.exception.CustomException;
@@ -124,6 +126,9 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 	@Autowired
 	private IUsuarioMapper usuarioMapper;
 	
+	@Autowired
+	private IProgramaCustomDao programaCustomDao;
+	
 	@Override
 	public List<EducacionContinua> findAll() {
 		// TODO Auto-generated method stub
@@ -188,8 +193,6 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 		// TODO Auto-generated method stub
 		String lastConsecutivo= educacionContinuaDao.findLastConsecutivo(idTipoEduContinua, idProgramaResponsable);
 		String consecutivo=null;
-		System.out.println("last consecutivo");
-		System.out.println(lastConsecutivo);
 		int cifrasMin=3;
 		if(lastConsecutivo == null || lastConsecutivo.isBlank()) {
 			consecutivo="001";
@@ -208,11 +211,6 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 			consecutivo=String.format(pattern, newCon);
 		}
 		
-		
-		System.out.println("***********************************************************");
-		System.out.println("actualizando consecutivos");
-		System.out.println("***********************************************************");
-		System.out.println(consecutivo);
 		educacionContinuaDao.updateConsecutivo(consecutivo, idEduContinua);
 	}
 
@@ -325,7 +323,7 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 	public InfoEducacionContinuaDto detallesEducacionContinua(String idAcceso) {
 		// TODO Auto-generated method stub
 		if(personaService.isSuperAdmin() || educacionContinuaCustomDao.docenteHasPermission(idAcceso, personaService.findPersonaLogueada().getId())) {
-			EducacionContinua e= educacionContinuaDao.findByIdAcceso(idAcceso);
+			EducacionContinua e= educacionContinuaCustomDao.findEducacionContinuaByIdAcceso(idAcceso);
 			if(e!=null) {
 				return educacionContinuaMapper.convertEducacionContinuaToEducacionContinuaWeb(e, true);
 			}else {
@@ -333,8 +331,6 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 			}
 			
 		}else {
-			System.out.println("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
-			System.out.println("entra a ca");
 			return educacionContinuaMapper.convertEducacionContinuaToEducacionContinuaWeb(null, false);
 		}
 		
@@ -353,27 +349,16 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 			if(j.isPresent()) {
 				String texto=Encrypt.desencriptar(qr);
 				String [] data=texto.split("_");
-				System.out.println("dataaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-				System.out.println(data[2]);
-				System.out.println(data[4]);
 				if(Long.parseLong(data[2])==idEducacionContinua) {
-					System.out.println("entraaaaaaaaaaaaaaaaaaaaaaaaaaa");
-					System.out.println(idEducacionContinua);
-					System.out.println(data[4]);
 					Participante p=participanteDao.validarParticipanteYaInscritoApp(idEducacionContinua, data[4]);
 					if(p!=null) {
-						System.out.println("existe participante....................................");
-						
 						if(educacionContinuaCustomDao.registrarAsistencia(idJornada, p.getId())==1) {
-							System.out.println("registraaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
 							dto=this.educacionContinuaMapper.convertParticipanteToParticipanteDto(p);
 							codigoError=200;
 						}else {
-							System.out.println("noooooooooooo registraaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
 							codigoError=0;
 						}
 					}else {
-						System.out.println("codigo error 412");
 						codigoError=412;//no se encontró participante inscrito
 						
 					}
@@ -398,8 +383,6 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 			String infoAdicional,  String idTipoEduContinua, String tipoEduContinua,
 			String idProgramaResponsable, String idDocenteResponsable, String idClasificacionCine, String consecutivo,
 			String idTipoBeneficiarios) {
-		System.out.println("tipos beneficiarios");
-		System.out.println(idTipoBeneficiarios);
 		EducacionContinuaWebDto dto = this.convertEducacionContinuaToDto(id, nombre, fechaInicio, fechaFin, 
 				duracion, cantMaxParticipantes, fechaLimInscripcion, costoInscripcion, lugar, costoEducacionContinua, 
 				 porcentajeAsistencia, infoAdicional, idTipoEduContinua, tipoEduContinua,
@@ -409,8 +392,7 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 			if(dto.getId() == 0L) {
 				dto.setEstado(StatusEducacionContinua.STATUS_ACTIVO);
 				educacionContinuaCustomDao.saveEducacionContinua(dto, personaService.findEmailPersonaLogueada());
-				System.out.println("dto registrado edu continua");
-				System.out.println(dto.getId());
+				
 				if(dto.getConsecutivo()==null) {
 					this.updateCodigoEducacionContinua(dto.getId(),dto.getIdTipoEduContinua(),dto.getIdProgramaResp());
 				}
@@ -440,18 +422,17 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 			}
 			String rutaImagen=Archivo.saveImageAboutEducacionContinua(imagen,idEducacionContinua+"/portada",fileStorageService.dirEducacionContinua());
 			educacionContinuaDao.updateImagenPortada(rutaImagen,idEducacionContinua);
-			System.out.println("actualizando guardar imagen edu continua");
+			
 		}
 	}
 	
 	
 	public void saveBeneficiarios(List<TipoBeneficiarioDto> idsTipoBeneficiarios, Long idEducacionContinua ) {
-		System.out.println("guardando tipo beneficiarios");
+		
 		educacionContinuaDao.deleteBeneficiarios(idEducacionContinua);
 		
 		for(TipoBeneficiarioDto dto: idsTipoBeneficiarios) {
-			System.out.println("en el for");
-			System.out.println(dto.getId());
+			
 			try {
 				educacionContinuaDao.insertBeneficiarios(idEducacionContinua, dto.getId());
 			}catch(Exception ex) {
@@ -469,7 +450,6 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 		if(clasificacionCineDao.findClasificacionById(dto.getIdClasificacion()) == null) {
 			return false;
 		}
-		System.out.println("id a buscar docente: " + dto.getIdDocenteResp());
 		
 		if( docenteDao.findOnlyDocente(dto.getIdDocenteResp()) == 0) {
 			return false;
@@ -502,8 +482,6 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 		}
 		
 		if(idTipoEduContinua.equals("-1")) {
-			System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-			System.out.println("entra a insertar nueva edu continua");
 			TipoEducacionContinua tec = tipoEducacionContinuaDao.findTipoEducacionContinuaByTipoEduContinua(tipoEduContinua.toUpperCase());
 			if(tec == null) {
 				idTipoEduContinua = String.valueOf(educacionContinuaCustomDao.insertNewTipoEduContinua(tipoEduContinua, false));
@@ -511,8 +489,6 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 				idTipoEduContinua =  String.valueOf(tec.getId());
 			}
 			
-			System.out.println("id obtenido");
-			System.out.println(idTipoEduContinua);
 		}
 		return educacionContinuaMapper.convertInfoToEduContinuaDto(id, nombre, fechaInicioFormat, 
 				fechaFinFormat, duracion, cantMaxParticipantes, fechaLimiteInscripcionFormat, costoInscripcion, lugar, costoEducacionContinua, 
@@ -549,7 +525,7 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 		EducacionContinuaWebDto dto = new EducacionContinuaWebDto();
 		if(!isAdmin) {
 			if(isDirPrograma) {
-				Programa programa= programaDao.findByDirector(p.getId());
+				ProgramaDto programa= programaCustomDao.findProgramaDtoByDirector(p.getId());
 				dto.setIdProgramaResp(programa.getId());
 				dto.setProgramaResp(programa.getPrograma());
 			}else if(hasPermission ) {
@@ -573,12 +549,8 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 		List<Object[]> list= new ArrayList<>();
 		if(p!=null) {
 			String[] tiposPersona=p.getIdsTipoPersona().split(",");
-			System.out.println("metodo tipos persona para inscripcion");
-			System.out.println(tipoBeneficiarios.size());
 			for(TipoBeneficiarioDto ectb: tipoBeneficiarios) {
-				System.out.println(ectb.getTipoBeneficiario());
 				for(String t: tiposPersona) {
-					System.out.println(t);
 					if(ectb.getIdTipoPersona()==Long.parseLong(t)) {
 						Object[] obj = new Object[2];
 						obj[0]=ectb.getIdTipoPersona();
@@ -596,8 +568,6 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 		// TODO Auto-generated method stub
 		
 		EducacionContinuaWebDto ec= this.findOneByIdAcceso(idAcceso);
-		System.out.println("id edu continuaaaa");
-		System.out.println(ec.getId());
 		int totalInscritos=participanteDao.countTotalParticipantes(ec.getId());
 		RequisitosInscripcionDto dto = new RequisitosInscripcionDto();
 		dto.setTotalInscritos(totalInscritos);
@@ -633,69 +603,10 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 		
 		dto.setEstaInscrito(participante!=null);
 		dto.setEducacionContinua(ec);
-		System.out.println("beneficiariosssssssssssssssssssssssssss");
-		System.out.println(ec.getTipoBeneficiarios().size());
 		return dto;
 	}
 
-	/*@Override
-	public void saveDiploma(EducacionContinua ec) {
-		// TODO Auto-generated method stub
-		EducacionContinua e= this.findOne(ec.getId()).get();
-		System.out.println(e.getId());
-		/*if(e.getDiploma()==null) {
-			e.setDiploma(new Diploma());
-		}*/
-		/*final String rutaBase ="files/uploads/educacion-continua/"+e.getId();
-		Long idDiploma=null;
-		if(e.getDiploma()==null) {
-			idDiploma= diplomaCustomDao.createDiploma(Archivo.saveImagenBase64(rutaBase+"/diploma_base.jpg",ec.getDiploma().getImagenPlantilla()));
-		}else {
-			idDiploma=e.getDiploma().getId();
-			diplomaCustomDao.deleteElementsDiploma(idDiploma);
-		}
-		
-		//e.getDiploma().setImagenPlantilla(Archivo.saveImagenBase64("/uploads/educacion-continua/"+e.getId()+"/diploma_base.jpg", ec.getDiploma().getImagenPlantilla()));
-		System.out.println("idDiplomaaaaaaaaaaaa");
-		System.out.println(idDiploma);
-		if(ec.getDiploma().getTextos()!=null) {
-			for(TextoDiploma t:ec.getDiploma().getTextos()) {
-				//t.setDiploma(e.getDiploma());
-				System.out.println("textooooooooooo");
-				System.out.println( t.getTexto());
-				System.out.println( t.getCategoria());
-				System.out.println( t.getX());
-				System.out.println( t.getY());
-				diplomaCustomDao.saveTexto(idDiploma, t.getTexto(), t.getCategoria(),t.getX(),t.getY());
-			}
-			//e.getDiploma().setTextos(ec.getDiploma().getTextos());
-		}
-		
-		if(ec.getDiploma().getImagenes()!=null) {
-			for(ImagenDiploma i:ec.getDiploma().getImagenes()) {
-				diplomaCustomDao.saveImagenDiploma(idDiploma,
-						Archivo.saveImagenBase64(rutaBase+"/plantilla-diploma/"+Archivo.generarNombreAleatorio()+".png", i.getRuta()), 
-								i.getX(), i.getY());
-				//i.setDiploma(e.getDiploma());
-				//i.setRuta());
-			}
-			//e.getDiploma().setImagenes(ec.getDiploma().getImagenes());
-		}
-		
-		
-		if(ec.getDiploma().getFirmas()!=null) {
-			for(FirmaDiploma f:ec.getDiploma().getFirmas()) {
-				diplomaCustomDao.saveFirma(idDiploma, f.getCargo(), f.getxCargo(), f.getyCargo(), f.getNombre(),
-						f.getxNombre(), f.getyNombre(),
-						Archivo.saveImagenBase64(rutaBase+"/plantilla-diploma/"+Archivo.generarNombreAleatorio()+".png", f.getImagenFirmaDigital()),
-						f.getX(), f.getY());
-				//f.setDiploma(e.getDiploma());
-				//f.setImagenFirmaDigital(Archivo.saveImagenBase64("/uploads/educacion-continua/"+e.getId()+"/plantilla-diploma/"+Archivo.generarNombreAleatorio()+".png", f.getImagenFirmaDigital()));
-			}
-			//e.getDiploma().setFirmas(ec.getDiploma().getFirmas());
-		}
-		diplomaCustomDao.updateDiplomaEduContinua(idDiploma, e.getId());
-	}*/
+	
 
 	@Override
 	public ByteArrayInputStream generarPdfAsistentes(String idAcceso) {

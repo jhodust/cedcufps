@@ -42,9 +42,6 @@ public class FileStorageService implements IFileStorageService {
 				Files.createDirectories(this.dirFormatoReportes);
 				Files.createDirectories(this.dirReportesSnies);
 				Files.createDirectories(this.dirEducacionContinua);
-				System.out.println("probando url");
-				System.out.println(this.dirEducacionContinua.toFile().getCanonicalPath());
-				System.out.println(this.dirEducacionContinua.toString());
 			} catch (Exception ex) {
 				log.error("Could not create the directory where the uploaded files will be stored.", ex);
 			}

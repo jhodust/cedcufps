@@ -13,12 +13,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ufps.cedcufps.dao.IInformeSnies;
+import com.ufps.cedcufps.dao.IProgramaCustomDao;
 import com.ufps.cedcufps.dao.IReportesSniesCustomDao;
 import com.ufps.cedcufps.dto.InformeCursosDto;
 import com.ufps.cedcufps.dto.InformeDetalleEducacionContinuaDto;
 import com.ufps.cedcufps.dto.InformeEducacionContinuaDto;
 import com.ufps.cedcufps.dto.InformeParticipanteResponsableDto;
 import com.ufps.cedcufps.dto.InformeSniesDto;
+import com.ufps.cedcufps.dto.ProgramaDto;
 import com.ufps.cedcufps.exception.CustomException;
 import com.ufps.cedcufps.modelos.EducacionContinua;
 import com.ufps.cedcufps.modelos.InformeSnies;
@@ -35,6 +37,9 @@ public class InformeSniesService implements IInformeSniesService {
 	private IReportesSniesCustomDao reporteSniesCustomDao;
 	
 	@Autowired
+	private IProgramaCustomDao programaCustomDao;
+	
+	@Autowired
 	private IPersonaService personaService;
 	
 	@Autowired
@@ -48,8 +53,9 @@ public class InformeSniesService implements IInformeSniesService {
 		// TODO Auto-generated method stub
 		Persona p=personaService.findPersonaLogueada();
 		Long idPrograma=null;
-		if(!personaService.isSuperAdmin(p) && personaService.isDirPrograma(p)) {
-			idPrograma=(programaService.findProgramaByDirector(p.getId())).getId();
+		ProgramaDto dto=this.programaCustomDao.findProgramaDtoByDirector(p.getId());
+		if(!personaService.isSuperAdmin(p) && dto!=null) {
+			idPrograma=dto.getId();
 		}
 		
 		return reporteSniesCustomDao.findAllInformesSNIES(idPrograma);
@@ -58,7 +64,6 @@ public class InformeSniesService implements IInformeSniesService {
 
 	public String generarReporteSNIESFormatoCurso(Date fechaInicio, Date fechaFin, Long idPrograma,String nombreMarcaTiempo) {
 		// TODO Auto-generated method stub
-		System.out.println("******************************PREPARANDO INFORME EXCEL 2******************");
 		//ReportesExcel.reporteEducacionContinua("/formatos_reportes_excel/formato_educacion_continua.xlsx",educacionesContinuas,año);
 		List<InformeCursosDto> result = reporteSniesCustomDao.informeExcelCursos(fechaInicio, fechaFin, idPrograma);
 		if(result.size()==0) {
@@ -71,7 +76,6 @@ public class InformeSniesService implements IInformeSniesService {
 	
 	public String generarReporteSNIESFormatoEducacionContinua(Date fechaInicio, Date fechaFin, Long idPrograma,String nombreMarcaTiempo) {
 		// TODO Auto-generated method stub
-		System.out.println("******************************PREPARANDO INFORME EXCEL 1******************");
 		//ReportesExcel.reporteCursos("/formatos_reportes_excel/formato_cursos.xlsx",educacionesContinuas,año);
 		//ReportesExcel.reporteEducacionContinuaHoja1("/formatos_reportes_excel/nuevo.xlsx",educacionesContinuas);
 		List<InformeEducacionContinuaDto> resultEduContinua = reporteSniesCustomDao.informeExcelEduContinuaHoja1(fechaInicio, fechaFin, idPrograma);
@@ -82,7 +86,6 @@ public class InformeSniesService implements IInformeSniesService {
 	
 	public String generarReporteSNIESFormatoParticipantesResponsable(Date fechaInicio, Date fechaFin, Long idPrograma, String nombreMarcaTiempo) {
 		// TODO Auto-generated method stub
-		System.out.println("******************************PREPARANDO INFORME EXCEL 3******************");
 		//ReportesExcel.reporteCursos("/formatos_reportes_excel/formato_cursos.xlsx",educacionesContinuas,año);
 		//ReportesExcel.reporteEducacionContinuaHoja1("/formatos_reportes_excel/nuevo.xlsx",educacionesContinuas);
 		List<InformeParticipanteResponsableDto> result = reporteSniesCustomDao.informeExcelParticipantesResponsables(fechaInicio, fechaFin,idPrograma);
@@ -106,9 +109,6 @@ public class InformeSniesService implements IInformeSniesService {
 			//throw new CustomException("Se ha generado un error con las fechas seleccionadas");
 		}
 		
-		System.out.println("fechasRecibidas");
-		System.out.println(fechaI);
-		System.out.println(fechaF);
 		Long marcaTiempo=System.currentTimeMillis();
 		Persona p=personaService.findPersonaLogueada();
 		Long idPrograma=null;

@@ -176,7 +176,6 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 	
 	private OAuth2AccessTokenResponseClient<OAuth2AuthorizationCodeGrantRequest> accessTokenResponseClient() {
-		System.out.println("nueva peticion");
 		return new DefaultAuthorizationCodeTokenResponseClient();
 	}
 
@@ -215,8 +214,6 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	private String authorizationRequestBaseUri() {
 		// TODO Auto-generated method stub
-		System.out.println("url");
-		System.out.println(OAuth2AuthorizationRequestRedirectFilter.DEFAULT_AUTHORIZATION_REQUEST_BASE_URI+"/226613155821-ri427lmire8qq5icol9s20srnuvh2vqg.apps.googleusercontent.com");
 		return OAuth2AuthorizationRequestRedirectFilter.DEFAULT_AUTHORIZATION_REQUEST_BASE_URI+"/226613155821-ri427lmire8qq5icol9s20srnuvh2vqg.apps.googleusercontent.com";
 	}
 
@@ -245,18 +242,9 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 			Persona p=personaService.findByEmail(oidcUser.getEmail());
 			if(p!=null) {
 				for(PersonaRol r:p.getPersonaXRoles()) {
-					System.out.println("imprimiendo informacion");
-					System.out.println(r.getPersona().getPrimerNombre());
-					System.out.println(r.getRol().getAuthority());
 					mappedAuthorities.add(new SimpleGrantedAuthority(r.getRol().getAuthority()));
 				}
 				oidcUser = new DefaultOidcUser(mappedAuthorities, oidcUser.getIdToken(), oidcUser.getUserInfo());
-			}else {
-				System.out.println("no es usuario registrado");
-				
-				//OidcClientInitiatedLogoutSuccessHandler successHandler = new OidcClientInitiatedLogoutSuccessHandler(clientRegistrationRepository);
-		        //successHandler.setPostLogoutRedirectUri(URI.create("http://localhost:8080/"));
-		        //return null;
 			}
 			
 			
@@ -274,23 +262,17 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	
 	private GrantedAuthoritiesMapper userAuthoritiesMapper() {
-		System.out.println("entra a mapper");
 		int i=0;
 		return (authorities) -> {
 			
-			System.out.println("entra a return");
 			Set<GrantedAuthority> mappedAuthorities = new HashSet<>();
 
 			authorities.forEach(authority -> {
 				
 				if(authority.getAuthority()=="ROLE_USER") {
-					System.out.println("authority");
-					System.out.println(authority);
 					OAuth2UserAuthority oauth2UserAuthority = (OAuth2UserAuthority)authority;
 					
 					Map<String, Object> userAttributes = oauth2UserAuthority.getAttributes();
-					System.out.println("email");
-					System.out.println(userAttributes.get("email"));
 					Persona p=personaService.findByEmail(String.valueOf(userAttributes.get("email")));
 					List<GrantedAuthority> authoritiess= new ArrayList<GrantedAuthority>();
 					/*for(Rol r:p.getRoles()) {
@@ -313,8 +295,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 					/*OAuth2UserAuthority oauth2UserAuthority = (OAuth2UserAuthority)authority;
 					
 					Map<String, Object> userAttributes = oauth2UserAuthority.getAttributes();
-					System.out.println("email");
-					System.out.println(userAttributes.get("email"));
+					
 					*/
 					// Map the attributes found in userAttributes
 					// to one or more GrantedAuthority's and add it to mappedAuthorities
@@ -357,7 +338,6 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 	public AuthorizationRequestRepository<OAuth2AuthorizationRequest> 
 	  authorizationRequestRepository() {
 	 
-		System.out.println("NUEVASESIONNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN");
 	    return new HttpSessionOAuth2AuthorizationRequestRepository();
 	}
 	

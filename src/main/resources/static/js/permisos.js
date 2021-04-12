@@ -1,11 +1,9 @@
 $( document ).ready(function() {
 	  
-	  console.log(persona);
 	  var idsEduCForPrograma= [];
 	  var eduCForPrograma= persona.programasForEduContinua;
 	  eduCForPrograma.forEach(element => idsEduCForPrograma.push(element.id));
 
-	  console.log(idsEduCForPrograma);
 	  $('#programasEC').val(idsEduCForPrograma);
 	  $('#programasEC').trigger('change');
 	  
@@ -13,7 +11,6 @@ $( document ).ready(function() {
 	  var prograForEst=persona.programasForEstudiantes;
 	  prograForEst.forEach(element => idsProgramaForEst.push(element.id));
 
-	  console.log(idsProgramaForEst);
 	  $('#programasEstudiantes').val(idsProgramaForEst);
 	  $('#programasEstudiantes').trigger('change');
 	  
@@ -21,7 +18,6 @@ $( document ).ready(function() {
 	  var prograForGradu= persona.programasForGraduados;
 	  prograForGradu.forEach(element => idsProgramaForGrad.push(element.id));
 
-	  console.log(idsProgramaForGrad);
 	  $('#programasGraduados').val(idsProgramaForGrad);
 	  $('#programasGraduados').trigger('change');
 	  
@@ -29,7 +25,6 @@ $( document ).ready(function() {
 	  var deptoForDoc= persona.deptosForDocentes;
 	  deptoForDoc.forEach(element => idsDeptoForDocentes.push(element.id));
 
-	  console.log(idsDeptoForDocentes);
 	  $('#deptosDocentes').val(idsDeptoForDocentes);
 	  $('#deptosDocentes').trigger('change');
 	  
@@ -37,7 +32,6 @@ $( document ).ready(function() {
 	  var eduCForAtten= persona.eduContinuasForAttendance;
 	  eduCForAtten.forEach(element => idsEduCForAtten.push(element.id));
 
-	  console.log(idsEduCForAtten);
 	  $('#educacionesContinuas').val(idsEduCForAtten);
 	  $('#educacionesContinuas').trigger('change');
 	  
@@ -85,16 +79,6 @@ $( document ).ready(function() {
 		
 		
 		
-		console.log(idsProgramasEdC);
-		console.log(idsProgramasPerEst);
-		console.log(idsProgramasPerGra);
-		console.log(idsDeptosDoc);
-		console.log(idsEduAtt);
-		console.log(switchEdC.checked);
-		console.log(switchP.checked);
-		console.log(switchA.checked);
-		console.log(cbAdminvo.checked);
-		console.log(cbE.checked);
 		if(persona.docente){
 			if((!switchEdC.checked && idsProgramasEdC.length>0 ) || (switchEdC.checked && idsProgramasEdC.length==0 ) || 
 					(switchP.checked && idsProgramasPerEst.length==0 && 
@@ -135,7 +119,6 @@ $( document ).ready(function() {
 			},
 			error: function(err) {
 				hideSpinnerModal("btnActualizarPermisos","btnSpinnerPermisos");
-				console.log(err);
 				toastr.error(err.responseJSON.message, 'Error!');
 			}
 		});
@@ -148,10 +131,7 @@ $( document ).ready(function() {
 	function validadorErroresPermisos(){
 		$("#switchEduContinua").click(function() {
 	  	if(document.getElementById("switchEduContinua").checked){
-	  	console.log($("#programasEC").val().length);
 	  		if($("#programasEC").val().length==0){
-	  		console.log("no hay educaciones");
-	  		console.log(persona);
 	  			
 		  			document.getElementById("ePEC").style.display='block';
 		  			document.getElementById("ePEC").innerText="Debes seleccionar como mínimo un Programa Académico al cual se va a gestionar las educaciones continuas";
@@ -222,8 +202,6 @@ $( document ).ready(function() {
 	});
 	
 	$('#programasEC').on('select2:unselect', function (e) { 
-	console.log("entra a ca");
-	console.log($("#programasEC").val());
 		if($("#programasEC").val().length==0){
 			if(document.getElementById("switchEduContinua").checked){
 				document.getElementById("ePEC").style.display='block';
@@ -259,12 +237,8 @@ $( document ).ready(function() {
 	
 	$("#switchPersonas").click(function() {
 	  	if(document.getElementById("switchPersonas").checked){
-	  	console.log($("#programasEC").val().length);
 	  		if($("#programasEstudiantes").val().length==0 && $("#deptosDocentes").val().length==0 && $("#programasGraduados").val().length==0 && !document.getElementById("cbAdminvo").checked && !document.getElementById("cbE").checked){
-	  		console.log("no hay items para personas");
-	  		console.log(persona);
-	  			
-  				console.log("entra");
+	  		
 	  			document.getElementById("ePP").style.display='block';
 	  			document.getElementById("ePP").innerText="Debes seleccionar como mínimo alguno de los aspectos que se encuentran a continuación";
 	  			
@@ -589,9 +563,7 @@ $( document ).ready(function() {
 	
 	$("#switchAsistencias").click(function() {
 	  	if(document.getElementById("switchAsistencias").checked){
-	  	console.log($("#educacionesContinuas").val().length);
 	  		if($("#educacionesContinuas").val().length==0){
-	  			console.log("entra");
 	  			document.getElementById("eA").style.display='block';
 	  			document.getElementById("eA").innerText="Debes seleccionar como mínimo una educación continua al cual se va a gestionar la asistencia mediante la app"
 	  			
@@ -658,9 +630,7 @@ $( document ).ready(function() {
 		}
 	});
 	
-	$('#educacionesContinuas').on('select2:unselect', function (e) { 
-	console.log("entra a ca");
-	console.log($("#educacionesContinuas").val());
+	$('#educacionesContinuas').on('select2:unselect', function (e) {
 		if($("#educacionesContinuas").val().length==0){
 			if(document.getElementById("switchAsistencias").checked){
 				document.getElementById("eA").style.display='block';

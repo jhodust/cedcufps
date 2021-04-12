@@ -12,8 +12,6 @@ $(document).ready(function ()
 	
 	$('.linkCertificado').on('click',function(e){
 		e.preventDefault();
-		console.log(e);
-		console.log(e.currentTarget.dataset.token);
 		var tokenParticipante=e.currentTarget.dataset.token;
 		$.ajax({
 	   		headers: {"X-CSRF-TOKEN": token},
@@ -23,12 +21,8 @@ $(document).ready(function ()
 	   		data: {'token':tokenParticipante },
 	   		cache: false,
 	   		success: function(result) {
-	   			console.log("RESULTADOOOOOOOOOOOOOOOOOOOO");
-	   			console.log(result);
 	   			if(result.updateDiploma){
-	   				console.log("antes de load");
 	   				canvasParticipante.loadFromJSON(result.diplomaDto.estructuraDiploma, function(o, object) {
-	   					console.log("entra a cargar");
 	   					updateInfoDiploma(result.participanteDto.nombrePersona, result.participanteDto.numeroDocumento,
 			   					result.participanteDto.tipoParticipante, canvasParticipante);
 	   					ajaxGenerarDiploma(result.participanteDto.token, result.participanteDto.idEducacionContinua,
@@ -57,10 +51,7 @@ function ajaxGenerarDiploma(tokenParticipante, idEduContinua, documentoParticipa
         format: 'jpg',
         quality: 0.8
     });
-	console.log(imagen);
 	var blob = dataURItoBlob(imagen);
-	console.log("blobbbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
-	console.log(blob);
 	var file = new File([blob], 'certificado.jpg', {type: 'image/jpg'});
 	formData.append('file',file);
 	formData.append('filename',filename);

@@ -37,5 +37,8 @@ public interface IPersonaCustomDao {
 	
 	public List<DocenteDto> findAllDocentesActivos();
 	
+	public Docente findDocenteResponsable(Long idPersona);
+	
+	public List<Persona> findPersonasList(List<Long> ids);
 	
 }

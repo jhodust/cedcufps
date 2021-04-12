@@ -22,8 +22,6 @@ var canvas = new fabric.Canvas('canvasDiploma',{
 $(document).ready(function ()
 		{
 	
-	console.log("inicializamos todo");
-	console.log(eduContinua);
 	loadSelectFontFamily();
 	ocultar("divNewImagen");
 	ocultar("divNewTexto");
@@ -45,7 +43,7 @@ $(document).ready(function ()
 
 	$('#btnCargar').on('click',function(e){
 		var tipo=$('#selectTipoElemento').val();
-		console.log(tipo);
+		
 		switch(tipo){
 			case "1":
 				loadImagen();
@@ -63,38 +61,7 @@ $(document).ready(function ()
 		
 	});
 	
-	$('#btnActualizar').on('click',function(e){
-		
-		console.log(canvas)
-		console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$4");
-		console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$4");
-		console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$4");
-		console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$4");
-		console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$4");
-		console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$4");
-		console.log(JSON.stringify(canvas));
-		
-		/*console.log("btnActualizar");
-		fabric.Canvas.prototype.getItemsByName = function(name) {
-			console.log("buscando.......");
-			console.log(name);  
-			var objectList = [],
-			      objects = this.getObjects();
-
-			  for (var i = 0, len = this.size(); i < len; i++) {
-			    if (objects[i].name && objects[i].name === name) {
-			      objectList.push(objects[i]);
-			    }
-			  }
-			  
-			  return objectList;
-			};*/
-		
-		// Modo de uso: 500,34 USD
-		/*console.log(
-		numeroALetras(128));*/
-		//probarCargue();
-	});
+	
 	
 	if(diploma != null && diploma.estructuraDiploma.objects.length > 0 ){
 		canvas.loadFromJSON(diploma.estructuraDiploma);
@@ -108,7 +75,6 @@ $(document).ready(function ()
 
 
 function probarCargue(){
-	console.log("entra al cargue");
 	
 	
 	
@@ -128,13 +94,11 @@ function probarCargue(){
 		left: width/2
 		
 	});
-	console.log("agregando nuevo");
 	canvas.add(text);
 	
 	
 	var text="%facultad%";
 	var width=canvas.width/2;
-	console.log("Texto: " + text.length)
 	if(text.length>100){
 		width=canvas.width*3/5
 	}
@@ -150,12 +114,10 @@ function probarCargue(){
 		top: 100,
 		left: width/2
 	});
-	console.log("agregando nuevo");
 	canvas.add(text);
 	
 	var text="%programa%";
 	var width=canvas.width/2;
-	console.log("Texto: " + text.length)
 	if(text.length>100){
 		width=canvas.width*3/5
 	}
@@ -172,12 +134,10 @@ function probarCargue(){
 		left: width/2
 		
 	});
-	console.log("agregando nuevo");
 	canvas.add(text);
 	
 	var text="Certifican que:";
 	var width=canvas.width/2;
-	console.log("Texto: " + text.length)
 	if(text.length>100){
 		width=canvas.width*3/5
 	}
@@ -194,7 +154,6 @@ function probarCargue(){
 		left: width/2
 		
 	});
-	console.log("agregando nuevo");
 	canvas.add(text);
 	
 	var text="%nombreAsistente%";
@@ -214,12 +173,10 @@ function probarCargue(){
 		top: 340,
 		
 	});
-	console.log("agregando nuevo");
 	canvas.add(text);
 	
 	var text="Identificado con %documentoParticipante%, participó en el %tipoEducacionContinua% %educacionContinua% con una intensidad horaria de %intensidadHoraria% horas.";
 	var width=canvas.width/2;
-	console.log("Texto: " + text.length)
 	if(text.length>100){
 		width=canvas.width*3/5
 	}
@@ -236,7 +193,6 @@ function probarCargue(){
 		left: width/2
 		
 	});
-	console.log("agregando nuevo");
 	canvas.add(text);
 	
 	
@@ -254,7 +210,6 @@ function probarCargue(){
 		fontWeight: 'normal',
 		top: 710
 	});
-	console.log("agregando nuevo");
 	canvas.add(text);
 	
 	
@@ -278,7 +233,6 @@ function addImage(imgLink) {
 	
 	  fabric.Image.fromURL(imgLink, function(img) {
 		  if(document.getElementById('cbxImagenFondo').checked){
-			   alert("entra a fondo");
 			    canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas), {
 		            scaleX: canvas.width / img.width,
 		            scaleY: canvas.height / img.height
@@ -307,12 +261,9 @@ function loadText(){
 		return;
 	}
 	var width=canvas.width/2;
-	console.log("Texto: " + text.length)
 	if(text.length>100){
 		width=canvas.width*3/5
 	}
-	console.log("longitud texto: " + text.length);
-	console.log("canvas width: " + canvas.width);
 	var text = new fabric.Textbox(text, { 
 		fontSize: size,
 		fontFamily: font,
@@ -327,7 +278,6 @@ function loadText(){
 		fixedWith: width
 		
 	});
-	console.log("text heigh: " + text.height);
 	canvas.add(text);
 	resetValues();
 }
@@ -335,21 +285,12 @@ function loadText(){
 
 var heightInicial;
 canvas.on('mouse:dblclick', function(obj) {
-	  console.log("doble cliek");
-	  console.log(obj);
 	  heightInicial=obj.target.height;
 	});
 
 	
 canvas.on('text:changed', function(opt) {
     var t1 = opt.target;
-    console.log("nuevo tamaño");
-    //console.log(t1);
-    //console.log(t1.width);
-    console.log(t1.height);
-    console.log(heightInicial);
-    //console.log(t1.fixedWidth);
-    //console.log(t1.text.length);
     if (t1.width > t1.fixedWidth) {
       t1.fontSize *= t1.fixedWidth / (t1.width + 1);
       t1.width = t1.fixedWidth;
@@ -387,7 +328,6 @@ function dataURItoBlob(dataURI) {
 
     // separate out the mime component
     var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
-    console.log("mimeString: " +  mimeString);
     // write the bytes of the string to a typed array
     var ia = new Uint8Array(byteString.length);
     for (var i = 0; i < byteString.length; i++) {
@@ -400,8 +340,6 @@ function dataURItoBlob(dataURI) {
 function loadDiplomaBase(){
 	$.getJSON( "/data/baseDiploma.json", function( json )
 			{       
-				console.log("objetos");
-				console.log("va a entrar al for");
 				json.objects.forEach(function(object){
 					if(object.type=="textbox"){
 						object=loadAttrEduContinua(object);
@@ -417,9 +355,6 @@ function loadDiplomaBase(){
 
 function loadAttrEduContinua(object){
 	heightInicial=object.height;
-	console.log("HEIGHTTTT INICIALLLLL: " + heightInicial);
-	console.log("metodo load");
-	console.log(object);
 	var regex = /%facultad%/gi;
 	var cad;
 	if(eduContinua.facultad.includes('Facultad')){
@@ -458,7 +393,6 @@ function loadAttrEduContinua(object){
 	var d = new Date(eduContinua.fechaFin);
 	var cad= d.getDate() + " de " + months[d.getMonth()] + " de " + d.getFullYear();
 	object.text=object.text.replace(regex, cad);
-	console.log("HEIGHTTTT FINAL: " + object.height);
 	fixSize(object);
 	
 	return object;
@@ -467,12 +401,10 @@ function loadAttrEduContinua(object){
 function fixSize(obj){
 	
 	while (obj.width > obj.fixedWidth) {
-		alert("entra al while de width");
 		obj.set({fontSize: obj.fontSize-1});
     }
 
      while (obj.height >  heightInicial) {
-	    	alert("entra al while de height");
 	    	obj.set({fontSize: obj.fontSize-1});
 	    }
 }
@@ -497,7 +429,6 @@ function loadSelectFontFamily(){
 $('#selectTipoElemento').on("change", function (e) { 
 	e.preventDefault();
 	var tipo=$('#selectTipoElemento').val();
-	console.log(tipo);
 	switch(tipo){
 		case "1":
 			mostrar("divNewImagen",'inline');
@@ -553,12 +484,6 @@ $("#btnGuardarEstructuraCertificado").on("click",function(e){
 	}
 	JSONdiploma.idEduContinua=eduContinua.id;
 	JSONdiploma.estructuraDiploma=canvas;
-	console.log(JSONdiploma.estructuraDiploma);
-	console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-	console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-	console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-	console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-	console.log(JSONdiploma);
 	showSpinnerModal("btnGuardarEstructuraCertificado","btnSpinnerEstructuraCertificado");
 	$.ajax({
 		headers: {"X-CSRF-TOKEN": token},
@@ -568,7 +493,6 @@ $("#btnGuardarEstructuraCertificado").on("click",function(e){
 		url: "/educacion-continua/generar-estructura-diploma",
 		cache: false,
 		success: function(result) {//retornar el diploma
-			console.log(result);
 			JSONdiploma.id=result;
 			eduContinua.diploma=JSONdiploma;
 			//carga la estructura en el canvas del participante en listado Asistentes
@@ -585,18 +509,6 @@ $("#btnGuardarEstructuraCertificado").on("click",function(e){
 	});
 	
 	
-	 /* var canvas = document.getElementById('canvasDiploma');
-	  var ctx = canvas.getContext('2d');
-	  var dataURL = canvas.toDataURL('image/jpg');
-	 
-		var blob = dataURItoBlob(dataURL);
-		//var formData = new FormData();
-		var newFile = new File([blob], 'plantilla.jpg', {type: 'image/jpg'});
-		console.log(dataURL);
-		console.log("imagen");
-		console.log(blob);
-		console.log(newFile);
-		*/
 });
 
 

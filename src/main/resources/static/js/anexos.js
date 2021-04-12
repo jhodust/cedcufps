@@ -1,4 +1,4 @@
- console.log(eduContinua);
+ 
   var myDropzone = new Dropzone("#myDropzone", { 
 	  url: "/educacion-continua/anexos/save",
 	  params: {'id':eduContinua.id},

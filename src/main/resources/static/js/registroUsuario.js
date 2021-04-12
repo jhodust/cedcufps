@@ -6,8 +6,6 @@ $(document).ready(function ()
 				id=0;
 				url="/";
 			}else if(caso==1){
-			console.log("id persona en caso 1");
-			console.log(persona.id);
 				if(persona.id==null){
 					id=0;
 				}else{
@@ -32,7 +30,6 @@ $(document).ready(function ()
 			});
 			
 			$('#selectPaisNacimiento').on("change", function (e) { 
-				console.log("entra a change pais");
 				e.preventDefault();
 				validateSelect('selectPaisNacimiento','errorPaisNacimiento');
 				
@@ -137,25 +134,7 @@ $(document).ready(function ()
 		var valid53=validateLengthTxt('segApe','errorSegundoApellido',20);
 		var valid54=validateLengthTxt('direccion','errorDireccion',100);
 			
-		console.log("imprimiendo validaciones");
-		console.log(valid1);
-		console.log(valid2);
-		console.log(valid3);
-		console.log(valid4);
-		console.log(valid5);
-		//console.log(valid6);
-		console.log(valid7);
-		console.log(valid8);
-		console.log(valid9);
-		console.log(valid10);
-		console.log(valid11);
-		console.log(valid12);
-		console.log(valid13);
-		console.log(valid50);
-		console.log(valid51);
-		console.log(valid52);
-		console.log(valid53);
-		console.log(valid54);
+		
 			if(!valid1 || !valid2 || !valid3 || !valid4 || !valid5  || !valid7
 					|| !valid8 || !valid9 || !valid10 || !valid0 || !valid11 || !valid12 || !valid13
 					|| !valid50 || !valid51 || !valid52 || !valid53 || !valid54){
@@ -164,28 +143,19 @@ $(document).ready(function ()
 			
 		}
 			if($('#selectPaisNacimiento').val().trim()=="170"){
-				console.log("entra al if de pais");
-				console.log($('#selectDepartamentoNacimiento').val());
-				console.log($('#selectMunicipioNacimiento').val());
+				
 				var valid14=validateSelect('selectDepartamentoNacimiento','errorDeptoNacimiento');
 				var valid15=validateSelect('selectMunicipioNacimiento','errorMpioNacimiento');
-				console.log("entra a validar municipios por el pais")
-				console.log(valid14);
-				console.log(valid15);
+				
 				if(!valid14 || !valid15){
-						console.log("entra");
 						anyError=true;
 						
 					}
 				}
 			
 			if(document.getElementById("cbEst").checked){
-				console.log("entra a validacion cbEst");
 				var valid16=validateSelect('programaAsociado','errorProgramaEstudiante');
 				var valid17=validateInputNumberRequerido('codigo','errorCodigoEstudiante');
-				console.log("entra a validar check estudiante")
-				console.log(valid16);
-				console.log(valid17);
 				if(!valid16 || !valid17){
 					anyError=true;
 						
@@ -193,12 +163,8 @@ $(document).ready(function ()
 				
 				}
 				if(document.getElementById("cbDoc").checked){
-					console.log("entra a validacion cbDoc");
 					var valid18=validateSelect('selectDeptoAdscrito','errorDeptoDocente');
 					var valid19=validateInputNumberRequerido('codDocente','errorCodigoDocente');
-					console.log("entra a validar check docente")
-					console.log(valid18);
-					console.log(valid19);
 					if(!valid18 || !valid19){
 						anyError=true;
 						
@@ -206,16 +172,10 @@ $(document).ready(function ()
 				
 				}
 				if(document.getElementById("cbAdminvo").checked){
-					console.log("entra a validacion cbAdminvo");
 					var valid20=validateInputTextRequerido('dependencia','errorDependenciaAdminvo');
 					var valid21=validateInputTextRequerido('cargo','errorCargoAdminvo');
 					var valid55=validateLengthTxt('dependencia','errorDependenciaAdminvo',50);
 					var valid56=validateLengthTxt('cargo','errorCargoAdminvo',50);
-					console.log("entra a validar check adminvo")
-					console.log(valid20);
-					console.log(valid21);
-					console.log(valid55);
-					console.log(valid56);
 					if(!valid20 || !valid21 || !valid55 || !valid56){
 						anyError=true;
 						
@@ -223,12 +183,8 @@ $(document).ready(function ()
 				
 				}
 				if(document.getElementById("cbGraduado").checked){
-					console.log("entra a validacion cbGraduado");
 					var valid20=validateSelect('selectProgramaGraduado','errorProgramaGraduado');
 					var valid21=validateAnio('anioGraduado','errorAnioGraduado');
-					console.log("entra a validar check graduado")
-					console.log(valid20);
-					console.log(valid21);
 					if(!valid20 || !valid21){
 						anyError=true;
 						
@@ -236,16 +192,10 @@ $(document).ready(function ()
 				
 				}
 				if(document.getElementById("cbExt").checked){
-					console.log("entra a validacion cbExt");
 					var valid22=validateInputTextRequerido('profesion','errorProfesionExterno');
 					var valid23=validateInputTextRequerido('empresa','errorEmpresa');
 					var valid57=validateLengthTxt('profesion','errorProfesionExterno',50);
 					var valid58=validateLengthTxt('empresa','errorEmpresa',50);
-					console.log("entra a validar check externo")
-					console.log(valid22);
-					console.log(valid23);
-					console.log(valid57);
-					console.log(valid58);
 					if(!valid22 || !valid23 || !valid57 || !valid58){
 						anyError=true;
 						
@@ -263,7 +213,6 @@ $(document).ready(function ()
 						return;
 			}
 		
-		console.log();
 		var userJSON = {};
 		userJSON.id=id;
 		userJSON.idTipoDocumento = $('#selectTipoDoc').val();
@@ -305,7 +254,6 @@ $(document).ready(function ()
 		userJSON.cargo=$('#cargo').val();
 		userJSON.empresa=$('#empresa').val();
 		
-		console.log(userJSON);
 		showSpinnerModal("btnGuardarUsuario","btnSpinnerUsuarios");
 		$
 				.ajax({
@@ -343,7 +291,6 @@ $(document).ready(function ()
 								.error(
 										err.responseJSON.message,
 										'Error!');
-						console.log(err);
 						
 					}
 				});

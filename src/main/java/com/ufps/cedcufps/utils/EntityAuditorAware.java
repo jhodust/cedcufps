@@ -17,8 +17,6 @@ public class EntityAuditorAware implements AuditorAware<String> {
 	private IPersonaService personaService;
 	
     public Optional<String> getCurrentAuditor() {
-    	System.out.println("SOLICITAAAAAAAAAAAAAAAAAAA EL CURRRENTTTTT AUDITORRRR");
-    	
         return Optional.of(personaService.findEmailPersonaLogueada());
     }
 }

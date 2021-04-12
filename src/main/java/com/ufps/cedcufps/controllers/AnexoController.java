@@ -21,7 +21,6 @@ public class AnexoController {
 	
 	@RequestMapping(value = "/educacion-continua/detalles/anexos/{id}")
 	public String reloadListAnexos(@PathVariable(value = "id") String idAcceso, Map<String, Object> model) {
-		System.out.println("entra a reload list participantes");
 		model.put("anexos",anexosService.findAnexosByEduContinuaIdAcceso(idAcceso));
 		return "educacion_continua/anexos/listadoAnexos :: listadoAnexos";
 	}

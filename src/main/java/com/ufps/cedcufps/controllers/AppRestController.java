@@ -51,10 +51,7 @@ public class AppRestController {
 	
 	@GetMapping(value="/validateLoginOutlook", produces = "application/json")
     public ResponseEntity<?> validarLoginOutlook(@RequestParam(name = "email", required = true) String email) {
-		System.out.println("***********************************");
-		System.out.println("***********************************");
-		System.out.println("entra a login outlook");
-		System.out.println("email: " + email);
+		
 		return  new ResponseEntity<>(HttpStatus.OK);
 	}
 	
@@ -141,7 +138,6 @@ public class AppRestController {
 
 		Map<Integer, ParticipanteDto> map=educacionContinuaService.tomarAsistencia(idEducacionContinua, idJornada, qr);
 		int codigo=map.keySet().iterator().next();
-		System.out.println("codigoooooooooooooooooooooooooooooo");
 		if(codigo==200) {
 			return  new ResponseEntity<>(map.get(codigo),HttpStatus.OK);
 		}

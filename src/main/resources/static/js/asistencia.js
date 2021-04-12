@@ -1,7 +1,6 @@
 if(eduContinua.jornadas.length>0){
 	if(asistenciaGlobal!=null){
 		  asistenciaGlobal.forEach(function(a){
-			    console.log(a);
 			   if(a[0]==eduContinua.participantes.length){
 				   var idCheckBox=a[1]+'_all';
 				   $('#'+idCheckBox).prop('checked', true);  
@@ -69,8 +68,6 @@ function asistenciaGeneral(element){
 	   			refreshTableAsistentes();
 	   		},
 	   		error: function(err) {
-	   			console.log("entra aca");
-	   			console.log(element.dataset.jornada+'_all');
 	   			toastr.error('No se guardaron las asistencias de la Jornada', 'Error!',{"positionClass": "toast-top-right"});
 	   			$('#'+element.dataset.jornada+'_all').prop('checked', false); 
 	   		}
@@ -89,8 +86,6 @@ function asistenciaGeneral(element){
 	   		    refreshTableAsistentes();
 	   		},
 	   		error: function(err) {
-	   			console.log("entra en else");
-	   			console.log(element.dataset.jornada+'_all');
 	   			toastr.error('No se guardaron las asistencias de la Jornada', 'Error!',{"positionClass": "toast-top-right"});
 	   			$('#'+element.dataset.jornada+'_all').prop('checked', true); 
 	   		}

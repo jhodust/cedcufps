@@ -113,25 +113,11 @@ public class EducacionContinuaController {
 		model.put("titulo","FORMULARIO EDUCACIÓN CONTINUA");
 		model.put("photoUser", SpringSecurityConfig.getInfoSession().getPhoto());
 		model.put("nameUser", SpringSecurityConfig.getInfoSession().getName());
-		/*if(buscarAuthority(auth, "ROLE_DOCENTE")) {
-			ec.setDocenteResponsable((Docente)personaService.findPersonaLogueada());
-		}*/
-		System.out.println("------------------------------------------------------------------------");
-		//System.out.println(ec.getIdClasificacion());
+		
 		Persona p= personaService.findPersonaLogueada();
-		//boolean isSuperAdmin= personaService.isSuperAdmin(p);
-		//boolean isDirPrograma = personaService.isDirPrograma(p);
-		//boolean isDocente=personaService.isDocente(p);
 		
 		PersonaDtoLogueada peopleLogin = personaService.findPersonaLogueadaDto(p);
-		System.out.println("issuperadmin");
-		System.out.println(peopleLogin.isSuperAdmin());
-		System.out.println("isdirprograma");
-		System.out.println(peopleLogin.isDirPrograma());
-		System.out.println("isdocente");
-		System.out.println(peopleLogin.isDocente());
-		System.out.println("has permisos");
-		System.out.println(peopleLogin.isHasPermisosEdC());
+		
 		model.put("educacionContinua",educacionContinuaService.createEducacionContinua(p, peopleLogin.isSuperAdmin(), 
 				peopleLogin.isDirPrograma(), peopleLogin.isHasPermisosEdC()));
 		model.put("tipos_educacion_continua",educacionContinuaService.findAllTiposEducacionContinua(0L));//metodo que busca los tipos de educacion oficiales y el 'otro' si es de una educacion continua en especifico
@@ -150,7 +136,6 @@ public class EducacionContinuaController {
 	public String mostrar(@RequestParam(name = "educacionContinua") String educacionContinua,
 			@RequestParam(name = "fecha") String fechaEduContinua, @RequestParam(name = "id") String idAcceso,
 			Map<String, Object> model,RedirectAttributes redirectAttributes) {
-		System.out.println("?????????????????????????????");
 		model.put("titulo","DETALLES EDUCACIÓN CONTINUA");
 		InfoEducacionContinuaDto dto= educacionContinuaService.detallesEducacionContinua(idAcceso);
 		if(dto.isHasPermission()) {
@@ -213,7 +198,7 @@ public class EducacionContinuaController {
 	
 	@RequestMapping(value = "/detalles/asistentes/{id}")
 	public String reloadListParticipantes(@PathVariable(value = "id") String idAcceso, Map<String, Object> model) {
-		System.out.println("entra a reload list participantes");
+		
 		model.put("ec",educacionContinuaService.detallesEducacionContinua(idAcceso));
 		return "educacion_continua/listado_asistentes/listadoParticipantes :: listadoParticipantes";
 	}

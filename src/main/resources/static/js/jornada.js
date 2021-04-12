@@ -31,9 +31,6 @@ $(document).ready(function ()
 	});
 	
 	
-			/*$.getJSON('http://localhost:8080/programas-academicos/listar', function(json) {
-				console.log(json)
-			});*/
 			
 	$('#modalRegistroJornada').on('show.bs.modal', function (event) {
 		$('#horaInicio').val("");
@@ -75,17 +72,14 @@ function ajaxGuardarJornada(jsonJornada){
 			//window.setTimeout(function(){location.reload()},1000);
 			idJornada=null;
 			$('#modalRegistroJornada').modal('hide');
-			console.log("va a urlReload");
 			reloadListJornadas();
 
 
-	        console.log("despues de reload");
 	        hideSpinnerModal("btnSaveJornada","btnSpinnerJornada");
 		},
 		error: function(err) {
 			hideSpinnerModal("btnSaveJornada","btnSpinnerJornada")
 			toastr.error('No se pudo procesar la solicitud...', 'Error!');
-			console.log(err);
 			err.responseJSON.forEach(function(error){
 				if(error.field=="horaInicio"){
 					var inputHoraInicio=document.getElementById('horaInicio');
@@ -112,7 +106,6 @@ function editarJornada(elemento){
 		url: "/educacion-continua/jornadas/search/"+elemento.dataset.id,
 		cache: false,
 		success: function(result) {
-			console.log(result);
 			$('#modalRegistroJornada').modal();
 			$('#horaInicio').val(result.fechaJornadaString + " " + result.horaInicioString);
 			$('#horaFin').val(result.fechaJornadaString + " " + result.horaFinString);
@@ -136,7 +129,6 @@ function eliminarJornada(elemento){
 		url: "/educacion-continua/jornadas/delete",
 		cache: false,
 		success: function(result) {
-			 console.log(result);
 			 toastr.success(result, 'Excelente!');
 			 reloadListJornadas();
 			 //window.setTimeout(function(){location.reload()},1000);

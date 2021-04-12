@@ -43,13 +43,6 @@ public class RoleRestController {
 			@RequestParam(name ="idsEdCA[]",required = false) List<Long> idsEducacionContinuaForAtt, @RequestParam("isDirPrograma") boolean isDirPrograma,
 			@RequestParam("isDoc") boolean isDocente, @RequestParam(name = "idProgramaDirector") String idProgramaDirector) {
 		
-		System.out.println("********************************************************************************************************");
-		System.out.println(idP);
-		System.out.println(hasPermisosForEdC);
-		System.out.println(hasPermisosForPeople);
-		System.out.println(hasPermisosForAttendance);
-		System.out.println(hasPermisosForAdminvo);
-		System.out.println(hasPermisosForExternos);
 		Long idPersona=null;
 		if(idP !=null && !idP.isEmpty()) {
 			idPersona=Long.parseLong(idP);

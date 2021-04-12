@@ -58,10 +58,7 @@ public class DiplomaCustomDaoImpl implements IDiplomaCustomDao {
 	@Override
 	public void saveImagenDiploma(Long idDiploma,  String rutaImagen, int x, int y) {
 		// TODO Auto-generated method stub
-		System.out.println("imageneessssss");
-		System.out.println( rutaImagen);
-		System.out.println( x);
-		System.out.println( y);
+		
 		StringBuilder query = new StringBuilder();
 		 em.createNativeQuery("insert into imagenes_diploma(id_diploma,x,y,ruta) values "
 				+ "(?1,?2,?3, ?4)")
@@ -95,16 +92,6 @@ public class DiplomaCustomDaoImpl implements IDiplomaCustomDao {
 			int xNombre, int yNombre, String rutaImagen, int x, int y) {
 		// TODO Auto-generated method stub
 		
-		System.out.println("firmassssssssssss");
-		System.out.println( cargo);
-		System.out.println( xCargo);
-		System.out.println( yCargo);
-		System.out.println(nombre);
-		System.out.println( xNombre);
-		System.out.println(yNombre);
-		System.out.println(rutaImagen);
-		System.out.println( x);
-		System.out.println( y);
 		
 		
 		StringBuilder query = new StringBuilder();

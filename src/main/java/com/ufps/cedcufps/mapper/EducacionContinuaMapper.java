@@ -99,15 +99,11 @@ public class EducacionContinuaMapper implements IEducacionContinuaMapper {
 			
 			List<ParticipanteDto> participantes = new ArrayList<ParticipanteDto>();
 			List<PonenteDto> ponentes = new ArrayList<PonenteDto>();
-			System.out.println("******************************************");
 			for(Participante p: e.getParticipantes()) {
 				
 				if(p.getTipoParticipante().getTipoParticipante().equalsIgnoreCase("ponente")) {
-					System.out.println("entrando por ponente");
 					ponentes.add(this.convertPonenteToPonenteDto((Ponente)p));
 				}
-				System.out.println("dentro del for");
-				System.out.println(p.getTarjetaInscripcion());
 				ParticipanteDto participanteDto=this.convertParticipanteToParticipanteDto(p);
 				
 				
@@ -117,17 +113,7 @@ public class EducacionContinuaMapper implements IEducacionContinuaMapper {
 					participanteDto.addAsistencia(a.getJornada().getId(), true);
 					asistenciasGeneralesMap.put(a.getJornada().getId(), asistenciasGeneralesMap.get(a.getJornada().getId()) - 1);
 				}
-				System.out.println("tamaño asistencias " + participanteDto.getJornadasAsistencias().size());
-				System.out.println("porcentaje asistencias: " + (e.getJornadas().size() * Integer.parseInt(e.getPorcentajeAsistencia()) / 100 ));
-				System.out.println("cantidad jornadas: " + e.getJornadas().size());
-				System.out.println((double)(e.getJornadas().size()) * (double)(Integer.parseInt(e.getPorcentajeAsistencia())) / (double)(100) );
-				System.out.println("redondeado " + Math.round((double)(e.getJornadas().size()) * (double)(Integer.parseInt(e.getPorcentajeAsistencia())) / (double)(100) ));
-				System.out.println("redondeado ceil " + Math.ceil((double)(e.getJornadas().size()) * (double)(Integer.parseInt(e.getPorcentajeAsistencia())) / (double)(100) ));
 				participanteDto.setEnableToCertificate(participanteDto.getJornadasAsistencias().size() >= Math.ceil((double)(e.getJornadas().size()) * (double)(Integer.parseInt(e.getPorcentajeAsistencia())) / (double)(100) ) || participanteDto.getDiplomaParticipacion() != null);
-				System.out.println(participanteDto.isEnableToCertificate());
-				System.out.println("---------------------");
-				//System.out.println(participanteDto.getJornadasAsistencias().size());
-				
 				participantes.add(participanteDto);
 			}
 			
@@ -136,14 +122,6 @@ public class EducacionContinuaMapper implements IEducacionContinuaMapper {
 			eduContinuaDto.setJornadas(jornadaMapper.convertJornadasToJornadaAppDto(e.getJornadas()));
 			eduContinuaDto.setCantidadInscritos(participantes.size());
 			eduContinuaDto.setPonentes(ponentes);
-			System.out.println("**************************************************");
-			System.out.println("**************************************************");
-			System.out.println("**************************************************");
-			System.out.println("**************************************************");
-			System.out.println("e.getanexos: " + e.getAnexos().size());
-			System.out.println("**************************************************");
-			System.out.println("**************************************************");
-			System.out.println("**************************************************");
 			eduContinuaDto.setAnexos(this.convertListAnexoToListAnexoDto(e.getAnexos()));
 			eduContinuaDto.setAsistenciasGenerales(this.validateAsistenciasGenerales(asistenciasGeneralesMap));
 			dto.setEducacionContinua(eduContinuaDto);
@@ -161,8 +139,6 @@ public class EducacionContinuaMapper implements IEducacionContinuaMapper {
 		while(itr.hasNext()) 
         { 
 			Map.Entry<Long, Integer> entry = itr.next(); 
-			System.out.println("key: " + entry.getKey());
-			System.out.println("value: " + entry.getValue());
 			map.put(entry.getKey(),
 					entry.getValue() == 0); 
         } 
@@ -177,9 +153,6 @@ public class EducacionContinuaMapper implements IEducacionContinuaMapper {
 		pdto.setId(p.getId());
 		pdto.setIdPersona(p.getPersona().getId());
 		pdto.setNombrePersona(usuarioMapper.convertFieldsFullName(p.getPersona()));
-		System.out.println("dentro de convert");
-		System.out.println(pdto.getNombrePersona());
-		System.out.println(p.getTarjetaInscripcion());
 		pdto.setIdTipoParticipante(p.getTipoParticipante().getId());
 		pdto.setTipoParticipante(p.getTipoParticipante().getTipoParticipante());
 		pdto.setIdTipoDocumento(p.getPersona().getTipoDocumento().getId());
@@ -220,7 +193,6 @@ public class EducacionContinuaMapper implements IEducacionContinuaMapper {
 		// TODO Auto-generated method stub
 		PonenteDto dto=new PonenteDto();
 		dto.setParticipante(this.convertParticipanteToParticipanteDto(p));
-		System.out.println("nombre ponente");
 		dto.setTema(p.getTema());
 		return dto;
 	}
@@ -345,8 +317,6 @@ public class EducacionContinuaMapper implements IEducacionContinuaMapper {
 	@Override
 	public EducacionContinuaWebDto convertEducacionContinuaToEduContinuaWebDto(EducacionContinua e) {
 		// TODO Auto-generated method stub
-		System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
-		System.out.println("mapperrrrrrrrrrrrrrrrrrrrrrrrrrr");
 		EducacionContinuaWebDto eduContinuaDto= new EducacionContinuaWebDto();
 		eduContinuaDto.setId(e.getId());
 		eduContinuaDto.setIdAcceso(e.getIdAcceso());
@@ -378,14 +348,9 @@ public class EducacionContinuaMapper implements IEducacionContinuaMapper {
 		eduContinuaDto.setCostoEducacionContinua(e.getCostoEducacionContinua());
 		eduContinuaDto.setEstadoOficialTipoEducacionContinua(e.getTipoEduContinua().isEstadoOficial());
 		List<TipoBeneficiarioDto> list = new ArrayList<TipoBeneficiarioDto>();
-		System.out.println("educacion continuaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-		System.out.println(e.getId());
-		System.out.println(e.getNombre());
-		System.out.println("cantidad beneficiarios");
-		System.out.println(e.getTipoBeneficiarios().size());
+		
 		for(EducacionContinuaTipoBeneficiario ectb:e.getTipoBeneficiarios()) {
-			System.out.println("--------------------");
-			System.out.println(ectb.getTipoBeneficiario().getTipoBeneficiario());
+			
 			TipoBeneficiarioDto d = new TipoBeneficiarioDto();
 			d.setId(ectb.getTipoBeneficiario().getId());
 			d.setTipoBeneficiario(ectb.getTipoBeneficiario().getTipoBeneficiario());

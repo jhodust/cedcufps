@@ -116,6 +116,6 @@ public interface IPersonaService {
 	
 	
 	
-	public PermisosRegistroPersonaDto findPermisosRegistrarPersonas(Long idPersonaEdit);
+	public PermisosRegistroPersonaDto findPermisosRegistrarPersonas(Long idPersonaEdit, boolean registroParaOtro);
 
 }

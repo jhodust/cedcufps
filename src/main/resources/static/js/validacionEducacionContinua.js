@@ -1,6 +1,5 @@
 
 $(document).ready(function(){
-	console.log("documento listo");
 	
 	$("#temaPonente").focusout(function(){
     if($("#temaPonente").val() == ""){

@@ -23,12 +23,10 @@ function validateEmail(idInput, idError){
 }
 function validateInputTextRequerido(idInput, idError){
  if(document.getElementById(idInput).value.trim() == ""){
-	 console.log("entra a vacio input text");
 		document.getElementById(idInput).classList.add("is-invalid");
 		document.getElementById(idError).innerText=msjRequerido;
 		return false;
 	}else{
-		console.log("limpia input text requerido");
 		cleanError(idInput,idError);
 		return true;
 	}
@@ -81,8 +79,6 @@ function validateInputPorcentaje(idInput, idError){
 }
 
 function validateSelect(idSelect, idError){
-	//console.log('validateSelect');
-	//console.log(document.getElementById(idSelect).value);
 	if(document.getElementById(idSelect).value == 0){
 		document.getElementById(idSelect).classList.add("is-invalid");
 		document.getElementById(idError).innerText=msjSelect;
@@ -114,11 +110,7 @@ function validateCheckboxEstadoCivil(idError){
 }
 
 function validateCheckboxPerfiles(idCheckbox1,idCheckbox2,idCheckbox3,idCheckbox4,idCheckbox5,idError){
-	console.log(document.getElementById(idCheckbox1).checked);
-	console.log(document.getElementById(idCheckbox2).checked);
-	console.log(document.getElementById(idCheckbox3).checked);
-	console.log(document.getElementById(idCheckbox4).checked);
-	console.log(document.getElementById(idCheckbox5).checked);
+	
 	if(!document.getElementById(idCheckbox1).checked && !document.getElementById(idCheckbox2).checked &&
 			!document.getElementById(idCheckbox3).checked && !document.getElementById(idCheckbox4).checked &&
 			!document.getElementById(idCheckbox5).checked){

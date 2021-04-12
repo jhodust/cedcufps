@@ -27,21 +27,8 @@ public class InscripcionController {
 	public String preinscripcionEducacionContinua(@RequestParam(name = "educacionContinua") String nombreEvento,
 			@RequestParam(name = "fecha") String fechaEvento, @RequestParam(name = "id") String idAcceso,
 			Map<String, Object> model) {
-		//EducacionContinua ec= educacionContinuaService.findOneByNombreAndFecha(nombreEvento,fechaEvento);
-		System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-		System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-		System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-		System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-		System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 		model.put("titulo","DETALLES EDUCACIÓN CONTINUA");
 		model.put("requisitosInscripcion",educacionContinuaService.consultarRequisitosInscripcion(idAcceso));
-		//System.out.println(ec.getId());
-		//model.put("listTipoPersonaValidInscripcion",educacionContinuaService.tiposPersonaParaInscripcion(ec.getTipoBeneficiarios()));
-		//try {
-		//model.put("participante",participanteService.findByIdEducacionContinuaAndIdPersona(ec.getId(),personaService.findPersonaLogueada().getId()));
-		//}catch(Exception e) {
-		//	model.put("participante",null);
-		//}
 		model.put("photoUser", SpringSecurityConfig.getInfoSession().getPhoto());
 		model.put("nameUser", SpringSecurityConfig.getInfoSession().getName());
 		return "preinscripcion";
@@ -49,7 +36,6 @@ public class InscripcionController {
 	
 	@RequestMapping(value = "/preinscripcion/reload/{id}")
 	public String reloadCantidadParticipantesInscripción(@PathVariable(value = "id") String idAcceso, Map<String, Object> model) {
-		System.out.println("entra a reload list cantidad participantes");
 		model.put("requisitosInscripcion",educacionContinuaService.consultarRequisitosInscripcion(idAcceso));
 		return "preinscripcion :: infoEducacionContinua";
 	}

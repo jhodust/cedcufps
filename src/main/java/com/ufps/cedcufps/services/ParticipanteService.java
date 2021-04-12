@@ -133,20 +133,14 @@ public class ParticipanteService implements IParticipanteService{
 		    
 		String texto=e.getProgramaResponsable().getCodigo()+"_"+e.getTipoEduContinua().getId()+"_"+e.getId()+"_"+tp.getId()+"_"+p.getNumeroDocumento();
 		String nombreArchivo=p.getNumeroDocumento()+".png";
-		System.out.println("texto original: " + texto);
 		texto=Encrypt.encriptar(texto);
 		try {
-			;
-			System.out.println("encriptado: " + texto);
-			System.out.println("desencriptado: " + Encrypt.desencriptar(texto));
 			dto.setImagenQr(CodigoQR.generateQR(fileStorageService.dirEducacionContinua().resolve(String.valueOf(e.getId())).resolve(fileStorageService.dirQrParticipantes()),nombreArchivo, texto));
 			dto.setCodigoQR(texto);
 		} catch (Exception exc) {
 			// TODO Auto-generated catch block
 			exc.printStackTrace();
 		}
-		System.out.println("##########################################################");
-		System.out.println(idTipoPersona);
 		if(idTipoPersona == 0L) {
 			if(tp.getTipoParticipante().equalsIgnoreCase("Ponente")) {
 				dto.setIdTipoPersona(null);
@@ -159,9 +153,6 @@ public class ParticipanteService implements IParticipanteService{
 		}
 		dto.setToken(String.valueOf(System.currentTimeMillis()));
 		participanteCustomDao.saveParticipante(dto);
-		System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-		System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-		System.out.println(dto.getId());
 		return dto;
 	}
 
@@ -287,51 +278,17 @@ public class ParticipanteService implements IParticipanteService{
 		if(p==null) {
 			throw new CustomException("La persona no fue encontrada en la base de datos ", HttpStatus.BAD_REQUEST);
 		}
-		/*Persona p=personaDao.findById(ponente.getPersona().getId()).get();
-		EducacionContinua ec=educacionContinuaDao.findById(ponente.getEducacionContinua().getId()).orElseThrow(() -> new CustomException("No fue posible encontrar la educación continua asociada en la base de datos"));
-		TipoParticipante tp=tipoParticipanteDao.findById(ponente.getTipoParticipante().getId()).orElseThrow(() -> new CustomException("No fue posible encontrar el tipo de participante asociado"));
-		/*preparando qr de inscripcion*/
-		/*System.out.println("ponete");
-		System.out.println(ponente.getId()==null);
-		System.out.println(ponente.getId().equals(0L));*/
+		
 		if(ponente.getId()==null || ponente.getId().equals(0L)) {
-			System.out.println("entra a crear");
 			ParticipanteDto dto=this.saveParticipante(ponente.getEducacionContinua().getId(), p, "Ponente",0L);
 			this.participanteDao.insertPonente(dto.getId(), ponente.getTema());
 			return dto;
-			/*System.out.println("entra al if");
-			System.out.println(p!=null);
-			System.out.println(ec!=null);
-			if(p!=null && ec!=null) {
-				System.out.println("entra al otro if");
-				ponente.setPersona(p);
-				ponente.setEducacionContinua(ec);
-				ponente.setTipoParticipante(tp);
-				
-				String texto=ec.getProgramaResponsable().getCodigo()+"_"+ec.getTipoEduContinua().getId()+"_"+ec.getId()+"_"+ponente.getTipoParticipante().getId()+"_"+p.getNumeroDocumento();
-				String nombreArchivo=p.getNumeroDocumento()+".png";
-				ponente.setCodigoQR(Encrypt.encriptar(texto));
-				System.out.println("guarda qr");
-				try {
-					System.out.println("encriptado: " + ponente.getCodigoQR());
-					System.out.println("desencriptado: " + Encrypt.desencriptar(ponente.getCodigoQR()));
-					ponente.setImagenCodigoQR(CodigoQR.generateQR(ec.getId()+"/qr-participantes/"+nombreArchivo, ponente.getCodigoQR()));
-					
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					throw new CustomException("No fue posible generar el código QR del ponente, registro fallido", HttpStatus.BAD_REQUEST);
-				}
-			}*/
+			
 		}else {
-			/*Ponente po=(Ponente)participanteDao.findById(ponente.getId()).orElseThrow(() -> new CustomException("No se encontró el ponente asociado en la base de datos"));
-			po.setTema(ponente.getTema());
-			ponente=po;*/
-			System.out.println("entra a actualizar");
 			participanteDao.updatePonente(ponente.getTema(),ponente.getId());
 			return null;
 		}
 			
-			/*participanteDao.save(ponente);*/
 	}
 
 	@Override
@@ -340,13 +297,10 @@ public class ParticipanteService implements IParticipanteService{
 		Participante p= participanteDao.findParticipanteById(idParticipante);
 		String tarjetaInscripcion=Archivo.saveImageAboutEducacionContinua(file,"inscripcion_"+p.getPersona().getNumeroDocumento(),fileStorageService.dirEducacionContinua().resolve(String.valueOf(p.getEducacionContinua().getId())).resolve(fileStorageService.dirTarjetasInscripcion()));
 		participanteDao.updateTarjetaInscripcion(tarjetaInscripcion, idParticipante);
-		System.out.println("#############################################################################");
-		System.out.println("tarjeta inscripcion");
+		
 		
 		PersonaDto perDto=usuarioMapper.convertPersonaToPersonaDto(p.getPersona());
 		
-		LOGGER.debug("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
-		LOGGER.debug("GUARDANDO TARJETA DE INSCRIPCION");
 		prepararEmailInscripcion(p.getEducacionContinua(), perDto, tarjetaInscripcion);
 		
 		
@@ -383,8 +337,7 @@ public class ParticipanteService implements IParticipanteService{
 	@Override
 	public void certificarParticipante(MultipartFile file, Long idEduContinua, String token, String documentoParticipante) {
 		// TODO Auto-generated method stub
-		System.out.println(token);
-		System.out.println(idEduContinua);
+		
 		String diplomaImagen=Archivo.saveImageAboutEducacionContinua(file,documentoParticipante,fileStorageService.dirEducacionContinua().resolve(String.valueOf(idEduContinua)).resolve(fileStorageService.dirDiplomasParticipantes()));
 		participanteDao.createCertificacionParticipante(true, diplomaImagen, new Date(), token);
 		//prepararEmailInscripcion(p.getEducacionContinua(), perDto, tarjetaInscripcion);

@@ -30,11 +30,7 @@ public class MiCertificacionRestController {
 	@ResponseBody
 	public ResponseEntity<?> updateCertificacionParticipante(MultipartFile file, String filename, String tokenParticipante, 
 			String idEduContinua, String documentoParticipante) {
-		System.out.println("UPDATTTTTTTTTTTTEEEEEEEEEEEEEEEEEE CERRRRRRRRRRTTTTTTTTTTTTTIIIIIIIIIIFFFFFFFFFFIIIIIIIICAAAAACCCCCIIIIONNNNNNN");
-		System.out.println("imagen filename: " + file.getName());
-		System.out.println(tokenParticipante);
-		System.out.println(idEduContinua);
-		System.out.println(documentoParticipante);
+		
 		participanteService.updateCertificado(file, filename, tokenParticipante, Long.parseLong(idEduContinua), documentoParticipante);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}

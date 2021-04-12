@@ -66,7 +66,7 @@ public class AsistenteRestController {
 	@PostMapping(value = "/generar-tarjeta-inscripcion" ,produces = "application/json")
 	@ResponseBody
 	public ResponseEntity<?> guardarTarjetaInscripcion(MultipartFile file, String idParticipante){
-		System.out.println("imagen: " + file.getName());
+		
 		participanteService.saveTarjetaInscripcion(file, Long.parseLong(idParticipante));
 		return new ResponseEntity<>(HttpStatus.OK);
 	}

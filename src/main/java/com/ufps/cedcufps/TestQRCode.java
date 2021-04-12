@@ -33,17 +33,13 @@ public class TestQRCode {
     	
     	 String strDateFormat = "dd/MM/yyyy hh:mm a"; // El formato de fecha está especificado  
 	     SimpleDateFormat objSDF = new SimpleDateFormat(strDateFormat);
-	     System.out.println(objSDF.format(new Date()));
     	
     	
     	int total=65;
     	int hojas= total/30;
     	int residuo=total%30;
-    	System.out.println("hojas: " + hojas);
-    	System.out.println("residuo: " + residuo);
     	
     	
-    	System.out.println(System.currentTimeMillis());
     	
     
 }

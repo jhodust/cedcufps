@@ -2,13 +2,14 @@ package com.ufps.cedcufps.modelos;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
 @Entity
 @Table(name="administrativos")
-@PrimaryKeyJoinColumn(name="id_persona")
+@PrimaryKeyJoinColumn(name="id_persona", foreignKey=@ForeignKey(name = "FK_adminvo_persona"))
 public class Administrativo extends Persona{
 
 	/**

@@ -69,13 +69,8 @@ public class PonenteRestController {
 	
 	@PostMapping(value = "/save")
 	public ResponseEntity<?> guardarPonenteRest(@RequestBody  Ponente ponente) {
-		/*if(result.hasErrors()) {
-			return new ResponseEntity<>(result.getAllErrors(),HttpStatus.BAD_REQUEST);
-		}*/
-		System.out.println("va a guardar ponente");
+		
 		ParticipanteDto dto = participanteService.savePonente(ponente);
-		System.out.println("dtooooooooooooooo");
-		System.out.println(dto);
 		return new ResponseEntity<>(dto,HttpStatus.OK);
 	}
 	

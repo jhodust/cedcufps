@@ -34,16 +34,13 @@ public class LoginController {
 	      .loadAuthorizedClient(
 	        authentication.getAuthorizedClientRegistrationId(), 
 	          authentication.getName());
-	    System.out.println("email");
-	    System.out.println(String.valueOf(authentication.getPrincipal().getAttribute("email")));
-	   
+	    
 	    return "redirect:/";
 	}
 	
 	@GetMapping("/loginFailureee")
 	public String loginFailure(Model model, OAuth2AuthenticationToken authentication) {
 	    
-	   System.out.println("error login");
 	    return "redirect:/";
 	}
 	
@@ -52,7 +49,7 @@ public class LoginController {
 	public String logoutPage (HttpServletRequest request, HttpServletResponse response) {
 	    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 	    if (auth != null){    
-	    	System.out.println("SISAS TERMINA");
+	    	
 	        new SecurityContextLogoutHandler().logout(request, null, null);
 	        //new SecurityContextLogoutHandler().logout(request, response, auth);
 	    }

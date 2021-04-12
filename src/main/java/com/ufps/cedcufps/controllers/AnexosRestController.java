@@ -22,10 +22,6 @@ public class AnexosRestController {
 	public ResponseEntity<?> save(@RequestParam(name="file", required=true) MultipartFile file,
 			@RequestParam(name="id", required=true) String idEduContinuaAcceso) {
 		
-		System.out.println("fileeeeeeeeeeeeeeeeeeeeeeeeeee");
-		System.out.println(file.getOriginalFilename());
-		System.out.println("idAccessoooo");
-		System.out.println(idEduContinuaAcceso);
 		
 		anexosService.saveAnexo(file, idEduContinuaAcceso);
 		return new ResponseEntity<>(HttpStatus.OK);

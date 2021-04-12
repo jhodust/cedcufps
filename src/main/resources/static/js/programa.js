@@ -20,9 +20,7 @@ toastr.options = {
 $(document).ready(function ()
 		{
 			
-			/*$.getJSON('http://localhost:8080/programas-academicos/listar', function(json) {
-				console.log(json)
-			});*/
+			
 			
 	$('#modalRegistroPrograma').on('show.bs.modal', function (event) {
 		$('#codigo').val("");
@@ -43,7 +41,6 @@ $(document).ready(function ()
 			var base="/programas-academicos/reload?facultad=";
 			var regex = / /gi;
 			var url=base.concat(facultad.replace(regex,'%20'));
-			console.log(url);
 			paginadorLoadAjax(url);
 		}
 		
@@ -66,7 +63,6 @@ $(document).ready(function ()
             contentType: "application/json; charset=utf-8",
 			cache: false,
 			success: function(result) {
-				console.log(result);
 				var element=document.getElementById("alertDirector");
 				if(result.programa != null){
 					element.innerText="El/La docente ya es director del programa " + result.programa + " y sería desvinculado.";
@@ -128,8 +124,6 @@ function guardarPrograma(){
 					return;
 	
 	}
-	console.log("json enviado: ");
-	console.log(JSONprograma);
 	showSpinnerModal("btnSaveAreas","btnSpinnerAreas");
 	$.ajax({
 		headers: {"X-CSRF-TOKEN": token},
@@ -149,7 +143,6 @@ function guardarPrograma(){
 		},
 		error: function(err) {
 			hideSpinnerModal("btnSaveAreas","btnSpinnerAreas");
-			console.log(err);
 			if(err.responseJSON.length >0){
 				toastr.error('No se pudo procesar la solicitud...', 'Error!');
 				err.responseJSON.forEach(function(error){
@@ -197,7 +190,6 @@ function editarPrograma(elemento){
 		url: "/programas-academicos/search/"+elemento.dataset.id,
 		cache: false,
 		success: function(result) {
-			console.log(result);
 			$('#modalRegistroPrograma').modal();
 			idPrograma=result.id;
 			$('#codigo').val(result.codigo);
@@ -213,7 +205,6 @@ function editarPrograma(elemento){
 			
 		},
 		error: function(err) {
-			console.log(err);
 			toastr.error(err.responseJSON.message, 'Error!');
 		}
 	});

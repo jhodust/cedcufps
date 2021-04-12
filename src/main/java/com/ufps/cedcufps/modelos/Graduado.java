@@ -15,7 +15,7 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Table(name="graduados")
-@PrimaryKeyJoinColumn(name="id_persona")
+@PrimaryKeyJoinColumn(name="id_persona", foreignKey=@ForeignKey(name = "FK_graduado_persona"))
 public class Graduado extends Persona{
 
 	/**

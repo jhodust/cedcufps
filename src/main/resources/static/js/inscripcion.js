@@ -77,10 +77,7 @@ function createTemplateCanvasInscripcion(){
 
 function buildOptions(){
 	buttonsJson={};
-	console.log("declarando");
-	console.log(buttonsJson);
 	listTipoPersonaValidInscripcion.forEach(function(e){
-		console.log(e);
 		
 		var btn='btn'+e[1];
 		btnn={};
@@ -88,13 +85,10 @@ function buildOptions(){
 		btnn.value=e[0];
 		buttonsJson[btn]=btnn;
 	});
-	console.log("botones");
-	console.log(buttonsJson);
 	swal("Cómo desea realizar la inscripción?", {
 		  buttons: buttonsJson,
 		})
 		.then((value) => {
-			console.log(value);
 			if(value != null){
 				prepararInscripcion(value);
 			}
@@ -105,15 +99,9 @@ function buildOptions(){
 
 function realizarInscripcion(){
 	var idTipoPersona;
-	console.log("realizar inscripcionnnnnnnnn");
-	console.log(listTipoPersonaValidInscripcion);
-	console.log("posicion");
-	console.log(listTipoPersonaValidInscripcion[0][0]);
 	if(listTipoPersonaValidInscripcion.length > 1 ){
 		buildOptions();
 	}else{
-		console.log("else");
-		console.log(idTipoPersona);
 		idTipoPersona=listTipoPersonaValidInscripcion[0][0];
 		prepararInscripcion(idTipoPersona);
 	}
@@ -144,14 +132,12 @@ function prepararInscripcion(idTipoPersona){
 }
 
 function ajaxRealizarInscripcion(idTipoPersona){
-console.log(idTipoPersona);
 	
 	if(idTipoPersona==undefined){
 		var data={'idEduContinua':idEduContinua};
 	}else{
 		var data={'idEduContinua':idEduContinua, 'idTipoPersona':idTipoPersona};
 	}
-	console.log(data);
 	$.ajax({
 		headers: {"X-CSRF-TOKEN": token},
 		type: "GET",
@@ -161,7 +147,6 @@ console.log(idTipoPersona);
 		cache: false,
 		success: function(result) {
 			creacionTarjetaInscripcion(result);
-			console.log(result);
 			//window.setTimeout(function(){location.reload()},1000);
 			
 		},
@@ -171,7 +156,6 @@ console.log(idTipoPersona);
 	});
 }
 function creacionTarjetaInscripcion(p){
-	console.log(p);
 	
     var primerNombre = p.primerNombre;
     var segundoNombre = p.segundoNombre;
@@ -414,125 +398,13 @@ function creacionTarjetaInscripcion(p){
 	
 	
 	
-	/*ctx.font = "normal 38px Berlin Sans FB";
-	ctx.fillStyle = "#000";
-	ctx.fillText(nombres, 80, 350);
-	
-	ctx.font = "normal 38px Berlin Sans FB";
-	ctx.fillText(apellidos, 80, 390);
-	
-	ctx.font = "800 38px Arial";
-	ctx.fillText(p.tipoParticipante.toUpperCase(), 120, 480);
-	
-	
-	
-	ctx.font = "italic 30px Arial";
-	ctx.fillStyle = "#484A4B";
-	ctx.fillText('Lugar', 80, 580);
-	
-	
-	ctx.font = "normal 33px Berlin Sans FB";
-	ctx.fillStyle = "#000";
-	ctx.fillText(p.lugarEducacionContinua, 80, 620);
-	
-	ctx.font = "italic 30px Arial";
-	ctx.fillStyle = "#484A4B";
-	ctx.fillText('Fecha Inicio', 80, 680);
-	
-	ctx.font = "normal 33px Berlin Sans FB";
-	ctx.fillStyle = "#000";
-	
-	ctx.fillText(fechaE, 80, 720);
-	
-	
-	
-	ctx.font = "italic 30px Arial";
-	ctx.fillStyle = "#484A4B";
-	ctx.fillText('Hora Inicio', 450, 680);
-	
-	ctx.font = "normal 33px Berlin Sans FB";
-	ctx.fillStyle = "#000";
-	ctx.fillText(tiempo, 450, 720);
-	
-	
-	ctx.font = "800 38px Arial";
-	ctx.textAlign = "center";
-	ctx.fillText(p.tipoEduContinua.toUpperCase(), 580, 550);
-	
-	
-	var array= p.educacionContinua.split(" ");
-    var cantCaracteres=0;
-    var y=0;
-    var z=0;
-    var cad="";
-    console.log("longitud nombre: " + p.educacionContinua.length);
-    if(p.educacionContinua.length<25){
-    	var height=120;
-    	ctx.font = "bold 38px Trebuchet MS";
-    }else if(p.educacionContinua.length<=50){
-    	var height=100;
-    	ctx.font = "bold 36px Trebuchet MS";
-    }else if(p.educacionContinua.length<100){
-    	var height=80;
-    	ctx.font = "bold 32px Trebuchet MS";
-    }
-    for (var i=0; i<array.length; i++){
-    	console.log("i: " +i + " contenido: " + array[i] + " " + array[i].length);
-    	
-    	if((cantCaracteres+array[i].length)<25){
-    		
-    		cantCaracteres=cantCaracteres+array[i].length;
-    		cantCaracteres=cantCaracteres+1;//espacio
-    		console.log("cant:" + cantCaracteres);
-    	}else{
-    		
-    		z=z+cantCaracteres;
-    		
-    		cantCaracteres=0;
-    		console.log("i: "+ i + " z: " + z);
-    		cad=p.educacionContinua.substring(y,z);
-    		console.log(p.educacionContinua.substring(y,z));
-    		ctx.fillText(cad, 530, height);
-    		console.log("escribe");
-    		height=height+35;
-    		y=z;
-    		i=i-1;
-    	}
-    	if(i==array.length-1){
-			z=z+cantCaracteres;
-    		
-    		cantCaracteres=0;
-    		console.log("i: "+ i + " z: " + z);
-    		cad=p.educacionContinua.substring(y,z);
-    		console.log(p.educacionContinua.substring(y,z));
-    		ctx.fillText(cad, 530, height);
-    		console.log("escribe");
-    		height=height+35;
-    		y=z;
-    	}
-    	
-    }
-    
-    var img3 = new Image();
-	img3.src=imgQR;
-	img3.onload = function() {
-	    ctx.drawImage(img3, 430, 220, 300, 300);
-	    var dataURL = c.toDataURL('image/jpg');
-		var blob = dataURItoBlob(dataURL);
-		guardarTarjeta(blob,p.id);
-	    
-	}
-    */
 }
 
 function guardarTarjeta(imagen,idParticipante){
-	console.log("entra a guardar tarjeta");
 	var formData = new FormData();
 	var newFile = new File([imagen], 'tarjeta.jpg', {type: 'image/jpg'});
 	formData.append('file', newFile);
 	formData.append('idParticipante', idParticipante);
-	console.log(imagen);
-	console.log(newFile);
 	$.ajax({
     	headers: {"X-CSRF-TOKEN": token},
     	url: "/preinscripcion/generar-tarjeta-inscripcion",

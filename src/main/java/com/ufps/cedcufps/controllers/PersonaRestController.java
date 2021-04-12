@@ -18,13 +18,7 @@ public class PersonaRestController {
 	
 	@PostMapping(value = "/registrarse",produces = "application/json")
 	public ResponseEntity<?> nuevoUsuario(@RequestBody UsuarioDto u) {
-		System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!**********************************************************");
-		System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!**********************************************************");
-		System.out.println(u.isEstudiante());
-		System.out.println(u.isDocente());
-		System.out.println(u.isAdministrativo());
-		System.out.println(u.isGraduado());
-		System.out.println(u.isExterno());
+		
 		personaService.guardar(u);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}

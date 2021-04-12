@@ -16,7 +16,6 @@ public class Task {
 	
 	@Scheduled(cron = "${app.scheduled-task.estado-educacion-continua.frequency}", zone = "America/Bogota")
 	public void checkAssignements() {
-		System.out.println("PROCESO SCHEDULEDDDDDDDDDDDDDDDDDDDDDDDDDDDD");
 		this.educacionContinuaDao.updateEstadoEduContinua();
 	}
 }

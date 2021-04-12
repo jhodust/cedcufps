@@ -305,26 +305,36 @@ public class PersonaCustomDaoImpl implements IPersonaCustomDao {
 	}
 
 	@Override
-	public List<Persona> findPersonasList(List<Long> ids) {
+	public List<Persona> findPersonasList(List<Long> ids, boolean superAdmin) {
 		// TODO Auto-generated method 
 		StringBuilder query = new StringBuilder();
 		query.append("SELECT p.id as id_persona, p.primer_nombre, p.segundo_nombre, p.primer_apellido, p.segundo_apellido,")
 			 .append(" p.id_acceso, p.is_estudiante, p.is_docente, p.is_administrativo, p.is_graduado, p.is_externo,")
 			 .append(" p.email, tp.id as id_tipo_documento, tp.tipo_documento")
 				.append(" from personas as p")
-				.append(" join tipos_documento tp on p.id_tipo_documento=tp.id")
-				.append(" where p.id in ( ?1 )");
+				.append(" join tipos_documento tp on p.id_tipo_documento=tp.id");
 		
-		Query q= em.createNativeQuery(query.toString()).setParameter(1, ids);
+		if(!superAdmin) {
+			query.append(" where p.id in ( ?1 )");
+		}
+				
+				
+		
+		Query q= em.createNativeQuery(query.toString());
+		
+		if(!superAdmin) {
+			q.setParameter(1, ids);
+		}
+		
 		List<Object[]> result= q.getResultList();
 		List<Persona> personas=new ArrayList<Persona>();
 		for(Object[] object:result) {
 			Persona per=new Persona();
 			per.setId(Long.parseLong(String.valueOf(object[0])));
-			per.setPrimerNombre(String.valueOf(object[1]));
-			per.setPrimerApellido(String.valueOf(object[2]));
-			per.setSegundoNombre(String.valueOf(object[3]));
-			per.setSegundoApellido(String.valueOf(object[4]));
+			per.setPrimerNombre((object[1] != null) ? String.valueOf(object[1]) : null);
+			per.setSegundoNombre((object[2] != null) ? String.valueOf(object[2]) : null);
+			per.setPrimerApellido((object[3] != null) ? String.valueOf(object[3]) : null);
+			per.setSegundoApellido((object[4] != null) ? String.valueOf(object[4]) : null);
 			per.setIdAcceso(String.valueOf(object[5]));
 			per.setEstudiante(Integer.parseInt(String.valueOf(object[6]))==1);
 			per.setDocente(Integer.parseInt(String.valueOf(object[7]))==1);
@@ -341,6 +351,7 @@ public class PersonaCustomDaoImpl implements IPersonaCustomDao {
 		
 		return personas;
 	}
+	
 	
 	
 	

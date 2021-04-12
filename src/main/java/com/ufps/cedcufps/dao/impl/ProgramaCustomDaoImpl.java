@@ -1,5 +1,6 @@
 package com.ufps.cedcufps.dao.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -40,4 +41,30 @@ public class ProgramaCustomDaoImpl implements IProgramaCustomDao{
 		}
 		return null;
 	}
+	
+	
+	@Override
+	public List<ProgramaDto> findAllProgramas() {
+		StringBuilder query = new StringBuilder();
+		query.append(" select id, codigo, programa, id_director, id_facultad")
+			 .append(" from programas pro");
+		
+		Query q=em.createNativeQuery(query.toString());
+		
+		List<Object[]> result=q.getResultList();
+		List<ProgramaDto> list=new ArrayList<ProgramaDto>();
+		for(Object[] object : result) {
+			ProgramaDto dto=new ProgramaDto();
+			dto.setId(Long.parseLong(String.valueOf(object[0])));
+			dto.setCodigo(String.valueOf(object[1]));
+			dto.setPrograma(String.valueOf(object[2]));
+			dto.setIdDirector(Long.parseLong(String.valueOf(object[3])));
+			dto.setIdFacultad(Long.parseLong(String.valueOf(object[4])));
+			list.add(dto);
+		}
+		
+		return list;
+	}
+	
+	
 }

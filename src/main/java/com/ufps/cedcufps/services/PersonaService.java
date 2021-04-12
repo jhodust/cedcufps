@@ -409,14 +409,14 @@ public class PersonaService implements IPersonaService {
 	public List<PersonaDto> findAllPersonasPosibles() {
 		// TODO Auto-generated method stub
 		Persona p=this.findPersonaLogueada();
-		if(this.isSuperAdmin()) {
-			List<Persona> personas=(List<Persona>)personaDao.findAll();
-			personas.remove(p);
+		if(this.isSuperAdmin(p)) {
+			List<Persona> personas=personaCustomDao.findPersonasList(null, true);
+			personas=this.removePersona(personas, p);
 			return usuarioMapper.convertListPersonasToPersonaDto(personas);
 		}else {
 			if(this.hasPermissionForPeople(p)) {
 				this.personaCustomDao.listAllPossiblePeople(p.getId());
-				List<Persona> personas=personaCustomDao.findPersonasList(this.personaCustomDao.listAllPossiblePeople(p.getId()));
+				List<Persona> personas=personaCustomDao.findPersonasList(this.personaCustomDao.listAllPossiblePeople(p.getId()),false);
 				personas=this.removePersona(personas, p);
 				return usuarioMapper.convertListPersonasToPersonaDto(personas);
 			}

@@ -27,7 +27,7 @@ public class PerfilController {
 	public String perfil(Map<String, Object> model) {
 		UsuarioDto dto= personaService.findMyInfo();
 		model.put("persona", dto);
-		model.put("programa", programaService.findProgramaByDirector(dto.getId()));
+		model.put("programa", programaService.findProgramaDtoByDirector(dto.getId()));
 		model.put("newSuperAdmin", null);
 		model.put("newDirPrograma", null);
 		model.put("photoUser", SpringSecurityConfig.getInfoSession().getPhoto());

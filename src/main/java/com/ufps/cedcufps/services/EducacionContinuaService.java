@@ -194,7 +194,7 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 		String lastConsecutivo= educacionContinuaDao.findLastConsecutivo(idTipoEduContinua, idProgramaResponsable);
 		String consecutivo=null;
 		int cifrasMin=3;
-		if(lastConsecutivo == null || lastConsecutivo.isBlank()) {
+		if(lastConsecutivo == null || lastConsecutivo.isEmpty()) {
 			consecutivo="001";
 		}else {
 			int tope=10^lastConsecutivo.length();

@@ -113,7 +113,7 @@ public class InformeSniesService implements IInformeSniesService {
 		Persona p=personaService.findPersonaLogueada();
 		Long idPrograma=null;
 		if(!personaService.isSuperAdmin(p) && personaService.isDirPrograma(p)) {
-			idPrograma=(programaService.findProgramaByDirector(p.getId())).getId();
+			idPrograma=(programaService.findProgramaDtoByDirector(p.getId())).getId();
 		}
 		String rutaInformeCurso=this.generarReporteSNIESFormatoCurso(fechaI, fechaF,idPrograma,String.valueOf(marcaTiempo));
 		String rutaInformeEduContinua=this.generarReporteSNIESFormatoEducacionContinua(fechaI, fechaF,idPrograma,String.valueOf(marcaTiempo));

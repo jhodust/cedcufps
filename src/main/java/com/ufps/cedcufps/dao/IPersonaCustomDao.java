@@ -39,6 +39,6 @@ public interface IPersonaCustomDao {
 	
 	public Docente findDocenteResponsable(Long idPersona);
 	
-	public List<Persona> findPersonasList(List<Long> ids);
+	public List<Persona> findPersonasList(List<Long> ids, boolean superAdmin);
 	
 }

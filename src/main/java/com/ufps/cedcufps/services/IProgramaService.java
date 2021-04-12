@@ -29,11 +29,13 @@ public interface IProgramaService {
 	
 	public Programa findProgramaByDirector(Long idDir);
 	
+	public ProgramaDto findProgramaDtoByDirector(Long idDir);
+	
 	public ProgramaDto searchProgramaById(Long id);
 	
 	public List<ProgramaDto> programasParaEduContinuaBase(Long idPersona, boolean isSuperAdmin, boolean hasPermission);
 	
 	public List<ProgramaDto> findAllProgramasOfPermission(Long idPersona, boolean isSuperAdmin, boolean hasPermission);
 	
-	public List<Programa> findAllProgramasDashboard(Persona p);
+	public List<ProgramaDto> findAllProgramasDashboard(Persona p);
 }

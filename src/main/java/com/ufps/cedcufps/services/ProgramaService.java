@@ -22,6 +22,7 @@ import com.ufps.cedcufps.dao.IDocenteDao;
 import com.ufps.cedcufps.dao.IFacultadDao;
 import com.ufps.cedcufps.dao.IPersonaDao;
 import com.ufps.cedcufps.dao.IPersonaRolCustomDao;
+import com.ufps.cedcufps.dao.IProgramaCustomDao;
 import com.ufps.cedcufps.dao.IProgramaDao;
 import com.ufps.cedcufps.dao.IRolDao;
 import com.ufps.cedcufps.dao.ITipoPersonaDao;
@@ -68,6 +69,9 @@ public class ProgramaService implements IProgramaService {
 	
 	@Autowired
 	private IProgramaMapper programaMapper;
+	
+	@Autowired
+	private IProgramaCustomDao programaCustomDao;
 	
 	@Override
 	public List<Programa> findAll() {
@@ -156,6 +160,11 @@ public class ProgramaService implements IProgramaService {
 		return programaDao.findByDirector(idDir);
 	}
 	
+	@Override
+	public ProgramaDto findProgramaDtoByDirector(Long idDir) {
+		return programaCustomDao.findProgramaDtoByDirector(idDir);
+	}
+	
 	
 
 	@Override
@@ -190,14 +199,14 @@ public class ProgramaService implements IProgramaService {
 	}
 
 	@Override
-	public List<Programa> findAllProgramasDashboard(Persona p) {
+	public List<ProgramaDto> findAllProgramasDashboard(Persona p) {
 		// TODO Auto-generated method stub
-		List<Programa> programas=new ArrayList<Programa>();
+		List<ProgramaDto> programas=new ArrayList<ProgramaDto>();
 		if(this.personaService.isSuperAdmin(p)) {
-			programas=(List<Programa>)programaDao.findAll();
+			programas=programaCustomDao.findAllProgramas();
 		}else {
 			if(this.personaService.isDirPrograma(p)) {
-				programas = programaDao.findProgramasDashboard(p.getId());
+				programas.add(programaCustomDao.findProgramaDtoByDirector(p.getId()));
 			}
 		}
 		return programas;

@@ -13,4 +13,8 @@ public interface IProgramaCustomDao {
 	public ProgramaDto findProgramaDtoByDirector(Long idDir);
 	
 	public List<ProgramaDto> findAllProgramas();
+	
+	public List<ProgramaDto> findProgramasOfPermissionEdCPersona(Long idPersona);
+	
+	public List<ProgramaDto> findProgramasEducacionContinuaBase(Long idPersona);
 }

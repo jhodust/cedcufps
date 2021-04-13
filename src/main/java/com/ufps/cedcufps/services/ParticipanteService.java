@@ -21,6 +21,7 @@ import com.ufps.cedcufps.dao.IEducacionContinuaCustomDao;
 import com.ufps.cedcufps.dao.IEducacionContinuaDao;
 import com.ufps.cedcufps.dao.IParticipanteCustomDao;
 import com.ufps.cedcufps.dao.IParticipanteDao;
+import com.ufps.cedcufps.dao.IPersonaCustomDao;
 import com.ufps.cedcufps.dao.IPersonaDao;
 import com.ufps.cedcufps.dao.ITipoParticipanteDao;
 import com.ufps.cedcufps.dto.CertificacionDto;
@@ -80,6 +81,9 @@ public class ParticipanteService implements IParticipanteService{
 	
 	@Autowired
 	private IFileStorageService fileStorageService;
+	
+	@Autowired
+	private IPersonaCustomDao personaCustomDao;
 	
 	@Override
 	public List<TipoParticipante> findAllTiposParticipante() {
@@ -274,7 +278,7 @@ public class ParticipanteService implements IParticipanteService{
 				throw new CustomException("La persona ya se encuentra registrada como " + participanteValidado.getTipoParticipante().getTipoParticipante(), HttpStatus.BAD_REQUEST);
 			}
 		}
-		Persona p=personaDao.findPersonaById(ponente.getPersona().getId());
+		Persona p=personaCustomDao.findPersonaById(ponente.getPersona().getId());
 		if(p==null) {
 			throw new CustomException("La persona no fue encontrada en la base de datos ", HttpStatus.BAD_REQUEST);
 		}

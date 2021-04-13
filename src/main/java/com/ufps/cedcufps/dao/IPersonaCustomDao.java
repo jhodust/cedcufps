@@ -2,6 +2,8 @@ package com.ufps.cedcufps.dao;
 
 import java.util.List;
 
+import javax.persistence.Query;
+
 import com.ufps.cedcufps.dto.DocenteDto;
 import com.ufps.cedcufps.dto.PersonaDto;
 import com.ufps.cedcufps.modelos.Administrativo;
@@ -10,6 +12,7 @@ import com.ufps.cedcufps.modelos.Estudiante;
 import com.ufps.cedcufps.modelos.Externo;
 import com.ufps.cedcufps.modelos.Graduado;
 import com.ufps.cedcufps.modelos.Persona;
+import com.ufps.cedcufps.modelos.PersonaRol;
 
 public interface IPersonaCustomDao {
 
@@ -40,5 +43,27 @@ public interface IPersonaCustomDao {
 	public Docente findDocenteResponsable(Long idPersona);
 	
 	public List<Persona> findPersonasList(List<Long> ids, boolean superAdmin);
+	
+	public Persona findPersonaById(Long id);
+	
+	public Persona findPersonaByIdAcceso(String idAcceso);
+	
+	public Persona findPersonaByNumeroDocumento(String documento);
+	
+	public Persona findPersonaByEmail(String email);
+	
+	public List<Persona> findPersonasByNumeroDocumento(String numeroDocumento);
+	
+	public List<Persona> findPersonasByEmail(String email);
+	
+	public List<Persona> findManyPeople(List<Long> idsPersonas);
+		
+	public List<Persona> findPosiblePonenteByNombre(String nombre);
+	
+	public boolean hasPermisos(Long idPersona, Long rol);
+	
+	public boolean hasPermisosOnlyMyEdC(Long idPersona, Long rol);
+	
+	public List<PersonaRol> findRolesPersona(Long id);
 	
 }

@@ -2,6 +2,7 @@ package com.ufps.cedcufps.dao.impl;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -10,20 +11,26 @@ import javax.persistence.Query;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.ufps.cedcufps.dao.IPersonaCustomDao;
 import com.ufps.cedcufps.dto.DocenteDto;
 import com.ufps.cedcufps.dto.PersonaDto;
+import com.ufps.cedcufps.mapper.IPersonaMapper;
 import com.ufps.cedcufps.modelos.Administrativo;
 import com.ufps.cedcufps.modelos.Departamento;
 import com.ufps.cedcufps.modelos.Docente;
+import com.ufps.cedcufps.modelos.EstadoCivil;
 import com.ufps.cedcufps.modelos.Estudiante;
 import com.ufps.cedcufps.modelos.Externo;
+import com.ufps.cedcufps.modelos.Genero;
 import com.ufps.cedcufps.modelos.Graduado;
 import com.ufps.cedcufps.modelos.Persona;
+import com.ufps.cedcufps.modelos.PersonaRol;
 import com.ufps.cedcufps.modelos.Programa;
+import com.ufps.cedcufps.modelos.Rol;
 import com.ufps.cedcufps.modelos.TipoDocumento;
 import com.ufps.cedcufps.utils.RolUtil;
 import com.ufps.cedcufps.utils.TipoPersonaUtil;
@@ -33,6 +40,9 @@ public class PersonaCustomDaoImpl implements IPersonaCustomDao {
 
 	@PersistenceContext
 	private EntityManager em;
+	
+	@Autowired
+	private IPersonaMapper personaMapper;
 	
 	@Transactional
 	@Override
@@ -310,9 +320,14 @@ public class PersonaCustomDaoImpl implements IPersonaCustomDao {
 		StringBuilder query = new StringBuilder();
 		query.append("SELECT p.id as id_persona, p.primer_nombre, p.segundo_nombre, p.primer_apellido, p.segundo_apellido,")
 			 .append(" p.id_acceso, p.is_estudiante, p.is_docente, p.is_administrativo, p.is_graduado, p.is_externo,")
-			 .append(" p.email, tp.id as id_tipo_documento, tp.tipo_documento")
+			 .append(" p.email, tp.id as id_tipo_documento, tp.tipo_documento, p.direccion, p.fecha_expedicion_documento,")
+			 .append(" p.fecha_nacimiento, p.id_departamento_nacimiento, p.id_municipio_nacimiento, p.id_pais_nacimiento,")
+			 .append(" p.ids_tipo_persona, p.numero_documento, p.telefono,ec.id as id_estado_civil, ec.estado_civil,  ")
+			 .append(" g.id as id_genero, g.genero")
 				.append(" from personas as p")
-				.append(" join tipos_documento tp on p.id_tipo_documento=tp.id");
+				.append(" join tipos_documento tp on p.id_tipo_documento=tp.id")
+				.append(" join estados_civiles ec on p.id_estado_civil=ec.id")
+				.append(" join generos g on p.id_genero=g.id");
 		
 		if(!superAdmin) {
 			query.append(" where p.id in ( ?1 )");
@@ -327,34 +342,261 @@ public class PersonaCustomDaoImpl implements IPersonaCustomDao {
 		}
 		
 		List<Object[]> result= q.getResultList();
-		List<Persona> personas=new ArrayList<Persona>();
-		for(Object[] object:result) {
-			Persona per=new Persona();
-			per.setId(Long.parseLong(String.valueOf(object[0])));
-			per.setPrimerNombre((object[1] != null) ? String.valueOf(object[1]) : null);
-			per.setSegundoNombre((object[2] != null) ? String.valueOf(object[2]) : null);
-			per.setPrimerApellido((object[3] != null) ? String.valueOf(object[3]) : null);
-			per.setSegundoApellido((object[4] != null) ? String.valueOf(object[4]) : null);
-			per.setIdAcceso(String.valueOf(object[5]));
-			per.setEstudiante(Integer.parseInt(String.valueOf(object[6]))==1);
-			per.setDocente(Integer.parseInt(String.valueOf(object[7]))==1);
-			per.setAdministrativo(Integer.parseInt(String.valueOf(object[8]))==1);
-			per.setGraduado(Integer.parseInt(String.valueOf(object[9]))==1);
-			per.setExterno(Integer.parseInt(String.valueOf(object[10]))==1);
-			per.setEmail(String.valueOf(object[11]));
-			TipoDocumento td= new TipoDocumento();
-			td.setId(Long.parseLong(String.valueOf(object[12])));
-			td.setTipoDocumento(String.valueOf(object[13]));
-			per.setTipoDocumento(td);
-			personas.add(per);
-		}
 		
-		return personas;
+		
+		
+		return personaMapper.convertListObjectToListPersonas(result);
+	}
+	
+	
+	
+	@Override
+	public Persona findPersonaById(Long id) {
+		// TODO Auto-generated method 
+		StringBuilder query = new StringBuilder();
+		query.append("SELECT p.id as id_persona, p.primer_nombre, p.segundo_nombre, p.primer_apellido, p.segundo_apellido,")
+			 .append(" p.id_acceso, p.is_estudiante, p.is_docente, p.is_administrativo, p.is_graduado, p.is_externo,")
+			 .append(" p.email, tp.id as id_tipo_documento, tp.tipo_documento, p.direccion, p.fecha_expedicion_documento,")
+			 .append(" p.fecha_nacimiento, p.id_departamento_nacimiento, p.id_municipio_nacimiento, p.id_pais_nacimiento,")
+			 .append(" p.ids_tipo_persona, p.numero_documento, p.telefono,ec.id as id_estado_civil, ec.estado_civil,  ")
+			 .append(" g.id as id_genero, g.genero")
+				.append(" from personas as p")
+				.append(" join tipos_documento tp on p.id_tipo_documento=tp.id")
+				.append(" join estados_civiles ec on p.id_estado_civil=ec.id")
+				.append(" join generos g on p.id_genero=g.id")
+			.append(" where p.id = ?1 ");
+		
+		Query q= em.createNativeQuery(query.toString()).setParameter(1, id);
+		List<Object[]> result= q.getResultList();
+		if(result.size()==1) {
+			return personaMapper.convertObjectToPersona(result.get(0));
+		}
+		return null;
+	}
+	
+	
+	@Override
+	public Persona findPersonaByIdAcceso(String idAcceso) {
+		// TODO Auto-generated method 
+		StringBuilder query = new StringBuilder();
+		query.append("SELECT p.id as id_persona, p.primer_nombre, p.segundo_nombre, p.primer_apellido, p.segundo_apellido,")
+			 .append(" p.id_acceso, p.is_estudiante, p.is_docente, p.is_administrativo, p.is_graduado, p.is_externo,")
+			 .append(" p.email, tp.id as id_tipo_documento, tp.tipo_documento, p.direccion, p.fecha_expedicion_documento,")
+			 .append(" p.fecha_nacimiento, p.id_departamento_nacimiento, p.id_municipio_nacimiento, p.id_pais_nacimiento,")
+			 .append(" p.ids_tipo_persona, p.numero_documento, p.telefono,ec.id as id_estado_civil, ec.estado_civil,  ")
+			 .append(" g.id as id_genero, g.genero")
+				.append(" from personas as p")
+				.append(" join tipos_documento tp on p.id_tipo_documento=tp.id")
+				.append(" join estados_civiles ec on p.id_estado_civil=ec.id")
+				.append(" join generos g on p.id_genero=g.id")
+			.append(" where p.id_acceso = ?1 ");
+		
+		Query q= em.createNativeQuery(query.toString()).setParameter(1, idAcceso);
+		List<Object[]> result= q.getResultList();
+		if(result.size()==1) {
+			return personaMapper.convertObjectToPersona(result.get(0));
+		}
+		return null;
+	}
+	
+	@Override
+	public Persona findPersonaByNumeroDocumento(String documento) {
+		// TODO Auto-generated method 
+		StringBuilder query = new StringBuilder();
+		query.append("SELECT p.id as id_persona, p.primer_nombre, p.segundo_nombre, p.primer_apellido, p.segundo_apellido,")
+			 .append(" p.id_acceso, p.is_estudiante, p.is_docente, p.is_administrativo, p.is_graduado, p.is_externo,")
+			 .append(" p.email, tp.id as id_tipo_documento, tp.tipo_documento, p.direccion, p.fecha_expedicion_documento,")
+			 .append(" p.fecha_nacimiento, p.id_departamento_nacimiento, p.id_municipio_nacimiento, p.id_pais_nacimiento,")
+			 .append(" p.ids_tipo_persona, p.numero_documento, p.telefono,ec.id as id_estado_civil, ec.estado_civil,  ")
+			 .append(" g.id as id_genero, g.genero")
+				.append(" from personas as p")
+				.append(" join tipos_documento tp on p.id_tipo_documento=tp.id")
+				.append(" join estados_civiles ec on p.id_estado_civil=ec.id")
+				.append(" join generos g on p.id_genero=g.id")
+			.append(" where p.numero_documento = ?1 ");
+		
+		Query q= em.createNativeQuery(query.toString()).setParameter(1, documento);
+		List<Object[]> result= q.getResultList();
+		if(result.size()==1) {
+			return personaMapper.convertObjectToPersona(result.get(0));
+		}
+		return null;
+	}
+	
+	
+	@Override
+	public Persona findPersonaByEmail(String email) {
+		// TODO Auto-generated method 
+		StringBuilder query = new StringBuilder();
+		query.append("SELECT p.id as id_persona, p.primer_nombre, p.segundo_nombre, p.primer_apellido, p.segundo_apellido,")
+			 .append(" p.id_acceso, p.is_estudiante, p.is_docente, p.is_administrativo, p.is_graduado, p.is_externo,")
+			 .append(" p.email, tp.id as id_tipo_documento, tp.tipo_documento, p.direccion, p.fecha_expedicion_documento,")
+			 .append(" p.fecha_nacimiento, p.id_departamento_nacimiento, p.id_municipio_nacimiento, p.id_pais_nacimiento,")
+			 .append(" p.ids_tipo_persona, p.numero_documento, p.telefono,ec.id as id_estado_civil, ec.estado_civil,  ")
+			 .append(" g.id as id_genero, g.genero")
+				.append(" from personas as p")
+				.append(" join tipos_documento tp on p.id_tipo_documento=tp.id")
+				.append(" join estados_civiles ec on p.id_estado_civil=ec.id")
+				.append(" join generos g on p.id_genero=g.id")
+			.append(" where p.email = ?1 ");
+		
+		Query q= em.createNativeQuery(query.toString()).setParameter(1, email);
+		List<Object[]> result= q.getResultList();
+		if(result.size()==1) {
+			return personaMapper.convertObjectToPersona(result.get(0));
+		}
+		return null;
 	}
 	
 	
 	
 	
+	@Override
+	public List<Persona> findPersonasByNumeroDocumento(String documento) {
+		// TODO Auto-generated method 
+		StringBuilder query = new StringBuilder();
+		query.append("SELECT p.id as id_persona, p.primer_nombre, p.segundo_nombre, p.primer_apellido, p.segundo_apellido,")
+			 .append(" p.id_acceso, p.is_estudiante, p.is_docente, p.is_administrativo, p.is_graduado, p.is_externo,")
+			 .append(" p.email, tp.id as id_tipo_documento, tp.tipo_documento, p.direccion, p.fecha_expedicion_documento,")
+			 .append(" p.fecha_nacimiento, p.id_departamento_nacimiento, p.id_municipio_nacimiento, p.id_pais_nacimiento,")
+			 .append(" p.ids_tipo_persona, p.numero_documento, p.telefono,ec.id as id_estado_civil, ec.estado_civil,  ")
+			 .append(" g.id as id_genero, g.genero")
+				.append(" from personas as p")
+				.append(" join tipos_documento tp on p.id_tipo_documento=tp.id")
+				.append(" join estados_civiles ec on p.id_estado_civil=ec.id")
+				.append(" join generos g on p.id_genero=g.id")
+			.append(" where p.numero_documento = ?1 ");
+		
+		Query q= em.createNativeQuery(query.toString()).setParameter(1, documento);
+		List<Object[]> result= q.getResultList();
+		return personaMapper.convertListObjectToListPersonas(result);
+	}
 	
+	
+	@Override
+	public List<Persona> findPersonasByEmail(String email) {
+		// TODO Auto-generated method 
+		StringBuilder query = new StringBuilder();
+		query.append("SELECT p.id as id_persona, p.primer_nombre, p.segundo_nombre, p.primer_apellido, p.segundo_apellido,")
+			 .append(" p.id_acceso, p.is_estudiante, p.is_docente, p.is_administrativo, p.is_graduado, p.is_externo,")
+			 .append(" p.email, tp.id as id_tipo_documento, tp.tipo_documento, p.direccion, p.fecha_expedicion_documento,")
+			 .append(" p.fecha_nacimiento, p.id_departamento_nacimiento, p.id_municipio_nacimiento, p.id_pais_nacimiento,")
+			 .append(" p.ids_tipo_persona, p.numero_documento, p.telefono,ec.id as id_estado_civil, ec.estado_civil,  ")
+			 .append(" g.id as id_genero, g.genero")
+				.append(" from personas as p")
+				.append(" join tipos_documento tp on p.id_tipo_documento=tp.id")
+				.append(" join estados_civiles ec on p.id_estado_civil=ec.id")
+				.append(" join generos g on p.id_genero=g.id")
+			.append(" where p.email = ?1 ");
+		
+		Query q= em.createNativeQuery(query.toString()).setParameter(1, email);
+		List<Object[]> result= q.getResultList();
+		return personaMapper.convertListObjectToListPersonas(result);
+		
+	}
+	
+	
+	
+	@Override
+	public List<Persona> findManyPeople(List<Long> idsPersonas) {
+		// TODO Auto-generated method 
+		StringBuilder query = new StringBuilder();
+		query.append("SELECT p.id as id_persona, p.primer_nombre, p.segundo_nombre, p.primer_apellido, p.segundo_apellido,")
+			 .append(" p.id_acceso, p.is_estudiante, p.is_docente, p.is_administrativo, p.is_graduado, p.is_externo,")
+			 .append(" p.email, tp.id as id_tipo_documento, tp.tipo_documento, p.direccion, p.fecha_expedicion_documento,")
+			 .append(" p.fecha_nacimiento, p.id_departamento_nacimiento, p.id_municipio_nacimiento, p.id_pais_nacimiento,")
+			 .append(" p.ids_tipo_persona, p.numero_documento, p.telefono,ec.id as id_estado_civil, ec.estado_civil,  ")
+			 .append(" g.id as id_genero, g.genero")
+				.append(" from personas as p")
+				.append(" join tipos_documento tp on p.id_tipo_documento=tp.id")
+				.append(" join estados_civiles ec on p.id_estado_civil=ec.id")
+				.append(" join generos g on p.id_genero=g.id")
+			.append(" where p.id in ( ?1 ) ");
+		
+		Query q= em.createNativeQuery(query.toString()).setParameter(1, idsPersonas);
+		List<Object[]> result= q.getResultList();
+		return personaMapper.convertListObjectToListPersonas(result);
+		
+	}
+	
+	
+	@Override
+	public List<Persona> findPosiblePonenteByNombre(String nombre) {
+		// TODO Auto-generated method 
+		StringBuilder query = new StringBuilder();
+		query.append("SELECT p.id as id_persona, p.primer_nombre, p.segundo_nombre, p.primer_apellido, p.segundo_apellido,")
+			 .append(" p.id_acceso, p.is_estudiante, p.is_docente, p.is_administrativo, p.is_graduado, p.is_externo,")
+			 .append(" p.email, tp.id as id_tipo_documento, tp.tipo_documento, p.direccion, p.fecha_expedicion_documento,")
+			 .append(" p.fecha_nacimiento, p.id_departamento_nacimiento, p.id_municipio_nacimiento, p.id_pais_nacimiento,")
+			 .append(" p.ids_tipo_persona, p.numero_documento, p.telefono,ec.id as id_estado_civil, ec.estado_civil,  ")
+			 .append(" g.id as id_genero, g.genero")
+				.append(" from personas as p")
+				.append(" join tipos_documento tp on p.id_tipo_documento=tp.id")
+				.append(" join estados_civiles ec on p.id_estado_civil=ec.id")
+				.append(" join generos g on p.id_genero=g.id")
+			.append(" where CONCAT(p.primerNombre,' ', p.segundoNombre,' ',p.primerApellido,' ', p.segundoApellido) like ?1");
+		
+		Query q= em.createNativeQuery(query.toString()).setParameter(1, nombre);
+		List<Object[]> result= q.getResultList();
+		return personaMapper.convertListObjectToListPersonas(result);
+		
+	}
+	
+	
+	
+	@Override
+	public boolean hasPermisos(Long idPersona, Long rol) {
+		// TODO Auto-generated method 
+		StringBuilder query = new StringBuilder();
+		query.append("SELECT count(*) ")
+				.append(" from personas_x_roles ")
+			.append(" where id_persona= ?1 and id_rol = ?2");
+		
+		Query q= em.createNativeQuery(query.toString()).setParameter(1, idPersona).setParameter(2, rol);
+		List<Object> result= q.getResultList();
+		
+		return Integer.parseInt(String.valueOf(result.get(0)))==1;
+		
+	}
+	
+	
+	@Override
+	public boolean hasPermisosOnlyMyEdC(Long idPersona, Long rol) {
+		// TODO Auto-generated method 
+		StringBuilder query = new StringBuilder();
+		query.append("SELECT count(*) ")
+				.append(" from roles_personas_programas_ec ")
+			.append(" where id_persona= ?1 and id_rol = ?2");
+		
+		Query q= em.createNativeQuery(query.toString()).setParameter(1, idPersona).setParameter(2, rol);
+		List<Object> result= q.getResultList();
+		
+		return Integer.parseInt(String.valueOf(result.get(0)))==0;
+		
+	}
+	
+	
+	@Override
+	public List<PersonaRol> findRolesPersona(Long id) {
+		// TODO Auto-generated method 
+		StringBuilder query = new StringBuilder();
+		query.append("SELECT r.id, r.authority")
+				.append(" from personas_x_roles as pr")
+				.append(" join roles r on pr.id_rol=r.id")
+			.append(" where pr.id_persona = ?1 ");
+		
+		Query q= em.createNativeQuery(query.toString()).setParameter(1, id);
+		List<Object[]> result= q.getResultList();
+		List<PersonaRol> rolesPersona=new ArrayList<PersonaRol>();
+		for(Object[] object: result) {
+			PersonaRol pr= new PersonaRol();
+			Rol r=new Rol();
+			r.setId(Long.parseLong(String.valueOf(object[0])));
+			r.setAuthority(String.valueOf(object[1]));
+			pr.setRol(r);
+			rolesPersona.add(pr);
+		}
+		return rolesPersona;
+	}
 
 }

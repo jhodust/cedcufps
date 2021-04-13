@@ -147,6 +147,8 @@ public class PersonaService implements IPersonaService {
 	@Autowired
 	private IEducacionContinuaCustomDao educacionContinuaCustomDao;
 	
+
+	
 	private Logger logger= LoggerFactory.getLogger(PersonaService.class);
 	
 	@Override
@@ -212,7 +214,7 @@ public class PersonaService implements IPersonaService {
 	@Override
 	public PersonaDto findOne(Long id) {
 		// TODO Auto-generated method stub
-		return usuarioMapper.convertPersonaToPersonaDto(personaDao.findPersonaById(id));
+		return usuarioMapper.convertPersonaToPersonaDto(personaCustomDao.findPersonaById(id));
 	}
 
 	@Override
@@ -265,7 +267,11 @@ public class PersonaService implements IPersonaService {
 	public Persona findByEmail(String email) {
 		// TODO Auto-generated method stub
 		try {
-			Persona p=personaDao.findPersonaByEmail(email);
+			Persona p=personaCustomDao.findPersonaByEmail(email);
+			if(p!=null) {
+				p.setPersonaXRoles(personaCustomDao.findRolesPersona(p.getId()));
+			}
+			
 			return p;
 		}catch(Exception e) {
 			return null;
@@ -508,28 +514,13 @@ public class PersonaService implements IPersonaService {
 	
 	@Override
 	public boolean hasPermissionForEduContinua(Long idPersona) {
-		Persona p=personaDao.findPersonaById(idPersona);
-		if(p!=null) {
-			for(PersonaRol pr: p.getPersonaXRoles()) {
-				if(pr.getRol().getAuthority().equalsIgnoreCase("ROLE_MANAECCU")) {
-					return true;
-				}
-			}
-		}
-		return false;
+		return personaCustomDao.hasPermisos(idPersona, RolUtil.ROLE_MANAECCU);
 	}
 	
 	@Override
 	public boolean hasPermissionForAttendance(Long idPersona) {
-		Persona p=personaDao.findPersonaById(idPersona);
-		if(p!=null) {
-			for(PersonaRol pr: p.getPersonaXRoles()) {
-				if(pr.getRol().getAuthority().equalsIgnoreCase("ROLE_ATTENDANCE")) {
-					return true;
-				}
-			}
-		}
-		return false;
+		
+		return personaCustomDao.hasPermisos(idPersona, RolUtil.ROLE_ATTENDANCE);
 	}
 
 	@Override
@@ -549,7 +540,7 @@ public class PersonaService implements IPersonaService {
 	public PerfilRolUsuarioDto findPermisos(String idAcceso) {
 		// TODO Auto-generated method stub
 		Persona autoridad= this.findPersonaLogueada();
-		Persona usuario= personaDao.findPersonaByIdAcceso(idAcceso);
+		Persona usuario= personaCustomDao.findPersonaByIdAcceso(idAcceso);
 		PerfilRolUsuarioDto dto= new PerfilRolUsuarioDto();
 		if(usuario!=null) {
 			dto.setIdPersona(usuario.getId());
@@ -665,7 +656,7 @@ public class PersonaService implements IPersonaService {
 	@Override
 	public UsuarioDto editarUsuario(String idAcceso) {
 		// TODO Auto-generated method stub
-		Persona p= personaDao.findPersonaByIdAcceso(idAcceso);
+		Persona p= personaCustomDao.findPersonaByIdAcceso(idAcceso);
 		return this.convertPersonaToUsuarioDto(p);
 	}
 	
@@ -692,10 +683,10 @@ public class PersonaService implements IPersonaService {
 		
 		switch(tipoBusqueda) {
 			case 1:
-				p=personaDao.findPersonasByNumeroDocumento(value);
+				p=personaCustomDao.findPersonasByNumeroDocumento(value);
 				break;
 			case 2:
-				p=personaDao.findPosiblePonenteByNombre("%"+value+"%");
+				p=personaCustomDao.findPosiblePonenteByNombre("%"+value+"%");
 				break;
 			case 3:
 				p=estudianteDao.findEstudianteByCodigo(value);
@@ -704,7 +695,7 @@ public class PersonaService implements IPersonaService {
 				p=docenteDao.findDocenteByCodigo(value);
 				break;
 			case 5:
-				p=personaDao.findPersonasByEmail(value);
+				p=personaCustomDao.findPersonasByEmail(value);
 				break;
 		}
 		
@@ -734,20 +725,14 @@ public class PersonaService implements IPersonaService {
 	}
 	
 	public boolean hasPermisosOnlyMyEdC(Long idPersona) {
-		Persona p=personaDao.findPersonaById(idPersona);
-		for(PersonaRol pr: p.getPersonaXRoles()) {
-			if(pr.getRol().getAuthority().equalsIgnoreCase("ROLE_MANAECCU")) {
-				return pr.getRolPersonaEducacionesContinuasProgramas().isEmpty();
-			}
-			
-		}
-		return false;
+		
+		return personaCustomDao.hasPermisosOnlyMyEdC(idPersona, RolUtil.ROLE_MANAECCU);
 	}
 
 	@Override
 	public Persona findPersonaById(Long idPersona) {
 		// TODO Auto-generated method stub
-		return personaDao.findPersonaById(idPersona);
+		return personaCustomDao.findPersonaById(idPersona);
 	}
 
 	public void prepararEmailRegistro(UsuarioDto usuario) {
@@ -790,7 +775,7 @@ public class PersonaService implements IPersonaService {
 	public PersonaDto findUsuarioAppByDocumento(String documento) {
 		// TODO Auto-generated method stub
 		
-		Persona p=personaDao.findPersonaByNumeroDocumento(documento);
+		Persona p=personaCustomDao.findPersonaByNumeroDocumento(documento);
 		if(p!=null) {
 			return usuarioMapper.convertPersonaToPersonaDto(p);
 		}
@@ -805,7 +790,7 @@ public class PersonaService implements IPersonaService {
 		// TODO Auto-generated method stub
 		
 		
-		Persona p = personaDao.findPersonaByNumeroDocumento(documento);
+		Persona p = personaCustomDao.findPersonaByNumeroDocumento(documento);
 		if(p!=null) {
 			
 			personaRolCustomDao.deleteRol("ROLE_SUPERADMIN", this.findPersonaLogueada().getId());
@@ -818,7 +803,7 @@ public class PersonaService implements IPersonaService {
 	@Override
 	public void updateDirPrograma(String documento) {
 		// TODO Auto-generated method stub
-		Persona p = personaDao.findPersonaByNumeroDocumento(documento);
+		Persona p = personaCustomDao.findPersonaByNumeroDocumento(documento);
 		if(p!=null) {
 			Persona personaLogueada=this.findPersonaLogueada();
 			ProgramaDto programa=programaCustomDao.findProgramaDtoByDirector(personaLogueada.getId());
@@ -848,8 +833,8 @@ public class PersonaService implements IPersonaService {
 				dto.setAbleEditAdministrativos(true);
 				dto.setAbleEditGraduados(true);
 				dto.setAbleEditExternos(true);
-				dto.setProgramasEstudiantes(programaMapper.convertListProgramaToProgramaDto((List<Programa>)programaDao.findAll()));
-				dto.setProgramasGraduados(programaMapper.convertListProgramaToProgramaDto((List<Programa>)programaDao.findAll()));
+				dto.setProgramasEstudiantes(programaCustomDao.findAllProgramas());
+				dto.setProgramasGraduados(programaCustomDao.findAllProgramas());
 				dto.setDepartamentosDocentes(departamentoMapper.convertListDepartamentoToDepartamentosDto((List<Departamento>)departamentoDao.findAll()));
 				return dto;
 			}else if(this.hasPermissionForPeople(p)) {
@@ -869,8 +854,8 @@ public class PersonaService implements IPersonaService {
 			dto.setAbleEditAdministrativos(true);
 			dto.setAbleEditGraduados(true);
 			dto.setAbleEditExternos(true);
-			dto.setProgramasEstudiantes(programaMapper.convertListProgramaToProgramaDto((List<Programa>)programaDao.findAll()));
-			dto.setProgramasGraduados(programaMapper.convertListProgramaToProgramaDto((List<Programa>)programaDao.findAll()));
+			dto.setProgramasEstudiantes(programaCustomDao.findAllProgramas());
+			dto.setProgramasGraduados(programaCustomDao.findAllProgramas());
 			dto.setDepartamentosDocentes(departamentoMapper.convertListDepartamentoToDepartamentosDto((List<Departamento>)departamentoDao.findAll()));
 			return dto;
 		}

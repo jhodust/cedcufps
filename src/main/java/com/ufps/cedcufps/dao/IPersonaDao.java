@@ -25,22 +25,7 @@ public interface IPersonaDao extends JpaRepository<Persona, Long>, DataTablesRep
 	@Query("select count(p) from Persona p where p.numeroDocumento != ?1 and p.email = ?2")
 	public int validarEmailRegistrado(String numeroDocumento, String email);
 	
-	@Query(value="select p from Persona p where p.id = ?1")
-	public Persona findPersonaById(Long id);
 	
-	@Query(value="select p from Persona p where p.idAcceso = ?1")
-	public Persona findPersonaByIdAcceso(String idAcceso);
-	
-	
-	
-	@Query(value="select p from Persona p where p.numeroDocumento = ?1")
-	public Persona findPersonaByNumeroDocumento(String documento);
-	
-	@Query(value="select p from Persona p where p.email = ?1")
-	public Persona findPersonaByEmail(String email);
-	
-	@Query("select p from Persona p where p.id IN (?1)")
-	public List<Persona> findManyPeople(List<Long> idsPersonas);
 	
 	@Query(value = "select count(rptp.id_persona) from rol_persona_tip_pers rptp join tipos_persona tp on tp.id=rptp.id_tipo_persona where rptp.id_persona=?1 and tp.tipo_persona='Administrativo'", nativeQuery=true)
 	public int hasPermissionForAdminvos(Long idPersona);
@@ -60,10 +45,7 @@ public interface IPersonaDao extends JpaRepository<Persona, Long>, DataTablesRep
 			String idPaisNacimiento, String idDepartamentoNacimiento, String idMunicipioNacimiento, String email, String direccion, String telefono,
 			boolean isEstudiante, boolean isDocente, boolean isAdministrativo, boolean isGraduado, boolean isExterno, String idsTipoPersona, Long id );
 	
-	@Query(value ="select p " + 
-			"from Persona p " + 
-			"where CONCAT(p.primerNombre,' ', p.segundoNombre,' ',p.primerApellido,' ', p.segundoApellido) like ?1")	
-	public List<Persona> findPosiblePonenteByNombre(String nombre);
+	
 	
 	@Transactional
 	@Modifying
@@ -90,15 +72,7 @@ public interface IPersonaDao extends JpaRepository<Persona, Long>, DataTablesRep
 	@Query(value = "update externos set estado = ?1 where id_persona = ?2 ", nativeQuery = true)
 	public void updateEstadoExterno(boolean estado, Long idPersona);
 	
-	@Query(value ="select p " + 
-			"from Persona p " + 
-			"where p.numeroDocumento = ?1")	
-	public List<Persona> findPersonasByNumeroDocumento(String numeroDocumento);
 	
-	@Query(value ="select p " + 
-			"from Persona p " + 
-			"where p.email = ?1")	
-	public List<Persona> findPersonasByEmail(String email);
 	
 	
 	

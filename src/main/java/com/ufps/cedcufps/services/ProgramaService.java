@@ -176,26 +176,26 @@ public class ProgramaService implements IProgramaService {
 
 	@Override
 	public List<ProgramaDto> programasParaEduContinuaBase(Long idPersona, boolean isSuperAdmin, boolean hasPermission){
-		List<Programa> programas= new ArrayList<Programa>();
+		List<ProgramaDto> programas= new ArrayList<ProgramaDto>();
 		if(isSuperAdmin) {
-			programas= (List<Programa>)programaDao.findAll();
+			programas=programaCustomDao.findAllProgramas();
 		}else if (hasPermission) {
-			programas=programaDao.findProgramasEducacionContinuaBase(idPersona);
+			programas=programaCustomDao.findProgramasEducacionContinuaBase(idPersona);
 			
 		}
-		return programaMapper.convertListProgramaToProgramaDto(programas);
+		return programas;
 	}
 
 	@Override
 	public List<ProgramaDto> findAllProgramasOfPermission(Long idPersona, boolean isSuperAdmin, boolean hasPermission) {
 		// TODO Auto-generated method stub
-		List<Programa> programas=new ArrayList<Programa>();
+		List<ProgramaDto> programas=new ArrayList<ProgramaDto>();
 		if(isSuperAdmin) {
-			programas=(List<Programa>)programaDao.findAll();
+			programas=programaCustomDao.findAllProgramas();
 		}else if(hasPermission) {
-			programas=programaDao.findProgramasOfPermissionEdCPersona(idPersona);
+			programas=programaCustomDao.findProgramasOfPermissionEdCPersona(idPersona);
 		}
-		return programaMapper.convertListProgramaToProgramaDto(programas);
+		return programas;
 	}
 
 	@Override

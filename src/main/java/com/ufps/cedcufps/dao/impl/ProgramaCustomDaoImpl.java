@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import com.ufps.cedcufps.dao.IProgramaCustomDao;
 import com.ufps.cedcufps.dto.ProgramaDto;
+import com.ufps.cedcufps.modelos.Programa;
 
 @Repository
 public class ProgramaCustomDaoImpl implements IProgramaCustomDao{
@@ -50,6 +51,59 @@ public class ProgramaCustomDaoImpl implements IProgramaCustomDao{
 			 .append(" from programas pro");
 		
 		Query q=em.createNativeQuery(query.toString());
+		
+		List<Object[]> result=q.getResultList();
+		List<ProgramaDto> list=new ArrayList<ProgramaDto>();
+		for(Object[] object : result) {
+			ProgramaDto dto=new ProgramaDto();
+			dto.setId(Long.parseLong(String.valueOf(object[0])));
+			dto.setCodigo(String.valueOf(object[1]));
+			dto.setPrograma(String.valueOf(object[2]));
+			dto.setIdDirector(Long.parseLong(String.valueOf(object[3])));
+			dto.setIdFacultad(Long.parseLong(String.valueOf(object[4])));
+			list.add(dto);
+		}
+		
+		return list;
+	}
+	
+
+	@Override
+	public List<ProgramaDto> findProgramasOfPermissionEdCPersona(Long idPersona) {
+		StringBuilder query = new StringBuilder();
+		query.append(" select id, codigo, programa, id_director, id_facultad")
+			 .append(" from programas p where p.id in (select rpp.id_programa from ")
+			 .append(" roles_personas_programas_ec rpp where id_persona = ?1)");
+			 
+		
+		Query q=em.createNativeQuery(query.toString()).setParameter(1, idPersona);
+		
+		List<Object[]> result=q.getResultList();
+		List<ProgramaDto> list=new ArrayList<ProgramaDto>();
+		for(Object[] object : result) {
+			ProgramaDto dto=new ProgramaDto();
+			dto.setId(Long.parseLong(String.valueOf(object[0])));
+			dto.setCodigo(String.valueOf(object[1]));
+			dto.setPrograma(String.valueOf(object[2]));
+			dto.setIdDirector(Long.parseLong(String.valueOf(object[3])));
+			dto.setIdFacultad(Long.parseLong(String.valueOf(object[4])));
+			list.add(dto);
+		}
+		
+		return list;
+	}
+	
+	@Override
+	public List<ProgramaDto> findProgramasEducacionContinuaBase(Long idPersona) {
+		StringBuilder query = new StringBuilder();
+		query.append(" select id, codigo, programa, id_director, id_facultad")
+			 .append(" from programas p where p.id in (select rpp.id_programa from ")
+			 .append(" roles_personas_programas_ec rpp where id_persona = ?1)")
+			 .append(" or p.id in (select distinct e.id_programa from")
+			 .append(" educacion_continua e where e.id_docente = ?1)");
+			 
+		
+		Query q=em.createNativeQuery(query.toString()).setParameter(1, idPersona);
 		
 		List<Object[]> result=q.getResultList();
 		List<ProgramaDto> list=new ArrayList<ProgramaDto>();

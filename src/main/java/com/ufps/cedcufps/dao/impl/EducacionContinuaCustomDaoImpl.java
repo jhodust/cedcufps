@@ -31,6 +31,7 @@ import com.ufps.cedcufps.dao.IDocenteDao;
 import com.ufps.cedcufps.dao.IEducacionContinuaCustomDao;
 import com.ufps.cedcufps.dao.IJornadaDao;
 import com.ufps.cedcufps.dao.IPersonaCustomDao;
+import com.ufps.cedcufps.dao.IProgramaCustomDao;
 import com.ufps.cedcufps.dao.IProgramaDao;
 import com.ufps.cedcufps.dao.ITipoBeneficiarioEducacionContinua;
 import com.ufps.cedcufps.dao.ITipoEducacionContinuaDao;
@@ -45,6 +46,7 @@ import com.ufps.cedcufps.mapper.IJornadaMapper;
 import com.ufps.cedcufps.modelos.Docente;
 import com.ufps.cedcufps.modelos.EducacionContinua;
 import com.ufps.cedcufps.modelos.Persona;
+import com.ufps.cedcufps.modelos.Programa;
 import com.ufps.cedcufps.utils.StatusEducacionContinua;
 
 @Repository
@@ -72,7 +74,7 @@ public class EducacionContinuaCustomDaoImpl implements IEducacionContinuaCustomD
 	private ITipoEducacionContinuaDao tipoEducacionContinuaDao;
 	
 	@Autowired
-	private IProgramaDao programaDao;
+	private IProgramaCustomDao programaCustomDao;
 	
 	@Autowired
 	private IDocenteDao docenteDao;
@@ -681,7 +683,7 @@ public class EducacionContinuaCustomDaoImpl implements IEducacionContinuaCustomD
 			e.setClasificacionCine(clasificacionCineDao.findClasificacionById(Long.parseLong(String.valueOf(result.get(0)[17]))));
 			e.setDiploma( (result.get(0)[18] != null) ? diplomaDao.findDiplomaById( Long.parseLong(String.valueOf(result.get(0)[18]))): null);
 			e.setDocenteResponsable(personaCustomDao.findDocenteResponsable(Long.parseLong(String.valueOf(result.get(0)[19]))));
-			e.setProgramaResponsable(programaDao.findProgramaById(Long.parseLong(String.valueOf(result.get(0)[20]))));
+			e.setProgramaResponsable(programaCustomDao.findProgramaById(Long.parseLong(String.valueOf(result.get(0)[20]))));
 			e.setTipoEduContinua(tipoEducacionContinuaDao.findTipoEducacionContinuaById(Long.parseLong(String.valueOf(result.get(0)[21]))));
 			e.setTipoBeneficiarios(tiposBeneficiariosEduContinuaDao.findTiposBeneficiariosByIdEduContinua(e.getId()));
 			return e;
@@ -689,5 +691,10 @@ public class EducacionContinuaCustomDaoImpl implements IEducacionContinuaCustomD
 		
 		return null;
 	}
+	
+	
+	
+	
+	
 
 }

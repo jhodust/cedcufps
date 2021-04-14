@@ -12,4 +12,8 @@ public interface IProgramaMapper {
 	public ProgramaDto convertProgramaToProgramaDto(Programa programa);
 	
 	public Programa convertProgramaDtoToPrograma(ProgramaDto programaDto);
+	
+	public List<ProgramaDto> convertListObjectToListProgramaDto(List<Object[]> result);
+	
+	public ProgramaDto convertObjectToProgramaDto(Object[] object);
 }

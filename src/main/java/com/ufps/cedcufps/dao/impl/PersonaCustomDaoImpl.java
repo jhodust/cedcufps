@@ -313,6 +313,31 @@ public class PersonaCustomDaoImpl implements IPersonaCustomDao {
 		
 		return null;
 	}
+	
+	@Override
+	public Docente findDocenteDirPrograma(Long idPrograma, Long idPersona) {
+		// TODO Auto-generated method stub
+		StringBuilder query = new StringBuilder();
+		query.append("SELECT p.id, p.primer_nombre, p.segundo_nombre, p.primer_apellido, p.segundo_apellido, d.codigo")
+				.append(" from programas pro join docentes d on pro.id_director=d.id_persona" )
+				.append(" join personas as p on d.id_persona=p.id")
+				.append(" where pro.id = ?1 and p.id = ?2");
+		
+		Query q= em.createNativeQuery(query.toString()).setParameter(1, idPrograma).setParameter(2, idPersona);
+		List<Object[]> result= q.getResultList();
+		if(result.size()==1) {
+			Docente d= new Docente();
+			d.setId(Long.parseLong(String.valueOf(result.get(0)[0])));
+			d.setPrimerNombre(String.valueOf(result.get(0)[1]));
+			d.setSegundoNombre(String.valueOf(result.get(0)[2]));
+			d.setPrimerApellido(String.valueOf(result.get(0)[3]));
+			d.setSegundoApellido(String.valueOf(result.get(0)[4]));
+			d.setCodigo(String.valueOf(result.get(0)[5]));
+			return d;
+		}
+		
+		return null;
+	}
 
 	@Override
 	public List<Persona> findPersonasList(List<Long> ids, boolean superAdmin) {
@@ -323,7 +348,7 @@ public class PersonaCustomDaoImpl implements IPersonaCustomDao {
 			 .append(" p.email, tp.id as id_tipo_documento, tp.tipo_documento, p.direccion, p.fecha_expedicion_documento,")
 			 .append(" p.fecha_nacimiento, p.id_departamento_nacimiento, p.id_municipio_nacimiento, p.id_pais_nacimiento,")
 			 .append(" p.ids_tipo_persona, p.numero_documento, p.telefono,ec.id as id_estado_civil, ec.estado_civil,  ")
-			 .append(" g.id as id_genero, g.genero")
+			 .append(" g.id as id_genero, g.genero, tp.descripcion")
 				.append(" from personas as p")
 				.append(" join tipos_documento tp on p.id_tipo_documento=tp.id")
 				.append(" join estados_civiles ec on p.id_estado_civil=ec.id")
@@ -359,7 +384,7 @@ public class PersonaCustomDaoImpl implements IPersonaCustomDao {
 			 .append(" p.email, tp.id as id_tipo_documento, tp.tipo_documento, p.direccion, p.fecha_expedicion_documento,")
 			 .append(" p.fecha_nacimiento, p.id_departamento_nacimiento, p.id_municipio_nacimiento, p.id_pais_nacimiento,")
 			 .append(" p.ids_tipo_persona, p.numero_documento, p.telefono,ec.id as id_estado_civil, ec.estado_civil,  ")
-			 .append(" g.id as id_genero, g.genero")
+			 .append(" g.id as id_genero, g.genero, tp.descripcion")
 				.append(" from personas as p")
 				.append(" join tipos_documento tp on p.id_tipo_documento=tp.id")
 				.append(" join estados_civiles ec on p.id_estado_civil=ec.id")
@@ -384,7 +409,7 @@ public class PersonaCustomDaoImpl implements IPersonaCustomDao {
 			 .append(" p.email, tp.id as id_tipo_documento, tp.tipo_documento, p.direccion, p.fecha_expedicion_documento,")
 			 .append(" p.fecha_nacimiento, p.id_departamento_nacimiento, p.id_municipio_nacimiento, p.id_pais_nacimiento,")
 			 .append(" p.ids_tipo_persona, p.numero_documento, p.telefono,ec.id as id_estado_civil, ec.estado_civil,  ")
-			 .append(" g.id as id_genero, g.genero")
+			 .append(" g.id as id_genero, g.genero, tp.descripcion")
 				.append(" from personas as p")
 				.append(" join tipos_documento tp on p.id_tipo_documento=tp.id")
 				.append(" join estados_civiles ec on p.id_estado_civil=ec.id")
@@ -408,7 +433,7 @@ public class PersonaCustomDaoImpl implements IPersonaCustomDao {
 			 .append(" p.email, tp.id as id_tipo_documento, tp.tipo_documento, p.direccion, p.fecha_expedicion_documento,")
 			 .append(" p.fecha_nacimiento, p.id_departamento_nacimiento, p.id_municipio_nacimiento, p.id_pais_nacimiento,")
 			 .append(" p.ids_tipo_persona, p.numero_documento, p.telefono,ec.id as id_estado_civil, ec.estado_civil,  ")
-			 .append(" g.id as id_genero, g.genero")
+			 .append(" g.id as id_genero, g.genero, tp.descripcion")
 				.append(" from personas as p")
 				.append(" join tipos_documento tp on p.id_tipo_documento=tp.id")
 				.append(" join estados_civiles ec on p.id_estado_civil=ec.id")
@@ -433,7 +458,7 @@ public class PersonaCustomDaoImpl implements IPersonaCustomDao {
 			 .append(" p.email, tp.id as id_tipo_documento, tp.tipo_documento, p.direccion, p.fecha_expedicion_documento,")
 			 .append(" p.fecha_nacimiento, p.id_departamento_nacimiento, p.id_municipio_nacimiento, p.id_pais_nacimiento,")
 			 .append(" p.ids_tipo_persona, p.numero_documento, p.telefono,ec.id as id_estado_civil, ec.estado_civil,  ")
-			 .append(" g.id as id_genero, g.genero")
+			 .append(" g.id as id_genero, g.genero, tp.descripcion")
 				.append(" from personas as p")
 				.append(" join tipos_documento tp on p.id_tipo_documento=tp.id")
 				.append(" join estados_civiles ec on p.id_estado_civil=ec.id")
@@ -460,7 +485,7 @@ public class PersonaCustomDaoImpl implements IPersonaCustomDao {
 			 .append(" p.email, tp.id as id_tipo_documento, tp.tipo_documento, p.direccion, p.fecha_expedicion_documento,")
 			 .append(" p.fecha_nacimiento, p.id_departamento_nacimiento, p.id_municipio_nacimiento, p.id_pais_nacimiento,")
 			 .append(" p.ids_tipo_persona, p.numero_documento, p.telefono,ec.id as id_estado_civil, ec.estado_civil,  ")
-			 .append(" g.id as id_genero, g.genero")
+			 .append(" g.id as id_genero, g.genero, tp.descripcion")
 				.append(" from personas as p")
 				.append(" join tipos_documento tp on p.id_tipo_documento=tp.id")
 				.append(" join estados_civiles ec on p.id_estado_civil=ec.id")
@@ -482,7 +507,7 @@ public class PersonaCustomDaoImpl implements IPersonaCustomDao {
 			 .append(" p.email, tp.id as id_tipo_documento, tp.tipo_documento, p.direccion, p.fecha_expedicion_documento,")
 			 .append(" p.fecha_nacimiento, p.id_departamento_nacimiento, p.id_municipio_nacimiento, p.id_pais_nacimiento,")
 			 .append(" p.ids_tipo_persona, p.numero_documento, p.telefono,ec.id as id_estado_civil, ec.estado_civil,  ")
-			 .append(" g.id as id_genero, g.genero")
+			 .append(" g.id as id_genero, g.genero, tp.descripcion")
 				.append(" from personas as p")
 				.append(" join tipos_documento tp on p.id_tipo_documento=tp.id")
 				.append(" join estados_civiles ec on p.id_estado_civil=ec.id")
@@ -506,7 +531,7 @@ public class PersonaCustomDaoImpl implements IPersonaCustomDao {
 			 .append(" p.email, tp.id as id_tipo_documento, tp.tipo_documento, p.direccion, p.fecha_expedicion_documento,")
 			 .append(" p.fecha_nacimiento, p.id_departamento_nacimiento, p.id_municipio_nacimiento, p.id_pais_nacimiento,")
 			 .append(" p.ids_tipo_persona, p.numero_documento, p.telefono,ec.id as id_estado_civil, ec.estado_civil,  ")
-			 .append(" g.id as id_genero, g.genero")
+			 .append(" g.id as id_genero, g.genero, tp.descripcion")
 				.append(" from personas as p")
 				.append(" join tipos_documento tp on p.id_tipo_documento=tp.id")
 				.append(" join estados_civiles ec on p.id_estado_civil=ec.id")
@@ -529,7 +554,7 @@ public class PersonaCustomDaoImpl implements IPersonaCustomDao {
 			 .append(" p.email, tp.id as id_tipo_documento, tp.tipo_documento, p.direccion, p.fecha_expedicion_documento,")
 			 .append(" p.fecha_nacimiento, p.id_departamento_nacimiento, p.id_municipio_nacimiento, p.id_pais_nacimiento,")
 			 .append(" p.ids_tipo_persona, p.numero_documento, p.telefono,ec.id as id_estado_civil, ec.estado_civil,  ")
-			 .append(" g.id as id_genero, g.genero")
+			 .append(" g.id as id_genero, g.genero, tp.descripcion")
 				.append(" from personas as p")
 				.append(" join tipos_documento tp on p.id_tipo_documento=tp.id")
 				.append(" join estados_civiles ec on p.id_estado_civil=ec.id")

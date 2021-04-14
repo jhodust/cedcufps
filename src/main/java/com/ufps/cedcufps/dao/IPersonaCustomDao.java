@@ -42,6 +42,8 @@ public interface IPersonaCustomDao {
 	
 	public Docente findDocenteResponsable(Long idPersona);
 	
+	public Docente findDocenteDirPrograma(Long idPrograma, Long idPersona);
+	
 	public List<Persona> findPersonasList(List<Long> ids, boolean superAdmin);
 	
 	public Persona findPersonaById(Long id);

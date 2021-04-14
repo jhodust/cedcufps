@@ -27,11 +27,7 @@ public interface IProgramaDao extends PagingAndSortingRepository<Programa, Long>
 	@Query(value="select count(p.id) from programas p where p.id != ?1 and p.programa = ?2", nativeQuery=true)
 	public int cantidadProgramaExistentes(Long id, String programa);
 	
-	@Query("select p from Programa p where p.id = ?1")
-	public Programa findProgramaById(Long id);
 	
-	@Query("select p from Programa p where p.directorPrograma.id = ?1")
-	public Programa findByDirector(Long idDir);
 	
 	@Query(value="select count(p.id) from programas p where p.id != ?1 and p.codigo = ?2", nativeQuery=true)
 	public int cantidadCodigosExistentes(Long idPro, String codigo);
@@ -47,37 +43,6 @@ public interface IProgramaDao extends PagingAndSortingRepository<Programa, Long>
 	@Modifying
 	@Query(value="update programas set id_director= ?1  where id = ?2 ", nativeQuery=true)
 	public void vincularDirectorPrograma(Long idDir, Long idPro);
-	
-	@Query("select p from Programa p where p.id != ?1 and p.directorPrograma.id = ?2")
-	public Programa findOthersProgramasByDirector(Long idPro, Long idDir);
-	
-	@Query
-	public Programa findByCodigo(String codigo);
-	
-	@Query("select p from Programa p where p.id NOT IN (?1)")
-	public List<Programa> findProgramasExceptSome(List<Long> idProgramas);
-	
-	@Query(value = "select p.* from roles_personas_programas_ec rppe join programas p on rppe.id_programa=p.id where rppe.id_persona = ?1 and rppe.id_programa != ?2",nativeQuery = true)
-	public List<Programa> findProgramasPermisosEduContinuaForDirProgramaExceptOwn(Long idDirector, Long idPrograma);
-	
-	@Query(value = "select p.* from roles_personas_programas_ec rppe join programas p on rppe.id_programa=p.id where rppe.id_persona = ?1",nativeQuery = true)
-	public List<Programa> findProgramasPermisosEduContinuaForDocEstAdminvo(Long idPersona);
-	
-	@Query(value = "select p.* from rol_persona_programa_per rppp join programas p on rppp.id_programa=p.id join tipos_persona tp on tp.id=rppp.id_tipo_persona where rppp.id_persona = ?1 and rppp.id_programa != ?2 and tp.tipo_persona='Estudiante' ",nativeQuery = true)
-	public List<Programa> findProgramasPermisosEstudiantesForDirProgramaExceptOwn(Long idDirector, Long idPrograma);
-	
-	@Query(value = "select p.* from rol_persona_programa_per rppp join programas p on rppp.id_programa=p.id join tipos_persona tp on tp.id=rppp.id_tipo_persona where rppp.id_persona = ?1 and tp.tipo_persona='Estudiante' ",nativeQuery = true)
-	public List<Programa> findProgramasPermisosEstudiantesForDocEstAdminvo(Long idPeronsa);
-	
-	@Query(value = "select p.* from rol_persona_programa_per rppp join programas p on rppp.id_programa=p.id join tipos_persona tp on tp.id=rppp.id_tipo_persona where rppp.id_persona = ?1 and rppp.id_programa != ?2 and tp.tipo_persona='Graduado'",nativeQuery = true)
-	public List<Programa> findProgramasPermisosGraduadosForDirProgramaExceptOwn(Long idDirector, Long idPrograma);
-	
-	@Query(value = "select p.* from rol_persona_programa_per rppp join programas p on rppp.id_programa=p.id join tipos_persona tp on tp.id=rppp.id_tipo_persona where rppp.id_persona = ?1 and tp.tipo_persona='Graduado'",nativeQuery = true)
-	public List<Programa> findProgramasPermisosGraduadosForDocEstAdminvo(Long idDirector);
-	
-	
-	
-	
 	
 	
 }

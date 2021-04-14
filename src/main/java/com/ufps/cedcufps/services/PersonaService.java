@@ -25,6 +25,7 @@ import org.springframework.security.oauth2.core.OAuth2AuthenticatedPrincipal;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ufps.cedcufps.dao.IAdministrativoDao;
+import com.ufps.cedcufps.dao.IDepartamentoCustomDao;
 import com.ufps.cedcufps.dao.IDepartamentoDao;
 import com.ufps.cedcufps.dao.IDocenteDao;
 import com.ufps.cedcufps.dao.IEducacionContinuaCustomDao;
@@ -130,7 +131,7 @@ public class PersonaService implements IPersonaService {
 	private IProgramaCustomDao programaCustomDao;
 	
 	@Autowired
-	private IDepartamentoDao departamentoDao;
+	private IDepartamentoCustomDao departamentoCustomDao;
 	
 	@Autowired
 	private ITipoPersonaDao tipoPersonaDao;
@@ -229,12 +230,7 @@ public class PersonaService implements IPersonaService {
 		return (List<Genero>) generoDao.findAll();
 	}
 
-	@Override
-	public List<Departamento> findAllDepartamentos() {
-		// TODO Auto-generated method stub
-		return (List<Departamento>)departamentoDao.findAll();
-	}
-
+	
 	@Override
 	public List<Estudiante> findAllEstudiantes() {
 		// TODO Auto-generated method stub
@@ -561,15 +557,15 @@ public class PersonaService implements IPersonaService {
 					dto.setHasPermissionForEduContinua(this.hasPermissionForEduContinua(usuario.getId()));
 					dto.setHasPermissionForUsuarios(this.hasPermissionForPeople(usuario));
 					dto.setHasPermissionForAttendance(this.hasPermissionForAttendance(usuario.getId()));
-					dto.setProgramasForEduContinua(programaMapper.convertListProgramaToProgramaDto(this.programaDao.findProgramasPermisosEduContinuaForDirProgramaExceptOwn(usuario.getId(), p.getId())));
+					dto.setProgramasForEduContinua(this.programaCustomDao.findProgramasPermisosEduContinuaForDirProgramaExceptOwn(usuario.getId(), p.getId()));
 					List<Programa> programasPosiblesSelectEduC=(List<Programa>)this.programaDao.findAll();
 					programasPosiblesSelectEduC.remove(p);
 					dto.setSelectProgramasForEduContinua(programaMapper.convertListProgramaToProgramaDto(programasPosiblesSelectEduC));
 					
-					dto.setProgramasForEstudiantes(programaMapper.convertListProgramaToProgramaDto(this.programaDao.findProgramasPermisosEstudiantesForDirProgramaExceptOwn(usuario.getId(), p.getId())));
-					dto.setProgramasForGraduados(programaMapper.convertListProgramaToProgramaDto(this.programaDao.findProgramasPermisosGraduadosForDirProgramaExceptOwn(usuario.getId(), p.getId())));
-					dto.setDeptosForDocentes(departamentoMapper.convertListDepartamentoToDepartamentosDto(this.departamentoDao.findDeptosPermisosDocentesForDocEstAdminvo(usuario.getId())));// el director tiene comportamiento de docente para la gestión de otros docentes de un departamento
-					dto.setSelectDeptosForDocentes(departamentoMapper.convertListDepartamentoToDepartamentosDto((List<Departamento>)this.departamentoDao.findAll()));
+					dto.setProgramasForEstudiantes(this.programaCustomDao.findProgramasPermisosEstudiantesForDirProgramaExceptOwn(usuario.getId(), p.getId()));
+					dto.setProgramasForGraduados(this.programaCustomDao.findProgramasPermisosGraduadosForDirProgramaExceptOwn(usuario.getId(), p.getId()));
+					dto.setDeptosForDocentes(this.departamentoCustomDao.findDeptosPermisosDocentesForDocEstAdminvo(usuario.getId()));// el director tiene comportamiento de docente para la gestión de otros docentes de un departamento
+					dto.setSelectDeptosForDocentes(this.departamentoCustomDao.findAll());
 					List<Programa> programasPosiblesSelectEst=(List<Programa>)this.programaDao.findAll();
 					programasPosiblesSelectEst.remove(p);
 					dto.setSelectProgramasForEstudiantes(programaMapper.convertListProgramaToProgramaDto(programasPosiblesSelectEst));
@@ -596,12 +592,12 @@ public class PersonaService implements IPersonaService {
 					dto.setHasPermissionForEduContinua(this.hasPermissionForEduContinua(usuario.getId()));
 					dto.setHasPermissionForUsuarios(this.hasPermissionForPeople(usuario));
 					dto.setHasPermissionForAttendance(this.hasPermissionForAttendance(usuario.getId()));
-					dto.setProgramasForEduContinua(programaMapper.convertListProgramaToProgramaDto(this.programaDao.findProgramasPermisosEduContinuaForDocEstAdminvo(usuario.getId())));
+					dto.setProgramasForEduContinua(this.programaCustomDao.findProgramasPermisosEduContinuaForDocEstAdminvo(usuario.getId()));
 					dto.setSelectProgramasForEduContinua(programaMapper.convertListProgramaToProgramaDto((List<Programa>)this.programaDao.findAll()));
-					dto.setProgramasForEstudiantes(programaMapper.convertListProgramaToProgramaDto(this.programaDao.findProgramasPermisosEstudiantesForDocEstAdminvo(usuario.getId())));
-					dto.setProgramasForGraduados(programaMapper.convertListProgramaToProgramaDto(this.programaDao.findProgramasPermisosGraduadosForDocEstAdminvo(usuario.getId())));
-					dto.setDeptosForDocentes(departamentoMapper.convertListDepartamentoToDepartamentosDto(this.departamentoDao.findDeptosPermisosDocentesForDocEstAdminvo(usuario.getId())));
-					dto.setSelectDeptosForDocentes(departamentoMapper.convertListDepartamentoToDepartamentosDto((List<Departamento>)this.departamentoDao.findAll()));
+					dto.setProgramasForEstudiantes((this.programaCustomDao.findProgramasPermisosEstudiantesForDocEstAdminvo(usuario.getId())));
+					dto.setProgramasForGraduados((this.programaCustomDao.findProgramasPermisosGraduadosForDocEstAdminvo(usuario.getId())));
+					dto.setDeptosForDocentes(this.departamentoCustomDao.findDeptosPermisosDocentesForDocEstAdminvo(usuario.getId()));
+					dto.setSelectDeptosForDocentes(this.departamentoCustomDao.findAll());
 					dto.setSelectProgramasForEstudiantes(programaMapper.convertListProgramaToProgramaDto((List<Programa>)this.programaDao.findAll()));
 					dto.setSelectProgramasForGraduados(programaMapper.convertListProgramaToProgramaDto((List<Programa>)this.programaDao.findAll()));
 					dto.setSelectEduContinuasForAttendance(educacionContinuaCustomDao.findEduContinuasPermissionForAttendance(autoridad.getId(), true, false));
@@ -617,23 +613,23 @@ public class PersonaService implements IPersonaService {
 				dto.setHasPermissionForEduContinua(this.hasPermissionForEduContinua(usuario.getId()));
 				dto.setHasPermissionForUsuarios(this.hasPermissionForPeople(usuario));
 				dto.setHasPermissionForAttendance(this.hasPermissionForAttendance(usuario.getId()));
-				dto.setProgramasForEduContinua(programaMapper.convertListProgramaToProgramaDto(this.programaDao.findProgramasPermisosEduContinuaForDocEstAdminvo(usuario.getId())));
+				dto.setProgramasForEduContinua(this.programaCustomDao.findProgramasPermisosEduContinuaForDocEstAdminvo(usuario.getId()));
 				List<ProgramaDto> selectProgramasDir= new ArrayList<ProgramaDto>();
 				selectProgramasDir.add(pDirector);
 				dto.setSelectProgramasForEduContinua(selectProgramasDir);
-				dto.setProgramasForEstudiantes(programaMapper.convertListProgramaToProgramaDto(this.programaDao.findProgramasPermisosEstudiantesForDocEstAdminvo(usuario.getId())));
-				dto.setProgramasForGraduados(programaMapper.convertListProgramaToProgramaDto(this.programaDao.findProgramasPermisosGraduadosForDocEstAdminvo(usuario.getId())));
-				dto.setDeptosForDocentes(departamentoMapper.convertListDepartamentoToDepartamentosDto(this.departamentoDao.findDeptosPermisosDocentesForDocEstAdminvo(usuario.getId())));
-				dto.setSelectDeptosForDocentes(departamentoMapper.convertListDepartamentoToDepartamentosDto((List<Departamento>)this.departamentoDao.findAll()));
+				dto.setProgramasForEstudiantes(this.programaCustomDao.findProgramasPermisosEstudiantesForDocEstAdminvo(usuario.getId()));
+				dto.setProgramasForGraduados(this.programaCustomDao.findProgramasPermisosGraduadosForDocEstAdminvo(usuario.getId()));
+				dto.setDeptosForDocentes(this.departamentoCustomDao.findDeptosPermisosDocentesForDocEstAdminvo(usuario.getId()));
+				dto.setSelectDeptosForDocentes(this.departamentoCustomDao.findAll());
 				dto.setSelectProgramasForEstudiantes(selectProgramasDir);
 				dto.setSelectProgramasForGraduados(selectProgramasDir);
 				dto.setSelectEduContinuasForAttendance(educacionContinuaCustomDao.findEduContinuasPermissionForAttendance(autoridad.getId(), false, true));
 				dto.setEduContinuasForAttendance(educacionContinuaCustomDao.findEduContinuasPermissionForAttendance(usuario.getId()));
 				dto.setHasPermissionForAdminvos(this.personaDao.hasPermissionForAdminvos(usuario.getId())>0);
 				dto.setHasPermissionForExternos(this.personaDao.hasPermissionForExternos(usuario.getId())>0);
-				dto.setProgramasForEduContinuaIntocables(programaMapper.convertListProgramaToProgramaDto(this.programaDao.findProgramasPermisosEduContinuaForDirProgramaExceptOwn(usuario.getId(), pDirector.getId())));
-				dto.setProgramasForEstudiantesIntocables(programaMapper.convertListProgramaToProgramaDto(this.programaDao.findProgramasPermisosEstudiantesForDirProgramaExceptOwn(usuario.getId(), pDirector.getId())));
-				dto.setProgramasForGraduadosIntocables(programaMapper.convertListProgramaToProgramaDto(this.programaDao.findProgramasPermisosGraduadosForDirProgramaExceptOwn(usuario.getId(), pDirector.getId())));
+				dto.setProgramasForEduContinuaIntocables(this.programaCustomDao.findProgramasPermisosEduContinuaForDirProgramaExceptOwn(usuario.getId(), pDirector.getId()));
+				dto.setProgramasForEstudiantesIntocables(this.programaCustomDao.findProgramasPermisosEstudiantesForDirProgramaExceptOwn(usuario.getId(), pDirector.getId()));
+				dto.setProgramasForGraduadosIntocables(this.programaCustomDao.findProgramasPermisosGraduadosForDirProgramaExceptOwn(usuario.getId(), pDirector.getId()));
 				dto.setEduContinuasForAttendanceIntocables(educacionContinuaCustomDao.findEduContinuasPermissionForAttendanceExceptDirectorPrograma(usuario.getId(),pDirector.getId()));
 				return dto;
 			}
@@ -835,7 +831,7 @@ public class PersonaService implements IPersonaService {
 				dto.setAbleEditExternos(true);
 				dto.setProgramasEstudiantes(programaCustomDao.findAllProgramas());
 				dto.setProgramasGraduados(programaCustomDao.findAllProgramas());
-				dto.setDepartamentosDocentes(departamentoMapper.convertListDepartamentoToDepartamentosDto((List<Departamento>)departamentoDao.findAll()));
+				dto.setDepartamentosDocentes(departamentoCustomDao.findAll());
 				return dto;
 			}else if(this.hasPermissionForPeople(p)) {
 				dto.setAbleEditEstudiantes(personaRolCustomDao.findPermisosTipoPersona(p.getId(), TipoPersonaUtil.ESTUDIANTE));
@@ -856,7 +852,7 @@ public class PersonaService implements IPersonaService {
 			dto.setAbleEditExternos(true);
 			dto.setProgramasEstudiantes(programaCustomDao.findAllProgramas());
 			dto.setProgramasGraduados(programaCustomDao.findAllProgramas());
-			dto.setDepartamentosDocentes(departamentoMapper.convertListDepartamentoToDepartamentosDto((List<Departamento>)departamentoDao.findAll()));
+			dto.setDepartamentosDocentes(departamentoCustomDao.findAll());
 			return dto;
 		}
 			

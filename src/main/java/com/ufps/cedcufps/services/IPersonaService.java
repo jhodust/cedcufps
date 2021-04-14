@@ -47,7 +47,6 @@ public interface IPersonaService {
 	
 	public List<Programa> findAllProgramas();
 	
-	public List<Departamento> findAllDepartamentos();
 	
 	public TipoPersona findByTipoPersona(String tipoPersona);
 	

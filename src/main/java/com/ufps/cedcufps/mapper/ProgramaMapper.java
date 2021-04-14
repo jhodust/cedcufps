@@ -45,4 +45,26 @@ public class ProgramaMapper implements IProgramaMapper {
 		return null;
 	}
 
+	@Override
+	public List<ProgramaDto> convertListObjectToListProgramaDto(List<Object[]> result) {
+		// TODO Auto-generated method stub
+		List<ProgramaDto> list=new ArrayList<ProgramaDto>();
+		for(Object[] object : result) {
+			list.add(this.convertObjectToProgramaDto(object));
+		}
+		return list;
+	}
+
+	@Override
+	public ProgramaDto convertObjectToProgramaDto(Object[] object) {
+		// TODO Auto-generated method stub
+		ProgramaDto dto=new ProgramaDto();
+		dto.setId(Long.parseLong(String.valueOf(object[0])));
+		dto.setCodigo(String.valueOf(object[1]));
+		dto.setPrograma(String.valueOf(object[2]));
+		dto.setIdDirector(Long.parseLong(String.valueOf(object[3])));
+		dto.setIdFacultad(Long.parseLong(String.valueOf(object[4])));
+		return dto;
+	}
+
 }

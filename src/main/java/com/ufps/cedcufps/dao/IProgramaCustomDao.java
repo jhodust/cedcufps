@@ -17,4 +17,25 @@ public interface IProgramaCustomDao {
 	public List<ProgramaDto> findProgramasOfPermissionEdCPersona(Long idPersona);
 	
 	public List<ProgramaDto> findProgramasEducacionContinuaBase(Long idPersona);
+	
+	public List<ProgramaDto> findProgramasExceptSome(List<Long> idProgramas);
+	
+	public List<ProgramaDto> findProgramasPermisosEduContinuaForDirProgramaExceptOwn(Long idDirector, Long idPrograma);
+	
+	public List<ProgramaDto> findProgramasPermisosEduContinuaForDocEstAdminvo(Long idPersona);
+	
+	public List<ProgramaDto> findProgramasPermisosEstudiantesForDirProgramaExceptOwn(Long idDirector, Long idPrograma);
+	
+	public List<ProgramaDto> findProgramasPermisosEstudiantesForDocEstAdminvo(Long idPeronsa);
+	
+	public List<ProgramaDto> findProgramasPermisosGraduadosForDirProgramaExceptOwn(Long idDirector, Long idPrograma);
+	
+	public List<ProgramaDto> findProgramasPermisosGraduadosForDocEstAdminvo(Long idDirector);
+
+	public ProgramaDto findOthersProgramasByDirector(Long idPro, Long idDir);
+	
+	public ProgramaDto findByDirector(Long idDir);
+
+	public Programa findProgramaById(Long id);
+	
 }

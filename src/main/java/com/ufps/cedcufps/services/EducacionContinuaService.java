@@ -454,7 +454,7 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 		if( docenteDao.findOnlyDocente(dto.getIdDocenteResp()) == 0) {
 			return false;
 		}
-		if(programaDao.findProgramaById(dto.getIdProgramaResp()) == null) {
+		if(programaCustomDao.findProgramaById(dto.getIdProgramaResp()) == null) {
 			return false;
 		}
 		return true;

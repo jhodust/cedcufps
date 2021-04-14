@@ -43,6 +43,7 @@ public class PersonaMapper implements IPersonaMapper{
 		TipoDocumento td= new TipoDocumento();
 		td.setId(Long.parseLong(String.valueOf(object[12])));
 		td.setTipoDocumento(String.valueOf(object[13]));
+		td.setDescripcion(String.valueOf(object[27]));
 		per.setTipoDocumento(td);
 		per.setDireccion(String.valueOf(object[14]));
 		per.setFechaExpedicionDocumento((Date)object[15]);

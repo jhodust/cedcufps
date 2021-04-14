@@ -43,4 +43,6 @@ public interface IEducacionContinuaCustomDao {
 	public List<EducacionContinuaAppDto> findEduContinuasPermissionForAttendanceExceptDirectorPrograma(Long idPersona, Long idPrograma);
 	
 	public EducacionContinua findEducacionContinuaByIdAcceso(String idAcceso);
+	
+	public EducacionContinua findEducacionContinuaByIdAccesoDetalles(String idAcceso);
 }

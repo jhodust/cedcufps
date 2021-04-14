@@ -717,6 +717,11 @@ public class PersonaService implements IPersonaService {
 		dto.setDocente(p.isDocente());
 		dto.setHasPermisosEdC(this.hasPermissionForEduContinua(p.getId()));
 		dto.setHasPermisosOnlyMyEdC(this.hasPermisosOnlyMyEdC(p.getId()));
+		System.out.println("setSuperAdmin:"+dto.isSuperAdmin());
+		System.out.println("setDirPrograma:"+this.isDirPrograma(p));
+		System.out.println("setDocente:"+p.isDocente());
+		System.out.println("setHasPermisosEdC:"+this.hasPermissionForEduContinua(p.getId()));
+		System.out.println("setHasPermisosOnlyMyEdC:"+this.hasPermisosOnlyMyEdC(p.getId()));
 		return dto;
 	}
 	

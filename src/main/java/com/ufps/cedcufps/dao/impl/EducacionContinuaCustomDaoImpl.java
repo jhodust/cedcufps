@@ -25,6 +25,7 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import com.google.common.primitives.Longs;
+import com.ufps.cedcufps.dao.IAnexosDao;
 import com.ufps.cedcufps.dao.IClasificacionCineDao;
 import com.ufps.cedcufps.dao.IDiplomaDao;
 import com.ufps.cedcufps.dao.IDocenteDao;
@@ -43,6 +44,7 @@ import com.ufps.cedcufps.dto.ParticipanteDto;
 import com.ufps.cedcufps.dto.TipoBeneficiarioDto;
 import com.ufps.cedcufps.mapper.IEducacionContinuaMapper;
 import com.ufps.cedcufps.mapper.IJornadaMapper;
+import com.ufps.cedcufps.modelos.Anexos;
 import com.ufps.cedcufps.modelos.Docente;
 import com.ufps.cedcufps.modelos.EducacionContinua;
 import com.ufps.cedcufps.modelos.Persona;
@@ -87,6 +89,9 @@ public class EducacionContinuaCustomDaoImpl implements IEducacionContinuaCustomD
 	
 	@Autowired
 	private IPersonaCustomDao personaCustomDao;
+	
+	@Autowired
+	private IAnexosDao anexosDao;
 	
 	@Override
 	public boolean  docenteHasPermission(String idAcceso, Long idPersona) {
@@ -686,6 +691,56 @@ public class EducacionContinuaCustomDaoImpl implements IEducacionContinuaCustomD
 			e.setProgramaResponsable(programaCustomDao.findProgramaById(Long.parseLong(String.valueOf(result.get(0)[20]))));
 			e.setTipoEduContinua(tipoEducacionContinuaDao.findTipoEducacionContinuaById(Long.parseLong(String.valueOf(result.get(0)[21]))));
 			e.setTipoBeneficiarios(tiposBeneficiariosEduContinuaDao.findTiposBeneficiariosByIdEduContinua(e.getId()));
+			return e;
+		}
+		
+		return null;
+	}
+	
+	
+	@Override
+	public EducacionContinua findEducacionContinuaByIdAccesoDetalles(String idAcceso) {
+		// TODO Auto-generated method stub
+		StringBuilder query = new StringBuilder();
+		query.append(" select e.id, e.nombre, COALESCE(e.cant_max_participantes,''), e.consecutivo, e.costo_educacion_continua,")
+			 .append(" COALESCE(e.costo_inscripcion,''), e.duracion, e.estado, e.fecha_inicio, e.fecha_fin, e.fecha_lim_inscripcion,")
+			 .append(" e.id_acceso, e.imagen, e.info_adicional, e.is_deleted, e.lugar, e.porcentaje_asistencia, ")
+			 .append(" e.id_clasificacion_cine, e.id_diploma, e.id_docente, e.id_programa, e.id_tipo_educacion_continua")
+			 .append(" from educacion_continua e")
+			 .append(" where e.id_acceso = ?1");
+		
+		Query q=em.createNativeQuery(query.toString());
+		q.setParameter(1, idAcceso);
+		
+		
+			
+		List<Object[]> result= q.getResultList();
+		if(result.size()==1) {
+			EducacionContinua e = new EducacionContinua();
+			e.setId(Long.parseLong(String.valueOf(result.get(0)[0])));
+			e.setNombre(String.valueOf(result.get(0)[1]));
+			e.setCantMaxParticipantes(String.valueOf(result.get(0)[2]));
+			e.setConsecutivo(String.valueOf(result.get(0)[3]));
+			e.setCostoEducacionContinua(String.valueOf(result.get(0)[4]));
+			e.setCostoInscripcion(String.valueOf(result.get(0)[5]));
+			e.setDuracion(String.valueOf(result.get(0)[6]));
+			e.setEstado(String.valueOf(result.get(0)[7]));
+			e.setFechaInicio((Date)(result.get(0)[8]));
+			e.setFechaFin((Date)(result.get(0)[9]));
+			e.setFechaLimInscripcion((Date)(result.get(0)[10]));
+			e.setIdAcceso(String.valueOf(result.get(0)[11]));
+			e.setImagen(String.valueOf(result.get(0)[12]));
+			e.setInfoAdicional(String.valueOf(result.get(0)[13]));
+			e.setDeleted(Integer.parseInt(String.valueOf(result.get(0)[14]))==1);
+			e.setLugar(String.valueOf(result.get(0)[15]));
+			e.setPorcentajeAsistencia(String.valueOf(result.get(0)[16]));
+			e.setClasificacionCine(clasificacionCineDao.findClasificacionById(Long.parseLong(String.valueOf(result.get(0)[17]))));
+			e.setDiploma( (result.get(0)[18] != null) ? diplomaDao.findDiplomaById( Long.parseLong(String.valueOf(result.get(0)[18]))): null);
+			e.setDocenteResponsable(personaCustomDao.findDocenteResponsable(Long.parseLong(String.valueOf(result.get(0)[19]))));
+			e.setProgramaResponsable(programaCustomDao.findProgramaById(Long.parseLong(String.valueOf(result.get(0)[20]))));
+			e.setTipoEduContinua(tipoEducacionContinuaDao.findTipoEducacionContinuaById(Long.parseLong(String.valueOf(result.get(0)[21]))));
+			e.setTipoBeneficiarios(tiposBeneficiariosEduContinuaDao.findTiposBeneficiariosByIdEduContinua(e.getId()));
+			e.setAnexos(anexosDao.findAnexosByEduContinuaId(e.getId()));
 			return e;
 		}
 		

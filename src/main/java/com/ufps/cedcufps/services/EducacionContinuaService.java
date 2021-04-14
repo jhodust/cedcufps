@@ -323,7 +323,7 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 	public InfoEducacionContinuaDto detallesEducacionContinua(String idAcceso) {
 		// TODO Auto-generated method stub
 		if(personaService.isSuperAdmin() || educacionContinuaCustomDao.docenteHasPermission(idAcceso, personaService.findPersonaLogueada().getId())) {
-			EducacionContinua e= educacionContinuaCustomDao.findEducacionContinuaByIdAcceso(idAcceso);
+			EducacionContinua e= educacionContinuaCustomDao.findEducacionContinuaByIdAccesoDetalles(idAcceso);
 			if(e!=null) {
 				return educacionContinuaMapper.convertEducacionContinuaToEducacionContinuaWeb(e, true);
 			}else {

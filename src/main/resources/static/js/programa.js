@@ -54,6 +54,11 @@ $(document).ready(function ()
             "id" : id,
             "idP": idPrograma
 		}
+		//limipiarDirectorProgramaExistente
+		var element=document.getElementById("alertDirector");
+		element.innerText="";
+		element.style.display = 'none';
+		
 		toastr.clear();
         $.ajax({
 			headers: {"X-CSRF-TOKEN": token},
@@ -63,13 +68,10 @@ $(document).ready(function ()
             contentType: "application/json; charset=utf-8",
 			cache: false,
 			success: function(result) {
-				var element=document.getElementById("alertDirector");
+				
 				if(result.programa != null){
 					element.innerText="El/La docente ya es director del programa " + result.programa + " y sería desvinculado.";
 					element.style.display = 'inline';
-				}else{
-					element.innerText="";
-					element.style.display = 'none';
 				}
 				
 			},

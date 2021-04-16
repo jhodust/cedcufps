@@ -21,6 +21,7 @@ import com.ufps.cedcufps.modelos.Docente;
 import com.ufps.cedcufps.modelos.Estudiante;
 import com.ufps.cedcufps.modelos.Externo;
 import com.ufps.cedcufps.modelos.Persona;
+import com.ufps.cedcufps.modelos.SessionWebGoogle;
 import com.ufps.cedcufps.services.IDepartamentoService;
 import com.ufps.cedcufps.services.IPersonaService;
 import com.ufps.cedcufps.services.IProgramaService;
@@ -43,8 +44,11 @@ public class PersonaController {
 		model.addAttribute("titulo","PROGRAMAS");
 		model.addAttribute("personas",personaService.findAllPersonasPosibles());
 		model.addAttribute("otorganPermisos",personaService.isSuperAdmin() || personaService.isDirPrograma() );
-		model.addAttribute("photoUser", SpringSecurityConfig.getInfoSession().getPhoto());
-		model.addAttribute("nameUser", SpringSecurityConfig.getInfoSession().getName());
+		SessionWebGoogle session=SpringSecurityConfig.getInfoSession();
+		if(session!=null) {
+			model.addAttribute("photoUser", session.getPhoto());
+			model.addAttribute("nameUser", session.getName());
+		}
 		return "persona/index";
 	}
 	
@@ -60,21 +64,12 @@ public class PersonaController {
 		model.put("generos",personaService.findAllGeneros());
 		model.put("estados_civiles",personaService.findAllEstadosCiviles());
 		model.put("propiedadesPerfiles",personaService.findPermisosRegistrarPersonas(0L,true));
-		/*if(p.getTipoPersona().getTipoPersona().equalsIgnoreCase("Estudiante")) {
-			model.put("estudiante",(Estudiante)personaService.findOne(id).get());
-			return "redirect:/usuarios/estudiante/registro/"+p.getId();
-		}else if(p.getTipoPersona().getTipoPersona().equalsIgnoreCase("Docente")) {
-			model.put("docente",(Docente)personaService.findOne(id).get());
-			return "redirect:/usuarios/docente/registro/"+p.getId();
-		}else if(p.getTipoPersona().getTipoPersona().equalsIgnoreCase("Administrativo")) {
-			model.put("administrativo",(Administrativo)personaService.findOne(id).get());
-			return "redirect:/usuarios/administrativo/registro/"+p.getId();
-		}else{
-			model.put("externo",(Externo)personaService.findOne(id).get());
-			return "redirect:/usuarios/externo/registro/"+p.getId();
-		}*/
-		model.put("photoUser", SpringSecurityConfig.getInfoSession().getPhoto());
-		model.put("nameUser", SpringSecurityConfig.getInfoSession().getName());
+		
+		SessionWebGoogle session=SpringSecurityConfig.getInfoSession();
+		if(session!=null) {
+			model.put("photoUser", session.getPhoto());
+			model.put("nameUser", session.getName());
+		}
 		
 		return "persona/form";
 	}
@@ -91,8 +86,11 @@ public class PersonaController {
 		UsuarioDto p=personaService.editarUsuario(idAcceso);
 		model.put("persona", p);
 		model.put("otorganPermisos",personaService.isSuperAdmin() || personaService.isDirPrograma() );
-		model.put("photoUser", SpringSecurityConfig.getInfoSession().getPhoto());
-		model.put("nameUser", SpringSecurityConfig.getInfoSession().getName());
+		SessionWebGoogle session=SpringSecurityConfig.getInfoSession();
+		if(session!=null) {
+			model.put("photoUser", session.getPhoto());
+			model.put("nameUser", session.getName());
+		}
 		model.put("propiedadesPerfiles",personaService.findPermisosRegistrarPersonas(p.getId(),true));
 		return "persona/form";
 	}

@@ -15,6 +15,7 @@ import com.ufps.cedcufps.SpringSecurityConfig;
 import com.ufps.cedcufps.modelos.Departamento;
 import com.ufps.cedcufps.modelos.Facultad;
 import com.ufps.cedcufps.modelos.Programa;
+import com.ufps.cedcufps.modelos.SessionWebGoogle;
 import com.ufps.cedcufps.services.IFacultadService;
 import com.ufps.cedcufps.services.IPersonaService;
 import com.ufps.cedcufps.services.IProgramaService;
@@ -48,8 +49,11 @@ public class ProgramaController {
 		
 		model.put("facultades",facultadService.findAll());
 		model.put("docentes",personaService.findAllDocentes());
-		model.put("photoUser", SpringSecurityConfig.getInfoSession().getPhoto());
-		model.put("nameUser", SpringSecurityConfig.getInfoSession().getName());
+		SessionWebGoogle session=SpringSecurityConfig.getInfoSession();
+		if(session!=null) {
+			model.put("photoUser", session.getPhoto());
+			model.put("nameUser", session.getName());
+		}
 		return "programa/index";
 	}
 	

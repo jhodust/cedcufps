@@ -94,8 +94,11 @@ public class EducacionContinuaController {
 	public String listar(HttpServletRequest request,Map<String, Object> model, Authentication auth) {
 		model.put("titulo","EDUCACIÓN CONTINUA");
 		
-		model.put("photoUser", SpringSecurityConfig.getInfoSession().getPhoto());
-		model.put("nameUser", SpringSecurityConfig.getInfoSession().getName());
+		SessionWebGoogle session=SpringSecurityConfig.getInfoSession();
+		if(session!=null) {
+			model.put("photoUser", session.getPhoto());
+			model.put("nameUser", session.getName());
+		}
 		logger.debug("va a listar educaciones continuas");
 		model.put("educacionesContinuas",educacionContinuaService.findPosiblesEduContinuaGestionar());
 		return "educacion_continua/index";

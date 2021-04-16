@@ -100,7 +100,7 @@
         		<div class="row col-md-12">
         	<div class="col-md-5 " style="display: flex;
    align-items: center;" >
-        	<div style="margin: 0 auto;">
+        	<div style="margin: 0 auto; max-height: 300px; overflow: hidden;">
         		<a sth:href="@{'/'+${requisitosInscripcion.educacionContinua.imagen}}" data-fancybox data-caption="My caption">
 								 <img th:src="@{'/'+${requisitosInscripcion.educacionContinua.imagen}}" class="img-fluid rounded">
 							  </a>
@@ -108,7 +108,7 @@
         	</div>
         	<br>
         	
-        	<div class="col-md-7"  >
+        	<div class="col-md-6"  >
         	<div th:fragment="infoEducacionContinua" id="div_info_educacionContinua">
         		<div class="mt-3 col-md-12 table-responsive" >
         			<table class="table align-items-center col-md-12">
@@ -160,7 +160,7 @@
 		    				<tr>
 		    					<td class="h6 text-sm"><strong>Abierto a</strong></td>
 		    					<td class="text-sm">
-		    						<span class="badge badge-dark mr-1" th:each="tb:${requisitosInscripcion.educacionContinua.tipoBeneficiarios}" th:text="${tb.homologacion}"></span>
+		    						<span class="badge badge-soft-dark mr-1" th:each="tb:${requisitosInscripcion.educacionContinua.tipoBeneficiarios}" th:text="${tb.homologacion}"></span>
 		    					</td>
 		    				</tr>
 		    			</tbody>
@@ -171,13 +171,16 @@
         	</div>
         	</div>
         </div>
+        <br>
+        <br>
         <div class="row">
 		            		<div class="col-md-12">
+		            		<div class="alert alert-dark" role="alert" >
+		    <strong> Información Adicional</strong>
+		</div>
+        
 				            	<table>
 				    				<tbody>
-					    				<tr>
-					    					<td class="h6 text-sm"><strong>Detalles</strong></td>
-					    				</tr>
 					    				<tr>
 					    					<td class="text-sm">[(${requisitosInscripcion.educacionContinua.infoAdicional})]</td>
 					    				</tr>

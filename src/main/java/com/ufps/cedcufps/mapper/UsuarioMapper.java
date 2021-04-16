@@ -436,20 +436,7 @@ private JSONArray readJsonDivipola() {
 	
 	@Override
 	public String convertFieldsFullName(Persona p) {
-		String nombreResponsable=null;
-		if(p.getPrimerNombre()!="") {
-			nombreResponsable=p.getPrimerNombre();
-		}
-		if(p.getSegundoNombre() != null && p.getSegundoNombre()!="") {
-			nombreResponsable=nombreResponsable + " " +p.getSegundoNombre();
-		}
-		if(p.getPrimerApellido()!="") {
-			nombreResponsable=nombreResponsable + " " +p.getPrimerApellido();
-		}
-		if(p.getSegundoApellido()!="") {
-			nombreResponsable=nombreResponsable + " " +p.getSegundoApellido();
-		}
-		return nombreResponsable;
+		return this.convertFieldsFullName(p.getPrimerNombre(), p.getSegundoNombre(), p.getPrimerApellido(), p.getSegundoApellido());
 	}
 	
 	public String convertPerfiles(Persona persona) {
@@ -526,5 +513,25 @@ private JSONArray readJsonDivipola() {
 			tiposPersona="5";
 		}
 		return tiposPersona;
+	}
+
+	@Override
+	public String convertFieldsFullName(String primerNombre, String segundoNombre, String primerApellido,
+			String segundoApellido) {
+		// TODO Auto-generated method stub
+		String nombreResponsable=null;
+		if(primerNombre!="") {
+			nombreResponsable=primerNombre;
+		}
+		if(segundoNombre != null && segundoNombre!="") {
+			nombreResponsable=nombreResponsable + " " +segundoNombre;
+		}
+		if(primerApellido!="") {
+			nombreResponsable=nombreResponsable + " " +primerApellido;
+		}
+		if(segundoApellido!="") {
+			nombreResponsable=nombreResponsable + " " +segundoApellido;
+		}
+		return nombreResponsable;
 	}
 }

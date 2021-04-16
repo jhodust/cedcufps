@@ -65,7 +65,6 @@ public class InicioController {
 		PageRender<EducacionContinua> pageRender= new PageRender<EducacionContinua>("/reload", edc);
 		model.addAttribute("educacionesRecientes",educacionContinuaService.educacionContinuaRecientes());
 		model.addAttribute("educacionesContinuas",edc);
-		
 		model.addAttribute("page",pageRender);
 		model.addAttribute("programas",programaService.findAll());
 		model.addAttribute("tipos_educacion_continua",educacionContinuaService.findAllTiposEducacionContinuaExisting());
@@ -96,14 +95,38 @@ public class InicioController {
 		Pageable pageRequest=PageRequest.of(page, 3);
 		Page<EducacionContinua> edc=educacionContinuaService.educacionContinuaFiltroPanel(Long.parseLong(idTipoEdC),
 				Long.parseLong(idPrograma), Long.parseLong(idPublico), pageRequest);
-		baseUri.concat("?idTipoEdC=").concat(idTipoEdC).
-		concat("?idPrograma=").concat(idPrograma).
-		concat("?idPublico=").concat(idPublico);
-		PageRender<EducacionContinua> pageRender= new PageRender<EducacionContinua>(baseUri, edc);
+		
+		
+		PageRender<EducacionContinua> pageRender= new PageRender<EducacionContinua>(this.convertBaseUri(Long.parseLong(idTipoEdC),
+				Long.parseLong(idPrograma), Long.parseLong(idPublico)), edc);
 		model.addAttribute("educacionesContinuas",edc);
 		model.addAttribute("page",pageRender);
 		
 		return "index :: listPanel";
+	}
+	
+	public String convertBaseUri(Long idTipoEdC, Long idPrograma, Long idPublico) {
+		String baseUri="/reload";
+		if(idTipoEdC!=0L){
+			baseUri=baseUri.concat("?idTipoEdC="+idTipoEdC);
+		}
+		
+		if(idPrograma!=0L && idTipoEdC==0L){
+			baseUri=baseUri.concat("?idPrograma="+idPrograma);
+		}else if(idPrograma!=0 && idTipoEdC!=0L){
+			baseUri=baseUri.concat("&idPrograma="+idPrograma);
+		}
+		
+		if(idPublico!=0L && idTipoEdC==0L && idPrograma==0L){
+			baseUri=baseUri.concat("?idPublico="+idPublico);
+		}else if(idPublico!=0L && (idTipoEdC==0L || idPrograma==0L)){
+			baseUri=baseUri.concat("&idPublico="+idPublico);
+		}else if(idPublico!=0L){
+			baseUri=baseUri.concat("&idPublico="+idPublico);
+		}
+		baseUri=baseUri.concat("&baseUri="+baseUri);
+		System.out.println("base uri en el metodo: " + baseUri);
+		return baseUri;
 	}
 	
 	@GetMapping(value = "/registrarse")

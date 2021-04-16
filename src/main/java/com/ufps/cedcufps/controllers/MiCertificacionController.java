@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ufps.cedcufps.SpringSecurityConfig;
+import com.ufps.cedcufps.modelos.SessionWebGoogle;
 import com.ufps.cedcufps.services.IParticipanteService;
 
 @Controller
@@ -21,8 +22,11 @@ public class MiCertificacionController {
 	@GetMapping
 	public String certificacionesParticipante( Map<String, Object> model) {
 		model.put("participaciones",participanteService.findCertificaciones());
-		model.put("photoUser", SpringSecurityConfig.getInfoSession().getPhoto());
-		model.put("nameUser", SpringSecurityConfig.getInfoSession().getName());
+		SessionWebGoogle session=SpringSecurityConfig.getInfoSession();
+		if(session!=null) {
+			model.put("photoUser", session.getPhoto());
+			model.put("nameUser", session.getName());
+		}
 		return "educacion_continua/certificados_asistentes/mis_certificaciones";
 	}
 }

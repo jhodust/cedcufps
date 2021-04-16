@@ -32,9 +32,8 @@ public interface IParticipanteService {
 	
 	public void cancelarInscripcion(Long idEduContinua);
 	
-	public List<Participante> findAllPonentesOfOneEducacionContinua(String educacionContinua);
 	
-	public List<Participante> findAllPonentesOfOneEducacionContinuaById(Long idEducacionContinua);
+	public List<PonenteDto> findAllPonentesOfOneEducacionContinuaById(Long idEducacionContinua);
 	
 	public ParticipanteDto findParticipante(Long id);
 	
@@ -46,7 +45,6 @@ public interface IParticipanteService {
 	
 	public List<ParticipanteDto> findAllParticipacionesActivasByParticipante();
 	
-	public List<ParticipanteDto> findAllParticipantesByEducacionContinua(String idEduContinua);
 	
 	public TipoParticipante findTipoParticipanteById(Long id);
 	

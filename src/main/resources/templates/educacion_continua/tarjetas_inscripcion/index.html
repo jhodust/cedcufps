@@ -20,7 +20,9 @@
         
         <br>
         <div th:if="${#lists.size(participaciones) == 0}">
-        	<center><span class="badge badge-danger">No se encuentra inscrito a cursos o eventos de educación continua próximos</span></center>
+        	<div class="alert alert-danger" role="alert" >
+		    <strong> <i class="fas fa-info-circle"></i> No se encuentra inscrito a cursos o eventos de educación continua próximos</strong>
+		</div>
         </div>
        
         <div class="row" th:unless="${#lists.size(participaciones) == 0}">

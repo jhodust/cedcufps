@@ -48,6 +48,8 @@ public interface IEducacionContinuaMapper {
 			String diplomaParticipacion, boolean aprobado, Date fechaGeneracionDiploma, String token, Long idDiploma,
 			Map<String,Object> estructuraDiploma,Date fechaActualizacionDiploma);
 	
+	public CertificacionDto convertToMisCertificaciones(ParticipanteDto participanteDto);
+	
 	
 	
 }

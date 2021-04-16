@@ -19,6 +19,7 @@ import com.ufps.cedcufps.modelos.EducacionContinua;
 import com.ufps.cedcufps.modelos.Estudiante;
 import com.ufps.cedcufps.modelos.InformeSnies;
 import com.ufps.cedcufps.modelos.Persona;
+import com.ufps.cedcufps.modelos.SessionWebGoogle;
 import com.ufps.cedcufps.services.IEducacionContinuaService;
 import com.ufps.cedcufps.services.IInformeSniesService;
 import com.ufps.cedcufps.services.IPersonaService;
@@ -45,8 +46,11 @@ public class ReportesSniesController {
 	@RequestMapping
 	public String reportesSnies(Map<String, Object> model) {
 		model.put("informesSnies",informeSniesService.findAll());
-		model.put("photoUser", SpringSecurityConfig.getInfoSession().getPhoto());
-		model.put("nameUser", SpringSecurityConfig.getInfoSession().getName());
+		SessionWebGoogle session=SpringSecurityConfig.getInfoSession();
+		if(session!=null) {
+			model.put("photoUser", session.getPhoto());
+			model.put("nameUser", session.getName());
+		}
 		return "reportes-snies/index";
 	}
 	
@@ -58,8 +62,11 @@ public class ReportesSniesController {
 		Persona p= this.personaService.findPersonaLogueada();
 		model.put("programas",programaService.findAllProgramasDashboard(p));
 		model.put("isSuperAdmin", this.personaService.isSuperAdmin(p));
-		model.put("photoUser", SpringSecurityConfig.getInfoSession().getPhoto());
-		model.put("nameUser", SpringSecurityConfig.getInfoSession().getName());
+		SessionWebGoogle session=SpringSecurityConfig.getInfoSession();
+		if(session!=null) {
+			model.put("photoUser", session.getPhoto());
+			model.put("nameUser", session.getName());
+		}
 		return "reportes-snies/dashboard";
 	}
 	

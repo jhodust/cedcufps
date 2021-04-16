@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -66,6 +67,7 @@ import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 
+import com.sun.tools.doclint.Env;
 import com.ufps.cedcufps.auth.handler.LoginSuccessHandler;
 import com.ufps.cedcufps.exception.CustomException;
 import com.ufps.cedcufps.modelos.Persona;
@@ -94,7 +96,12 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private ClientRegistrationRepository clientRegistrationRepository;
 	
+
+	private GoogleProperties googleProperties;
 	
+	public SpringSecurityConfig(GoogleProperties googleProp) {
+		this.googleProperties=googleProp;
+	}
 	
 	public static SessionWebGoogle getInfoSession() {
 		// TODO Auto-generated constructor stub
@@ -205,16 +212,17 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	
 	private ClientRegistration googleClientRegistration() {
-		 return CommonOAuth2Provider.GOOGLE.getBuilder("google")
-		 .clientId("226613155821-ri427lmire8qq5icol9s20srnuvh2vqg.apps.googleusercontent.com")
-		 .clientSecret("bTJqrfgRmLIwmGFvV_BnFTFd")
+		
+		return CommonOAuth2Provider.GOOGLE.getBuilder("google")
+		 .clientId(this.googleProperties.getGoogleClientId())
+		 .clientSecret(this.googleProperties.getGoogleClientSecret())
 		 .build();
 		 }
 
 	
 	private String authorizationRequestBaseUri() {
 		// TODO Auto-generated method stub
-		return OAuth2AuthorizationRequestRedirectFilter.DEFAULT_AUTHORIZATION_REQUEST_BASE_URI+"/226613155821-ri427lmire8qq5icol9s20srnuvh2vqg.apps.googleusercontent.com";
+		return OAuth2AuthorizationRequestRedirectFilter.DEFAULT_AUTHORIZATION_REQUEST_BASE_URI+"/"+this.googleProperties.getGoogleClientId();
 	}
 
 	 
@@ -224,7 +232,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 	 
 	OidcClientInitiatedLogoutSuccessHandler oidcLogoutSuccessHandler() { 
 		OidcClientInitiatedLogoutSuccessHandler successHandler = new OidcClientInitiatedLogoutSuccessHandler(clientRegistrationRepository());
-        successHandler.setPostLogoutRedirectUri(URI.create("http://localhost:8080/"));
+        successHandler.setPostLogoutRedirectUri(URI.create(this.googleProperties.getUrl()));
         return successHandler;
 		
     }
@@ -261,51 +269,6 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 	
 	
-	private GrantedAuthoritiesMapper userAuthoritiesMapper() {
-		int i=0;
-		return (authorities) -> {
-			
-			Set<GrantedAuthority> mappedAuthorities = new HashSet<>();
-
-			authorities.forEach(authority -> {
-				
-				if(authority.getAuthority()=="ROLE_USER") {
-					OAuth2UserAuthority oauth2UserAuthority = (OAuth2UserAuthority)authority;
-					
-					Map<String, Object> userAttributes = oauth2UserAuthority.getAttributes();
-					Persona p=personaService.findByEmail(String.valueOf(userAttributes.get("email")));
-					List<GrantedAuthority> authoritiess= new ArrayList<GrantedAuthority>();
-					/*for(Rol r:p.getRoles()) {
-						mappedAuthorities.add(new SimpleGrantedAuthority(r.getAuthority()));
-					}*/
-					mappedAuthorities.add(new SimpleGrantedAuthority("ROLE_SUPERADMIN"));
-				}
-				
-				
-				if (OidcUserAuthority.class.isInstance(authority)) {
-					OidcUserAuthority oidcUserAuthority = (OidcUserAuthority)authority;
-
-					OidcIdToken idToken = oidcUserAuthority.getIdToken();
-					OidcUserInfo userInfo = oidcUserAuthority.getUserInfo();
-
-					// Map the claims found in idToken and/or userInfo
-					// to one or more GrantedAuthority's and add it to mappedAuthorities
-
-				} else if (OAuth2UserAuthority.class.isInstance(authority)) {
-					/*OAuth2UserAuthority oauth2UserAuthority = (OAuth2UserAuthority)authority;
-					
-					Map<String, Object> userAttributes = oauth2UserAuthority.getAttributes();
-					
-					*/
-					// Map the attributes found in userAttributes
-					// to one or more GrantedAuthority's and add it to mappedAuthorities
-
-				}
-			});
-
-			return mappedAuthorities;
-		};
-	}
 	
 	@Bean
 	public BCryptPasswordEncoder passwordEnconder() {
@@ -324,7 +287,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:8080", "https://cedcufps.tk"));
+        configuration.setAllowedOrigins(Arrays.asList("http://localhost:8080", this.googleProperties.getUrl()));
         configuration.setAllowedMethods(Arrays.asList("GET","POST"));
         configuration.setAllowCredentials(true);
         configuration.setAllowedHeaders(Arrays.asList("Content-Type","Authorization"));

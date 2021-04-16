@@ -222,7 +222,7 @@
 												<span class="badge badge-red-ufps">Información Organizador</span>
 											</div>
 											<div class="row" >
-												<div class="col-md-6" th:if="${peopleLogin.isSuperAdmin() or (not peopleLogin.isDirPrograma() and peopleLogin.isHasPermisosEdC() )}">
+												<div class="col-md-6" th:if="${peopleLogin.isSuperAdmin() or peopleLogin.isDirPrograma() or (peopleLogin.isHasPermisosEdC() and !peopleLogin.isHasPermisosOnlyMyEdC()) }">
 													<div class="form-group">
 														<label class="form-control-label">Programa Académico </label><label class="requerido pl-2">*</label> <select
 															class="form-control" data-toggle="select" id="programaResponsable">
@@ -234,7 +234,7 @@
 														<small class="form-text text-danger"><strong id="errProgRespEdc"></strong></small>
 													</div>
 												</div>
-												<div class="col-md-6" th:if="${not peopleLogin.isSuperAdmin() and peopleLogin.isDirPrograma() }" >
+												<div class="col-md-6" th:if="${not peopleLogin.isSuperAdmin() and not peopleLogin.isDirPrograma() and peopleLogin.isHasPermisosOnlyMyEdC() }" >
 													<div class="form-group">
 														<label class="form-control-label">Programa Académico </label><label class="requerido pl-2">*</label> <label
 															class="form-control" th:text="${educacionContinua.programaResp}" readOnly></label>

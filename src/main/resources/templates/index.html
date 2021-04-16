@@ -111,7 +111,9 @@
 		
 		<div id="div_list_paginador" th:fragment="listPanel">
 		 <div th:if="${educacionesContinuas.getNumberOfElements() == 0}">
-        	<center><span class="badge badge-red-ufps" >No existen educaciones continuas activas</span></center>
+			 <div class="alert alert-danger" role="alert" >
+			    <strong> <i class="fas fa-info-circle"></i> No existen educaciones continuas activas</strong>
+			</div>
         </div>
 		<div class="row" th:unless="${educacionesContinuas.getNumberOfElements() == 0}">
 		<p class="text-dark">Para consultar información adicional y/o inscribirse, por favor dar click sobre la educación continua</p>
@@ -139,8 +141,8 @@
 			       			<td class="p text-dark text-sm" th:text="${#strings.capitalizeWords(#dates.format(ec.fechaLimInscripcion, 'dd MMMM yyyy HH:mm'))}"></td>
 			       		</tr>
 			       		<tr>
-			       			<td class="p text-dark text-sm"><strong>Cupos Disponibles: </strong></td>
-			       			<td><span class="badge badge-danger" th:text="${ec.cantMaxParticipantes}"></span></td>
+			       			<td class="p text-dark text-sm"><strong>Cupos Habilitados: </strong></td>
+			       			<td><span class="badge badge-danger" th:text=" ${ec.cantMaxParticipantes != null ? ec.cantMaxParticipantes : 'LIBRE'}"></span></td>
 			       		</tr>
 			       		<tr>
 			       			<td class="p text-dark text-sm"><strong>Estado: </strong></td>
@@ -163,7 +165,7 @@
 			       	
 			       	
 			       </div>
-			       <div class="col-md-4 pt-3">
+			       <div class="col-md-4 pt-3" style="max-height: 250px; overflow: hidden;">
 			       		
 								 <img th:src="@{${ec.imagen}}" class="img-fluid rounded">
 							 

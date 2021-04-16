@@ -37,4 +37,6 @@ public interface IUsuarioMapper {
 			Administrativo a, Graduado g, Externo ex);
 	
 	public String convertFieldsFullName(Persona p);
+	
+	public String convertFieldsFullName(String primerNombre, String segundoNombre, String primerApellido, String segundoApellido);
 }

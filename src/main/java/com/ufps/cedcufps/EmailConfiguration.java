@@ -2,22 +2,32 @@ package com.ufps.cedcufps;
 
 import java.util.Properties;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.stereotype.Component;
 
+@Component
 @Configuration
 public class EmailConfiguration {
-
+		
+		
 	
+		private EmailProperties emailProperties;
+		
+		public EmailConfiguration(EmailProperties emailProperties) {
+			this.emailProperties=emailProperties;
+		}
+		
 		@Bean
 		public JavaMailSender getJavaMailSender() {
 		    JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
-		    mailSender.setHost("smtp.gmail.com");
-		    mailSender.setPort(587);
-		    mailSender.setUsername("trabajogradojj@gmail.com");
-		    mailSender.setPassword("fnoxsmmclqrymxkx");
+		    mailSender.setHost(emailProperties.getHost());
+		    mailSender.setPort(Integer.parseInt(emailProperties.getPort()));
+		    mailSender.setUsername(emailProperties.getUsername());
+		    mailSender.setPassword(emailProperties.getPassword());
 		    
 		    Properties props = mailSender.getJavaMailProperties();
 		    props.put("mail.transport.protocol", "smtp");

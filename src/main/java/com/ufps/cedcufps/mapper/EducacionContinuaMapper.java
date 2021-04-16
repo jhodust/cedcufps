@@ -1,5 +1,6 @@
 package com.ufps.cedcufps.mapper;
 
+import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -11,7 +12,14 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.ufps.cedcufps.dao.IAsistenciaCustomDao;
+import com.ufps.cedcufps.dao.IAsistenciaDao;
+import com.ufps.cedcufps.dao.IDiplomaCustomDao;
+import com.ufps.cedcufps.dao.IDiplomaDao;
+import com.ufps.cedcufps.dao.IJornadaDao;
+import com.ufps.cedcufps.dao.IParticipanteCustomDao;
 import com.ufps.cedcufps.dto.AnexosDto;
+import com.ufps.cedcufps.dto.AsistenciaDto;
 import com.ufps.cedcufps.dto.CertificacionDto;
 import com.ufps.cedcufps.dto.DiplomaDto;
 import com.ufps.cedcufps.dto.EducacionContinuaAppDto;
@@ -44,6 +52,18 @@ public class EducacionContinuaMapper implements IEducacionContinuaMapper {
 	
 	@Autowired
 	private IUsuarioMapper usuarioMapper;
+	
+	@Autowired
+	private IParticipanteCustomDao participanteCustomDao;
+	
+	@Autowired
+	private IDiplomaDao diplomaDao;
+	
+	@Autowired
+	private IJornadaDao jornadaDao;
+	
+	@Autowired
+	private IAsistenciaCustomDao asistenciaCustomDao;
 	
 	/*@Override
 	public List<EducacionContinuaAppDto> convertEducacionContinuaToApp(List<EducacionContinuaAppDto> edC, Map<Long,List<JornadaAppDto>> jornadasMap) {
@@ -87,40 +107,36 @@ public class EducacionContinuaMapper implements IEducacionContinuaMapper {
 			EducacionContinuaWebDto eduContinuaDto= this.convertEducacionContinuaToEduContinuaWebDto(e);
 			//eduContinuaDto.setIdTipoBeneficiario(e.getTipoBeneficiario().getId());
 			//eduContinuaDto.setTipoBeneficiario(e.getTipoBeneficiario().getTipoBeneficiario());
-			if(e.getDiploma()!=null) {
-				eduContinuaDto.setDiploma(this.convertDiplomaToDiplomaDto(e.getDiploma(),e.getId()));
-			}else {
-				eduContinuaDto.setDiploma(null);
-			}
+			eduContinuaDto.setDiploma(this.convertDiplomaToDiplomaDto(diplomaDao.findDiplomaByIdEduContinua(e.getId()),e.getId()));
+			
 			Map<Long, Integer> asistenciasGeneralesMap=new HashMap<Long, Integer>();
-			for(Jornada j: e.getJornadas()) {
-				asistenciasGeneralesMap.put(j.getId(), e.getParticipantes().size());
+			List<ParticipanteDto> participantes=this.participanteCustomDao.findAllParticipantesEducacionContinua(e.getId());
+			List<Jornada> jornadas=jornadaDao.findByIdEducacionContinua(e.getId());
+			for(Jornada j: jornadas) {
+				asistenciasGeneralesMap.put(j.getId(), participantes.size());
 			}
 			
-			List<ParticipanteDto> participantes = new ArrayList<ParticipanteDto>();
-			List<PonenteDto> ponentes = new ArrayList<PonenteDto>();
-			for(Participante p: e.getParticipantes()) {
-				
-				if(p.getTipoParticipante().getTipoParticipante().equalsIgnoreCase("ponente")) {
-					ponentes.add(this.convertPonenteToPonenteDto((Ponente)p));
-				}
-				ParticipanteDto participanteDto=this.convertParticipanteToParticipanteDto(p);
+			List<PonenteDto> ponentes = participanteCustomDao.findAllPonentesOfOneEducacionContinuaById(e.getId());
+			for(ParticipanteDto p: participantes) {
 				
 				
-				for(Asistencia a:p.getAsistencias()) {
+				List<AsistenciaDto> asistencias=asistenciaCustomDao.findAsistenciasByIdParticipante(p.getId());
+				for(AsistenciaDto a:asistencias) {
 					
 					
-					participanteDto.addAsistencia(a.getJornada().getId(), true);
-					asistenciasGeneralesMap.put(a.getJornada().getId(), asistenciasGeneralesMap.get(a.getJornada().getId()) - 1);
+					p.addAsistencia(a.getIdJornada(), true);
+					asistenciasGeneralesMap.put(a.getIdJornada(), asistenciasGeneralesMap.get(a.getIdJornada()) - 1);
 				}
-				participanteDto.setEnableToCertificate(participanteDto.getJornadasAsistencias().size() >= Math.ceil((double)(e.getJornadas().size()) * (double)(Integer.parseInt(e.getPorcentajeAsistencia())) / (double)(100) ) || participanteDto.getDiplomaParticipacion() != null);
-				participantes.add(participanteDto);
+				p.setEnableToCertificate(p.getJornadasAsistencias().size() >= Math.ceil(
+						(double)(e.getJornadas().size()) * (double)(Integer.parseInt(e.getPorcentajeAsistencia())) / 
+						(double)(100) ) || p.getDiplomaParticipacion() != null);
+				
 			}
 			
 			
 			eduContinuaDto.setParticipantes(participantes);
-			eduContinuaDto.setJornadas(jornadaMapper.convertJornadasToJornadaAppDto(e.getJornadas()));
-			eduContinuaDto.setCantidadInscritos(participantes.size());
+			eduContinuaDto.setJornadas(jornadaMapper.convertJornadasToJornadaAppDto(jornadas));
+			eduContinuaDto.setCantidadInscritos(participantes.size()-ponentes.size());
 			eduContinuaDto.setPonentes(ponentes);
 			eduContinuaDto.setAnexos(this.convertListAnexoToListAnexoDto(e.getAnexos()));
 			eduContinuaDto.setAsistenciasGenerales(this.validateAsistenciasGenerales(asistenciasGeneralesMap));
@@ -209,12 +225,15 @@ public class EducacionContinuaMapper implements IEducacionContinuaMapper {
 	}
 	
 	private DiplomaDto convertDiplomaToDiplomaDto(Diploma d, Long idEduContinua) {
-		DiplomaDto dto= new DiplomaDto();
-		dto.setId(d.getId());
-		dto.setEstructuraDiploma(d.getEstructuraDiploma());
-		dto.setIdEduContinua(idEduContinua);
-		dto.setFechaActualizacionDiploma(d.getUpdatedAt());
-		return dto;
+		if(d!=null) {
+			DiplomaDto dto= new DiplomaDto();
+			dto.setId(d.getId());
+			dto.setEstructuraDiploma(d.getEstructuraDiploma());
+			dto.setIdEduContinua(idEduContinua);
+			dto.setFechaActualizacionDiploma(d.getUpdatedAt());
+			return dto;
+		}
+		return null;
 		
 	}
 	
@@ -415,6 +434,36 @@ public class EducacionContinuaMapper implements IEducacionContinuaMapper {
 	}
 
 
+	public CertificacionDto convertToMisCertificaciones(ParticipanteDto participanteDto) {
+		// TODO Auto-generated method stub
+		
+		
+		
+		DiplomaDto diplomaDto=new DiplomaDto();
+		diplomaDto.setId(participanteDto.getIdDiploma());
+		diplomaDto.setEstructuraDiploma(this.parameters(participanteDto.getEstructuraDiploma()));
+		diplomaDto.setFechaActualizacionDiploma(participanteDto.getFechaActualizacionDiploma());
+		
+		CertificacionDto certDto=new CertificacionDto();
+		certDto.setDiplomaDto(diplomaDto);
+		certDto.setParticipanteDto(participanteDto);
+		if(diplomaDto.getFechaActualizacionDiploma() != null && participanteDto.getFechaGeneracionDiploma() != null) {
+			certDto.setUpdateDiploma(participanteDto.getFechaGeneracionDiploma().before(diplomaDto.getFechaActualizacionDiploma()));
+		}else {
+			certDto.setUpdateDiploma(diplomaDto.getFechaActualizacionDiploma() != null);
+		}
+		
+		return certDto;
+	}
+	
+	 public static Map<String, Object> parameters(Object obj) {
+        Map<String, Object> map = new HashMap<>();
+        for (Field field : obj.getClass().getDeclaredFields()) {
+            field.setAccessible(true);
+            try { map.put(field.getName(), field.get(obj)); } catch (Exception e) { }
+        }
+        return map;
+    }
 	@Override
 	public List<PonenteDto> convertListParticipantesToListPonentesDto(List<Participante> participantes) {
 		// TODO Auto-generated method stub

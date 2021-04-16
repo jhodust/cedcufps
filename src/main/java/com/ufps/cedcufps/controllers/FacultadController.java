@@ -20,6 +20,7 @@ import org.springframework.web.bind.support.SessionStatus;
 import com.ufps.cedcufps.SpringSecurityConfig;
 import com.ufps.cedcufps.modelos.Facultad;
 import com.ufps.cedcufps.modelos.Programa;
+import com.ufps.cedcufps.modelos.SessionWebGoogle;
 import com.ufps.cedcufps.services.IFacultadService;
 import com.ufps.cedcufps.services.IProgramaService;
 import com.ufps.cedcufps.utils.paginator.PageRender;
@@ -40,8 +41,11 @@ public class FacultadController {
 		model.put("facultades",facultades);	
 		model.put("facultadesTotales",facultadService.findAll());	
 		model.put("page",pageRender);
-		model.put("photoUser", SpringSecurityConfig.getInfoSession().getPhoto());
-		model.put("nameUser", SpringSecurityConfig.getInfoSession().getName());
+		SessionWebGoogle session=SpringSecurityConfig.getInfoSession();
+		if(session!=null) {
+			model.put("photoUser", session.getPhoto());
+			model.put("nameUser", session.getName());
+		}
 		return "facultad/index";
 	}
 	

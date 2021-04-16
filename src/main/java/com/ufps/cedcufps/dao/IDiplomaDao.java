@@ -10,5 +10,8 @@ public interface IDiplomaDao extends JpaRepository<Diploma, Long>{
 
 	@Query(value="select d from Diploma d where d.id = ?1")
 	public Diploma findDiplomaById(Long id);
+	
+	@Query(value="select d.* from educacion_continua ec join diplomas d on ec.id_diploma=d.id where ec.id = ?1", nativeQuery=true)
+	public Diploma findDiplomaByIdEduContinua(Long id);
 
 }

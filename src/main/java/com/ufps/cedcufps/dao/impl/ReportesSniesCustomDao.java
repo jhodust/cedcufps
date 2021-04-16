@@ -82,7 +82,7 @@ public class ReportesSniesCustomDao implements IReportesSniesCustomDao{
 			 .append(" join clasificacion_cine cc on cc.id=e.id_clasificacion_cine")
 			 .append(" join programas p on e.id_programa=p.id")
 			 .append(" join tipos_educacion_continua tp on tp.id=e.id_tipo_educacion_continua")
-			 .append(" where (e.fecha_inicio between ?1 and ?2 ) and e.is_deleted=false");
+			 .append(" where (e.fecha_inicio >= ?1 and e.fecha_inicio <= ?2 ) and e.is_deleted=false");
 		
 		if(idPrograma!=null) {
 			query.append(" and e.id_programa = ?3");
@@ -139,7 +139,7 @@ public class ReportesSniesCustomDao implements IReportesSniesCustomDao{
 			 .append(" join tipos_beneficiarios tb on tb.id=ectb.id_tipo_beneficiario")
 			 .append(" left join participantes par on par.id_tipo_persona=tb.id_tipo_persona and ec.id=par.educacion_continua_id")
 			 .append(" group by ec.id, tb.id_tipo_persona ) s1 on s1.idEduContinua=e.id and s1.idTipoPersona=tb.id_tipo_persona")
-			 .append(" where (e.fecha_inicio between ?1 and ?2 ) and e.is_deleted=false");
+			 .append(" where (e.fecha_inicio >= ?1 and e.fecha_inicio <= ?2 ) and e.is_deleted=false");
 		
 		if(idPrograma!=null) {
 			query.append(" and e.id_programa = ?3");
@@ -198,7 +198,7 @@ public class ReportesSniesCustomDao implements IReportesSniesCustomDao{
 			 .append(" join programas pro on pro.id=est.id_programa")
 			 .append(" join tipos_educacion_continua tp on tp.id=e.id_tipo_educacion_continua")
 			 .append(" join tipos_beneficiarios tb on tb.id_tipo_persona=p.id_tipo_persona")
-			 .append(" where (e.fecha_inicio between ?1 and ?2) and p.id_tipo_participante='1' and e.is_deleted=false");
+			 .append(" where (e.fecha_inicio >= ?1 and e.fecha_inicio <= ?2 ) and p.id_tipo_participante='1' and e.is_deleted=false");
 			 
 		if(idPrograma!=null) {
 			query.append(" and e.id_programa = ?3");
@@ -244,7 +244,7 @@ public class ReportesSniesCustomDao implements IReportesSniesCustomDao{
 			 .append(" join participantes p on p.educacion_continua_id=e.id")
 			 .append(" join personas per on p.id_persona=per.id")
 			 .append(" join tipos_documento td on td.id=per.id_tipo_documento")
-			 .append(" where (e.fecha_inicio between ?1 and ?2) and p.id_tipo_participante='2' ");
+			 .append(" where (e.fecha_inicio >= ?1 and e.fecha_inicio <= ?2 ) and p.id_tipo_participante='2' ");
 		if(idPrograma!=null) {
 			query.append(" and e.id_programa = ?3");
 		}
@@ -390,7 +390,7 @@ public class ReportesSniesCustomDao implements IReportesSniesCustomDao{
 			 .append(" (select 'Otro', (select COALESCE(count(e.id),0) ")
 			 .append(" FROM educacion_continua e")
 			 .append(" join tipos_educacion_continua tec on tec.id=e.id_tipo_educacion_continua")
-			 .append(" where (e.fecha_inicio between ?1 and ?2 ) and  not tec.estado_oficial and e.is_deleted=false");
+			 .append(" where (e.fecha_inicio >= ?1 and e.fecha_inicio <= ?2 ) and  not tec.estado_oficial and e.is_deleted=false");
 		if(idPrograma!=null) {
 			query.append(" and e.id_programa = ?3");
 		}
@@ -467,7 +467,7 @@ public class ReportesSniesCustomDao implements IReportesSniesCustomDao{
 			 .append(" join tipos_persona tp on tp.id=par.id_tipo_persona")
 			 .append(" join educacion_continua e on e.id=par.educacion_continua_id")
 			 .append(" join tipos_educacion_continua tec on tec.id=e.id_tipo_educacion_continua")
-			 .append(" where e.fecha_inicio between ?1 and ?2 and tec.estado_oficial and e.is_deleted=false");
+			 .append(" where (e.fecha_inicio >= ?1 and e.fecha_inicio <= ?2 ) and tec.estado_oficial and e.is_deleted=false");
 		if(idPrograma!=null) {
 			query.append(" and e.id_programa = ?3");
 		}
@@ -478,7 +478,7 @@ public class ReportesSniesCustomDao implements IReportesSniesCustomDao{
 			 .append(" join tipos_persona tp on tp.id=par.id_tipo_persona")
 			 .append(" join educacion_continua e on e.id=par.educacion_continua_id")
 			 .append(" join tipos_educacion_continua tec on tec.id=e.id_tipo_educacion_continua")
-			 .append(" where e.fecha_inicio between ?1 and ?2 and  not tec.estado_oficial and e.is_deleted=false");
+			 .append(" where (e.fecha_inicio >= ?1 and e.fecha_inicio <= ?2 ) and  not tec.estado_oficial and e.is_deleted=false");
 		if(idPrograma!=null) {
 			query.append(" and e.id_programa = ?3");
 		}
@@ -565,7 +565,7 @@ public class ReportesSniesCustomDao implements IReportesSniesCustomDao{
 			 .append(" join personas per on per.id=par.id_persona")
 			 .append(" join generos g on g.id=per.id_genero")
 			 .append(" join educacion_continua e on e.id=par.educacion_continua_id")
-			 .append(" where e.fecha_inicio between ?1 and ?2 and e.is_deleted=false ");
+			 .append(" where (e.fecha_inicio >= ?1 and e.fecha_inicio <= ?2 ) and e.is_deleted=false ");
 		if(idPrograma!=null) {
 			query.append(" and e.id_programa = ?3");
 		}

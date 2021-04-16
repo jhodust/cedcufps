@@ -1,0 +1,65 @@
+Cuando no tiene otro numero no debe dejar gestionar otro numero de la misma cuenta
+
+Crear un demonio para desgestionar las cuentas
+
+Cuando se deshabilite una asignacion se deshabilite una segmentacion y no deje registrar segmentos 
+
+Que el nombre de la segmentacion no se monte en los otros campos de la tabla
+
+Que el grafico solo muestre un decimal  
+
+Que registre al menos un pago al seleccionar una promesa de pago en un tipo de pago parcial 
+
+Que no deje registrar si no escribe un valor a pagar 
+
+limitar el nombre de la campaña que no sobre pasa el limite de la base de datos, para que no se totee 
+name -> 50 descripcion-> 100
+
+Quitar el recargar al momento de registrar la campaña 
+
+Cuando el nombre del aliado o de la campaña son muy grandes se monta en las otras columnas en campañas
+
+limitar los campos de servicio y tipo de servicios para que no pasen del limite de caracteres 
+servicios--> name ->50 
+descripcion -> 255
+
+tipo servicios-> name-> 50 
+descripcion->255 
+relacion -> descripcion 255
+
+limitar los campos para crear tipo de producto name->60 descripcion-> 200
+
+limitar los campos para crear foco aliado name-> 40 
+
+limitar los campos para crear metas asesores 
+descripcion-> 255
+
+limitar los campos para crear metas coordinadores  
+descripcion ->255
+
+
+------------------------------------------------------------- Sugerencias por parte de JUA--------------
+
+Buscar los roles en las campañas al momento de asignar usuarios
+colocar la razon de no pago en la descripcion de la gestion 
+Agregar fecha de asignacion y de desasignacion tanto activas como inactivas
+Poner la descripcion en mayuscula
+inhabilitar caracteres especiales en la descripcion que solo sean letras (quizas) letras - numeros y slash y sin tildes
+
+----------------------------------------------------------------
+
+no deja gestionar la cuenta cuando se cliquea en gestionar otro numero y no tiene mas numeros, esta bien, pero deberia
+enviarlo a la ventana de gestiones o a otra cuenta del random y mostrar un mensaje que esa cuenta ya no tenia mas 
+numeros para gestionar, lo que hace ahorita es bloquear al usuario para seguir gestionando 
+
+----------------------------------------------------------------
+
+Que los historiales lo cargue solo cuando cuando desplegue el acordion
+
+
+------------------------------------------------------------------- cosas de ultimo momento--------
+
+No carga las cuentas que no existen en en un archivo donde vienen cuentas ya existentes
+
+fecha- fecha - referencia - 
+

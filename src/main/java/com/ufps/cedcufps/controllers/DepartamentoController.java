@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import com.ufps.cedcufps.SpringSecurityConfig;
 import com.ufps.cedcufps.modelos.Departamento;
 import com.ufps.cedcufps.modelos.Facultad;
+import com.ufps.cedcufps.modelos.SessionWebGoogle;
 import com.ufps.cedcufps.services.IDepartamentoService;
 import com.ufps.cedcufps.services.IFacultadService;
 import com.ufps.cedcufps.utils.paginator.PageRender;
@@ -40,8 +41,11 @@ public class DepartamentoController {
 		model.put("departamentosTotales",departamentoService.findAll());
 		model.put("facultad",new Facultad());//para cuando el filtro es todos
 		model.put("facultades",facultadService.findAll());
-		model.put("photoUser", SpringSecurityConfig.getInfoSession().getPhoto());
-		model.put("nameUser", SpringSecurityConfig.getInfoSession().getName());
+		SessionWebGoogle session=SpringSecurityConfig.getInfoSession();
+		if(session!=null) {
+			model.put("photoUser", session.getPhoto());
+			model.put("nameUser", session.getName());
+		}
 		return "departamento/index";
 	}
 	

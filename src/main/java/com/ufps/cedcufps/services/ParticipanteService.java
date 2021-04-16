@@ -108,7 +108,7 @@ public class ParticipanteService implements IParticipanteService{
 	
 	public ParticipanteDto saveParticipante(Long idEduContinua, Persona p, String tipoParticipante, Long idTipoPersona) {
 		ParticipanteDto dto=new ParticipanteDto();
-		EducacionContinua e= educacionContinuaDao.findEducacionContinuaById(idEduContinua);
+		EducacionContinua e= educacionContinuaCustomDao.findEducacionContinuaById(idEduContinua);
 		if(e == null) {
 			throw new CustomException("No se encontró la educación continua en la base de datos");
 		}else {
@@ -139,6 +139,7 @@ public class ParticipanteService implements IParticipanteService{
 		String nombreArchivo=p.getNumeroDocumento()+".png";
 		texto=Encrypt.encriptar(texto);
 		try {
+			System.out.println("nombre archivo: " + nombreArchivo);
 			dto.setImagenQr(CodigoQR.generateQR(fileStorageService.dirEducacionContinua().resolve(String.valueOf(e.getId())).resolve(fileStorageService.dirQrParticipantes()),nombreArchivo, texto));
 			dto.setCodigoQR(texto);
 		} catch (Exception exc) {
@@ -175,22 +176,21 @@ public class ParticipanteService implements IParticipanteService{
 	@Override
 	public ParticipanteDto findByIdEducacionContinuaAndIdPersona(Long idEducacionContinua, Long idPersona) {
 		// TODO Auto-generated method stub
-		return educacionContinuaMapper.convertParticipanteToParticipanteDto(participanteDao.findParticipanteByIdEducacionContinuaAndIdPersona(idEducacionContinua, idPersona));
+		return participanteCustomDao.findParticipanteByIdEducacionContinuaAndIdPersona(idEducacionContinua, idPersona);
 	}
 
 	@Override
 	@Transactional(rollbackFor = CustomException.class)
 	public void deleteParticipante(Long idParticipante) {
 		// TODO Auto-generated method stub
-		Participante pa= participanteDao.findParticipanteById(idParticipante); 
+		ParticipanteDto pa= participanteCustomDao.findParticipanteById(idParticipante); 
 		if(pa==null) {
 			throw new CustomException("El participante a eliminar no fue encontrado en la base de datos");
 		}
 		
 		this.deleteInfoParticipante(idParticipante, pa.getCodigoQR(), pa.getTarjetaInscripcion());
 		
-		PersonaDto perDto=usuarioMapper.convertPersonaToPersonaDto(pa.getPersona());
-		this.prepararEmailCancelarInscripcion(pa.getEducacionContinua(), perDto);
+		this.prepararEmailCancelarInscripcion(pa);
 		
 	}
 	
@@ -209,26 +209,21 @@ public class ParticipanteService implements IParticipanteService{
 	@Transactional(rollbackFor = CustomException.class)
 	public void cancelarInscripcion(Long idEduContinua) {
 		// TODO Auto-generated method stub
-		Participante pa = participanteDao.findParticipanteByIdEducacionContinuaAndIdPersona(idEduContinua, personaService.findPersonaLogueada().getId());
+		ParticipanteDto pa = participanteCustomDao.findParticipanteByIdEducacionContinuaAndIdPersona(idEduContinua, personaService.findPersonaLogueada().getId());
 		if(pa==null) {
 			throw new CustomException("La inscripción a eliminar no fue encontrada en la base de datos");
 		}
 		
-		this.deleteInfoParticipante(pa.getId(), pa.getImagenCodigoQR(), pa.getTarjetaInscripcion());
-		PersonaDto perDto=usuarioMapper.convertPersonaToPersonaDto(pa.getPersona());
-		this.prepararEmailCancelarInscripcion(pa.getEducacionContinua(), perDto);
+		this.deleteInfoParticipante(pa.getId(), pa.getImagenQr(), pa.getTarjetaInscripcion());
+		this.prepararEmailCancelarInscripcion(pa);
 	}
 
-	@Override
-	public List<Participante> findAllPonentesOfOneEducacionContinua(String educacionContinua) {
-		// TODO Auto-generated method stub
-		return participanteDao.findAllPonentesOfOneEducacionContinua(educacionContinua);
-	}
+	
 	
 	@Override
-	public List<Participante> findAllPonentesOfOneEducacionContinuaById(Long idEducacionContinua) {
+	public List<PonenteDto> findAllPonentesOfOneEducacionContinuaById(Long idEducacionContinua) {
 		// TODO Auto-generated method stub
-		return participanteDao.findAllPonentesOfOneEducacionContinuaById(idEducacionContinua);
+		return participanteCustomDao.findAllPonentesOfOneEducacionContinuaById(idEducacionContinua);
 	}
 
 	@Override
@@ -252,14 +247,8 @@ public class ParticipanteService implements IParticipanteService{
 	@Override
 	public List<ParticipanteDto> findAllParticipacionesActivasByParticipante() {
 		// TODO Auto-generated method stub
-		return educacionContinuaMapper.convertParticipantesToParticipanteDto(participanteDao.findAllParticipacionesActivasByParticipante(personaService.findPersonaLogueada().getNumeroDocumento()));
+		return participanteCustomDao.findAllParticipacionesActivasByParticipante(personaService.findPersonaLogueada().getNumeroDocumento());
 		
-	}
-
-	@Override
-	public List<ParticipanteDto> findAllParticipantesByEducacionContinua(String eduContinua) {
-		// TODO Auto-generated method stub
-		return educacionContinuaMapper.convertParticipantesToParticipanteDto(participanteDao.findAllParticipantesByEducacionContinua(eduContinua));
 	}
 
 	@Override
@@ -273,9 +262,9 @@ public class ParticipanteService implements IParticipanteService{
 	public ParticipanteDto savePonente(Ponente ponente) {
 		// TODO Auto-generated method stub
 		if(ponente.getId() == null || ponente.getId().equals(0L) ) {
-			Participante participanteValidado = participanteDao.validarParticipanteYaInscrito(ponente.getEducacionContinua().getId(), ponente.getPersona().getId());
+			ParticipanteDto participanteValidado = participanteCustomDao.findParticipanteByIdEducacionContinuaAndIdPersona(ponente.getEducacionContinua().getId(), ponente.getPersona().getId());
 			if( participanteValidado != null) {
-				throw new CustomException("La persona ya se encuentra registrada como " + participanteValidado.getTipoParticipante().getTipoParticipante(), HttpStatus.BAD_REQUEST);
+				throw new CustomException("La persona ya se encuentra registrada como " + participanteValidado.getTipoParticipante(), HttpStatus.BAD_REQUEST);
 			}
 		}
 		Persona p=personaCustomDao.findPersonaById(ponente.getPersona().getId());
@@ -298,19 +287,17 @@ public class ParticipanteService implements IParticipanteService{
 	@Override
 	public void saveTarjetaInscripcion(MultipartFile file, Long idParticipante) {
 		// TODO Auto-generated method stub
-		Participante p= participanteDao.findParticipanteById(idParticipante);
-		String tarjetaInscripcion=Archivo.saveImageAboutEducacionContinua(file,"inscripcion_"+p.getPersona().getNumeroDocumento(),fileStorageService.dirEducacionContinua().resolve(String.valueOf(p.getEducacionContinua().getId())).resolve(fileStorageService.dirTarjetasInscripcion()));
+		ParticipanteDto p= participanteCustomDao.findParticipanteById(idParticipante);
+		String tarjetaInscripcion=Archivo.saveImageAboutEducacionContinua(file,"inscripcion_"+p.getNumeroDocumento(),
+				fileStorageService.dirEducacionContinua().resolve(String.valueOf(p.getIdEducacionContinua())).resolve(fileStorageService.dirTarjetasInscripcion()));
 		participanteDao.updateTarjetaInscripcion(tarjetaInscripcion, idParticipante);
 		
-		
-		PersonaDto perDto=usuarioMapper.convertPersonaToPersonaDto(p.getPersona());
-		
-		prepararEmailInscripcion(p.getEducacionContinua(), perDto, tarjetaInscripcion);
+		prepararEmailInscripcion(p, tarjetaInscripcion);
 		
 		
 	}
 
-	public void prepararEmailInscripcion(EducacionContinua e, PersonaDto persona, String tarjetaInscripcion) {
+	public void prepararEmailInscripcion(ParticipanteDto participante, String tarjetaInscripcion) {
 		String strDateFormat = "dd/MM/yyyy"; 
 	     SimpleDateFormat objSDF = new SimpleDateFormat(strDateFormat);
 	     
@@ -319,18 +306,21 @@ public class ParticipanteService implements IParticipanteService{
 	     
 		String contenido=String.format("La inscripción al %s %s se ha realizado exitosamente. "
 				+ "Recuerde que la actividad inicia el %s a las %s A continuación se adjunta su respectiva tarjeta de inscripción.",
-				e.getTipoEduContinua().getTipoEduContinua(),e.getNombre(), objSDF.format(e.getFechaInicio()),objSTF.format(e.getFechaInicio())); 
+				participante.getTipoEduContinua(), participante.getEducacionContinua(),
+				objSDF.format(participante.getFechaInicioEduContinua()),objSTF.format(participante.getFechaInicioEduContinua())); 
 		
-		notificarViaEmail(persona.getEmail(), "Inscripción Realizada " + e.getNombre(), tarjetaInscripcion, contenido, persona.getNombre(),true);
+		notificarViaEmail(participante.getEmail(), "Inscripción Realizada " + participante.getEducacionContinua(),
+				tarjetaInscripcion, contenido,participante.getNombrePersona(),true);
 	}
 	
-	public void prepararEmailCancelarInscripcion(EducacionContinua e, PersonaDto persona) {
+	public void prepararEmailCancelarInscripcion(ParticipanteDto participante) {
 		
 	     
 		String contenido=String.format("La inscripción al %s %s se ha cancelado exitosamente. ",
-				e.getTipoEduContinua().getTipoEduContinua(),e.getNombre()); 
+				participante.getTipoEduContinua(),participante.getEducacionContinua()); 
 		
-		notificarViaEmail(persona.getEmail(), "Inscripción Cancelada " + e.getNombre(), null, contenido, persona.getNombre(),false);
+		notificarViaEmail(participante.getEmail(), "Inscripción Cancelada " + participante.getEducacionContinua(),
+				null, contenido, participante.getNombrePersona(),false);
 	}
 	
 	public void notificarViaEmail(String email, String asunto, String tarjetaInscripcion, String contenido, String nombreParticipante, boolean adjuntarImagen) {
@@ -352,14 +342,14 @@ public class ParticipanteService implements IParticipanteService{
 	@Override
 	public ByteArrayInputStream generarPdfDiplomas(String token) {
 		// TODO Auto-generated method stub
-		Participante p= participanteDao.findByToken(token);
+		ParticipanteDto p= participanteCustomDao.findByToken(token);
 		return ManejoPdf.generarPDFDiplomas(p.getDiplomaParticipacion());
 	}
 
 	@Override
 	public void cancelarCertificacionParticipante(String token) {
 		// TODO Auto-generated method stub
-		Participante p= participanteDao.findByToken(token);
+		ParticipanteDto p= participanteCustomDao.findByToken(token);
 		try {
 			Archivo.deleteImage(p.getDiplomaParticipacion());
 		}catch(Exception e) {
@@ -379,15 +369,11 @@ public class ParticipanteService implements IParticipanteService{
 	public CertificacionDto findCertificacionByToken(String token) {
 		// TODO Auto-generated method stub
 		
-		Participante p = participanteDao.findByToken(token);
-		Persona per=p.getPersona();
-		EducacionContinua e= p.getEducacionContinua();
-		Diploma d= e.getDiploma();
-		return educacionContinuaMapper.convertToMisCertificaciones(p.getId(), per.getId(),
-				usuarioMapper.convertFieldsFullName(per), p.getTipoParticipante().getTipoParticipante(),
-				per.getNumeroDocumento(), per.getTipoDocumento().getTipoDocumento(), e.getTipoEduContinua().getTipoEduContinua(), 
-				e.getId(), e.getNombre(), e.getFechaInicio(), e.getFechaFin(), p.getDiplomaParticipacion(), p.isAprobado(),
-				p.getFechaGeneracionDiploma(),p.getToken(), d.getId(), d.getEstructuraDiploma(), d.getUpdatedAt());
+		ParticipanteDto p= participanteCustomDao.findByToken(token);
+		//Persona per=p.getPersona();
+		//EducacionContinua e= p.getEducacionContinua();
+		//Diploma d= e.getDiploma();
+		return educacionContinuaMapper.convertToMisCertificaciones(p);
 		
 	}
 
@@ -407,7 +393,7 @@ public class ParticipanteService implements IParticipanteService{
 	@Override
 	public List<PonenteDto> findPonentesByEduContinua(Long idEducacionContinua) {
 		// TODO Auto-generated method stub
-		return educacionContinuaMapper.convertListParticipantesToListPonentesDto(participanteDao.findAllPonentesOfOneEducacionContinuaById(idEducacionContinua));
+		return participanteCustomDao.findAllPonentesOfOneEducacionContinuaById(idEducacionContinua);
 	}
 	
 

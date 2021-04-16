@@ -30,6 +30,7 @@ import com.ufps.cedcufps.dao.IDocenteDao;
 import com.ufps.cedcufps.dao.IEducacionContinuaCustomDao;
 import com.ufps.cedcufps.dao.IEducacionContinuaDao;
 import com.ufps.cedcufps.dao.IJornadaDao;
+import com.ufps.cedcufps.dao.IParticipanteCustomDao;
 import com.ufps.cedcufps.dao.IParticipanteDao;
 import com.ufps.cedcufps.dao.IProgramaCustomDao;
 import com.ufps.cedcufps.dao.IProgramaDao;
@@ -74,6 +75,9 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 	
 	@Autowired
 	private IParticipanteDao  participanteDao;
+	
+	@Autowired
+	private IParticipanteCustomDao  participanteCustomDao;
 	
 	@Autowired
 	private IEducacionContinuaDao educacionContinuaDao;
@@ -342,7 +346,7 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 		int codigoError=0;
 		Map<Integer, ParticipanteDto> map= new HashMap<Integer, ParticipanteDto>();
 		ParticipanteDto dto=null;
-		if(participanteDao.validarQr(qr)==null) {
+		if(participanteCustomDao.validarQr(qr)==null) {
 			codigoError=500;//qr inválido
 		}else {
 			Optional<Jornada> j= jornadaDao.findById(idJornada);
@@ -350,10 +354,10 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 				String texto=Encrypt.desencriptar(qr);
 				String [] data=texto.split("_");
 				if(Long.parseLong(data[2])==idEducacionContinua) {
-					Participante p=participanteDao.validarParticipanteYaInscritoApp(idEducacionContinua, data[4]);
+					ParticipanteDto p=participanteCustomDao.validarParticipanteYaInscritoApp(idEducacionContinua, data[4]);
 					if(p!=null) {
 						if(educacionContinuaCustomDao.registrarAsistencia(idJornada, p.getId())==1) {
-							dto=this.educacionContinuaMapper.convertParticipanteToParticipanteDto(p);
+							dto=p;
 							codigoError=200;
 						}else {
 							codigoError=0;
@@ -593,15 +597,16 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 		}
 		dto.setMensajeNoInscripcion(mensaje);
 		ParticipanteDto participante=null;
-		try {
-			participante= participanteService.findByIdEducacionContinuaAndIdPersona(ec.getId(),personaService.findPersonaLogueada().getId());
-			
-		}catch(Exception e) {
-			participante=null;
-		}
+		System.out.println(ec.getId());
+		System.out.println(personaService.findPersonaLogueada().getId());
+		participante= participanteService.findByIdEducacionContinuaAndIdPersona(ec.getId(),personaService.findPersonaLogueada().getId());
+		
+		System.out.println("participante es null: " + participante==null);
+		
 		dto.setParticipante(participante);
 		
 		dto.setEstaInscrito(participante!=null);
+		System.out.println("esta inscrito: " + dto.isEstaInscrito());
 		dto.setEducacionContinua(ec);
 		return dto;
 	}

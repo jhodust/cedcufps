@@ -244,11 +244,20 @@ function ajaxSaveEducacionContinua(){
 	  var porcentajeAsistencia=$('#porcentajeAsistenciaEdc').val();
 	  var idTipoEduContinua=$('#selectTipoContinua').select2('data')[0].id;
 	  var tipoEduContinua=$('#selectTipoContinua').select2('data')[0].text;
-	  var idProgramaResponsable=$('#programaResponsable').val();
-	  var idDocenteResponsable=$('#docenteResponsable').val();
+	  var idProgramaResponsable;
+	  if(document.getElementById('programaResponsable')!=null){
+		  idProgramaResponsable=$('#programaResponsable').val();
+	  }else{
+		  idProgramaResponsable=eduContinua.idProgramaResp;
+	  }
+	  var idDocenteResponsable;
+	  if(document.getElementById('docenteResponsable')!=null){
+		  idDocenteResponsable=$('#docenteResponsable').val();
+	  }else{
+		  idDocenteResponsable=eduContinua.idDocenteResp;
+	  }
 	  var idClasificacionCine=$('#selectClasificacionCINE').val();
 	  var infoAdicional=$('#infoAdicionalEdC').val();
-	  
 	  var valid1 = validateInputTextRequerido('nombreEdc','errNombreEdc');
 	  var valid2=validateLengthTxt('nombreEdc','errNombreEdc',150);
 	  var valid3 = validateInputTextRequerido('fechaInicioEduCont','errFechaInicioEdc');
@@ -265,11 +274,24 @@ function ajaxSaveEducacionContinua(){
 	  var valid14 = validateSelect('selectTipoContinua','errTipoEdc');
 	  var valid15 = validateSelect('selectTipoBeneficiarios','errTipoBenefEdc');
 	  var valid16 = validateSelect('selectClasificacionCINE','errClasificacionEdc');
-	  var valid17 = validateSelect('programaResponsable','errProgRespEdc');
+	  
+	  var valid17;
+	  if(document.getElementById('programaResponsable')!=null){
+		  valid17 = validateSelect('programaResponsable','errProgRespEdc');
+	  }
+	  
+	  var valid18;
+	  if(document.getElementById('docenteResponsable')!=null){
+		  valid18 = validateSelect('docenteResponsable','errDocRespEdc');
+	  }
+	  
+	  
 	  var valid18 = validateSelect('docenteResponsable','errDocRespEdc');
 	  
 	  if( !valid1 || !valid2 || !valid3 || !valid4 || !valid5 || !valid6 || !valid7 || !valid8 || !valid9
-			  || !valid10 || !valid11 || !valid12 || !valid13 || !valid14 || !valid15 || !valid16 || !valid17 || !valid18){
+			  || !valid10 || !valid11 || !valid12 || !valid13 || !valid14 || !valid15 || !valid16 || 
+			  (valid17 != undefined && !valid17) || 
+			  (valid18 != undefined && !valid18)){
 		 
 		  //hideLoader();
 		  toastr
@@ -415,6 +437,10 @@ function loadEduContinuaBase(e){
 	$('#porcentajeAsistenciaEdc').val(e.porcentajeAsistencia);
 	$('#lugarEdc').val(e.lugar);
 	$('#infoAdicionalEdC').summernote('code', e.infoAdicional);
+	if(!e.estadoOficialTipoEducacionContinua){
+		var newOption = new Option(e.tipoEduContinua, e.idTipoEduContinua, false, false);
+		$('#selectTipoContinua').append(newOption);
+	}
 	$('#selectTipoContinua').val(e.idTipoEduContinua).trigger('change');
 	$('#selectClasificacionCINE').val(e.idClasificacion).trigger('change');
 	$('#programaResponsable').val(e.idProgramaResp).trigger('change');

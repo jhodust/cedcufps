@@ -9,8 +9,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ufps.cedcufps.dao.IAsistenciaCustomDao;
 import com.ufps.cedcufps.dao.IAsistenciaDao;
 import com.ufps.cedcufps.dao.IJornadaDao;
+import com.ufps.cedcufps.dto.AsistenciaDto;
 import com.ufps.cedcufps.dto.JornadaAppDto;
 import com.ufps.cedcufps.modelos.Asistencia;
 import com.ufps.cedcufps.modelos.Jornada;
@@ -23,24 +25,13 @@ public class AsistenciaService implements IAsistenciaService {
 	private IAsistenciaDao asistenciaDao;
 	
 	@Autowired
+	private IAsistenciaCustomDao asistenciaCustomDao;
+	
+	@Autowired
 	private IJornadaDao jornadaDao;
 
-	@Override
-	public List<Asistencia> findAll() {
-		// TODO Auto-generated method stub
-		return (List<Asistencia>) asistenciaDao.findAll();
-	}
 	
-	@Override
-	public List<Asistencia> findAsistenciasByJornadas(List<JornadaAppDto> jornadas) {
-		// TODO Auto-generated method stub
-		List<Long> idsJornadas=new ArrayList<>();
-		for(JornadaAppDto j: jornadas) {
-			idsJornadas.add(j.getId());
-		}
-		return asistenciaDao.findAsistenciasByJornadas(idsJornadas);
-	}
-
+	
 	@Override
 	public List<?> countAsistenciasByJornadas(String eduContinua, String fechaInicio) {
 		// TODO Auto-generated method stub
@@ -54,9 +45,9 @@ public class AsistenciaService implements IAsistenciaService {
 	}
 
 	@Override
-	public Asistencia findAsistenciaByJornadaAndParticipante(Long idJornada, Long idParticipante) {
+	public AsistenciaDto findAsistenciaByJornadaAndParticipante(Long idJornada, Long idParticipante) {
 		// TODO Auto-generated method stub
-		return asistenciaDao.findAsistenciasByJornadaAndParticipante(idJornada, idParticipante);
+		return asistenciaCustomDao.findAsistenciasByJornadaAndParticipante(idJornada, idParticipante);
 	}
 
 	@Override

@@ -38,23 +38,35 @@ $('#selectPublicoPanel').on("change", function (e) {
 });
 
 function convertUri(baseUri,idTipoEdC,idPrograma,idPublico){
+	var anyAttrib=false;
 	if(idTipoEdC!=0){
+		anyAttrib=true;
 		baseUri=baseUri.concat('?idTipoEdC=',idTipoEdC);
 	}
 	
 	if(idPrograma!=0 && idTipoEdC==0){
+		anyAttrib=true;
 		baseUri=baseUri.concat('?idPrograma=',idPrograma);
 	}else if(idPrograma!=0 && idTipoEdC!=0){
+		anyAttrib=true;
 		baseUri=baseUri.concat('&idPrograma=',idPrograma);
 	}
 	
 	if(idPublico!=0 && idTipoEdC==0 && idPrograma==0){
+		anyAttrib=true;
 		baseUri=baseUri.concat('?idPublico=',idPublico);
 	}else if(idPublico!=0 && (idTipoEdC==0 || idPrograma==0)){
+		anyAttrib=true;
 		baseUri=baseUri.concat('&idPublico=',idPublico);
 	}else if(idPublico!=0){
+		anyAttrib=true;
 		baseUri=baseUri.concat('&idPublico=',idPublico);
 	}
-	baseUri.concat('&baseUri=',baseUri);
+	if(anyAttrib){
+		baseUri=baseUri.concat('&baseUri=',baseUri);
+	}else{
+		baseUri=baseUri.concat('?baseUri=',baseUri);
+	}
+	
 	return baseUri;
 }

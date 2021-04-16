@@ -559,7 +559,7 @@ public class PersonaCustomDaoImpl implements IPersonaCustomDao {
 				.append(" join tipos_documento tp on p.id_tipo_documento=tp.id")
 				.append(" join estados_civiles ec on p.id_estado_civil=ec.id")
 				.append(" join generos g on p.id_genero=g.id")
-			.append(" where CONCAT(p.primerNombre,' ', p.segundoNombre,' ',p.primerApellido,' ', p.segundoApellido) like ?1");
+			.append(" where CONCAT(p.primer_nombre,' ', p.segundo_nombre,' ',p.primer_apellido,' ', p.segundo_apellido) like ?1");
 		
 		Query q= em.createNativeQuery(query.toString()).setParameter(1, nombre);
 		List<Object[]> result= q.getResultList();

@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
+import com.ufps.cedcufps.GoogleProperties;
 import com.ufps.cedcufps.dto.EducacionContinuaAppDto;
 import com.ufps.cedcufps.dto.JornadaAppDto;
 import com.ufps.cedcufps.dto.ParticipanteDto;
@@ -40,14 +42,23 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 @RequestMapping("/app")
 public class AppRestController {
 
-	private static final String idDebug="877594372056-aegs95db4kk73knee04esc80phfn3lbp.apps.googleusercontent.com";
-	private static final String idPro="362769569855-et1d0fucmaneh2urgfggho49migpbss6.apps.googleusercontent.com";
+	@Value("${spring.security.oauth2.appdebug}") 
+	private static String idDebug;
+	
+	@Value("${spring.security.oauth2.appproduccion}")  
+	private static String idPro;
 									   
 	@Autowired
 	private IEducacionContinuaService educacionContinuaService;
 	
 	@Autowired
 	private IPersonaService personaService;
+	
+	private GoogleProperties googleProperties;
+	
+	public AppRestController(GoogleProperties googleProperties) {
+		this.googleProperties=googleProperties;
+	}
 	
 	@GetMapping(value="/validateLoginOutlook", produces = "application/json")
     public ResponseEntity<?> validarLoginOutlook(@RequestParam(name = "email", required = true) String email) {
@@ -60,7 +71,7 @@ public class AppRestController {
 		
 		GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(new NetHttpTransport(),  new JacksonFactory())
 			    // Specify the CLIENT_ID of the app that accesses the backend:
-			   .setAudience(Collections.singletonList(idPro))
+			   .setAudience(Collections.singletonList(this.googleProperties.getAppProduccion()))
 			    // Or, if multiple clients access the backend:
 			    //.setAudience(Arrays.asList(idDebug, idPro))
 			    .build();

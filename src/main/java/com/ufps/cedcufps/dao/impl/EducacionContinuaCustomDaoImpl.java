@@ -459,7 +459,7 @@ public class EducacionContinuaCustomDaoImpl implements IEducacionContinuaCustomD
 			query.append(" where rppp.id_persona=?1 and rppp.id_rol=(select ro.id from roles ro where ro.authority='ROLE_MANAECCU'))" );
 			query.append(" or e.id_docente=?1" );
 		}
-		query.append(" order by e.created_at desc");
+		query.append(" order by e.id desc");
 		
 		
 		
@@ -702,9 +702,9 @@ public class EducacionContinuaCustomDaoImpl implements IEducacionContinuaCustomD
 	public EducacionContinua findEducacionContinuaByIdAccesoDetalles(String idAcceso) {
 		// TODO Auto-generated method stub
 		StringBuilder query = new StringBuilder();
-		query.append(" select e.id, e.nombre, COALESCE(e.cant_max_participantes,''), e.consecutivo, e.costo_educacion_continua,")
+		query.append(" select e.id, e.nombre, COALESCE(e.cant_max_participantes,''), e.consecutivo, COALESCE(e.costo_educacion_continua,''),")
 			 .append(" COALESCE(e.costo_inscripcion,''), e.duracion, e.estado, e.fecha_inicio, e.fecha_fin, e.fecha_lim_inscripcion,")
-			 .append(" e.id_acceso, e.imagen, e.info_adicional, e.is_deleted, e.lugar, e.porcentaje_asistencia, ")
+			 .append(" e.id_acceso, e.imagen, e.info_adicional, e.is_deleted, e.lugar, COALESCE(e.porcentaje_asistencia,0), ")
 			 .append(" e.id_clasificacion_cine, e.id_diploma, e.id_docente, e.id_programa, e.id_tipo_educacion_continua")
 			 .append(" from educacion_continua e")
 			 .append(" where e.id_acceso = ?1");
@@ -734,7 +734,7 @@ public class EducacionContinuaCustomDaoImpl implements IEducacionContinuaCustomD
 			e.setDeleted(Integer.parseInt(String.valueOf(result.get(0)[14]))==1);
 			e.setLugar(String.valueOf(result.get(0)[15]));
 			e.setPorcentajeAsistencia(String.valueOf(result.get(0)[16]));
-			e.setClasificacionCine(clasificacionCineDao.findClasificacionById(Long.parseLong(String.valueOf(result.get(0)[17]))));
+			e.setClasificacionCine( (result.get(0)[17] != null) ? clasificacionCineDao.findClasificacionById(Long.parseLong(String.valueOf(result.get(0)[17]))) : null);
 			e.setDiploma( (result.get(0)[18] != null) ? diplomaDao.findDiplomaById( Long.parseLong(String.valueOf(result.get(0)[18]))): null);
 			e.setDocenteResponsable(personaCustomDao.findDocenteResponsable(Long.parseLong(String.valueOf(result.get(0)[19]))));
 			e.setProgramaResponsable(programaCustomDao.findProgramaById(Long.parseLong(String.valueOf(result.get(0)[20]))));

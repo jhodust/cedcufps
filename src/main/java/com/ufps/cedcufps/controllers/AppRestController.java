@@ -42,11 +42,7 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 @RequestMapping("/app")
 public class AppRestController {
 
-	@Value("${spring.security.oauth2.appdebug}") 
-	private static String idDebug;
 	
-	@Value("${spring.security.oauth2.appproduccion}")  
-	private static String idPro;
 									   
 	@Autowired
 	private IEducacionContinuaService educacionContinuaService;

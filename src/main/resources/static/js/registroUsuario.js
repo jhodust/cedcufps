@@ -142,7 +142,7 @@ $(document).ready(function ()
 				anyError=true;
 			
 		}
-			if($('#selectPaisNacimiento').val().trim()=="170"){
+			if($('#selectPaisNacimiento').val()=="170"){
 				
 				var valid14=validateSelect('selectDepartamentoNacimiento','errorDeptoNacimiento');
 				var valid15=validateSelect('selectMunicipioNacimiento','errorMpioNacimiento');
@@ -383,3 +383,5 @@ $(document).ready(function ()
 			$('#selectTipoDoc').val();
 		}
 	}
+	
+	

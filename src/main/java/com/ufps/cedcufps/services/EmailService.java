@@ -28,6 +28,9 @@ import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
+import com.ufps.cedcufps.GoogleProperties;
+import com.ufps.cedcufps.HostProperties;
+
 @Service
 public class EmailService implements IEmailService {
 	
@@ -39,6 +42,12 @@ public class EmailService implements IEmailService {
     
     @Autowired
     private TemplateEngine templateEngine;
+    
+    private HostProperties hostProperties;
+    
+    public EmailService(HostProperties hostProperties) {
+		this.hostProperties=hostProperties;
+	}
 
     @Async
     @Override
@@ -130,4 +139,47 @@ public class EmailService implements IEmailService {
 			e.printStackTrace();
 		}
     }
+
+    @Async
+	@Override
+	public void sendEmailActualización(String remitente, String asunto, String contenido, String token, String persona) {
+		// TODO Auto-generated method stub
+		LOGGER.debug("preparando email actualizacion");
+		try {
+		
+		Locale locale= new Locale("es");
+		
+		
+		// Preparando las variables para la plantilla
+	    final Context ctx = new Context(locale);
+	    ctx.setVariable("contenido", contenido);
+	    ctx.setVariable("persona", persona);
+	    
+	    ctx.setVariable("url", this.hostProperties.getHost().concat("/update-email/").concat(token));
+	   
+	  
+	    // generando plantilla con las variables
+	    final String htmlContent = this.templateEngine.process("email/plantillaActualizacionDatos.html", ctx);
+	    
+	    
+	    // Preparando email
+	    final MimeMessage mimeMessage = this.mailSender.createMimeMessage();
+	    final MimeMessageHelper message =
+	        new MimeMessageHelper(mimeMessage, true, "UTF-8"); // true = multipart
+	    message.setSubject(asunto);
+	    message.setTo(remitente);
+	    
+	    message.setText(htmlContent, true); // true = isHtml
+
+	    
+	   
+	   
+	    
+	    // enviando  mail
+	    this.mailSender.send(mimeMessage);
+	    LOGGER.debug("enviando email");
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
 }

@@ -264,7 +264,6 @@ public class PersonaService implements IPersonaService {
 		// TODO Auto-generated method stub
 		try {
 			Persona p=personaCustomDao.findPersonaByEmail(email);
-			System.out.println("en find by email: " + p.getNumeroDocumento());
 			if(p!=null) {
 				p.setPersonaXRoles(personaCustomDao.findRolesPersona(p.getId()));
 			}
@@ -654,6 +653,13 @@ public class PersonaService implements IPersonaService {
 	public UsuarioDto editarUsuario(String idAcceso) {
 		// TODO Auto-generated method stub
 		Persona p= personaCustomDao.findPersonaByIdAcceso(idAcceso);
+		return this.convertPersonaToUsuarioDto(p);
+	}
+	
+	@Override
+	public UsuarioDto editarUsuarioByDocumento(String documento) {
+		// TODO Auto-generated method stub
+		Persona p= personaCustomDao.findPersonaByNumeroDocumento(documento);
 		return this.convertPersonaToUsuarioDto(p);
 	}
 	

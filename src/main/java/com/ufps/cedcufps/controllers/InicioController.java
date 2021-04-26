@@ -125,7 +125,6 @@ public class InicioController {
 			baseUri=baseUri.concat("&idPublico="+idPublico);
 		}
 		baseUri=baseUri.concat("&baseUri="+baseUri);
-		System.out.println("base uri en el metodo: " + baseUri);
 		return baseUri;
 	}
 	
@@ -138,6 +137,7 @@ public class InicioController {
 		model.put("generos",personaService.findAllGeneros());
 		model.put("estados_civiles",personaService.findAllEstadosCiviles());
 		model.put("persona",new UsuarioDto());
+		model.put("recoveryEmail",true);
 		model.put("propiedadesPerfiles",personaService.findPermisosRegistrarPersonas(0L,false));
 		//educacionContinuaService.generarReporteSNIESEducacionContinua(new Date(), 0);
 		return "registrarse";

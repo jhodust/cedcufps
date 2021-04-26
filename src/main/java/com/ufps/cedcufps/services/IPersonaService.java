@@ -116,5 +116,7 @@ public interface IPersonaService {
 	
 	
 	public PermisosRegistroPersonaDto findPermisosRegistrarPersonas(Long idPersonaEdit, boolean registroParaOtro);
+	
+	public UsuarioDto editarUsuarioByDocumento(String documento);
 
 }

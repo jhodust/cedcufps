@@ -3,9 +3,7 @@ var idDepartamento;
 $(document).ready(function ()
 		{
 				
-			/*$.getJSON('http://localhost:8080/programas-academicos/listar', function(json) {
-				console.log(json)
-			});*/
+		
 			
 	$('#modalRegistroDepartamento').on('show.bs.modal', function (event) {
 		$('#departamento').val("");
@@ -25,7 +23,6 @@ $(document).ready(function ()
 			var base="/departamentos-academicos/reload?facultad=";
 			var regex = / /gi;
 			var url=base.concat(facultad.replace(regex,'%20'));
-			console.log(url);
 			paginadorLoadAjax(url);
 		}
 		
@@ -80,7 +77,6 @@ function guardarDepartamento(){
 		},
 		error: function(err) {
 			hideSpinnerModal("btnSaveAreas","btnSpinnerAreas");
-			  console.log(err);
 			if(err.responseJSON.length >0){
 				toastr.error('No se pudo procesar la solicitud...', 'Error!');
 				err.responseJSON.forEach(function(error){

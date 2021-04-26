@@ -4,7 +4,6 @@ $(document).ready(function ()
 
 	$('#selectProgramaStatistics').on("change", function (e) { 
 		e.preventDefault();
-		console.log($(this).val());
 		validateGenerarStatistics();
 		
 	});
@@ -13,23 +12,6 @@ $("#fechaInicioReporteDashboard").flatpickr({
 	dateFormat: "d/m/Y",
 	onChange: function(selectedDates, dateStr, instance) {
 			document.getElementById('errFechaInicioDashboard').innerText='';
-	    	console.log(selectedDates);
-	    	console.log(selectedDates[0].toDateString());
-	    	console.log(dateStr);
-	    	console.log(selectedDates[0].getDate());
-	    	console.log("toString:" + selectedDates[0].toString());
-	    	console.log("dia: " + selectedDates[0].getDay());
-	    	console.log("mes: " + selectedDates[0].getMonth());
-	    	console.log("UTCMONTH " + selectedDates[0].getUTCMonth());
-	    	console.log("fullYear: " + selectedDates[0].getFullYear());
-	    	console.log("años: " + selectedDates[0].getYear());
-	    	console.log("horas: "+ selectedDates[0].getHours());
-	    	console.log("toLocaleString: "+selectedDates[0].toLocaleString());
-	    	console.log("toLocaleDateString: "+selectedDates[0].toLocaleDateString());
-	    	
-	    	
-	    	console.log("minDate: "+selectedDates[0].toDateString());
-           
 	    	$("#fechaFinReporteDashboard").flatpickr({
        		dateFormat: "d/m/Y",
        	    minDate: selectedDates[0].toLocaleDateString(),
@@ -165,8 +147,7 @@ function drawDashboardGeneralPersonas() {
       }).responseText;
     var data2 = google.visualization.arrayToDataTable($.parseJSON(jsonData));
   
-  console.log(jsonData);
-  var donutRangeSlider2 = new google.visualization.ControlWrapper({
+ var donutRangeSlider2 = new google.visualization.ControlWrapper({
       'controlType': 'CategoryFilter',
       'containerId': 'filter_div2',
       'options': {
@@ -217,9 +198,7 @@ function drawChartGeneralGender() {
           dataType: "json",
           async: false
           }).responseText;
-	  console.log("%%%%%%%%%%%%%%");
-	  console.log(jsonData);
-        var data = google.visualization.arrayToDataTable($.parseJSON(jsonData));
+	  var data = google.visualization.arrayToDataTable($.parseJSON(jsonData));
    
 
     var options = {

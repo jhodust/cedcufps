@@ -41,7 +41,7 @@ public class PersonaMapper implements IPersonaMapper{
 		per.setExterno(Integer.parseInt(String.valueOf(object[10]))==1);
 		per.setEmail(String.valueOf(object[11]));
 		TipoDocumento td= new TipoDocumento();
-		td.setId(Long.parseLong(String.valueOf(object[12])));
+		td.setId((object[12] != null) ? Long.parseLong(String.valueOf(object[12])) : 0L );
 		td.setTipoDocumento(String.valueOf(object[13]));
 		td.setDescripcion(String.valueOf(object[27]));
 		per.setTipoDocumento(td);
@@ -55,12 +55,12 @@ public class PersonaMapper implements IPersonaMapper{
 		per.setNumeroDocumento(String.valueOf(object[21]));
 		per.setTelefono(String.valueOf(object[22]));
 		EstadoCivil ec=new EstadoCivil();
-		ec.setId(Long.parseLong(String.valueOf(object[23])));
-		ec.setEstadoCivil(String.valueOf(object[24]));
+		ec.setId((object[23] != null) ? Long.parseLong(String.valueOf(object[23])) : 0L );
+		ec.setEstadoCivil((object[24] != null) ? String.valueOf(object[24]) : null);
 		per.setEstadoCivil(ec);
 		Genero g=new Genero();
-		g.setId(Long.parseLong(String.valueOf(object[25])));
-		g.setGenero(String.valueOf(object[26]));
+		g.setId((object[25] != null) ? Long.parseLong(String.valueOf(object[25])) : 0L );
+		g.setGenero((object[26] != null) ? String.valueOf(object[26]) : null);
 		per.setGenero(g);
 		return per;
 	}

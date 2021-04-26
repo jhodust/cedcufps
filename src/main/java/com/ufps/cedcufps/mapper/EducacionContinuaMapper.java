@@ -128,7 +128,8 @@ public class EducacionContinuaMapper implements IEducacionContinuaMapper {
 					asistenciasGeneralesMap.put(a.getIdJornada(), asistenciasGeneralesMap.get(a.getIdJornada()) - 1);
 				}
 				p.setEnableToCertificate(p.getJornadasAsistencias().size() >= Math.ceil(
-						(double)(e.getJornadas().size()) * (double)(Integer.parseInt(e.getPorcentajeAsistencia())) / 
+						(double)(e.getJornadas().size()) * 
+						(double)(Integer.parseInt((e.getPorcentajeAsistencia() != null) ? e.getPorcentajeAsistencia() : "100")) / 
 						(double)(100) ) || p.getDiplomaParticipacion() != null);
 				
 			}
@@ -360,8 +361,8 @@ public class EducacionContinuaMapper implements IEducacionContinuaMapper {
 		eduContinuaDto.setProgramaResp(e.getProgramaResponsable().getPrograma());
 		eduContinuaDto.setIdFacultad(e.getProgramaResponsable().getFacultad().getId());
 		eduContinuaDto.setFacultad(e.getProgramaResponsable().getFacultad().getFacultad());
-		eduContinuaDto.setIdClasificacion(e.getClasificacionCine().getId());
-		eduContinuaDto.setClasificacion(e.getClasificacionCine().getClasificacionCine());
+		eduContinuaDto.setIdClasificacion((e.getClasificacionCine() != null ) ? e.getClasificacionCine().getId() : null);
+		eduContinuaDto.setClasificacion((e.getClasificacionCine() != null ) ? e.getClasificacionCine().getClasificacionCine() : null);
 		eduContinuaDto.setConsecutivo(e.getConsecutivo());
 		eduContinuaDto.setPorcentajeAsistencia(e.getPorcentajeAsistencia());
 		eduContinuaDto.setCostoEducacionContinua(e.getCostoEducacionContinua());

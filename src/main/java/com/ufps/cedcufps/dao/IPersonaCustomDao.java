@@ -68,4 +68,5 @@ public interface IPersonaCustomDao {
 	
 	public List<PersonaRol> findRolesPersona(Long id);
 	
+	
 }

@@ -435,9 +435,9 @@ public class PersonaCustomDaoImpl implements IPersonaCustomDao {
 			 .append(" p.ids_tipo_persona, p.numero_documento, p.telefono,ec.id as id_estado_civil, ec.estado_civil,  ")
 			 .append(" g.id as id_genero, g.genero, tp.descripcion")
 				.append(" from personas as p")
-				.append(" join tipos_documento tp on p.id_tipo_documento=tp.id")
-				.append(" join estados_civiles ec on p.id_estado_civil=ec.id")
-				.append(" join generos g on p.id_genero=g.id")
+				.append(" left join tipos_documento tp on p.id_tipo_documento=tp.id")
+				.append(" left join estados_civiles ec on p.id_estado_civil=ec.id")
+				.append(" left join generos g on p.id_genero=g.id")
 			.append(" where p.numero_documento = ?1 ");
 		
 		Query q= em.createNativeQuery(query.toString()).setParameter(1, documento);

@@ -458,6 +458,7 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 		if( docenteDao.findOnlyDocente(dto.getIdDocenteResp()) == 0) {
 			return false;
 		}
+		
 		if(programaCustomDao.findProgramaById(dto.getIdProgramaResp()) == null) {
 			return false;
 		}
@@ -597,16 +598,12 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 		}
 		dto.setMensajeNoInscripcion(mensaje);
 		ParticipanteDto participante=null;
-		System.out.println(ec.getId());
-		System.out.println(personaService.findPersonaLogueada().getId());
 		participante= participanteService.findByIdEducacionContinuaAndIdPersona(ec.getId(),personaService.findPersonaLogueada().getId());
 		
-		System.out.println("participante es null: " + participante==null);
 		
 		dto.setParticipante(participante);
 		
 		dto.setEstaInscrito(participante!=null);
-		System.out.println("esta inscrito: " + dto.isEstaInscrito());
 		dto.setEducacionContinua(ec);
 		return dto;
 	}

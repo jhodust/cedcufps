@@ -7,4 +7,6 @@ public interface IEmailService {
 	public void sendEmailInscripcion(String remitente, String asunto,  String file, String contenido, String nombreParticipante, boolean adjuntarImagen);
 
 	public void sendEmailRegistro(String remitente, String asunto,  String contenido, String nombreUsuario);
+	
+	public void sendEmailActualización(String remitente, String asunto, String contenido, String token, String persona);
 }

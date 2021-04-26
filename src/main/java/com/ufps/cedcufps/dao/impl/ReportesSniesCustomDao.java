@@ -77,9 +77,9 @@ public class ReportesSniesCustomDao implements IReportesSniesCustomDao{
 		// TODO Auto-generated method stub
 		
 		StringBuilder query = new StringBuilder();
-		query.append(" SELECT CONCAT(p.codigo,'-',tp.tipo_educacion_continua,e.consecutivo), e.nombre, CONCAT(cc.id, ' ',cc.clasificacion_cine) ") 
+		query.append(" SELECT CONCAT(p.codigo,'-',tp.tipo_educacion_continua,e.consecutivo), e.nombre, COALESCE(CONCAT(cc.id, ' ',cc.clasificacion_cine),'') ") 
 			 .append(" from educacion_continua e ")
-			 .append(" join clasificacion_cine cc on cc.id=e.id_clasificacion_cine")
+			 .append(" left join clasificacion_cine cc on cc.id=e.id_clasificacion_cine")
 			 .append(" join programas p on e.id_programa=p.id")
 			 .append(" join tipos_educacion_continua tp on tp.id=e.id_tipo_educacion_continua")
 			 .append(" where (e.fecha_inicio >= ?1 and e.fecha_inicio <= ?2 ) and e.is_deleted=false");
@@ -125,18 +125,18 @@ public class ReportesSniesCustomDao implements IReportesSniesCustomDao{
 			 .append(" else '2'")
 			 .append(" end as semestre,")
 			 .append(" concat(p.codigo,'-',tp.tipo_educacion_continua,e.consecutivo), e.duracion, tp.id, ")
-			 .append(" e.costo_educacion_continua, UPPER(CONCAT(td.tipo_documento,'-',td.descripcion)), per.numero_documento, UPPER(CONCAT(tb.id,'-',tb.tipo_beneficiario)), s1.conteo")
+			 .append(" COALESCE(e.costo_educacion_continua,''), UPPER(CONCAT(td.tipo_documento,'-',td.descripcion)), per.numero_documento, COALESCE(UPPER(CONCAT(tb.id,'-',tb.tipo_beneficiario)),''), COALESCE(s1.conteo,'')")
 			 .append(" from educacion_continua e ")
 			 .append(" join programas p on e.id_programa=p.id")
 			 .append(" join tipos_educacion_continua tp on tp.id=e.id_tipo_educacion_continua")
 			 .append(" join personas per on e.id_docente=per.id")
 			 .append(" join tipos_documento td on td.id=per.id_tipo_documento")
-			 .append(" join educacion_continua_tipo_beneficiario ectb on ectb.id_educacion_continua=e.id")
-			 .append(" join tipos_beneficiarios tb on tb.id=ectb.id_tipo_beneficiario")
+			 .append(" left join educacion_continua_tipo_beneficiario ectb on ectb.id_educacion_continua=e.id")
+			 .append(" left join tipos_beneficiarios tb on tb.id=ectb.id_tipo_beneficiario")
 			 .append(" left join (")
 			 .append(" select count(par.id) as conteo, ec.id as idEduContinua, tb.id_tipo_persona as idTipoPersona from  educacion_continua ec")
-			 .append(" join educacion_continua_tipo_beneficiario ectb on ectb.id_educacion_continua=ec.id")
-			 .append(" join tipos_beneficiarios tb on tb.id=ectb.id_tipo_beneficiario")
+			 .append(" left join educacion_continua_tipo_beneficiario ectb on ectb.id_educacion_continua=ec.id")
+			 .append(" left join tipos_beneficiarios tb on tb.id=ectb.id_tipo_beneficiario")
 			 .append(" left join participantes par on par.id_tipo_persona=tb.id_tipo_persona and ec.id=par.educacion_continua_id")
 			 .append(" group by ec.id, tb.id_tipo_persona ) s1 on s1.idEduContinua=e.id and s1.idTipoPersona=tb.id_tipo_persona")
 			 .append(" where (e.fecha_inicio >= ?1 and e.fecha_inicio <= ?2 ) and e.is_deleted=false");
@@ -188,17 +188,17 @@ public class ReportesSniesCustomDao implements IReportesSniesCustomDao{
 			 .append(" DATE_FORMAT(e.fecha_inicio, '%d/%m/%Y'),")
 			 .append(" UPPER(CONCAT(td.tipo_documento,'-',td.descripcion)), per.numero_documento,")
 			 .append(" CONCAT(COALESCE(per.primer_nombre,''),' ',COALESCE(per.segundo_nombre,''),' ',COALESCE(per.primer_apellido,''),")
-			 .append("		 ' ',COALESCE(per.segundo_apellido,'')), COALESCE(pro.programa,''), e.costo_educacion_continua,e.duracion")
+			 .append("		 ' ',COALESCE(per.segundo_apellido,'')), COALESCE(pro.programa,''), COALESCE(e.costo_educacion_continua,''),e.duracion")
 			 .append(" from educacion_continua e")
 			 .append(" join participantes p on p.educacion_continua_id=e.id")
 			 .append(" join personas per on p.id_persona=per.id")
 			 .append(" join tipos_documento td on td.id=per.id_tipo_documento")
 			 .append(" join programas proEdu on proEdu.id=e.id_programa")
 			 .append(" left join estudiantes est on per.id=est.id_persona")
-			 .append(" join programas pro on pro.id=est.id_programa")
-			 .append(" join tipos_educacion_continua tp on tp.id=e.id_tipo_educacion_continua")
-			 .append(" join tipos_beneficiarios tb on tb.id_tipo_persona=p.id_tipo_persona")
-			 .append(" where (e.fecha_inicio >= ?1 and e.fecha_inicio <= ?2 ) and p.id_tipo_participante='1' and e.is_deleted=false");
+			 .append(" left join programas pro on pro.id=est.id_programa")
+			 .append(" left join tipos_educacion_continua tp on tp.id=e.id_tipo_educacion_continua")
+			 .append(" left join tipos_beneficiarios tb on tb.id_tipo_persona=p.id_tipo_persona")
+			 .append(" where (e.fecha_inicio >= ?1 and e.fecha_inicio <= ?2 ) and p.id_tipo_participante='1' and e.is_deleted=0");
 			 
 		if(idPrograma!=null) {
 			query.append(" and e.id_programa = ?3");

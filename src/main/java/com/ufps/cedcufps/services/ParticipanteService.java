@@ -139,7 +139,6 @@ public class ParticipanteService implements IParticipanteService{
 		String nombreArchivo=p.getNumeroDocumento()+".png";
 		texto=Encrypt.encriptar(texto);
 		try {
-			System.out.println("nombre archivo: " + nombreArchivo);
 			dto.setImagenQr(CodigoQR.generateQR(fileStorageService.dirEducacionContinua().resolve(String.valueOf(e.getId())).resolve(fileStorageService.dirQrParticipantes()),nombreArchivo, texto));
 			dto.setCodigoQR(texto);
 		} catch (Exception exc) {

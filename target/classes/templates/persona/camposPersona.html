@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+</head>
+<body>
+	<div class="row" th:fragment="camposInformacionPersonal">
+						<div class="col-lg-6">
+
+							<div class="card">
+								<div class="card-body">
+									<!-- General information -->
+									<div class="row">
+										<span class="badge badge-red-ufps">Información Personal</span>
+									</div>
+									<div class="row">
+										<div class="col-md-6">
+											<div class="form-group">
+												<label class="form-control-label">Tipo Documento</label> <select
+													class="form-control" data-toggle="select" th:field="*{tipoDocumento}" th:errorclass="'form-control is-invalid'">
+													<option value="0">Seleccione Tipo Documento...</option>
+														<option th:each="t: ${tipos_documento}" th:value="${t.id}"
+															th:text="${t.tipoDocumento}"></option>
+												</select>
+												<small class="form-text text-danger" th:if="${#fields.hasErrors('tipoDocumento')}"><strong th:errors="*{tipoDocumento}"></strong></small>
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="form-group">
+												<label class="form-control-label">Número Documento</label> <input
+													class="form-control" type="text"
+													placeholder="Ingrese su número de documento..." th:field="*{numeroDocumento}" th:errorclass="'form-control is-invalid'"/>
+												<small class="form-text text-danger" th:if="${#fields.hasErrors('numeroDocumento')}"><strong th:errors="*{numeroDocumento}"></strong></small>
+											</div>
+										</div>
+
+									</div>
+									<div class="row">
+										<div class="col-md-12">
+											<div class="form-group">
+												<label class="form-control-label">Fecha Expedición
+													Documento</label> <input type="text"
+													class="form-control flatpickr-input" data-toggle="date"
+													placeholder="Seleccione fecha..." th:field="*{fechaExpedicionDocumento}" th:errorclass="'form-control is-invalid'"/>
+												<small class="form-text text-danger" th:if="${#fields.hasErrors('fechaExpedicionDocumento')}"><strong th:errors="*{fechaExpedicionDocumento}"></strong></small>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-6">
+											<div class="form-group">
+												<label class="form-control-label">Primer Nombre</label> <input
+													class="form-control" type="text"
+													placeholder="Ingrese su primer nombre..." th:field="*{primerNombre}" th:errorclass="'form-control is-invalid'"/>
+												<small class="form-text text-danger" th:if="${#fields.hasErrors('primerNombre')}"><strong th:errors="*{primerNombre}"></strong></small>
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="form-group">
+												<label class="form-control-label">Segundo Nombre</label> <input
+													class="form-control" type="text"
+													placeholder="Ingrese su segundo nombre..." th:field="*{segundoNombre}" th:errorclass="'form-control is-invalid'"/>
+												<small class="form-text text-danger" th:if="${#fields.hasErrors('segundoNombre')}"><strong th:errors="*{segundoNombre}"></strong></small>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-6">
+											<div class="form-group">
+												<label class="form-control-label">Primer Apellido</label> <input
+													class="form-control" type="text"
+													placeholder="Ingrese su primer apellido..." th:field="*{primerApellido}" th:errorclass="'form-control is-invalid'"/>
+												<small class="form-text text-danger" th:if="${#fields.hasErrors('primerApellido')}"><strong th:errors="*{primerApellido}"></strong></small>
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="form-group">
+												<label class="form-control-label">Segundo Apellido</label> <input
+													class="form-control" type="text"
+													placeholder="Ingrese su segundo apellido..." th:field="*{segundoApellido}" th:errorclass="'form-control is-invalid'"/>
+												<small class="form-text text-danger" th:if="${#fields.hasErrors('segundoApellido')}"><strong th:errors="*{segundoApellido}"></strong></small>
+											</div>
+										</div>
+									</div>
+									</div>
+									</div>
+
+						</div>
+						<div class="col-lg-6">
+
+							<div class="card">
+								<div class="card-body">
+									<!-- General information -->
+									<div class="row">
+										<span class="badge badge-red-ufps">Información Personal</span>
+									</div>
+									<div class="row align-items-center">
+
+										<div class="col-md-12">
+											<div class="form-group">
+												<label class="form-control-label">Género</label>
+												<div class="col">
+													<div
+														class="custom-control custom-radio custom-control-inline" th:each="g: ${generos}">
+														<input type="radio" th:id="${g.genero}"
+															name="genero" class="custom-control-input" th:value="${g.id}" th:field="*{genero}" />
+														<label class="custom-control-label"
+															th:for="${g.genero}" th:text="${g.genero}"></label>
+													</div>
+													<small class="form-text text-danger" th:if="${#fields.hasErrors('genero')}"><strong th:errors="*{genero}"></strong></small>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="row align-items-center">
+
+										<div class="col-md-12">
+										
+											<div class="form-group">
+												<label class="form-control-label">Estado Civil</label>
+												
+												<div class="col">
+													<div
+														class="custom-control custom-radio custom-control-inline" th:each="e: ${estados_civiles}">
+														<input type="radio" th:id="${e.estadoCivil}"
+															name="estadoCivil" class="custom-control-input" th:value="${e.id}" th:field="*{estadoCivil}" />
+														<label class="custom-control-label"
+															th:for="${e.estadoCivil}" th:text="${e.estadoCivil}"></label>
+													</div>
+													<small class="form-text text-danger" th:if="${#fields.hasErrors('estadoCivil')}"><strong th:errors="*{estadoCivil}"></strong></small>
+													
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="row align-items-center">
+
+										<div class="col-md-6">
+											<div class="form-group">
+												<label class="form-control-label">Fecha Nacimiento</label> <input
+													type="text" class="form-control flatpickr-input"
+													data-toggle="date" placeholder="Seleccione su fecha de nacimiento..." th:field="*{fechaNacimiento}" th:errorclass="'form-control is-invalid'"/>
+												<small class="form-text text-danger" th:if="${#fields.hasErrors('fechaNacimiento')}"><strong th:errors="*{fechaNacimiento}"></strong></small>
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="form-group">
+												<label class="form-control-label">Pais Nacimiento</label> <select
+													class="form-control" data-toggle="select" id="selectPaisNacimiento" th:field="*{idPaisNacimiento}" th:errorclass="'form-control is-invalid'">
+													<option value="0">Seleccione pais...</option>
+												</select>
+												<small class="form-text text-danger" th:if="${#fields.hasErrors('idPaisNacimiento')}"><strong th:errors="*{idPaisNacimiento}"></strong></small>
+											</div>
+										</div>
+									</div>
+									<div class="row" id="rowDeptoYMpioColombia">
+										<div class="col-md-6">
+											<div class="form-group">
+												<label class="form-control-label">Departamento
+													Nacimiento</label> <select class="form-control"
+													data-toggle="select" id="selectDepartamentoNacimiento" th:field="*{idDepartamentoNacimiento}" >
+													<option value="0">Seleccione departamento...</option>
+												</select>
+												<small class="form-text text-danger" th:if="${#fields.hasErrors('idDepartamentoNacimiento')}"><strong th:errors="*{idDepartamentoNacimiento}"></strong></small>
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="form-group">
+												<label class="form-control-label">Municipio
+													Nacimiento</label> <select class="form-control"
+													data-toggle="select" id="selectMunicipioNacimiento" th:field="*{idMunicipioNacimiento}">
+													<option value="0">Seleccione municipio...</option>
+												</select>
+												<small class="form-text text-danger" th:if="${#fields.hasErrors('idMunicipioNacimiento')}"><strong th:errors="*{idMunicipioNacimiento}"></strong></small>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<script th:inline="javascript">
+							    var idPaisNac = [[*{idPaisNacimiento}]];
+							    var idDepNac = [[*{idDepartamentoNacimiento}]];
+							    var idMunNac = [[*{idMunicipioNacimiento}]];
+							</script>
+						</div>
+						</div>
+						<div class="row">
+						<div class="col-lg-6">
+							<div class="card" th:fragment="camposInformacionContacto">
+									<div class="card-body">
+										<div class="row">
+											<span class="badge badge-red-ufps">Información de
+												Contacto</span>
+										</div>
+										<div class="row">
+											<div class="col-md-12">
+												<div class="form-group">
+													<label class="form-control-label">Email</label> <input
+														class="form-control" type="email" 
+														placeholder="Ingrese su email..."  th:field="*{email}" th:errorclass="'form-control is-invalid'"/> 
+													<small class="form-text text-danger" th:if="${#fields.hasErrors('email')}"><strong th:errors="*{email}"></strong></small>
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-md-12">
+												<div class="form-group">
+													<label class="form-control-label">Telefono</label> <input
+														class="form-control" type="text"
+														placeholder="Ingrese su telefono de contacto..." th:field="*{telefono}" th:errorclass="'form-control is-invalid'"/>
+													<small class="form-text text-danger" th:if="${#fields.hasErrors('telefono')}"><strong th:errors="*{telefono}"></strong></small>
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-md-12">
+												<div class="form-group">
+													<label class="form-control-label">Dirección</label> <input
+														class="form-control" type="text"
+														placeholder="Ingrese su dirección de residencia..." th:field="*{direccion}" th:errorclass="'form-control is-invalid'"/>
+													<small class="form-text text-danger" th:if="${#fields.hasErrors('direccion')}"><strong th:errors="*{direccion}"></strong></small>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+						</div>
+					</div>
+					
+
+</body>
+</html>

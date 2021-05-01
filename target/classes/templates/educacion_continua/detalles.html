@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="layouts/layout :: head">
+	<meta charset="UTF-8"/>
+</head>
+<body>
+  <!-- Application container -->
+  <div class="container-fluid container-application">
+    <!-- Content -->
+    <div class="main-content position-relative">
+      <!-- Main nav -->
+      <div th:replace="layouts/logosHead :: logosHead"></div>
+      <nav th:replace="layouts/navbar :: navbar"></nav>
+      
+      <!-- Page content -->
+      <div class="page-content col-lg-11 center">
+       <!-- Project cards -->
+       <nav aria-label="breadcrumb">
+		  <ol class="breadcrumb breadcrumb-links">
+		    <li class="breadcrumb-item"><a class="red-ufps-breadcrumb" th:href="@{/}">Inicio</a></li>
+		    <li class="breadcrumb-item"><a class="red-ufps-breadcrumb" th:href="@{/educacion-continua}">Educaciones Continuas</a></li>
+		    <li class="breadcrumb-item active" aria-current="page">Detalles</li>
+		  </ol>
+		</nav>
+        <!-- Page title -->
+       	<div class="contenido ml-3 mr-3 pb-2" >
+        
+        <div class="page-title">
+          <div class="row justify-content-between align-items-center">
+            <div class="col-md-6 d-flex align-items-center justify-content-between justify-content-md-start mb-3 mb-md-0">
+              <!-- Page title + Go Back button -->
+              <div class="d-inline-block">
+                <h5 class="h5 d-inline-block font-weight-400 mb-0 text-dark" ><strong>INFORMACIÓN ADICIONAL</strong></h5>
+	              
+              </div>
+            </div>
+            
+          </div>
+        </div>
+        <br>
+        
+        
+        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist" sec:authorize="hasAnyRole('ROLE_SUPERADMIN','ROLE_MANAECCU')">
+		  <li class="nav-item">
+		    <a class="nav-link active" id="pills-detalles-tab" data-toggle="pill" href="#pills-detalles" role="tab" aria-controls="pills-detalles" aria-selected="true"><i class="fas fa-search-plus"></i> Detalles</a>
+		  </li>
+		  <li class="nav-item">
+		    <a class="nav-link" id="pills-editar-tab" data-toggle="pill" href="#pills-editar" role="tab" aria-controls="pills-editar" aria-selected="false"><i class="fas fa-edit"></i> Editar</a>
+		  </li>
+		  <li class="nav-item">
+		    <a class="nav-link" id="pills-ponentes-tab" data-toggle="pill" href="#pills-ponentes" role="tab" aria-controls="pills-ponentes" aria-selected="false"><i class="fas fa-user-circle"></i> Ponentes</a>
+		  </li>
+		  <li class="nav-item">
+		    <a class="nav-link" id="pills-jornadas-tab" data-toggle="pill" href="#pills-jornadas" role="tab" aria-controls="pills-jornadas" aria-selected="false"><i class="far fa-calendar-alt"></i> Jornadas</a>
+		  </li>
+		  <li class="nav-item">
+		    <a class="nav-link" id="pills-participantes-tab" data-toggle="pill" href="#pills-participantes" role="tab" aria-controls="pills-participantes" aria-selected="false"><i class="fas fa-clipboard-list"></i> Asistentes</a>
+		  </li>
+		  <li class="nav-item">
+		    <a class="nav-link" id="pills-diploma-tab" data-toggle="pill" href="#pills-diploma" role="tab" aria-controls="pills-diploma" aria-selected="false"><i class="fas fa-money-check"></i> Personalizar Certificado</a>
+		  </li>
+		  <li class="nav-item">
+		    <a class="nav-link" id="pills-anexos-tab" data-toggle="pill" href="#pills-anexos" role="tab" aria-controls="pills-anexos" aria-selected="false"><i class="fas fa-file"></i> Anexos</a>
+		  </li>
+		</ul>
+		<div class="tab-content" id="pills-tabContent">
+		  <div class="tab-pane fade show active" id="pills-detalles" role="tabpanel" aria-labelledby="pills-detalles-tab">
+		  	<div class="card">
+		  	<div class="card-body">
+			<div class="row">
+			
+				<div class="col-md-12">
+				<div id="detallesEdC" th:fragment="detallesEdc">
+					<div class="row">
+		            <div class="col-12 col-md-6">
+		            <div class="alert alert-dark" role="alert" >
+					    <strong>Información Básica y Participantes</strong>
+					</div>
+		            <table class="table align-items-center col-md-12">
+	    				<tbody>
+		    				<tr>
+		    					<td class="h6 text-sm"><strong>Tipo</strong></td>
+		    					<td class="text-sm th2" th:text="${ec.educacionContinua.tipoEduContinua}"></td>
+		    				</tr>
+		    				<tr>
+		    					<td class="h6 text-sm"><strong>Nombre</strong></td>
+		    					<td class="text-sm th2"  th:text="${ec.educacionContinua.nombre}"></td>
+		    				</tr>
+		    				<tr>
+		    					<td class="h6 text-sm"><strong>Fecha Inicio</strong></td>
+		    					<td class="text-sm th2" th:text="${#strings.capitalizeWords(#dates.format(ec.educacionContinua.fechaInicio, 'dd MMMM yyyy HH:mm'))}"></td>
+		    				</tr>
+		    				<tr>
+		    					<td class="h6 text-sm"><strong>Fecha Fin</strong></td>
+		    					<td class="text-sm th2" th:text="${#strings.capitalizeWords(#dates.format(ec.educacionContinua.fechaFin, 'dd MMMM yyyy HH:mm'))}"></td>
+		    				</tr>
+		    				<tr>
+		    					<td class="h6 text-sm"><strong>Duración (horas)</strong></td>
+		    					<td class="text-sm th2" th:text="${ec.educacionContinua.duracion}"></td>
+		    				</tr>
+		    				<tr>
+		    					<td class="h6 text-sm"><strong>Costo</strong></td>
+		    					<td class="text-sm th2" th:text="${ec.educacionContinua.costoEducacionContinua != ''} ? ('$ '+${#numbers.formatDecimal(ec.educacionContinua.costoEducacionContinua, 0, 'COMMA', 0, 'POINT')}):'No Aplica'"></td>
+		    				</tr>
+		    				<tr>
+		    					<td class="h6 text-sm"><strong>Lugar</strong></td>
+		    					<td class="text-sm th2" th:text="${ec.educacionContinua.lugar}"></td>
+		    				</tr>
+		    				<tr>
+		    					<td class="h6 text-sm"><strong>Estado</strong></td>
+		    					<td class="text-sm th2" th:text="${ec.educacionContinua.estado}"></td>
+		    				</tr>
+		    				<tr>
+		    					<td class="h6 text-sm"><strong>Fecha Límite Inscripción</strong></td>
+		    					<td class="text-sm th2" th:text="${#strings.capitalizeWords(#dates.format(ec.educacionContinua.fechaLimInscripcion, 'dd MMMM yyyy HH:mm'))}"></td>
+		    				</tr>
+		    				<tr>
+		    					<td class="h6 text-sm"><strong>Costo Inscripción</strong></td>
+		    					<td class="text-sm th2" th:text="${ec.educacionContinua.costoInscripcion != '' and ec.educacionContinua.costoInscripcion != null} ? ('$ '+${#numbers.formatDecimal(ec.educacionContinua.costoInscripcion, 0, 'COMMA', 0, 'POINT')}):'No Aplica'"></td>
+		    				</tr>
+		    				<tr>
+		    					<td class="h6 text-sm"><strong>Cantidad (Máx) Participantes</strong></td>
+		    					<td class="text-sm th2" th:text="${ec.educacionContinua.cantMaxParticipantes != ''} ? ${ec.educacionContinua.cantMaxParticipantes}:'No Aplica'"></td>
+		    				</tr>
+		    				<tr>
+		    					<td class="h6 text-sm"><strong>Participantes Inscritos</strong></td>
+		    					<td class="text-sm th2" th:text="${ec.educacionContinua.cantidadInscritos}"></td>
+		    				</tr>
+		    			</tbody>
+	    			</table>
+		              
+		            </div>
+		            <div class="col-md-6">
+		            	<div style="max-height: 400px; overflow: hidden;">
+		            		<a th:if="${ec.educacionContinua.imagen!=null}" th:href="@{'/'+${ec.educacionContinua.imagen}}" data-fancybox data-caption="My caption">
+								 <img th:src="@{'/'+${ec.educacionContinua.imagen}}" class="img-fluid rounded">
+							  </a>
+		            	</div>
+		            	
+		            	<br>
+		            	<!-- <div class="row">
+		            		<div th:if="${participante == null}">
+						<a href="#" onclick="realizarInscripcion()" 
+									class="btn btn-inscripcion btn-sm" id="btn_inscripcion">INSCRIBETE!
+								</a>
+						
+						</div>
+						
+						 <div th:if="${participante != null and participante.tipoParticipante.tipoParticipante == 'Asistente'}">
+							<a href="#" onclick="cancelarInscripcion()" 
+									class="btn btn-primary btn-sm" id="btn_inscripcion">CANCELAR INSCRIPCIÓN!
+								</a>
+						</div>
+						<div th:if="${participante != null and participante.tipoParticipante.tipoParticipante == 'Ponente'}">
+							<span class="badge badge-dark">Te encuentras inscrito(a) como 'PONENTE'</span>
+						</div>
+		            	</div>
+		            	-->
+		              	
+		            </div>
+		          </div>
+		         
+		         <br>
+		          <div class="row">
+		            
+		            <div class="col-12 col-md-12">
+		            <div class="alert alert-dark" role="alert" >
+					    <strong>Información Adicional</strong>
+					</div>
+		            
+		            	<div class="row">
+		            		<div class="col-md-6">
+				            	<table>
+				    				<tbody>
+					    				<tr>
+					    					<td class="text-sm">[(${ec.educacionContinua.infoAdicional})]</td>
+					    				</tr>
+					    				
+					    			</tbody>
+				    			</table>
+				    		</div>
+		              	</div>
+		              
+						
+		            </div>
+		          </div>
+		          </div>
+		          <br>
+		          <div class="row">
+		          	<div class="col-md-6">
+		          		<div id="div_list_detalles_ponentes" th:fragment="detallesEcPonentes">
+		          		<div class="alert alert-dark" role="alert" >
+					    <strong>Ponentes</strong>
+					</div>
+						 <div th:if="${#lists.size(ponentes) == 0}">
+				        	<center><span class="badge badge-white-red-ufps">No existen ponentes registrados(as)</span></center>
+				        </div>
+				        <div th:unless="${#lists.size(ponentes) == 0}">
+					        <div class="table-responsive">
+							<table class="table align-items-center">
+								<thead>
+									<tr>
+										<td><strong>Nombre</strong></td>
+										<td><strong>Tema</strong></td>
+									</tr>
+								</thead>
+								<tbody>
+									<tr th:each="p: ${ponentes}">
+										<td th:text="${p.participante.nombrePersona}">Nombre</td>
+										<td th:text="${p.tema}">tema</td>
+									</tr>
+								</tbody>
+							</table>
+							</div>
+						</div>
+						</div>
+		          	</div>
+		          	<div class="col-md-6">
+		          		<div id="div_list_detalles_jornadas" th:fragment="detallesEcJornadas">
+		          		<div class="alert alert-dark" role="alert" >
+					    <strong>Jornadas</strong>
+					</div>
+						<div th:if="${#lists.size(jornadas) == 0}">
+				        	<center><span class="badge badge-white-red-ufps">No existen jornadas registradas</span></center>
+				        </div>
+				        <div th:unless="${#lists.size(jornadas) == 0}">
+					        <div class="table-responsive">
+							<table class="table align-items-center">
+								<thead>
+									<tr>
+										<td><strong>Horario</strong></td>
+									</tr>
+								</thead>
+								<tbody>
+									<tr th:each="j: ${jornadas}">
+										<td th:text="${#dates.format(j.horaInicio, 'dd/MMM/yyyy HH:mm')} + ' - ' + ${#dates.format(j.horaFin, 'dd/MMM/yyyy HH:mm')} "></td>
+									</tr>
+								</tbody>
+							</table>
+							</div>
+						</div>
+						</div>
+		          	</div>
+		          </div>
+		          
+		          
+				</div>
+			</div>
+		
+          		  
+		        </div>
+		        </div>
+		  </div>
+		  <div class="tab-pane fade" id="pills-editar" role="tabpanel" aria-labelledby="pills-editar-tab">
+		  <div th:replace="loader :: loader"></div>
+		  	<div th:replace="educacion_continua/form :: form"></div>
+	  	  </div>	
+		  <div class="tab-pane fade" id="pills-ponentes" role="tabpanel" aria-labelledby="pills-ponentes-tab">
+		  	<div class="card">
+		  		<div class="card-header">
+		  		<h6><strong>Agregar Ponente</strong></h6>
+		  		<p class="text-dark">A continuación podrá filtrar entre los usuarios registrados el ponente a registrar</p>
+		  			<div class="row align-items-center">
+						<div class="col-md-4">
+							<div class="form-group">
+								<label class="form-control-label">Tipo de Búsqueda </label><label class="requerido pl-2">*</label> <select
+									class="form-control" data-toggle="select" id="selectTipoBusqueda">
+									<option value="0">Seleccione...</option>
+									<option value="1">Número Documento</option>
+									<option value="2">Nombre</option>
+									<option value="3">Código Estudiante</option>
+									<option value="4">Código Docente</option>
+									<option value="5">Email</option>
+								</select>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<label class="form-control-label">Valor </label><label class="requerido pl-2">*</label> <input
+									class="form-control" type="text" id="valueBusqueda"
+									placeholder="Ingrese el dato a buscar"/>
+							</div>
+						</div>
+						<div class="col-md-2">
+						    <button type="button" class="btn btn-sm btn-primary" onclick="searchPosiblePonente()"><i class="fas fa-search"></i> Consultar</button>
+						</div>
+						<!-- <div class="col-md-4">
+							<div class="form-group" style="position: absolute;  bottom: 0;">
+							
+								<button type="button" onclick="searchPosiblePonente()" 
+												class="btn btn-sm btn-red-ufps" >Consultar</button>
+							</div>						
+						</div> -->
+					</div>
+					<div class="row mt-3">
+						<div class="table-responsive" id="tablaPonentes" style="display:none">
+          <div class="col-lg-12">
+						<table id="table2"  style="width: 100%;" class="row-border table align-items-center myTable2">
+							<thead>
+								<td>Tipo Documento</td>
+								<td>Documento</td>
+								<td>Nombre</td>
+								<td></td>
+							</thead>
+						</table>
+						</div></div>
+						<center style="display:none" id="msgPonentes">
+							<span class="badge badge-white-red-ufps" >No coinciden personas registradas con el criterio de búsqueda</span></center>
+						</center>
+					</div>
+		  		</div>
+		  		<div class="card-body">
+		  			<h5 class="h4 d-inline-block font-weight-400 mb-0 text-dark pb-3" th:if="${#lists.size(ec.educacionContinua.ponentes) > 0}" ><strong>Ponentes Registrados</strong></h5>
+		  			<div th:replace="educacion_continua/ponente/index :: indexPonentes"></div>
+		  			
+		  		</div>
+		  	</div>
+		  </div>
+		  <div class="tab-pane fade" id="pills-jornadas" role="tabpanel" aria-labelledby="pills-jornadas-tab">
+		  	<div class="card">
+		  		<div class="card-header">
+		  			<a href="#" data-toggle="modal" data-target="#modalRegistroJornada" class="btn btn-sm btn-white ml-4">
+		                <span class="btn-inner--icon"><i class="fas fa-plus"></i> Agregar</span>
+		              </a>
+		  		</div>
+		  		<div class="card-body">
+		  		<h5 class="h4 d-inline-block font-weight-400 mb-0 text-dark pb-3" th:if="${#lists.size(ec.educacionContinua.jornadas) > 0}" ><strong>Jornadas Registradas</strong></h5>
+		  			<div th:replace="educacion_continua/jornada/index :: indexJornadas"></div>
+		  			
+		  		</div>
+		  	</div>
+		  
+		  </div>
+		  <div class="tab-pane fade" id="pills-diploma" role="tabpanel" aria-labelledby="pills-diploma-tab">
+		  	<div th:replace="educacion_continua/plantillaDiploma :: plantilla"></div>
+		  	<div th:replace="educacion_continua/plantillaDiploma :: plantillaOculta"></div>
+		  </div>
+		  <div class="tab-pane fade" id="pills-participantes" role="tabpanel" aria-labelledby="pills-participantes-tab">
+		  	<div class="card">
+		  	<div class="card-header">
+			  	<h5 class="h4 d-inline-block font-weight-400 mb-0 text-dark" ><strong>Listado Asistentes</strong></h5>
+		              
+		              <a th:if="${#lists.size(ec.educacionContinua.participantes) > 0}"  target="_blank" th:href="@{/educacion-continua/listado-participantes (educacionContinua=${educacionContinua.nombre},fecha=${educacionContinua.fechaInicio}, id=${educacionContinua.idAcceso})}"  data-toggle="tooltip" data-placement="top" title="Generar PDF" class="btn btn-white btn-icon-only rounded-circle ml-4">
+		                <span class="btn-inner--icon"><i class="far fa-file-pdf"></i></span>
+		              </a>	
+	  	 	</div>
+	  	 	<div class="card-body" >
+	  	 		<div th:replace="educacion_continua/listado_asistentes/listadoParticipantes :: listadoParticipantes"></div>
+	  	 		
+	  	 	</div>
+	  	 	</div>
+	  	  </div>
+	  	  <div class="tab-pane fade" id="pills-anexos" role="tabpanel" aria-labelledby="pills-anexos-tab">
+	  	  <div class="card">
+	  	  	<div class="card-body">
+	  	  		
+	  	  		<div class="card card-body">
+	  	  			<div th:replace="educacion_continua/anexos/listadoAnexos :: listadoAnexos"></div>
+	  	  		</div>
+	  	  		<div class="card card-body">
+	  	  		<h5><strong>Carga de Anexos</strong></h5>
+	  	  		<p class="text-dark">En este espacio podrá cargar los anexos para que sean registrados, tenga en cuenta que el archivo se 
+	  	  		guardará con su nombre original</p>
+	  	  			<form action="/file-upload"
+			      class="dropzone"
+			      id="myDropzone">
+			      <input type="hidden"  th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+			      </form>
+	  	  		</div>
+	  	  	</div>
+	  	  </div>
+		  	
+		</div>
+		
+		
+		
+        
+		</div>
+	  </div>
+    
+    </div>
+    
+    
+    <div th:replace="layouts/footer :: footer"></div>
+    <div th:replace="educacion_continua/tarjetas_inscripcion/canvas_modal :: canvas"></div>
+    <div th:replace="educacion_continua/jornada/formModal :: modalRegistro"></div>
+    <div th:replace="educacion_continua/ponente/formModal :: modalRegistro"></div>
+  </div>
+  <!-- Scripts -->
+  <!-- Core JS - includes jquery, bootstrap, popper, in-view and sticky-kit -->
+  <div th:replace="layouts/layout :: scripts"></div>
+  
+   <script th:src="@{/js/educacionContinua.js}" type="text/javascript"></script>
+  <script th:inline="javascript">
+    var eduContinua=[[${ec.educacionContinua}]];
+    var fechaIEvento = [[${#dates.format(ec.educacionContinua.fechaInicio, 'dd/MM/yyyy HH:mm')}]];
+	var fechaFEvento = [[${#dates.format(ec.educacionContinua.fechaFin, 'dd/MM/yyyy HH:mm')}]];
+    
+    var idsTB= [];
+    eduContinua.tipoBeneficiarios.forEach(element => idsTB.push(element.id));
+    $('#selectTipoBeneficiarios').val(idsTB).trigger('change');
+    </script>
+  <script th:src="@{/js/jornada.js}" type="text/javascript"></script>
+  <script th:inline="javascript">
+    var idEduContinua = eduContinua.id;
+    </script>
+  <script th:src="@{/js/ponente.js}" type="text/javascript"></script>
+  <script th:src="@{/js/inscripcion.js}" type="text/javascript"></script>
+  <script type="text/javascript" th:inline="javascript">
+	  
+  var asistenciaGlobal= [[${asistenciaGlobal}]];
+  
+  var diploma=[[${ec.educacionContinua.diploma}]];
+	
+	
+  </script>
+  
+ <script th:if="${educacionContinua.estado != 'Activo'}" th:src="@{/js/asistencia.js}" type="text/javascript"></script>
+ <script th:src="@{/js/aprobarParticipante.js}" type="text/javascript"></script>
+ <script th:src="@{/js/utilsNumeros.js}"  type="text/javascript"></script>
+ <script th:src="@{/js/customDiploma.js}"  type="text/javascript"></script>
+ <script th:src="@{/js/validacionEducacionContinua.js}" type="text/javascript"></script>
+ <script th:src="@{/js/anexos.js}" type="text/javascript"></script> 
+</body>
+
+</html>

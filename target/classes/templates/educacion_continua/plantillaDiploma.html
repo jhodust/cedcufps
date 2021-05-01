@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="layouts/layout :: head">
+	<meta charset="UTF-8"/>
+</head>
+<body>
+  <!-- Application container -->
+  <div class="container-fluid container-application">
+    <!-- Content -->
+    <div class="main-content position-relative">
+      <!-- Main nav -->
+      <div th:replace="layouts/logosHead :: logosHead"></div>
+      <nav th:replace="layouts/navbar :: navbar"></nav>
+      
+      <!-- Page content -->
+      <div class="page-content col-lg-9 center">
+       <!-- Project cards -->
+       <nav aria-label="breadcrumb">
+		  <ol class="breadcrumb breadcrumb-links">
+		    <li class="breadcrumb-item"><a class="red-ufps-breadcrumb" th:href="@{/}">Inicio</a></li>
+		    <li class="breadcrumb-item"><a class="red-ufps-breadcrumb" th:href="@{/educacion-continua}">Educaciones Continuas</a></li>
+		    <li class="breadcrumb-item" th:if="${educacionContinua.id != null}"><a class="red-ufps-breadcrumb"  th:href="@{/educacion-continua/detalles?educacionContinua={educacionContinua}(educacionContinua=${educacionContinua.nombre})}">Detalles</a></li>
+		    <li class="breadcrumb-item active" aria-current="page">Diploma<li>
+		  </ol>
+		</nav>
+        <!-- Page title -->
+       	<div class="contenido ml-3 mr-3 pb-2" >
+        
+        <div class="page-title">
+          <div class="row justify-content-between align-items-center">
+            <div class="col-md-6 d-flex align-items-center justify-content-between justify-content-md-start mb-3 mb-md-0">
+              <!-- Page title + Go Back button -->
+              <div class="d-inline-block">
+                <h5 class="h4 d-inline-block font-weight-400 mb-0 text-dark" ><strong>Personalizar Diploma</strong></h5>
+	              
+              </div>
+            </div>
+            
+          </div>
+        </div>
+        <hr/>
+        
+        <div class="card col-md-12" th:fragment="plantilla">
+        	
+       		<div class="card-body">
+        		<div class="row">
+        			<!-- <button class="btn btn-sm btn-red-ufps" id="btnActualizar">Actualizar Cambios</button> -->
+			  	
+        		</div>
+			  	
+			  	<div class="card">
+			  		<div class="card-body">
+			  		<p>A continuación podrá personalizar el certificado de asistencia agregando elementos a la preferencia
+			  		de la actividad como: imágenes, textos y líneas. Las siguientes etiquetas se utilizarán para reemplazar 
+			  		datos almacenados en el sistema para cada uno de los participantes.</p>
+			  		 <div class="col-md-12 table-responsive">
+			        	
+			        		<table class="table align-items-center">
+				        		<thead>
+				        			<th>Etiqueta</th>
+				        			<th>Definición</th>
+				        		</thead>
+				        			<tbody>
+				        				<tr>
+				        					<td class="td2"><strong>%tipoAsistente%</strong></td>
+				        					<td class="td2">Indicará si la persona fue asistente o ponente de la educación continua</td>
+				        				</tr>
+				        				<tr>
+				        					<td class="td2"><strong>%nombreParticipante%</strong></td>
+				        					<td class="td2">Indicará el nombre de la persona que participó en la educación continua</td>
+				        				</tr>
+				        				<tr>
+				        					<td class="td2"><strong>%documentoParticipante%</strong></td>
+				        					<td class="td2">Indicará el tipo de documento y número de documento 
+				        					de la persona que participó en la educación continua</td>
+				        				</tr>
+				        				
+				        			</tbody>
+				        		</table>
+				        	</div>
+			  			<ul>
+			  				
+			  			</ul>
+			  		</div>
+			  	</div>
+			  	
+			  	<div class="card mt-4">
+			  	<div class="card-body pb-4">
+			  	<h6><strong>Agregar Elementos</strong></h6>
+			  		<div class="row" >
+			  			<div class="col-md-3" > 
+				  			
+							<div class="form-group">
+								<label class="form-control-label">Tipo Elemento</label><label class="requerido pl-2">*</label> <select class="form-control"
+									data-toggle="select" id="selectTipoElemento">
+									<option value="0">Seleccione...</option>
+									<option value="1">Imagen</option>
+									<option value="2">Texto</option>
+									<option value="3">Linea</option>
+								</select> 
+							</div>
+				  		</div>
+				  		<div class="col-md-9" style="position:relative;" id="divNewImagen">
+					  		
+					  		 	<div class="col-md-12">
+									<div class="form-group">
+										<label class="form-control-label">Imagen</label> 
+										<input type="file" class="custom-input-file" id="inputImagen" accept="image/*"/>
+									    <label for="inputImagen">
+									        <i class="fa fa-upload"></i>
+									        <span id="spnFile">Seleccionar un archivo…</span>
+									    </label>
+									    
+									</div>
+									<input type="checkbox" id="cbxImagenFondo"> Fondo Plantilla</input>
+									
+								</div>
+								
+						</div>
+						<div class="col-md-9" style="position:relative;" id="divNewTexto">
+					  			<div class="row">
+						  			<div class="col-md-5">
+										<div class="form-group">
+											<label class="form-control-label">Estilo</label><label class="requerido pl-2">*</label> <select class="form-control"
+												data-toggle="select" id="selectFontFamily">
+												<option value="0">Seleccione...</option>
+											</select> 
+										</div>
+									</div>
+									<div class="col-md-3">
+										<div class="form-group">
+											<label class="form-control-label"><strong>Tamaño</strong></label> 
+											<input class="form-control" type="number" id="inputTamanio" value="20"/>
+										</div>
+										
+									</div>
+									<div class="col-md-2">
+										<div class="form-group">
+											<label class="form-control-label"><strong>Color Texto</strong></label> 
+											<input  type="color" id="inputColor"/>
+										</div>
+										
+									</div>
+									<div class="col-md-2">
+										<div class="form-group">
+											<label class="form-control-label"><strong>Color Borde</strong></label> 
+											<input  type="color" id="inputBorderColor"/>
+										</div>
+										
+									</div>
+								</div>
+								<div class="col-md-12">
+									<div class="form-group">
+										<label class="form-control-label"><strong>Texto</strong></label> 
+										<input class="form-control" type="text" id="inputTexto"/>
+									</div>
+									<div class="row">
+										<div class="col-md-2">
+											<input type="checkbox" id="cbxTxtBold"> Negrita</input>
+										</div>
+										<div class="col-md-2">
+											<input type="checkbox" id="cbxTxtCursive"> Cursiva</input>
+										</div>
+										<div class="col-md-2">
+											<input type="checkbox" id="cbxTxtUnderline"> Subrayado</input>
+										</div>
+										<div class="col-md-2">
+											<input type="checkbox" id="cbxTxtStroke"> Tachado</input>
+										</div>
+									</div>
+									
+									
+									
+									
+								</div>
+								
+						</div>
+						<div class="col-md-9" style="position:relative;" id="divNewLine">
+					  		
+					  		 	<div class="col-md-1">
+										<div class="form-group">
+											<label class="form-control-label"><strong>Color</strong></label> 
+											<input  type="color" id="inputColorLine"/>
+										</div>
+										
+									</div>
+								
+						</div>
+						
+			  		</div>
+			  		
+					<div class="col-md-12 d-flex align-items-center justify-content-between justify-content-md-end mt-2">
+	        			<button  class="btn btn-sm btn-red-ufps" id="btnCargar"><i class="fas fa-undo"></i> Cargar</button>
+	        		</div>
+	        		
+					</div>
+			  	</div> 
+			  	
+			  	
+			  	<div class="row mt-5">
+			  	<button class="btn btn-sm btn-red-ufps" id="btnGuardarEstructuraCertificado"><i class="fas fa-save"></i> Guardar</button>
+			  	<div>
+	         		<button class="btn btn-primary btn-sm btnSpinner" type="button" id="btnSpinnerEstructuraCertificado" disabled>
+						  <div class="spinner-border text-white mr-2 divSpinnerBtn" role="status">
+						  <span class="sr-only">Loading...</span>
+						</div> Procesando
+					</button>
+				</div>
+			  	
+			  	</div>
+			  	<canvas class="col-md-12 mt-3" id="canvasDiploma" width="970" height="750" style="border:1px solid #000000;"></canvas>
+			  	
+			  	
+			  	</div>
+				
+			  </div>
+			  
+			</div>
+        </div>
+		
+		</div>
+	  </div>
+    
+    <div th:fragment="plantillaOculta">
+    <div class="modal fade"  tabindex="-1" role="dialog"  aria-hidden="true" >
+	    <div class="modal-dialog modal-dialog-centered" role="document">
+	       <div class="modal-content">
+	               
+	                <div class="modal-body">
+	                	
+	                    <canvas class="col-md-6" id="canvas2" width="970" height="750"></canvas>
+	                </div>
+	            </div>
+	    </div>
+	</div>
+	</div>
+	
+    <div th:replace="layouts/footer :: footer"></div>
+    
+  <!-- Scripts -->
+  <!-- Core JS - includes jquery, bootstrap, popper, in-view and sticky-kit -->
+  <div th:replace="layouts/layout :: scripts"></div>
+  
+ 
+  
+</body>
+
+</html>

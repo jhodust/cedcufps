@@ -1,0 +1,12 @@
+com\ufps\cedcufps\testController\EducacionContinuaControllerTest.class
+com\ufps\cedcufps\testController\InscripcionControllerTest.class
+com\ufps\cedcufps\testController\ReporteSniesController.class
+com\ufps\cedcufps\testController\AsistenciaControllerTest.class
+com\ufps\cedcufps\testController\FacultadControllerTest.class
+com\ufps\cedcufps\testController\DepartamentoControllerTest.class
+com\ufps\cedcufps\testController\JornadaControllerTest.class
+com\ufps\cedcufps\testController\AppControllerTest.class
+com\ufps\cedcufps\testController\PersonaControllerTest.class
+com\ufps\cedcufps\testController\PonenteControllerTest.class
+com\ufps\cedcufps\testController\ProgramaControllerTest.class
+com\ufps\cedcufps\CedcufpsApplicationTests.class

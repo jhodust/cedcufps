@@ -1,0 +1,387 @@
+$(document).ready(function ()
+			{
+			var url=null;
+			var id=0;
+			if(caso==0){
+				id=0;
+				url="/";
+			}else if(caso==1){
+				if(persona.id==null){
+					id=0;
+				}else{
+					id=persona.id;
+				}
+				
+				url="/usuarios";
+			}else{
+				id=persona.id;
+				url="/perfil";
+			}
+		/*ocultar('formEstudiante');
+		ocultar('formDocente');
+		ocultar('formAdministrativo');
+		ocultar('formGraduado');
+		ocultar('formExterno');
+		*/
+			$('#selectTipoDoc').on("change", function (e) { 
+				e.preventDefault();
+				validateSelect('selectTipoDoc','errorTipoDoc');
+				
+			});
+			
+			$('#selectPaisNacimiento').on("change", function (e) { 
+				e.preventDefault();
+				validateSelect('selectPaisNacimiento','errorPaisNacimiento');
+				
+			});
+			$('#selectDepartamentoNacimiento').on("change", function (e) { 
+				e.preventDefault();
+				validateSelect('selectDepartamentoNacimiento','errorDeptoNacimiento');
+				
+			});
+			$('#selectMunicipioNacimiento').on("change", function (e) { 
+				e.preventDefault();
+				validateSelect('selectMunicipioNacimiento','errorMpioNacimiento');
+				
+			});
+			$('#programaAsociado').on("change", function (e) { 
+				e.preventDefault();
+				validateSelect('programaAsociado','errorProgramaEstudiante');
+				
+			});
+			$('#selectDeptoAdscrito').on("change", function (e) { 
+				e.preventDefault();
+				validateSelect('selectDeptoAdscrito','errorDeptoDocente');
+				
+			});
+			$('#selectProgramaGraduado').on("change", function (e) { 
+				e.preventDefault();
+				validateSelect('selectProgramaGraduado','errorProgramaGraduado');
+				
+			});
+			$('input[name="genero"]').click(function() {
+				cleanMsj('errorGenero');
+			});
+			$('input[name="estadoCivil"]').click(function() {
+				cleanMsj('errorEstadoCivil');
+			});
+			
+			$("#cbEst").click(function() {
+				validateCheckboxPerfiles('cbEst','cbDoc','cbAdminvo','cbGraduado','cbExt','errorPerfiles');
+			});
+			$("#cbDoc").click(function() {
+				validateCheckboxPerfiles('cbEst','cbDoc','cbAdminvo','cbGraduado','cbExt','errorPerfiles');
+			});
+			$("#cbAdminvo").click(function() {
+				validateCheckboxPerfiles('cbEst','cbDoc','cbAdminvo','cbGraduado','cbExt','errorPerfiles');
+			});
+			$("#cbGraduado").click(function() {
+				validateCheckboxPerfiles('cbEst','cbDoc','cbAdminvo','cbGraduado','cbExt','errorPerfiles');
+			});
+			$("#cbExt").click(function() {
+				validateCheckboxPerfiles('cbEst','cbDoc','cbAdminvo','cbGraduado','cbExt','errorPerfiles');
+			});
+			
+			$('.cancel')
+			.on(
+					'click',
+					function(e) {
+						e.preventDefault();
+			window.setTimeout(function() {
+				window.location.href = url;
+			}, 1000);
+					});
+		$('.save')
+				.on(
+						'click',
+						function(e) {
+							e.preventDefault();
+							
+							//showLoader();
+							ajaxSaveUsuario(id,url);
+			});
+			});
+	function showLoader(){
+		document.getElementById("divLoader").style.display='flex';
+		document.getElementById("formUsuario").style.display='none';
+	}
+	
+	function hideLoader(){
+		document.getElementById("divLoader").style.display='none';
+		document.getElementById("formUsuario").style.display='inline';
+	}
+	function ajaxSaveUsuario(id,url){
+		var anyError=false;
+		
+		
+		var valid1=validateSelect('selectTipoDoc','errorTipoDoc');
+		var valid2=validateInputTextRequerido('numDoc','errorNumeroDocumento');
+		var valid3=validateInputTextRequerido('fechaExp','errorFechaExp');
+		var valid4=validateInputTextRequerido('primNom','errorPrimerNombre');
+		var valid5=validateInputTextRequerido('primApe','errorPrimerApellido');
+		//var valid6=validateInputTextRequerido('segApe','errorSegundoApellido');
+		var valid7=validateInputTextRequerido('fechaNac','errorFechaNacimiento');
+		var valid8=validateCheckboxGenero('errorGenero');
+		var valid9=validateCheckboxEstadoCivil('errorEstadoCivil');
+		var valid10=validateInputTextRequerido('email','errorEmail');
+		var valid0= validateEmail('email','errorEmail');
+		var valid11=validateInputNumberRequerido('telefono','errorTelefono');
+		var valid12=validateCheckboxPerfiles('cbEst','cbDoc','cbAdminvo','cbGraduado','cbExt','errorPerfiles');
+		var valid13=validateSelect('selectPaisNacimiento','errorPaisNacimiento');
+		var valid50=validateLengthTxt('primNom','errorPrimerNombre',20);
+		var valid51=validateLengthTxt('segNom','errorSegundoNombre',20);
+		var valid52=validateLengthTxt('primApe','errorPrimerApellido',20);
+		var valid53=validateLengthTxt('segApe','errorSegundoApellido',20);
+		var valid54=validateLengthTxt('direccion','errorDireccion',100);
+			
+		
+			if(!valid1 || !valid2 || !valid3 || !valid4 || !valid5  || !valid7
+					|| !valid8 || !valid9 || !valid10 || !valid0 || !valid11 || !valid12 || !valid13
+					|| !valid50 || !valid51 || !valid52 || !valid53 || !valid54){
+			
+				anyError=true;
+			
+		}
+			if($('#selectPaisNacimiento').val()=="170"){
+				
+				var valid14=validateSelect('selectDepartamentoNacimiento','errorDeptoNacimiento');
+				var valid15=validateSelect('selectMunicipioNacimiento','errorMpioNacimiento');
+				
+				if(!valid14 || !valid15){
+						anyError=true;
+						
+					}
+				}
+			
+			if(document.getElementById("cbEst").checked){
+				var valid16=validateSelect('programaAsociado','errorProgramaEstudiante');
+				var valid17=validateInputNumberRequerido('codigo','errorCodigoEstudiante');
+				if(!valid16 || !valid17){
+					anyError=true;
+						
+					}
+				
+				}
+				if(document.getElementById("cbDoc").checked){
+					var valid18=validateSelect('selectDeptoAdscrito','errorDeptoDocente');
+					var valid19=validateInputNumberRequerido('codDocente','errorCodigoDocente');
+					if(!valid18 || !valid19){
+						anyError=true;
+						
+					}
+				
+				}
+				if(document.getElementById("cbAdminvo").checked){
+					var valid20=validateInputTextRequerido('dependencia','errorDependenciaAdminvo');
+					var valid21=validateInputTextRequerido('cargo','errorCargoAdminvo');
+					var valid55=validateLengthTxt('dependencia','errorDependenciaAdminvo',50);
+					var valid56=validateLengthTxt('cargo','errorCargoAdminvo',50);
+					if(!valid20 || !valid21 || !valid55 || !valid56){
+						anyError=true;
+						
+					}
+				
+				}
+				if(document.getElementById("cbGraduado").checked){
+					var valid20=validateSelect('selectProgramaGraduado','errorProgramaGraduado');
+					var valid21=validateAnio('anioGraduado','errorAnioGraduado');
+					if(!valid20 || !valid21){
+						anyError=true;
+						
+					}
+				
+				}
+				if(document.getElementById("cbExt").checked){
+					var valid22=validateInputTextRequerido('profesion','errorProfesionExterno');
+					var valid23=validateInputTextRequerido('empresa','errorEmpresa');
+					var valid57=validateLengthTxt('profesion','errorProfesionExterno',50);
+					var valid58=validateLengthTxt('empresa','errorEmpresa',50);
+					if(!valid22 || !valid23 || !valid57 || !valid58){
+						anyError=true;
+						
+					}
+				
+				}
+		
+		
+			if(anyError){
+				hideLoader();
+				toastr
+				.error(
+						'Debes diligenciar el formulario correctamente',
+						'Error!');
+						return;
+			}
+		
+		var userJSON = {};
+		userJSON.id=id;
+		userJSON.idTipoDocumento = $('#selectTipoDoc').val();
+		userJSON.numeroDocumento = $('#numDoc').val();
+		var partsDateED =$('#fechaExp').val().split('/');
+		userJSON.fechaExpedicionDocumento = new Date(partsDateED[2], partsDateED[1] - 1, partsDateED[0]); 
+		userJSON.primerNombre = $('#primNom').val();
+		userJSON.segundoNombre = $('#segNom').val();
+		userJSON.primerApellido = $('#primApe').val();
+		userJSON.segundoApellido = $('#segApe').val();
+		userJSON.idGenero = $('input[name="genero"]:checked')
+				.val();
+		userJSON.idEstadoCivil = $(
+				'input[name="estadoCivil"]:checked').val();
+		var partsDateFN =$('#fechaNac').val().split('/');
+		userJSON.fechaNacimiento = new Date(partsDateFN[2], partsDateFN[1] - 1, partsDateFN[0]); 
+		userJSON.idPaisNacimiento = $(
+				'#selectPaisNacimiento').val();
+		userJSON.idDepartamentoNacimiento = $(
+				'#selectDepartamentoNacimiento').val();
+		userJSON.idMunicipioNacimiento = $(
+				'#selectMunicipioNacimiento').val();
+		userJSON.email = $('#email').val();
+		userJSON.direccion = $('#direccion').val();
+		userJSON.telefono = $('#telefono').val();
+		userJSON.codigoProgramaEstudiante = $('#codigo').val();
+		userJSON.idProgramaEstudiante = $('#programaAsociado').val();
+		userJSON.profesion = $('#profesion').val();
+		userJSON.estudiante=document.getElementById("cbEst").checked;
+		userJSON.docente=document.getElementById("cbDoc").checked;
+		userJSON.administrativo=document.getElementById("cbAdminvo").checked;
+		userJSON.graduado=document.getElementById("cbGraduado").checked;
+		userJSON.externo=document.getElementById("cbExt").checked;
+		userJSON.idProgramaGraduado=$('#selectProgramaGraduado').val();
+		userJSON.anioGraduado=$('#anioGraduado').val();
+		userJSON.idDeptoAdscrito=$('#selectDeptoAdscrito').val();
+		userJSON.codigoDocente=$('#codDocente').val();
+		userJSON.dependencia=$('#dependencia').val();
+		userJSON.cargo=$('#cargo').val();
+		userJSON.empresa=$('#empresa').val();
+		
+		showSpinnerModal("btnGuardarUsuario","btnSpinnerUsuarios");
+		$
+				.ajax({
+					headers : {
+						"X-CSRF-TOKEN" : token
+					},
+					type : "POST",
+					contentType : "application/json; charset=utf-8",
+					data : JSON.stringify(userJSON),//variable idEducacionContinua la recibo de un script al final del index de jornadas
+					url : "/registrarse",
+					cache : false,
+					success : function(result) {
+						if(caso==0){
+						
+							toastr
+									.success(
+											'Se ha creado su usuario, inicie Sesión para acceder',
+											'Excelente!')
+							
+						}else{
+							toastr
+									.success(
+											'Se ha guardado el usuario exitosamente',
+											'Excelente!');
+						
+						}
+						window.setTimeout(function() {
+								window.location.href = url;
+							}, 1000);
+					},
+					error : function(err) {
+						//hideLoader();
+						hideSpinnerModal("btnGuardarUsuario","btnSpinnerUsuarios");
+						toastr
+								.error(
+										err.responseJSON.message,
+										'Error!');
+						
+					}
+				});
+	}
+	function estudiante() {
+		mostrar('divAdicional','block');
+		var cbEst = document.getElementById("cbEst");
+		if (cbEst.checked == true) {
+			mostrar('formEstudiante','block');
+			ocultar('formExterno');
+			$("#cbExt").prop("checked", false);
+		} else {
+			ocultar('formEstudiante');
+		}
+	}
+
+	function docente() {
+		mostrar('divAdicional','block');
+		var cbDoc = document.getElementById("cbDoc");
+		if (cbDoc.checked == true) {
+			mostrar('formDocente','block');
+			ocultar('formExterno');
+			$("#cbExt").prop("checked", false);
+		} else {
+			ocultar('formDocente');
+		}
+	}
+
+	function adminvo() {
+		mostrar('divAdicional','block');
+		var cbAdmin = document.getElementById("cbAdminvo");
+		if (cbAdmin.checked == true) {
+			mostrar('formAdministrativo','block');
+			ocultar('formExterno');
+			$("#cbExt").prop("checked", false);
+		} else {
+			ocultar('formAdministrativo');
+		}
+	}
+
+	function graduado() {
+		mostrar('divAdicional','block');
+		var cbGrad = document.getElementById("cbGraduado");
+		if (cbGrad.checked == true) {
+			mostrar('formGraduado','block');
+			ocultar('formExterno');
+			$("#cbExt").prop("checked", false);
+		} else {
+			ocultar('formGraduado');
+		}
+	}
+
+	function externo() {
+		mostrar('divAdicional','block');
+		var cbEx = document.getElementById("cbExt");
+		if (cbEx.checked == true) {
+			$("#cbEst").prop("checked", false);
+			$("#cbDoc").prop("checked", false);
+			$("#cbAdminvo").prop("checked", false);
+			$("#cbGraduado").prop("checked", false);
+			mostrar('formExterno','block');
+			ocultar('formEstudiante','block');
+			ocultar('formDocente','block');
+			ocultar('formAdministrativo','block');
+			ocultar('formGraduado','block');
+
+		} else {
+			ocultar('divAdicional');
+		}
+	}
+	
+	
+	function loadUsuario(){
+		if(id!=null){
+			$('#selectTipoDoc').val();
+			$('#numDoc').val();
+			$('#fechaExp').val();
+			$('#primNom').val();
+			$('#segNom').val();
+			$('#primApe').val();
+			$('#segApe').val();
+			$('#fechaNac').val();
+			$('#selectPaisNacimiento').val();
+			$('#selectDepartamentoNacimiento').val();
+			$('#selectMunicipioNacimiento').val();
+			$('#email').val();
+			$('#telefono').val();
+			$('#direccion').val();
+			$('#selectTipoDoc').val();
+			$('#selectTipoDoc').val();
+		}
+	}
+	
+	

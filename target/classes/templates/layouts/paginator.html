@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	<nav aria-label="..." th:fragment="paginator">
+		  <ul class="pagination justify-content-center">
+		  	
+		  	<li class="page-item">
+		  	  <a class="page-link-ufps disabled-extreme" th:if="${page.first}"  href="#" tabindex="-1" aria-disabled="true"><i class="fas fa-angle-double-left"></i></a>
+		      <a class="page-link-ufps paginator" th:if="${not page.first}" onclick="paginadorLoad(this)" href="#" th:data-url="@{${page.url}(page=0)}" tabindex="-1" aria-disabled="true"><i class="fas fa-angle-double-left"></i></a>
+		    </li>
+		    
+		    <li class="page-item">
+		  	  <a class="page-link-ufps disabled-extreme " th:if="${not page.hasPrevious}" href="#" tabindex="-1" aria-disabled="true"><i class="fas fa-angle-left"></i></a>
+		      <a class="page-link-ufps paginator" th:if="${page.hasPrevious}" onclick="paginadorLoad(this)" href="#" th:data-url="@{${page.url}(page=${page.paginaActual - 2})}" tabindex="-1" aria-disabled="true"><i class="fas fa-angle-left"></i></a>
+		    </li>
+		    <li class="page-item" th:each="item : ${page.paginas}">
+		  	  <a class="page-link-ufps disabled paginator" th:if="${item.actual}" onclick="paginadorLoad(this)" href="#" th:data-url="@{${page.url}(page=${item.numero - 1})}" tabindex="-1" aria-disabled="true" th:text="${item.numero}"></a>
+		      <a class="page-link-ufps paginator" th:if="${not item.actual}" onclick="paginadorLoad(this)" href="#" th:data-url="@{${page.url}(page=${item.numero - 1})}" tabindex="-1" aria-disabled="true" th:text="${item.numero}"></a>
+		    </li>
+		    <li class="page-item active">
+		  	  <a class="page-link-ufps disabled-extreme" th:if="${not page.hasNext}" href="#" tabindex="-1" aria-disabled="true"><i class="fas fa-angle-right"></i></a>
+		      <a class="page-link-ufps paginator" th:if="${page.hasNext}" onclick="paginadorLoad(this)" href="#" th:data-url="@{${page.url}(page=${page.paginaActual})}" tabindex="-1" aria-disabled="true"><i class="fas fa-angle-right"></i></a>
+		    </li>
+		  	<li class="page-item">
+		  	  <a class="page-link-ufps disabled-extreme" th:if="${page.last}" href="#" tabindex="-1" aria-disabled="true"><i class="fas fa-angle-double-right"></i></a>
+		      <a class="page-link-ufps paginator" th:if="${not page.last}" onclick="paginadorLoad(this)" href="#" th:data-url="@{${page.url}(page=${page.totalPaginas - 1})}" tabindex="-1" aria-disabled="true"><i class="fas fa-angle-double-right"></i></a>
+		    </li>
+		  </ul>
+		</nav>
+</body>
+</html>

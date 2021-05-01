@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="layouts/layout :: head">
+	<meta charset="UTF-8"/>
+	
+</head>
+<style>
+		
+	</style>
+<body>
+  <!-- Application container -->
+  
+  <div class="container-fluid container-application">
+    <!-- Content -->
+    <div class="main-content position-relative">
+      <!-- Main nav -->
+      
+      <div th:replace="layouts/logosHead :: logosHead"></div>
+      <nav th:replace="layouts/navbar :: navbar"></nav>
+      
+      <!-- Page content -->
+      <div class="page-content col-lg-9 center">
+       <!-- Project cards -->
+       
+       <nav aria-label="breadcrumb">
+		  <ol class="breadcrumb breadcrumb-links">
+		    <li class="breadcrumb-item"><a class="red-ufps-breadcrumb" th:href="@{/}">Inicio</a></li>
+		    <li class="breadcrumb-item"><a class="red-ufps-breadcrumb" th:href="@{/educacion-continua}">Educaciones Continuas</a></li>
+		    <li class="breadcrumb-item" th:if="${educacionContinua.id != null}"><a class="red-ufps-breadcrumb"  th:href="@{/educacion-continua/detalles?educacionContinua={educacionContinua}(educacionContinua=${educacionContinua.nombre})}">Detalles</a></li>
+		    <li class="breadcrumb-item active" aria-current="page">Listado Participantes</li>
+		  </ol>
+		</nav>
+        <!-- Page title -->
+       	<div class="contenido ml-3 mr-3 pb-2" >
+        <br>
+        <div class="page-title">
+          <div class="row justify-content-between align-items-center">
+            <div class="col-md-6 d-flex align-items-center justify-content-between justify-content-md-start mb-3 mb-md-0">
+              <!-- Page title + Go Back button -->
+              
+            </div>
+            
+          </div>
+        </div>
+        <hr/>
+        <!--  <div class="text-center" id="spinner">
+		  <div class="spinner-border" role="status">
+		    <span class="sr-only">Loading...</span>
+		  </div>
+		</div>-->
+		<div class="card" id="cardListado" style="display:none;">
+          <!-- Card header -->
+          <br>
+          <!-- Table -->
+          <div class="col-md-4">
+          
+				</div>		
+				<div th:fragment="listadoParticipantes" id="div_table_asistentes">
+				<p> El icono <i class="fas fa-ban"></i> indica que el asistente no cumple con los criterios mínimos de asistencia
+				para ser aprobado su certificado de participación</p>
+				<div class="alert-messages" th:if="${!ec.educacionContinua.isEnableAsistencia()}">
+				<div class="alert alert-warning" role="alert" id="msgAsistencia">
+				     La asistencia se habilitará una vez la educación continua haya iniciado
+				</div>
+				</div>	
+				<div class="alert-messages" th:if="${ec.educacionContinua.isEnableAsistencia() and #lists.size(ec.educacionContinua.jornadas) == 0}">
+				<div class="alert alert-warning" role="alert" id="msgAsistencia">
+				     Debes agregar jornadas para realizar la toma de asistencia
+				</div>
+				</div>
+				<div class="alert-messages" th:if="${ec.educacionContinua.diploma == null}" id="msgCertificado">
+				<div class="alert alert-warning" role="alert" >
+				     Debes personalizar el certificado de participación antes de aprobar los asistentes
+				</div>
+				</div>			
+          <div class="table-responsive">
+          <div class="col-lg-12">
+            <table  style="width: 100%;"class="row-border table align-items-center myTable2" >
+						<thead>
+							<tr>
+								<th class="th2" th:if="${ec.educacionContinua.isEnableAsistencia() and #lists.size(ec.educacionContinua.jornadas) > 0 and ec.educacionContinua.diploma != null}" id="headerImgCertificado">Certificado Participación</th>
+								<th>Documento</th>
+								<th>Nombre</th>
+								<th>Tipo Participante</th>
+								<th th:if="${ec.educacionContinua.isEnableAsistencia() and #lists.size(ec.educacionContinua.jornadas) > 0 }">Asistencia<br>
+									<input type="checkbox" th:each="j : ${ec.educacionContinua.jornadas}" th:checked="${ec.educacionContinua.asistenciasGenerales.get(j.id)}" th:id="${j.id}+'_all'"  onclick="asistenciaGeneral(this);" th:data-jornada="${j.id}" data-toggle="tooltip" data-placement="top" th:title="${#strings.capitalizeWords(#dates.format(j.horaInicio, 'dd MMMM yyyy HH:mm'))}"/>
+								</th><!-- and ec.educacionContinua.diploma != null -->
+								<th id="headerAprobado">Aprobado</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="p : ${ec.educacionContinua.participantes}" >
+								<td class="tdImgCertificados" th:if="${ec.educacionContinua.isEnableAsistencia() and #lists.size(ec.educacionContinua.jornadas) > 0 and ec.educacionContinua.diploma != null}">
+								<a class="action-item" th:class="${p.isAprobado()} ? 'action-item action-item-red-ufps hover-scale-110' : 'action-item action-item-red-ufps action-item-disabled' " th:id="${'aCertificado_'+p.token}" th:href="@{/educacion-continua/visualizar-diploma (token=${p.token})}" target="_blank"   data-toggle="tooltip" data-placement="left" title="Ver Certificado" >
+   									<span class="btn-inner--icon"><i class="fas fa-money-check"></i></span></a>
+   								</td>
+								<td th:text="${p.tipoDocumento + ' ' + p.numeroDocumento}"></td>
+								<td class="th2" th:text="${p.nombrePersona}"></td>
+								<td th:text="${p.tipoParticipante}"></td>
+								<td th:if="${ec.educacionContinua.isEnableAsistencia() and #lists.size(ec.educacionContinua.jornadas) > 0}">
+									<input type="checkbox" th:each="j : ${ec.educacionContinua.jornadas}" onclick="asistencia(this);" th:checked="${p.jornadasAsistencias.get(j.id)}" th:disabled="${p.jornadasAsistencias.get(j.id) != null and p.diplomaParticipacion != null}" th:class="'checkAsistencia j_'+${j.id}"  th:data-jornada="${j.id}" th:data-participante="${p.id}" data-toggle="tooltip" data-placement="top" th:title="${#strings.capitalizeWords(#dates.format(j.horaInicio, 'dd MMMM yyyy HH:mm'))}"/>
+								</td><!--  and ec.educacionContinua.diploma != null -->
+    							<td class="swAprobado" th:if="${ec.educacionContinua.isEnableAsistencia() and #lists.size(ec.educacionContinua.jornadas) > 0 and ec.educacionContinua.diploma != null and p.isEnableToCertificate()}" ><div class="custom-control custom-switch">
+									  <input type="checkbox"  class="custom-control-input swAprobarAsistente" onclick="aprobarAsistente(this);"  th:id="${'swAprobar_'+p.id}"  th:data-token="${p.token}" th:data-participante="${p.nombrePersona}" th:data-tipoParticipante="${p.tipoParticipante}" th:data-tipoDocumento="${p.tipoDocumento}"  th:data-documento="${p.numeroDocumento}" th:checked="${p.isAprobado()}">
+									  <label class="custom-control-label" th:for="${'swAprobar_'+p.id}"></label>
+									</div>
+								</td>
+								<td class="swAprobado" th:unless="${ec.educacionContinua.isEnableAsistencia() and #lists.size(ec.educacionContinua.jornadas) > 0 and ec.educacionContinua.diploma != null and p.isEnableToCertificate() } " >
+									 <i class="fas fa-ban"></i>
+									
+								</td>
+							</tr>
+							
+						</tbody>
+					</table>
+					<script type="text/javascript">
+					try{
+						$(document).ready( function () {
+							
+							  $('.myTable2').DataTable( {
+								  destroy: true,
+							        language: {
+							            url: "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+							        },
+							    } );
+							   
+							} );
+						
+						$('[data-toggle="tooltip"]').tooltip(); 
+					}catch(err){
+						
+					}
+					  
+					  
+					  </script>
+					</div>
+          </div>
+          <div th:replace="educacion_continua/listado_asistentes/canvas_modal :: canvas"></div>
+        	
+       
+          </div>	
+        </div>
+        
+		</div>
+	  </div>
+    
+    </div>
+    <div th:replace="layouts/footer :: footer"></div>
+    
+  </div>
+  <!-- Scripts -->
+  <!-- Core JS - includes jquery, bootstrap, popper, in-view and sticky-kit -->
+  <div th:replace="layouts/layout :: scripts"></div>
+  <script type="text/javascript" th:inline="javascript">
+  var mensajeExitoso= [[${successMessage}]];
+  if(mensajeExitoso!=null){
+	  toastr.success(mensajeExitoso, 'Excelente!',{timeOut:2000});
+  }
+  var mensajeError= [[${errorMessage}]];
+  if(mensajeError!=null){
+	  toastr.error(mensajeError, 'Error!',{timeOut:2000});
+  }
+  </script>
+  <script type="text/javascript" th:inline="javascript">
+  var token = $("meta[name='_csrf']").attr("content");
+  var eduContinua= [[${educacionContinua}]];
+  var jornadas= [[${jornadas}]];
+  if(jornadas.length>0){
+	  var participantes= [[${participantes}]];
+	  
+	  var asistencias= [[${asistencias}]];
+	  var asistenciaGlobal= [[${asistenciaGlobal}]];
+	  
+  
+  if(eduContinua.estado=="Activo"){
+	  document.getElementById('cardListado').style.display='flex';
+	  document.getElementById('spinner').style.display='none';
+  }
+  </script>
+  <script th:if="${educacionContinua.estado != 'Activo'}" th:src="@{/js/asistencia.js}" type="text/javascript"></script>
+
+</body>
+
+</html>

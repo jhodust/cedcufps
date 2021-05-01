@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layouts/layout :: head">
+	<meta charset="UTF-8"/>
+</head>
+<body>
+  <!-- Application container -->
+  <div class="container-fluid container-application">
+    <!-- Content -->
+    <div class="main-content position-relative">
+      <!-- Main nav -->
+      <div th:replace="layouts/logosHead :: logosHead"></div>
+      <nav th:replace="layouts/navbar :: navbar"></nav>
+      
+      <!-- Page content -->
+      <div class="page-content col-lg-11 center">
+       <!-- Project cards -->
+        <!-- Page title -->
+       	<div class="contenido ml-3 mr-3 pb-2" >
+       
+        
+        <br>
+        <div th:if="${#lists.size(participaciones) == 0}">
+        	<div class="alert alert-danger" role="alert" >
+		    <strong> <i class="fas fa-info-circle"></i> No  se encuentran datos de participaciones de educación continua</strong>
+		</div>
+        </div>
+       
+        <div class="row" th:unless="${#lists.size(participaciones) == 0}">
+        	<div class="col-md-12">
+        		<div class="card">
+        		<div class="card-header">
+          			 <h5 class="card-title mb-0"><strong>MIS CERTIFICACIONES</strong></h5>
+          		</div>
+          <!-- Card header -->
+          
+          <!-- Table -->
+          <div class="card-body">
+         	<p class="text-dark">A continuación se listarán las educaciones continuas a las cuales se ha inscrito. 
+         	El certificado de participación se podrá descargar una vez haya sido aprobada su participación.</p>
+         	<br>
+          	<div class="table-responsive">
+          <div class="col-lg-12">
+            <table id="myTable" style="width: 100%;" class="row-border table align-items-center">
+						<thead>
+							<tr>
+								<th>Certificado</th>
+								<th>Tipo</th>
+								<th class="th2">Educación Continua</th>
+								<th>Fecha Inicio</th>
+								<th>Tipo Participante</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="p : ${participaciones}">
+								<td>
+									<a class="action-item" th:class="${p.participanteDto.isAprobado()} ? 'action-item action-item-red-ufps hover-scale-110 linkCertificado' : 'action-item action-item-disabled linkCertificado' "  th:href="@{/certificaciones-educacion-continua/visualizar (token=${p.participanteDto.token})}"  target="_blank"  th:data-token="${p.participanteDto.token}" data-toggle="tooltip" data-placement="left" title="Ver Certificado" >
+   									<span class="btn-inner--icon"><i class="fas fa-money-check"></i></span>
+   									</td>
+								<td th:text="${p.participanteDto.tipoEduContinua}"></td>
+								<td class="td2" th:text="${p.participanteDto.educacionContinua}"></td>
+								<td th:text="${#dates.format(p.participanteDto.fechaInicioEduContinua, 'dd-MM-yyyy HH:mm')}"></td>
+								<td th:text="${p.participanteDto.tipoParticipante}"></td>
+							</tr>
+							
+						</tbody>
+					</table>
+					</div>
+          </div>
+          </div>
+        </div>
+        	</div>
+
+			</div>
+        	<div th:replace="educacion_continua/listado_asistentes/canvas_modal :: canvas"></div>
+        </div>
+	  </div>
+    
+    </div>
+    <div th:replace="layouts/footer :: footer"></div>
+    
+  </div>
+  <!-- Scripts -->
+  <!-- Core JS - includes jquery, bootstrap, popper, in-view and sticky-kit -->
+  <div th:replace="layouts/layout :: scripts"></div>
+  <script th:src="@{/js/miCertificado.js}"  type="text/javascript"></script>
+</body>
+
+</html>
+

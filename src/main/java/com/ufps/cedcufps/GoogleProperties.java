@@ -5,7 +5,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 @Component
-@ConfigurationProperties(prefix = "spring.mail")
+@ConfigurationProperties
 public class GoogleProperties {
 	
 	@Value("${spring.security.oauth2.client.registration.google.client-id}") 
@@ -14,8 +14,11 @@ public class GoogleProperties {
 	@Value("${spring.security.oauth2.client.registration.google.client-secret}") 
 	private String googleClientSecret;
 	
-	@Value("${spring.url}") 
+	@Value("${server.servlet.url}") 
 	private String url;
+	
+	@Value("${server.servlet.context-path}") 
+	private String contextPath;
 	
 	@Value("${spring.security.oauth2.appdebug}") 
 	private String appDebug;
@@ -52,6 +55,12 @@ public class GoogleProperties {
 	}
 	public void setAppProduccion(String appProduccion) {
 		this.appProduccion = appProduccion;
+	}
+	public String getContextPath() {
+		return contextPath;
+	}
+	public void setContextPath(String contextPath) {
+		this.contextPath = contextPath;
 	}
 	
 	

@@ -38,7 +38,7 @@
           		<div class="row">
           	       
 	        	<div class="card card-overlay hover-shadow-lg hover-translate-y-n10 col-md-4" th:each="p : ${participaciones}">
-				    <img th:src="${p.tarjetaInscripcion}" class="img-fluid rounded card-img">
+				    <img th:src="@{${p.tarjetaInscripcion}}" class="img-fluid rounded card-img">
 				<span class="mask bg-dark opacity-8"></span><div class="card-img-overlay d-flex flex-column align-items-center p-0">
 				        <div class="overlay-text w-75 mt-auto">
 				            <p class="lead" th:text="${p.tipoEduContinua}"></p>

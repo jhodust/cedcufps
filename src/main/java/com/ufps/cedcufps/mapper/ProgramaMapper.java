@@ -62,8 +62,8 @@ public class ProgramaMapper implements IProgramaMapper {
 		dto.setId(Long.parseLong(String.valueOf(object[0])));
 		dto.setCodigo(String.valueOf(object[1]));
 		dto.setPrograma(String.valueOf(object[2]));
-		dto.setIdDirector(Long.parseLong(String.valueOf(object[3])));
-		dto.setIdFacultad(Long.parseLong(String.valueOf(object[4])));
+		dto.setIdDirector((object[3] != null) ? Long.parseLong(String.valueOf(object[3])) : null);
+		dto.setIdFacultad((object[4] != null) ? Long.parseLong(String.valueOf(object[4])) : null);
 		return dto;
 	}
 

@@ -151,9 +151,9 @@ public class ProgramaCustomDaoImpl implements IProgramaCustomDao{
 			programa.setId(Long.parseLong(String.valueOf(result.get(0)[0])));
 			programa.setCodigo(String.valueOf(result.get(0)[1]));
 			programa.setPrograma(String.valueOf(result.get(0)[2]));
-			programa.setDirectorPrograma(personaCustomDao.findDocenteDirPrograma(programa.getId(), Long.parseLong(String.valueOf(result.get(0)[3]))));
+			programa.setDirectorPrograma((result.get(0)[3] != null) ? personaCustomDao.findDocenteDirPrograma(programa.getId(), Long.parseLong(String.valueOf(result.get(0)[3]))) : null);
 			Facultad f= new Facultad();
-			f.setId(Long.parseLong(String.valueOf(result.get(0)[4])));
+			f.setId((result.get(0)[4] != null) ? Long.parseLong(String.valueOf(result.get(0)[4])) : null);
 			f.setFacultad(String.valueOf(result.get(0)[5]));
 			programa.setFacultad(f);
 			return programa;

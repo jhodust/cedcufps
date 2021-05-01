@@ -59,8 +59,8 @@ public interface IParticipanteDao extends JpaRepository<Participante, Long>{
 	
 	@Transactional
 	@Modifying
-	@Query(value="update participantes set fecha_generacion_diploma = ?1 where token = ?2 ", nativeQuery = true)
-	public void updateCertificacionParticipante(Date fechaDiploma, String token);
+	@Query(value="update participantes set fecha_generacion_diploma = ?1, diploma_participacion = ?2 where token = ?3 ", nativeQuery = true)
+	public void updateCertificacionParticipante(Date fechaDiploma, String nombreArchivo, String token);
 	
 	
 	

@@ -1,6 +1,9 @@
 package com.ufps.cedcufps.services;
 
 import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -17,6 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.ufps.cedcufps.dao.IDiplomaDao;
 import com.ufps.cedcufps.dao.IEducacionContinuaCustomDao;
 import com.ufps.cedcufps.dao.IEducacionContinuaDao;
 import com.ufps.cedcufps.dao.IParticipanteCustomDao;
@@ -25,6 +29,7 @@ import com.ufps.cedcufps.dao.IPersonaCustomDao;
 import com.ufps.cedcufps.dao.IPersonaDao;
 import com.ufps.cedcufps.dao.ITipoParticipanteDao;
 import com.ufps.cedcufps.dto.CertificacionDto;
+import com.ufps.cedcufps.dto.EducacionContinuaWebDto;
 import com.ufps.cedcufps.dto.ParticipanteDto;
 import com.ufps.cedcufps.dto.PersonaDto;
 import com.ufps.cedcufps.dto.PonenteDto;
@@ -85,6 +90,9 @@ public class ParticipanteService implements IParticipanteService{
 	@Autowired
 	private IPersonaCustomDao personaCustomDao;
 	
+	@Autowired
+	private IDiplomaDao diplomaDao;
+	
 	@Override
 	public List<TipoParticipante> findAllTiposParticipante() {
 		// TODO Auto-generated method stub
@@ -109,6 +117,7 @@ public class ParticipanteService implements IParticipanteService{
 	public ParticipanteDto saveParticipante(Long idEduContinua, Persona p, String tipoParticipante, Long idTipoPersona) {
 		ParticipanteDto dto=new ParticipanteDto();
 		EducacionContinua e= educacionContinuaCustomDao.findEducacionContinuaById(idEduContinua);
+		this.createDirEducacionContinua(idEduContinua);
 		if(e == null) {
 			throw new CustomException("No se encontró la educación continua en la base de datos");
 		}else {
@@ -372,7 +381,9 @@ public class ParticipanteService implements IParticipanteService{
 		//Persona per=p.getPersona();
 		//EducacionContinua e= p.getEducacionContinua();
 		//Diploma d= e.getDiploma();
-		return educacionContinuaMapper.convertToMisCertificaciones(p);
+		EducacionContinuaWebDto e=educacionContinuaCustomDao.findInfoEducacionContinuaDiplomaById(p.getIdEducacionContinua());
+		Diploma d=diplomaDao.findDiplomaById(p.getIdDiploma());
+		return educacionContinuaMapper.convertToMisCertificaciones(p,e,d);
 		
 	}
 
@@ -381,9 +392,10 @@ public class ParticipanteService implements IParticipanteService{
 		// TODO Auto-generated method stub
 		
 		try {
+			this.createDirEducacionContinua(idEduContinua);
 			Archivo.deleteImage(filename);
-			Archivo.saveImageAboutEducacionContinua(file,documentoParticipante, fileStorageService.dirEducacionContinua().resolve(String.valueOf(idEduContinua)).resolve(fileStorageService.dirDiplomasParticipantes()));
-			participanteDao.updateCertificacionParticipante(new Date(), token);
+			String nombreArchivo=Archivo.saveImageAboutEducacionContinua(file,documentoParticipante, fileStorageService.dirEducacionContinua().resolve(String.valueOf(idEduContinua)).resolve(fileStorageService.dirDiplomasParticipantes()));
+			participanteDao.updateCertificacionParticipante(new Date(), nombreArchivo, token);
 		}catch(Exception e) {
 			System.out.println("No se encontró la imagen de la certificación del participante con token: " + token);
 		}
@@ -395,5 +407,33 @@ public class ParticipanteService implements IParticipanteService{
 		return participanteCustomDao.findAllPonentesOfOneEducacionContinuaById(idEducacionContinua);
 	}
 	
+	
+	public void createDirEducacionContinua(Long idEducacionContinua) {
+		try {
+			File directory = new File(fileStorageService.dirEducacionContinua().resolve(String.valueOf(idEducacionContinua)).resolve(fileStorageService.dirQrParticipantes()).toString());
+			if(!directory.exists()) {
+				Files.createDirectories(fileStorageService.dirEducacionContinua().resolve(String.valueOf(idEducacionContinua)).resolve(fileStorageService.dirQrParticipantes()));
+			}
+			directory = new File(fileStorageService.dirEducacionContinua().resolve(String.valueOf(idEducacionContinua)).resolve(fileStorageService.dirTarjetasInscripcion()).toString());
+			if(!directory.exists()) {
+				Files.createDirectories(fileStorageService.dirEducacionContinua().resolve(String.valueOf(idEducacionContinua)).resolve(fileStorageService.dirTarjetasInscripcion()));
+			}
+			directory = new File(fileStorageService.dirEducacionContinua().resolve(String.valueOf(idEducacionContinua)).resolve(fileStorageService.dirDiplomasParticipantes()).toString());
+			if(!directory.exists()) {
+				Files.createDirectories(fileStorageService.dirEducacionContinua().resolve(String.valueOf(idEducacionContinua)).resolve(fileStorageService.dirDiplomasParticipantes()));
+			}
+			directory = new File(fileStorageService.dirEducacionContinua().resolve(String.valueOf(idEducacionContinua)).resolve(fileStorageService.dirAnexos()).toString());
+			if(!directory.exists()) {
+				Files.createDirectories(fileStorageService.dirEducacionContinua().resolve(String.valueOf(idEducacionContinua)).resolve(fileStorageService.dirAnexos()));
+			}
+			
+			
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
 
 }

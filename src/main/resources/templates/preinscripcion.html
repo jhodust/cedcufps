@@ -101,7 +101,7 @@
         	<div class="col-md-5 " style="display: flex;
    align-items: center;" >
         	<div style="margin: 0 auto; max-height: 300px; overflow: hidden;">
-        		<a sth:href="@{'/'+${requisitosInscripcion.educacionContinua.imagen}}" data-fancybox data-caption="My caption">
+        		<a th:if ="${requisitosInscripcion.educacionContinua.imagen != null and requisitosInscripcion.educacionContinua.imagen != 'null'}" th:href="@{'/'+${requisitosInscripcion.educacionContinua.imagen}}" data-fancybox data-caption="My caption">
 								 <img th:src="@{'/'+${requisitosInscripcion.educacionContinua.imagen}}" class="img-fluid rounded">
 							  </a>
 							  </div>
@@ -178,8 +178,9 @@
 		            		<div class="alert alert-dark" role="alert" >
 		    <strong> Información Adicional</strong>
 		</div>
-        
-				            	<table>
+        		
+				            	<div class="table-responsive">
+							<table class="table align-items-center">
 				    				<tbody>
 					    				<tr>
 					    					<td class="text-sm">[(${requisitosInscripcion.educacionContinua.infoAdicional})]</td>
@@ -187,6 +188,7 @@
 					    				
 					    			</tbody>
 				    			</table>
+				    			</div>
 				    		</div>
 		              	</div>
         
@@ -211,7 +213,8 @@
     </div>
     
     <div th:replace="layouts/footer :: footer"></div>
-    <div th:replace="educacion_continua/tarjetas_inscripcion/canvas_modal :: canvas"></div>
+    
+   <div th:replace="educacion_continua/tarjetas_inscripcion/canvas_modal :: canvas"></div>
     
   </div>
   <!-- Scripts -->
@@ -223,7 +226,7 @@
   var listTipoPersonaValidInscripcion= [[${requisitosInscripcion.listTipoPersonaValidInscripcion}]];
   
   </script>
-  <script th:src="@{/js/inscripcion.js}" type="text/javascript"></script>
+  <script th:src="@{/js/inscripcion.min.js}" type="text/javascript"></script>
 </body>
 
 </html>

@@ -20,7 +20,7 @@ function solicitarCambioEmail(){
 			type: "GET",
 			contentType: "application/json; charset=utf-8",
 			data: {'documento':documento, 'email':email},
-			url: "/change-email",
+			url: contextPath+"/change-email",
 			cache: false,
 			success: function(result) {
 				toastr.success('Revise su bandeja de correo para actualizar su información', 'Excelente!');
@@ -30,7 +30,7 @@ function solicitarCambioEmail(){
 			},
 			error: function(err) {
 				hideSpinnerModal("btnEmailRecovery","btnSpinnerRecuperacionEmail");
-				  console.log(err);
+				
 				toastr.error(err.responseJSON.message, 'Error!');
 				
 			}

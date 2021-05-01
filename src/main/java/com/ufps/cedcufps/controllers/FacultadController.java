@@ -35,7 +35,7 @@ public class FacultadController {
 	
 	@RequestMapping
 	public String listar(Map<String, Object> model) {
-		Pageable pageRequest=PageRequest.of(0, 12);
+		Pageable pageRequest=PageRequest.of(0, 16);
 		Page<Facultad> facultades=facultadService.findAll(pageRequest);
 		PageRender<Facultad> pageRender= new PageRender<Facultad>("/facultades/reload", facultades);
 		model.put("facultades",facultades);	
@@ -52,7 +52,7 @@ public class FacultadController {
 	
 	@RequestMapping(value = "/reload")
 	public String reloadList(@RequestParam(name="page", defaultValue = "0") int page, Map<String, Object> model) {
-		Pageable pageRequest=PageRequest.of(page, 12);
+		Pageable pageRequest=PageRequest.of(page, 16);
 		Page<Facultad> facultades=facultadService.findAll(pageRequest);
 		PageRender<Facultad> pageRender= new PageRender<Facultad>("/facultades/reload", facultades);
 		model.put("facultades",facultades);	

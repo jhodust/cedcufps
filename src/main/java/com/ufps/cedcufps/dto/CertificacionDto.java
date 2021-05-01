@@ -4,6 +4,7 @@ public class CertificacionDto {
 
 	private ParticipanteDto participanteDto;
 	private DiplomaDto diplomaDto;
+	private EducacionContinuaWebDto eduContinuaDto;
 	private boolean updateDiploma;
 	
 	public ParticipanteDto getParticipanteDto() {
@@ -23,6 +24,12 @@ public class CertificacionDto {
 	}
 	public void setUpdateDiploma(boolean updateDiploma) {
 		this.updateDiploma = updateDiploma;
+	}
+	public EducacionContinuaWebDto getEduContinuaDto() {
+		return eduContinuaDto;
+	}
+	public void setEduContinuaDto(EducacionContinuaWebDto eduContinuaDto) {
+		this.eduContinuaDto = eduContinuaDto;
 	}
 	
 	

@@ -155,7 +155,7 @@ public class EmailService implements IEmailService {
 	    ctx.setVariable("contenido", contenido);
 	    ctx.setVariable("persona", persona);
 	    
-	    ctx.setVariable("url", this.hostProperties.getHost().concat("/update-email/").concat(token));
+	    ctx.setVariable("url", this.hostProperties.getUrl().concat(this.hostProperties.getContextPath()).concat("/update-email/").concat(token));
 	   
 	  
 	    // generando plantilla con las variables

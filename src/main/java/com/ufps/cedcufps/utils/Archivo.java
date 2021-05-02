@@ -36,8 +36,8 @@ public class Archivo {
 			System.out.println("guardando imagen");
 			System.out.println(nombreImagen);
 			logger.debug("°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°");
-			logger.debug("guardando imagen");
-			logger.debug(nombreImagen);
+			logger.info("guardando imagen");
+			logger.info(nombreImagen);
 			guardarImagen(bytes,nombreImagen);
 			return nombreImagen;
 		} catch (IOException e1) {

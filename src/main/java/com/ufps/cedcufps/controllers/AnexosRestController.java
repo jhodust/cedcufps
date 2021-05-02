@@ -30,9 +30,9 @@ public class AnexosRestController {
 		System.out.println("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
 		System.out.println("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
 		System.out.println("save anexo");
-		logger.debug("!!!!!!!!!!!!!!!!!11");
-		logger.debug("!!!!!!!!!!!!!!!!");
-		logger.debug("!!!!!!!!!!!!!!!1111111111");
+		logger.info("!!!!!!!!!!!!!!!!!11");
+		logger.info("!!!!!!!!!!!!!!!!");
+		logger.info("!!!!!!!!!!!!!!!1111111111");
 		anexosService.saveAnexo(file, idEduContinuaAcceso);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}

@@ -1,8 +1,8 @@
 FROM openjdk:8-alpine
 
-RUN apt-get update
+RUN yum update
 
-RUN apt-get install -y git
+RUN yum install -y git
 
 RUN mkdir /projects
 

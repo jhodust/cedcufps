@@ -31,7 +31,6 @@ target/
 *.zip
 *.tar.gz
 *.rar
-*.properties
 .classpath
 .project
 .settings/

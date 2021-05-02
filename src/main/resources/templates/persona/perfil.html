@@ -255,15 +255,15 @@
                 </div>
                 <div class="modal-body">
                 	<ul class="nav nav-tabs">
-					  <li class="nav-item">
+					  <li class="nav-item" th:if="${persona.isSuperAdmin()}">
 					    <a class="nav-link active" data-toggle="pill" href="#pills-control-superadmin">Super Admin</a>
 					  </li>
 					  <li class="nav-item" th:if="${persona.isDirPrograma()}">
-					    <a class="nav-link" data-toggle="pill" href="#pills-control-dirPrograma">Director de Programa</a>
+					    <a th:class="${(persona.isDirPrograma() and not persona.isSuperAdmin()) ? 'nav-link active' : 'nav-link'}" data-toggle="pill" href="#pills-control-dirPrograma">Director de Programa</a>
 					  </li>
 					</ul>
 					<div class="tab-content mt-3" id="pills-tabContent">
-					<div class="tab-pane fade show active" id="pills-control-superadmin" role="tabpanel" aria-labelledby="pills-control-superadmin-tab">
+					<div th:if="${persona.isSuperAdmin()}" class="tab-pane fade show active" id="pills-control-superadmin" role="tabpanel" aria-labelledby="pills-control-superadmin-tab">
 					   <label class="form-control-label">Ingresa el número de documento de la persona quien será el nuevo Super Admin del sistema</label>
 				  		<div class="row align-items-center">
 	                        <div class="col-md-8">
@@ -312,7 +312,7 @@
 			                  
 		                 </div>
 				  	</div>
-				  	<div class="tab-pane fade" id="pills-control-dirPrograma" th:if="${persona.isDirPrograma()}" role="tabpanel" aria-labelledby="pills-control-dirPrograma-tab">
+				  	<div  th:class="${(persona.isDirPrograma() and not persona.isSuperAdmin()) ? 'tab-pane fade show active' :  'tab-pane fade'}" id="pills-control-dirPrograma" th:if="${persona.isDirPrograma()}" role="tabpanel" aria-labelledby="pills-control-dirPrograma-tab">
 					   <h6>Información Actual</h6>
 				  		<div class="row">
 					  		<div class="col-md-3">
@@ -396,7 +396,7 @@
   <!-- Scripts -->
   <!-- Core JS - includes jquery, bootstrap, popper, in-view and sticky-kit -->
   <div th:replace="layouts/layout :: scripts"></div>
-  <script th:src="@{/js/perfil.js}"  type="text/javascript"></script>
+  <script th:src="@{/js/perfil.min.js}"  type="text/javascript"></script>
 </body>
 
 </html>

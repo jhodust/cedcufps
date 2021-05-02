@@ -90,8 +90,7 @@ public class InicioController {
 	public String reloadPanelEventos(@RequestParam(name="page", defaultValue = "0") int page,
 			@RequestParam(name="idTipoEdC", defaultValue = "0") String idTipoEdC,
 			@RequestParam(name="idPrograma", defaultValue = "0") String idPrograma,
-			@RequestParam(name="idPublico", defaultValue = "0") String idPublico,
-			@RequestParam(name="baseUri", defaultValue = "/reload") String baseUri,Model model) {
+			@RequestParam(name="idPublico", defaultValue = "0") String idPublico,Model model) {
 		Pageable pageRequest=PageRequest.of(page, 3);
 		Page<EducacionContinua> edc=educacionContinuaService.educacionContinuaFiltroPanel(Long.parseLong(idTipoEdC),
 				Long.parseLong(idPrograma), Long.parseLong(idPublico), pageRequest);
@@ -124,7 +123,7 @@ public class InicioController {
 		}else if(idPublico!=0L){
 			baseUri=baseUri.concat("&idPublico="+idPublico);
 		}
-		baseUri=baseUri.concat("&baseUri="+baseUri);
+		//baseUri=baseUri.concat("&baseUri="+baseUri);
 		return baseUri;
 	}
 	

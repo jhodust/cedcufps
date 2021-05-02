@@ -422,6 +422,7 @@ public class EducacionContinuaMapper implements IEducacionContinuaMapper {
 		diplomaDto.setEstructuraDiploma((Map<String,Object>)estructuraDiploma);
 		diplomaDto.setFechaActualizacionDiploma(fechaActualizacionDiploma);
 		
+		
 		CertificacionDto certDto=new CertificacionDto();
 		certDto.setDiplomaDto(diplomaDto);
 		certDto.setParticipanteDto(participanteDto);
@@ -434,16 +435,17 @@ public class EducacionContinuaMapper implements IEducacionContinuaMapper {
 		return certDto;
 	}
 
-
-	public CertificacionDto convertToMisCertificaciones(ParticipanteDto participanteDto) {
+	@Override
+	public CertificacionDto convertToMisCertificaciones(ParticipanteDto participanteDto, EducacionContinuaWebDto e, Diploma diploma) {
 		// TODO Auto-generated method stub
 		
 		
 		
 		DiplomaDto diplomaDto=new DiplomaDto();
 		diplomaDto.setId(participanteDto.getIdDiploma());
-		diplomaDto.setEstructuraDiploma(this.parameters(participanteDto.getEstructuraDiploma()));
+		diplomaDto.setEstructuraDiploma(diploma.getEstructuraDiploma());
 		diplomaDto.setFechaActualizacionDiploma(participanteDto.getFechaActualizacionDiploma());
+		
 		
 		CertificacionDto certDto=new CertificacionDto();
 		certDto.setDiplomaDto(diplomaDto);
@@ -453,6 +455,7 @@ public class EducacionContinuaMapper implements IEducacionContinuaMapper {
 		}else {
 			certDto.setUpdateDiploma(diplomaDto.getFechaActualizacionDiploma() != null);
 		}
+		certDto.setEduContinuaDto(e);
 		
 		return certDto;
 	}

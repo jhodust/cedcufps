@@ -796,5 +796,39 @@ public class EducacionContinuaCustomDaoImpl implements IEducacionContinuaCustomD
 		}
 		return null;
 	}
+	
+	
+	@Override
+	public EducacionContinuaWebDto findInfoEducacionContinuaDiplomaById(Long id) {
+		// TODO Auto-generated method stub
+		StringBuilder query = new StringBuilder();
+		query.append(" select e.id, e.nombre, e.duracion, e.fecha_fin, f.facultad, pro.programa,  tec.tipo_educacion_continua ")
+			 .append(" from educacion_continua e")
+			 .append(" join programas pro on e.id_programa=pro.id")
+			 .append(" join facultades f on pro.id_facultad=f.id")
+			 .append(" join tipos_educacion_continua tec on e.id_tipo_educacion_continua=tec.id")
+			 .append(" where e.id = ?1");
+		
+		Query q=em.createNativeQuery(query.toString());
+		q.setParameter(1, id);
+		
+		
+			
+		List<Object[]> result= q.getResultList();
+		
+		if(result.size()==1) {
+			EducacionContinuaWebDto e = new EducacionContinuaWebDto();
+			e.setId(Long.parseLong(String.valueOf(result.get(0)[0])));
+			e.setNombre(String.valueOf(result.get(0)[1]));
+			e.setDuracion(String.valueOf(result.get(0)[2]));
+			e.setFechaFin((Date)(result.get(0)[3]));
+			e.setFacultad(String.valueOf(result.get(0)[4]));
+			e.setProgramaResp(String.valueOf(result.get(0)[5]));
+			e.setTipoEduContinua(String.valueOf(result.get(0)[6]));
+			
+			return e;
+		}
+		return null;
+	}
 
 }

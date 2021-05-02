@@ -1,6 +1,7 @@
 package com.ufps.cedcufps.services;
 
 import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.text.ParseException;
@@ -393,6 +394,7 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 				idProgramaResponsable, idDocenteResponsable, idClasificacionCine, consecutivo, idTipoBeneficiarios.split(","));
 		
 		if(this.validateAsociacionesEduContinua(dto)) {
+			
 			if(dto.getId() == 0L) {
 				dto.setEstado(StatusEducacionContinua.STATUS_ACTIVO);
 				educacionContinuaCustomDao.saveEducacionContinua(dto, personaService.findEmailPersonaLogueada());
@@ -400,12 +402,12 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 				if(dto.getConsecutivo()==null) {
 					this.updateCodigoEducacionContinua(dto.getId(),dto.getIdTipoEduContinua(),dto.getIdProgramaResp());
 				}
-				this.createDirEducacionContinua(dto.getId());
+				
 				
 			}else {
 				educacionContinuaCustomDao.updateEducacionContinua(dto,personaService.findEmailPersonaLogueada());
 			}
-			
+			this.createDirEducacionContinua(dto.getId());
 			EducacionContinua ec= educacionContinuaDao.findOneEducacionContinua(dto.getId());
 			saveBeneficiarios(dto.getTipoBeneficiarios(), ec.getId());
 			guardarImagenPortada(ec.getId(),ec.getImagen(),file);
@@ -618,12 +620,28 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 	}
 	
 
+	@Override
 	public void createDirEducacionContinua(Long idEducacionContinua) {
 		try {
-			Files.createDirectories(fileStorageService.dirEducacionContinua().resolve(String.valueOf(idEducacionContinua)).resolve(fileStorageService.dirQrParticipantes()));
-			Files.createDirectories(fileStorageService.dirEducacionContinua().resolve(String.valueOf(idEducacionContinua)).resolve(fileStorageService.dirTarjetasInscripcion()));
-			Files.createDirectories(fileStorageService.dirEducacionContinua().resolve(String.valueOf(idEducacionContinua)).resolve(fileStorageService.dirDiplomasParticipantes()));
-			Files.createDirectories(fileStorageService.dirEducacionContinua().resolve(String.valueOf(idEducacionContinua)).resolve(fileStorageService.dirAnexos()));
+			File directory = new File(fileStorageService.dirEducacionContinua().resolve(String.valueOf(idEducacionContinua)).resolve(fileStorageService.dirQrParticipantes()).toString());
+			if(!directory.exists()) {
+				Files.createDirectories(fileStorageService.dirEducacionContinua().resolve(String.valueOf(idEducacionContinua)).resolve(fileStorageService.dirQrParticipantes()));
+			}
+			directory = new File(fileStorageService.dirEducacionContinua().resolve(String.valueOf(idEducacionContinua)).resolve(fileStorageService.dirTarjetasInscripcion()).toString());
+			if(!directory.exists()) {
+				Files.createDirectories(fileStorageService.dirEducacionContinua().resolve(String.valueOf(idEducacionContinua)).resolve(fileStorageService.dirTarjetasInscripcion()));
+			}
+			directory = new File(fileStorageService.dirEducacionContinua().resolve(String.valueOf(idEducacionContinua)).resolve(fileStorageService.dirDiplomasParticipantes()).toString());
+			if(!directory.exists()) {
+				Files.createDirectories(fileStorageService.dirEducacionContinua().resolve(String.valueOf(idEducacionContinua)).resolve(fileStorageService.dirDiplomasParticipantes()));
+			}
+			directory = new File(fileStorageService.dirEducacionContinua().resolve(String.valueOf(idEducacionContinua)).resolve(fileStorageService.dirAnexos()).toString());
+			if(!directory.exists()) {
+				Files.createDirectories(fileStorageService.dirEducacionContinua().resolve(String.valueOf(idEducacionContinua)).resolve(fileStorageService.dirAnexos()));
+			}
+			
+			
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

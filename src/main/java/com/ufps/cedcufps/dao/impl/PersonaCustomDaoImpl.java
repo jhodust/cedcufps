@@ -350,9 +350,9 @@ public class PersonaCustomDaoImpl implements IPersonaCustomDao {
 			 .append(" p.ids_tipo_persona, p.numero_documento, p.telefono,ec.id as id_estado_civil, ec.estado_civil,  ")
 			 .append(" g.id as id_genero, g.genero, tp.descripcion")
 				.append(" from personas as p")
-				.append(" join tipos_documento tp on p.id_tipo_documento=tp.id")
-				.append(" join estados_civiles ec on p.id_estado_civil=ec.id")
-				.append(" join generos g on p.id_genero=g.id");
+				.append(" left join tipos_documento tp on p.id_tipo_documento=tp.id")
+				.append(" left join estados_civiles ec on p.id_estado_civil=ec.id")
+				.append(" left join generos g on p.id_genero=g.id");
 		
 		if(!superAdmin) {
 			query.append(" where p.id in ( ?1 )");
@@ -386,9 +386,9 @@ public class PersonaCustomDaoImpl implements IPersonaCustomDao {
 			 .append(" p.ids_tipo_persona, p.numero_documento, p.telefono,ec.id as id_estado_civil, ec.estado_civil,  ")
 			 .append(" g.id as id_genero, g.genero, tp.descripcion")
 				.append(" from personas as p")
-				.append(" join tipos_documento tp on p.id_tipo_documento=tp.id")
-				.append(" join estados_civiles ec on p.id_estado_civil=ec.id")
-				.append(" join generos g on p.id_genero=g.id")
+				.append(" left join tipos_documento tp on p.id_tipo_documento=tp.id")
+				.append(" left join estados_civiles ec on p.id_estado_civil=ec.id")
+				.append(" left join generos g on p.id_genero=g.id")
 			.append(" where p.id = ?1 ");
 		
 		Query q= em.createNativeQuery(query.toString()).setParameter(1, id);
@@ -411,9 +411,9 @@ public class PersonaCustomDaoImpl implements IPersonaCustomDao {
 			 .append(" p.ids_tipo_persona, p.numero_documento, p.telefono,ec.id as id_estado_civil, ec.estado_civil,  ")
 			 .append(" g.id as id_genero, g.genero, tp.descripcion")
 				.append(" from personas as p")
-				.append(" join tipos_documento tp on p.id_tipo_documento=tp.id")
-				.append(" join estados_civiles ec on p.id_estado_civil=ec.id")
-				.append(" join generos g on p.id_genero=g.id")
+				.append(" left join tipos_documento tp on p.id_tipo_documento=tp.id")
+				.append(" left join estados_civiles ec on p.id_estado_civil=ec.id")
+				.append(" left join generos g on p.id_genero=g.id")
 			.append(" where p.id_acceso = ?1 ");
 		
 		Query q= em.createNativeQuery(query.toString()).setParameter(1, idAcceso);
@@ -460,9 +460,9 @@ public class PersonaCustomDaoImpl implements IPersonaCustomDao {
 			 .append(" p.ids_tipo_persona, p.numero_documento, p.telefono,ec.id as id_estado_civil, ec.estado_civil,  ")
 			 .append(" g.id as id_genero, g.genero, tp.descripcion")
 				.append(" from personas as p")
-				.append(" join tipos_documento tp on p.id_tipo_documento=tp.id")
-				.append(" join estados_civiles ec on p.id_estado_civil=ec.id")
-				.append(" join generos g on p.id_genero=g.id")
+				.append(" left join tipos_documento tp on p.id_tipo_documento=tp.id")
+				.append(" left join estados_civiles ec on p.id_estado_civil=ec.id")
+				.append(" left join generos g on p.id_genero=g.id")
 			.append(" where p.email = ?1 ");
 		
 		Query q= em.createNativeQuery(query.toString()).setParameter(1, email);
@@ -509,9 +509,9 @@ public class PersonaCustomDaoImpl implements IPersonaCustomDao {
 			 .append(" p.ids_tipo_persona, p.numero_documento, p.telefono,ec.id as id_estado_civil, ec.estado_civil,  ")
 			 .append(" g.id as id_genero, g.genero, tp.descripcion")
 				.append(" from personas as p")
-				.append(" join tipos_documento tp on p.id_tipo_documento=tp.id")
-				.append(" join estados_civiles ec on p.id_estado_civil=ec.id")
-				.append(" join generos g on p.id_genero=g.id")
+				.append(" left join tipos_documento tp on p.id_tipo_documento=tp.id")
+				.append(" left join estados_civiles ec on p.id_estado_civil=ec.id")
+				.append(" left join generos g on p.id_genero=g.id")
 			.append(" where p.email = ?1 ");
 		
 		Query q= em.createNativeQuery(query.toString()).setParameter(1, email);
@@ -533,9 +533,9 @@ public class PersonaCustomDaoImpl implements IPersonaCustomDao {
 			 .append(" p.ids_tipo_persona, p.numero_documento, p.telefono,ec.id as id_estado_civil, ec.estado_civil,  ")
 			 .append(" g.id as id_genero, g.genero, tp.descripcion")
 				.append(" from personas as p")
-				.append(" join tipos_documento tp on p.id_tipo_documento=tp.id")
-				.append(" join estados_civiles ec on p.id_estado_civil=ec.id")
-				.append(" join generos g on p.id_genero=g.id")
+				.append(" left join tipos_documento tp on p.id_tipo_documento=tp.id")
+				.append(" left join estados_civiles ec on p.id_estado_civil=ec.id")
+				.append(" left join generos g on p.id_genero=g.id")
 			.append(" where p.id in ( ?1 ) ");
 		
 		Query q= em.createNativeQuery(query.toString()).setParameter(1, idsPersonas);
@@ -556,9 +556,9 @@ public class PersonaCustomDaoImpl implements IPersonaCustomDao {
 			 .append(" p.ids_tipo_persona, p.numero_documento, p.telefono,ec.id as id_estado_civil, ec.estado_civil,  ")
 			 .append(" g.id as id_genero, g.genero, tp.descripcion")
 				.append(" from personas as p")
-				.append(" join tipos_documento tp on p.id_tipo_documento=tp.id")
-				.append(" join estados_civiles ec on p.id_estado_civil=ec.id")
-				.append(" join generos g on p.id_genero=g.id")
+				.append(" left join tipos_documento tp on p.id_tipo_documento=tp.id")
+				.append(" left join estados_civiles ec on p.id_estado_civil=ec.id")
+				.append(" left join generos g on p.id_genero=g.id")
 			.append(" where CONCAT(p.primer_nombre,' ', p.segundo_nombre,' ',p.primer_apellido,' ', p.segundo_apellido) like ?1");
 		
 		Query q= em.createNativeQuery(query.toString()).setParameter(1, nombre);

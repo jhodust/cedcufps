@@ -414,7 +414,7 @@ public class ParticipanteCustomDao implements IParticipanteCustomDao {
 			 .append(" p.fecha_registro, p.imagen_codigo_qr, p.tarjeta_inscripcion, p.aprobado, p.token, tec.id as id_tipo_educacion_continua,")
 			 .append(" tec.tipo_educacion_continua, per.primer_nombre, per.segundo_nombre, per.primer_apellido, per.segundo_apellido,")
 			 .append(" per.email, e.fecha_inicio, e.fecha_fin, d.id as id_diploma, d.structure_diploma, p.diploma_participacion,")
-			 .append(" p.fecha_generacion_diploma, d.updated_at, epr.numero_documento")
+			 .append(" d.updated_at, per.numero_documento")
 			 .append(" from participantes p join personas per on p.id_persona=per.id ")
 			 .append(" join educacion_continua e on p.educacion_continua_id=e.id")
 			 .append(" join tipos_participante tp on p.id_tipo_participante=tp.id")
@@ -456,9 +456,8 @@ public class ParticipanteCustomDao implements IParticipanteCustomDao {
 			dto.setIdDiploma(Long.parseLong(String.valueOf(object[23])));
 			dto.setEstructuraDiploma(String.valueOf(object[24]));
 			dto.setDiplomaParticipacion(String.valueOf(object[25]));
-			dto.setFechaGeneracionDiploma((Date) object[26]);
-			dto.setFechaActualizacionDiploma((Date) object[27]);
-			dto.setNumeroDocumento(String.valueOf(object[28]));
+			dto.setFechaActualizacionDiploma((Date) object[26]);
+			dto.setNumeroDocumento(String.valueOf(object[27]));
 			dto.setNombrePersona(usuarioMapper.convertFieldsFullName(dto.getPrimerNombre(), 
 					dto.getSegundoNombre(), dto.getPrimerApellido(), dto.getSegundoApellido()));
 			return dto;

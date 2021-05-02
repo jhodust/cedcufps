@@ -47,4 +47,6 @@ public interface IEducacionContinuaCustomDao {
 	public EducacionContinua findEducacionContinuaByIdAccesoDetalles(String idAcceso);
 	
 	public EducacionContinua findEducacionContinuaById(Long id);
+	
+	public EducacionContinuaWebDto findInfoEducacionContinuaDiplomaById(Long id);
 }

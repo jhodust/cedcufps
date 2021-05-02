@@ -16,6 +16,7 @@ import com.ufps.cedcufps.dto.ParticipanteDto;
 import com.ufps.cedcufps.dto.PonenteDto;
 import com.ufps.cedcufps.dto.EducacionContinuaAppDto;
 import com.ufps.cedcufps.modelos.Anexos;
+import com.ufps.cedcufps.modelos.Diploma;
 import com.ufps.cedcufps.modelos.EducacionContinua;
 import com.ufps.cedcufps.modelos.Participante;
 import com.ufps.cedcufps.modelos.Persona;
@@ -48,7 +49,7 @@ public interface IEducacionContinuaMapper {
 			String diplomaParticipacion, boolean aprobado, Date fechaGeneracionDiploma, String token, Long idDiploma,
 			Map<String,Object> estructuraDiploma,Date fechaActualizacionDiploma);
 	
-	public CertificacionDto convertToMisCertificaciones(ParticipanteDto participanteDto);
+	public CertificacionDto convertToMisCertificaciones(ParticipanteDto participanteDto, EducacionContinuaWebDto e, Diploma diploma);
 	
 	
 	

@@ -1,8 +1,10 @@
-FROM openjdk:8-alpine
+FROM ubuntu
 
-RUN yum update
+RUN apt-get update
 
-RUN yum install -y git
+RUN apt-get install -y openjdk-8-jre
+
+RUN apt-get install -y git
 
 RUN mkdir /projects
 

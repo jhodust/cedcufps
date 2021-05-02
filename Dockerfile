@@ -49,6 +49,6 @@ RUN mvn clean
 
 RUN mvn install
 
-WORKDIR /projects/cedcufps/target
+WORKDIR /projects/cedcufps
 
-ENTRYPOINT ["java","-jar","cedcufps-0.0.1-SNAPSHOT.jar","/bin/bash"]
+ENTRYPOINT ["java","-jar","target/cedcufps-0.0.1-SNAPSHOT.jar","/bin/bash"]

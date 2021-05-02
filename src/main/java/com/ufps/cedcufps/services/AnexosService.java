@@ -28,6 +28,9 @@ public class AnexosService implements IAnexosService {
 	private IEducacionContinuaDao educacionContinuaDao;
 	
 	@Autowired
+	private IEducacionContinuaService educacionContinuaService;
+	
+	@Autowired
 	private IAnexosDao anexosDao;
 	
 	@Autowired
@@ -36,6 +39,7 @@ public class AnexosService implements IAnexosService {
 	@Override
 	public void saveAnexo(MultipartFile file, String idEduContinua) {
 		// TODO Auto-generated method stub
+		educacionContinuaService.createDirEducacionContinua(Long.parseLong(idEduContinua));
 		String originalName=Archivo.getNameWithoutExtension(file.getOriginalFilename());
 		String fileName=Archivo.saveImageAboutEducacionContinua(file,originalName,fileStorageService.dirEducacionContinua().resolve(String.valueOf(idEduContinua)).resolve(fileStorageService.dirAnexos()));
 		EducacionContinua e= educacionContinuaDao.findEducacionContinuaById(Long.parseLong(idEduContinua));

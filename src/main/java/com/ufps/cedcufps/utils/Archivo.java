@@ -9,6 +9,8 @@ import java.util.Base64;
 import java.util.Random;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.google.common.io.Files;
@@ -21,7 +23,7 @@ public class Archivo {
 
 	//public final static String rutaEducacionContinua="files/uploads/educacion-continua/";
 	
-	
+	protected static Log logger = LogFactory.getLog(Archivo.class);
 	
 	
 	public static String saveImageAboutEducacionContinua(MultipartFile imagen, String imagenSinExtension,Path path) {
@@ -30,6 +32,12 @@ public class Archivo {
 			
 			nombreImagen = path.resolve(imagenSinExtension+"."+Files.getFileExtension(imagen.getOriginalFilename())).toString();
 			byte[] bytes = imagen.getBytes();
+			System.out.println("°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°");
+			System.out.println("guardando imagen");
+			System.out.println(nombreImagen);
+			logger.debug("°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°");
+			logger.debug("guardando imagen");
+			logger.debug(nombreImagen);
 			guardarImagen(bytes,nombreImagen);
 			return nombreImagen;
 		} catch (IOException e1) {

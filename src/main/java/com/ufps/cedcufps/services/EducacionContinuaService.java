@@ -626,23 +626,31 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 			File directory = new File(fileStorageService.dirEducacionContinua().resolve(String.valueOf(idEducacionContinua)).resolve(fileStorageService.dirQrParticipantes()).toString());
 			System.out.println(directory.getAbsolutePath());
 			System.out.println("exits: " + directory.exists());
+			logger.debug(directory.getAbsolutePath());
+			logger.debug("exits: " + directory.exists());
 			if(!directory.exists()) {
 				Files.createDirectories(fileStorageService.dirEducacionContinua().resolve(String.valueOf(idEducacionContinua)).resolve(fileStorageService.dirQrParticipantes()));
 			}
 			System.out.println(directory.getAbsolutePath());
 			System.out.println("exits: " + directory.exists());
+			logger.debug(directory.getAbsolutePath());
+			logger.debug("exits: " + directory.exists());
 			directory = new File(fileStorageService.dirEducacionContinua().resolve(String.valueOf(idEducacionContinua)).resolve(fileStorageService.dirTarjetasInscripcion()).toString());
 			if(!directory.exists()) {
 				Files.createDirectories(fileStorageService.dirEducacionContinua().resolve(String.valueOf(idEducacionContinua)).resolve(fileStorageService.dirTarjetasInscripcion()));
 			}
 			System.out.println(directory.getAbsolutePath());
 			System.out.println("exits: " + directory.exists());
+			logger.debug(directory.getAbsolutePath());
+			logger.debug("exits: " + directory.exists());
 			directory = new File(fileStorageService.dirEducacionContinua().resolve(String.valueOf(idEducacionContinua)).resolve(fileStorageService.dirDiplomasParticipantes()).toString());
 			if(!directory.exists()) {
 				Files.createDirectories(fileStorageService.dirEducacionContinua().resolve(String.valueOf(idEducacionContinua)).resolve(fileStorageService.dirDiplomasParticipantes()));
 			}
 			System.out.println(directory.getAbsolutePath());
 			System.out.println("exits: " + directory.exists());
+			logger.debug(directory.getAbsolutePath());
+			logger.debug("exits: " + directory.exists());
 			directory = new File(fileStorageService.dirEducacionContinua().resolve(String.valueOf(idEducacionContinua)).resolve(fileStorageService.dirAnexos()).toString());
 			if(!directory.exists()) {
 				Files.createDirectories(fileStorageService.dirEducacionContinua().resolve(String.valueOf(idEducacionContinua)).resolve(fileStorageService.dirAnexos()));

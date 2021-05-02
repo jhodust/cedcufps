@@ -39,6 +39,7 @@ public class AnexosService implements IAnexosService {
 	@Override
 	public void saveAnexo(MultipartFile file, String idEduContinua) {
 		// TODO Auto-generated method stub
+		System.out.println("create dir edu continua");
 		educacionContinuaService.createDirEducacionContinua(Long.parseLong(idEduContinua));
 		String originalName=Archivo.getNameWithoutExtension(file.getOriginalFilename());
 		String fileName=Archivo.saveImageAboutEducacionContinua(file,originalName,fileStorageService.dirEducacionContinua().resolve(String.valueOf(idEduContinua)).resolve(fileStorageService.dirAnexos()));

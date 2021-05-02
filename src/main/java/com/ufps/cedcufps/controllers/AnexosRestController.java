@@ -1,5 +1,7 @@
 package com.ufps.cedcufps.controllers;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,17 +20,25 @@ public class AnexosRestController {
 	@Autowired
 	private IAnexosService anexosService;
 	
+	protected Log logger = LogFactory.getLog(this.getClass());
+	
 	@PostMapping(value = "/save")
 	public ResponseEntity<?> save(@RequestParam(name="file", required=true) MultipartFile file,
 			@RequestParam(name="id", required=true) String idEduContinuaAcceso) {
-		
-		
+		System.out.println("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
+		System.out.println("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
+		System.out.println("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
+		System.out.println("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
+		System.out.println("save anexo");
+		logger.debug("!!!!!!!!!!!!!!!!!11");
+		logger.debug("!!!!!!!!!!!!!!!!");
+		logger.debug("!!!!!!!!!!!!!!!1111111111");
 		anexosService.saveAnexo(file, idEduContinuaAcceso);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
 	@PostMapping(value = "/delete")
-	public ResponseEntity<?> save(@RequestParam(name="id", required=true) String id) {
+	public ResponseEntity<?> deleteAnexo(@RequestParam(name="id", required=true) String id) {
 		anexosService.deleteAnexo(Long.parseLong(id));
 		return new ResponseEntity<>(HttpStatus.OK);
 	}

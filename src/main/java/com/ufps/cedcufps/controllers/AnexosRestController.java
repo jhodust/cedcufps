@@ -39,6 +39,9 @@ public class AnexosRestController {
 	
 	@PostMapping(value = "/delete")
 	public ResponseEntity<?> deleteAnexo(@RequestParam(name="id", required=true) String id) {
+		logger.info("$$$$$$$$$$$$44");
+		logger.info("$$$$$$$$$$$$$$$$$$$$");
+		logger.info("$$$$$$$$$$$");
 		anexosService.deleteAnexo(Long.parseLong(id));
 		return new ResponseEntity<>(HttpStatus.OK);
 	}

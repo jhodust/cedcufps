@@ -12,7 +12,7 @@ WORKDIR /projects
 
 RUN git clone https://github.com/jhodust/cedcufps.git
 
-WORKDIR /cedcufps
+RUN cd /cedcufps
 
 RUN git checkout current
 
@@ -22,4 +22,4 @@ RUN mvn install
 
 WORKDIR /target
 
-ENTRYPOINT ["java","-jar","cedcufps-0.0.1-SNAPSHOT.jar","/bin/bash"]
+ENTRYPOINT ["java","-jar","cedcufps/target/cedcufps-0.0.1-SNAPSHOT.jar","/bin/bash"]

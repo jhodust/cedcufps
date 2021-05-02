@@ -63,16 +63,12 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 
-import com.sun.tools.doclint.Env;
 import com.ufps.cedcufps.auth.handler.LoginSuccessHandler;
-import com.ufps.cedcufps.exception.CustomException;
 import com.ufps.cedcufps.modelos.Persona;
 import com.ufps.cedcufps.modelos.PersonaRol;
-import com.ufps.cedcufps.modelos.Rol;
 import com.ufps.cedcufps.modelos.SessionWebGoogle;
 import com.ufps.cedcufps.services.PersonaService;
 

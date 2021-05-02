@@ -12,7 +12,7 @@ WORKDIR /projects
 
 RUN git clone https://github.com/jhodust/cedcufps.git
 
-RUN cd /cedcufps
+RUN cd cedcufps/
 
 RUN git checkout current
 

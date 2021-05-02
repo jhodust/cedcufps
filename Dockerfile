@@ -1,16 +1,23 @@
 FROM openjdk:8-alpine
 
-# Refer to Maven build -> finalName
-ARG JAR_FILE=target/cedcufps-0.0.1-SNAPSHOT.jar
+RUN apt-get update
 
-RUN mkdir /opt/app
+RUN apt-get install -y git
 
-# cd /opt/app
-#WORKDIR /opt/app
+RUN mkdir /projects
 
+WORKDIR /projects
 
-# cp target/spring-boot-web.jar /opt/app/app.jar
-#COPY ${JAR_FILE} app.jar
+RUN git clone https://github.com/jhodust/cedcufps.git
 
-# java -jar /opt/app/app.jar
-ENTRYPOINT ["java","-jar","target/cedcufps-0.0.1-SNAPSHOT.jar","/bin/bash"]
+WORKDIR /cedcufps
+
+RUN git checkout current
+
+RUN mvn clean
+
+RUN mvn install
+
+WORKDIR /target
+
+ENTRYPOINT ["java","-jar","cedcufps-0.0.1-SNAPSHOT.jar","/bin/bash"]

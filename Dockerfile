@@ -51,4 +51,6 @@ RUN mvn install
 
 WORKDIR /projects/cedcufps
 
+EXPOSE 8080
+
 ENTRYPOINT ["java","-jar","target/cedcufps-0.0.1-SNAPSHOT.jar","/bin/bash"]

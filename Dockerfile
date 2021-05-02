@@ -33,13 +33,10 @@ ENV MAVEN_HOME /usr/share/maven
 ENV MAVEN_CONFIG "$USER_HOME_DIR/.m2"
 
 
-RUN mkdir /projects
-
-WORKDIR /projects
 
 RUN git clone https://github.com/jhodust/cedcufps.git
 
-WORKDIR /projects/cedcufps
+WORKDIR /cedcufps
 
 RUN git checkout current
 
@@ -49,7 +46,7 @@ RUN mvn clean
 
 RUN mvn install
 
-WORKDIR /projects/cedcufps
+WORKDIR /cedcufps
 
 EXPOSE 8080
 

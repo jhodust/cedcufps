@@ -40,6 +40,8 @@ WORKDIR /cedcufps
 
 RUN git checkout current
 
+RUN git pull origin current
+
 RUN mvn --version
 
 RUN mvn clean

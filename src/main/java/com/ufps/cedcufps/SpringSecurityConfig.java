@@ -133,6 +133,13 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 	
 
 	@Override
+	public void configure(WebSecurity web) throws Exception {
+		// TODO Auto-generated method stub
+		super.configure(web);
+		web.httpFirewall(allowUrlEncodedSlashHttpFirewall());
+	}
+
+	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		// TODO Auto-generated method stub
 		http.authorizeRequests().antMatchers("/","/change-email", "/update-email/**", "/bienvenida","/reload**","/registrarse","/files/**","/img/**","/js/**","/css/**","/plantilla/**", "/logos/**","/app/**","/data/***").permitAll()
@@ -296,7 +303,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:8080", "https://".concat(this.googleProperties.getUrl())));
+        configuration.setAllowedOrigins(Arrays.asList("*","http://localhost:8080", "https://".concat(this.googleProperties.getUrl())));
         configuration.setAllowedMethods(Arrays.asList("GET","POST"));
         configuration.setAllowCredentials(true);
         configuration.setAllowedHeaders(Arrays.asList("Content-Type","Authorization"));

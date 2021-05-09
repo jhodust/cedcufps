@@ -687,11 +687,11 @@ public class EducacionContinuaCustomDaoImpl implements IEducacionContinuaCustomD
 			e.setDeleted(Integer.parseInt(String.valueOf(result.get(0)[14]))==1);
 			e.setLugar(String.valueOf(result.get(0)[15]));
 			e.setPorcentajeAsistencia(String.valueOf(result.get(0)[16]));
-			e.setClasificacionCine(clasificacionCineDao.findClasificacionById(Long.parseLong(String.valueOf(result.get(0)[17]))));
+			e.setClasificacionCine( (result.get(0)[17] != null) ? clasificacionCineDao.findClasificacionById(Long.parseLong(String.valueOf(result.get(0)[17]))) : null);
 			e.setDiploma( (result.get(0)[18] != null) ? diplomaDao.findDiplomaById( Long.parseLong(String.valueOf(result.get(0)[18]))): null);
-			e.setDocenteResponsable(personaCustomDao.findDocenteResponsable(Long.parseLong(String.valueOf(result.get(0)[19]))));
-			e.setProgramaResponsable(programaCustomDao.findProgramaById(Long.parseLong(String.valueOf(result.get(0)[20]))));
-			e.setTipoEduContinua(tipoEducacionContinuaDao.findTipoEducacionContinuaById(Long.parseLong(String.valueOf(result.get(0)[21]))));
+			e.setDocenteResponsable((result.get(0)[19] != null) ? personaCustomDao.findDocenteResponsable(Long.parseLong(String.valueOf(result.get(0)[19]))) : null);
+			e.setProgramaResponsable((result.get(0)[20] != null) ? programaCustomDao.findProgramaById(Long.parseLong(String.valueOf(result.get(0)[20]))) : null);
+			e.setTipoEduContinua((result.get(0)[21] != null) ? tipoEducacionContinuaDao.findTipoEducacionContinuaById(Long.parseLong(String.valueOf(result.get(0)[21]))) : null);
 			e.setTipoBeneficiarios(tiposBeneficiariosEduContinuaDao.findTiposBeneficiariosByIdEduContinua(e.getId()));
 			return e;
 		}
@@ -738,9 +738,9 @@ public class EducacionContinuaCustomDaoImpl implements IEducacionContinuaCustomD
 			e.setPorcentajeAsistencia(String.valueOf(result.get(0)[16]));
 			e.setClasificacionCine( (result.get(0)[17] != null) ? clasificacionCineDao.findClasificacionById(Long.parseLong(String.valueOf(result.get(0)[17]))) : null);
 			e.setDiploma( (result.get(0)[18] != null) ? diplomaDao.findDiplomaById( Long.parseLong(String.valueOf(result.get(0)[18]))): null);
-			e.setDocenteResponsable(personaCustomDao.findDocenteResponsable(Long.parseLong(String.valueOf(result.get(0)[19]))));
-			e.setProgramaResponsable(programaCustomDao.findProgramaById(Long.parseLong(String.valueOf(result.get(0)[20]))));
-			e.setTipoEduContinua(tipoEducacionContinuaDao.findTipoEducacionContinuaById(Long.parseLong(String.valueOf(result.get(0)[21]))));
+			e.setDocenteResponsable((result.get(0)[19] != null) ? personaCustomDao.findDocenteResponsable(Long.parseLong(String.valueOf(result.get(0)[19]))) : null);
+			e.setProgramaResponsable((result.get(0)[20] != null) ? programaCustomDao.findProgramaById(Long.parseLong(String.valueOf(result.get(0)[20]))) : null);
+			e.setTipoEduContinua((result.get(0)[21] != null) ? tipoEducacionContinuaDao.findTipoEducacionContinuaById(Long.parseLong(String.valueOf(result.get(0)[21]))) : null);
 			e.setTipoBeneficiarios(tiposBeneficiariosEduContinuaDao.findTiposBeneficiariosByIdEduContinua(e.getId()));
 			e.setAnexos(anexosDao.findAnexosByEduContinuaId(e.getId()));
 			
@@ -788,11 +788,11 @@ public class EducacionContinuaCustomDaoImpl implements IEducacionContinuaCustomD
 			e.setDeleted(Integer.parseInt(String.valueOf(result.get(0)[14]))==1);
 			e.setLugar(String.valueOf(result.get(0)[15]));
 			e.setPorcentajeAsistencia(String.valueOf(result.get(0)[16]));
-			e.setClasificacionCine(clasificacionCineDao.findClasificacionById(Long.parseLong(String.valueOf(result.get(0)[17]))));
+			e.setClasificacionCine( (result.get(0)[17] != null) ? clasificacionCineDao.findClasificacionById(Long.parseLong(String.valueOf(result.get(0)[17]))) : null);
 			e.setDiploma( (result.get(0)[18] != null) ? diplomaDao.findDiplomaById( Long.parseLong(String.valueOf(result.get(0)[18]))): null);
-			e.setDocenteResponsable(personaCustomDao.findDocenteResponsable(Long.parseLong(String.valueOf(result.get(0)[19]))));
-			e.setProgramaResponsable(programaCustomDao.findProgramaById(Long.parseLong(String.valueOf(result.get(0)[20]))));
-			e.setTipoEduContinua(tipoEducacionContinuaDao.findTipoEducacionContinuaById(Long.parseLong(String.valueOf(result.get(0)[21]))));
+			e.setDocenteResponsable((result.get(0)[19] != null) ? personaCustomDao.findDocenteResponsable(Long.parseLong(String.valueOf(result.get(0)[19]))) : null);
+			e.setProgramaResponsable((result.get(0)[20] != null) ? programaCustomDao.findProgramaById(Long.parseLong(String.valueOf(result.get(0)[20]))) : null);
+			e.setTipoEduContinua((result.get(0)[21] != null) ? tipoEducacionContinuaDao.findTipoEducacionContinuaById(Long.parseLong(String.valueOf(result.get(0)[21]))) : null);
 			e.setTipoBeneficiarios(tiposBeneficiariosEduContinuaDao.findTiposBeneficiariosByIdEduContinua(e.getId()));
 			return e;
 		}

@@ -340,6 +340,7 @@ public class ParticipanteService implements IParticipanteService{
 	public void certificarParticipante(MultipartFile file, Long idEduContinua, String token, String documentoParticipante) {
 		// TODO Auto-generated method stub
 		
+		this.createDirEducacionContinua(idEduContinua);
 		String diplomaImagen=Archivo.saveImageAboutEducacionContinua(file,documentoParticipante,fileStorageService.dirEducacionContinua().resolve(String.valueOf(idEduContinua)).resolve(fileStorageService.dirDiplomasParticipantes()));
 		participanteDao.createCertificacionParticipante(true, diplomaImagen, new Date(), token);
 		//prepararEmailInscripcion(p.getEducacionContinua(), perDto, tarjetaInscripcion);

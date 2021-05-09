@@ -572,7 +572,9 @@ public class EducacionContinuaCustomDaoImpl implements IEducacionContinuaCustomD
 			 .append(" from educacion_continua e");
 			 
 		if(isDirPrograma) {//es director de programa
-			query.append(" where e.id_programa = (select p.id from programas p where p.id_director = ?1 )");
+			query.append(" where e.id_programa = (select p.id from programas p where p.id_director = ?1 ) and e.estado != '" + StatusEducacionContinua.STATUS_TERMINADO+"'" );
+		}else {
+			query.append(" where e.estado != '" + StatusEducacionContinua.STATUS_TERMINADO +"'");
 		}
 		   query.append(" order by e.fecha_inicio asc");
 		

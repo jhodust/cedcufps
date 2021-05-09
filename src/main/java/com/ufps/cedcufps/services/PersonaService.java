@@ -689,7 +689,7 @@ public class PersonaService implements IPersonaService {
 				p=personaCustomDao.findPersonasByNumeroDocumento(value);
 				break;
 			case 2:
-				p=personaCustomDao.findPosiblePonenteByNombre("%"+value+"%");
+				p=personaCustomDao.findPosiblePonenteByNombre("%"+value.replaceAll(" ", "%")+"%");
 				break;
 			case 3:
 				p=estudianteDao.findEstudianteByCodigo(value);

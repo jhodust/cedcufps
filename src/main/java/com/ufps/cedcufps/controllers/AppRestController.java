@@ -120,7 +120,6 @@ public class AppRestController {
 	
 	public boolean buscarPermisosAdminsitradorCursosYEventos(Persona p) {
 		if(personaService.hasPermissionForAttendance(p) || personaService.isSuperAdmin(p) || personaService.hasPermissionForEduContinua(p.getId())) {
-
 			return true;
 		}
 		

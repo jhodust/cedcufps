@@ -559,9 +559,9 @@ public class PersonaCustomDaoImpl implements IPersonaCustomDao {
 				.append(" left join tipos_documento tp on p.id_tipo_documento=tp.id")
 				.append(" left join estados_civiles ec on p.id_estado_civil=ec.id")
 				.append(" left join generos g on p.id_genero=g.id")
-			.append(" where CONCAT(p.primer_nombre,' ', p.segundo_nombre,' ',p.primer_apellido,' ', p.segundo_apellido) like ?1");
+			.append(" where UPPER(CONCAT(COALESCE(p.primer_nombre,''),' ', COALESCE(p.segundo_nombre,''),' ',COALESCE(p.primer_apellido,''),' ', COALESCE(p.segundo_apellido,''))) like ?1");
 		
-		Query q= em.createNativeQuery(query.toString()).setParameter(1, nombre);
+		Query q= em.createNativeQuery(query.toString()).setParameter(1, nombre.toUpperCase());
 		List<Object[]> result= q.getResultList();
 		return personaMapper.convertListObjectToListPersonas(result);
 		

@@ -54,7 +54,7 @@
 						<tbody>
 							<tr th:each="p : ${participaciones}">
 								<td>
-									<a class="action-item" th:class="${p.participanteDto.isAprobado()} ? 'action-item action-item-red-ufps hover-scale-110 linkCertificado' : 'action-item action-item-disabled linkCertificado' "  onclick="viewMyCertificado(this)"  target="_blank"  th:data-token="${p.participanteDto.token}" data-toggle="tooltip" data-placement="left" title="Ver Certificado" >
+									<a class="action-item" th:class="${p.participanteDto.isAprobado()} ? 'action-item action-item-red-ufps hover-scale-110 linkCertificado' : 'action-item action-item-disabled linkCertificado' "   target="_blank"  th:data-token="${p.participanteDto.token}" data-toggle="tooltip" data-placement="left" title="Ver Certificado" >
    									<span class="btn-inner--icon"><i class="fas fa-money-check"></i></span>
    									</td>
 								<td th:text="${p.participanteDto.tipoEduContinua}"></td>

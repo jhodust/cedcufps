@@ -272,8 +272,13 @@ public class PersonaService implements IPersonaService {
 		}catch(Exception e) {
 			return null;
 		}
-		
-		
+	}
+	
+	@Override
+	public List<PersonaRol> findRolesPersona(Long idPersona) {
+		// TODO Auto-generated method stub
+		return personaCustomDao.findRolesPersona(idPersona);
+			
 	}
 
 	@Override

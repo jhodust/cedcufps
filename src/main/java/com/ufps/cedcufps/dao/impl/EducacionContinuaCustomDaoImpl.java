@@ -501,7 +501,6 @@ public class EducacionContinuaCustomDaoImpl implements IEducacionContinuaCustomD
 	@Override
 	public List<EducacionContinuaAppDto> findEducacionesContinuasForApp(Long idPersona, boolean isSuperAdmin) {
 		// TODO Auto-generated method stub
-		
 		StringBuilder query = new StringBuilder();
 		query.append(" select e.id, e.nombre, e.fecha_inicio, e.fecha_fin, e.fecha_lim_inscripcion, pro.programa,")
 			 .append(" tec.tipo_educacion_continua, e.id_acceso, p.primer_nombre, p.segundo_nombre, p.primer_apellido,")

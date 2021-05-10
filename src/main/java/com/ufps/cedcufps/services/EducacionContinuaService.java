@@ -297,6 +297,7 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 		Persona p= personaService.findPersonaById(idPersona);
 		List<EducacionContinuaAppDto> list = new ArrayList<EducacionContinuaAppDto>();
 		if(p!=null) {
+			p.setPersonaXRoles(personaService.findRolesPersona(p.getId()));
 			return educacionContinuaCustomDao.findEducacionesContinuasForApp(p.getId(), personaService.isSuperAdmin(p));
 			
 		}

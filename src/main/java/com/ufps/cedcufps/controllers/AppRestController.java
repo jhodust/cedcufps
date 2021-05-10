@@ -129,7 +129,6 @@ public class AppRestController {
 	
 	@GetMapping(value="/misCursosYEduContinua/{idPersona}", produces = "application/json")
     public ResponseEntity<List<EducacionContinuaAppDto>> searchCursosYEventos(@PathVariable Long idPersona) {
-        
         return  new ResponseEntity<>(educacionContinuaService.findAllEducacionesApp(idPersona),HttpStatus.OK);
     }
 	

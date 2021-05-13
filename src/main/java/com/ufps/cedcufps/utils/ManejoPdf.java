@@ -42,7 +42,7 @@ public class ManejoPdf {
 
 	private static final String header="header_pdf.png";
 	private static final String footer="footer_pdf.png";
-	
+	private static final int CANT_PERSONAS_POR_HOJA=19;
 	public static ByteArrayInputStream generarPDFParticipantes(List<ParticipanteDto> participantes, EducacionContinua e, Path dirFolderImgs) {
 
 		Document document = new Document(PageSize.LETTER, 50, 50, 100, 100);//creo el documento con margenes para la información (titulo, subtitulo, tabla)
@@ -55,15 +55,14 @@ public class ManejoPdf {
 			document.open();
 
 			int totalParticipantes = participantes.size();
-			int hojas = totalParticipantes / 30;
-			if (totalParticipantes % 30 > 0) {
+			int hojas = totalParticipantes / CANT_PERSONAS_POR_HOJA;
+			if (totalParticipantes % CANT_PERSONAS_POR_HOJA > 0) {
 				hojas++;
 			}
 			int k = 0;//variable para recorrer las paginas
 			int i = 1;
-			int j = 30;//variable para recorrer la cantidad de participantes por grupos de 30
+			int j = CANT_PERSONAS_POR_HOJA;//variable para recorrer la cantidad de participantes por grupos de 20
 			while (k < hojas) {
-				
 				
 				/***********************titulo**************************/
 				String tituloDoc=e.getTipoEduContinua().getTipoEduContinua()+": "+e.getNombre();
@@ -79,9 +78,9 @@ public class ManejoPdf {
 				titulo.setAlignment(Element.ALIGN_CENTER);
 				
 				document.add(titulo);
-				
 				/***********************sub titulo**************************/
-				font = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12, Font.UNDERLINE);
+				document.add(Chunk.NEWLINE);
+				font = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 11, Font.UNDERLINE);
 				chunk = new Chunk("Listado Inscritos", font);
 
 				phrase = new Phrase();
@@ -97,9 +96,9 @@ public class ManejoPdf {
 				document.add(Chunk.NEWLINE);
 
 				/***********************tabla participantes **************************/
-				PdfPTable table = new PdfPTable(3);
+				PdfPTable table = new PdfPTable(4);
 				table.setWidthPercentage(90);
-				table.setWidths(new int[] { 1, 3, 7 });
+				table.setWidths(new int[] { 1, 3, 6, 6 });
 				
 				Font headFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD);
 
@@ -115,11 +114,14 @@ public class ManejoPdf {
 				hcell = new PdfPCell(new Phrase("Nombre", headFont));
 				hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				table.addCell(hcell);
+				
+				hcell = new PdfPCell(new Phrase("Email", headFont));
+				hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				table.addCell(hcell);
 
 				//hcell = new PdfPCell(new Phrase("Participante", headFont));
 				//hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				//table.addCell(hcell);
-
 				while (i <= j) {
 					if (i <= participantes.size()) {
 						
@@ -142,6 +144,12 @@ public class ManejoPdf {
 						cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 						cell.setHorizontalAlignment(Element.ALIGN_LEFT);
 						table.addCell(cell);
+						
+						cell = new PdfPCell(new Phrase(p.getEmail()));
+						cell.setPaddingLeft(5);
+						cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+						cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+						table.addCell(cell);
 
 						//cell = new PdfPCell(new Phrase(p.getPersona().getTipoPersona().getTipoPersona()));
 						//cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -155,7 +163,6 @@ public class ManejoPdf {
 					}
 				}
 				document.add(table);
-				
 				/************************encabezado fijado***********************************/
 				/*cargo la imagen*/
 				
@@ -187,7 +194,7 @@ public class ManejoPdf {
 				
 				
 				k++;
-				j = j + 30;
+				j = j + CANT_PERSONAS_POR_HOJA;
 				document.add(Chunk.NEXTPAGE);
 			}
 			

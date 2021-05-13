@@ -100,4 +100,50 @@ public class EducacionContinuaRestController {
 		participanteService.cancelarCertificacionParticipante(tokenParticipante);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
+	
+	@GetMapping(value = "/aprobarPreInscripcionTodos")
+	public ResponseEntity<?> aprobarPreInscripcionTodosParticipantes(@RequestParam(name = "idEduContinua") Long idEduContinua) {
+		System.out.println("aprobar preinscripcion todos");
+		System.out.println("id acceso edu continua: " + idEduContinua);
+		participanteService.aprobarPreInscripcionAllParticipantes(idEduContinua);
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/cancelarPreInscripcionParticipante")
+	public ResponseEntity<?> cancelarPreInscripcionParticipante(@RequestParam(name = "idEduContinua") Long idEduContinua,
+			@RequestParam(name = "tokenParticipante") String tokenParticipante) {
+		System.out.println("cancelar preinscipcion participante");
+		System.out.println("idAccesoEduContinua: " + idEduContinua);
+		System.out.println("token participante: " + tokenParticipante);
+		participanteService.cancelarPreInscripcionParticipante(idEduContinua, tokenParticipante);
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/aprobarPreInscripcionParticipante")
+	public ResponseEntity<?> aprobarPreInscripcionParticipante(@RequestParam(name = "idEduContinua") Long idEduContinua,
+			@RequestParam(name = "tokenParticipante") String tokenParticipante) {
+		System.out.println("aprobar preinscipcion participante");
+		System.out.println("idAccesoEduContinua: " + idEduContinua);
+		System.out.println("token participante: " + tokenParticipante);
+		participanteService.aprobarPreInscripcionParticipante(idEduContinua, tokenParticipante);
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/notificarPreInscripcionTodos")
+	public ResponseEntity<?> notificarPreInscripcionTodosParticipantes(@RequestParam(name = "idEduContinua") Long idEduContinua) {
+		System.out.println("notificar preinscipcion todos");
+		System.out.println("idAccesoEduContinua: " + idEduContinua);
+		participanteService.notificarPreInscripcionAllParticipantes(idEduContinua);
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/notificarPreInscripcionParticipante")
+	public ResponseEntity<?> notificarPreInscripcionParticipante(@RequestParam(name = "idEduContinua") Long idEduContinua,
+			@RequestParam(name = "tokenParticipante") String tokenParticipante) {
+		System.out.println("notificar preinscipcion participante");
+		System.out.println("idAccesoEduContinua: " + idEduContinua);
+		System.out.println("token participante: " + tokenParticipante);
+		participanteService.notificarPreInscripcionParticipante(idEduContinua, tokenParticipante);
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
 }

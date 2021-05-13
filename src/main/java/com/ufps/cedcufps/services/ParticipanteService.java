@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -166,6 +167,7 @@ public class ParticipanteService implements IParticipanteService{
 		}
 		dto.setToken(String.valueOf(System.currentTimeMillis()));
 		participanteCustomDao.saveParticipante(dto);
+		participanteCustomDao.updateStatusPreInscripcionAllParticipantesEduContinua(idEduContinua);
 		return dto;
 	}
 
@@ -198,15 +200,14 @@ public class ParticipanteService implements IParticipanteService{
 		
 		this.deleteInfoParticipante(idParticipante, pa.getCodigoQR(), pa.getTarjetaInscripcion());
 		
-		this.prepararEmailCancelarInscripcion(pa);
 		
 	}
 	
 	private void deleteInfoParticipante(Long idParticipante, String codigoQr, String tarjetaInscripcion) {
 		try {
 			participanteDao.deleteParticipante(idParticipante);
-			Archivo.deleteImage(codigoQr);
-			Archivo.deleteImage(tarjetaInscripcion);
+			//Archivo.deleteImage(codigoQr);
+			//Archivo.deleteImage(tarjetaInscripcion);
 		}catch(DataIntegrityViolationException e) {
 			throw new CustomException("El participante ya tiene asistencias registradas y no es posible cancelar su inscripción");
 		}
@@ -300,12 +301,11 @@ public class ParticipanteService implements IParticipanteService{
 				fileStorageService.dirEducacionContinua().resolve(String.valueOf(p.getIdEducacionContinua())).resolve(fileStorageService.dirTarjetasInscripcion()));
 		participanteDao.updateTarjetaInscripcion(tarjetaInscripcion, idParticipante);
 		
-		prepararEmailInscripcion(p, tarjetaInscripcion);
 		
 		
 	}
 
-	public void prepararEmailInscripcion(ParticipanteDto participante, String tarjetaInscripcion) {
+	public void prepararEmailInscripcion(ParticipanteDto participante) {
 		String strDateFormat = "dd/MM/yyyy"; 
 	     SimpleDateFormat objSDF = new SimpleDateFormat(strDateFormat);
 	     
@@ -318,7 +318,7 @@ public class ParticipanteService implements IParticipanteService{
 				objSDF.format(participante.getFechaInicioEduContinua()),objSTF.format(participante.getFechaInicioEduContinua())); 
 		
 		notificarViaEmail(participante.getEmail(), "Inscripción Realizada " + participante.getEducacionContinua(),
-				tarjetaInscripcion, contenido,participante.getNombrePersona(),true);
+				participante.getTarjetaInscripcion(), contenido,participante.getNombrePersona(),true);
 	}
 	
 	public void prepararEmailCancelarInscripcion(ParticipanteDto participante) {
@@ -435,6 +435,61 @@ public class ParticipanteService implements IParticipanteService{
 			e.printStackTrace();
 		}
 		
+	}
+
+	@Async
+	@Override
+	public void notificarPreInscripcionAllParticipantes(Long idEduContinua) {
+		// TODO Auto-generated method stub
+		List<ParticipanteDto> listParticipantes=participanteCustomDao.findAllParticipantesEducacionContinuaById(idEduContinua);
+		for(ParticipanteDto dto:listParticipantes) {
+			if(dto.isStatusInscripcion()) {
+				this.notificarInscripcion(dto);
+			}
+			
+		}
+	}
+
+	@Override
+	public void notificarPreInscripcionParticipante(Long idEduContinua, String tokenParticipante) {
+		// TODO Auto-generated method stub
+		ParticipanteDto p= participanteCustomDao.findByToken(tokenParticipante);
+		this.notificarInscripcion(p);
+		
+		
+	}
+	
+	public void notificarInscripcion(ParticipanteDto participanteDto) {
+		prepararEmailInscripcion(participanteDto);
+	}
+
+	@Override
+	public void aprobarPreInscripcionAllParticipantes(Long idEduContinua) {
+		// TODO Auto-generated method stub
+		participanteCustomDao.updateStatusPreInscripcionAllParticipantes(idEduContinua);
+		participanteCustomDao.updateStatusPreInscripcionAllParticipantesEduContinua(idEduContinua);
+	}
+	
+	
+	
+	@Override
+	public void aprobarPreInscripcionParticipante(Long idEduContinua, String tokenParticipante) {
+		// TODO Auto-generated method stub
+		participanteCustomDao.updateStatusPreInscripcionParticipante(idEduContinua, tokenParticipante);
+		participanteCustomDao.updateStatusPreInscripcionAllParticipantesEduContinua(idEduContinua);
+	}
+
+	@Override
+	public void cancelarPreInscripcionParticipante(Long idEduContinua, String tokenParticipante) {
+		// TODO Auto-generated method stub
+		ParticipanteDto pa= participanteCustomDao.findByToken(tokenParticipante); 
+		if(pa==null) {
+			throw new CustomException("El participante a eliminar no fue encontrado en la base de datos");
+		}
+		
+		this.deleteInfoParticipante(pa.getId(), pa.getCodigoQR(), pa.getTarjetaInscripcion());
+		
+		this.prepararEmailCancelarInscripcion(pa);
 	}
 
 }

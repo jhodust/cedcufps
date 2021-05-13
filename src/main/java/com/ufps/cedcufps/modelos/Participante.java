@@ -92,6 +92,11 @@ public class Participante implements Serializable{
 	
 	@Column(columnDefinition = "boolean default false")
 	private boolean aprobado;
+	
+	@Column(name = "status_preinscripcion", columnDefinition = "boolean default false")
+	private boolean statusPreinscripcion;
+	
+	
 	@PrePersist
 	public void generarFecha() {
 		this.fechaRegisto = new Date();
@@ -213,6 +218,14 @@ public class Participante implements Serializable{
 
 	public void setToken(String token) {
 		this.token = token;
+	}
+
+	public boolean isStatusPreinscripcion() {
+		return statusPreinscripcion;
+	}
+
+	public void setStatusPreinscripcion(boolean statusPreinscripcion) {
+		this.statusPreinscripcion = statusPreinscripcion;
 	}
 
 	

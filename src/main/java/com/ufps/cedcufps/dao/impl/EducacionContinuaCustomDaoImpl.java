@@ -246,7 +246,7 @@ public class EducacionContinuaCustomDaoImpl implements IEducacionContinuaCustomD
 		.append(" e.consecutivo, e.costo_educacion_continua, e.porcentaje_asistencia,")
 		.append(" tec.id as id_tipo_edu_continua, tec.tipo_educacion_continua, tec.estado_oficial, ")
 		.append(" p.id as id_docente, CONCAT(COALESCE(p.primer_nombre,''),' ',COALESCE(p.segundo_nombre,''),' ',COALESCE(p.primer_apellido,''),' ',COALESCE(p.segundo_apellido,'')),")
-		.append(" d.codigo, pro.id as id_programa, pro.programa, f.id as id_facultad, f.facultad, c.id as id_clasificacion_cine, c.clasificacion_cine")
+		.append(" d.codigo, pro.id as id_programa, pro.programa, f.id as id_facultad, f.facultad, c.id as id_clasificacion_cine, c.clasificacion_cine, e.status_preinscripcion_all_participantes")
 		.append(" from educacion_continua e")
 		.append(" join tipos_educacion_continua tec on tec.id=e.id_tipo_educacion_continua ")
 		.append(" join docentes d on d.id_persona =e.id_docente ")
@@ -293,6 +293,7 @@ public class EducacionContinuaCustomDaoImpl implements IEducacionContinuaCustomD
 			eduContinuaDto.setIdClasificacion(Long.parseLong(String.valueOf(edc[25])));
 			eduContinuaDto.setClasificacion(String.valueOf(edc[26]));
 			eduContinuaDto.setIdAcceso(idAcceso);
+			eduContinuaDto.setStatusAllPreinscripciones((Boolean) edc[27]);
 			
 			StringBuilder edcTipoBeneficiarios = new StringBuilder();
 			edcTipoBeneficiarios.append("select tb.id as id_tipo_beneficiario, tb.tipo_beneficiario,")
@@ -657,7 +658,7 @@ public class EducacionContinuaCustomDaoImpl implements IEducacionContinuaCustomD
 		query.append(" select e.id, e.nombre, COALESCE(e.cant_max_participantes,''), e.consecutivo, e.costo_educacion_continua,")
 			 .append(" COALESCE(e.costo_inscripcion,''), e.duracion, e.estado, e.fecha_inicio, e.fecha_fin, e.fecha_lim_inscripcion,")
 			 .append(" e.id_acceso, e.imagen, e.info_adicional, e.is_deleted, e.lugar, e.porcentaje_asistencia, ")
-			 .append(" e.id_clasificacion_cine, e.id_diploma, e.id_docente, e.id_programa, e.id_tipo_educacion_continua")
+			 .append(" e.id_clasificacion_cine, e.id_diploma, e.id_docente, e.id_programa, e.id_tipo_educacion_continua, e.status_preinscripcion_all_participantes")
 			 .append(" from educacion_continua e")
 			 .append(" where e.id_acceso = ?1");
 		
@@ -692,6 +693,7 @@ public class EducacionContinuaCustomDaoImpl implements IEducacionContinuaCustomD
 			e.setProgramaResponsable((result.get(0)[20] != null) ? programaCustomDao.findProgramaById(Long.parseLong(String.valueOf(result.get(0)[20]))) : null);
 			e.setTipoEduContinua((result.get(0)[21] != null) ? tipoEducacionContinuaDao.findTipoEducacionContinuaById(Long.parseLong(String.valueOf(result.get(0)[21]))) : null);
 			e.setTipoBeneficiarios(tiposBeneficiariosEduContinuaDao.findTiposBeneficiariosByIdEduContinua(e.getId()));
+			e.setAllParticipantesAprobadaPreinscipcion((Boolean) result.get(0)[22]);
 			return e;
 		}
 		
@@ -706,7 +708,7 @@ public class EducacionContinuaCustomDaoImpl implements IEducacionContinuaCustomD
 		query.append(" select e.id, e.nombre, COALESCE(e.cant_max_participantes,''), e.consecutivo, COALESCE(e.costo_educacion_continua,''),")
 			 .append(" COALESCE(e.costo_inscripcion,''), e.duracion, e.estado, e.fecha_inicio, e.fecha_fin, e.fecha_lim_inscripcion,")
 			 .append(" e.id_acceso, e.imagen, e.info_adicional, e.is_deleted, e.lugar, COALESCE(e.porcentaje_asistencia,0), ")
-			 .append(" e.id_clasificacion_cine, e.id_diploma, e.id_docente, e.id_programa, e.id_tipo_educacion_continua")
+			 .append(" e.id_clasificacion_cine, e.id_diploma, e.id_docente, e.id_programa, e.id_tipo_educacion_continua, e.status_preinscripcion_all_participantes")
 			 .append(" from educacion_continua e")
 			 .append(" where e.id_acceso = ?1");
 		
@@ -742,6 +744,7 @@ public class EducacionContinuaCustomDaoImpl implements IEducacionContinuaCustomD
 			e.setTipoEduContinua((result.get(0)[21] != null) ? tipoEducacionContinuaDao.findTipoEducacionContinuaById(Long.parseLong(String.valueOf(result.get(0)[21]))) : null);
 			e.setTipoBeneficiarios(tiposBeneficiariosEduContinuaDao.findTiposBeneficiariosByIdEduContinua(e.getId()));
 			e.setAnexos(anexosDao.findAnexosByEduContinuaId(e.getId()));
+			e.setAllParticipantesAprobadaPreinscipcion((Boolean) result.get(0)[22]);
 			
 			return e;
 		}

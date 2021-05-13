@@ -340,11 +340,27 @@
 		  <div class="tab-pane fade" id="pills-participantes" role="tabpanel" aria-labelledby="pills-participantes-tab">
 		  	<div class="card">
 		  	<div class="card-header">
-			  	<h5 class="h4 d-inline-block font-weight-400 mb-0 text-dark" ><strong>Listado Asistentes</strong></h5>
+		  	
+		  		<div class="row justify-content-between align-items-center">
+            <div class="col-md-6 d-flex align-items-center justify-content-between justify-content-md-start mb-3 mb-md-0">
+              <!-- Page title + Go Back button -->
+              <h5 class="h4 d-inline-block font-weight-400 mb-0 text-dark" ><strong>Listado Asistentes</strong></h5>
 		              
 		              <a th:if="${#lists.size(ec.educacionContinua.participantes) > 0}"  target="_blank" th:href="@{/educacion-continua/listado-participantes (educacionContinua=${educacionContinua.nombre},fecha=${educacionContinua.fechaInicio}, id=${educacionContinua.idAcceso})}"  data-toggle="tooltip" data-placement="top" title="Generar PDF" class="btn btn-white btn-icon-only rounded-circle ml-4">
 		                <span class="btn-inner--icon"><i class="far fa-file-pdf"></i></span>
 		              </a>	
+            </div>
+            <div class="col-md-6 d-flex align-items-center justify-content-between justify-content-md-end">
+              
+              <!-- Filter input -->
+              <a href="#" data-toggle="modal" data-target="#modalAyudaIconosListado" class="btn btn-sm btn-white rounded-circle ml-4">
+                <span class="btn-inner--icon"><i class="fas fa-info"></i> Ayuda</span></a>
+              
+              
+            </div>
+          </div>
+		  		
+			  	
 	  	 	</div>
 	  	 	<div class="card-body" >
 	  	 		<div th:replace="educacion_continua/listado_asistentes/listadoParticipantes :: listadoParticipantes"></div>
@@ -388,6 +404,48 @@
    <div th:replace="educacion_continua/tarjetas_inscripcion/canvas_modal :: canvas"></div> 
     <div th:replace="educacion_continua/jornada/formModal :: modalRegistro"></div>
     <div th:replace="educacion_continua/ponente/formModal :: modalRegistro"></div>
+    <div class="modal fade" id="modalAyudaIconosListado" tabindex="-1" role="dialog" aria-labelledby="modalAyudaIconosListado" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-title d-flex align-items-center" id="modal-title-change-username">
+                        <div>
+                            <div class="icon icon-sm icon-shape rounded-circle shadow mr-3">
+                                <i class="fas fa-info"></i>
+                            </div>
+                        </div>
+                        <div>
+                            <h5 class="mb-0 text-white">Panel de íconos</h5>
+                        </div>
+                    </div>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true" class="text-white">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                	<div class="card">
+					<div class="card-body">
+						
+						<p>Los siguientes íconos en la tabla indican lo siguiente:</p>
+						<ul>
+							<li style="font-size:14px"><i class="fas fa-times"></i> cancela la preinscripción del participante</li>
+							<li style="font-size:14px"><i class="fas fa-check"></i> aprueba la preinscripción del participante</li>
+							<li style="font-size:14px"><i class="fas fa-envelope-open-text"></i> notificar vía email la inscripción del participante</li>
+							<li style="font-size:14px"><i class="far fa-address-card"></i> visualizar tarjeta de participación</li>
+							<li style="font-size:14px"><i class="fas fa-money-check"></i> descargar certificado de participación</li>
+							<li style="font-size:14px"><i class="fas fa-ban"></i> el asistente no cumple con los criterios mínimos de asistencia
+								para ser aprobado su certificado de participación</li>
+						</ul>
+					</div>
+				</div>
+                </div>
+                 
+                
+                
+            </div>
+    </div>
+</div>
   </div>
   <!-- Scripts -->
   <!-- Core JS - includes jquery, bootstrap, popper, in-view and sticky-kit -->

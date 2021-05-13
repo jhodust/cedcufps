@@ -110,7 +110,7 @@ public class EducacionContinuaMapper implements IEducacionContinuaMapper {
 			eduContinuaDto.setDiploma(this.convertDiplomaToDiplomaDto(diplomaDao.findDiplomaByIdEduContinua(e.getId()),e.getId()));
 			
 			Map<Long, Integer> asistenciasGeneralesMap=new HashMap<Long, Integer>();
-			List<ParticipanteDto> participantes=this.participanteCustomDao.findAllParticipantesEducacionContinua(e.getId());
+			List<ParticipanteDto> participantes=this.participanteCustomDao.findAllParticipantesEducacionContinuaById(e.getId());
 			List<Jornada> jornadas=jornadaDao.findByIdEducacionContinua(e.getId());
 			for(Jornada j: jornadas) {
 				asistenciasGeneralesMap.put(j.getId(), participantes.size());
@@ -142,7 +142,8 @@ public class EducacionContinuaMapper implements IEducacionContinuaMapper {
 			eduContinuaDto.setAnexos(this.convertListAnexoToListAnexoDto(e.getAnexos()));
 			eduContinuaDto.setAsistenciasGenerales(this.validateAsistenciasGenerales(asistenciasGeneralesMap));
 			dto.setEducacionContinua(eduContinuaDto);
-			
+			eduContinuaDto.setAbleToActions(!e.getEstado().equalsIgnoreCase(StatusEducacionContinua.STATUS_TERMINADO));
+			eduContinuaDto.setStatusAllPreinscripciones(e.isAllParticipantesAprobadaPreinscipcion());
 		}else {
 			dto.setEducacionContinua(null);
 		}
@@ -190,6 +191,8 @@ public class EducacionContinuaMapper implements IEducacionContinuaMapper {
 		pdto.setDiplomaParticipacion(p.getDiplomaParticipacion());
 		pdto.setFechaGeneracionDiploma(p.getFechaGeneracionDiploma());
 		pdto.setToken(p.getToken());
+		pdto.setEmail(p.getPersona().getEmail());
+		pdto.setStatusInscripcion(p.isStatusPreinscripcion());
 		return pdto;
 	}
 

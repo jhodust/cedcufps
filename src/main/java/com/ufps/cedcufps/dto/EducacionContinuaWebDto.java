@@ -47,8 +47,8 @@ public class EducacionContinuaWebDto {
 	private String idAcceso;
 	private List<AnexosDto> anexos;
 	private Map<Long,Boolean> asistenciasGenerales;
-	
-	
+	private boolean ableToActions;
+	private boolean statusAllPreinscripciones;
 	
 	public EducacionContinuaWebDto() {
 		this.asistenciasGenerales=new HashMap<Long, Boolean>();
@@ -283,6 +283,19 @@ public class EducacionContinuaWebDto {
 	public void setAnexos(List<AnexosDto> anexos) {
 		this.anexos = anexos;
 	}
+	public boolean isAbleToActions() {
+		return ableToActions;
+	}
+	public void setAbleToActions(boolean ableToActions) {
+		this.ableToActions = ableToActions;
+	}
+	public boolean isStatusAllPreinscripciones() {
+		return statusAllPreinscripciones;
+	}
+	public void setStatusAllPreinscripciones(boolean statusAllPreinscripciones) {
+		this.statusAllPreinscripciones = statusAllPreinscripciones;
+	}
+	
 	
 	
 }

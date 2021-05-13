@@ -169,6 +169,11 @@ public class EducacionContinua extends Auditable<String> implements Serializable
 	@JsonIgnore
 	@OneToMany(mappedBy = "educacionContinua",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Anexos> anexos;
+	
+	@Column(name = "status_preinscripcion_all_participantes", columnDefinition = "boolean default false")
+	private boolean allParticipantesAprobadaPreinscipcion;
+	
+	
 	public EducacionContinua() {
 		this.jornadas=new ArrayList<Jornada>();
 		this.participantes=new ArrayList<Participante>();

@@ -12,6 +12,7 @@ import com.ufps.cedcufps.dto.PonenteDto;
 import com.ufps.cedcufps.modelos.Participante;
 import com.ufps.cedcufps.modelos.Ponente;
 import com.ufps.cedcufps.modelos.TipoParticipante;
+import com.ufps.cedcufps.utils.Archivo;
 
 public interface IParticipanteService {
 
@@ -63,4 +64,16 @@ public interface IParticipanteService {
 	public CertificacionDto findCertificacionByToken(String token);
 	
 	public List<PonenteDto> findPonentesByEduContinua(Long idEducacionContinua);
+	
+	public void notificarPreInscripcionAllParticipantes(Long idEduContinua);
+	
+	public void notificarPreInscripcionParticipante(Long idEduContinua, String tokenParticipante);
+	
+	public void aprobarPreInscripcionAllParticipantes(Long idEduContinua);
+	
+	public void aprobarPreInscripcionParticipante(Long idEduContinua, String tokenParticipante);
+	
+	public void cancelarPreInscripcionParticipante(Long idEduContinua, String tokenParticipante);
+	
+	
 }

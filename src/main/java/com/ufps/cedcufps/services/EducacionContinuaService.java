@@ -616,8 +616,8 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 	@Override
 	public ByteArrayInputStream generarPdfAsistentes(String idAcceso) {
 		// TODO Auto-generated method stub
-		EducacionContinua e = educacionContinuaDao.findByIdAcceso(idAcceso);
-		return ManejoPdf.generarPDFParticipantes(educacionContinuaMapper.convertParticipantesToParticipanteDto(e.getParticipantes()),e,fileStorageService.dirImgPdfAsistentes());
+		EducacionContinua e = educacionContinuaCustomDao.findEducacionContinuaByIdAcceso(idAcceso);
+		return ManejoPdf.generarPDFParticipantes(participanteCustomDao.findAllParticipantesEducacionContinuaByIdAcceso(idAcceso),e,fileStorageService.dirImgPdfAsistentes());
 	}
 	
 

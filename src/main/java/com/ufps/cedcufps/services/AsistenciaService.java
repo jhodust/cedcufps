@@ -56,12 +56,15 @@ public class AsistenciaService implements IAsistenciaService {
 			Jornada j= jornadaDao.findOneById(idJornada);
 			ArrayList <Asistencia> asistencias=new ArrayList<>();
 			for(Participante p:j.getEducacionContinua().getParticipantes()) {
-				Asistencia a=new Asistencia();
-				a.setJornada(j);
-				a.setParticipante(p);
-				if(this.findAsistenciaByJornadaAndParticipante(a.getJornada().getId(), a.getParticipante().getId())==null){
-					asistencias.add(a);
+				if(p.isStatusPreinscripcion()) {
+					Asistencia a=new Asistencia();
+					a.setJornada(j);
+					a.setParticipante(p);
+					if(this.findAsistenciaByJornadaAndParticipante(a.getJornada().getId(), a.getParticipante().getId())==null){
+						asistencias.add(a);
+					}
 				}
+				
 			}
 		asistenciaDao.saveAll(asistencias);
 	}

@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.data.jpa.datatables.mapping.DataTablesOutput;
 
 import com.ufps.cedcufps.dto.DocenteDto;
+import com.ufps.cedcufps.dto.ParticipanteDto;
 import com.ufps.cedcufps.dto.PerfilRolUsuarioDto;
 import com.ufps.cedcufps.dto.PermisosRegistroPersonaDto;
 import com.ufps.cedcufps.dto.PersonaDto;
@@ -24,6 +25,7 @@ import com.ufps.cedcufps.modelos.PersonaRol;
 import com.ufps.cedcufps.modelos.Programa;
 import com.ufps.cedcufps.modelos.TipoDocumento;
 import com.ufps.cedcufps.modelos.TipoPersona;
+import com.ufps.cedcufps.utils.Archivo;
 
 public interface IPersonaService {
 
@@ -120,5 +122,7 @@ public interface IPersonaService {
 	public UsuarioDto editarUsuarioByDocumento(String documento);
 	
 	public List<PersonaRol> findRolesPersona(Long idPersona);
+	
+	
 
 }

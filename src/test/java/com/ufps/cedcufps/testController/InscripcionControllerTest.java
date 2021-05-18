@@ -52,12 +52,12 @@ public class InscripcionControllerTest {
 	}
 	
 	
-	@Test
+	/*@Test
 	public void realizarInscripcionTest() {
 		Mockito.when(participanteService.saveAsistente(Long.parseLong(ID_EDU_CONTINUA), Long.parseLong(ID_TIPO_PERSONA))).thenReturn(PARTICIPANTE_DTO);
 		final ResponseEntity<?> response = asistenteRestController.realizarInscripcion(ID_EDU_CONTINUA, ID_TIPO_PERSONA);
 		assertEquals(response.getStatusCode(), HttpStatus.OK);
-	}
+	}*/
 	
 	@Test
 	public void cancelarInscripcionTest() {

@@ -608,6 +608,7 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 		
 		dto.setEstaInscrito(participante!=null);
 		dto.setEducacionContinua(ec);
+		dto.setEnableToPay(!ec.getCostoInscripcion().equalsIgnoreCase("GRATUITO"));
 		return dto;
 	}
 
@@ -625,31 +626,23 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 	public void createDirEducacionContinua(Long idEducacionContinua) {
 		try {
 			File directory = new File(fileStorageService.dirEducacionContinua().resolve(String.valueOf(idEducacionContinua)).resolve(fileStorageService.dirQrParticipantes()).toString());
-			System.out.println(directory.getAbsolutePath());
-			System.out.println("exits: " + directory.exists());
 			logger.info(directory.getAbsolutePath());
 			logger.info("exits: " + directory.exists());
 			if(!directory.exists()) {
 				Files.createDirectories(fileStorageService.dirEducacionContinua().resolve(String.valueOf(idEducacionContinua)).resolve(fileStorageService.dirQrParticipantes()));
 			}
-			System.out.println(directory.getAbsolutePath());
-			System.out.println("exits: " + directory.exists());
 			logger.info(directory.getAbsolutePath());
 			logger.info("exits: " + directory.exists());
 			directory = new File(fileStorageService.dirEducacionContinua().resolve(String.valueOf(idEducacionContinua)).resolve(fileStorageService.dirTarjetasInscripcion()).toString());
 			if(!directory.exists()) {
 				Files.createDirectories(fileStorageService.dirEducacionContinua().resolve(String.valueOf(idEducacionContinua)).resolve(fileStorageService.dirTarjetasInscripcion()));
 			}
-			System.out.println(directory.getAbsolutePath());
-			System.out.println("exits: " + directory.exists());
 			logger.info(directory.getAbsolutePath());
 			logger.info("exits: " + directory.exists());
 			directory = new File(fileStorageService.dirEducacionContinua().resolve(String.valueOf(idEducacionContinua)).resolve(fileStorageService.dirDiplomasParticipantes()).toString());
 			if(!directory.exists()) {
 				Files.createDirectories(fileStorageService.dirEducacionContinua().resolve(String.valueOf(idEducacionContinua)).resolve(fileStorageService.dirDiplomasParticipantes()));
 			}
-			System.out.println(directory.getAbsolutePath());
-			System.out.println("exits: " + directory.exists());
 			logger.info(directory.getAbsolutePath());
 			logger.info("exits: " + directory.exists());
 			directory = new File(fileStorageService.dirEducacionContinua().resolve(String.valueOf(idEducacionContinua)).resolve(fileStorageService.dirAnexos()).toString());

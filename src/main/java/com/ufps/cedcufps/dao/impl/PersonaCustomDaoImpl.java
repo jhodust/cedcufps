@@ -464,7 +464,6 @@ public class PersonaCustomDaoImpl implements IPersonaCustomDao {
 				.append(" left join estados_civiles ec on p.id_estado_civil=ec.id")
 				.append(" left join generos g on p.id_genero=g.id")
 			.append(" where p.email = ?1 ");
-		
 		Query q= em.createNativeQuery(query.toString()).setParameter(1, email);
 		List<Object[]> result= q.getResultList();
 		if(result.size()==1) {

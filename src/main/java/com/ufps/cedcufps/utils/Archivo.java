@@ -32,9 +32,6 @@ public class Archivo {
 			
 			nombreImagen = path.resolve(imagenSinExtension+"."+Files.getFileExtension(imagen.getOriginalFilename())).toString();
 			byte[] bytes = imagen.getBytes();
-			System.out.println("°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°");
-			System.out.println("guardando imagen");
-			System.out.println(nombreImagen);
 			logger.debug("°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°");
 			logger.info("guardando imagen");
 			logger.info(nombreImagen);

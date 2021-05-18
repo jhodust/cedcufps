@@ -96,6 +96,8 @@ public class Participante implements Serializable{
 	@Column(name = "status_preinscripcion", columnDefinition = "boolean default false")
 	private boolean statusPreinscripcion;
 	
+	@Column(name = "recibo_pago")
+	private String reciboPago;
 	
 	@PrePersist
 	public void generarFecha() {

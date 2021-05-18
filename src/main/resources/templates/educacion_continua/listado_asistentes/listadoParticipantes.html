@@ -77,10 +77,10 @@
             <table  style="width: 100%;"class="row-border table align-items-center myTable2" >
 						<thead>
 							<tr>
-								<th class="th2" th:if="${ec.educacionContinua.isAbleToActions() and #lists.size(ec.educacionContinua.participantes) > 0}">Acciones <br>
-									<button class="action-item action-item-red-ufps hover-scale-110 " th:if="${not ec.educacionContinua.isStatusAllPreinscripciones()}" onclick="aprobarPreinscripcionAll()"  data-toggle="tooltip" data-placement="left" title="Aprobar Inscripción">
+								<th class="th2" th:if="${#lists.size(ec.educacionContinua.participantes) > 0}">Acciones <br>
+									<button class="action-item action-item-red-ufps hover-scale-110 " th:if="${ec.educacionContinua.isAbleToActions() and  not ec.educacionContinua.isStatusAllPreinscripciones()}" onclick="aprobarPreinscripcionAll()"  data-toggle="tooltip" data-placement="left" title="Aprobar Inscripción">
     									<span class="btn-inner--icon"><i class="fas fa-check"></i></span></button>
-    								<button class="action-item action-item-red-ufps hover-scale-110 "   onclick="notificarPreinscripcionAllParticipantes()"  data-toggle="tooltip" data-placement="left" title="Notificar Inscripción">
+    								<button class="action-item action-item-red-ufps hover-scale-110 "   th:if="${ec.educacionContinua.isAbleToActions()}" onclick="notificarPreinscripcionAllParticipantes()"  data-toggle="tooltip" data-placement="left" title="Notificar Inscripción">
     									<span class="btn-inner--icon"><i class="fas fa-envelope-open-text"></i></button>
 								</th>
 								<th class="th2" th:if="${ec.educacionContinua.isEnableAsistencia() and #lists.size(ec.educacionContinua.jornadas) > 0 and ec.educacionContinua.diploma != null}" id="headerImgCertificado">Certificado Participación</th>
@@ -95,16 +95,19 @@
 						</thead>
 						<tbody>
 							<tr th:each="p : ${ec.educacionContinua.participantes}" >
-								<td th:if="${ec.educacionContinua.isAbleToActions()}">
-									<button class="action-item action-item-red-ufps hover-scale-110" onclick="deleteParticipanteListado(this)" th:data-token="${p.token}" data-toggle="tooltip" data-placement="left" title="Cancelar Inscripción">
+								<td >
+									<button class="action-item action-item-red-ufps hover-scale-110" th:if="${ec.educacionContinua.isAbleToActions()}" onclick="deleteParticipanteListado(this)" th:data-token="${p.token}" data-toggle="tooltip" data-placement="left" title="Cancelar Inscripción">
     									<span class="btn-inner--icon"><i class="fas fa-times"></i></span></button>
-    								<button class="action-item action-item-red-ufps hover-scale-110 " th:if="${not p.isStatusInscripcion()}"  onclick="aprobarPreinscripcionParticipanteListado(this)" th:data-token="${p.token}" data-toggle="tooltip" data-placement="left" title="Aprobar Inscripción">
+    								<button class="action-item action-item-red-ufps hover-scale-110 " th:if="${ec.educacionContinua.isAbleToActions() and not p.isStatusInscripcion()}"  onclick="aprobarPreinscripcionParticipanteListado(this)" th:data-token="${p.token}" data-toggle="tooltip" data-placement="left" title="Aprobar Inscripción">
     									<span class="btn-inner--icon"><i class="fas fa-check"></i></span></button>
-    									<a th:href="@{${'/'+p.tarjetaInscripcion}}" th:if="${p.isStatusInscripcion()}" data-caption="Tarjeta Inscripción"  data-fancybox="group" class="action-item actions-red-ufps" th:data-id="${p.id}" data-toggle="tooltip" data-placement="left" title="Ver tarjeta inscripción">
+    									<a th:href="@{${'/'+p.reciboPago}}" th:if="${p.reciboPago}" th:data-caption="${'Constancia Pago - ' + p.nombrePersona} "  data-fancybox="group" class="action-item actions-red-ufps" th:data-id="${p.id}" data-toggle="tooltip" data-placement="left" title="Ver constancia pago">
+						                    <i class="fas fa-money-check-alt"></i>
+						                </a>
+    									<a th:href="@{${'/'+p.tarjetaInscripcion}}" th:if="${p.isStatusInscripcion() and ec.educacionContinua.isAbleToActions()}" data-caption="Tarjeta Inscripción"  data-fancybox="group" class="action-item actions-red-ufps" th:data-id="${p.id}" data-toggle="tooltip" data-placement="left" title="Ver tarjeta inscripción">
 						                    <i class="far fa-address-card"></i>
 						                   
 						                  </a>
-    								<button class="action-item action-item-red-ufps hover-scale-110 " th:if="${p.isStatusInscripcion()}"  onclick="NotificarPreinscripcionParticipanteListado(this)" th:data-token="${p.token}" data-toggle="tooltip" data-placement="left" title="Notificar Inscripción">
+    								<button class="action-item action-item-red-ufps hover-scale-110 " th:if="${p.isStatusInscripcion() and ec.educacionContinua.isAbleToActions()}"  onclick="NotificarPreinscripcionParticipanteListado(this)" th:data-token="${p.token}" data-toggle="tooltip" data-placement="left" title="Notificar Inscripción">
     									<span class="btn-inner--icon"><i class="fas fa-envelope-open-text"></i></button>
     								</td>
 								<td class="tdImgCertificados" th:if="${ec.educacionContinua.isEnableAsistencia() and #lists.size(ec.educacionContinua.jornadas) > 0 and ec.educacionContinua.diploma != null}">
@@ -123,7 +126,7 @@
 									  <label class="custom-control-label" th:for="${'swAprobar_'+p.id}"></label>
 									</div>
 								</td>
-								<td class="swAprobado" th:unless="${ec.educacionContinua.isEnableAsistencia() and #lists.size(ec.educacionContinua.jornadas) > 0 and ec.educacionContinua.diploma != null and p.isEnableToCertificate() } " >
+								<td class="swAprobado" th:unless="${ec.educacionContinua.isEnableAsistencia() and #lists.size(ec.educacionContinua.jornadas) > 0 and ec.educacionContinua.diploma != null and p.isEnableToCertificate()  and p.isStatusInscripcion() } " >
 									 <i class="fas fa-ban"></i>
 									
 								</td>

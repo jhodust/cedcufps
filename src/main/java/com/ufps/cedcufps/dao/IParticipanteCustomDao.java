@@ -48,4 +48,6 @@ public interface IParticipanteCustomDao  {
 	public void deletePreInscripcionParticipante(Long idEduContinua, String tokenParticipante);
 	
 	public void updateStatusPreInscripcionAllParticipantesEduContinua(Long idEduContinua);
+	
+	public void updateConstanciaPagoAsistente(Long idParticipante, String filePago);
 }

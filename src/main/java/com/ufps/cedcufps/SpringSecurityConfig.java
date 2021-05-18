@@ -153,6 +153,9 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 		.logout().logoutSuccessUrl("/logout").logoutSuccessHandler(this.oidcLogoutSuccessHandler()).clearAuthentication(true).deleteCookies("oauth2_auth_request","JSESSIONID")
 		.and().cors().configurationSource(corsConfigurationSource())
 		.and()
+	        .sessionManagement()
+	        .sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
+	    .and()
 		.oauth2Login(oauthLogin -> oauthLogin
 	            
 			.authorizedClientService(this.authorizedClientService())
@@ -211,7 +214,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Bean
     public AuthenticationSuccessHandler customSuccessHandler() {
-        return new CustomAuthenticationSuccessHandler();
+		return new CustomAuthenticationSuccessHandler();
     }
 	 
 	
@@ -248,7 +251,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 	 
 	OidcClientInitiatedLogoutSuccessHandler oidcLogoutSuccessHandler() { 
 		OidcClientInitiatedLogoutSuccessHandler successHandler = new OidcClientInitiatedLogoutSuccessHandler(clientRegistrationRepository());
-        successHandler.setPostLogoutRedirectUri(URI.create(this.googleProperties.getUrl()));
+        successHandler.setPostLogoutRedirectUri(URI.create(this.googleProperties.getUrl().concat(this.googleProperties.getContextPath())));
         return successHandler;
 		
     }

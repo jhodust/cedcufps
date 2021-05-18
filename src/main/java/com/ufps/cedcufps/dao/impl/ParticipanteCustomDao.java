@@ -53,8 +53,8 @@ public class ParticipanteCustomDao implements IParticipanteCustomDao {
 	@Override
 	public void saveParticipante(ParticipanteDto p) {
 		// TODO Auto-generated method stub
-		StringBuilder query = new StringBuilder().append("insert into participantes (codigoqr, fecha_registro, imagen_codigo_qr, educacion_continua_id, id_persona, id_tipo_participante, id_tipo_persona, token)")
-				.append(" VALUES (?,?,?,?,?,?,?,?)");
+		StringBuilder query = new StringBuilder().append("insert into participantes (codigoqr, fecha_registro, imagen_codigo_qr, educacion_continua_id, id_persona, id_tipo_participante, id_tipo_persona, token, status_preinscripcion)")
+				.append(" VALUES (?,?,?,?,?,?,?,?, ?)");
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 		jdbcTemplate.update(new PreparedStatementCreator() {
 
@@ -69,7 +69,7 @@ public class ParticipanteCustomDao implements IParticipanteCustomDao {
 				ps.setLong(6, p.getIdTipoParticipante());
 				ps.setObject(7, p.getIdTipoPersona());
 				ps.setObject(8, p.getToken());
-				
+				ps.setObject(9, p.isStatusInscripcion());
 				return ps;
 			}
 
@@ -89,7 +89,7 @@ public class ParticipanteCustomDao implements IParticipanteCustomDao {
 		.append(" td.id as id_tipo_documento, td.tipo_documento, e.id as id_edu_continua, e.nombre, p.codigoqr, p.fecha_generacion_diploma, ")
 			 .append(" p.fecha_registro, p.imagen_codigo_qr, p.tarjeta_inscripcion, p.aprobado, p.token, tec.id as id_tipo_educacion_continua,")
 			 .append(" tec.tipo_educacion_continua, per.primer_nombre, per.segundo_nombre, per.primer_apellido, per.segundo_apellido,")
-			 .append(" per.email, e.fecha_inicio, per.numero_documento, p.status_preinscripcion")
+			 .append(" per.email, e.fecha_inicio, per.numero_documento, p.status_preinscripcion, p.recibo_pago")
 			 .append(" from participantes p join personas per on p.id_persona=per.id ")
 			 .append(" join educacion_continua e on p.educacion_continua_id=e.id")
 			 .append(" join tipos_participante tp on p.id_tipo_participante=tp.id")
@@ -129,6 +129,7 @@ public class ParticipanteCustomDao implements IParticipanteCustomDao {
 			dto.setNombrePersona(usuarioMapper.convertFieldsFullName(dto.getPrimerNombre(), 
 					dto.getSegundoNombre(), dto.getPrimerApellido(), dto.getSegundoApellido()));
 			dto.setStatusInscripcion((Boolean)object[23]);
+			dto.setReciboPago((object[24] != null) ? String.valueOf(object[24]) : null);
 			list.add(dto);
 		}
 		return list;
@@ -143,7 +144,7 @@ public class ParticipanteCustomDao implements IParticipanteCustomDao {
 		.append(" td.id as id_tipo_documento, td.tipo_documento, e.id as id_edu_continua, e.nombre, p.codigoqr, p.fecha_generacion_diploma, ")
 			 .append(" p.fecha_registro, p.imagen_codigo_qr, p.tarjeta_inscripcion, p.aprobado, p.token, tec.id as id_tipo_educacion_continua,")
 			 .append(" tec.tipo_educacion_continua, per.primer_nombre, per.segundo_nombre, per.primer_apellido, per.segundo_apellido,")
-			 .append(" per.email, e.fecha_inicio, pon.tema,per.numero_documento, p.status_preinscripcion")
+			 .append(" per.email, e.fecha_inicio, pon.tema,per.numero_documento, p.status_preinscripcion, p.recibo_pago")
 			 .append(" from participantes p join personas per on p.id_persona=per.id ")
 			 .append(" join educacion_continua e on p.educacion_continua_id=e.id")
 			 .append(" join tipos_participante tp on p.id_tipo_participante=tp.id")
@@ -188,6 +189,7 @@ public class ParticipanteCustomDao implements IParticipanteCustomDao {
 			ponenteDto.setTema(String.valueOf(object[22]));
 			dto.setNumeroDocumento(String.valueOf(object[23]));
 			dto.setStatusInscripcion((Boolean)object[24]);
+			dto.setReciboPago((object[25] != null) ? String.valueOf(object[25]) : null);
 			list.add(ponenteDto);
 		}
 		return list;
@@ -201,7 +203,7 @@ public class ParticipanteCustomDao implements IParticipanteCustomDao {
 		.append(" td.id as id_tipo_documento, td.tipo_documento, e.id as id_edu_continua, e.nombre, p.codigoqr, p.fecha_generacion_diploma, ")
 			 .append(" p.fecha_registro, p.imagen_codigo_qr, p.tarjeta_inscripcion, p.aprobado, p.token, tec.id as id_tipo_educacion_continua,")
 			 .append(" tec.tipo_educacion_continua, per.primer_nombre, per.segundo_nombre, per.primer_apellido, per.segundo_apellido,")
-			 .append(" per.email, e.fecha_inicio, per.numero_documento, p.status_preinscripcion")
+			 .append(" per.email, e.fecha_inicio, per.numero_documento, p.status_preinscripcion, p.recibo_pago")
 			 .append(" from participantes p join personas per on p.id_persona=per.id ")
 			 .append(" join educacion_continua e on p.educacion_continua_id=e.id")
 			 .append(" join tipos_participante tp on p.id_tipo_participante=tp.id")
@@ -241,6 +243,7 @@ public class ParticipanteCustomDao implements IParticipanteCustomDao {
 			dto.setNombrePersona(usuarioMapper.convertFieldsFullName(dto.getPrimerNombre(), 
 					dto.getSegundoNombre(), dto.getPrimerApellido(), dto.getSegundoApellido()));
 			dto.setStatusInscripcion((Boolean)object[23]);
+			dto.setReciboPago((object[24] != null) ? String.valueOf(object[24]) : null);
 			list.add(dto);
 		}
 		return list;
@@ -255,7 +258,7 @@ public class ParticipanteCustomDao implements IParticipanteCustomDao {
 		.append(" td.id as id_tipo_documento, td.tipo_documento, e.id as id_edu_continua, e.nombre, p.codigoqr, p.fecha_generacion_diploma, ")
 			 .append(" p.fecha_registro, p.imagen_codigo_qr, p.tarjeta_inscripcion, p.aprobado, p.token, tec.id as id_tipo_educacion_continua,")
 			 .append(" tec.tipo_educacion_continua, per.primer_nombre, per.segundo_nombre, per.primer_apellido, per.segundo_apellido,")
-			 .append(" per.email, e.fecha_inicio, per.numero_documento, p.status_preinscripcion")
+			 .append(" per.email, e.fecha_inicio, per.numero_documento, p.status_preinscripcion, p.recibo_pago")
 			 .append(" from participantes p join personas per on p.id_persona=per.id ")
 			 .append(" join educacion_continua e on p.educacion_continua_id=e.id")
 			 .append(" join tipos_participante tp on p.id_tipo_participante=tp.id")
@@ -295,6 +298,7 @@ public class ParticipanteCustomDao implements IParticipanteCustomDao {
 			dto.setNombrePersona(usuarioMapper.convertFieldsFullName(dto.getPrimerNombre(), 
 					dto.getSegundoNombre(), dto.getPrimerApellido(), dto.getSegundoApellido()));
 			dto.setStatusInscripcion((Boolean)object[23]);
+			dto.setReciboPago((object[24] != null) ? String.valueOf(object[24]) : null);
 			list.add(dto);
 		}
 		return list;
@@ -313,7 +317,7 @@ public class ParticipanteCustomDao implements IParticipanteCustomDao {
 		.append(" td.id as id_tipo_documento, td.tipo_documento, e.id as id_edu_continua, e.nombre, p.codigoqr, p.fecha_generacion_diploma, ")
 			 .append(" p.fecha_registro, p.imagen_codigo_qr, p.tarjeta_inscripcion, p.aprobado, p.token, tec.id as id_tipo_educacion_continua,")
 			 .append(" tec.tipo_educacion_continua, per.primer_nombre, per.segundo_nombre, per.primer_apellido, per.segundo_apellido,")
-			 .append(" per.email, e.fecha_inicio, per.numero_documento, p.status_preinscripcion")
+			 .append(" per.email, e.fecha_inicio, per.numero_documento, p.status_preinscripcion, p.recibo_pago")
 			 .append(" from participantes p join personas per on p.id_persona=per.id ")
 			 .append(" join educacion_continua e on p.educacion_continua_id=e.id")
 			 .append(" join tipos_participante tp on p.id_tipo_participante=tp.id")
@@ -354,6 +358,7 @@ public class ParticipanteCustomDao implements IParticipanteCustomDao {
 			dto.setNombrePersona(usuarioMapper.convertFieldsFullName(dto.getPrimerNombre(), 
 					dto.getSegundoNombre(), dto.getPrimerApellido(), dto.getSegundoApellido()));
 			dto.setStatusInscripcion((Boolean)object[23]);
+			dto.setReciboPago((object[24] != null) ? String.valueOf(object[24]) : null);
 			return dto;
 		}
 		return null;
@@ -367,7 +372,7 @@ public class ParticipanteCustomDao implements IParticipanteCustomDao {
 			 .append(" td.id as id_tipo_documento, td.tipo_documento, e.id as id_edu_continua, e.nombre, p.codigoqr, p.fecha_generacion_diploma, ")
 			 .append(" p.fecha_registro, p.imagen_codigo_qr, p.tarjeta_inscripcion, p.aprobado, p.token, tec.id as id_tipo_educacion_continua,")
 			 .append(" tec.tipo_educacion_continua, per.primer_nombre, per.segundo_nombre, per.primer_apellido, per.segundo_apellido,")
-			 .append(" per.email, e.fecha_inicio, per.numero_documento, p.status_preinscripcion")
+			 .append(" per.email, e.fecha_inicio, per.numero_documento, p.status_preinscripcion, p.recibo_pago")
 			 .append(" from participantes p join personas per on p.id_persona=per.id ")
 			 .append(" join educacion_continua e on p.educacion_continua_id=e.id")
 			 .append(" join tipos_participante tp on p.id_tipo_participante=tp.id")
@@ -408,6 +413,7 @@ public class ParticipanteCustomDao implements IParticipanteCustomDao {
 			dto.setNombrePersona(usuarioMapper.convertFieldsFullName(dto.getPrimerNombre(), 
 					dto.getSegundoNombre(), dto.getPrimerApellido(), dto.getSegundoApellido()));
 			dto.setStatusInscripcion((Boolean)object[23]);
+			dto.setReciboPago((object[24] != null) ? String.valueOf(object[24]) : null);
 			return dto;
 		}
 		return null;
@@ -422,7 +428,7 @@ public class ParticipanteCustomDao implements IParticipanteCustomDao {
 			 .append(" p.fecha_registro, p.imagen_codigo_qr, p.tarjeta_inscripcion, p.aprobado, p.token, tec.id as id_tipo_educacion_continua,")
 			 .append(" tec.tipo_educacion_continua, per.primer_nombre, per.segundo_nombre, per.primer_apellido, per.segundo_apellido,")
 			 .append(" per.email, e.fecha_inicio, e.fecha_fin, d.id as id_diploma, d.structure_diploma, p.diploma_participacion,")
-			 .append(" d.updated_at, per.numero_documento, p.status_preinscripcion")
+			 .append(" d.updated_at, per.numero_documento, p.status_preinscripcion, p.recibo_pago")
 			 .append(" from participantes p join personas per on p.id_persona=per.id ")
 			 .append(" join educacion_continua e on p.educacion_continua_id=e.id")
 			 .append(" join tipos_participante tp on p.id_tipo_participante=tp.id")
@@ -468,8 +474,8 @@ public class ParticipanteCustomDao implements IParticipanteCustomDao {
 			dto.setNumeroDocumento(String.valueOf(object[27]));
 			dto.setNombrePersona(usuarioMapper.convertFieldsFullName(dto.getPrimerNombre(), 
 					dto.getSegundoNombre(), dto.getPrimerApellido(), dto.getSegundoApellido()));
-			System.out.println("object result: " + object[28]);
 			dto.setStatusInscripcion((Boolean)object[28]);
+			dto.setReciboPago((object[29] != null) ? String.valueOf(object[29]) : null);
 			return dto;
 		}
 		return null;
@@ -483,7 +489,7 @@ public class ParticipanteCustomDao implements IParticipanteCustomDao {
 		.append(" td.id as id_tipo_documento, td.tipo_documento, e.id as id_edu_continua, e.nombre, p.codigoqr, p.fecha_generacion_diploma, ")
 			 .append(" p.fecha_registro, p.imagen_codigo_qr, p.tarjeta_inscripcion, p.aprobado, p.token, tec.id as id_tipo_educacion_continua,")
 			 .append(" tec.tipo_educacion_continua, per.primer_nombre, per.segundo_nombre, per.primer_apellido, per.segundo_apellido,")
-			 .append(" per.email, e.fecha_inicio, per.numero_documento, p.status_preinscripcion")
+			 .append(" per.email, e.fecha_inicio, per.numero_documento, p.status_preinscripcion, p.recibo_pago")
 			 .append(" from participantes p join personas per on p.id_persona=per.id ")
 			 .append(" join educacion_continua e on p.educacion_continua_id=e.id")
 			 .append(" join tipos_participante tp on p.id_tipo_participante=tp.id")
@@ -524,6 +530,7 @@ public class ParticipanteCustomDao implements IParticipanteCustomDao {
 			dto.setNombrePersona(usuarioMapper.convertFieldsFullName(dto.getPrimerNombre(), 
 					dto.getSegundoNombre(), dto.getPrimerApellido(), dto.getSegundoApellido()));
 			dto.setStatusInscripcion((Boolean)object[23]);
+			dto.setReciboPago((object[24] != null) ? String.valueOf(object[24]) : null);
 			return dto;
 		}
 		return null;
@@ -537,7 +544,7 @@ public class ParticipanteCustomDao implements IParticipanteCustomDao {
 		.append(" td.id as id_tipo_documento, td.tipo_documento, e.id as id_edu_continua, e.nombre, p.codigoqr, p.fecha_generacion_diploma, ")
 			 .append(" p.fecha_registro, p.imagen_codigo_qr, p.tarjeta_inscripcion, p.aprobado, p.token, tec.id as id_tipo_educacion_continua,")
 			 .append(" tec.tipo_educacion_continua, per.primer_nombre, per.segundo_nombre, per.primer_apellido, per.segundo_apellido,")
-			 .append(" per.email, e.fecha_inicio, per.numero_documento, p.status_preinscripcion")
+			 .append(" per.email, e.fecha_inicio, per.numero_documento, p.status_preinscripcion, p.recibo_pago")
 			 .append(" from participantes p join personas per on p.id_persona=per.id ")
 			 .append(" join educacion_continua e on p.educacion_continua_id=e.id")
 			 .append(" join tipos_participante tp on p.id_tipo_participante=tp.id")
@@ -578,6 +585,7 @@ public class ParticipanteCustomDao implements IParticipanteCustomDao {
 			dto.setNombrePersona(usuarioMapper.convertFieldsFullName(dto.getPrimerNombre(), 
 					dto.getSegundoNombre(), dto.getPrimerApellido(), dto.getSegundoApellido()));
 			dto.setStatusInscripcion((Boolean)object[23]);
+			dto.setReciboPago((object[24] != null) ? String.valueOf(object[24]) : null);
 			return dto;
 		}
 		return null;
@@ -596,7 +604,7 @@ public class ParticipanteCustomDao implements IParticipanteCustomDao {
 		.append(" td.id as id_tipo_documento, td.tipo_documento, e.id as id_edu_continua, e.nombre, p.codigoqr, p.fecha_generacion_diploma, ")
 			 .append(" p.fecha_registro, p.imagen_codigo_qr, p.tarjeta_inscripcion, p.aprobado, p.token, tec.id as id_tipo_educacion_continua,")
 			 .append(" tec.tipo_educacion_continua, per.primer_nombre, per.segundo_nombre, per.primer_apellido, per.segundo_apellido,")
-			 .append(" per.email, e.fecha_inicio, per.numero_documento, p.status_preinscripcion")
+			 .append(" per.email, e.fecha_inicio, per.numero_documento, p.status_preinscripcion, p.recibo_pago")
 			 .append(" from participantes p join personas per on p.id_persona=per.id ")
 			 .append(" join educacion_continua e on p.educacion_continua_id=e.id")
 			 .append(" join tipos_participante tp on p.id_tipo_participante=tp.id")
@@ -635,6 +643,7 @@ public class ParticipanteCustomDao implements IParticipanteCustomDao {
 			dto.setNumeroDocumento(String.valueOf(object[22]));
 			dto.setNombrePersona(usuarioMapper.convertFieldsFullName(dto.getPrimerNombre(), 
 					dto.getSegundoNombre(), dto.getPrimerApellido(), dto.getSegundoApellido()));
+			dto.setReciboPago((object[23] != null) ? String.valueOf(object[23]) : null);
 			list.add(dto);
 		}
 		return list;
@@ -683,6 +692,18 @@ public class ParticipanteCustomDao implements IParticipanteCustomDao {
 			  .append(" select count(*)=0 from participantes where educacion_continua_id = ?1 and status_preinscripcion='0') where id = ?1");
 		
 		Query q=em.createNativeQuery(sb.toString()).setParameter(1, idEduContinua);
+		q.executeUpdate();
+	}
+	
+	@Transactional
+	@Modifying
+	@Override
+	public void updateConstanciaPagoAsistente(Long idParticipante, String filePago) {
+		StringBuilder sb = new StringBuilder();
+			sb.append(" update participantes set recibo_pago=?1 ")
+			  .append(" where id = ?2");
+		
+		Query q=em.createNativeQuery(sb.toString()).setParameter(1, filePago).setParameter(2, idParticipante);
 		q.executeUpdate();
 	}
 	

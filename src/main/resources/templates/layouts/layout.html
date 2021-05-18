@@ -97,9 +97,20 @@
   <script th:src="@{/plantilla/fabric/fontfaceobserver.standalone.js}"></script>
   <script th:src="@{/plantilla/dropzone/dropzone.min.js}"></script>
    <script type="text/javascript">
-   $(document).ready(function(){initTableWithScroll();initTableWithoutScroll();$('#infoAdicionalEdC').summernote({height:250,lang:'es-ES'})});function initTableWithoutScroll(){$('.myTable2').DataTable({destroy:!0,language:{url:"//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"},})}
-   function initTableWithScroll(){$('#myTable').DataTable({destroy:!0,scrollX:!0,language:{url:"//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"},})}
-  </script>
+   $(document).ready(function () {
+	    initTableWithScroll();
+	    initTableWithoutScroll();
+	    $("#infoAdicionalEdC").summernote({ height: 250, lang: "es-ES" });
+	});
+   
+	function initTableWithoutScroll() {
+		  $(".myTable2").DataTable({ destroy: !0, language: { url: "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json" } });
+	}
+	function initTableWithScroll() {
+		  $("#myTable").DataTable({ destroy: !0, scrollX: !0, language: { url: "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json" } });
+	}
+
+   </script>
    <script type="text/javascript" th:inline="javascript">
 	  var mensajeExitoso= [[${successMessage}]];
 	  if(mensajeExitoso!=null){

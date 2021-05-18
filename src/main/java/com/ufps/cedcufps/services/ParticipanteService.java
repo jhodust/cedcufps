@@ -107,15 +107,22 @@ public class ParticipanteService implements IParticipanteService{
 	}
 
 	@Override
-	public ParticipanteDto saveAsistente(Long idEduContinua, Long idTipoPersona) {
+	public ParticipanteDto saveAsistente(Long idEduContinua, Long idTipoPersona, MultipartFile file) {
 		// TODO Auto-generated method stub
-		ParticipanteDto dto=this.saveParticipante(idEduContinua, personaService.findPersonaLogueada(),"Asistente", idTipoPersona);
+		ParticipanteDto dto=this.saveParticipante(idEduContinua, personaService.findPersonaLogueada(),"Asistente", idTipoPersona, Boolean.FALSE);
 		this.participanteDao.insertAsistente(dto.getId());
+		if(file != null) {
+			Long marcaTiempo=System.currentTimeMillis();
+			String fileName=Archivo.saveImageAboutEducacionContinua(file,"recibo_"+marcaTiempo,fileStorageService.dirEducacionContinua().resolve(String.valueOf(idEduContinua)).resolve(fileStorageService.dirAnexos()));
+			dto.setReciboPago(fileName);
+			participanteCustomDao.updateConstanciaPagoAsistente(dto.getId(), fileName);
+		}
+		
 		
 		return dto;
 	}
 	
-	public ParticipanteDto saveParticipante(Long idEduContinua, Persona p, String tipoParticipante, Long idTipoPersona) {
+	public ParticipanteDto saveParticipante(Long idEduContinua, Persona p, String tipoParticipante, Long idTipoPersona, boolean statusInscripcion) {
 		ParticipanteDto dto=new ParticipanteDto();
 		EducacionContinua e= educacionContinuaCustomDao.findEducacionContinuaById(idEduContinua);
 		this.createDirEducacionContinua(idEduContinua);
@@ -166,8 +173,12 @@ public class ParticipanteService implements IParticipanteService{
 			dto.setIdTipoPersona(idTipoPersona);
 		}
 		dto.setToken(String.valueOf(System.currentTimeMillis()));
+		dto.setStatusInscripcion(statusInscripcion);
 		participanteCustomDao.saveParticipante(dto);
-		participanteCustomDao.updateStatusPreInscripcionAllParticipantesEduContinua(idEduContinua);
+		if(tp.getTipoParticipante().equalsIgnoreCase("Asistente")) {
+			participanteCustomDao.updateStatusPreInscripcionAllParticipantesEduContinua(idEduContinua);
+		}
+		
 		return dto;
 	}
 
@@ -197,7 +208,16 @@ public class ParticipanteService implements IParticipanteService{
 		if(pa==null) {
 			throw new CustomException("El participante a eliminar no fue encontrado en la base de datos");
 		}
+		if(pa.getImagenQr()!=null) {
+			Archivo.deleteImage(pa.getImagenQr());
+		}
 		
+		if(pa.getTarjetaInscripcion() != null) {
+			Archivo.deleteImage(pa.getTarjetaInscripcion());
+		}
+		if(pa.getReciboPago()!=null) {
+			Archivo.deleteImage(pa.getReciboPago());
+		}
 		this.deleteInfoParticipante(idParticipante, pa.getCodigoQR(), pa.getTarjetaInscripcion());
 		
 		
@@ -222,9 +242,18 @@ public class ParticipanteService implements IParticipanteService{
 		if(pa==null) {
 			throw new CustomException("La inscripción a eliminar no fue encontrada en la base de datos");
 		}
+		if(pa.getImagenQr()!=null) {
+			Archivo.deleteImage(pa.getImagenQr());
+		}
 		
+		if(pa.getTarjetaInscripcion() != null) {
+			Archivo.deleteImage(pa.getTarjetaInscripcion());
+		}
+		if(pa.getReciboPago()!=null) {
+			Archivo.deleteImage(pa.getReciboPago());
+		}
 		this.deleteInfoParticipante(pa.getId(), pa.getImagenQr(), pa.getTarjetaInscripcion());
-		this.prepararEmailCancelarInscripcion(pa);
+		//this.prepararEmailCancelarInscripcion(pa);
 	}
 
 	
@@ -282,7 +311,8 @@ public class ParticipanteService implements IParticipanteService{
 		}
 		
 		if(ponente.getId()==null || ponente.getId().equals(0L)) {
-			ParticipanteDto dto=this.saveParticipante(ponente.getEducacionContinua().getId(), p, "Ponente",0L);
+			
+			ParticipanteDto dto=this.saveParticipante(ponente.getEducacionContinua().getId(), p, "Ponente",0L, Boolean.TRUE);
 			this.participanteDao.insertPonente(dto.getId(), ponente.getTema());
 			return dto;
 			

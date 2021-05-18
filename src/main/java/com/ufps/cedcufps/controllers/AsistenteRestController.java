@@ -56,11 +56,12 @@ public class AsistenteRestController {
 	private IPersonaService personaService;
 	
 	
-	@GetMapping(value = "/realizar-inscripcion",produces = "application/json")
-	public ResponseEntity<ParticipanteDto> realizarInscripcion(@RequestParam(name = "idEduContinua") String idEduContinua, 
+	@PostMapping(value = "/realizar-inscripcion")
+	public ResponseEntity<ParticipanteDto> realizarInscripcion(@RequestParam(name="filePago", required=false) MultipartFile file,
+			@RequestParam(name = "idEduContinua") String idEduContinua, 
 			@RequestParam(name = "idTipoPersona",required = false,defaultValue = "0") String idTipoPersona) {
 		
-		return ResponseEntity.ok(participanteService.saveAsistente(Long.parseLong(idEduContinua),Long.parseLong(idTipoPersona)));
+		return ResponseEntity.ok(participanteService.saveAsistente(Long.parseLong(idEduContinua),Long.parseLong(idTipoPersona),file));
 	}
 	
 	@PostMapping(value = "/generar-tarjeta-inscripcion" ,produces = "application/json")

@@ -31,7 +31,6 @@ public class MiCertificacionRestController {
 	public ResponseEntity<?> updateCertificacionParticipante(MultipartFile file, String filename, String tokenParticipante, 
 			String idEduContinua, String documentoParticipante) {
 		
-		System.out.println("entra actualizar certificado");
 		participanteService.updateCertificado(file, filename, tokenParticipante, Long.parseLong(idEduContinua), documentoParticipante);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}

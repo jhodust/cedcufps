@@ -25,11 +25,6 @@ public class AnexosRestController {
 	@PostMapping(value = "/save")
 	public ResponseEntity<?> save(@RequestParam(name="file", required=true) MultipartFile file,
 			@RequestParam(name="id", required=true) String idEduContinuaAcceso) {
-		System.out.println("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
-		System.out.println("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
-		System.out.println("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
-		System.out.println("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
-		System.out.println("save anexo");
 		logger.info("!!!!!!!!!!!!!!!!!11");
 		logger.info("!!!!!!!!!!!!!!!!");
 		logger.info("!!!!!!!!!!!!!!!1111111111");

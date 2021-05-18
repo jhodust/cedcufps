@@ -14,6 +14,7 @@ public class RequisitosInscripcionDto {
 	private EducacionContinuaWebDto educacionContinua;
 	private boolean ableToInscription;
 	private String mensajeNoInscripcion;
+	private boolean enableToPay;
 	
 	
 	public boolean isAbleToInscription() {
@@ -64,6 +65,12 @@ public class RequisitosInscripcionDto {
 	}
 	public void setMensajeNoInscripcion(String mensajeNoInscripcion) {
 		this.mensajeNoInscripcion = mensajeNoInscripcion;
+	}
+	public boolean isEnableToPay() {
+		return enableToPay;
+	}
+	public void setEnableToPay(boolean enableToPay) {
+		this.enableToPay = enableToPay;
 	}
 	
 	

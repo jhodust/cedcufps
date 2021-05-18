@@ -18,7 +18,7 @@ public interface IAnexosDao extends JpaRepository<Anexos, Long> {
 			nativeQuery = true)
 	public List<Anexos> findAnexosByEduContinuaIdAcceso(String idAcceso);
 	
-	@Query(value="select * from anexos where educacion_continua_id = ?1", 
+	@Query(value="select a.* from anexos a where a.educacion_continua_id = ?1", 
 			nativeQuery = true)
 	public List<Anexos> findAnexosByEduContinuaId(Long id);
 	

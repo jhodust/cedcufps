@@ -58,6 +58,7 @@ public class ParticipanteDto {
 	private String estructuraDiploma;
 	private Date fechaActualizacionDiploma;
 	private boolean statusInscripcion;
+	private String reciboPago;
 	
 	public ParticipanteDto() {
 		this.jornadasAsistencias=new HashMap<>();

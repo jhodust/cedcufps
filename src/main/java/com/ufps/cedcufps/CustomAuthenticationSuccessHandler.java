@@ -37,7 +37,7 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 			Authentication authentication) throws IOException, ServletException {
 		// TODO Auto-generated method stub
 		//handle(request, response, authentication);
-        clearAuthenticationAttributes(request);
+		clearAuthenticationAttributes(request);
         HttpSession session = request.getSession();
         if (session != null) {
             String redirectUrl = (String) session.getAttribute("url_prior_login");
@@ -84,9 +84,8 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 	
 	protected void clearAuthenticationAttributes(HttpServletRequest request) {
 	    
-		HttpSession session = request.getSession(false);
-		
-	    if (session == null) {
+		HttpSession session = request.getSession(true);
+		if (session == null) {
 	        return;
 	    }
 	    session.removeAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);

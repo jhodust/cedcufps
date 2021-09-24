@@ -11,6 +11,7 @@
 	<groupId>com.ufps</groupId>
 	<artifactId>cedcufps</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<packaging>war</packaging>
 	<name>cedcufps</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
@@ -33,6 +34,7 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-tomcat</artifactId>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -199,20 +201,6 @@
         </dependency>
  
  
- 
-        <!-- https://mvnrepository.com/artifact/org.springframework.social/spring-social-facebook -->
-        <dependency>
-            <groupId>org.springframework.social</groupId>
-            <artifactId>spring-social-facebook</artifactId>
-            <version>2.0.3.RELEASE</version>
-        </dependency>
- 
-        <!-- https://mvnrepository.com/artifact/org.springframework.social/spring-social-twitter -->
-        <dependency>
-            <groupId>org.springframework.social</groupId>
-            <artifactId>spring-social-twitter</artifactId>
-            <version>1.1.2.RELEASE</version>
-        </dependency>
          <!-- https://mvnrepository.com/artifact/org.springframework.social/spring-social-google -->
         <dependency>
             <groupId>org.springframework.social</groupId>
@@ -250,16 +238,13 @@
 			<artifactId>lombok</artifactId>
 			<optional>true</optional>
 		</dependency>
-		<dependency>
-		    <groupId>com.microsoft.azure</groupId>
-		    <artifactId>msal4j</artifactId>
-		    <version>1.9.1</version>
-		</dependency>
+		
 		
 		
 		
 	</dependencies>
 	<build>
+		<finalName>${artifactId}</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>

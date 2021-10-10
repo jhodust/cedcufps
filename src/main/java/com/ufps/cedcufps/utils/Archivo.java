@@ -2,11 +2,10 @@ package com.ufps.cedcufps.utils;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Base64;
-import java.util.Random;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.logging.Log;
@@ -14,8 +13,9 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.google.common.io.Files;
+import com.opencsv.CSVWriter;
+import com.ufps.cedcufps.dto.ParticipanteDto;
 import com.ufps.cedcufps.exception.CustomException;
-import com.ufps.cedcufps.modelos.EducacionContinua;
 import java.nio.charset.*;
 import java.util.*;
 
@@ -139,4 +139,35 @@ public class Archivo {
         // the resulting string 
         return thebuffer.toString(); 
     } 
+	
+	public static CSVWriter writeCSVEmails(String filename, Path path, List<Object> emailsParticipantes) {
+		
+		try {
+			File archivo=path.resolve(filename).toAbsolutePath().toFile();
+			
+			if(archivo.exists()) {
+				archivo.delete();
+			}
+			
+			 CSVWriter writer = new CSVWriter(new FileWriter(archivo.getAbsolutePath()),
+	                    ';',
+	                    CSVWriter.NO_QUOTE_CHARACTER,
+	                    CSVWriter.NO_ESCAPE_CHARACTER,
+	                    CSVWriter.DEFAULT_LINE_END);
+			
+			for (Object email : emailsParticipantes) {
+				writer.writeNext(new String[] {String.valueOf(email)});
+			}
+			
+			writer.close();
+			
+			return writer;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			throw new CustomException("Se ha presentado un error al generar el archivo");
+		}
+	}
+	
+	
+	
 }

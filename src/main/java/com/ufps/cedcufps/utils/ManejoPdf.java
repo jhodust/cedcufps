@@ -97,8 +97,8 @@ public class ManejoPdf {
 
 				/***********************tabla participantes **************************/
 				PdfPTable table = new PdfPTable(4);
-				table.setWidthPercentage(90);
-				table.setWidths(new int[] { 1, 3, 6, 6 });
+				table.setWidthPercentage(100);
+				table.setWidths(new int[] { 1, 4, 6, 6 });
 				
 				Font headFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD);
 
@@ -107,7 +107,7 @@ public class ManejoPdf {
 				hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				table.addCell(hcell);
 
-				hcell = new PdfPCell(new Phrase("Número Documento", headFont));
+				hcell = new PdfPCell(new Phrase("Documento", headFont));
 				hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				table.addCell(hcell);
 
@@ -134,7 +134,7 @@ public class ManejoPdf {
 						cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 						table.addCell(cell);
 
-						cell = new PdfPCell(new Phrase(p.getNumeroDocumento()));
+						cell = new PdfPCell(new Phrase(p.getTipoDocumento() + " - " + p.getNumeroDocumento()));
 						cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 						cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 						table.addCell(cell);

@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.support.SessionStatus;
 
 import com.ufps.cedcufps.dto.JornadaAppDto;
+import com.ufps.cedcufps.dto.JornadaDto;
 import com.ufps.cedcufps.modelos.Departamento;
 import com.ufps.cedcufps.modelos.EducacionContinua;
 import com.ufps.cedcufps.modelos.Jornada;
@@ -38,8 +39,7 @@ public class JornadaRestController {
 	
 	
 	@PostMapping(value ="/save")
-	public ResponseEntity<?> guardarJornada(@RequestBody  Jornada jornada) {
-		
+	public ResponseEntity<?> guardarJornada(@RequestBody  JornadaDto jornada) {
 		jornadaService.save(jornada);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}

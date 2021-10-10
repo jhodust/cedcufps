@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ufps.cedcufps.SpringSecurityConfig;
+import com.ufps.cedcufps.dto.RequisitosInscripcionDto;
 import com.ufps.cedcufps.modelos.SessionWebGoogle;
 import com.ufps.cedcufps.services.IEducacionContinuaService;
 import com.ufps.cedcufps.services.IParticipanteService;
@@ -29,7 +30,9 @@ public class InscripcionController {
 			@RequestParam(name = "fecha") String fechaEvento, @RequestParam(name = "id") String idAcceso,
 			Map<String, Object> model) {
 		model.put("titulo","DETALLES EDUCACIÓN CONTINUA");
-		model.put("requisitosInscripcion",educacionContinuaService.consultarRequisitosInscripcion(idAcceso));
+		RequisitosInscripcionDto req=educacionContinuaService.consultarRequisitosInscripcion(idAcceso);
+		model.put("requisitosInscripcion",req);
+		
 		SessionWebGoogle session=SpringSecurityConfig.getInfoSession();
 		if(session!=null) {
 			model.put("photoUser", session.getPhoto());

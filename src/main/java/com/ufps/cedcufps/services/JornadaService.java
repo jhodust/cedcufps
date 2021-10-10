@@ -8,8 +8,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.ufps.cedcufps.dao.IEducacionContinuaCustomDao;
 import com.ufps.cedcufps.dao.IJornadaDao;
 import com.ufps.cedcufps.dto.JornadaAppDto;
+import com.ufps.cedcufps.dto.JornadaDto;
 import com.ufps.cedcufps.exception.CustomException;
 import com.ufps.cedcufps.mapper.IJornadaMapper;
 import com.ufps.cedcufps.modelos.Jornada;
@@ -23,6 +25,9 @@ public class JornadaService implements IJornadaService{
 	@Autowired
 	private IJornadaMapper jornadaMapper;
 	
+	@Autowired
+	private IEducacionContinuaCustomDao educacionContinuaCustomDao;
+	
 	@Override
 	public List<JornadaAppDto> findAllByIdEducacionContinua(Long idEducacionContinua) {
 		// TODO Auto-generated method stub
@@ -30,9 +35,9 @@ public class JornadaService implements IJornadaService{
 	}
 
 	@Override
-	public void save(Jornada j) {
+	public void save(JornadaDto jornadaDto) {
 		// TODO Auto-generated method stub
-		jornadaDao.save(j);
+		jornadaDao.save(jornadaMapper.convertJornadaDtoToJornada(jornadaDto, educacionContinuaCustomDao.findEducacionContinuaById(jornadaDto.getIdEducacionContinua())));
 	}
 
 	@Override

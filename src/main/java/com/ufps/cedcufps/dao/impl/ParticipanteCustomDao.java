@@ -649,6 +649,218 @@ public class ParticipanteCustomDao implements IParticipanteCustomDao {
 		return list;
 	}
 
+	@Override
+	public List<ParticipanteDto> findAllParticipantesAprobadosEducacionContinuaByIdAcceso(String idAcceso) {
+		// TODO Auto-generated method stub
+		StringBuilder query = new StringBuilder();
+		query.append(" select p.id as id_participante, tp.id as id_tipo_participante, tp.tipo_participante,")
+		.append(" td.id as id_tipo_documento, td.tipo_documento, e.id as id_edu_continua, e.nombre, p.codigoqr, p.fecha_generacion_diploma, ")
+			 .append(" p.fecha_registro, p.imagen_codigo_qr, p.tarjeta_inscripcion, p.aprobado, p.token, tec.id as id_tipo_educacion_continua,")
+			 .append(" tec.tipo_educacion_continua, per.primer_nombre, per.segundo_nombre, per.primer_apellido, per.segundo_apellido,")
+			 .append(" per.email, e.fecha_inicio, per.numero_documento, p.status_preinscripcion, p.recibo_pago")
+			 .append(" from participantes p join personas per on p.id_persona=per.id ")
+			 .append(" join educacion_continua e on p.educacion_continua_id=e.id")
+			 .append(" join tipos_participante tp on p.id_tipo_participante=tp.id")
+			 .append(" join tipos_documento td on per.id_tipo_documento=td.id")
+			 .append(" join tipos_educacion_continua tec on e.id_tipo_educacion_continua=tec.id")
+			 .append(" where e.id_acceso= ?1 and p.status_preinscripcion='1' ORDER BY per.primer_apellido");
+			 
+		Query q=em.createNativeQuery(query.toString()).setParameter(1, idAcceso);
+		
+		List<Object[]> result=q.getResultList();
+		List<ParticipanteDto> list=new ArrayList<ParticipanteDto>();
+		for(Object[] object : result) {
+			ParticipanteDto dto=new ParticipanteDto();
+			dto.setId(Long.parseLong(String.valueOf(object[0])));
+			dto.setIdTipoParticipante(Long.parseLong(String.valueOf(object[1])));
+			dto.setTipoParticipante(String.valueOf(object[2]));
+			dto.setIdTipoDocumento(Long.parseLong(String.valueOf(object[3])));
+			dto.setTipoDocumento(String.valueOf(object[4]));
+			dto.setIdEducacionContinua(Long.parseLong(String.valueOf(object[5])));
+			dto.setEducacionContinua(String.valueOf(object[6]));
+			dto.setCodigoQR(String.valueOf(object[7]));
+			dto.setFechaGeneracionDiploma((Date)object[8]);
+			dto.setFechaInscripcion((Date)object[9]);
+			dto.setImagenQr(String.valueOf(object[10]));
+			dto.setTarjetaInscripcion(String.valueOf(object[11]));
+			dto.setAprobado((Boolean)object[12]);
+			dto.setToken(String.valueOf(object[13]));
+			dto.setIdTipoEduContinua(Long.parseLong(String.valueOf(object[14])));
+			dto.setTipoEduContinua(String.valueOf(object[15]));
+			dto.setPrimerNombre((object[16] != null) ? String.valueOf(object[16]) : null);
+			dto.setSegundoNombre((object[17] != null) ? String.valueOf(object[17]) : null);
+			dto.setPrimerApellido((object[18] != null) ? String.valueOf(object[18]) : null);
+			dto.setSegundoApellido((object[19] != null) ? String.valueOf(object[19]) : null);
+			dto.setEmail(String.valueOf(object[20]));
+			dto.setFechaInicioEduContinua((Date)object[21]);
+			dto.setNumeroDocumento(String.valueOf(object[22]));
+			dto.setNombrePersona(usuarioMapper.convertFieldsFullName(dto.getPrimerNombre(), 
+					dto.getSegundoNombre(), dto.getPrimerApellido(), dto.getSegundoApellido()));
+			dto.setReciboPago((object[23] != null) ? String.valueOf(object[23]) : null);
+			list.add(dto);
+		}
+		return list;
+	}
+	
+	@Override
+	public List<ParticipanteDto> findAllParticipantesAprobadosEducacionContinuaById(Long idEduContinua) {
+		// TODO Auto-generated method stub
+		StringBuilder query = new StringBuilder();
+		query.append(" select p.id as id_participante, tp.id as id_tipo_participante, tp.tipo_participante,")
+		.append(" td.id as id_tipo_documento, td.tipo_documento, e.id as id_edu_continua, e.nombre, p.codigoqr, p.fecha_generacion_diploma, ")
+			 .append(" p.fecha_registro, p.imagen_codigo_qr, p.tarjeta_inscripcion, p.aprobado, p.token, tec.id as id_tipo_educacion_continua,")
+			 .append(" tec.tipo_educacion_continua, per.primer_nombre, per.segundo_nombre, per.primer_apellido, per.segundo_apellido,")
+			 .append(" per.email, e.fecha_inicio, per.numero_documento, p.status_preinscripcion, p.recibo_pago")
+			 .append(" from participantes p join personas per on p.id_persona=per.id ")
+			 .append(" join educacion_continua e on p.educacion_continua_id=e.id")
+			 .append(" join tipos_participante tp on p.id_tipo_participante=tp.id")
+			 .append(" join tipos_documento td on per.id_tipo_documento=td.id")
+			 .append(" join tipos_educacion_continua tec on e.id_tipo_educacion_continua=tec.id")
+			 .append(" where e.id= ?1 and p.status_preinscripcion='1' ORDER BY per.primer_apellido");
+			 
+		Query q=em.createNativeQuery(query.toString()).setParameter(1, idEduContinua);
+		
+		List<Object[]> result=q.getResultList();
+		List<ParticipanteDto> list=new ArrayList<ParticipanteDto>();
+		for(Object[] object : result) {
+			ParticipanteDto dto=new ParticipanteDto();
+			dto.setId(Long.parseLong(String.valueOf(object[0])));
+			dto.setIdTipoParticipante(Long.parseLong(String.valueOf(object[1])));
+			dto.setTipoParticipante(String.valueOf(object[2]));
+			dto.setIdTipoDocumento(Long.parseLong(String.valueOf(object[3])));
+			dto.setTipoDocumento(String.valueOf(object[4]));
+			dto.setIdEducacionContinua(Long.parseLong(String.valueOf(object[5])));
+			dto.setEducacionContinua(String.valueOf(object[6]));
+			dto.setCodigoQR(String.valueOf(object[7]));
+			dto.setFechaGeneracionDiploma((Date)object[8]);
+			dto.setFechaInscripcion((Date)object[9]);
+			dto.setImagenQr(String.valueOf(object[10]));
+			dto.setTarjetaInscripcion(String.valueOf(object[11]));
+			dto.setAprobado((Boolean)object[12]);
+			dto.setToken(String.valueOf(object[13]));
+			dto.setIdTipoEduContinua(Long.parseLong(String.valueOf(object[14])));
+			dto.setTipoEduContinua(String.valueOf(object[15]));
+			dto.setPrimerNombre((object[16] != null) ? String.valueOf(object[16]) : null);
+			dto.setSegundoNombre((object[17] != null) ? String.valueOf(object[17]) : null);
+			dto.setPrimerApellido((object[18] != null) ? String.valueOf(object[18]) : null);
+			dto.setSegundoApellido((object[19] != null) ? String.valueOf(object[19]) : null);
+			dto.setEmail(String.valueOf(object[20]));
+			dto.setFechaInicioEduContinua((Date)object[21]);
+			dto.setNumeroDocumento(String.valueOf(object[22]));
+			dto.setNombrePersona(usuarioMapper.convertFieldsFullName(dto.getPrimerNombre(), 
+					dto.getSegundoNombre(), dto.getPrimerApellido(), dto.getSegundoApellido()));
+			dto.setReciboPago((object[23] != null) ? String.valueOf(object[23]) : null);
+			list.add(dto);
+		}
+		return list;
+	}
+	
+	@Override
+	public List<ParticipanteDto> findAllParticipantesAprobadosSinNotificarEducacionContinuaById(Long idEduContinua) {
+		// TODO Auto-generated method stub
+		StringBuilder query = new StringBuilder();
+		query.append(" select p.id as id_participante, tp.id as id_tipo_participante, tp.tipo_participante,")
+		.append(" td.id as id_tipo_documento, td.tipo_documento, e.id as id_edu_continua, e.nombre, p.codigoqr, p.fecha_generacion_diploma, ")
+			 .append(" p.fecha_registro, p.imagen_codigo_qr, p.tarjeta_inscripcion, p.aprobado, p.token, tec.id as id_tipo_educacion_continua,")
+			 .append(" tec.tipo_educacion_continua, per.primer_nombre, per.segundo_nombre, per.primer_apellido, per.segundo_apellido,")
+			 .append(" per.email, e.fecha_inicio, per.numero_documento, p.status_preinscripcion, p.recibo_pago")
+			 .append(" from participantes p join personas per on p.id_persona=per.id ")
+			 .append(" join educacion_continua e on p.educacion_continua_id=e.id")
+			 .append(" join tipos_participante tp on p.id_tipo_participante=tp.id")
+			 .append(" join tipos_documento td on per.id_tipo_documento=td.id")
+			 .append(" join tipos_educacion_continua tec on e.id_tipo_educacion_continua=tec.id")
+			 .append(" where e.id= ?1 and p.status_preinscripcion='1' and p.notificado_general='0' ORDER BY per.primer_apellido");
+			 
+		Query q=em.createNativeQuery(query.toString()).setParameter(1, idEduContinua);
+		
+		List<Object[]> result=q.getResultList();
+		List<ParticipanteDto> list=new ArrayList<ParticipanteDto>();
+		for(Object[] object : result) {
+			ParticipanteDto dto=new ParticipanteDto();
+			dto.setId(Long.parseLong(String.valueOf(object[0])));
+			dto.setIdTipoParticipante(Long.parseLong(String.valueOf(object[1])));
+			dto.setTipoParticipante(String.valueOf(object[2]));
+			dto.setIdTipoDocumento(Long.parseLong(String.valueOf(object[3])));
+			dto.setTipoDocumento(String.valueOf(object[4]));
+			dto.setIdEducacionContinua(Long.parseLong(String.valueOf(object[5])));
+			dto.setEducacionContinua(String.valueOf(object[6]));
+			dto.setCodigoQR(String.valueOf(object[7]));
+			dto.setFechaGeneracionDiploma((Date)object[8]);
+			dto.setFechaInscripcion((Date)object[9]);
+			dto.setImagenQr(String.valueOf(object[10]));
+			dto.setTarjetaInscripcion(String.valueOf(object[11]));
+			dto.setAprobado((Boolean)object[12]);
+			dto.setToken(String.valueOf(object[13]));
+			dto.setIdTipoEduContinua(Long.parseLong(String.valueOf(object[14])));
+			dto.setTipoEduContinua(String.valueOf(object[15]));
+			dto.setPrimerNombre((object[16] != null) ? String.valueOf(object[16]) : null);
+			dto.setSegundoNombre((object[17] != null) ? String.valueOf(object[17]) : null);
+			dto.setPrimerApellido((object[18] != null) ? String.valueOf(object[18]) : null);
+			dto.setSegundoApellido((object[19] != null) ? String.valueOf(object[19]) : null);
+			dto.setEmail(String.valueOf(object[20]));
+			dto.setFechaInicioEduContinua((Date)object[21]);
+			dto.setNumeroDocumento(String.valueOf(object[22]));
+			dto.setNombrePersona(usuarioMapper.convertFieldsFullName(dto.getPrimerNombre(), 
+					dto.getSegundoNombre(), dto.getPrimerApellido(), dto.getSegundoApellido()));
+			dto.setReciboPago((object[23] != null) ? String.valueOf(object[23]) : null);
+			list.add(dto);
+		}
+		return list;
+	}
+	
+	
+	@Transactional
+	@Override
+	public void updateParticipantesNoNotificadosEmailByIdEducacionContinua(Long idEduContinua) {
+		// TODO Auto-generated method stub
+		StringBuilder query = new StringBuilder();
+		query.append(" update participantes p  ")
+			 .append(" join educacion_continua e on p.educacion_continua_id=e.id")
+			 .append(" set notificado_general = '1' ")
+			 .append(" where e.id= ?1 and p.status_preinscripcion='1' and p.notificado_general='0' ");
+			 
+		Query q=em.createNativeQuery(query.toString()).setParameter(1, idEduContinua);
+	
+		q.executeUpdate();
+	}
+	
+	@Override
+	public List<Object> findEmailParticipantesEducacionContinuaByIdAcceso(String idAcceso) {
+		// TODO Auto-generated method stub
+		StringBuilder query = new StringBuilder();
+		query.append(" select GROUP_CONCAT(per.email SEPARATOR ';') ")
+			 .append(" from participantes p join personas per on p.id_persona=per.id ")
+			 .append(" join educacion_continua e on p.educacion_continua_id=e.id")
+			 .append(" join tipos_participante tp on p.id_tipo_participante=tp.id")
+			 .append(" join tipos_documento td on per.id_tipo_documento=td.id")
+			 .append(" join tipos_educacion_continua tec on e.id_tipo_educacion_continua=tec.id")
+			 .append(" where e.id_acceso= ?1  ORDER BY per.primer_apellido");
+			 
+		Query q=em.createNativeQuery(query.toString()).setParameter(1, idAcceso);
+		
+		List<Object> result=q.getResultList();
+		
+		return result;
+	}
+	
+	@Override
+	public List<Object> findEmailParticipantesAprobadosEducacionContinuaByIdAcceso(String idAcceso) {
+		// TODO Auto-generated method stub
+		StringBuilder query = new StringBuilder();
+		query.append(" select GROUP_CONCAT(per.email SEPARATOR ';') ")
+			 .append(" from participantes p join personas per on p.id_persona=per.id ")
+			 .append(" join educacion_continua e on p.educacion_continua_id=e.id")
+			 .append(" join tipos_participante tp on p.id_tipo_participante=tp.id")
+			 .append(" join tipos_documento td on per.id_tipo_documento=td.id")
+			 .append(" join tipos_educacion_continua tec on e.id_tipo_educacion_continua=tec.id")
+			 .append(" where e.id_acceso= ?1 and p.status_preinscripcion='1' ORDER BY per.primer_apellido");
+			 
+		Query q=em.createNativeQuery(query.toString()).setParameter(1, idAcceso);
+		
+		List<Object> result=q.getResultList();
+		
+		return result;
+	}
 
 	@Transactional
 	@Modifying

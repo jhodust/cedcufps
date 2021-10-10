@@ -4,6 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ import java.util.Optional;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.scheduling.annotation.Async;
@@ -23,6 +25,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.itextpdf.text.log.SysoLogger;
+import com.opencsv.CSVWriter;
 import com.ufps.cedcufps.dao.IClasificacionCineDao;
 import com.ufps.cedcufps.dao.IDiplomaCustomDao;
 import com.ufps.cedcufps.dao.IDiplomaDao;
@@ -484,6 +487,7 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 			fechaInicioFormat = new SimpleDateFormat(format).parse(fechaInicio);
 			fechaFinFormat= new SimpleDateFormat(format).parse(fechaFin);
 			fechaLimiteInscripcionFormat=new SimpleDateFormat(format).parse(fechaLimInscripcion);
+			
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -618,7 +622,7 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 	public ByteArrayInputStream generarPdfAsistentes(String idAcceso) {
 		// TODO Auto-generated method stub
 		EducacionContinua e = educacionContinuaCustomDao.findEducacionContinuaByIdAcceso(idAcceso);
-		return ManejoPdf.generarPDFParticipantes(participanteCustomDao.findAllParticipantesEducacionContinuaByIdAcceso(idAcceso),e,fileStorageService.dirImgPdfAsistentes());
+		return ManejoPdf.generarPDFParticipantes(participanteCustomDao.findAllParticipantesAprobadosEducacionContinuaByIdAcceso(idAcceso),e,fileStorageService.dirImgPdfAsistentes());
 	}
 	
 
@@ -663,5 +667,22 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 	public void deleteEducacionContinua(String idAcceso) {
 		// TODO Auto-generated method stub
 		educacionContinuaDao.deleteEducacionContinua(idAcceso);
+	}
+
+	@Override
+	public Resource generarEmailAsistentes(String idAcceso, boolean all) {
+		// TODO Auto-generated method stub
+		Path path=this.fileStorageService.dirEducacionContinua();
+		
+		EducacionContinua eduContinua=educacionContinuaCustomDao.findEducacionContinuaByIdAcceso(idAcceso);
+		String filename=eduContinua.getId()+ ".txt";
+		if(all) {
+			Archivo.writeCSVEmails(filename, path, participanteCustomDao.findEmailParticipantesEducacionContinuaByIdAcceso(idAcceso));
+		}else {
+			Archivo.writeCSVEmails(filename, path, participanteCustomDao.findEmailParticipantesAprobadosEducacionContinuaByIdAcceso(idAcceso));
+		}
+		
+		
+		return this.fileStorageService.loadFileTxt(path.resolve(filename));
 	}
 }

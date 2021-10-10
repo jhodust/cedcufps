@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -196,6 +197,24 @@ public class EducacionContinuaController {
                 .headers(headers)
                 .contentType(MediaType.APPLICATION_PDF)
                 .body(new InputStreamResource(bis));
+    }
+	
+	@RequestMapping(value = "/email-participantes", method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+    public ResponseEntity<Resource> emailInscritos(@RequestParam(name = "educacionContinua") String educacionContinua,
+    		@RequestParam(name = "fecha") String fechaEduContinua, @RequestParam(name = "id") String idAcceso,
+    		@RequestParam(name = "all", defaultValue = "true") boolean all,
+    		Map<String, Object> model, RedirectAttributes redirectAttributes) {
+
+        Resource resource = educacionContinuaService.generarEmailAsistentes(idAcceso, all);
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Disposition", "inline; filename=email_participantes.txt");
+        
+        return ResponseEntity
+                .ok()
+                .headers(headers)
+                .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                .body(resource);
     }
 	
 	

@@ -834,5 +834,7 @@ public class EducacionContinuaCustomDaoImpl implements IEducacionContinuaCustomD
 		}
 		return null;
 	}
+	
+	
 
 }

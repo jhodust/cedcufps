@@ -1,5 +1,6 @@
 package com.ufps.cedcufps.services;
 
+import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -7,9 +8,12 @@ import java.nio.file.Paths;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 
 import com.ufps.cedcufps.FileStorageProperties;
+import com.ufps.cedcufps.exception.CustomException;
 
 
 @Service
@@ -37,6 +41,7 @@ public class FileStorageService implements IFileStorageService {
 			this.dirPlantillaEducacionContinua = Paths.get(env.getDirPlantillaEducacionContinua()).normalize();
 			this.dirPlantillaParticipantesResponsables = Paths.get(env.getDirPlantillaParticipantesResponsables()).normalize();
 			this.dirImgPdfAsistentes = Paths.get(env.getDirImgPdfAsistentes()).normalize();
+			
 			
 			try {
 				Files.createDirectories(this.dirFormatoReportes);
@@ -124,5 +129,21 @@ public class FileStorageService implements IFileStorageService {
 		public String dirAnexos() {
 			// TODO Auto-generated method stub
 			return env.getDirAnexos();
+		}
+		
+		@Override
+		public Resource loadFileTxt(Path filePath) {
+			try {
+				Resource resource = new UrlResource(filePath.toUri());
+				
+				if(resource.exists()) {
+	                return resource;
+	            } else {
+	                throw new CustomException("File not found ");
+	            }
+				
+			} catch (MalformedURLException e) {
+				throw new CustomException("File not found ");
+			}
 		}
 }

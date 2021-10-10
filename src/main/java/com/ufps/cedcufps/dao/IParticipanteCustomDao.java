@@ -35,7 +35,17 @@ public interface IParticipanteCustomDao  {
 	
 	List<ParticipanteDto> findAllParticipantesEducacionContinuaByIdAcceso(String idAcceso);
 	
+	public List<ParticipanteDto> findAllParticipantesAprobadosEducacionContinuaByIdAcceso(String idAcceso);
 	
+	public List<ParticipanteDto> findAllParticipantesAprobadosEducacionContinuaById(Long idEduContinua);
+	
+	public List<ParticipanteDto> findAllParticipantesAprobadosSinNotificarEducacionContinuaById(Long idEduContinua);
+	
+	
+	public void updateParticipantesNoNotificadosEmailByIdEducacionContinua(Long idEduContinua);
+	
+	public List<Object> findEmailParticipantesAprobadosEducacionContinuaByIdAcceso(String idAcceso);
+	public List<Object> findEmailParticipantesEducacionContinuaByIdAcceso(String idAcceso);
 	
 	public ParticipanteDto validarParticipanteYaInscritoApp(Long idEduContinua, String documento);
 	

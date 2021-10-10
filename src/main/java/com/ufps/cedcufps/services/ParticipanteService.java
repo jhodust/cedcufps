@@ -471,13 +471,20 @@ public class ParticipanteService implements IParticipanteService{
 	@Override
 	public void notificarPreInscripcionAllParticipantes(Long idEduContinua) {
 		// TODO Auto-generated method stub
-		List<ParticipanteDto> listParticipantes=participanteCustomDao.findAllParticipantesEducacionContinuaById(idEduContinua);
-		for(ParticipanteDto dto:listParticipantes) {
-			if(dto.isStatusInscripcion()) {
+		List<ParticipanteDto> listParticipantes=participanteCustomDao.findAllParticipantesAprobadosSinNotificarEducacionContinuaById(idEduContinua);
+		
+		if(listParticipantes.size()>0) {
+			for(ParticipanteDto dto:listParticipantes) {
 				this.notificarInscripcion(dto);
+				
+				
 			}
 			
+			participanteCustomDao.updateParticipantesNoNotificadosEmailByIdEducacionContinua(idEduContinua);
+		}else {
+			throw new CustomException("Ya se notificó a todos los participantes la inscripción");
 		}
+		
 	}
 
 	@Override

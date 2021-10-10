@@ -99,6 +99,9 @@ public class Participante implements Serializable{
 	@Column(name = "recibo_pago")
 	private String reciboPago;
 	
+	@Column(name = "notificado_general", columnDefinition = "boolean default false")
+	private boolean notificadoGeneral;
+	
 	@PrePersist
 	public void generarFecha() {
 		this.fechaRegisto = new Date();
@@ -228,6 +231,22 @@ public class Participante implements Serializable{
 
 	public void setStatusPreinscripcion(boolean statusPreinscripcion) {
 		this.statusPreinscripcion = statusPreinscripcion;
+	}
+
+	public String getReciboPago() {
+		return reciboPago;
+	}
+
+	public void setReciboPago(String reciboPago) {
+		this.reciboPago = reciboPago;
+	}
+
+	public boolean isNotificadoGeneral() {
+		return notificadoGeneral;
+	}
+
+	public void setNotificadoGeneral(boolean notificadoGeneral) {
+		this.notificadoGeneral = notificadoGeneral;
 	}
 
 	

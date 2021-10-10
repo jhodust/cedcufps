@@ -349,6 +349,10 @@
 		              <a th:if="${#lists.size(ec.educacionContinua.participantes) > 0}"  target="_blank" th:href="@{/educacion-continua/listado-participantes (educacionContinua=${educacionContinua.nombre},fecha=${educacionContinua.fechaInicio}, id=${educacionContinua.idAcceso})}"  data-toggle="tooltip" data-placement="top" title="Generar PDF" class="btn btn-white btn-icon-only rounded-circle ml-4">
 		                <span class="btn-inner--icon"><i class="far fa-file-pdf"></i></span>
 		              </a>	
+		              	
+		              <button th:if="${#lists.size(ec.educacionContinua.participantes) > 0}" th:attr="onclick=|generarEmailsTxt('${educacionContinua.nombre}', '${educacionContinua.fechaInicio}', '${educacionContinua.idAcceso}')|"  data-toggle="tooltip" data-placement="top" title="Listado Emails" class="btn btn-white btn-icon-only rounded-circle ml-4">
+		                <span class="btn-inner--icon"><i class="far fa-file-alt"></i></span>
+		              </button>
             </div>
             <div class="col-md-6 d-flex align-items-center justify-content-between justify-content-md-end">
               

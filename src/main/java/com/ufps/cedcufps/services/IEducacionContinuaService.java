@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -103,6 +104,8 @@ public interface IEducacionContinuaService {
 	//public void saveDiploma(EducacionContinua ec);
 	
 	public ByteArrayInputStream generarPdfAsistentes(String idAcceso);
+	
+	public Resource generarEmailAsistentes(String idAcceso, boolean all);
 	
 	public void deleteEducacionContinua(String idAcceso);
 	

@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="layouts/layout :: head">
+	<meta charset="UTF-8"/>
+</head>
+<body>
+  <!-- Application container -->
+  <div class="container-fluid container-application">
+    <!-- Content -->
+    <div class="main-content position-relative">
+      <!-- Main nav -->
+      <div th:replace="layouts/logosHead :: logosHead"></div>
+      <nav th:replace="layouts/navbar :: navbar"></nav>
+      
+      <!-- Page content -->
+      <div class="page-content col-lg-11 center">
+       <!-- Project cards -->
+       <nav aria-label="breadcrumb">
+		  <ol class="breadcrumb breadcrumb-links">
+		    <li class="breadcrumb-item"><a class="red-ufps-breadcrumb" th:href="@{/}">Inicio</a></li>
+		    <li class="breadcrumb-item"><a class="red-ufps-breadcrumb" th:href="@{/educacion-continua}">Educaciones Continuas</a></li>
+		    <li class="breadcrumb-item" th:if="${educacionContinua.id != null}"><a class="red-ufps-breadcrumb" th:href="@{/educacion-continua/detalles?educacionContinua={educacionContinua}(educacionContinua=${educacionContinua.nombre})}">Detalles</a></li>
+		    <li class="breadcrumb-item active" aria-current="page">Formulario</li>
+		  </ol>
+		</nav>
+        <!-- Page title -->
+       	<div class="contenido ml-3 mr-3 pb-2" >
+        <div class="page-title">
+          <div class="row justify-content-between align-items-center">
+            <div class="col-md-6 d-flex align-items-center justify-content-between justify-content-md-start mb-3 mb-md-0">
+              <!-- Page title + Go Back button -->
+              <div class="d-inline-block">
+              <div class="row">
+              	 <h5 class="h5 d-inline-block font-weight-400 mb-0 text-dark" ><strong>FORMULARIO REGISTRO</strong></h5>
+	              	
+              </div>
+               
+              </div>
+            </div>
+            
+          </div>
+        </div>
+        <br>
+        <div th:replace="loader :: loader"></div>
+        
+        <div id="formEducacionContinuaBase">
+        <div class="card">
+	        <div class="card-body">
+	        	<p class="text-dark">Seleccione esta opción solo sí desea registrar una edición de una educación continua ya existente. 
+	        	Tenga en cuenta	que el código de registro interno para el reporte de SNIES será el mismo.</p>
+				<div class="col-md-12">
+					<div class="custom-control custom-checkbox">
+					    <input type="checkbox" class="custom-control-input" id="cbEdCExistente">
+					    <label class="custom-control-label" for="cbEdCExistente">Tomar Registro Educación Continua Existente</label>
+					</div>
+	
+				</div>
+				
+				<div class="row" id="divEdCBase" style="display:none">
+				<br>
+						<div class="col-md-12 card">
+							<div class="card-body">
+								
+								<div class="row">
+									<span class="badge badge-red-ufps">Modo Registro Base</span>
+								</div>
+								<div class="row">
+									<div class="col-md-4" th:if="${programasBase != null}">
+										<div class="form-group">
+											<label class="form-control-label">Programa Académico </label><select
+												class="form-control" data-toggle="select" id="selectProgramaBase">
+												<option value="0">Seleccione el programa...</option>
+												<option th:each="p: ${programasBase}"
+													th:value="${p.id}" th:text="${p.programa}"></option>
+												
+											</select>
+											<small class="form-text text-danger"><strong></strong></small>
+										</div>
+									</div>
+									<div class="col-md-8">
+										<div class="form-group">
+											<label class="form-control-label">Educación Continua</label><select
+												class="form-control" data-toggle="select" id="selectEdCBase">
+												<option value="0">Seleccione la educación Continua...</option>
+												<option th:each="e: ${educacionesContinuasBase}"
+													th:value="${e.id}" th:text="${e.nombre}" ></option>
+												
+											</select>
+											<small class="form-text text-danger"><strong></strong></small>
+										</div>
+									</div>
+									
+								</div>
+								
+								
+								
+							</div>
+						</div>
+					</div>
+			</div>
+		</div>
+		
+		</div>
+        <div th:fragment="form" id="formEducacionContinua">
+        <div class="card">
+        <div class="card-body">
+        <label class="reglasForms">Los campos marcados con</label> <label class="requerido pl-2">*</label> <label class="reglasForms">son obligatorios</label>
+		<form enctype="multipart/form-data">
+					<div class="row">
+
+							<div class="col-md-12 card">
+								<div class="card-body">
+									<!-- General information -->
+									<div class="row">
+										<span class="badge badge-red-ufps">Información Evento</span>
+									</div>
+									<div class="row">
+									
+										<div class="col-md-6">
+											<div class="form-group">
+												<label class="form-control-label">Tipo Educación Continua </label><label class="requerido pl-2">*</label> <select
+													class="form-control" data-toggle="select" id="selectTipoContinua">
+													<option value="0">Seleccione el tipo...</option>
+													<option th:each="tec: ${tipos_educacion_continua}" th:value="${tec.id}"
+															th:text="${tec.tipoEduContinua}" th:selected="${educacionContinua.idTipoEduContinua == tec.id}"></option>
+													
+												</select>
+												 <i class="fas fa-question-circle"> Si desea crear otro tipo acorde a su evento, solo ingrese este en el cuadro de texto
+												  del buscador de las opciones y posteriormente da enter</i>
+												<small class="form-text text-danger"><strong id="errTipoEdc"></strong></small>
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="form-group">
+												<label class="form-control-label">Nombre </label><label class="requerido pl-2">*</label> <input
+													class="form-control" type="text" id="nombreEdc"
+													placeholder="Ingrese el nombre del evento" th:value="${educacionContinua.nombre}"/>
+													<small class="form-text text-danger"><strong id="errNombreEdc"></strong></small>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-4">
+											<div class="form-group">
+												<label class="form-control-label">Clasificación CINE </label><label class="requerido pl-2">*</label> <select
+													class="form-control" data-toggle="select" id="selectClasificacionCINE">
+													<option value="0">Seleccione...</option>
+													<option th:each="c: ${clasificacion_cine}"
+														th:value="${c.id}" th:text="${c.clasificacionCine}" th:selected="${educacionContinua.idClasificacion == c.id}"></option>
+															
+												</select>
+												<small class="form-text text-danger"><strong id="errClasificacionEdc"></strong></small>
+											</div>
+										</div>
+										<div class="col-md-4">
+											<div class="form-group">
+												<label class="form-control-label">Fecha Inicio </label><label class="requerido pl-2">*</label> <input type="text"
+													class="form-control flatpickr-input"  data-toggle="date" 
+													placeholder="Seleccione la fecha de inicio..." id="fechaInicioEduCont" th:value="${#dates.format(educacionContinua.fechaInicio, 'dd/MM/yyyy HH:mm')}"/>
+													<small class="form-text text-danger"><strong id="errFechaInicioEdc"></strong></small>
+											</div>
+										</div>
+										<div class="col-md-4">
+											<div class="form-group">
+												<label class="form-control-label">Fecha Fin </label><label class="requerido pl-2">*</label> <input type="text"
+													class="form-control flatpickr-input"  data-toggle="date"
+													placeholder="Seleccione la fecha de finalización..." id="fechaFinEduCont" th:value="${#dates.format(educacionContinua.fechaFin, 'dd/MM/yyyy HH:mm')}"/>
+													<small class="form-text text-danger"><strong id="errFechaFinEdc"></strong></small>
+											</div>
+										</div>
+									</div>
+									
+									<script th:inline="javascript">
+										var fIni= [[${educacionContinua.fechaInicio}]];
+										var fFin=[[${educacionContinua.fechaFin}]];
+										var fLim=[[${educacionContinua.fechaLimInscripcion}]];
+									    var fechaInicioEvento = [[${#dates.format(educacionContinua.fechaInicio, 'dd/MM/yyyy HH:mm')}]];
+									    var fechaFinEvento = [[${#dates.format(educacionContinua.fechaFin, 'dd/MM/yyyy HH:mm')}]];
+									    var fechaLimInscripcionEvento = [[${#dates.format(educacionContinua.fechaLimInscripcion, 'dd/MM/yyyy HH:mm')}]];
+								 		
+								 </script>
+									<div class="row">
+										<div class="col-md-4">
+											<div class="form-group">
+												<label class="form-control-label">Duración(horas) </label><label class="requerido pl-2">*</label> <input
+													class="form-control" type="text"
+													placeholder="Ingrese la duración del evento..." id="duracion" th:value="${educacionContinua.duracion}"/>
+													<small class="form-text text-danger"><strong id="errDuracionEdc" ></strong></small>
+											</div>
+										</div>
+										<div class="col-md-4">
+												<div class="form-group">
+													<label class="form-control-label">Costo de la educación Continua </label><label class="requerido pl-2">*</label>
+													<input
+														class="form-control" type="text" id="costoTotalEdc" th:value="${educacionContinua.costoEducacionContinua}"
+														placeholder="Ingrese el costo de la educación continua"/>
+														<small class="form-text text-danger"><strong id="errCostoTotalEdc"></strong></small>
+												</div>
+											</div>
+										<div class="col-md-4">
+											<div class="form-group">
+												<label class="form-control-label">Imagen</label> 
+												<input type="file" class="custom-input-file" name="file" id="inputImagenEvento" accept="image/*"/>
+											    <label for="inputImagenEvento">
+											        <i class="fa fa-upload"></i>
+											        <span>Seleccionar un archivo…</span>
+											    </label>
+											    
+											</div>
+										</div>
+									</div>
+									
+									
+									
+									</div>
+								</div>
+								</div>
+								<div class="row">
+									<div class="col-md-12 card">
+										<div class="card-body">
+											<div class="row">
+												<span class="badge badge-red-ufps">Información Organizador</span>
+											</div>
+											<div class="row" >
+												<div class="col-md-6" th:if="${peopleLogin.isSuperAdmin() or peopleLogin.isDirPrograma() or (peopleLogin.isHasPermisosEdC() and !peopleLogin.isHasPermisosOnlyMyEdC()) }">
+													<div class="form-group">
+														<label class="form-control-label">Programa Académico </label><label class="requerido pl-2">*</label> <select
+															class="form-control" data-toggle="select" id="programaResponsable">
+															<option value="0">Seleccione el programa...</option>
+															<option th:each="p: ${programas}"
+																th:value="${p.id}" th:text="${p.programa}" th:selected="${educacionContinua.idProgramaResp == p.id}"></option>
+															
+														</select>
+														<small class="form-text text-danger"><strong id="errProgRespEdc"></strong></small>
+													</div>
+												</div>
+												<div class="col-md-6" th:if="${not peopleLogin.isSuperAdmin() and not peopleLogin.isDirPrograma() and peopleLogin.isHasPermisosOnlyMyEdC() }" >
+													<div class="form-group">
+														<label class="form-control-label">Programa Académico </label><label class="requerido pl-2">*</label> <label
+															class="form-control" th:text="${educacionContinua.programaResp}" readOnly></label>
+													</div>
+												</div>
+												<div class="col-md-6" th:if="${peopleLogin.isSuperAdmin() or peopleLogin.isDirPrograma() or (peopleLogin.isHasPermisosEdC() and !peopleLogin.isHasPermisosOnlyMyEdC()) }" >
+													<div class="form-group">
+														<label class="form-control-label">Docente Responsable </label><label class="requerido pl-2">*</label> <select
+															class="form-control" data-toggle="select" id="docenteResponsable">
+															<option value="0">Seleccione el docente...</option>
+															<option th:each="d: ${docentes}"
+																th:value="${d.id}" th:text="${d.codigo + ' - ' + d.nombre}" th:selected="${educacionContinua.idDocenteResp == d.id}"></option>
+															
+														</select>
+														<small class="form-text text-danger"><strong id="errDocRespEdc"></strong></small>
+													</div>
+												</div>
+												<div class="col-md-6" th:if="${not peopleLogin.isSuperAdmin() and not peopleLogin.isDirPrograma() and peopleLogin.isHasPermisosOnlyMyEdC() }">
+													<div class="form-group">
+														<label class="form-control-label">Docente Responsable </label><label class="requerido pl-2">*</label> <label
+															class="form-control" th:text="${educacionContinua.codigoDocenteResp + ' - ' + educacionContinua.nombreDocenteResp}" readOnly></label>
+													</div>
+												</div>
+											</div>
+											
+											
+										</div>
+									</div>
+								</div>
+						<div class="row">
+							
+								<div class="col-md-12 card">
+									<div class="card-body">
+										<div class="row">
+											<span class="badge badge-red-ufps">Información Participantes</span>
+										</div>
+										<div class="row">
+											<div class="col-md-6">
+												<div class="form-group">
+													<label class="form-control-label">Tipo Beneficiarios </label><label class="requerido pl-2">*</label><select
+														class="form-control" data-toggle="select" multiple="multiple" id="selectTipoBeneficiarios">
+														<option value="0" disabled>Seleccione...</option>
+														<option th:each="tb: ${tipo_beneficiarios}"
+															th:value="${tb.id}" th:text="${tb.tipoBeneficiario}"></option>
+														
+													</select>
+													<small class="form-text text-danger"><strong id="errTipoBenefEdc"></strong></small>
+												</div>
+											</div>
+											<div class="col-md-6">
+												<div class="form-group">
+													<label class="form-control-label">Fecha Límite Inscripción </label><label class="requerido pl-2">*</label> <input type="text"
+														class="form-control flatpickr-input" data-toggle="date"
+														placeholder="Seleccione la fecha límite de inscripción..." id="fechaLimInscripcionEduCont" th:value="${#dates.format(educacionContinua.fechaLimInscripcion, 'dd/MM/yyyy HH:mm')}" readOnly />
+														<small class="form-text text-danger"><strong id="errFechaLimInscEdc"></strong></small>
+												</div>
+											</div>
+										</div>
+										
+										<div class="row">
+											<div class="col-md-4">
+												<div class="form-group">
+													<label class="form-control-label">Costo Inscripción </label>
+													<input
+														class="form-control" type="text" id="costoInscripcionEdc"
+														placeholder="Ingrese el costo que tendrá la inscripción del participante" th:value="${educacionContinua.costoInscripcion}"/>
+														<i class="fas fa-info-circle"> No ingrese información si la inscripción es gratuita</i>
+														<small class="form-text text-danger"><strong id="errCostoInscripEdc"></strong></small>
+												</div>
+											</div>
+											<div class="col-md-4">
+												<div class="form-group">
+													<label class="form-control-label">Cantidad Participantes (Max) </label>
+													
+													<input
+														class="form-control" type="number" id="cantMaxPartEdc"
+														placeholder="Ingrese la cantidad máxima de participantes" th:value="${educacionContinua.cantMaxParticipantes}"/>
+														<i class="fas fa-info-circle"> No ingrese información si no existe límite de participantes</i>
+														<small class="form-text text-danger"><strong id="errCantPartEdc"></strong></small>
+												</div>
+											</div>
+											<div class="col-md-4">
+												<div class="form-group">
+													<label class="form-control-label">Porcentaje de asistencia mínimo</label><label class="requerido pl-2">*</label>
+													<input
+														class="form-control" type="text" id="porcentajeAsistenciaEdc" data-mask="000"
+														placeholder="Ingrese el porcentaje" th:value="${educacionContinua.porcentajeAsistencia}"/>
+														<small class="form-text text-danger"><strong id="errPorcAsisEdc"></strong></small>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-12 card">
+									<div class="card-body">
+										<div class="row">
+											<span class="badge badge-red-ufps">Información Adicional</span>
+										</div>
+										<div class="row">
+											<div class="col-md-12">
+												<div class="form-group">
+													<label class="form-control-label">Lugar </label><label class="requerido pl-2">*</label>
+													<textarea class="form-control" data-toggle="autosize"  id="lugarEdc"
+													placeholder="Ingrese el lugar donde se llevará a cabo el evento..." rows="1" 
+													th:text="${educacionContinua.lugar}"></textarea>
+													<small class="form-text text-danger"><strong id="errLugarEdc"></strong></small>
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-md-12">
+												<div class="form-group">
+													<label class="form-control-label">Detalles</label> 
+													<textarea class="form-control" data-toggle="autosize" 
+													placeholder="Ingrese la información.." rows="50"  id="infoAdicionalEdC"
+													> [(${educacionContinua.infoAdicional})] </textarea>
+													<small class="form-text text-danger"><strong></strong></small>
+												</div>
+											</div>
+										</div>
+										
+										<!-- Save changes buttons -->
+										
+										
+									</div>
+								</div>
+					</div>
+
+				</form>
+				</div>
+				 <div class="modal-footer">
+	        	<div class="row">
+	        		<a th:href="@{/educacion-continua}" type="button" data-dismiss="modal" class="btn btn-sm btn-red-ufps"><i class="fas fa-times"></i> Cancelar</a>
+	   				<button type="button" id="btnGuardarEdC" onclick="guardarEdc()" class="btn btn-sm btn-red-ufps"><i class="fas fa-save"></i> Guardar</button>
+					<div>
+		         		<button class="btn btn-primary btn-sm btnSpinner" type="button" id="btnSpinnerEdC" disabled>
+							  <div class="spinner-border text-white mr-2 divSpinnerBtn" role="status">
+							  <span class="sr-only">Loading...</span>
+							</div> Procesando
+						</button>
+					</div>						
+	        	</div>
+        </div>
+        </div>
+        </div>
+        
+		</div>
+	  </div>
+    
+    </div>
+    <div th:replace="layouts/footer :: footer"></div>
+    
+  </div>
+  <!-- Scripts -->
+  <!-- Core JS - includes jquery, bootstrap, popper, in-view and sticky-kit -->
+  <div th:replace="layouts/layout :: scripts"></div>
+  <script th:src="@{/js/educacionContinua.min.js}" type="text/javascript"></script>
+  <script th:src="@{/js/validacionEducacionContinua.min.js}" type="text/javascript"></script>
+  <script>
+  var idEduContinua=0;
+  </script>
+</body>
+
+</html>

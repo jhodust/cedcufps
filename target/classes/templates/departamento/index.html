@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layouts/layout :: head">
+	<meta charset="UTF-8"/>
+</head>
+<body style="display:inline">
+  <!-- Application container -->
+  <div class="container-fluid container-application">
+    <!-- Content -->
+    <div class="main-content position-relative">
+      <!-- Main nav -->
+      <div th:replace="layouts/logosHead :: logosHead"></div>
+      <nav th:replace="layouts/navbar :: navbar"></nav>
+      
+      <!-- Page content -->
+      <div class="page-content col-lg-11 center">
+       <!-- Project cards -->
+       <nav aria-label="breadcrumb">
+		  <ol class="breadcrumb breadcrumb-links">
+		    <li class="breadcrumb-item"><a class="red-ufps-breadcrumb" th:href="@{/}">Inicio</a></li>
+		    <li class="breadcrumb-item active" aria-current="page">Departamentos Académicos</li>
+		  </ol>
+		</nav>
+        <!-- Page title -->
+       	<div class="contenido ml-3 mr-3 pb-2" >
+        
+        <div class="page-title">
+          <div class="row justify-content-between align-items-center">
+            <div class="col-md-6 d-flex align-items-center justify-content-between justify-content-md-start mb-3 mb-md-0">
+              <!-- Page title + Go Back button -->
+              <div class="d-inline-block">
+                <h5 class="d-inline-block font-weight-400 mb-0 text-dark" ><strong>DEPARTAMENTOS ACADÉMICOS</strong></h5>
+              	<a href="#" data-toggle="modal" data-target="#modalRegistroDepartamento" class="btn btn-sm btn-white btn-icon-only rounded-circle ml-4">
+                <span class="btn-inner--icon"><i class="fas fa-plus"></i></span>
+              </a>
+              </div>
+            </div>
+            <div class="col-md-6 d-flex align-items-center justify-content-between justify-content-md-end">
+              
+              <!-- Filter input -->
+              <form class="bg-neutral rounded-pill d-inline-block">
+                <div class="input-group input-group-sm input-group-merge input-group-flush">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text bg-transparent"><i class="fas fa-filter"></i></span>
+                  </div>
+                  <select class="form-control form-control-flush" id="select_facultad_filtro_departamento" th:field="${facultad.id}">
+					<option value="0">Seleccione la facultad...</option>
+					<option value="">Todos</option>
+					<option th:each="f: ${facultades}" th:value="${f.id}"
+						th:text="${f.facultad}"></option>
+				</select>
+                  
+                </div>
+              </form>
+              
+              
+            </div>
+          </div>
+        </div>
+        <br>
+        <div id="div_list_paginador" th:fragment="listDepartamentos">
+        
+        <div th:if="${departamentos.getNumberOfElements() == 0}">
+        <br>
+          <br>
+		  <div class="alert alert-danger" role="alert" >
+		    <strong> <i class="fas fa-info-circle"></i> No existen departamentos registrados</strong>
+		</div>
+        </div>
+		<div class="row" th:unless="${departamentos.getNumberOfElements() == 0}">
+			<div class="col-lg-3 col-sm-6 hover-scale-110"  th:each="d: ${departamentos}">
+            <div class="card card-fluid">
+              <div class="card-body text-center d-flex flex-column justify-content-center">
+              	<div class="actions d-flex justify-content-between ">
+                <a href="#" onclick="editarDepartamento(this)" class="action-item editarPrograma action-item-red-ufps" th:data-id="${d.id}" data-toggle="tooltip" data-placement="right" title="Editar">
+                   <i class="far fa-edit"></i>
+                  </a>
+                  </div>
+                <h6 class="mb-4" th:text="${d.departamento}"></h6>
+                <p class="mt-4 mb-1 badge badge-red-ufps overflow-visible" th:text="${d.facultad.facultad}"></p>
+                <!--  <div class="avatar-parent-child">
+                  <img alt="Image placeholder" th:src="@{/logos/logo_no_disponible.png}" class="avatar  rounded-circle avatar-lg">
+                </div>-->
+				
+			  </div>
+              
+            </div>
+          </div>
+		
+		</div>
+		<div th:if="${departamentos.getNumberOfElements() != 0}">
+		<nav  th:replace="layouts/paginator :: paginator"></nav>
+		</div>
+			
+		</div>
+		
+		
+		</div>
+	  </div>
+    
+    </div>
+    <div th:replace="layouts/footer :: footer"></div>
+    <div th:replace="departamento/formModal :: modalRegistro"></div>
+    
+  </div>
+  <!-- Scripts -->
+  <!-- Core JS - includes jquery, bootstrap, popper, in-view and sticky-kit -->
+  <div th:replace="layouts/layout :: scripts"></div>
+  <script th:src="@{/js/departamento.min.js}" type="text/javascript"></script>
+  <script th:src="@{/js/validacionAreasAcademicas.min.js}" type="text/javascript"></script>
+</body>
+
+</html>

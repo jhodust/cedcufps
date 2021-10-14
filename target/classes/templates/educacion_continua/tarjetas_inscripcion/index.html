@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layouts/layout :: head">
+	<meta charset="UTF-8"/>
+</head>
+<body>
+  <!-- Application container -->
+  <div class="container-fluid container-application">
+    <!-- Content -->
+    <div class="main-content position-relative">
+      <!-- Main nav -->
+      <div th:replace="layouts/logosHead :: logosHead"></div>
+      <nav th:replace="layouts/navbar :: navbar"></nav>
+      
+      <!-- Page content -->
+      <div class="page-content col-lg-11 center">
+       <!-- Project cards -->
+        <!-- Page title -->
+       	<div class="contenido ml-3 mr-3 pb-2" >
+        
+        <br>
+        <div th:if="${#lists.size(participaciones) == 0}">
+        	<div class="alert alert-danger" role="alert" >
+		    <strong> <i class="fas fa-info-circle"></i> No se encuentra inscrito a cursos o eventos de educación continua próximos o su inscripción no ha sido aprobada por el docente a cargo </strong>
+		</div>
+        </div>
+       
+        <div class="row" th:unless="${#lists.size(participaciones) == 0}">
+        
+        <div class="card col-md-12">
+        	<div class="card-header">
+          			 <h5 class="card-title mb-0"><strong>MIS INSCRIPCIONES</strong></h5>
+          		</div>
+          	<div class="card-body">
+          		<p class="text-dark">A continuación podrá visualizar las tarjetas de inscripción de las educaciones continuas activas
+          		a las cuales se ha inscrito dando click en  <i class="far fa-eye"></i>.  
+	         	<br>
+          		<div class="row">
+          	       
+	        	<div class="card card-overlay hover-shadow-lg hover-translate-y-n10 col-md-4" th:each="p : ${participaciones}">
+				    <img th:src="@{${p.tarjetaInscripcion}}" class="img-fluid rounded card-img">
+				<span class="mask bg-dark opacity-8"></span><div class="card-img-overlay d-flex flex-column align-items-center p-0">
+				        <div class="overlay-text w-75 mt-auto">
+				            <p class="lead" th:text="${p.tipoEduContinua}"></p>
+				            <a  href="#!" class="link link-underline-white font-weight-bold p" th:if="${#strings.length(p.educacionContinua)<25}" th:text="${p.educacionContinua}"></a>
+				            <a  href="#!" class="link link-underline-white font-weight-bold p" th:if="${#strings.length(p.educacionContinua)>=25 and #strings.length(p.educacionContinua)<=50}" th:text="${p.educacionContinua}" style="font-size:small"></a>
+				            <a  href="#!" class="link link-underline-white font-weight-bold p" th:if="${#strings.length(p.educacionContinua)>50 and #strings.length(p.educacionContinua)<100}" th:text="${p.educacionContinua}" style="font-size:x-small"></a>
+				        </div>
+				        <div class="overlay-actions w-100 card-footer mt-auto d-flex justify-content-between align-items-center">
+				            <div>
+				                <a href="#!" class="h6 mb-0">Tarjeta Inscripción</a>
+				            </div>
+				            <div>
+				                <div class="actions">
+				                    <a th:href="@{${p.tarjetaInscripcion}}" data-fancybox="group" th:data-caption="'Tarjeta Inscripción ' + ${p.educacionContinua}" class="action-item action-item-lg mr-4"><i class="far fa-eye"></i></a>
+				                </div>
+				            </div>
+				        </div>
+				    </div>
+				</div>
+
+			</div>
+			</div>
+        </div>
+			
+	       <!--  <div class="card-group col-md-4" th:each="p : ${participaciones}">
+				<div class="card bg-gradient-dark mb-3">
+				    <div class="card-body">
+				    	<center><h5 class="h4 text-white" th:text="${p.educacionContinua.tipoEduContinua.tipoEduContinua}"></h5></center>
+				        <h6 class="h4 text-white" th:text="${p.educacionContinua.nombre}"></h6>
+				        
+				        
+				    </div>
+				</div>
+				
+				</div>
+				 -->
+			</div>
+        
+        </div>
+	  </div>
+    
+    </div>
+    <div th:replace="layouts/footer :: footer"></div>
+    
+  </div>
+  <!-- Scripts -->
+  <!-- Core JS - includes jquery, bootstrap, popper, in-view and sticky-kit -->
+  <div th:replace="layouts/layout :: scripts"></div>
+</body>
+
+</html>

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layouts/layout :: head">
+	<meta charset="UTF-8"/>
+</head>
+<body>
+  <!-- Application container -->
+  <div class="container-fluid container-application">
+    <!-- Content -->
+    <div class="main-content position-relative">
+      <!-- Main nav -->
+      <div th:replace="layouts/logosHead :: logosHead"></div>
+      <nav th:replace="layouts/navbar :: navbar"></nav>
+      
+      <!-- Page content -->
+      <div class="page-content col-lg-11 center">
+       <!-- Project cards -->
+        <!-- Page title -->
+        <nav aria-label="breadcrumb">
+		  <ol class="breadcrumb breadcrumb-links">
+		    <li class="breadcrumb-item"><a class="red-ufps-breadcrumb" th:href="@{/}">Inicio</a></li>
+		    <li class="breadcrumb-item active" aria-current="page">Reportes SNIES</li>
+		  </ol>
+		</nav>
+       	<div class="contenido ml-3 mr-3 pb-2" >
+        
+        <div class="page-title">
+          <div class="row justify-content-between align-items-center">
+            <div class="col-md-6 d-flex align-items-center justify-content-between justify-content-md-start mb-3 mb-md-0">
+              <!-- Page title + Go Back button -->
+              <div class="d-inline-block">
+                <h5 class="h5 d-inline-block font-weight-400 mb-0 text-dark" ><strong>REPORTES SNIES</strong></h5>
+	              
+              </div>
+            </div>
+            
+          </div>
+        </div>
+        <br>
+        <div class="alert alert-danger alert-dismissible fade show" role="alert" id="divMsgGeneralSnies" style="display:none">
+		    <strong id="msgGeneralSnies"></strong>
+		    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+        <div class="row">
+          	<div class="col-sm-12">
+          		<div class="card" >
+          		<div class="card-header">
+          			 <h6 class="card-title mb-0">Generar Reporte</h6>
+          		</div>
+          		 <div class="card-body">
+          		 <div class="row">
+	          		 <div class="col-md-6">
+						<div class="form-group">
+							<label class="form-control-label">Descripción </label><label class="requerido pl-2">*</label>
+							<input
+								class="form-control" type="text" id="descripcionReporte"
+								placeholder="Ingrese una breve descripción"/>
+								<small class="form-text text-danger"><strong id="errDescripcionReporte"></strong></small>
+						</div>
+					</div>
+	                  <div class="col-md-3">
+							<div class="form-group">
+								<label class="form-control-label">Fecha Inicio </label><label class="requerido pl-2">*</label> <input type="text"
+									class="form-control flatpickr-input" data-toggle="date"
+									placeholder="Seleccione la fecha de inicio..." id="fechaInicioReporte"/>
+									<small class="form-text text-danger"><strong id="errFechaInicioReporte"></strong></small>
+							</div>
+						</div>
+						<div class="col-md-3">
+							<div class="form-group">
+								<label class="form-control-label">Fecha Fin </label><label class="requerido pl-2">*</label> <input type="text"
+									class="form-control flatpickr-input" data-toggle="date"
+									placeholder="Seleccione la fecha de finalización..." id="fechaFinReporte" />
+									<small class="form-text text-danger"><strong id="errFechaFinReporte"></strong></small>
+							</div>
+						</div>
+					</div>
+                  <button type="button" onclick="generarReporteSnies()" class="btn btn-red-ufps btn-sm" id="btnGenerarReportesSnies">
+				    	<i class="fas fa-save"></i> Generar
+					</button>
+					<div>
+			         		<button class="btn btn-primary btn-sm btnSpinner" type="button" id="btnSpinnerSNIES" disabled>
+								  <div class="spinner-border text-white mr-2 divSpinnerBtn" role="status">
+								  <span class="sr-only">Loading...</span>
+								</div> Procesando
+							</button>
+						</div>
+					</div>
+					</div>
+              </div>
+             <div class="col-sm-12">
+             	<div class="card" >
+		          <!-- Card header -->
+		          <div class="card-header">
+		          	<h6 class="card-title mb-0">Historial Reportes</h6>
+		          </div>
+		          
+		          <div class="card-body">
+		          <div class="col-lg-12">
+		            <table id="myTable" style="width: 100%;" class="row-border table align-items-center">
+								<thead>
+									<tr>
+										<th>Descripción</th>
+										<th>Fecha Inicio</th>
+										<th>Fecha Fin</th>
+										<th class="th2">Informe Cursos</th>
+										<th class="th2">Informe Educación Continua</th>
+										<th class="th2">Informe Participantes</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr th:each="i : ${informesSnies}">
+										<td class="th2" th:text="${i.descripcion}"></td>
+										<td th:text="${i.fechaInicio}"></td>
+										<td th:text="${i.fechaFin}"></td>
+										<td><a class="action-item action-item-red-ufps hover-scale-110" th:href="@{'/'+${i.informeCursos}}" data-toggle="tooltip" data-placement="left" title="Descargar">
+		    								<span class="btn-inner--icon"><i class="fas fa-file-download"></i></span></a></td>
+		    							<td><a class="action-item action-item-red-ufps hover-scale-110" th:href="@{'/'+${i.informeEduContinua}}" data-toggle="tooltip" data-placement="left" title="Descargar">
+		    								<span class="btn-inner--icon"><i class="fas fa-file-download"></i></span></a></td>
+		    							<td><a class="action-item action-item-red-ufps hover-scale-110" th:href="@{'/'+${i.informeParticipantes}}" data-toggle="tooltip" data-placement="left" title="Descargar">
+		    								<span class="btn-inner--icon"><i class="fas fa-file-download"></i></span></a></td>
+									</tr>
+									
+								</tbody>
+							</table>
+							</div>
+		          </div>
+		        </div>
+             </div>
+                  
+              </div>
+          </div>
+		
+		</div>
+	  </div>
+    
+    <div th:replace="layouts/footer :: footer"></div>
+    
+  </div>
+  <!-- Scripts -->
+  <!-- Core JS - includes jquery, bootstrap, popper, in-view and sticky-kit -->
+  <div th:replace="layouts/layout :: scripts"></div>
+  <script th:src="@{/js/informeSnies.min.js}" type="text/javascript"></script>
+  <script th:src="@{/js/validateInput.min.js}" type="text/javascript"></script>
+  <script th:src="@{/js/validacionInformeSnies.min.js}" type="text/javascript"></script>
+  
+</body>
+
+</html>

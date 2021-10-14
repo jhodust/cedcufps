@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="UTF-8"/>
+<title>Insert title here</title>
+</head>
+<body>
+	<!-- Modal -->
+<div class="modal fade" id="modalAyudaIconosListado" tabindex="-1" role="dialog" aria-labelledby="modalAyudaIconosListado" aria-hidden="true" th:fragment="modalAyudaIconosListado">
+    <div class="modal-dialog" role="document">
+        
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-title d-flex align-items-center" id="modal-title-change-username">
+                        <div>
+                            <div class="icon icon-sm icon-shape rounded-circle shadow mr-3">
+                                <i class="fas fa-info"></i>
+                            </div>
+                        </div>
+                        <div>
+                            <h5 class="mb-0 text-white">Panel de íconos</h5>
+                        </div>
+                    </div>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true" class="text-white">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                	<div class="card">
+					<div class="card-body">
+						
+						<p>Los íconos en la tabla indican lo siguiente:</p>
+						<ul>
+							<li style="font-size:14px"><i style="color:#bc0017" class="fas fa-times"></i> cancela la preinscripción del participante</li>
+							<li style="font-size:14px"><i style="color:#bc0017" class="fas fa-check"></i> aprueba la preinscripción del participante</li>
+							<li style="font-size:14px"><i style="color:#bc0017" class="fas fa-money-check-alt"></i> visualizar constancia de pago de inscripción</li>
+							<li style="font-size:14px"><i style="color:#bc0017" class="fas fa-envelope-open-text"></i> notificar vía email la inscripción del participante</li>
+							<li style="font-size:14px"><i style="color:#bc0017" class="far fa-address-card"></i> visualizar tarjeta de participación</li>
+							<li style="font-size:14px"><i style="color:#bc0017" class="fas fa-money-check"></i> descargar certificado de participación</li>
+							<li style="font-size:14px"><i  class="fas fa-ban"></i> el asistente no cumple con los criterios mínimos de asistencia
+								para ser aprobado su certificado de participación</li>
+						</ul>
+					</div>
+				</div>
+                </div>
+                 
+                
+                
+            </div>
+    </div>
+</div>
+</body>
+</html>

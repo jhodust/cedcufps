@@ -1,6 +1,10 @@
 package com.ufps.cedcufps.services;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.MalformedURLException;
+import java.net.URL;
+import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -47,12 +51,68 @@ public class FileStorageService implements IFileStorageService {
 				Files.createDirectories(this.dirFormatoReportes);
 				Files.createDirectories(this.dirReportesSnies);
 				Files.createDirectories(this.dirEducacionContinua);
+				Files.createDirectories(this.dirImgPdfAsistentes);
+				Files.createDirectories(this.dirFormatoReportes);
+				this.downloadFilesStructures();
 			} catch (Exception ex) {
 				log.error("Could not create the directory where the uploaded files will be stored.", ex);
 			}
 
 		}
 
+		public void downloadFilesStructures() {
+			try(InputStream in = new URL("https://github.com/jhodust/cedcufps/raw/master/structures/img_plantilla_listado_asistentes/footer_pdf.png").openStream()){
+			    Files.copy(in, this.dirImgPdfAsistentes.resolve("footer_pdf.png"));
+			} catch (FileAlreadyExistsException e) {
+				// TODO Auto-generated catch block
+				
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			try(InputStream in = new URL("https://github.com/jhodust/cedcufps/raw/master/structures/img_plantilla_listado_asistentes/header_pdf.png").openStream()){
+			    Files.copy(in, this.dirImgPdfAsistentes.resolve("header_pdf.png"));
+			} catch (FileAlreadyExistsException e) {
+				// TODO Auto-generated catch block
+				
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			try(InputStream in = new URL("https://github.com/jhodust/cedcufps/raw/master/structures/formatos_reportes_excel/formato_cursos.xlsx").openStream()){
+			    Files.copy(in, this.dirPlantillaCursos);
+			} catch (FileAlreadyExistsException e) {
+				// TODO Auto-generated catch block
+				
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			try(InputStream in = new URL("https://github.com/jhodust/cedcufps/raw/master/structures/formatos_reportes_excel/formato_educacion_continua.xlsx").openStream()){
+			    Files.copy(in, this.dirPlantillaEducacionContinua);
+			} catch (FileAlreadyExistsException e) {
+				// TODO Auto-generated catch block
+				
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			try(InputStream in = new URL("https://github.com/jhodust/cedcufps/raw/master/structures/formatos_reportes_excel/formato_participante.xlsx").openStream()){
+			    Files.copy(in, this.dirPlantillaParticipantesResponsables);
+			} catch (FileAlreadyExistsException e) {
+				// TODO Auto-generated catch block
+				
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			
+		}
 
 		@Override
 		public Path dirFormatoReportes() {

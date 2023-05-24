@@ -70,11 +70,10 @@ public class Persona implements Serializable {//*
 	@Column(name = "numero_documento")
 	private String numeroDocumento;
 
-	@NotNull(message = "Ingrese fecha de expedición del documeto de identidad")
-	@DateTimeFormat(pattern="dd/MM/yyyy")
+    @DateTimeFormat(pattern="dd/MM/yyyy")
 	@Column(name = "fecha_expedicion_documento")
 	private Date fechaExpedicionDocumento;
-	
+    
 	@NotEmpty(message = "El campo primer nombre es requerido")
 	@Pattern(regexp = "^$|^[a-zA-ZñNáéíóúÁÉÍÓÚüÜ\\s]+$", message = "El campo primer nombre debe contener solo letras")
 	@Size(max = 20, message = "El campo primer nombre debe tener máximo 20 caracteres")

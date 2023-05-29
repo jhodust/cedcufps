@@ -11,6 +11,7 @@ import com.ufps.cedcufps.dto.EducacionContinuaAppDto;
 import com.ufps.cedcufps.dto.EducacionContinuaWebDto;
 import com.ufps.cedcufps.modelos.EducacionContinua;
 import com.ufps.cedcufps.modelos.Persona;
+import com.ufps.cedcufps.utils.StatusEducacionContinua;
 
 public interface IEducacionContinuaCustomDao {
 
@@ -29,7 +30,7 @@ public interface IEducacionContinuaCustomDao {
 	
 	public List<CertificacionDto> findCertificaciones(String numDocumento);
 	
-	public Long[] listAllPossibleEducacionContinuaFiltro(String estado, Long idTipoEdC, Long idPrograma,
+	public Long[] listAllPossibleEducacionContinuaFiltro(StatusEducacionContinua estado, Long idTipoEdC, Long idPrograma,
 			Long idBeneficiarios);
 	
 	public List<EducacionContinuaAppDto> findEducacionesContinuasAGestionar(Long idPersona, boolean isSuperAdmin, boolean hasPermission);

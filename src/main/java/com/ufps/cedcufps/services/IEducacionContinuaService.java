@@ -39,7 +39,7 @@ public interface IEducacionContinuaService {
 	
 	public Page<EducacionContinua> educacionContinuaNoTerminadas(Pageable pageable);
 	
-	public Page<EducacionContinua> educacionContinuaFiltroPanel(Long idTipoEdC, Long idPrograma, Long idBeneficiarios, Pageable pageable);
+	public Page<EducacionContinua> educacionContinuaFiltroPanel(Long idTipoEdC, Long idPrograma, Long idBeneficiarios, Long statusId, Pageable pageable);
 	
 	public void save(EducacionContinua ec);
 	

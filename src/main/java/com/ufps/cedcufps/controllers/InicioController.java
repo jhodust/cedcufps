@@ -8,6 +8,7 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 
 import javax.validation.Valid;
@@ -42,6 +43,7 @@ import com.ufps.cedcufps.modelos.SessionWebGoogle;
 import com.ufps.cedcufps.services.IEducacionContinuaService;
 import com.ufps.cedcufps.services.IPersonaService;
 import com.ufps.cedcufps.services.IProgramaService;
+import com.ufps.cedcufps.services.IStatusEducacionContinua;
 import com.ufps.cedcufps.utils.ReportesExcel;
 import com.ufps.cedcufps.utils.paginator.PageRender;
 
@@ -57,6 +59,9 @@ public class InicioController {
 	@Autowired
 	private IProgramaService programaService;
 	
+	@Autowired
+	private IStatusEducacionContinua statusEducacionContinuaService;
+	
 	
 	@RequestMapping(value = "/")
 	public String listar(Model model) {
@@ -69,6 +74,7 @@ public class InicioController {
 		model.addAttribute("programas",programaService.findAll());
 		model.addAttribute("tipos_educacion_continua",educacionContinuaService.findAllTiposEducacionContinuaExisting());
 		model.addAttribute("tipo_beneficiarios",educacionContinuaService.findAllTipoBeneficiario());
+		model.addAttribute("status",statusEducacionContinuaService.getAllStatus());
 		SessionWebGoogle session=SpringSecurityConfig.getInfoSession();
 		if(session!=null) {
 			model.addAttribute("photoUser", session.getPhoto());
@@ -90,21 +96,23 @@ public class InicioController {
 	public String reloadPanelEventos(@RequestParam(name="page", defaultValue = "0") int page,
 			@RequestParam(name="idTipoEdC", defaultValue = "0") String idTipoEdC,
 			@RequestParam(name="idPrograma", defaultValue = "0") String idPrograma,
-			@RequestParam(name="idPublico", defaultValue = "0") String idPublico,Model model) {
+			@RequestParam(name="idPublico", defaultValue = "0") String idPublico,
+			@RequestParam(name="status", defaultValue = "0") String status,Model model) {
+		System.out.println("STATUS: " + status);
 		Pageable pageRequest=PageRequest.of(page, 3);
 		Page<EducacionContinua> edc=educacionContinuaService.educacionContinuaFiltroPanel(Long.parseLong(idTipoEdC),
-				Long.parseLong(idPrograma), Long.parseLong(idPublico), pageRequest);
+				Long.parseLong(idPrograma), Long.parseLong(idPublico), Long.parseLong(status), pageRequest);
 		
 		
 		PageRender<EducacionContinua> pageRender= new PageRender<EducacionContinua>(this.convertBaseUri(Long.parseLong(idTipoEdC),
-				Long.parseLong(idPrograma), Long.parseLong(idPublico)), edc);
+				Long.parseLong(idPrograma), Long.parseLong(idPublico), Long.parseLong(status)), edc);
 		model.addAttribute("educacionesContinuas",edc);
 		model.addAttribute("page",pageRender);
 		
 		return "index :: listPanel";
 	}
 	
-	public String convertBaseUri(Long idTipoEdC, Long idPrograma, Long idPublico) {
+	public String convertBaseUri(Long idTipoEdC, Long idPrograma, Long idPublico, Long status) {
 		String baseUri="/reload";
 		if(idTipoEdC!=0L){
 			baseUri=baseUri.concat("?idTipoEdC="+idTipoEdC);
@@ -123,6 +131,16 @@ public class InicioController {
 		}else if(idPublico!=0L){
 			baseUri=baseUri.concat("&idPublico="+idPublico);
 		}
+		
+		if(status!=0L &&  idPublico==0L && idTipoEdC==0L && idPrograma==0L){
+			baseUri=baseUri.concat("?status="+status);
+		}else if(status!=0 && (idPublico!=0L || idTipoEdC==0L || idPrograma==0L)){
+			baseUri=baseUri.concat("&status="+status);
+		}else if(status!=0){
+			baseUri=baseUri.concat("&status="+status);
+		}
+		
+		
 		//baseUri=baseUri.concat("&baseUri="+baseUri);
 		return baseUri;
 	}

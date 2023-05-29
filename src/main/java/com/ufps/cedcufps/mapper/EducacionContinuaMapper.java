@@ -142,7 +142,7 @@ public class EducacionContinuaMapper implements IEducacionContinuaMapper {
 			eduContinuaDto.setAnexos(this.convertListAnexoToListAnexoDto(e.getAnexos()));
 			eduContinuaDto.setAsistenciasGenerales(this.validateAsistenciasGenerales(asistenciasGeneralesMap));
 			dto.setEducacionContinua(eduContinuaDto);
-			eduContinuaDto.setAbleToActions(!e.getEstado().equalsIgnoreCase(StatusEducacionContinua.STATUS_TERMINADO));
+			eduContinuaDto.setAbleToActions(!e.getEstado().equalsIgnoreCase(StatusEducacionContinua.TERMINADO.getStatus()));
 			eduContinuaDto.setStatusAllPreinscripciones(e.isAllParticipantesAprobadaPreinscipcion());
 		}else {
 			dto.setEducacionContinua(null);
@@ -354,7 +354,7 @@ public class EducacionContinuaMapper implements IEducacionContinuaMapper {
 		eduContinuaDto.setImagen(e.getImagen());
 		eduContinuaDto.setInfoAdicional(e.getInfoAdicional());
 		eduContinuaDto.setEstado(e.getEstado());
-		eduContinuaDto.setEnableAsistencia(!e.getEstado().equalsIgnoreCase(StatusEducacionContinua.STATUS_ACTIVO));
+		eduContinuaDto.setEnableAsistencia(!e.getEstado().equalsIgnoreCase(StatusEducacionContinua.ACTIVO.getStatus()));
 		eduContinuaDto.setIdTipoEduContinua(e.getTipoEduContinua().getId());
 		eduContinuaDto.setTipoEduContinua(e.getTipoEduContinua().getTipoEduContinua());
 		eduContinuaDto.setIdDocenteResp(e.getDocenteResponsable().getId());

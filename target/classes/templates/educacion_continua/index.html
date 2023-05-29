@@ -71,11 +71,11 @@
     								<span class="btn-inner--icon"><i class="fas fa-times"></i></span></button>
     								</td>
     							<td th:switch="${ec.estado}">
-    								<span th:case="'Activo'" class="badge badge-success badge-circle" data-toggle="tooltip" data-placement="left" th:title="${ec.estado}">  </span>
-    								<span th:case="'En Desarrollo'" class="badge badge-warning badge-circle" data-toggle="tooltip" data-placement="left" th:title="${ec.estado}"> </span>
-    								<span th:case="'Terminado'" class="badge badge-danger badge-circle" data-toggle="tooltip" data-placement="left" th:title="${ec.estado}"> </span>
+    								<span th:case="'Activo'" class="badge badge-success" th:text="${ec.estado}"></span>
+    								<span th:case="'En Desarrollo'" class="badge badge-warning" th:text="${ec.estado}"></span>
+    								<span th:case="'Terminado'" class="badge badge-danger" th:text="${ec.estado}"></span>
     								
-    							</td>	
+    							</td>		
 								<td th:text="${ec.tipoEduContinua}"></td>
 								<td class="td2" th:text="${ec.programaResponsable}"></td>
 								<td class="td2" th:text="${ec.nombre}"></td>

@@ -7,6 +7,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -374,30 +375,43 @@ public class EducacionContinuaCustomDaoImpl implements IEducacionContinuaCustomD
 
 
 	@Override
-	public Long[] listAllPossibleEducacionContinuaFiltro(String estado, Long idTipoEdC, Long idPrograma,
+	public Long[] listAllPossibleEducacionContinuaFiltro(StatusEducacionContinua estado, Long idTipoEdC, Long idPrograma,
 			Long idBeneficiarios) {
 		// TODO Auto-generated method stub
 		
         
 		StringBuilder query = new StringBuilder();
 		
-		query.append("SELECT distinct ec.id from educacion_continua ec")
-		.append(" left join educacion_continua_tipo_beneficiario tb on tb.id_educacion_continua=ec.id")
-		.append(" where ec.estado != ? ");
+		query.append("SELECT edu_continua.id from (");
+		query.append("SELECT distinct ec.id, ec.estado, ec.id_tipo_educacion_continua, ");
+		query.append("ec.id_programa, tb.id_tipo_beneficiario, ec.fecha_inicio from educacion_continua ec")
+		.append(" left join educacion_continua_tipo_beneficiario tb on tb.id_educacion_continua=ec.id");
+		query.append(" ORDER BY ec.fecha_inicio DESC) edu_continua");
+		if(Objects.isNull(estado)) {
+			query.append(" where edu_continua.estado != ? ");
+		}else {
+			query.append(" where edu_continua.estado = ? ");
+		}
+		
 	
 		
 		if(idTipoEdC != 0L) {
-			query.append(" and ec.id_tipo_educacion_continua = ? ");
+			query.append(" and edu_continua.id_tipo_educacion_continua = ? ");
 		}
 		if(idPrograma != 0L) {
-			query.append(" and ec.id_programa = ? ");
+			query.append(" and edu_continua.id_programa = ? ");
 		}
 		if(idBeneficiarios != 0L) {
-			query.append(" and tb.id_tipo_beneficiario = ? ");
+			query.append(" and edu_continua.id_tipo_beneficiario = ? ");
 		}
-		query.append(" ORDER BY ec.fecha_inicio DESC");
-		Query q=em.createNativeQuery(query.toString())
-				.setParameter(1, estado);
+		
+		Query q=em.createNativeQuery(query.toString());
+		if(Objects.isNull(estado)) {
+			q.setParameter(1, StatusEducacionContinua.TERMINADO.getStatus());
+		}else {
+			q.setParameter(1, estado.getStatus());
+		}
+		
 		if(idTipoEdC != 0L) {
 			q.setParameter(2, idTipoEdC);
 		}
@@ -524,7 +538,7 @@ public class EducacionContinuaCustomDaoImpl implements IEducacionContinuaCustomD
 			     .append(" select rpa.id_edu_continua from rol_persona_asistencia rpa where rpa.id_persona =?1) sq")
 			     .append(" on sq.idEdC=e.id");
 		}
-		query.append(" where e.estado='"+StatusEducacionContinua.STATUS_EN_DESARROLLO+"' and e.is_deleted=false")
+		query.append(" where e.estado='"+StatusEducacionContinua.DESARROLLO.getStatus()+"' and e.is_deleted=false")
 			 .append(" order by e.fecha_inicio asc");
 		
 		
@@ -572,9 +586,9 @@ public class EducacionContinuaCustomDaoImpl implements IEducacionContinuaCustomD
 			 .append(" from educacion_continua e");
 			 
 		if(isDirPrograma) {//es director de programa
-			query.append(" where e.id_programa = (select p.id from programas p where p.id_director = ?1 ) and e.estado != '" + StatusEducacionContinua.STATUS_TERMINADO+"'" );
+			query.append(" where e.id_programa = (select p.id from programas p where p.id_director = ?1 ) and e.estado != '" + StatusEducacionContinua.TERMINADO.getStatus()+"'" );
 		}else {
-			query.append(" where e.estado != '" + StatusEducacionContinua.STATUS_TERMINADO +"'");
+			query.append(" where e.estado != '" + StatusEducacionContinua.TERMINADO.getStatus() +"'");
 		}
 		   query.append(" order by e.fecha_inicio asc");
 		

@@ -97,7 +97,7 @@ public class ParticipanteCustomDao implements IParticipanteCustomDao {
 			 .append(" join tipos_educacion_continua tec on e.id_tipo_educacion_continua=tec.id")
 			 .append(" where per.numero_documento = ?1 and e.estado != ?2 and p.status_preinscripcion='1'");
 			 
-		Query q=em.createNativeQuery(query.toString()).setParameter(1, numDocumento).setParameter(2, StatusEducacionContinua.STATUS_TERMINADO);
+		Query q=em.createNativeQuery(query.toString()).setParameter(1, numDocumento).setParameter(2, StatusEducacionContinua.TERMINADO.getStatus());
 		
 		List<Object[]> result=q.getResultList();
 		List<ParticipanteDto> list=new ArrayList<ParticipanteDto>();

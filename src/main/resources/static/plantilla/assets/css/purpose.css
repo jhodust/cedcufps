@@ -102,3 +102,11 @@ a.action-item-disabled{
 	color:#818386;
 	border-color:#000;
 }
+.label-radio-filter-index{
+	color: #000
+}
+.label-radio-filter-index:before{
+	background-color:#FFF;
+	border: 1px solid #2e2e2e;
+	color: #000
+}

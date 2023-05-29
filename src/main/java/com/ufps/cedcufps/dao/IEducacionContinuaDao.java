@@ -16,6 +16,7 @@ import org.springframework.data.repository.CrudRepository;
 import com.ufps.cedcufps.modelos.Departamento;
 import com.ufps.cedcufps.modelos.EducacionContinua;
 import com.ufps.cedcufps.modelos.Participante;
+import com.ufps.cedcufps.utils.StatusDescription;
 import com.ufps.cedcufps.utils.StatusEducacionContinua;
 
 public interface IEducacionContinuaDao extends JpaRepository<EducacionContinua, Long> {
@@ -108,9 +109,9 @@ public interface IEducacionContinuaDao extends JpaRepository<EducacionContinua, 
 	@Transactional
 	@Modifying
 	@Query(value = "update educacion_continua set estado = "
-			+ "(case when fecha_inicio > NOW() THEN '" + StatusEducacionContinua.STATUS_ACTIVO
-			+ "' when fecha_inicio <= NOW() and fecha_fin > NOW() THEN '" + StatusEducacionContinua.STATUS_EN_DESARROLLO
-			+ "'else '" + StatusEducacionContinua.STATUS_TERMINADO + "'  end)", nativeQuery = true)
+			+ "(case when fecha_inicio > NOW() THEN '" + StatusDescription.ACTIVO
+			+ "' when fecha_inicio <= NOW() and fecha_fin > NOW() THEN '" + StatusDescription.DESARROLLO
+			+ "'else '" + StatusDescription.TERMINADO + "'  end)", nativeQuery = true)
 	public int updateEstadoEduContinua();
 	
 	

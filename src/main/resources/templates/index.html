@@ -73,12 +73,12 @@
 		
 		<hr/>
 		
-		
+			<div class="col-md-8">
 			<h6>Filtro <i class="fas fa-filter"></i></h6>
 				<div class="row">
 					<div class="col-md-4">
 						<div class="form-group">
-							<label class="form-control-label">Tipo Educación Continua </label><label class="requerido pl-2">*</label> <select
+							<label class="form-control-label">Tipo Educación Continua </label> <select
 								class="form-control" data-toggle="select" id="selectTipoContinuaPanel">
 								<option value="0">Seleccione el tipo...</option>
 								<option th:each="tec: ${tipos_educacion_continua}" th:value="${tec.id}"
@@ -88,7 +88,7 @@
 					</div>
 					<div class="col-md-4">
 						<div class="form-group">
-							<label class="form-control-label">Programa </label><label class="requerido pl-2">*</label> <select
+							<label class="form-control-label">Programa </label> <select
 								class="form-control" data-toggle="select" id="selectProgramaPanel">
 								<option value="0">Seleccione el programa...</option>
 								<option th:each="p: ${programas}" th:value="${p.id}"
@@ -99,7 +99,7 @@
 					</div>
 					<div class="col-md-4">
 						<div class="form-group">
-							<label class="form-control-label">Abierto a </label><label class="requerido pl-2">*</label> <select
+							<label class="form-control-label">Abierto a </label> <select
 								class="form-control" data-toggle="select" id="selectPublicoPanel">
 								<option value="0">Seleccione el tipo...</option>
 								<option th:each="tb: ${tipo_beneficiarios}"
@@ -108,11 +108,27 @@
 						</div>
 					</div>
 				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<div class="form-group">
+							<label class="form-control-label">Estado</label>
+							<div class="col">
+								<div
+									class="custom-control custom-radio custom-control-inline" th:each="estado: ${status}">
+									<input type="radio" th:id="${estado.status} " 
+										 class="custom-control-input" name="statusEducacionPanel" th:value="${estado.id}"/>
+									<label class="custom-control-label label-radio-filter-index pt-2 p"
+										th:for="${estado.status}" th:text="${estado.status}"></label>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 		
 		<div id="div_list_paginador" th:fragment="listPanel">
 		 <div th:if="${educacionesContinuas.getNumberOfElements() == 0}">
 			 <div class="alert alert-danger" role="alert" >
-			    <strong> <i class="fas fa-info-circle"></i> No existen educaciones continuas activas</strong>
+			    <strong> <i class="fas fa-info-circle"></i> No existen educaciones continuas según tu búsqueda</strong>
 			</div>
         </div>
 		<div class="row" th:unless="${educacionesContinuas.getNumberOfElements() == 0}">
@@ -179,7 +195,7 @@
 		<nav  th:replace="layouts/paginator :: paginator"></nav>
 		</div>
 	</div>
-	
+	</div>
 </div>
 		
 		</div>

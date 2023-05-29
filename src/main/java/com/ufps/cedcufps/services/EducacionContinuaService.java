@@ -183,10 +183,10 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 	}
 	
 	@Override
-	public Page<EducacionContinua> educacionContinuaFiltroPanel(Long idTipoEdC, Long idPrograma, Long idBeneficiarios, Pageable pageable) {
+	public Page<EducacionContinua> educacionContinuaFiltroPanel(Long idTipoEdC, Long idPrograma, Long idBeneficiarios, Long statusId, Pageable pageable) {
 		// TODO Auto-generated method stub
 		
-		return educacionContinuaDao.educacionesContinuasPanelFiltroIds(educacionContinuaCustomDao.listAllPossibleEducacionContinuaFiltro(StatusEducacionContinua.STATUS_TERMINADO, idTipoEdC, idPrograma, idBeneficiarios), pageable);
+		return educacionContinuaDao.educacionesContinuasPanelFiltroIds(educacionContinuaCustomDao.listAllPossibleEducacionContinuaFiltro(StatusEducacionContinua.findStatusById(statusId), idTipoEdC, idPrograma, idBeneficiarios), pageable);
 	}
 
 	@Override
@@ -400,7 +400,7 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 		if(this.validateAsociacionesEduContinua(dto)) {
 			
 			if(dto.getId() == 0L) {
-				dto.setEstado(StatusEducacionContinua.STATUS_ACTIVO);
+				dto.setEstado(StatusEducacionContinua.ACTIVO.getStatus());
 				educacionContinuaCustomDao.saveEducacionContinua(dto, personaService.findEmailPersonaLogueada());
 				
 				if(dto.getConsecutivo()==null) {

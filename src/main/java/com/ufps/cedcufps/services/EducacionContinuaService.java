@@ -631,24 +631,24 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 		try {
 			File directory = new File(fileStorageService.dirEducacionContinua().resolve(String.valueOf(idEducacionContinua)).resolve(fileStorageService.dirQrParticipantes()).toString());
 			logger.info(directory.getAbsolutePath());
-			logger.info("exits: " + directory.exists());
+			logger.info("exists: " + directory.exists());
 			if(!directory.exists()) {
 				Files.createDirectories(fileStorageService.dirEducacionContinua().resolve(String.valueOf(idEducacionContinua)).resolve(fileStorageService.dirQrParticipantes()));
 			}
 			logger.info(directory.getAbsolutePath());
-			logger.info("exits: " + directory.exists());
+			logger.info("exists: " + directory.exists());
 			directory = new File(fileStorageService.dirEducacionContinua().resolve(String.valueOf(idEducacionContinua)).resolve(fileStorageService.dirTarjetasInscripcion()).toString());
 			if(!directory.exists()) {
 				Files.createDirectories(fileStorageService.dirEducacionContinua().resolve(String.valueOf(idEducacionContinua)).resolve(fileStorageService.dirTarjetasInscripcion()));
 			}
 			logger.info(directory.getAbsolutePath());
-			logger.info("exits: " + directory.exists());
+			logger.info("exists: " + directory.exists());
 			directory = new File(fileStorageService.dirEducacionContinua().resolve(String.valueOf(idEducacionContinua)).resolve(fileStorageService.dirDiplomasParticipantes()).toString());
 			if(!directory.exists()) {
 				Files.createDirectories(fileStorageService.dirEducacionContinua().resolve(String.valueOf(idEducacionContinua)).resolve(fileStorageService.dirDiplomasParticipantes()));
 			}
 			logger.info(directory.getAbsolutePath());
-			logger.info("exits: " + directory.exists());
+			logger.info("exists: " + directory.exists());
 			directory = new File(fileStorageService.dirEducacionContinua().resolve(String.valueOf(idEducacionContinua)).resolve(fileStorageService.dirAnexos()).toString());
 			if(!directory.exists()) {
 				Files.createDirectories(fileStorageService.dirEducacionContinua().resolve(String.valueOf(idEducacionContinua)).resolve(fileStorageService.dirAnexos()));
@@ -684,5 +684,11 @@ public class EducacionContinuaService implements IEducacionContinuaService{
 		
 		
 		return this.fileStorageService.loadFileTxt(path.resolve(filename));
+	}
+
+	@Override
+	public List<EducacionContinuaWebDto> ultimasEducacionesContinuasFinalizadas() {
+		// TODO Auto-generated method stub
+		return educacionContinuaCustomDao.findLastEducacionesContinuasFinished();
 	}
 }

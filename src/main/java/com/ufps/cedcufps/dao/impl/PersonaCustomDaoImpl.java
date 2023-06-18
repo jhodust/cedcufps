@@ -21,6 +21,7 @@ import com.ufps.cedcufps.dto.PersonaDto;
 import com.ufps.cedcufps.mapper.IPersonaMapper;
 import com.ufps.cedcufps.modelos.Administrativo;
 import com.ufps.cedcufps.modelos.Departamento;
+import com.ufps.cedcufps.modelos.Dependencia;
 import com.ufps.cedcufps.modelos.Docente;
 import com.ufps.cedcufps.modelos.EstadoCivil;
 import com.ufps.cedcufps.modelos.Estudiante;
@@ -231,7 +232,8 @@ public class PersonaCustomDaoImpl implements IPersonaCustomDao {
 	public Administrativo findOnlyAdministrativo(Long idPersona) {
 		// TODO Auto-generated method stub
 		StringBuilder query = new StringBuilder();
-		query.append("select id_persona, dependencia, cargo from administrativos a where a.id_persona=?1 and a.estado");
+		query.append("select id_persona, d.id dependencia_id, d.dependencia, cargo from administrativos a ")
+		.append(" join dependencias d on d.id=a.id_dependencia where a.id_persona=?1 and a.estado");
 		Query q=em.createNativeQuery(query.toString());
 		q.setParameter(1, idPersona);
 		List<Object []> result=q.getResultList();
@@ -239,8 +241,8 @@ public class PersonaCustomDaoImpl implements IPersonaCustomDao {
 		if(result.size()>0) {
 			a=new Administrativo();
 			a.setId(Long.parseLong(String.valueOf(result.get(0)[0])));
-			a.setDependencia(String.valueOf(result.get(0)[1]));
-			a.setCargo(String.valueOf(result.get(0)[2]));
+			a.setDependencia(Dependencia.builder().id(Long.parseLong(String.valueOf(result.get(0)[1]))).dependencia(String.valueOf(result.get(0)[2])).build());
+			a.setCargo(String.valueOf(result.get(0)[3]));
 		}
 		return a;
 		

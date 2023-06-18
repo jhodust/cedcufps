@@ -327,7 +327,7 @@ public class PersonaService implements IPersonaService {
 				logger.info("Es administrativo");
 				Administrativo a= usuarioMapper.convertUsuarioToAdministrativo(u,per.getId());
 				logger.info(a.getId().toString());
-				logger.info(a.getDependencia());
+				logger.info(a.getDependencia().getDependencia());
 				logger.info(a.getCargo());
 				personaCustomDao.saveAdministrativo(a);
 			}
@@ -390,9 +390,9 @@ public class PersonaService implements IPersonaService {
 				logger.info("Es administrativo");
 				Administrativo a= usuarioMapper.convertUsuarioToAdministrativo(u,p.getId());
 				logger.info(a.getId().toString());
-				logger.info(a.getDependencia());
+				logger.info(a.getDependencia().getDependencia());
 				logger.info(a.getCargo());
-				administrativoDao.updateOnlyAdministrativo(a.getDependencia(), a.getCargo(), p.getId());
+				administrativoDao.updateOnlyAdministrativo(a.getDependencia().getId(), a.getCargo(), p.getId());
 				//personaCustomDao.saveAdministrativo(a);
 			}
 			if(u.isGraduado()) {

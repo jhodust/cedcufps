@@ -33,6 +33,7 @@ import com.ufps.cedcufps.dto.UsuarioDto;
 import com.ufps.cedcufps.exception.CustomException;
 import com.ufps.cedcufps.modelos.Administrativo;
 import com.ufps.cedcufps.modelos.Departamento;
+import com.ufps.cedcufps.modelos.Dependencia;
 import com.ufps.cedcufps.modelos.Docente;
 import com.ufps.cedcufps.modelos.EstadoCivil;
 import com.ufps.cedcufps.modelos.Estudiante;
@@ -199,7 +200,7 @@ public class UsuarioMapper implements IUsuarioMapper {
 		Administrativo a= new Administrativo();
 		a.setId(idPersona);
 		a.setCargo(u.getCargo());
-		a.setDependencia(u.getDependencia());
+		a.setDependencia(Dependencia.builder().id(u.getIdDependencia()).dependencia(u.getDependencia()).build());
 		return a;
 	}
 
@@ -322,7 +323,8 @@ public class UsuarioMapper implements IUsuarioMapper {
 		
 		if(a!=null) {
 			dto.setCargo(a.getCargo());
-			dto.setDependencia(a.getDependencia());
+			dto.setIdDependencia(a.getDependencia().getId());
+			dto.setDependencia(a.getDependencia().getDependencia());
 		}
 		
 		if(g!=null) {

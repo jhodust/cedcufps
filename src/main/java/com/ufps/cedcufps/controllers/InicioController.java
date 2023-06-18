@@ -75,6 +75,7 @@ public class InicioController {
 		model.addAttribute("tipos_educacion_continua",educacionContinuaService.findAllTiposEducacionContinuaExisting());
 		model.addAttribute("tipo_beneficiarios",educacionContinuaService.findAllTipoBeneficiario());
 		model.addAttribute("status",statusEducacionContinuaService.getAllStatus());
+		model.addAttribute("educacionesFinalizadas", educacionContinuaService.ultimasEducacionesContinuasFinalizadas());
 		SessionWebGoogle session=SpringSecurityConfig.getInfoSession();
 		if(session!=null) {
 			model.addAttribute("photoUser", session.getPhoto());

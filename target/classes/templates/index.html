@@ -73,6 +73,7 @@
 		
 		<hr/>
 		
+		<div class="row">
 			<div class="col-md-8">
 			<h6>Filtro <i class="fas fa-filter"></i></h6>
 				<div class="row">
@@ -196,6 +197,67 @@
 		</div>
 	</div>
 	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="card col-md-4">
+    <div class="card-header">
+    <div class="d-flex justify-content-between align-items-center">
+        <div>
+            <h6 class="mb-0">Educaciones Continuas Anteriores</h6>
+        </div>
+    </div>
+</div>
+
+    <div class="card-body">
+        <div class="timeline timeline-one-side" data-timeline-content="axis" data-timeline-axis-style="dashed">
+    
+    
+    
+    <div class="timeline-block" th:each="educacionFinalizada, iterator: ${educacionesFinalizadas}">
+        <span class="timeline-step timeline-step-sm bg-primary border-primary text-white" th:text="${iterator.index +1}">1</span>
+        <div class="timeline-content">
+            <p class="d-block h6 text-sm mb-0" th:text="${educacionFinalizada.nombre}"></p>
+            <span class="text-muted text-sm" th:text="${educacionFinalizada.tipoEduContinua}"></span> 
+            <br>
+            <span><i class="far fa-clock mr-1 p" th:text="${#dates.format(educacionFinalizada.fechaInicio, 'dd-MM-yyyy')}"></i></span>
+        </div>
+    </div>
+    
+</div>
+
+    </div>
+    <div class="card-footer py-2 text-center">
+        <a href="#" class="text-sm text-muted font-weight-bold">Ver más</a>
+    </div>
+</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	</div>
+	
 </div>
 		
 		</div>

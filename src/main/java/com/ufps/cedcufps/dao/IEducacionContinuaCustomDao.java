@@ -50,4 +50,5 @@ public interface IEducacionContinuaCustomDao {
 	public EducacionContinua findEducacionContinuaById(Long id);
 	
 	public EducacionContinuaWebDto findInfoEducacionContinuaDiplomaById(Long id);
+	public List<EducacionContinuaWebDto> findLastEducacionesContinuasFinished();
 }

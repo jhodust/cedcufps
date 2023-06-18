@@ -2,11 +2,15 @@ package com.ufps.cedcufps.dto;
 
 import java.util.Date;
 
+import com.ufps.cedcufps.modelos.Dependencia;
+
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+@Builder
 @Setter
 @Getter
 @AllArgsConstructor
@@ -53,6 +57,7 @@ public class UsuarioDto {
 	private Long idDeptoAdscrito;
 	private String deptoAdscrito;
 	private String codigoDocente;
+	private Long idDependencia;
 	private String dependencia;
 	private String cargo;
 	

@@ -79,7 +79,11 @@
                   Áreas academicas
                 </a>	
                 		
-                      <div class="dropdown-menu"><a class="dropdown-item" sec:authorize="hasAnyRole('ROLE_SUPERADMIN')" th:href="@{/facultades}">
+                      <div class="dropdown-menu">
+                      	<a class="dropdown-item" sec:authorize="hasAnyRole('ROLE_SUPERADMIN')" th:href="@{/dependencias}">
+                          Dependencias
+                        </a>
+                      	<a class="dropdown-item" sec:authorize="hasAnyRole('ROLE_SUPERADMIN')" th:href="@{/facultades}">
                           Facultades
                         </a>
                         <a class="dropdown-item"sec:authorize="hasAnyRole('ROLE_SUPERADMIN')" th:href="@{/departamentos-academicos}">

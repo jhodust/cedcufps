@@ -110,4 +110,6 @@ public interface IEducacionContinuaService {
 	public void deleteEducacionContinua(String idAcceso);
 	
 	public void createDirEducacionContinua(Long idEducacionContinua);
+	
+	public List<EducacionContinuaWebDto> ultimasEducacionesContinuasFinalizadas();
 }

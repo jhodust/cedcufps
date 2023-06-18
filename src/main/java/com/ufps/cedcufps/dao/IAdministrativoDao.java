@@ -19,6 +19,6 @@ public interface IAdministrativoDao extends JpaRepository<Administrativo, Long>{
 	
 	@Transactional
 	@Modifying
-	@Query(value = "INSERT INTO administrativos (dependencia, cargo, id_persona) VALUES(?1,?2,?3) ON DUPLICATE KEY  UPDATE dependencia=VALUES(dependencia), cargo=VALUES(cargo), estado= true", nativeQuery = true)
-	public void updateOnlyAdministrativo(String dependencia, String cargo, Long idPersona);
+	@Query(value = "INSERT INTO administrativos (id_dependencia, cargo, id_persona) VALUES(?1,?2,?3) ON DUPLICATE KEY  UPDATE dependencia=VALUES(id_dependencia), cargo=VALUES(cargo), estado= true", nativeQuery = true)
+	public void updateOnlyAdministrativo(Long idDependencia, String cargo, Long idPersona);
 }

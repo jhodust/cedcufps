@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -48,6 +49,7 @@ import com.ufps.cedcufps.mapper.IJornadaMapper;
 import com.ufps.cedcufps.modelos.Anexos;
 import com.ufps.cedcufps.modelos.Docente;
 import com.ufps.cedcufps.modelos.EducacionContinua;
+import com.ufps.cedcufps.modelos.EstadoCivil;
 import com.ufps.cedcufps.modelos.Persona;
 import com.ufps.cedcufps.modelos.Programa;
 import com.ufps.cedcufps.utils.StatusEducacionContinua;
@@ -849,6 +851,35 @@ public class EducacionContinuaCustomDaoImpl implements IEducacionContinuaCustomD
 		return null;
 	}
 	
+	
+	@Autowired
+	public List<EducacionContinuaWebDto> findLastEducacionesContinuasFinished(){
+		StringBuilder query = new StringBuilder();
+		query.append(" select e.id, e.nombre, e.fecha_inicio, pro.programa,  tec.tipo_educacion_continua ")
+			 .append(" from educacion_continua e")
+			 .append(" join programas pro on e.id_programa=pro.id")
+			 .append(" join tipos_educacion_continua tec on e.id_tipo_educacion_continua=tec.id")
+			 .append(" where e.estado = ?1")
+			 .append(" order by e.fecha_inicio DESC")
+			 .append(" limit 5");
+		
+		Query q=em.createNativeQuery(query.toString());
+		q.setParameter(1, StatusEducacionContinua.TERMINADO.getStatus());
+		
+		
+			
+		List<Object[]> result= q.getResultList();
+		return result.stream().map(rowData -> {
+		EducacionContinuaWebDto e = new EducacionContinuaWebDto();
+		e.setId(Long.parseLong(String.valueOf(rowData[0])));
+		e.setNombre(String.valueOf(rowData[1]));
+		e.setFechaInicio((Date)(rowData[2]));
+		e.setProgramaResp(String.valueOf(rowData[3]));
+		e.setTipoEduContinua(String.valueOf(rowData[4]));
+		return e;
+		}).collect(Collectors.toList());
+		
+	}
 	
 
 }
